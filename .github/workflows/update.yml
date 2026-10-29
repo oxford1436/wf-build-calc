@@ -12,13 +12,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with: { python-version: "3.12" }
-      - name: Fetch latest WFCD data
-        run: scripts/fetch_data.sh data/raw
+      - name: Fetch latest data
+        run: bash scripts/fetch_data.sh data/raw
       - name: Build page
-        run: scripts/build.sh
+        run: bash scripts/build.sh
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
