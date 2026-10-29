@@ -1,30 +1,38 @@
 #!/usr/bin/env bash
-# Downloads the WFCD warframe-items JSON files the calculator is built from.
-set -euo pipefail
+# Downloads the data the calculator is built from (WFCD warframe-items + wiki data modules).
+# A failed or broken download keeps the previous copy in data/raw, so a bad day never breaks the page.
+set -uo pipefail
 OUT="${1:-data/raw}"
 mkdir -p "$OUT"
+
+fetch() {  # url, destination, kind (json|lua)
+  local url="$1" dest="$2" kind="$3" tmp
+  tmp="$(mktemp)"
+  if curl -fsSL --retry 3 --max-time 300 "$url" -o "$tmp" && python3 - "$tmp" "$kind" <<'PY'
+import json, sys
+path, kind = sys.argv[1], sys.argv[2]
+text = open(path, encoding="utf-8", errors="replace").read()
+if kind == "json":
+    json.loads(text)
+else:
+    assert len(text) > 1000 and "return" in text[:5000], "not a Lua data module"
+PY
+  then mv "$tmp" "$dest"; echo "ok    $dest"
+  else rm -f "$tmp"; echo "keep  $dest (download failed or invalid — using the previous copy)"; fi
+}
+
 BASE="https://raw.githubusercontent.com/WFCD/warframe-items/master/data/json"
 for f in Primary Secondary Melee Mods Arcanes Warframes Misc; do
-  curl -sSL "$BASE/$f.json" -o "$OUT/$f.json"
+  fetch "$BASE/$f.json" "$OUT/$f.json" json
 done
-curl -sSL "https://raw.githubusercontent.com/WFCD/warframe-items/master/data/json/i18n.json" -o "$OUT/i18n.json" || true
-# wiki weapon database (max ammo, ammo pickup, ammo cost, projectile speed) — Module:Weapons/data/*
+# Korean names and mod texts (keyed by uniqueName)
+fetch "$BASE/i18n/ko.json" "$OUT/ko.json" json
+# wiki weapon database (ammo, forced procs, polarities, zoom, exalted weapons) and Zaw/Kitgun parts
 for s in primary secondary melee; do
-  curl -sSL "https://wiki.warframe.com/w/Module:Weapons/data/${s}?action=raw" -o "$OUT/wiki_${s}.lua" || true
+  fetch "https://wiki.warframe.com/w/Module:Weapons/data/${s}?action=raw" "$OUT/wiki_${s}.lua" lua
 done
-# Zaw / Kitgun parts
-curl -sSL "https://wiki.warframe.com/w/Module:Modular/data?action=raw" -o "$OUT/wiki_modular.lua" || true
-# ko.json: Korean names keyed by uniqueName (extracted from i18n.json)
-python3 - "$OUT" <<'PY'
-import json, sys, os
-out = sys.argv[1]
-p = os.path.join(out, "i18n.json")
-if os.path.exists(p) and os.path.getsize(p) > 100:
-    d = json.load(open(p, encoding="utf-8"))
-    ko = {}
-    for k, v in d.items():
-        if isinstance(v, dict) and "ko" in v:
-            ko[k] = v["ko"]
-    json.dump(ko, open(os.path.join(out, "ko.json"), "w", encoding="utf-8"), ensure_ascii=False)
-    print("ko.json", len(ko))
-PY
+fetch "https://wiki.warframe.com/w/Module:Modular/data?action=raw" "$OUT/wiki_modular.lua" lua
+
+for f in Primary Secondary Melee Mods Arcanes Warframes; do
+  [ -s "$OUT/$f.json" ] || { echo "missing $OUT/$f.json — cannot build"; exit 1; }
+done
