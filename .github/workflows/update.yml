@@ -1,0 +1,27 @@
+name: Update data and rebuild
+on:
+  schedule:
+    - cron: "17 3 * * 1"   # every Monday 03:17 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["src/**", "scripts/**", ".github/workflows/update.yml"]
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Fetch latest WFCD data
+        run: scripts/fetch_data.sh data/raw
+      - name: Build page
+        run: scripts/build.sh
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html data/*.js
+          if git diff --cached --quiet; then echo "no changes"; else git commit -m "chore: rebuild with latest data" && git push; fi
