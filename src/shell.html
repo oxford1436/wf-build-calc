@@ -1,0 +1,375 @@
+<title>워프레임 세팅 계산기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: two-pane workbench — question-style config rail on the left, results ledger on the right. Orokin brass on parchment / void-teal in dark. */
+:root{
+  --bg:#f3f1ea; --panel:#fbfaf6; --ink:#1d2326; --muted:#5d676b; --line:#d9d4c6;
+  --brass:#9a6b16; --brass-soft:#efe1c2; --void:#0f3b40; --good:#2f7d4f; --mid:#b07a12; --bad:#b0412e;
+  --c-direct:#6d7a80; --c-heat:#d9622b; --c-tox:#6ea43a; --c-elec:#3c7fd6; --c-gas:#3aa69a; --c-slash:#b03a4e; --c-blast:#c79a25;
+  --f-display:"Chakra Petch","IBM Plex Sans KR",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c1416; --panel:#121d20; --ink:#e7e4da; --muted:#98a3a5; --line:#24343a;
+  --brass:#d6a74a; --brass-soft:#2c2616; --void:#9fd3cf; --good:#6cc28d; --mid:#e0b45a; --bad:#e17b66; --c-direct:#8b989e; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0c1416; --panel:#121d20; --ink:#e7e4da; --muted:#98a3a5; --line:#24343a;
+  --brass:#d6a74a; --brass-soft:#2c2616; --void:#9fd3cf; --good:#6cc28d; --mid:#e0b45a; --bad:#e17b66; --c-direct:#8b989e; color-scheme:dark;}
+*{box-sizing:border-box} [hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.55;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:20px 40px}
+header.top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;max-width:1360px;margin:0 auto 18px}
+header.top h1{font-family:var(--f-display);font-weight:700;font-size:26px;letter-spacing:.02em;margin:0;text-wrap:balance}
+header.top h1 span{color:var(--brass)}
+header.top p{margin:0;color:var(--muted);font-size:13px}
+.wrap{display:grid;grid-template-columns:minmax(300px,420px) minmax(0,1fr);gap:20px;max-width:1360px;margin:0 auto;align-items:start}
+@media (max-width: 900px){.wrap{grid-template-columns:minmax(0,1fr)}}
+.rail{display:flex;flex-direction:column;gap:14px;min-width:0}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.box h2{font-family:var(--f-display);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin:0;font-weight:600}
+.box h2 small{letter-spacing:0;text-transform:none;color:var(--muted);font-family:var(--f-body);font-weight:400;margin-left:6px}
+label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted)}
+label.inline{flex-direction:row;align-items:flex-start;gap:8px;color:var(--ink);font-size:13px}
+label.inline input{margin-top:3px}
+label.inline small{display:block;color:var(--muted);font-size:11px}
+.abil-off{font-size:13px;color:var(--muted);padding-left:24px}
+.abil-off small{display:block;font-size:11px}
+select,input[type=text],input[type=number],input[type=search]{font:inherit;font-size:13px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px 8px;min-width:0;width:100%}
+input[type=range]{width:100%;accent-color:var(--brass)}
+select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.row3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px}
+.slot-tabs{display:flex;gap:4px;flex-wrap:wrap}
+.slot-tabs button{font:inherit;font-size:12px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:3px 10px;cursor:pointer}
+.slot-tabs button.on{background:var(--void);color:var(--bg);border-color:var(--void)}
+#wlist{display:flex;flex-direction:column;gap:2px;max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:4px;padding:4px;background:var(--bg)}
+.witem{display:grid;grid-template-columns:1fr auto;gap:0 8px;text-align:left;font:inherit;background:transparent;border:0;border-radius:3px;padding:5px 8px;cursor:pointer;color:var(--ink)}
+.witem:hover{background:var(--brass-soft)}
+.witem.on{background:var(--brass-soft);box-shadow:inset 3px 0 0 var(--brass)}
+.wko{font-weight:600}.wen{color:var(--muted);font-size:12px;grid-column:1}.wcls{grid-column:2;grid-row:1/3;align-self:center;font-size:11px;color:var(--muted)}
+.empty{color:var(--muted);font-size:12px;margin:6px}
+.wpick b{font-family:var(--f-display);font-size:20px;display:block}
+.wpick small{color:var(--muted)}
+.dmgline{display:flex;flex-wrap:wrap;gap:4px}
+.dt{font-family:var(--f-mono);font-size:12px;padding:1px 6px;border-radius:3px;background:var(--brass-soft)}
+.statline,.desc{font-size:12px;color:var(--muted)}
+.desc{margin:-4px 0 0}
+.targets{font-size:12px;color:var(--muted);line-height:1.5}
+.targets span{display:block}
+#sets{display:flex;flex-direction:column;gap:10px}
+.cset{border:1px solid var(--line);border-radius:6px;padding:8px 10px;background:var(--bg)}
+.cset[open]{padding-bottom:10px}
+.cset summary{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);list-style:none}
+.cset summary::-webkit-details-marker{display:none}
+.cset summary::before{content:"▸";color:var(--muted);font-size:11px}
+.cset[open] summary::before{content:"▾"}
+.cset .cname{font-weight:600}
+.cset .ccount{color:var(--muted);font-size:12px;margin-right:auto}
+.cdel{font:inherit;font-size:12px;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:4px;padding:1px 8px;cursor:pointer}
+.cdel:hover{color:var(--bad);border-color:var(--bad)}
+.cbody{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.cmsg{margin:0;font-size:12px}
+.crivbox{border:1px dashed #8a5cc7;border-radius:6px;padding:8px;display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb, #8a5cc7 6%, var(--panel))}
+.crivbox[hidden]{display:none}
+.crivhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;font-size:13px}
+.crivhead small{color:var(--muted);font-size:11px}
+.crivcopy{margin-left:auto;font:inherit;font-size:11px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:4px;padding:1px 8px;cursor:pointer}
+.crivrow{display:grid;grid-template-columns:3.4em minmax(0,1fr) 5.5em;gap:6px;align-items:center}
+.crivlab{font-size:12px;color:var(--muted)}
+.fa-ok{border-color:var(--good)!important}.fa-bad{border-color:var(--bad)!important}
+.tag{display:inline-block;font-size:11px;padding:0 6px;border-radius:999px;border:1px solid var(--line);color:var(--muted);margin-left:4px}
+.tag.cond{border-color:var(--mid);color:var(--mid)}
+.cset .cnamein{background:var(--panel)}
+/* comparison slots laid out like the in-game mod screen: stance/exilus on top, arcane at the right, 4×2 mod slots */
+.mgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.mslot{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:58px;padding:12px 4px 6px;border:1px solid var(--line);border-radius:6px;
+  background:linear-gradient(180deg,var(--panel),color-mix(in srgb, var(--line) 35%, var(--panel)));text-align:center;font-size:11.5px;line-height:1.25;color:var(--ink);cursor:text;overflow:hidden;word-break:keep-all;overflow-wrap:anywhere}
+.mslot.top{min-height:50px}
+.mslot.c2{grid-column:2}.mslot.c3{grid-column:3}.mslot.c4{grid-column:4}.mslot.c23{grid-column:2/4}
+.mslot.fixed{border-style:dashed;background:transparent;color:var(--muted);cursor:default;padding-top:6px}
+.mslot.fixed small{font-size:10px}
+.mslot .mnum{position:absolute;top:2px;left:6px;font-style:normal;font-size:10px;color:var(--muted);font-family:var(--f-mono)}
+.mslot .mname{font-weight:600}
+.modslot .mname:empty::before{content:"빈 칸";font-weight:400;color:var(--muted)}
+.mslot input,.mslot select{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:6px;background:transparent;color:transparent;text-align:center;font-size:12px;padding:4px}
+.mslot input::placeholder{color:transparent}
+.mslot input:focus{color:var(--ink);background:var(--panel);outline:2px solid var(--brass);outline-offset:-2px}
+.mslot input:focus::placeholder{color:var(--muted)}
+.mslot:focus-within .mname,.modslot:focus-within .mnum{visibility:hidden}
+.mslot select{opacity:0;cursor:pointer}
+.arcslot{cursor:pointer;border-color:var(--brass)}
+.arcslot:focus-within{outline:2px solid var(--brass);outline-offset:1px}
+.mslot.filled{border-color:var(--brass);background:linear-gradient(180deg,var(--brass-soft),var(--panel))}
+.mslot.riv{border-color:#8a5cc7;background:linear-gradient(180deg,color-mix(in srgb, #8a5cc7 22%, var(--panel)),var(--panel))}
+.mslot.bad{border-color:var(--bad);background:color-mix(in srgb, var(--bad) 10%, var(--panel))}
+@media (max-width: 440px){.mslot{font-size:10.5px;padding-left:3px;padding-right:3px}}
+.ghostbtn{font:inherit;font-size:13px;border:1px dashed var(--brass);background:transparent;color:var(--brass);border-radius:6px;padding:7px;cursor:pointer}
+.ghostbtn:hover{background:var(--brass-soft)}
+.ghostbtn[hidden]{display:none}
+.cmp td{vertical-align:middle}
+.cmp tr.main td{border-bottom:0;padding-top:9px}
+.cmp tr.sub td{padding-top:0;padding-bottom:9px}
+.cmp tr.rec td{background:color-mix(in srgb, var(--brass-soft) 60%, transparent)}
+.cmp .rank{font-family:var(--f-mono);font-size:16px;font-weight:600;color:var(--brass);width:2.2em}
+.cmp .sname{font-weight:600;white-space:nowrap}
+.cmp .big{font-family:var(--f-mono);font-size:15px;font-weight:600}
+.cmp .fl{display:flex;justify-content:space-between;gap:10px;white-space:nowrap;font-family:var(--f-mono);font-size:12px}
+.cmp .fl span{color:var(--muted);font-family:var(--f-body)}
+.cmp small{color:var(--muted)}
+@media (max-width: 640px){
+  .cmp thead{display:none}
+  .cmp,.cmp tbody{display:block}
+  .cmp tr.main{display:grid;grid-template-columns:2em minmax(0,1fr) minmax(0,1fr);gap:4px 10px;padding:10px 6px 4px}
+  .cmp tr.main td{display:block;padding:0;border:0;background:none}
+  .cmp td.rank{grid-row:1/4}
+  .cmp td.sname{grid-column:2}
+  .cmp td.spd{grid-column:3;text-align:right}
+  .cmp td.t1{grid-column:2}.cmp td.t2{grid-column:3}
+  .cmp td.arc{grid-column:2/4;font-size:12px}
+  .cmp td[data-label]::before{content:attr(data-label);display:block;font-size:11px;color:var(--muted);margin-bottom:2px}
+  .cmp td.arc::before{display:inline;margin-right:6px}
+  .cmp tr.sub{display:block;padding:2px 6px 10px calc(2em + 16px);border-bottom:1px dotted var(--line)}
+  .cmp tr.sub td{display:block;padding:0;border:0;background:none}
+  .cmp tr.sub td:first-child{display:none}
+  .cmp tr.rec{background:color-mix(in srgb, var(--brass-soft) 60%, transparent)}
+}
+.slot.free{border-style:dashed;color:var(--muted);font-weight:400}
+.modlist .plain{color:var(--ink)}
+.cmp .els{font-weight:400;white-space:normal}
+.reorder{margin-top:6px;font-size:12px;color:var(--ink);background:color-mix(in srgb, var(--good) 10%, transparent);border-left:3px solid var(--good);padding:4px 8px;border-radius:3px}
+.modlist .miss{color:var(--muted);text-decoration:line-through}
+.warn{color:var(--bad);font-size:13px;margin:0 0 8px}
+#abilities,#shards{display:flex;flex-direction:column;gap:6px}
+.stat4{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+@media (max-width: 480px){.stat4{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.shardrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;align-items:center}
+.abilcalc{color:var(--brass)!important}
+.runbar{position:sticky;bottom:0;display:flex;flex-direction:column;gap:8px;background:var(--bg);padding-block:8px}
+#runbtn{font-family:var(--f-display);font-weight:600;font-size:16px;letter-spacing:.04em;background:var(--brass);color:#fff;border:0;border-radius:6px;padding:12px;cursor:pointer}
+#runbtn:disabled{opacity:.6;cursor:progress}
+#progress{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+#progress .bar{height:100%;width:0;background:var(--brass);transition:width .2s}
+details{border-top:1px dashed var(--line);padding-top:8px}
+summary{cursor:pointer;font-size:12px;color:var(--muted)}
+.results{display:flex;flex-direction:column;gap:14px;min-width:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px;min-width:0;overflow-x:auto}
+.card h3{font-family:var(--f-display);font-size:14px;letter-spacing:.06em;margin:0 0 10px;color:var(--ink)}
+.card h3:not(:first-child){margin-top:16px}
+.hero{border-color:var(--brass);background:linear-gradient(180deg,var(--brass-soft),var(--panel) 120px)}
+.eyebrow{font-family:var(--f-display);font-size:11px;letter-spacing:.16em;color:var(--brass);text-transform:uppercase}
+.hero h2{font-family:var(--f-display);font-size:24px;margin:2px 0 4px;text-wrap:balance}
+.meta{color:var(--muted);margin-bottom:12px}.meta b{color:var(--ink)}
+.slots{display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
+.slabel{font-size:12px;color:var(--muted);margin-bottom:4px}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.slot{border:1px solid var(--line);background:var(--panel);border-radius:4px;padding:8px 10px;font-weight:600;font-size:13px}
+.slot.riv{border-color:#8a5cc9;color:#8a5cc9}
+.hint{color:var(--muted);font-size:12px;margin:8px 0 0}
+.kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px 16px}
+.kvi{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dotted var(--line);padding:3px 0;font-size:13px}
+.kvi span{color:var(--muted)} .kvi b{font-family:var(--f-mono);font-weight:500;font-variant-numeric:tabular-nums}
+.fbars{display:flex;flex-direction:column;gap:8px}
+.frow{display:grid;grid-template-columns:80px 90px minmax(0,1fr);gap:8px;align-items:center}
+.fname{font-size:13px}.fval{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.stack{display:flex;height:12px;border-radius:2px;overflow:hidden;background:var(--line)}
+.stack i,.legend i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-size:11px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:4px}.legend i{width:10px;height:10px;border-radius:2px}
+.c-direct{background:var(--c-direct)}.c-heat{background:var(--c-heat)}.c-tox{background:var(--c-tox)}.c-elec{background:var(--c-elec)}.c-gas{background:var(--c-gas)}.c-slash{background:var(--c-slash)}.c-blast{background:var(--c-blast)}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;font-weight:500;color:var(--muted);font-size:12px;border-bottom:1px solid var(--line);padding:4px 6px}
+.tbl td{border-bottom:1px dotted var(--line);padding:5px 6px;vertical-align:top}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.neg{color:var(--bad)}
+.g{font-size:11px;padding:1px 6px;border-radius:999px;color:#fff}.g.ok{background:var(--good)}.g.mid{background:var(--mid)}.g.bad{background:var(--bad)}
+.modlist span{display:inline-block;margin:0 4px 2px 0;padding:0 5px;border-radius:3px;font-size:12px}
+.modlist .same{color:var(--muted)}.modlist .diff{background:var(--brass-soft);color:var(--ink);font-weight:600}
+.placeholder{background:var(--panel);border:1px dashed var(--line);border-radius:6px;padding:24px}
+.placeholder h3{font-family:var(--f-display);margin:0 0 6px}
+.notes ul,.plain{margin:0;padding-left:18px;color:var(--muted);font-size:12px}
+.plain{color:var(--ink);font-size:13px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+.modbox{border:1px solid var(--line);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:6px}
+.modbox[open]{padding-bottom:10px}
+.modbox summary{cursor:pointer;font-weight:600}
+.row2.tight{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+label.aug{margin-left:18px}
+.capline{margin:8px 0 0;font-size:14px}
+.capline small{color:var(--muted)}
+.capbad{color:var(--bad, #c0392b);font-weight:600}
+
+.ver{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.ver b{color:var(--brass);font-weight:700}
+.viewtabs{display:flex;gap:4px;margin-left:auto}
+.viewtabs a{font-size:13px;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+.viewtabs a.on{background:var(--void);color:var(--bg);border-color:var(--void)}
+header.top p{flex-basis:100%}
+.patchview{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.patchview[hidden]{display:none}
+.patchview .card h3{margin:0 0 6px;font-size:17px}
+.patchview .card h3 .pv{color:var(--brass);margin-right:8px}
+.patchview .card .pd{color:var(--muted);font-size:12px;margin-left:6px;font-weight:400}
+.patchview ul{margin:6px 0 0;padding-left:20px;line-height:1.6}
+.patchview .card.cur{border-color:var(--brass)}
+#calcview[hidden]{display:none}
+@media (max-width: 600px){.viewtabs{margin-left:0}}
+</style>
+<header class="top">
+  <h1>워프레임 <span>세팅 계산기</span></h1>
+  <span class="ver" id="ver" data-built="__BUILD_DATE__"></span>
+  <nav class="viewtabs" role="tablist" aria-label="화면">
+    <a href="#" class="on" data-view="calc" role="tab">계산기</a>
+    <a href="#patch" data-view="patch" role="tab">패치 내역</a>
+  </nav>
+  <p>무기와 상황을 고르면, 장착 가능한 모든 모드 조합 중 가장 빨리 죽이는 세팅을 찾습니다 · 데이터 WFCD warframe-items · 위키 Module:Weapons</p>
+</header>
+<main class="patchview" id="patchview" hidden></main>
+<div class="wrap" id="calcview">
+  <div class="rail">
+    <div class="box">
+      <h2>무기 <small id="wcount"></small></h2>
+      <div class="slot-tabs" role="tablist">
+        <button type="button" class="on" data-slot="all">전체</button>
+        <button type="button" data-slot="primary">주무기</button>
+        <button type="button" data-slot="secondary">보조무기</button>
+        <button type="button" data-slot="melee">근접</button>
+      </div>
+      <input type="search" id="wsearch" placeholder="무기 이름 검색 (한국어·영어)" aria-label="무기 검색">
+      <div id="wlist"></div>
+      <details id="modbox" class="modbox"><summary>자우·킷건 직접 조립</summary>
+        <label>종류<select id="mkind"><option value="zaw">자우 (근접)</option><option value="kit_primary">킷건 — 주무기</option><option value="kit_secondary">킷건 — 보조무기</option></select></label>
+        <label><span id="ml1">타격부</span><select id="mp1"></select></label>
+        <label><span id="ml2">손잡이</span><select id="mp2"></select></label>
+        <label><span id="ml3">연결부</span><select id="mp3"></select></label>
+        <p class="hint" id="mstat" style="margin:0"></p>
+        <button type="button" id="mbuild" class="ghostbtn">이 조합으로 무기 고르기</button>
+        <p class="hint" style="margin:0">부품 수치는 위키 모듈러 데이터(Module:Modular/data) 기준입니다. 부품 조합별로 한 번씩 계산해 비교해 보세요.</p>
+      </details>
+      <div class="wpick"><b id="wname"></b><small id="wsub"></small></div>
+      <label>어떤 공격으로 잡나요?<select id="atk"></select></label>
+      <p class="desc" id="atkdesc"></p>
+      <div id="atkstats"></div>
+    </div>
+
+    <div class="box">
+      <h2>어디서 쓰나요?</h2>
+      <label>적 종류<select id="scenario">
+        <option value="crowd">잡몹 무리 — 랜서·크루맨급 12명이 몰려오는 상황</option>
+        <option value="heavy">중장갑 한 명 — 헤비 거너·테크·에인션트급이 따로 떨어져 있을 때 (상태이상이 퍼질 주변 적 없음)</option>
+        <option value="boss">보스전 — 잡몹 없음, 처치로 쌓는 버프(갈바나이즈드·머시리스) 0</option>
+      </select></label>
+      <div class="row2">
+        <label>적 레벨<input type="number" id="level" value="150" min="1" max="9999"></label>
+        <label class="inline" style="align-self:end"><input type="checkbox" id="steel" checked>강철의 길 (체력·실드 2.5배)</label>
+      </div>
+      <label>팩션<select id="objective">
+        <option value="geo">어디든 쓰기 — 그리니어·코퍼스·인페스티드 평균이 가장 빠른 세팅</option>
+        <option value="min">어디든 쓰기 — 가장 못 잡는 팩션(보통 그리니어)을 기준으로 고르는 세팅</option>
+        <option value="grineer">그리니어 전용</option>
+        <option value="corpus">코퍼스 전용</option>
+        <option value="infested">인페스티드 전용</option>
+        <option value="corrupted">커럽티드 전용 (보이드 균열)</option>
+        <option value="murmur">머머(속삭임) 전용 (알브레히트 연구소)</option>
+      </select></label>
+      <label class="inline" id="ogrow" hidden><input type="checkbox" id="og" checked><span>엑시무스 오버가드 포함<small>중장갑 한 명을 엑시무스로 보고 오버가드(방어구·바이러스 무시, 자성·보이드에 약함)를 먼저 깎습니다.</small></span></label>
+      <div class="targets" id="targets"></div>
+    </div>
+
+    <div class="box">
+      <h2>추가 조건 <small>기본은 전부 끔</small></h2>
+      <label class="inline" id="aimrow"><input type="checkbox" id="aimmods"><span>조준·헤드샷이 필요한 모드·아케인도 후보에 넣기<small>갈바나이즈드 스코프, 데드헤드, 크럭스, 어큐이티 등. 헤드샷 50%를 가정합니다. 끄면 난사 기준으로 계산합니다.</small></span></label>
+      <label class="inline"><input type="checkbox" id="castmods"><span>어빌리티를 자주 써서 "시전 후 9초" 조건 모드도 후보에 넣기<small>나노 어플리케이터, 카탈라이저 링크, 임베디드 카탈라이저</small></span></label>
+      <label class="inline" id="mercyrow" hidden><input type="checkbox" id="mercy"><span>머시 처형 버프 유지 (바소시스트: 피해·멀티샷 +100%)</span></label>
+      <div id="valrow" class="row2">
+        <label>베일런스 속성<select id="valtype"><option value="auto">자동 (7속성 비교)</option><option value="heat">화염</option><option value="cold">냉기</option><option value="elec">전기</option><option value="tox">독</option><option value="impact">충격</option><option value="mag">자성</option><option value="rad">방사능</option></select></label>
+        <label>베일런스 수치 <span id="valpctv">60%</span><input type="range" id="valpct" min="25" max="60" step="1" value="60"></label>
+      </div>
+      <label>아케인<select id="arc"></select></label>
+      <label class="inline" id="ammorow"><input type="checkbox" id="ammoalways"><span>탄약 보완 세팅도 항상 보기<small>탄약이 30초 안에 바닥나는 무기는 자동으로 보여 줍니다.</small></span></label>
+      <label>포르마 한도 <small>모드 용량 안에 들어가는 조합만 추천</small><select id="forma">
+        <option value="">제한 없음 (필요한 포르마 수를 알려 줌)</option>
+        <option value="0">0개 — 기본 극성 그대로</option><option value="1">1개</option><option value="2">2개</option><option value="3">3개</option><option value="4">4개</option>
+        <option value="5">5개</option><option value="6">6개</option><option value="7">7개</option><option value="8">8개</option>
+      </select></label>
+      <div class="stat4">
+        <label>외부 상태이상 종류<input type="number" id="extstatus" value="0" min="0" max="10"></label>
+        <label>프레임 글래디에이터<input type="number" id="setglad" value="0" min="0" max="3"></label>
+        <label>프레임 비질란테<input type="number" id="setvig" value="0" min="0" max="2"></label>
+      </div>
+      <p class="hint" style="margin:0">외부 상태이상: 어빌리티·아군이 계속 묻혀 두는 상태이상 종류 수 — 컨디션 오버로드·갈바나이즈드 계열 보너스에만 더합니다. 프레임 세트 모드: 워프레임에 낀 글래디에이터(아이기스·피네스·리졸브, 0~3)·비질란테(퍼슈트·비거, 0~2) 개수 — 무기에 낀 세트 모드와 합쳐 세트 보너스를 계산합니다.</p>
+    </div>
+
+    <div class="box">
+      <h2>워프레임 <small>선택 안 하면 모든 프레임 범용</small></h2>
+      <label>워프레임<select id="frame"></select></label>
+      <div id="abilities"></div>
+      <label>헬민스 어빌리티<select id="helminth"></select></label>
+      <label>오라 모드<select id="aura"></select></label>
+      <datalist id="falist"></datalist>
+      <div class="row2">
+        <label>워프레임 아케인 1<input type="text" id="fa0" list="falist" placeholder="이름 검색" autocomplete="off"></label>
+        <label>워프레임 아케인 2<input type="text" id="fa1" list="falist" placeholder="이름 검색" autocomplete="off"></label>
+      </div>
+      <p class="hint" id="fanote" style="margin:0">무기 연사·피해를 올리는 아케인(액셀러레이션·퓨리 등)과 어빌리티 위력을 올리는 아케인(몰트 어그먼티드 등)을 모두 계산합니다. 결과에 아케인별 효과 순위가 나옵니다.</p>
+      <div id="framestats" hidden style="display:flex;flex-direction:column;gap:8px">
+        <div class="stat4">
+          <label>위력 %<input type="number" id="strength" value="100" min="10" max="600"></label>
+          <label>지속시간 %<input type="number" id="duration" value="100" min="10" max="600"></label>
+          <label>범위 %<input type="number" id="range" value="100" min="10" max="400"></label>
+          <label>효율 %<input type="number" id="efficiency" value="100" min="10" max="175"></label>
+          <label>최대 에너지<input type="number" id="energy" value="300" min="0" max="2000"></label>
+          <label>방어력<input type="number" id="armor" value="0" min="0" max="20000"></label>
+          <label>최대 체력<input type="number" id="health" value="0" min="0" max="20000"></label>
+        </div>
+        <p class="hint" style="margin:0">모드 적용 후 아스날에 표시되는 값을 넣으세요. 아콘 샤드·워프레임 아케인은 고르면 자동으로 더해집니다. 방어력·체력은 프라이머리 불워크·아케인 배터리·아케인 벨리코스 계산에만 씁니다.</p>
+        <p class="hint" id="statline" style="margin:0"></p>
+      </div>
+      <details><summary>기타 버프 (포커스·중재·기습)</summary>
+        <div id="miscbuffs" style="margin-top:8px;display:flex;flex-direction:column;gap:6px"></div>
+        <p class="hint">위키 수치 그대로입니다. 순간 버프(보이드 스트라이크)는 재사용 대기시간 기준 평균값으로 넣습니다.</p>
+      </details>
+      <details><summary>아콘 샤드 (5칸)</summary>
+        <div id="shards" style="margin-top:8px;display:flex;flex-direction:column;gap:6px"></div>
+        <p class="hint">위력·지속시간(진홍), 최대 에너지(청색)는 어빌리티 계산에, 무기 관련 옵션은 무기 계산에 들어갑니다. 무기 피해와 무관한 옵션도 고를 수 있지만 계산에는 영향이 없습니다.</p>
+      </details>
+    </div>
+
+    <div class="box">
+      <h2>리벤</h2>
+      <p class="hint" id="rivnote" hidden style="margin:0">익절티드 무기에는 리벤이 나오지 않습니다.</p>
+      <label>리벤 모드<select id="rivmode">
+        <option value="none">없음 — 리벤 없는 최종 세팅</option>
+        <option value="plan">맞출 예정 — 어떤 옵션을 몇까지 뽑아야 하는지 보기</option>
+        <option value="owned">보유 리벤 고정 — 가진 리벤을 넣고 나머지 7칸 추천</option>
+      </select></label>
+      <div id="rivowned" hidden style="display:flex;flex-direction:column;gap:6px">
+        <p class="hint" style="margin:0">옵션과 수치를 넣고, 추천에 반영할 옵션만 체크하세요. 재순환할 생각인 옵션은 체크를 끄면 됩니다.</p>
+        <div class="row3"><select id="rk0" aria-label="긍정 1"></select><input type="number" id="rv0" placeholder="수치 %" aria-label="수치 1"><label class="inline"><input type="checkbox" id="ri0" checked>반영</label></div>
+        <div class="row3"><select id="rk1" aria-label="긍정 2"></select><input type="number" id="rv1" placeholder="수치 %" aria-label="수치 2"><label class="inline"><input type="checkbox" id="ri1" checked>반영</label></div>
+        <div class="row3"><select id="rk2" aria-label="긍정 3"></select><input type="number" id="rv2" placeholder="수치 %" aria-label="수치 3"><label class="inline"><input type="checkbox" id="ri2" checked>반영</label></div>
+        <div class="row3"><select id="rk3" aria-label="부정"></select><input type="number" id="rv3" placeholder="부정 수치 % (양수로)" aria-label="부정 수치"><label class="inline"><input type="checkbox" id="ri3" checked>반영</label></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2>비교할 세팅 <small>선택 · 최대 5개</small></h2>
+      <datalist id="arclist"></datalist><datalist id="exlist"></datalist>
+      <div id="sets"></div>
+      <button type="button" id="addset" class="ghostbtn">+ 세팅 추가</button>
+      <p class="hint" style="margin:0">칸 번호는 게임 모드 화면 순서입니다 (윗줄 왼쪽→오른쪽, 그다음 아랫줄). 원소는 입력한 칸 순서대로 합쳐서 계산하고, 같은 모드나 같이 낄 수 없는 모드(프라임드·아말감·갈바나이즈드 등 같은 계열)는 들어가지 않습니다. 내 세팅, 클랜원 세팅 등을 넣으면 결과에서 추천 세팅과 함께 빠른 순서로 표에 정리합니다. 계산 후에 바꾸면 비교표만 바로 다시 계산됩니다. 리벤을 넣으려면 아무 칸에 "리벤 모드"를 고르면 그 세팅 전용 리벤 옵션 칸이 열립니다. 익실러스 칸은 훨윈드(글레이브 투척 속도)·텐노카이 모드처럼 계산에 들어가는 것과, 탄약 변환처럼 탄약 계산에만 들어가는 것이 있습니다.</p>
+    </div>
+
+    <div class="runbar">
+      <button type="button" id="runbtn">최적 세팅 계산</button>
+      <div id="progress" hidden><div class="bar"></div></div>
+    </div>
+  </div>
+  <main class="results" id="results"></main>
+</div>
+<script type="text/plain" id="wf-src">/*__SRC__*/</script>
+<script>/*__SRC_EXEC__*/</script>
+<script>/*__APP__*/</script>
