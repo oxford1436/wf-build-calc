@@ -270,8 +270,12 @@
     }
     return out;
   }
-  // score = geometric mean of kill speed at the chosen level and at +100 levels (fast now, still strong later)
-  function targetsFor(o) { return { lo: targetsAt(o, o.level), hi: targetsAt(o, o.level + (o.levelStep == null ? 100 : o.levelStep)) }; }
+  // score = geometric mean of kill speed at three levels: the chosen one, +100 and +250 (150 → 150 / 250 / 400 "endurance").
+  // Overkill is rewarded only through the higher levels (a build that still one-shots at 400 ranks above one that doesn't),
+  // and attack speed through kills per second at every level.
+  const LEVEL_STEPS = [0, 100, 250];
+  function levelsOf(o) { return (o.levelSteps || LEVEL_STEPS).map((d) => o.level + d); }
+  function targetsFor(o) { const L = levelsOf(o); return { lo: targetsAt(o, L[0]), hi: targetsAt(o, L[1]), top: targetsAt(o, L[2]), levels: L }; }
 
   /* ---------- time-to-kill simulation ---------- */
   // p: {hp, sh, ar0, strip, r, D, blast, dot:{T:X}, Tdur, pv, ph, pc, pk, cc, cd, corrMax, dt, tmax, firstShot}
@@ -317,6 +321,9 @@
     if (until) return dealt;
     return p.tmax + hp / Math.max(1e-6, lastRate);
   }
+
+  // does the first attack alone (its hit and its own status procs, no damage over time) kill the enemy?
+  function oneHit(p) { return ttk(Object.assign({}, p, { r: 0, dot: {}, blast: 0, F: 0 }), p.dt) >= p.hp - 1e-6; }
 
   /* ---------- evaluation ---------- */
   // Element arrangement: o.elemOrder fixes it (slot order as typed). Otherwise every possible arrangement is a
@@ -417,12 +424,6 @@
             pv: d0.pv * w0, ph: d0.ph * w0, pc: d0.pc * w0, pk: d0.pk * w0, pm: (d0.pm || 0) * w0, hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar });
           Keff = 1 + (main.K - 1) * Math.min(1, Math.max(tHit, period) / Math.max(ttk(dirP), period));
         }
-        // overkill margin: when an enemy dies within one attack period, a bigger margin still ranks higher
-        const margin = (t, params) => {
-          if (t >= period) return 1;
-          const ratio = ttk(params, period) / Math.max(1, params.hp);   // overkill within one attack period
-          return 1 + 0.3 * Math.log2(Math.max(1, ratio));
-        };
         if (o.scenario === "crowd") {
           // bystanders in the blast die together with the target when the blast alone kills them about as fast
           if (Kaoe > 1) {
@@ -440,13 +441,28 @@
             lights = Math.min(lights, casc);
             clear = Math.max(lights, Math.min(tHeavy + period, casc + 0.3));
           }
-          kps = main.N / Math.max(period, clear) * margin(tHeavy, pHeavy);
-        } else { clear = Math.max(period, tHit); kps = margin(tHit, pMain) / clear; }
-        return { ttk: tHit, ttkHeavy: tHeavy, ttkNon: tNon, kps, clear, target: tg, targetHeavy: tgs.heavy || null, Keff };
+          kps = main.N / Math.max(period, clear);
+        } else { clear = Math.max(period, tHit); kps = 1 / clear; }
+        return { ttk: tHit, ttkHeavy: tHeavy, ttkNon: tNon, kps, clear, target: tg, targetHeavy: tgs.heavy || null, Keff,
+          one: oneHit(pMain), oneHeavy: tgs.heavy ? oneHit(pHeavy) : oneHit(pMain) };
       };
-      const lo = solve(targets.lo[f]), hi = solve(targets.hi[f]);
+      // the hardest enemy of the scenario at any level (crowd: the heavy mixed in; single: heavy with overguard if set; boss)
+      const hardAt = (lv) => {
+        const tier = o.scenario === "boss" ? "boss" : "heavy";
+        const tg = enemyStats(f, tier, lv, o.steel);
+        const shc = 1 - (o.ext.shieldCut || 0);
+        return Object.assign({}, base, hitP, { hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar, og: o.scenario === "heavy" && o.og ? overguardAt(lv) : 0 });
+      };
+      const lo = solve(targets.lo[f]), hi = solve(targets.hi[f]), top = targets.top ? solve(targets.top[f]) : hi;
+      // highest level where the first attack alone (with its own procs) still kills that enemy
+      let oneLv = 0;
+      if (oneHit(hardAt(1))) {
+        let a = 1, b = 9999;
+        if (oneHit(hardAt(b))) oneLv = b;
+        else { while (b - a > 1) { const m = (a + b) >> 1; if (oneHit(hardAt(m))) a = m; else b = m; } oneLv = a; }
+      }
       const disp = res.reduce((s, r) => { const x = r.perF[f]; s.direct += x.dispDirect; s.dot += x.dispDot; s.blast += x.dispBlast; for (const T in x.dispDotBy) s.dotBy[T] = (s.dotBy[T] || 0) + x.dispDotBy[T]; return s; }, { direct: 0, dot: 0, blast: 0, dotBy: {} });
-      perF[f] = Object.assign({}, lo, { hi, period, kps: Math.sqrt(lo.kps * hi.kps), kpsLo: lo.kps, direct: disp.direct, dot: disp.dot, blast: disp.blast, dotBy: disp.dotBy, perShot: disp.direct + disp.dot + disp.blast });
+      perF[f] = Object.assign({}, lo, { hi, top, oneLv, period, kps: Math.cbrt(lo.kps * hi.kps * top.kps), kpsLo: lo.kps, direct: disp.direct, dot: disp.dot, blast: disp.blast, dotBy: disp.dotBy, perShot: disp.direct + disp.dot + disp.blast });
     }
     const vals = o.factions.map((f) => perF[f].kps);
     const score = o.metric === "min" ? Math.min(...vals) : Math.exp(vals.reduce((s, x) => s + Math.log(Math.max(x, 1e-9)), 0) / vals.length);
@@ -966,5 +982,5 @@
     return out;
   }
 
-  root.WFEngine = { evaluate, optimize, defaults, targetsFor, enemyStats, FACTIONS, UNITS, PRIM, COMBO, aggregate, comboMult, comboAvg, ttk, capacityPlan };
+  root.WFEngine = { evaluate, optimize, defaults, targetsFor, levelsOf, enemyStats, FACTIONS, UNITS, PRIM, COMBO, aggregate, comboMult, comboAvg, ttk, capacityPlan };
 })(typeof self !== "undefined" ? self : globalThis);

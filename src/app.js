@@ -751,7 +751,7 @@ self.onmessage = function (ev) {
     const one = (t) => `${esc(t.ko)} 체력 ${fmt(t.hp)}${t.sh ? " · 실드 " + fmt(t.sh) : ""}${t.ar ? " · 방어구 " + t.ar.toFixed(0) : ""}${t.og ? " · 오버가드 " + fmt(t.og) : ""}`;
     $("#ogrow").hidden = $("#scenario").value !== "heavy";
     const rows = o.factions.map((f) => { const t = o.targets.lo[f]; return `<span><b>${E.FACTIONS[f].label}</b> ${one(t.main)}${t.heavy ? " / 섞여 있는 " + one(t.heavy) : ""}</span>`; });
-    $("#targets").innerHTML = `기준 적 (${o.steel ? "강철의 길 " : ""}${o.level}레벨): ` + rows.join("") + `<span>순위는 ${o.level}레벨과 ${o.level + 100}레벨 두 조건의 처치 속도를 함께 봅니다 (지금 빠르고, 더 높은 레벨에서도 버티는 세팅).</span>`;
+    $("#targets").innerHTML = `기준 적 (${o.steel ? "강철의 길 " : ""}${o.level}레벨): ` + rows.join("") + `<span>순위는 ${E.levelsOf(o).join("·")}레벨 세 조건의 처치 속도를 함께 봅니다 (${E.levelsOf(o)[2]} = 버티기 기준). 한 방에 죽고도 남는 화력은 높은 레벨에서도 한 방이 유지되는 것으로, 빠른 공격 속도는 같은 시간에 더 많이 잡는 것으로 점수에 들어갑니다.</span>`;
   }
   function valOptions() {
     if (!st.weapon.valence) return [null];
@@ -897,11 +897,13 @@ self.onmessage = function (ev) {
   const pctDelta = (x) => { const d = (x - 1) * 100; return (d >= 0 ? "+" : "") + d.toFixed(1) + "%"; };
   const diffMods = (ids, base) => ids.map((id) => `<span class="${base.includes(id) ? "same" : "diff"}">${esc(modName(id))}</span>`).join("");
 
+  const oneLvTxt = (lv) => lv >= 9999 ? "9999+" : lv > 0 ? `${lv}레벨까지` : "안 됨";
   function ttkTable(r, o) {
-    const cell = (x) => { const os = x.ttk <= r.perF[o.factions[0]].period + 1e-6; return `${os ? "한 방" : sec(x.ttk)}${x.targetHeavy ? ` / ${x.ttkHeavy <= r.perF[o.factions[0]].period + 1e-6 ? "한 방" : sec(x.ttkHeavy)}` : ""}${o.scenario === "crowd" ? `<br><small>12명 전멸 ${sec(x.clear)}</small>` : ""}`; };
-    return `<table class="tbl"><thead><tr><th>팩션 · 기준 적</th><th>${o.level}레벨 처치 시간</th><th>${o.level + 100}레벨 처치 시간</th></tr></thead><tbody>
-      ${o.factions.map((f) => { const x = r.perF[f]; return `<tr><td>${E.FACTIONS[f].label} · ${esc(x.target.ko)}${x.targetHeavy ? " / " + esc(x.targetHeavy.ko) : ""}<br><small>${o.level}레벨 체력 ${fmt(x.target.hp)}${x.target.sh ? " · 실드 " + fmt(x.target.sh) : ""}${x.target.ar ? " · 방어구 " + x.target.ar.toFixed(0) : ""}${x.target.og ? " · 오버가드 " + fmt(x.target.og) : ""}${x.targetHeavy ? " / 체력 " + fmt(x.targetHeavy.hp) : ""}</small></td><td class="num">${cell(x)}</td><td class="num">${cell(x.hi)}</td></tr>`; }).join("")}
-    </tbody></table><p class="hint">"한 방"은 첫 공격(과 그 상태이상)으로 죽는다는 뜻입니다. 잡몹 무리는 "잡몹 / 섞여 있는 중장갑" 순서입니다.</p>`;
+    const cell = (x) => `${x.one ? "한 방" : sec(x.ttk)}${x.targetHeavy ? ` / ${x.oneHeavy ? "한 방" : sec(x.ttkHeavy)}` : ""}${o.scenario === "crowd" ? `<br><small>12명 전멸 ${sec(x.clear)}</small>` : ""}`;
+    const L = E.levelsOf(o);
+    return `<table class="tbl"><thead><tr><th>팩션 · 기준 적</th><th>${L[0]}레벨</th><th>${L[1]}레벨</th><th>${L[2]}레벨 (버티기)</th><th>한 방 유지</th></tr></thead><tbody>
+      ${o.factions.map((f) => { const x = r.perF[f]; return `<tr><td>${E.FACTIONS[f].label} · ${esc(x.target.ko)}${x.targetHeavy ? " / " + esc(x.targetHeavy.ko) : ""}<br><small>${o.level}레벨 체력 ${fmt(x.target.hp)}${x.target.sh ? " · 실드 " + fmt(x.target.sh) : ""}${x.target.ar ? " · 방어구 " + x.target.ar.toFixed(0) : ""}${x.target.og ? " · 오버가드 " + fmt(x.target.og) : ""}${x.targetHeavy ? " / 체력 " + fmt(x.targetHeavy.hp) : ""}</small></td><td class="num">${cell(x)}</td><td class="num">${cell(x.hi)}</td><td class="num">${cell(x.top)}</td><td class="num">${oneLvTxt(x.oneLv)}</td></tr>`; }).join("")}
+    </tbody></table><p class="hint">"한 방"은 첫 공격과 그 공격의 상태이상만으로 죽는다는 뜻입니다 (도트 피해 제외). "한 방 유지"는 ${o.scenario === "boss" ? "보스" : "중장갑"}을 한 방에 잡는 가장 높은 레벨입니다. 잡몹 무리는 "잡몹 / 섞여 있는 중장갑" 순서입니다.</p>`;
   }
 
   /* ---------------- results ---------------- */
@@ -1057,11 +1059,13 @@ self.onmessage = function (ev) {
     }));
     rows.sort((a, b) => b.r.score - a.r.score || (a.rec ? -1 : 1));
     const crowd = o.scenario === "crowd";
-    const per = (r, f, hi) => {
-      const x = hi ? r.perF[f].hi : r.perF[f];
+    const per = (r, f, k) => {
+      const x = k ? r.perF[f][k] : r.perF[f];
       if (crowd) return sec(x.clear);
-      return x.ttk <= r.perF[f].period + 1e-6 ? "한 방" : sec(x.ttk);
+      return x.one ? "한 방" : sec(x.ttk);
     };
+    const oneCell = (r) => o.factions.map((f) => multi ? `<div class="fl"><span>${E.FACTIONS[f].label}</span>${oneLvTxt(r.perF[f].oneLv)}</div>` : `<span class="big">${oneLvTxt(r.perF[f].oneLv)}</span>`).join("");
+    const L = E.levelsOf(o);
     const multi = o.factions.length > 1;
     const timeCell = (r, hi) => o.factions.map((f) => multi ? `<div class="fl"><span>${E.FACTIONS[f].label}</span>${per(r, f, hi)}</div>` : `<span class="big">${per(r, f, hi)}</span>`).join("");
     const speedCell = (x) => {
@@ -1087,9 +1091,9 @@ self.onmessage = function (ev) {
     box.innerHTML = `<h3>세팅 비교 — 빠른 순서</h3>
       ${beaten ? `<p class="warn">입력하신 <b>${esc(beaten.name)}</b>가 추천보다 빠릅니다. ${beatWhy(beaten, top)}</p>` : ""}
       ${rivNote}
-      <table class="tbl cmp"><thead><tr><th>순위</th><th>세팅</th><th>처치 속도<br><small>추천 = 100%</small></th><th>${o.level}레벨 ${what}</th><th>${o.level + 100}레벨 ${what}</th><th>아케인</th></tr></thead><tbody>
-      ${rows.map((x, i) => `<tr class="main${x.rec ? " rec" : ""}"><td class="rank">${i + 1}</td><td class="sname">${esc(x.name)}<br><small class="els">${finalElements(x.r)}${x.r.ammo ? ` · 탄약 ${Math.round(x.r.ammo.sustain)}초` : ""}</small><br><small class="${capInfo(x.ids, x.rivEff).ok ? "els" : "capbad"}">${capInfo(x.ids, x.rivEff).short}</small></td><td class="num spd">${speedCell(x)}</td><td class="t1" data-label="${o.level}레벨 ${what}">${timeCell(x.r, false)}</td><td class="t2" data-label="${o.level + 100}레벨 ${what}">${timeCell(x.r, true)}</td><td class="arc" data-label="아케인">${x.arcane ? esc(ARC[x.arcane].ko) : "없음"}</td></tr>
-        <tr class="sub${x.rec ? " rec" : ""}"><td></td><td colspan="5" class="modlist">${modsCell(x)}</td></tr>`).join("")}
+      <table class="tbl cmp"><thead><tr><th>순위</th><th>세팅</th><th>처치 속도<br><small>추천 = 100%</small></th><th>${L[0]}레벨 ${what}</th><th>${L[2]}레벨 ${what}<br><small>버티기</small></th><th>한 방 유지<br><small>${o.scenario === "boss" ? "보스" : "중장갑"}</small></th><th>아케인</th></tr></thead><tbody>
+      ${rows.map((x, i) => `<tr class="main${x.rec ? " rec" : ""}"><td class="rank">${i + 1}</td><td class="sname">${esc(x.name)}<br><small class="els">${finalElements(x.r)}${x.r.ammo ? ` · 탄약 ${Math.round(x.r.ammo.sustain)}초` : ""}</small><br><small class="${capInfo(x.ids, x.rivEff).ok ? "els" : "capbad"}">${capInfo(x.ids, x.rivEff).short}</small></td><td class="num spd">${speedCell(x)}</td><td class="t1" data-label="${L[0]}레벨 ${what}">${timeCell(x.r, null)}</td><td class="t2" data-label="${L[2]}레벨 ${what}">${timeCell(x.r, "top")}</td><td class="t3" data-label="한 방 유지">${oneCell(x.r)}</td><td class="arc" data-label="아케인">${x.arcane ? esc(ARC[x.arcane].ko) : "없음"}</td></tr>
+        <tr class="sub${x.rec ? " rec" : ""}"><td></td><td colspan="6" class="modlist">${modsCell(x)}</td></tr>`).join("")}
       </tbody></table>
       ${probs.map((s) => `<p class="warn"><b>${esc(s.name)}</b>: ${s.problems.map(esc).join(" · ")} — 이 모드는 빼고 계산했습니다.</p>`).join("")}
       ${sets.filter((s) => s.notes && s.notes.length).map((s) => `<p class="hint"><b>${esc(s.name)}</b> — ${s.notes.map(esc).join("<br>")}</p>`).join("")}
@@ -1284,7 +1288,7 @@ self.onmessage = function (ev) {
     const rSwap = evalBuild(swapIds, top.val, top.arcane, null, gEff, null);
     const rFull = evalBuild(B.top.ids, B.top.val, B.top.arcane, null, B.riv.eff);
     const crowd = o.scenario === "crowd";
-    const tcell = (rr) => o.factions.map((f) => `<div class="fl"><span>${E.FACTIONS[f].label}</span>${crowd ? sec(rr.perF[f].clear) : rr.perF[f].ttk <= rr.perF[f].period + 1e-6 ? "한 방" : sec(rr.perF[f].ttk)}</div>`).join("");
+    const tcell = (rr) => o.factions.map((f) => `<div class="fl"><span>${E.FACTIONS[f].label}</span>${crowd ? sec(rr.perF[f].clear) : rr.perF[f].one ? "한 방" : sec(rr.perF[f].ttk)}</div>`).join("");
     const rows = [
       { n: "① 리벤 없이 짠 추천 세팅", d: "위 추천 세팅 그대로", ids: top.ids, rr: r0, riv: null },
       { n: "② ①에서 한 칸만 리벤으로 교체", d: `${modName(g.slot)} 대신 리벤 (아래 가이드 1순위)`, ids: swapIds, rr: rSwap, riv: gInfo },
