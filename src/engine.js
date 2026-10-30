@@ -409,6 +409,14 @@
         let tNon = Infinity;
         if (o.scenario === "crowd" && hasNon && main.N > main.K) tNon = ttk(Object.assign({}, base, nonP, { hp: tg.hp, sh: tg.sh, ar0: tg.ar }));
         let kps, clear, Keff = main.K;
+        // combined shot with punch through: enemies behind the first one take the direct hit only — the blast goes off on
+        // the first enemy (wiki, Burston Prime Incarnon radial attack)
+        if (res.length > 1 && parts[0].kind === "gun" && parts.some((p) => p.kind === "radial") && main.K > 1) {
+          const d0 = res[0].perF[f], w0 = weights[0];
+          const dirP = Object.assign({}, base, { D: d0.D * w0, blast: d0.blast * w0, F: (d0.F || 0) * w0, dot: Object.fromEntries(Object.entries(d0.dot).map(([T, v]) => [T, v * w0])),
+            pv: d0.pv * w0, ph: d0.ph * w0, pc: d0.pc * w0, pk: d0.pk * w0, pm: (d0.pm || 0) * w0, hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar });
+          Keff = 1 + (main.K - 1) * Math.min(1, Math.max(tHit, period) / Math.max(ttk(dirP), period));
+        }
         // overkill margin: when an enemy dies within one attack period, a bigger margin still ranks higher
         const margin = (t, params) => {
           if (t >= period) return 1;
@@ -608,7 +616,8 @@
     }
     const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, atk.mag * (1 + a.mag)) : 0);
     const msLock = a.msLock > 0;
-    const ms0 = (atk.pellets || 1) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)));
+    // atk.noMs: a radial part the wiki says multishot doesn't multiply (one blast per trigger pull)
+    const ms0 = atk.noMs ? 1 : (atk.pellets || 1) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)));
     const tierNow = isHeavy ? M : (isMelee ? swingTier(atk.fr) : 1);
     const ccMod = (isHeavy ? 2 * a.cc : a.cc) + a.ccHeavyNoDouble + (ext.ccAdd || 0);
     let ccBase = (atk.cc || 0) * (1 + ccMod + (a.br + (isMelee ? a.glad : 0)) * Math.max(0, tierNow - 1)) + a.ccFlat + (ext.ccFlat || 0);
@@ -662,7 +671,7 @@
         ms = ms0; cd = cdBase; dmgArc = 0;
         if (arc && arc.procStack) {
           const ps = arc.procStack;
-          if (ps.ms && !msLock) ms += (atk.pellets || 1) * ps.ms * fArc;
+          if (ps.ms && !msLock && !atk.noMs) ms += (atk.pellets || 1) * ps.ms * fArc;
           if (ps.cd) cd += (atk.cd || 1.5) * ps.cd * fArc;
           if (ps.dmg) dmgArc = ps.dmg * fArc;
         }
@@ -766,7 +775,13 @@
       }
     }
     // ammo: seconds of continuous fire from a full load, and ammo packs needed per minute
-    if (best && weapon.ammoMax && !isMelee) {
+    // Incarnon Form: its own pool (charges), untouched by mods and ammo efficiency; the form ends when it runs out
+    const incOf = atk.inc || (atk.parts && atk.parts[0].inc);
+    if (best && incOf) {
+      const rounds = atk.incAmmo || (atk.parts && atk.parts[0].incAmmo) || 0;
+      const cost = atk.ammoCost != null ? atk.ammoCost : atk.parts && atk.parts[0].ammoCost != null ? atk.parts[0].ammoCost : 1;
+      best.inc = { rounds, sec: rounds ? rounds / Math.max(1e-6, rate * cost) : null };
+    } else if (best && weapon.ammoMax && !isMelee) {
       const magN = (atk.mag || 0) * (1 + a.mag), maxA = weapon.ammoMax * (1 + a.ammoMax);
       const cost = atk.ammoCost != null ? atk.ammoCost : atk.parts && atk.parts[0].ammoCost != null ? atk.parts[0].ammoCost : 1;
       const use = rate * cost * (1 - Math.min(0.95, a.ammoEff));

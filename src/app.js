@@ -711,7 +711,7 @@ self.onmessage = function (ev) {
     const plan = rivenCombos(top0, ref0);
     R.rivPlan = plan; R.rivPlanTop = top0;
     const picks = [];
-    for (const x of plan.out) { if (x.form !== "3+1") continue; const key = x.stats.slice().sort().join(); if (picks.some((p) => p.key === key)) continue; picks.push({ key, stats: x.stats }); if (picks.length >= 2) break; }
+    for (const x of plan.out) { if (x.form !== "3+1") continue; const key = x.stats.slice().sort().join(); if (picks.some((p) => p.key === key)) continue; picks.push({ key, stats: x.stats }); if (picks.length >= 4) break; }
     if (!picks.length) { $("#runbtn").disabled = false; $("#progress").hidden = true; renderResults(); return; }
     const mult = 1.2 * RIV_FORM["3+1"].pos, negBase = 1.2 * Math.abs(RIV_FORM["3+1"].neg);
     const other = (modClass(w) === "melee" ? RIV_OTHER.melee : RIV_OTHER.gun);
@@ -731,6 +731,7 @@ self.onmessage = function (ev) {
       const out = {}; for (const x of ev.data.out) out[x.tag] = x.res;
       let bi = 0; rivs.forEach((_, i) => { if (out["riv" + i] && out["riv" + i][0] && (!out["riv" + bi] || out["riv" + i][0].score > out["riv" + bi][0].score)) bi = i; });
       if (out["riv" + bi] && out["riv" + bi].length) R.rivBest = { top: out["riv" + bi][0], riv: rivs[bi] };
+      R.rivAlts = rivs.map((rv, i) => out["riv" + i] && out["riv" + i][0] ? { riv: rv, top: out["riv" + i][0] } : null).filter(Boolean);
       renderResults();
       $("#results").scrollIntoView({ behavior: "smooth", block: "start" });
     };
@@ -846,7 +847,7 @@ self.onmessage = function (ev) {
       ${kv("상태이상 피해", "+" + pct(r.sd))}${kv("상태이상 지속", pct(r.dur))}
       ${r.u ? kv("인플루언스 가동률", pct(r.u)) : ""}${kv(o.scenario === "crowd" && r.perF[o.factions[0]].Keff > r.K + 0.05 ? "한 발에 같이 잡히는 적 (폭발 포함)" : "한 번에 맞는 적", Math.max(r.K, o.scenario === "crowd" ? r.perF[o.factions[0]].Keff || 0 : 0).toFixed(1) + "명")}
       ${r.fallM && r.fallM < 0.995 ? kv("거리·폭발 가장자리 감쇠", pct(r.fallM)) : ""}${r.tenno ? kv("텐노카이 강공", `${Math.round(r.tenno.f * 100)}% 타격마다 1회`) : ""}
-      ${r.ammo ? kv("탄약 (연속 사격)", ammoSec(r.ammo.sustain)) : ""}
+      ${r.ammo ? kv("탄약 (연속 사격)", ammoSec(r.ammo.sustain)) : ""}${r.inc ? kv("인카논 탄 (모드 영향 없음)", r.inc.sec ? `${r.inc.rounds}발 · ${ammoSec(r.inc.sec)}` : "충전식") : ""}
       ${r.exS && r.exS !== 1 ? kv("익절티드 기본 피해 (위력)", "×" + r.exS.toFixed(2)) : ""}${r.exChain > 1 ? kv("피스메이커 연사 보너스", "×" + r.exChain.toFixed(2)) : ""}
       ${r.sniperM > 1 ? kv("저격 콤보 (20초 평균)", "×" + r.sniperM.toFixed(2)) : ""}${r.vigil ? kv("비질란테 세트 (치명 단계 상승)", pct(r.vigil)) : ""}${r.glad && atk.kind !== "gun" ? kv("글래디에이터 세트", `연속기 배율당 +${pct(r.glad)}`) : ""}
     </div>
@@ -1033,6 +1034,7 @@ self.onmessage = function (ev) {
     const xs = exilusMods(st.weapon);
     const conv = st.weapon.exalted ? null : xs.filter((m) => m.eff.ammoConv).sort((a, b) => b.eff.ammoConv - a.eff.ammoConv)[0];   // exalted weapons use energy, not ammo
     if (r.ammo && r.ammo.sustain < 60 && conv) return { name: conv.ko, why: `탄약 보완 — 다른 종류 탄약 픽업을 이 무기 탄약으로 ${pct(conv.eff.ammoConv)} 바꿔 줍니다 (처치 속도 영향 없음, 탄약 ${Math.round(r.ammo.sustain)}초 만에 바닥)` };
+    if (r.inc) return { name: "자유", why: `피해 계산에 영향 없는 칸입니다. 인카논 형태는 모드와 무관한 별도 탄(${r.inc.rounds || "충전식"}${r.inc.rounds ? "발" : ""})을 쓰고 재장전이 없어서 탄약·탄창 모드도 효과가 없습니다. 기본 형태로 돌아갔을 때를 위해 탄약 변환 모드를 끼워도 됩니다.` };
     const proj = xs.find((m) => m.eff.projSpd);
     if (atk.kind === "melee" && xs.some((m) => m.eff.tenno)) return { name: "자유", why: "휘두르기 운용이 아니면 텐노카이가 의미 없어 피해 계산에 영향 없는 칸입니다" };
     return { name: "자유", why: `피해 계산에 영향 없는 칸입니다.${conv ? ` 탄약이 아쉬우면 ${conv.ko}` : ""}${proj ? `, 투사체 무기라 맞히기 힘들면 ${proj.ko}` : ""}` + (conv || proj ? "를 추천합니다." : "") };
@@ -1199,13 +1201,21 @@ self.onmessage = function (ev) {
     const changed = B.top.ids.filter((id) => id !== "__riven" && !top.ids.includes(id));
     const dropped = top.ids.filter((id) => !B.top.ids.includes(id));
     const k3 = rFull.score / Math.max(1e-9, rSwap.score);
+    // every riven combo that was searched again from scratch: which one to roll for
+    const alts = (R.rivAlts || []).map((a) => ({ a, rr: evalBuild(a.top.ids, a.top.val, a.top.arcane, null, a.riv.eff) })).sort((x, y) => y.rr.score - x.rr.score);
+    const altTable = alts.length > 1 ? `<h4>어떤 리벤을 노릴까 — 옵션 조합별 최고 세팅</h4>
+      <p class="hint">조합마다 리벤을 고정하고 나머지 칸을 처음부터 다시 짠 결과입니다. 3% 안쪽 차이는 사실상 같은 등급이라, 그중 뽑기 쉬운 쪽을 노리면 됩니다.</p>
+      <table class="tbl cmp"><thead><tr><th>리벤 긍정 옵션</th><th>처치 속도<br><small>① = 100%</small></th><th>모드</th></tr></thead><tbody>
+      ${alts.map((x) => `<tr><td class="sname">${esc(x.a.riv.info.filter((y) => !y.k.startsWith("x_")).map((y) => RIV_KO[y.k] || y.k).join(" + "))}<br><small class="els">${finalElements(x.rr)}</small></td><td class="num"><span class="big">${pct(x.rr.score / ref, 0)}</span></td><td class="modlist">${diffMods(x.a.top.ids, top.ids)}</td></tr>`).join("")}
+      </tbody></table>` : "";
     return `<section class="card"><h3>리벤을 맞춘다면 — 전제별 최고 세팅 비교</h3>
       <table class="tbl cmp"><thead><tr><th>세팅</th><th>처치 속도<br><small>① = 100%</small></th><th>${o.level}레벨 ${crowd ? "12명 전멸" : "처치"}</th><th>모드</th></tr></thead><tbody>
       ${rows.map((x) => `<tr><td class="sname"><b>${esc(x.n)}</b><br><small>${esc(x.d)}</small>${x.riv ? `<br><small>리벤: ${esc(rivenText(x.riv))}</small>` : ""}<br><small class="els">${finalElements(x.rr)} · ${capInfo(x.ids, x.riv ? (x === rows[1] ? gEff : B.riv.eff) : null).short}</small></td>
         <td class="num"><span class="big">${pct(x.rr.score / ref, 0)}</span></td><td>${tcell(x.rr)}</td><td class="modlist">${diffMods(x.ids, top.ids)}</td></tr>`).join("")}
       </tbody></table>
       <p>${k3 > 1.005 ? `처음부터 리벤을 전제로 짜면 한 칸만 바꾸는 것보다 <b>×${k3.toFixed(2)}</b> 더 빠릅니다. 리벤이 생기면 ${dropped.filter((id) => id !== g.slot).length ? `<b>${dropped.filter((id) => id !== g.slot).map(modName).map(esc).join(", ")}</b>도 빼고 ` : ""}<b>${changed.map(modName).map(esc).join(", ") || "-"}</b>${changed.length ? "을(를) 넣는" : ""} 쪽이 좋습니다.` : `처음부터 리벤을 전제로 짜도 한 칸만 바꾼 세팅과 거의 같습니다 (×${k3.toFixed(2)}). 리벤이 생기면 ${esc(modName(g.slot))} 자리에만 넣으면 됩니다.`}</p>
-      <p class="hint">리벤 수치는 3긍정 1부정 리벤의 각 옵션 범위 중간값으로 가정했습니다 (부정은 피해 계산에 영향 없는 옵션). ③은 효과가 큰 리벤 옵션 조합 두 가지로 각각 다시 짜 본 뒤 더 빠른 쪽입니다. 베일런스·아케인은 ①과 같게 두었습니다. 실제로 뽑은 리벤이 생기면 리벤 모드를 "보유 리벤 고정"으로 바꿔 그 수치로 계산하세요.</p></section>`;
+      ${altTable}
+      <p class="hint">리벤 수치는 3긍정 1부정 리벤의 각 옵션 범위 중간값으로 가정했습니다 (부정은 피해 계산에 영향 없는 옵션). ③은 한 칸 교체 기준 상위 리벤 옵션 조합 네 가지로 각각 다시 짜 본 뒤 가장 빠른 쪽입니다. 베일런스·아케인은 ①과 같게 두었습니다. 실제로 뽑은 리벤이 생기면 리벤 모드를 "보유 리벤 고정"으로 바꿔 그 수치로 계산하세요.</p></section>`;
   }
   function ownedRivenSection(owned) {
     const inc = owned.info.filter((x) => x.inc), exc = owned.info.filter((x) => !x.inc);

@@ -21,6 +21,9 @@ except Exception as e:  # keep building without it
     print("wiki data skipped:", e)
 
 
+# radial attacks that the wiki says get no multishot bonus (one explosion per trigger pull)
+NO_MS_RADIAL = {"Burston Prime": ("Incarnon Form Radial Attack",)}
+
 FORCED = {"Impact": "impact", "Puncture": "punct", "Slash": "slash", "Heat": "heat", "Cold": "cold", "Electricity": "elec",
           "Toxin": "tox", "Blast": "blast", "Radiation": "rad", "Gas": "gas", "Magnetic": "mag", "Viral": "viral", "Corrosive": "corr", "Void": "void"}
 
@@ -119,6 +122,17 @@ def conv(w, typ):
                     at["ammoCost"] = wa["AmmoCost"]
                 if wa.get("AttackName") == a["name"]:
                     wiki_traits(at, wa)
+                # Incarnon Form: its own ammo pool (charges → rounds), no magazine or reload; mods and ammo efficiency don't
+                # touch the pool (wiki Incarnon). The radial part of the form shares it.
+                if a["name"].startswith("Incarnon Form"):
+                    incs = [x for x in ((WIKI.get(name) or {}).get("Attacks") or []) if str(x.get("AttackName", "")).startswith("Incarnon Form")]
+                    if not any(x.get("Magazine") for x in incs):
+                        ch = next((x["IncarnonCharges"] for x in incs if x.get("IncarnonCharges")), None)
+                        at["mag"], at["reload"], at["inc"] = 0, 0, True
+                        if ch:
+                            at["incAmmo"] = ch
+                if at["kind"] == "radial" and a["name"] in NO_MS_RADIAL.get(name, ()):
+                    at["noMs"] = True     # wiki weapon page: the radial attack gets no multishot bonus
                 if a.get("charge_time"):
                     at["charge"] = a["charge_time"]
                 if at["kind"] == "radial" and "hsMult" not in at:
@@ -152,6 +166,10 @@ def conv(w, typ):
                     combos.append({"name": cname, "en": y["en"] + "+" + x["en"], "kind": "gun", "desc": "한 발의 직격과 폭발 피해를 합쳐서 계산",
                                    "parts": [y, x], "dmg": y["dmg"], "cc": y["cc"], "cd": y["cd"], "sc": y["sc"], "fr": y["fr"],
                                    "pellets": pellets, "mag": y["mag"], "reload": y["reload"], "semi": y.get("semi", False), "ptLock": bool(y.get("ptLock"))})
+                    if y.get("inc"):
+                        combos[-1]["inc"] = True
+                    if y.get("incAmmo"):
+                        combos[-1]["incAmmo"] = y["incAmmo"]
             for x in base:
                 x.pop("_shot", None)
             W["attacks"] = combos + base

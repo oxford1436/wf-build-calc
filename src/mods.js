@@ -372,6 +372,8 @@
     for (const raw of lines || []) for (let line of raw.split(/\n| \/ /)) {
       line = line.trim().replace(/\.$/, "");
       if (!line) continue;
+      // Syndicate weapon augments: "+1 'Truth'" etc. only feeds the Syndicate proc meter (no weapon stat) — not a blocker
+      if (/^\+\d+ '(Truth|Justice|Purity|Entropy|Sequence|Blight)'$/i.test(line)) continue;
       const head = line.match(/^(On (?:Melee )?Kill|On Headshot(?: Kill)?|On Weak Point (?:Hit|Kill)|On Ability Cast|When Aiming|While Aiming)\s*:\s*(.*)$/i);
       if (head) {
         const h = head[1].toLowerCase();
