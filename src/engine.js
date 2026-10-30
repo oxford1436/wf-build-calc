@@ -545,8 +545,10 @@
 
     let rate, M = 1;
     if (isHeavy) {
-      const tw = (atk.windup || 1) / Math.max(0.2, 1 + a.wind + (ext.asAdd || 0) + (ext.windAdd || 0));
-      let over = 0.3;
+      // wind-up (and glaive charged throws) only speed up with Heavy Attack Wind Up Speed, not attack speed (wiki "Attack Speed");
+      // attack speed only shortens the heavy swing animation after the wind-up
+      const tw = (atk.windup || 1) / Math.max(0.2, 1 + a.wind + (ext.windAdd || 0));
+      let over = 0.3 / Math.max(0.2, 1 + a.fr + (ext.asAdd || 0));
       if (kind === "glaive") {
         // the glaive has to fly out and come back before the next throw: travel time at its projectile speed
         const d = o.scenario === "crowd" ? 13.4 : (o.dist || 15);

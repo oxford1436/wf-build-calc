@@ -220,7 +220,7 @@ header.top p{flex-basis:100%}
 </style>
 <header class="top">
   <h1>워프레임 <span>세팅 계산기</span></h1>
-  <span class="ver" id="ver" data-built="2026-10-29"></span>
+  <span class="ver" id="ver" data-built="2026-10-30"></span>
   <nav class="viewtabs" role="tablist" aria-label="화면">
     <a href="#" class="on" data-view="calc" role="tab">계산기</a>
     <a href="#patch" data-view="patch" role="tab">패치 내역</a>
@@ -374,6 +374,13 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.8", date: "2026-10-30", title: "리벤 비교 안내",
+      items: [
+        "비교 세팅이 추천보다 빠를 때 이유를 구체적으로 표시 (리벤 포함 여부, 조건부 아케인).",
+        "추천 세팅은 리벤 모드가 '없음'이면 리벤 없이 찾는다는 것을 비교표에 표시하고, 비교 세팅의 리벤을 그대로 고정해 다시 계산하는 버튼을 추가.",
+        "리벤 모드 '맞출 예정': 리벤 없는 추천은 그대로 두고, ① 리벤 없이 짠 세팅 ② 거기서 한 칸만 리벤으로 바꾼 세팅 ③ 처음부터 리벤(3긍정 1부정, 수치 중간값)을 넣고 다시 짠 세팅을 나란히 비교하는 표를 추가. 세팅 비교표에도 '추천 + 리벤' 줄이 함께 나옵니다.",
+        "강공 준비 시간·글레이브 충전 투척이 어빌리티 공격 속도 버프(워크라이 등)로 빨라지던 오류 수정 — 위키대로 '강공 준비 속도'만 적용하고, 공격 속도는 준비 뒤 휘두르는 동작에만 적용.",
+      ] },
     { v: "1.7", date: "2026-10-29", title: "버전·패치 내역 표시",
       items: [
         "페이지 맨 위에 현재 버전과 마지막 수정일, 데이터 갱신일을 표시합니다.",
@@ -976,8 +983,10 @@ header.top p{flex-basis:100%}
 
     let rate, M = 1;
     if (isHeavy) {
-      const tw = (atk.windup || 1) / Math.max(0.2, 1 + a.wind + (ext.asAdd || 0) + (ext.windAdd || 0));
-      let over = 0.3;
+      // wind-up (and glaive charged throws) only speed up with Heavy Attack Wind Up Speed, not attack speed (wiki "Attack Speed");
+      // attack speed only shortens the heavy swing animation after the wind-up
+      const tw = (atk.windup || 1) / Math.max(0.2, 1 + a.wind + (ext.windAdd || 0));
+      let over = 0.3 / Math.max(0.2, 1 + a.fr + (ext.asAdd || 0));
       if (kind === "glaive") {
         // the glaive has to fly out and come back before the next throw: travel time at its projectile speed
         const d = o.scenario === "crowd" ? 13.4 : (o.dist || 15);
@@ -2033,6 +2042,13 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.8", date: "2026-10-30", title: "리벤 비교 안내",
+      items: [
+        "비교 세팅이 추천보다 빠를 때 이유를 구체적으로 표시 (리벤 포함 여부, 조건부 아케인).",
+        "추천 세팅은 리벤 모드가 '없음'이면 리벤 없이 찾는다는 것을 비교표에 표시하고, 비교 세팅의 리벤을 그대로 고정해 다시 계산하는 버튼을 추가.",
+        "리벤 모드 '맞출 예정': 리벤 없는 추천은 그대로 두고, ① 리벤 없이 짠 세팅 ② 거기서 한 칸만 리벤으로 바꾼 세팅 ③ 처음부터 리벤(3긍정 1부정, 수치 중간값)을 넣고 다시 짠 세팅을 나란히 비교하는 표를 추가. 세팅 비교표에도 '추천 + 리벤' 줄이 함께 나옵니다.",
+        "강공 준비 시간·글레이브 충전 투척이 어빌리티 공격 속도 버프(워크라이 등)로 빨라지던 오류 수정 — 위키대로 '강공 준비 속도'만 적용하고, 공격 속도는 준비 뒤 휘두르는 동작에만 적용.",
+      ] },
     { v: "1.7", date: "2026-10-29", title: "버전·패치 내역 표시",
       items: [
         "페이지 맨 위에 현재 버전과 마지막 수정일, 데이터 갱신일을 표시합니다.",
@@ -2635,8 +2651,10 @@ header.top p{flex-basis:100%}
 
     let rate, M = 1;
     if (isHeavy) {
-      const tw = (atk.windup || 1) / Math.max(0.2, 1 + a.wind + (ext.asAdd || 0) + (ext.windAdd || 0));
-      let over = 0.3;
+      // wind-up (and glaive charged throws) only speed up with Heavy Attack Wind Up Speed, not attack speed (wiki "Attack Speed");
+      // attack speed only shortens the heavy swing animation after the wind-up
+      const tw = (atk.windup || 1) / Math.max(0.2, 1 + a.wind + (ext.windAdd || 0));
+      let over = 0.3 / Math.max(0.2, 1 + a.fr + (ext.asAdd || 0));
       if (kind === "glaive") {
         // the glaive has to fly out and come back before the next throw: travel time at its projectile speed
         const d = o.scenario === "crowd" ? 13.4 : (o.dist || 15);
@@ -3729,13 +3747,15 @@ self.onmessage = function (ev) {
   const d = ev.data, E = self.WFEngine;
   const byId = Object.fromEntries(self.WF_MODS.map(m => [m.id, m]));
   if (d.riven) byId["__riven"] = { id: "__riven", eff: d.riven };
-  const cands = d.cands.map(id => byId[id]), locked = d.locked.map(id => byId[id]);
+  const cands = d.cands.map(id => byId[id]);
   const jobs = d.jobs;
   const out = [];
   let done = 0;
   for (const j of jobs) {
+    if (j.riven) byId["__riven"] = { id: "__riven", eff: j.riven };
+    const locked = (j.locked || d.locked).map(id => byId[id]);
     const opts = Object.assign({}, d.opts, j.optsPatch || {});
-    const res = E.optimize(d.weapon, d.weapon.attacks[d.atk], cands, opts, { slots: 8, beam: d.beam, locked, valOptions: d.valOptions, arcOptions: d.arcOptions },
+    const res = E.optimize(d.weapon, d.weapon.attacks[d.atk], cands, opts, { slots: 8, beam: j.beam || d.beam, locked, valOptions: j.valOptions || d.valOptions, arcOptions: j.arcOptions || d.arcOptions },
       p => self.postMessage({ type: "progress", p: (done + p) / jobs.length }));
     out.push({ tag: j.tag, res: res.slice(0, 40).map(r => ({ ids: r.mods.map(m => m.id), score: r.score, val: r.val, arcane: r.arcane })) });
     done++;
@@ -4374,14 +4394,50 @@ self.onmessage = function (ev) {
     const wk = getWorker();
     wk.onmessage = (ev) => {
       if (ev.data.type === "progress") { $("#progress .bar").style.width = (ev.data.p * 100).toFixed(0) + "%"; return; }
-      $("#runbtn").disabled = false; $("#progress").hidden = true;
       const out = {}; for (const x of ev.data.out) out[x.tag] = x.res;
       st.results = { res: out.main, nobuff: out.nobuff || null, o, owned, flags };
+      if ($("#rivmode").value === "plan" && !w.noRiven && out.main && out.main.length) { planRivenPhase(wk, w, o, cands, jobs.some((j) => j.tag === "nobuff")); return; }
+      $("#runbtn").disabled = false; $("#progress").hidden = true;
       renderResults();
       $("#results").scrollIntoView({ behavior: "smooth", block: "start" });
     };
     wk.onerror = (e) => { $("#runbtn").disabled = false; $("#progress").hidden = true; $("#results").innerHTML = `<div class="placeholder"><h3>계산 중 오류</h3><p>${esc(e.message)}</p></div>`; };
     wk.postMessage({ weapon: JSON.parse(JSON.stringify(w)), atk: st.atk, opts: o, cands, locked, beam: 100, valOptions: valOptions(), arcOptions: arcOptions(), riven: owned ? owned.eff : null, jobs });
+  }
+
+  // "맞출 예정": after the riven-free search, give the build the best riven worth rolling (3 positives at the middle of
+  // their range + a harmless negative) and search the other slots again with it locked — so the recommendation and the
+  // comparison table already include the riven
+  function planRivenPhase(wk, w, o, cands, hadNobuff) {
+    const R = st.results, top0 = R.res[0];
+    const ref0 = evalBuild(top0.ids, top0.val, top0.arcane).score;
+    const plan = rivenCombos(top0, ref0);
+    R.rivPlan = plan; R.rivPlanTop = top0;
+    const picks = [];
+    for (const x of plan.out) { if (x.form !== "3+1") continue; const key = x.stats.slice().sort().join(); if (picks.some((p) => p.key === key)) continue; picks.push({ key, stats: x.stats }); if (picks.length >= 2) break; }
+    if (!picks.length) { $("#runbtn").disabled = false; $("#progress").hidden = true; renderResults(); return; }
+    const mult = 1.2 * RIV_FORM["3+1"].pos, negBase = 1.2 * Math.abs(RIV_FORM["3+1"].neg);
+    const other = (modClass(w) === "melee" ? RIV_OTHER.melee : RIV_OTHER.gun);
+    const neg = modClass(w) === "melee" ? other.find((x) => x[0] === "finisher") : other.find((x) => x[0] === "recoil");
+    const rivs = picks.map((p) => {
+      const eff = {}, info = [];
+      for (const k of p.stats) { eff[k] = plan.table[k] * mult; info.push({ k, v: eff[k], inc: true }); }
+      if (neg) info.push({ k: "x_" + neg[0], v: -neg[2] * negBase, inc: true });
+      return { eff, info };
+    });
+    const jobs2 = [];
+    rivs.forEach((rv, i) => jobs2.push({ tag: "riv" + i, riven: rv.eff, locked: ["__riven"], valOptions: [top0.val], arcOptions: [top0.arcane], beam: 70 }));
+    $("#runbtn").textContent = "리벤을 넣은 전제로 다시 계산 중…"; $("#progress .bar").style.width = "0%";
+    wk.onmessage = (ev) => {
+      if (ev.data.type === "progress") { $("#progress .bar").style.width = (ev.data.p * 100).toFixed(0) + "%"; return; }
+      $("#runbtn").disabled = false; $("#progress").hidden = true; $("#runbtn").textContent = "최적 세팅 계산";
+      const out = {}; for (const x of ev.data.out) out[x.tag] = x.res;
+      let bi = 0; rivs.forEach((_, i) => { if (out["riv" + i] && out["riv" + i][0] && (!out["riv" + bi] || out["riv" + i][0].score > out["riv" + bi][0].score)) bi = i; });
+      if (out["riv" + bi] && out["riv" + bi].length) R.rivBest = { top: out["riv" + bi][0], riv: rivs[bi] };
+      renderResults();
+      $("#results").scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    wk.postMessage({ weapon: JSON.parse(JSON.stringify(w)), atk: st.atk, opts: o, cands, locked: [], beam: 70, valOptions: [top0.val], arcOptions: [top0.arcane], riven: null, jobs: jobs2 });
   }
 
   /* ---------------- evaluation helpers ---------------- */
@@ -4469,6 +4525,7 @@ self.onmessage = function (ev) {
     const ref = r.score;
     const atk = st.weapon.attacks[st.atk];
     const buffNames = buffSummary();
+    const rm0 = $("#rivmode").value;
     const xa = exilusAdvice(xid, r, atk);
     let html = "";
 
@@ -4482,6 +4539,7 @@ self.onmessage = function (ev) {
       ${ttkTable(r, o)}
     </section>
     <section class="card" id="cmpout" hidden></section>`;
+    if (rm0 === "plan" && R.rivBest) html += rivenPremiseSection(R, top, r);
 
     // stats + breakdown
     html += `<section class="card"><h3>수치</h3><div class="kv">
@@ -4599,7 +4657,9 @@ self.onmessage = function (ev) {
     rec.r = evalBuild(rec.ids, top.val, rec.arcane);
     const ref = rec.r.score;
     // comparison sets: elements combine in the slot order typed (game rule); also check whether reordering alone would help
-    const rows = [rec].concat(sets.filter((s) => s.ids.length).map((s) => {
+    const rivRow = R.rivBest && $("#rivmode").value === "plan" ? { name: "추천 + 리벤 (처음부터 리벤 전제)", rec: false, auto: true, ids: R.rivBest.top.ids, arcane: R.rivBest.top.arcane, rivEff: R.rivBest.riv.eff, rivInfo: R.rivBest.riv.info, problems: [],
+      r: evalBuild(R.rivBest.top.ids, R.rivBest.top.val, R.rivBest.top.arcane, null, R.rivBest.riv.eff) } : null;
+    const rows = [rec].concat(rivRow ? [rivRow] : []).concat(sets.filter((s) => s.ids.length).map((s) => {
       const r = evalBuild(s.ids, top.val, s.arcane, null, s.rivEff, elemOrderOf(s.ids, s.rivInfo));
       const auto = evalBuild(s.ids, top.val, s.arcane, null, s.rivEff);
       const reorder = auto.score > r.score * 1.01 ? { k: auto.score / r.score, el: finalElements(auto), groups: orderMods(s.ids, auto, s.rivInfo).filter((g) => g.label !== "그 외 (순서 무관)") } : null;
@@ -4626,11 +4686,17 @@ self.onmessage = function (ev) {
         + (x.reorder ? `<div class="reorder">칸 순서만 바꿔도 <b>×${x.reorder.k.toFixed(2)}</b> 빨라집니다 (→ ${x.reorder.el}). 앞 칸부터 ${x.reorder.groups.map((g) => `<b>${g.label}</b>: ${g.ids.map((id) => esc(modName(id))).join(", ")}`).join(" → ")} 순서로 넣으세요.</div>` : "");
     };
     const what = crowd ? "12명 전멸" : "처치";
-    const beaten = rows[0] && !rows[0].rec;
+    const firstTyped = rows.findIndex((x) => !x.rec && !x.auto), recIdx = rows.findIndex((x) => x.rec);
+    const beaten = firstTyped >= 0 && firstTyped < recIdx ? rows[firstTyped] : null;
+    // the recommendation is searched without a riven unless "보유 리벤 고정" is on: say so, and offer a re-run with that riven
+    const recHasRiv = top.ids.includes("__riven");
+    const rivSet = !recHasRiv && !st.weapon.noRiven ? sets.find((x) => x.ids.includes("__riven") && x.rivInfo && x.rivInfo.length) : null;
+    const rivNote = rivSet && !(beaten && beaten === rivSet) ? `<p class="hint">추천 세팅은 리벤 없이 찾은 세팅입니다. <b>${esc(rivSet.name)}</b>의 리벤까지 넣고 나머지 칸을 다시 고르려면 <button type="button" class="ghostbtn rivrerun" data-set="${esc(rivSet.name)}">이 리벤으로 추천 다시 계산</button></p>` : "";
     const probs = sets.filter((s) => s.problems.length);
     box.hidden = false;
     box.innerHTML = `<h3>세팅 비교 — 빠른 순서</h3>
-      ${beaten ? `<p class="warn">입력하신 <b>${esc(rows[0].name)}</b>가 추천보다 빠릅니다. 수동 아케인이거나 자동 탐색에서 빠진 조합일 수 있으니, 그 세팅을 그대로 쓰셔도 됩니다.</p>` : ""}
+      ${beaten ? `<p class="warn">입력하신 <b>${esc(beaten.name)}</b>가 추천보다 빠릅니다. ${beatWhy(beaten, top)}</p>` : ""}
+      ${rivNote}
       <table class="tbl cmp"><thead><tr><th>순위</th><th>세팅</th><th>처치 속도<br><small>추천 = 100%</small></th><th>${o.level}레벨 ${what}</th><th>${o.level + 100}레벨 ${what}</th><th>아케인</th></tr></thead><tbody>
       ${rows.map((x, i) => `<tr class="main${x.rec ? " rec" : ""}"><td class="rank">${i + 1}</td><td class="sname">${esc(x.name)}<br><small class="els">${finalElements(x.r)}${x.r.ammo ? ` · 탄약 ${Math.round(x.r.ammo.sustain)}초` : ""}</small><br><small class="${capInfo(x.ids, x.rivEff).ok ? "els" : "capbad"}">${capInfo(x.ids, x.rivEff).short}</small></td><td class="num spd">${speedCell(x)}</td><td class="t1" data-label="${o.level}레벨 ${what}">${timeCell(x.r, false)}</td><td class="t2" data-label="${o.level + 100}레벨 ${what}">${timeCell(x.r, true)}</td><td class="arc" data-label="아케인">${x.arcane ? esc(ARC[x.arcane].ko) : "없음"}</td></tr>
         <tr class="sub${x.rec ? " rec" : ""}"><td></td><td colspan="5" class="modlist">${modsCell(x)}</td></tr>`).join("")}
@@ -4640,6 +4706,24 @@ self.onmessage = function (ev) {
       <p class="hint">강조된 모드는 추천 세팅에 없는 모드, 줄 그은 모드는 추천에는 있는데 그 세팅에 없는 모드입니다. ${multi ? "처치 속도는 세 팩션 평균입니다. " : ""}${crowd ? "시간은 섞여 있는 중장갑까지 12명을 모두 잡는 시간입니다. " : ""}${top.val ? `베일런스는 모든 세팅을 추천 값(${TYPE_KO[top.val.type]} ${pct(top.val.pct)})으로 맞췄습니다. ` : ""}워프레임·어빌리티·샤드 버프는 모든 세팅에 똑같이 적용했습니다.</p>
       <p class="hint">원소 합성 순서: 비교 세팅은 입력한 칸 순서(1번 칸 = 왼쪽 위)대로, 추천 세팅은 가장 빠른 순서로 합칩니다. 리벤은 그 칸 자리에서 합쳐지고(리벤 안에서는 마지막 줄 원소가 먼저), 보라 샤드 전기는 전기 모드가 있으면 그 자리에, 없으면 모든 모드 뒤에 붙습니다. 무기 고유 원소와 베일런스는 맨 마지막(화염→냉기→전기→독 순)이고, 어빌리티가 주는 원소(일렉트릭 실드·톡식 래시·자타의 속삭임·너리시)는 다른 원소와 합쳐지지 않습니다.</p>`;
   }
+
+  // why a typed set beats the recommendation
+  function beatWhy(x, top) {
+    const why = [];
+    if (x.ids.includes("__riven") && !top.ids.includes("__riven")) why.push(`이 세팅에는 리벤(${esc(rivenText(x.rivInfo || []))})이 들어 있는데, 추천 세팅은 <b>리벤 없이</b> 찾은 세팅입니다${$("#rivmode").value === "plan" && st.results.rivBest ? ' (리벤을 넣은 기준은 표의 "추천 + 리벤" 줄)' : ""}. 리벤 한 장이 좋은 모드 두 장 몫을 하기 때문에 이런 차이가 납니다 — 이 버튼은 입력하신 리벤 수치를 그대로 고정하고 나머지 칸을 다시 고릅니다. <button type="button" class="ghostbtn rivrerun" data-set="${esc(x.name)}">이 리벤으로 추천 다시 계산</button>`);
+    if (x.arcane && ARC[x.arcane] && ARC[x.arcane].manual) why.push(`${esc(ARC[x.arcane].ko)}는 조건부 아케인이라 자동 추천 후보에서 빠집니다 (조건을 계속 채운다는 가정으로 계산한 값).`);
+    if (!why.length) why.push("자동 탐색이 놓친 조합입니다. 그 세팅을 그대로 쓰셔도 되고, 알려 주시면 탐색을 보강하겠습니다.");
+    return why.join(" ");
+  }
+  // copy a comparison set's riven into "보유 리벤 고정" and run again
+  function rerunWithRiven(name) {
+    const d = $$("#sets .cset").find((e) => setMods(e).name === name); if (!d) return;
+    const ks = d.querySelectorAll(".crk"), vs = d.querySelectorAll(".crv");
+    for (let i = 0; i < 4; i++) { $("#rk" + i).value = ks[i].value; $("#rv" + i).value = vs[i].value; $("#ri" + i).checked = true; }
+    $("#rivmode").value = "owned"; $("#rivowned").hidden = false;
+    run();
+  }
+  document.addEventListener("click", (e) => { const b = e.target.closest(".rivrerun"); if (b) rerunWithRiven(b.dataset.set); });
 
   /* ---------------- exilus / warframe arcanes / ammo ---------------- */
   function exilusAdvice(xid, r, atk) {
@@ -4718,7 +4802,8 @@ self.onmessage = function (ev) {
   }
 
   /* ---------------- riven advisor ---------------- */
-  function rivenPlan(top, ref) {
+  // every riven stat combo in every slot of a riven-free build (score relative to that build)
+  function rivenCombos(top, ref) {
     const cls = modClass(st.weapon), atk = st.weapon.attacks[st.atk];
     const table = RIV[cls] || RIV.rifle;
     const stats = Object.keys(table).filter((k) => !(k === "ic" && atk.kind !== "heavy" && atk.kind !== "glaive"));
@@ -4729,6 +4814,7 @@ self.onmessage = function (ev) {
       const rec = (start, acc) => { if (acc.length === n) { combos.push(acc.slice()); return; } for (let i = start; i < stats.length; i++) { acc.push(stats[i]); rec(i + 1, acc); acc.pop(); } };
       rec(0, []);
       for (let i = 0; i < top.ids.length; i++) {
+        if (MOD_BY_ID[top.ids[i]] && MOD_BY_ID[top.ids[i]].exilus) continue;     // a riven can't go in the exilus slot
         const rest = top.ids.filter((_, j) => j !== i);
         for (const c of combos) {
           const riv = {}; for (const k of c) riv[k] = table[k] * mult;
@@ -4738,6 +4824,12 @@ self.onmessage = function (ev) {
       }
     }
     out.sort((a, b) => b.s - a.s);
+    return { out, table, stats };
+  }
+  function rivenPlan(top, ref) {
+    const cls = modClass(st.weapon), atk = st.weapon.attacks[st.atk];
+    const cached = st.results && st.results.rivPlan && st.results.rivPlanTop === top ? st.results.rivPlan : null;
+    const { out, table } = cached || rivenCombos(top, ref);
     const best3 = out.filter((x) => x.form === "3+1").slice(0, 3), best2 = out.filter((x) => x.form === "2+1").slice(0, 2);
     const rangeTxt = (k, form) => { const b = table[k] * 1.2 * RIV_FORM[form].pos; return k === "ic" ? `${(b * 0.9).toFixed(0)}~${(b * 1.1).toFixed(0)}` : `${pct(b * 0.9, 1)}~${pct(b * 1.1, 1)}`; };
     const row = (x) => `<tr><td>${RIV_FORM[x.form].ko}</td><td>${x.stats.map((k) => `${RIV_KO[k]} <small>(${rangeTxt(k, x.form)})</small>`).join("<br>")}</td><td>${esc(modName(x.slot))}</td><td class="num">×${x.s.toFixed(2)}</td></tr>`;
@@ -4782,6 +4874,35 @@ self.onmessage = function (ev) {
     </section>`;
   }
 
+  // plan mode: riven-free best vs "swap one mod of it for the riven" vs "build around the riven from the start"
+  function rivenPremiseSection(R, top, r0) {
+    const o = R.o, ref = r0.score, plan = R.rivPlan, B = R.rivBest;
+    const mult = 1.2 * RIV_FORM["3+1"].pos;
+    const g = plan.out.find((x) => x.form === "3+1");
+    if (!g) return "";
+    const gEff = {}; for (const k of g.stats) gEff[k] = plan.table[k] * mult;
+    const gInfo = g.stats.map((k) => ({ k, v: gEff[k], inc: true }));
+    const swapIds = top.ids.map((id) => id === g.slot ? "__riven" : id);
+    const rSwap = evalBuild(swapIds, top.val, top.arcane, null, gEff, null);
+    const rFull = evalBuild(B.top.ids, B.top.val, B.top.arcane, null, B.riv.eff);
+    const crowd = o.scenario === "crowd";
+    const tcell = (rr) => o.factions.map((f) => `<div class="fl"><span>${E.FACTIONS[f].label}</span>${crowd ? sec(rr.perF[f].clear) : rr.perF[f].ttk <= rr.perF[f].period + 1e-6 ? "한 방" : sec(rr.perF[f].ttk)}</div>`).join("");
+    const rows = [
+      { n: "① 리벤 없이 짠 추천 세팅", d: "위 추천 세팅 그대로", ids: top.ids, rr: r0, riv: null },
+      { n: "② ①에서 한 칸만 리벤으로 교체", d: `${modName(g.slot)} 대신 리벤 (아래 가이드 1순위)`, ids: swapIds, rr: rSwap, riv: gInfo },
+      { n: "③ 처음부터 리벤을 넣고 다시 짠 세팅", d: "리벤을 고정하고 나머지 칸·익실러스를 전부 다시 고름", ids: B.top.ids, rr: rFull, riv: B.riv.info },
+    ];
+    const changed = B.top.ids.filter((id) => id !== "__riven" && !top.ids.includes(id));
+    const dropped = top.ids.filter((id) => !B.top.ids.includes(id));
+    const k3 = rFull.score / Math.max(1e-9, rSwap.score);
+    return `<section class="card"><h3>리벤을 맞춘다면 — 전제별 최고 세팅 비교</h3>
+      <table class="tbl cmp"><thead><tr><th>세팅</th><th>처치 속도<br><small>① = 100%</small></th><th>${o.level}레벨 ${crowd ? "12명 전멸" : "처치"}</th><th>모드</th></tr></thead><tbody>
+      ${rows.map((x) => `<tr><td class="sname"><b>${esc(x.n)}</b><br><small>${esc(x.d)}</small>${x.riv ? `<br><small>리벤: ${esc(rivenText(x.riv))}</small>` : ""}<br><small class="els">${finalElements(x.rr)} · ${capInfo(x.ids, x.riv ? (x === rows[1] ? gEff : B.riv.eff) : null).short}</small></td>
+        <td class="num"><span class="big">${pct(x.rr.score / ref, 0)}</span></td><td>${tcell(x.rr)}</td><td class="modlist">${diffMods(x.ids, top.ids)}</td></tr>`).join("")}
+      </tbody></table>
+      <p>${k3 > 1.005 ? `처음부터 리벤을 전제로 짜면 한 칸만 바꾸는 것보다 <b>×${k3.toFixed(2)}</b> 더 빠릅니다. 리벤이 생기면 ${dropped.filter((id) => id !== g.slot).length ? `<b>${dropped.filter((id) => id !== g.slot).map(modName).map(esc).join(", ")}</b>도 빼고 ` : ""}<b>${changed.map(modName).map(esc).join(", ") || "-"}</b>${changed.length ? "을(를) 넣는" : ""} 쪽이 좋습니다.` : `처음부터 리벤을 전제로 짜도 한 칸만 바꾼 세팅과 거의 같습니다 (×${k3.toFixed(2)}). 리벤이 생기면 ${esc(modName(g.slot))} 자리에만 넣으면 됩니다.`}</p>
+      <p class="hint">리벤 수치는 3긍정 1부정 리벤의 각 옵션 범위 중간값으로 가정했습니다 (부정은 피해 계산에 영향 없는 옵션). ③은 효과가 큰 리벤 옵션 조합 두 가지로 각각 다시 짜 본 뒤 더 빠른 쪽입니다. 베일런스·아케인은 ①과 같게 두었습니다. 실제로 뽑은 리벤이 생기면 리벤 모드를 "보유 리벤 고정"으로 바꿔 그 수치로 계산하세요.</p></section>`;
+  }
   function ownedRivenSection(owned) {
     const inc = owned.info.filter((x) => x.inc), exc = owned.info.filter((x) => !x.inc);
     const other = Object.fromEntries(RIV_OTHER.gun.concat(RIV_OTHER.melee).map(([k, v]) => ["x_" + k, v]));
