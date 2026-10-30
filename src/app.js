@@ -3,6 +3,7 @@
   const E = window.WFEngine, MODS = window.WF_MODS, ARC = window.WF_ARCANES, RIV = window.WF_RIVEN;
   const BUFFS = window.WF_BUFFS, FRAMES = window.WF_FRAMES || [];
   const WEAPONS = (window.WF_WEAPONS && window.WF_WEAPONS.length ? window.WF_WEAPONS : window.WF_WEAPONS_BUILTIN).slice();
+  let pendingOcr = null;   // screenshot read while the wrong weapon was selected: fills set A once a weapon is picked
   const MOD_BY_ID = Object.fromEntries(MODS.map((m) => [m.id, m]));
   const MODS_SORTED = MODS.slice().sort((a, b) => a.ko.localeCompare(b.ko, "ko"));
   const $ = (s, r) => (r || document).querySelector(s);
@@ -205,6 +206,7 @@ self.onmessage = function (ev) {
       if (f && $("#frame").value !== f.id) { $("#frame").value = f.id; renderAbilities(); }
     }
     renderAll();
+    if (pendingOcr) { const reads = pendingOcr, d = $$("#sets .cset")[0]; if (d) ocrApply(d, reads, `${w.ko}(으)로 다시 맞춰 봤습니다. `); }
   }
 
   function renderAll() {
@@ -425,7 +427,8 @@ self.onmessage = function (ev) {
     d.querySelector(".cnamein").addEventListener("input", upd);
     // screenshot → slots
     const ocrBox = d.querySelector(".cocr"), ocrBtn = d.querySelector(".cocrbtn"), ocrFile = d.querySelector(".cocrfile");
-    d._ocr = (files) => ocrFill(d, files, { upd, showRiv });
+    d._ocr = (files) => ocrFill(d, files);
+    d.addEventListener("ocrfilled", upd);
     ocrBtn.addEventListener("click", () => ocrFile.click());
     ocrFile.addEventListener("change", () => { if (ocrFile.files.length) d._ocr([...ocrFile.files]); ocrFile.value = ""; });
     ocrBox.addEventListener("dragover", (e) => { e.preventDefault(); ocrBox.classList.add("drag"); });
@@ -447,49 +450,74 @@ self.onmessage = function (ev) {
     if (!d || !d._ocr) return;
     e.preventDefault(); d._ocr(files);
   });
-  async function ocrFill(d, files, { upd, showRiv }) {
+  const CLS_NAME = { rifle: "주무기", shotgun: "샷건", pistol: "보조무기", melee: "근접 무기" };
+  let ocrAll = null;
+  const ocrAllNames = () => ocrAll || (ocrAll = MODS.map((m) => ({ id: m.id, ko: m.ko, compat: m.compat, weapons: m.weapons })).concat(Object.entries(ARC).map(([k, v]) => ({ id: "arc:" + k, ko: v.ko, slot: v.slot }))));
+  async function ocrFill(d, files) {
     const btn = d.querySelector(".cocrbtn"), bar = d.querySelector(".cocrbar"), msg = d.querySelector(".cocrmsg");
     if (btn.disabled) return;
     btn.disabled = true; bar.hidden = false; msg.hidden = false;
     msg.textContent = "글자 인식 준비 중… (처음 한 번은 인식 도구와 한국어 데이터 약 6MB를 받습니다)";
     try {
       const reads = await window.WF_OCR.read(files, (p, label) => { bar.firstElementChild.style.width = Math.round(p * 100) + "%"; msg.textContent = `${label}… ${Math.round(p * 100)}%`; });
-      const w = st.weapon;
-      const ctx = { mods: modCands.concat(exilusMods(w)), arcanes: arcanesFor(w).map(([k, v]) => ({ id: k, ko: v.ko })), weaponKo: w.ko };
-      const r = window.WF_OCR.match(reads, ctx);
-      const ins = [...d.querySelectorAll(".cm")];
-      const unsure = [], empty = [];
-      ins.forEach((el, i) => {
-        const s = r.slots[i];
-        el.value = s ? (s.id === "__riven" ? RIVEN_ENTRY.ko : s.ko) : "";
-        syncSlot(el, el.value ? resolveMod(el.value) : null);
-        const q = !!s && (!s.sure || s.guessRiv);
-        el.parentElement.classList.toggle("ocrq", q);
-        if (q) unsure.push(`${i + 1}번 ${s.ko}`);
-        if (!s) empty.push(i + 1);
-      });
-      const xin = d.querySelector(".cx"), ain = d.querySelector(".carc");
-      if (r.exilus) { xin.value = r.exilus.ko; syncEx(xin); xin.parentElement.classList.toggle("ocrq", !r.exilus.sure); if (!r.exilus.sure) unsure.push("익실러스 " + r.exilus.ko); }
-      if (r.arcane) { ain.value = r.arcane.ko; syncArc(ain); ain.parentElement.classList.toggle("ocrq", !r.arcane.sure); if (!r.arcane.sure) unsure.push("아케인 " + r.arcane.ko); }
-      let rivNote = "";
-      if (r.riven) {
-        const ks = [...d.querySelectorAll(".crk")], vs = [...d.querySelectorAll(".crv")];
-        const pos = r.riven.stats.filter((x) => !x.neg).slice(0, 3), neg = r.riven.stats.find((x) => x.neg);
-        const rows = [pos[0], pos[1], pos[2], neg];
-        rows.forEach((x, i) => {
-          const has = (k) => k && [...ks[i].options].some((o) => o.value === k);
-          ks[i].value = x && has(x.k) ? x.k : ""; vs[i].value = x ? x.v : "";
-          ks[i].parentElement.classList.toggle("ocrq", !!x && (x.guess || !has(x.k)));
-        });
-        const n = r.riven.stats.length;
-        rivNote = n ? ` 리벤 옵션 ${n}개를 읽었습니다${r.riven.stats.some((x) => x.guess || !x.k) ? " (점선 표시된 옵션은 이름을 확인해 주세요)" : ""}.` : " 리벤 수치는 리벤 카드에 마우스를 올린 화면을 같이 올리면 읽습니다.";
-      }
-      showRiv(); upd();
-      const got = r.slots.filter(Boolean).length + (r.exilus ? 1 : 0) + (r.arcane ? 1 : 0);
-      msg.innerHTML = `${got}칸을 채웠습니다.${unsure.length ? ` <b>점선 칸은 확인해 주세요</b>: ${esc(unsure.join(", "))}.` : ""}${empty.length ? ` 읽지 못한 칸: ${empty.join(", ")}번.` : ""}${r.orderSure ? "" : " 칸 순서는 화면 위치로 추정했습니다 (원소 순서에 영향)."}${esc(rivNote)}`;
+      // the screenshot's own weapon (arsenal header): switch to it first
+      const hw = window.WF_OCR.findWeapon(reads, WEAPONS);
+      if (hw && hw.id !== st.weapon.id) {
+        selectWeapon(hw);
+        const d2 = $$("#sets .cset")[0] || d;
+        ocrApply(d2, reads, `스크린샷의 무기 ${hw.ko}(으)로 바꿨습니다. `);
+      } else ocrApply(d, reads, "");
     } catch (e) {
       msg.textContent = "읽지 못했습니다: " + (e && e.message ? e.message : e);
     } finally { btn.disabled = false; bar.hidden = true; }
+  }
+  function ocrApply(d, reads, lead) {
+    const msg = d.querySelector(".cocrmsg"), w = st.weapon, cls = modClass(w);
+    msg.hidden = false;
+    const ctx = { mods: modCands.concat(exilusMods(w)), arcanes: arcanesFor(w).map(([k, v]) => ({ id: k, ko: v.ko })), all: ocrAllNames() };
+    const r = window.WF_OCR.match(reads, ctx);
+    const got = r.slots.filter(Boolean).length + (r.exilus ? 1 : 0) + (r.arcane ? 1 : 0);
+    // mods of another weapon class: the wrong weapon is selected — keep the reading and fill once the right one is picked
+    const other = r.foreign.filter((m) => m.compat ? !m.compat.includes(cls) && !m.weapons : m.slot && m.slot !== w.slot);
+    if (other.length >= 3 && other.length > got) {
+      const tally = {};
+      for (const m of other) { const c = m.compat ? m.compat[0] : m.slot === "melee" ? "melee" : m.slot === "secondary" ? "pistol" : "rifle"; tally[c] = (tally[c] || 0) + 1; }
+      const guess = Object.entries(tally).sort((a, b) => b[1] - a[1])[0][0];
+      pendingOcr = reads;
+      msg.innerHTML = `${esc(lead)}이 스크린샷은 <b>${CLS_NAME[guess] || guess}</b> 모드 화면으로 보입니다 (${esc(other.slice(0, 4).map((m) => m.ko).join(", "))} 등). 지금 고른 무기는 ${esc(w.ko)}(${CLS_NAME[cls] || cls})라 맞지 않습니다. <b>왼쪽에서 무기를 고르면 이 스크린샷으로 바로 채웁니다.</b>`;
+      return;
+    }
+    pendingOcr = null;
+    const ins = [...d.querySelectorAll(".cm")];
+    const unsure = [], empty = [];
+    ins.forEach((el, i) => {
+      const s = r.slots[i];
+      el.value = s ? (s.id === "__riven" ? RIVEN_ENTRY.ko : s.ko) : "";
+      syncSlot(el, el.value ? resolveMod(el.value) : null);
+      const q = !!s && (!s.sure || s.guessRiv);
+      el.parentElement.classList.toggle("ocrq", q);
+      if (q) unsure.push(`${i + 1}번 ${s.ko}`);
+      if (!s) empty.push(i + 1);
+    });
+    const xin = d.querySelector(".cx"), ain = d.querySelector(".carc");
+    xin.parentElement.classList.remove("ocrq"); ain.parentElement.classList.remove("ocrq");
+    if (r.exilus) { xin.value = r.exilus.ko; syncEx(xin); xin.parentElement.classList.toggle("ocrq", !r.exilus.sure); if (!r.exilus.sure) unsure.push("익실러스 " + r.exilus.ko); }
+    if (r.arcane) { ain.value = r.arcane.ko; syncArc(ain); ain.parentElement.classList.toggle("ocrq", !r.arcane.sure); if (!r.arcane.sure) unsure.push("아케인 " + r.arcane.ko); }
+    let rivNote = "";
+    if (r.riven) {
+      const ks = [...d.querySelectorAll(".crk")], vs = [...d.querySelectorAll(".crv")];
+      const pos = r.riven.stats.filter((x) => !x.neg).slice(0, 3), neg = r.riven.stats.find((x) => x.neg);
+      [pos[0], pos[1], pos[2], neg].forEach((x, i) => {
+        const has = (k) => k && [...ks[i].options].some((o) => o.value === k);
+        ks[i].value = x && has(x.k) ? x.k : ""; vs[i].value = x ? x.v : "";
+        ks[i].parentElement.classList.toggle("ocrq", !!x && (x.guess || !has(x.k)));
+      });
+      const n = r.riven.stats.length;
+      rivNote = n ? ` 리벤 옵션 ${n}개를 읽었습니다${r.riven.stats.some((x) => x.guess || !x.k) ? " (점선 표시된 옵션은 이름을 확인해 주세요)" : ""}.` : " 리벤 수치는 리벤 카드에 마우스를 올린 화면을 같이 올리면 읽습니다.";
+    }
+    d.querySelector(".crivbox").hidden = !ins.some((x) => x.value.trim() && resolveMod(x.value) === RIVEN_ENTRY);
+    d.dispatchEvent(new Event("ocrfilled"));
+    msg.innerHTML = `${esc(lead)}${got}칸을 채웠습니다.${unsure.length ? ` <b>점선 칸은 확인해 주세요</b>: ${esc(unsure.join(", "))}.` : ""}${empty.length ? ` 읽지 못한 칸: ${empty.join(", ")}번.` : ""}${r.orderSure || !got ? "" : " 칸 순서는 화면 위치로 추정했습니다 (원소 순서에 영향)."}${esc(rivNote)}`;
   }
   // read one set in slot order (empty slots skipped); conflicts are already blocked at input, this is a safety net
   function setMods(d) {

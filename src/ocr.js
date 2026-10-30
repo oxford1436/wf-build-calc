@@ -155,7 +155,9 @@
       const longer = cands.filter((c) => c !== top.c && (c._n || (c._n = norm(c.ko))).endsWith(top.c._n) && c._n.length > top.len);
       if (longer.length) {
         // unread letters in front about as long as the variant's prefix ("Bz" ↔ "아말감"): it's most likely that variant
-        const extra = seg.t.length - top.len, fit = longer.filter((c) => Math.abs(c._n.length - top.len - extra) <= 1), v = longer.length === 1 && fit.length === 1 ? fit[0] : null;
+        const extra = seg.t.length - top.len, fit = longer.filter((c) => Math.abs(c._n.length - top.len - extra) <= 1);
+        const one = longer.length === 1 ? longer[0] : null;
+        const v = one && (fit.length === 1 || 1 - fitDist(one._n, seg.t) / one._n.length >= 0.72) ? one : null;
         top = Object.assign({}, top, v ? { c: v, len: v._n.length } : {}, { sim: Math.min(top.sim, 0.8), variant: true });
       }
     }
@@ -249,14 +251,39 @@
     return stats;
   }
 
-  // ctx: { mods: [{id, ko, exilus, group}], arcanes: [{id, ko}], weaponKo }
+  // weapon name in the arsenal header ("업그레이드/코다 패소시스트 [40]"), if the screenshot shows it
+  function findWeapon(reads, weapons) {
+    let best = null;
+    for (const R of reads) for (const L of R.lines) {
+      const raw = String(L.text).replace(/\s+/g, "");
+      // "업그레이드/코다 패소시스트 [40]": the header line, or a top-of-screen line ending in the rank bracket
+      if (!/그레이드/.test(raw) && !(/\[\d{1,2}\]/.test(raw) && (!R.h || L.y0 < R.h * 0.15))) continue;
+      const t = norm(raw.replace(/.*그레이드\/?/, "").replace(/\[.*$/, ""));
+      if (t.length < 2) continue;
+      for (const w of weapons) {
+        const n = w._n || (w._n = norm(w.ko));
+        if (n.length < 2 || t.length < n.length * 0.7) continue;
+        const sim = 1 - fitDist(n, t) / n.length;
+        if (sim >= 0.85 && (!best || sim * n.length > best.sim * best.n.length)) best = { w, sim, n };
+      }
+    }
+    return best ? best.w : null;
+  }
+
+  // ctx: { mods: [{id, ko, exilus, group}], arcanes: [{id, ko}], all: every mod and arcane in the game (any weapon class) }
   function match(reads, ctx) {
     const segs = [];
     for (const R of reads) segs.push(...segments(R.lines));
-    const det = [];
+    const det = [], foreign = new Map();
     for (const s of segs) {
       const hm = bestName(s, ctx.mods), ha = bestName(s, ctx.arcanes);
-      const h = ha && (!hm || ha.sim * ha.len > hm.sim * hm.len) ? Object.assign({ arc: true }, ha) : hm;
+      let h = ha && (!hm || ha.sim * ha.len > hm.sim * hm.len) ? Object.assign({ arc: true }, ha) : hm;
+      // a name that fits a mod of another weapon class better is that mod, not a near-miss of ours
+      const hg = ctx.all ? bestName(s, ctx.all) : null;
+      if (hg && hg.sim >= 0.85 && (!h || (hg.c.id !== h.c.id && hg.sim * hg.len > h.sim * h.len + 0.01))) {
+        if (!foreign.has(hg.c.id) || foreign.get(hg.c.id).sim < hg.sim) foreign.set(hg.c.id, { c: hg.c, sim: hg.sim });
+        h = null;
+      }
       if (h) det.push({ c: h.c, sim: h.sim, len: h.len, arc: !!h.arc, box: s.box });
     }
     // one name per spot on the card grid: overlapping detections (several passes, wrapped lines) keep the best
@@ -332,8 +359,9 @@
       exilus: ex ? { id: ex.c.id, ko: ex.c.ko, sure: ex.sim >= 0.85 } : null,
       arcane: arc ? { id: arc.c.id, ko: arc.c.ko, sure: arc.sim >= 0.85 } : null,
       riven: hasRiv ? { stats: rivStats || [] } : null,
+      foreign: [...foreign.values()].map((f) => f.c),
     };
   }
 
-  root.WF_OCR = { read, match, parseTSV, segments, fitDist, norm, parseRiven, _passes: PASSES };
+  root.WF_OCR = { read, match, findWeapon, parseTSV, segments, fitDist, norm, parseRiven, _passes: PASSES };
 })(typeof self !== "undefined" ? self : globalThis);
