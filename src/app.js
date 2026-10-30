@@ -962,7 +962,8 @@ self.onmessage = function (ev) {
     const buffNames = buffSummary();
     const rm0 = $("#rivmode").value;
     const xa = exilusAdvice(xid, r, atk);
-    let html = "";
+    let html = shareBarHtml();
+    try { if (/github\.io$/.test(location.hostname)) history.replaceState(null, "", "#s=" + b64e(JSON.stringify(captureState()))); } catch (e) {}
 
     html += `<section class="card hero"><div class="eyebrow">추천 세팅 · ${esc(st.weapon.ko)} · ${esc(atk.name)}</div>
       <h2>${finalElements(r)}</h2>
@@ -1401,6 +1402,118 @@ self.onmessage = function (ev) {
     renderRivenSelects();
   }
 
+  /* ---------------- share link + error report ---------------- */
+  // The link carries every input (weapon, attack, all settings, element concept, comparison sets) in the address after "#s=".
+  // Opening it restores the inputs and runs the calculation, so the same results come back.
+  const SHARE_BASE = /github\.io$/.test(location.hostname) ? location.origin + location.pathname : "https://oxford1436.github.io/wf-build-calc/";
+  const b64e = (str) => btoa(unescape(encodeURIComponent(str))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  const b64d = (x) => decodeURIComponent(escape(atob(x.replace(/-/g, "+").replace(/_/g, "/"))));
+  const NOSAVE = new Set(["wsearch", "atk", "mkind", "mp1", "mp2", "mp3"]);
+  function captureFields() {
+    const f = {};
+    $$(".rail [id]").forEach((el) => {
+      if (NOSAVE.has(el.id) || el.closest("#sets") || el.closest("#concepts")) return;
+      if (el.tagName === "SELECT") f[el.id] = el.value;
+      else if (el.tagName === "INPUT" && el.type !== "file") f[el.id] = el.type === "checkbox" ? el.checked : el.value;
+    });
+    return f;
+  }
+  let F0 = {};      // untouched page defaults: the link only carries what differs
+  function captureState() {
+    const all = captureFields(), f = {};
+    for (const k in all) if (all[k] !== F0[k]) f[k] = all[k];
+    const w = st.weapon;
+    return {
+      v: 1, w: w.modular ? null : w.id, mod: w.modular ? [w.modular.kind].concat(w.modular.parts) : null, a: st.atk, f,
+      ab: $$("#abilities input.abil:checked").map((x) => x.value), mb: $$("#miscbuffs input.mb:checked").map((x) => x.value),
+      c: $$("#concepts select").map((x) => x.value),
+      s: $$("#sets .cset").map((d) => ({ n: d.querySelector(".cnamein").value, m: $$(".cm", d).map((x) => x.value), x: d.querySelector(".cx").value, ar: d.querySelector(".carc").value,
+        rk: $$(".crk", d).map((x) => x.value), rv: $$(".crv", d).map((x) => x.value) })).filter((x) => x.m.some(Boolean) || x.x || x.ar),
+    };
+  }
+  const shareUrl = () => SHARE_BASE + "#s=" + b64e(JSON.stringify(captureState()));
+  const fire = (el) => { el.dispatchEvent(new Event("input", { bubbles: true })); el.dispatchEvent(new Event("change", { bubbles: true })); };
+  function restoreState(S) {
+    let w = null;
+    if (S.mod) w = buildModular(...S.mod); else if (S.w) w = WEAPONS.find((x) => x.id === S.w);
+    if (!w) return false;
+    selectWeapon(w);
+    if (S.a != null && w.attacks[S.a]) { st.atk = S.a; renderAll(); }
+    const f = S.f || {};
+    const setOne = (id) => {
+      const el = document.getElementById(id); if (!el || !(id in f)) return;
+      if (el.type === "checkbox") el.checked = !!f[id]; else el.value = f[id];
+      fire(el);
+    };
+    // the frame decides which ability boxes exist, so it goes first; the weapon and the attack were set above
+    ["frame", "helminth"].forEach(setOne);
+    for (const id in f) if (!["frame", "helminth"].includes(id) && !NOSAVE.has(id)) setOne(id);
+    $$("#abilities input.abil").forEach((x) => { x.checked = (S.ab || []).includes(x.value); fire(x); });
+    $$("#miscbuffs input.mb").forEach((x) => { x.checked = (S.mb || []).includes(x.value); fire(x); });
+    syncEnemySeg(); renderTargets();
+    if (Array.isArray(S.c)) {
+      const box = $("#concepts"); box.querySelectorAll("select").forEach((x) => x.remove());
+      box.querySelector(".cadd").hidden = false;
+      (S.c.length ? S.c : ["", ""]).slice(0, 4).forEach((v) => addConcept(v));
+    }
+    if (Array.isArray(S.s) && S.s.length) {
+      $("#sets").innerHTML = "";
+      S.s.slice(0, 5).forEach((x) => {
+        addSet();
+        const d = $("#sets").lastElementChild;
+        const nm = d.querySelector(".cnamein"); nm.value = x.n || nm.value; fire(nm);
+        $$(".crk", d).forEach((el, i) => { if (x.rk && x.rk[i] != null) { el.value = x.rk[i]; fire(el); } });
+        $$(".crv", d).forEach((el, i) => { if (x.rv && x.rv[i] != null) { el.value = x.rv[i]; fire(el); } });
+        $$(".cm", d).forEach((el, i) => { el.value = (x.m || [])[i] || ""; fire(el); });
+        for (const [sel, v] of [[".cx", x.x], [".carc", x.ar]]) { const el = d.querySelector(sel); el.value = v || ""; fire(el); }
+        d.open = false;
+      });
+    }
+    return true;
+  }
+  function restoreFromHash() {
+    const m = /^#s=([A-Za-z0-9_-]+)/.exec(location.hash);
+    if (!m) return;
+    let S = null;
+    try { S = JSON.parse(b64d(m[1])); } catch (e) { S = null; }
+    if (!S || !restoreState(S)) { $("#results").innerHTML = `<div class="placeholder"><h3>공유 링크를 읽지 못했습니다</h3><p>링크가 잘렸거나 지금 데이터에 없는 무기입니다. 무기를 직접 골라 주세요.</p></div>`; return; }
+    $("#results").innerHTML = `<div class="placeholder"><h3>공유된 설정으로 계산합니다</h3><p>받은 링크의 무기와 설정을 그대로 불러왔습니다. 계산이 끝나면 결과가 여기에 나옵니다.</p></div>`;
+    run();
+  }
+  async function copyText(text, btn, okMsg) {
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {
+      try { const ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select(); ok = document.execCommand("copy"); ta.remove(); } catch (e2) { ok = false; }
+    }
+    const box = btn.closest(".sharebar").querySelector(".sharemsg");
+    if (ok) { box.textContent = okMsg; box.hidden = false; box.classList.remove("manual"); }
+    else { box.hidden = false; box.classList.add("manual"); box.innerHTML = `복사가 막혀 있어요. 아래 내용을 직접 복사해 주세요.<textarea readonly rows="6">${esc(text)}</textarea>`; box.querySelector("textarea").select(); }
+  }
+  function reportText() {
+    const CL = window.WF_CHANGELOG || [], R = st.results, o = R ? R.o : readOpts(), w = st.weapon, atk = w.attacks[st.atk];
+    const lines = ["[워프레임 세팅 계산기 오류 신고]", `버전: v${CL[0] ? CL[0].v : "?"} · 데이터 ${$("#ver").dataset.built || "?"}`, `링크: ${shareUrl()}`,
+      `무기: ${w.ko || w.en} · ${atk.name}`,
+      `조건: ${o.scenario === "boss" ? "보스" : o.scenario === "single" ? "중장갑 한 명" : "일반"} · ${o.steel ? "강철의 길 " : ""}${o.level}레벨 · ${$("#objective").selectedOptions[0].textContent.split(" — ")[0]}${o.concept && o.concept.length ? " · 속성 콘셉트 " + o.concept.map((t) => TYPE_KO[t]).join("+") : ""} · 리벤 ${$("#rivmode").selectedOptions[0].textContent.split(" — ")[0]}`];
+    if (R && R.res && R.res.length) {
+      const top = R.res[0], r = evalBuild(top.ids, top.val, top.arcane);
+      lines.push(`추천: ${finalElements(r)} · 아케인 ${top.arcane ? ARC[top.arcane].ko : "없음"}${top.val ? ` · 베일런스 ${TYPE_KO[top.val.type]} ${pct(top.val.pct)}` : ""}`);
+      lines.push(`추천 모드: ${top.ids.map(modName).join(", ")}`);
+    }
+    const sets = $$("#sets .cset").map(setMods).filter((x) => x.ids.length);
+    for (const x of sets) lines.push(`비교 ${x.name}: ${x.ids.map(modName).join(", ")}${x.arcane ? " · " + ARC[x.arcane].ko : ""}`);
+    lines.push("", "무엇이 이상한가요: (여기에 적어 주세요)");
+    return lines.join("\n");
+  }
+  function shareBarHtml() {
+    return `<div class="sharebar"><button type="button" class="ghostbtn" data-share="link">링크 복사</button><button type="button" class="ghostbtn" data-share="report">오류 신고 복사</button>
+      <small>링크를 열면 같은 설정으로 다시 계산합니다. 오류 신고는 디스코드에 붙여 넣으면 됩니다.</small><p class="sharemsg" hidden></p></div>`;
+  }
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-share]"); if (!b) return;
+    if (b.dataset.share === "link") copyText(shareUrl(), b, "링크를 복사했습니다.");
+    else copyText(reportText(), b, "오류 신고 내용을 복사했습니다. 디스코드에 붙여 넣고 '무엇이 이상한가요'를 채워 주세요.");
+  });
+
   /* ---------------- version + patch notes tab (#patch) ---------------- */
   function renderVersion() {
     const CL = window.WF_CHANGELOG || [];
@@ -1431,4 +1544,6 @@ self.onmessage = function (ev) {
   try { const sv = JSON.parse(localStorage.getItem("wfopt2") || "null"); if (sv && sv.mod) { const w = buildModular(...sv.mod); if (w) { st.weapon = w; st.atk = 0; } } } catch (e) {}
   bind();
   if (st.weapon.exalted) selectWeapon(st.weapon); else renderAll();
+  F0 = captureFields();
+  restoreFromHash();
 })();
