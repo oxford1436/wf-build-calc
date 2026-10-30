@@ -141,7 +141,7 @@
   add("focus_energy", "포커스 에너지", "Focus Energy", ["melee"], { elec: 0.6, hae: 0.4 });
   add("killing_blow", "킬링 블로우", "Killing Blow", ["melee"], { heavy: 1.2, wind: 0.6 }, { req: "heavy" });
   add("corrupt_charge", "커럽트 차지", "Corrupt Charge", ["melee"], { ic: 30 }, { req: "heavy" });
-  add("galvanized_reflex", "갈바나이즈드 리플렉스", "Galvanized Reflex", ["melee"], { hae: 0.5 }, { req: "heavy", group: "m_reflex", cond: [{ when: "kill", eff: { ic: 80 } }] });
+  add("galvanized_reflex", "갈바나이즈드 리플렉스", "Galvanized Reflex", ["melee"], { hae: 0.5 }, { req: "heavy", group: "m_reflex", cond: [{ when: "kill", eff: { ic: 81.4 } }] });   // 20.35 × 4 stacks (wiki true value; the card rounds to 20)
   // explodes on the first contact (bounce explosion: 50% damage, no combo multiplier, no guaranteed procs) and returns at once;
   // a heavy-attack detonation still works in the same throw (wiki)
   add("volatile_quick_return", "볼래틸 퀵 리턴", "Volatile Quick Return", ["melee"], { radius: 3, volatile: 1 }, { req: "glaive", note: "벽에 튕겨 엉뚱한 방향으로 가지 않음(튕김 −4) · 폭발 범위 +3m · 닿을 때 작은 폭발(피해 50%, 연속기 배율 없음)" });

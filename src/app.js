@@ -21,11 +21,13 @@
   const KIND_KO = { gun: "사격", radial: "폭발", melee: "휘두르기", heavy: "강공", glaive: "투척" };
   const RIV_KO = { dmg: "피해", ms: "멀티샷", cc: "치명타 확률", cd: "치명타 피해", heat: "화염", cold: "냉기", elec: "전기", tox: "독", sc: "상태이상 확률", sd: "상태이상 피해 (접합 전용)", dur: "상태이상 지속시간", fr: "연사력/공격 속도", ic: "초기 연속기", impact: "충격", punct: "관통", slash: "베기", reload: "재장전 속도", mag: "탄창 용량" };
   const RIV_FORM = { "3+1": { pos: 0.9375, neg: -0.75, ko: "3긍정 1부정" }, "2+1": { pos: 1.2375, neg: -0.495, ko: "2긍정 1부정" }, "3+0": { pos: 0.75, neg: 0, ko: "3긍정" }, "2+0": { pos: 0.99, neg: 0, ko: "2긍정" } };
-  // non-modeled riven stats (for negative-option grading); base magnitudes at 1.0 disposition
+  // riven stats outside the damage formula (for negative-option grading); base magnitudes at 1.0 disposition.
+  // RIV_HEAVY ones still feed the heavy-attack combo model (combo count chance, heavy attack efficiency)
   const RIV_OTHER = {
     gun: [["zoom", "확대율", 0.6], ["recoil", "반동", 0.9], ["ammo", "최대 탄약", 0.9], ["pt", "관통력", 2.7], ["speed", "투사체 속도", 0.9], ["faction", "특정 팩션 피해", 0.55]],
     melee: [["finisher", "마무리 일격 피해", 1.2], ["slidecc", "슬라이드 공격 치명타 확률", 1.2], ["combodur", "연속기 지속시간", 8.1], ["combochance", "연속기 획득 확률", 1.02], ["range", "사거리", 1.2], ["hae", "강공 효율", 0.73], ["faction", "특정 팩션 피해", 0.55]],
   };
+  const RIV_HEAVY = { combochance: "ccc", hae: "hae" };
   const SPLICE = [
     { out: "sd", ko: "상태이상 피해", need: ["피해", "상태이상 확률"], cls: ["rifle", "shotgun", "pistol", "melee"] },
     { out: "wpd", ko: "약점 피해", need: ["피해", "확대율 또는 멀티샷"], cls: ["rifle", "shotgun", "pistol"] },
@@ -490,7 +492,7 @@ self.onmessage = function (ev) {
   function rivenOptionsHtml() {
     const cls = modClass(st.weapon);
     const base = Object.entries(RIV_KO).filter(([k]) => k !== "sd" && !(k === "ic" && cls !== "melee") && !(k === "ms" && cls === "melee")).map(([k, v]) => `<option value="${k}">${v}</option>`).join("") + `<option value="sd">상태이상 피해 (접합)</option>`;
-    const other = (cls === "melee" ? RIV_OTHER.melee : RIV_OTHER.gun).map(([k, v]) => `<option value="x_${k}">${v} (계산 영향 없음)</option>`).join("");
+    const other = (cls === "melee" ? RIV_OTHER.melee : RIV_OTHER.gun).map(([k, v]) => `<option value="x_${k}">${v} (${RIV_HEAVY[k] ? "강공 연속기에만 반영" : "계산 영향 없음"})</option>`).join("");
     return `<option value="">—</option>` + base + other;
   }
   function renderRivenSelects() {
@@ -505,6 +507,7 @@ self.onmessage = function (ev) {
       const val = (i === 3 ? -1 : 1) * (k === "ic" ? Math.abs(v) : Math.abs(v) / 100);
       info.push({ k, v: val, inc });
       if (inc && !k.startsWith("x_") && k in RIV_KO) r[k] = (r[k] || 0) + val;
+      else if (inc && RIV_HEAVY[k.slice(2)]) { const e = RIV_HEAVY[k.slice(2)]; r[e] = (r[e] || 0) + val; }
     });
     return { eff: r, info };
   }
@@ -837,7 +840,7 @@ self.onmessage = function (ev) {
     html += `<section class="card"><h3>수치</h3><div class="kv">
       ${kv("치명타 확률", pct(r.cc))}${kv("치명타 피해", r.cd.toFixed(2) + "배")}
       ${kv("상태이상 확률", pct(r.sc) + (atk.kind === "gun" ? " /발" : ""))}${atk.kind === "gun" || atk.kind === "radial" ? kv("멀티샷", r.ms.toFixed(2)) : ""}
-      ${r.M > 1 ? kv("연속기 배율", r.M + "배") : kv(atk.kind === "melee" ? "초당 타격" : "초당 발사", r.rate.toFixed(2))}${kv("기본 피해 보너스", "+" + pct(r.dmgb))}
+      ${r.M > 1 ? kv("연속기 배율 (강공 때)", (Number.isInteger(r.M) ? r.M : "평균 " + r.M.toFixed(1)) + "배") : kv(atk.kind === "melee" ? "초당 타격" : "초당 발사", r.rate.toFixed(2))}${kv("기본 피해 보너스", "+" + pct(r.dmgb))}
       ${kv("상태이상 피해", "+" + pct(r.sd))}${kv("상태이상 지속", pct(r.dur))}
       ${r.u ? kv("인플루언스 가동률", pct(r.u)) : ""}${kv(o.scenario === "crowd" && r.perF[o.factions[0]].Keff > r.K + 0.05 ? "한 발에 같이 잡히는 적 (폭발 포함)" : "한 번에 맞는 적", Math.max(r.K, o.scenario === "crowd" ? r.perF[o.factions[0]].Keff || 0 : 0).toFixed(1) + "명")}
       ${r.fallM && r.fallM < 0.995 ? kv("거리·폭발 가장자리 감쇠", pct(r.fallM)) : ""}${r.tenno ? kv("텐노카이 강공", `${Math.round(r.tenno.f * 100)}% 타격마다 1회`) : ""}
@@ -928,7 +931,7 @@ self.onmessage = function (ev) {
       <li>잡몹 무리: 반경 20m 안 12명, 한 발이 맞히는 수는 폭발 반경·관통으로 추정. 직격+폭발 무기는 주변 적이 폭발만 맞는다고 보고, 폭발만으로 죽는 속도만큼 같이 잡히는 것으로 계산합니다. 폭발 투사체는 관통이 적용되지 않습니다(위키 "Punch Through"). 갈바나이즈드 계열 피해 보너스와 세컨더리 이레디에이트 전파는 직격에만 적용합니다(위키). 처치 조건 효과(갈바나이즈드, 머시리스 등)는 잡몹·중장갑에서는 최대 중첩, 보스전에서는 0으로 계산합니다.</li>
       <li>코퍼스 실드는 독·출혈 도트만 관통하고 나머지는 실드를 먼저 깎습니다. 자성 중첩은 실드·오버가드 피해를 최대 4.25배로 올립니다.${o.og ? " 엑시무스 오버가드(위키 레벨 공식)는 방어구·바이러스 영향 없이 먼저 깎고, 보이드는 1.5배입니다." : ""}</li>
       <li>무기별 숨은 특성은 위키 무기 데이터에서 가져옵니다: 확정 상태이상(예: 조리스 회수 폭발의 전기·충격), 헤드샷 배율 변경, 거리별 피해 감소(잡몹은 2~20m에 고르게, 중장갑은 15m), 폭발 가장자리 피해 감소, 최대 탄약·탄약 소모.</li>
-      <li>근접 휘두르기는 연속기 12배 유지, 공격 속도 1당 초당 1.5타로 근사합니다. 텐노카이는 그 배율의 강공이 15%(디시플린즈 메리트는 4타마다) 섞이는 것으로 계산합니다. 글레이브·강공은 초기 연속기만 사용하고, 글레이브는 던지고 돌아오는 비행 시간(투척 속도 기준)을 주기에 넣습니다.</li>
+      <li>근접 휘두르기는 연속기 12배 유지, 공격 속도 1당 초당 1.5타로 근사합니다. 텐노카이는 그 배율의 강공이 15%(디시플린즈 메리트는 4타마다) 섞이는 것으로 계산합니다. 글레이브·강공은 초기 연속기로 배율을 정합니다. 강공이 연속기를 쓰고 나면 초기 연속기는 초당 40씩 다시 차므로(위키), 강공 간격이 짧으면 덜 찬 배율로 터지고, 그 사이 맞힌 타수(연속기 획득 확률 반영)가 모자란 만큼을 메웁니다. 글레이브는 던지고 돌아오는 비행 시간(투척 속도 기준)을 주기에 넣습니다.</li>
       <li>치명타는 확률을 그대로 반영한 기대값(평균)으로 계산합니다. 운이 좋고 나쁜 편차, 반동·명중 퍼짐, 투사체 비행 시간(15m 기준 0.1초 안팎)은 넣지 않습니다.</li>
       <li>모드 용량: 오로킨 카탈리스트(용량 = 최대 랭크×2), 모든 모드 최대 랭크 기준입니다. 같은 극성 칸은 소모 절반(올림), 다른 극성 칸은 25% 증가(올림)이고, 포르마 한도 안에서 들어가는 조합만 추천합니다.</li>
       <li>저격총은 조준 옵션을 켜면 최대 배율 줌 보너스와 저격 콤보(20초 연속 교전 평균)를 넣습니다. 익절티드 무기는 워프레임 위력 값을 기본 피해(또는 위키에 적힌 방식)에 반영합니다.</li>
@@ -1134,18 +1137,24 @@ self.onmessage = function (ev) {
     for (const k of Object.keys(table)) {
       if (out[0].stats.includes(k)) continue;
       if (k === "sd") continue;
-      if (k === "ic" && atk.kind !== "heavy" && atk.kind !== "glaive") continue;
+      if (k === "ic") continue;   // rivens never roll negative Initial Combo (wiki Melee Combo)
       const riv = Object.assign({}, posRiv, { [k]: table[k] * 1.2 * RIV_FORM["3+1"].neg });
       const s = evalBuild(restB.concat(["__riven"]), top.val, top.arcane, null, riv).score / withPos;
       const isElem = ["heat", "cold", "elec", "tox"].includes(k);
       negRows.push({ ko: RIV_KO[k], s, note: isElem && s >= 0.97 ? "이 원소 모드를 안 쓰는 세팅이라 무해. 그 원소를 쓰면 치명" : "" });
     }
     const other = cls === "melee" ? RIV_OTHER.melee : RIV_OTHER.gun;
-    for (const [k, ko] of other) {
+    for (const [k, ko, tv] of other) {
       let s = 1, note = "";
       if (k === "range") { s = atk.kind === "melee" ? 0.8 : atk.kind === "heavy" && atk.radius ? 0.85 : 1; note = atk.kind === "melee" ? "휘두르기 사거리 감소" : atk.radius ? "슬램 반경 감소" : "투척·폭발에는 영향 없음"; }
-      else if (k === "combochance" || k === "combodur") { s = atk.kind === "melee" ? 0.9 : 1; note = atk.kind === "melee" ? "연속기 유지가 느려짐" : "초기 연속기로 고정되어 영향 없음"; }
-      else if (k === "hae") { s = 1; note = "초기 연속기 이하로 안 내려감"; }
+      else if (RIV_HEAVY[k] && (atk.kind === "heavy" || atk.kind === "glaive")) {
+        // modeled: combo count chance / heavy attack efficiency change how much combo is back by the next heavy attack
+        const riv = Object.assign({}, posRiv, { [RIV_HEAVY[k]]: -tv * 1.2 * Math.abs(RIV_FORM["3+1"].neg) });
+        s = evalBuild(restB.concat(["__riven"]), top.val, top.arcane, null, riv).score / withPos;
+        note = s >= 0.97 ? "강공 사이에 초기 연속기가 다 차서 거의 무해" : "강공 간격이 짧아 초기 연속기(초당 40 회복)가 덜 찬 채로 터짐";
+      }
+      else if (k === "combochance" || k === "combodur") { s = atk.kind === "melee" ? 0.9 : 1; note = atk.kind === "melee" ? "연속기 유지가 느려짐" : "초기 연속기로 유지되어 영향 없음"; }
+      else if (k === "hae") { s = 1; note = "강공을 쓰지 않아 무관"; }
       else if (k === "faction") { s = 0.55; note = "그 팩션 상대 −45%. 다른 팩션엔 무해"; }
       else if (k === "speed") { s = 0.97; note = "투사체 무기만 사거리·명중 영향"; }
       else if (k === "ammo") { s = 0.97; note = "장기전 탄약 압박"; }
@@ -1198,7 +1207,7 @@ self.onmessage = function (ev) {
   function ownedRivenSection(owned) {
     const inc = owned.info.filter((x) => x.inc), exc = owned.info.filter((x) => !x.inc);
     const other = Object.fromEntries(RIV_OTHER.gun.concat(RIV_OTHER.melee).map(([k, v]) => ["x_" + k, v]));
-    const txt = (x) => `${RIV_KO[x.k] || other[x.k] || x.k} ${x.k === "ic" ? x.v.toFixed(0) : pct(x.v, 1)}${x.k.startsWith("x_") ? " (피해 계산 영향 없음)" : ""}`;
+    const txt = (x) => `${RIV_KO[x.k] || other[x.k] || x.k} ${x.k === "ic" ? x.v.toFixed(0) : pct(x.v, 1)}${x.k.startsWith("x_") && !RIV_HEAVY[x.k.slice(2)] ? " (피해 계산 영향 없음)" : ""}`;
     return `<section class="card"><h3>보유 리벤 고정</h3>
       <p>반영한 옵션: <b>${inc.map(txt).join(", ") || "없음"}</b>${exc.length ? ` · 반영하지 않은 옵션(재순환 예정): ${exc.map(txt).join(", ")}` : ""}</p>
       <p class="hint">리벤을 한 칸에 고정하고 나머지 7칸을 다시 최적화한 결과가 위 추천 세팅입니다.</p></section>`;

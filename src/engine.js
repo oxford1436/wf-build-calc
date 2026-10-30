@@ -82,7 +82,7 @@
 
   /* ---------- mods aggregation ---------- */
   const NUM_KEYS = ["dmg", "heavy", "ms", "cc", "ccHeavyNoDouble", "cd", "sc", "sd", "dur", "fr", "frneg", "lock", "mag", "reload", "wind",
-    "ic", "hae", "br", "ww", "co", "gco", "radius", "pt", "cdFlat", "ccFlat", "hsMult", "msLock", "hm", "ib", "welt",
+    "ic", "hae", "ccc", "br", "ww", "co", "gco", "radius", "pt", "cdFlat", "ccFlat", "hsMult", "msLock", "hm", "ib", "welt",
     "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot"];
   const EXTRA = ["radm", "magm", "gasm", "blastm", "viralm", "corrm", "heatx", "coldx", "elecx", "toxx", "voidx"];
   function newAgg() {
@@ -213,13 +213,29 @@
     return res;
   }
 
-  function comboMult(ic, hae, K, hitsBetween) {
-    const e = Math.min(0.9, hae);
-    let cPrev = ic + K + hitsBetween, cDet = 0;
-    for (let i = 0; i < 40; i++) { cDet = Math.max(ic, cPrev * e) + 1; cPrev = cDet + K + hitsBetween; }
-    return Math.min(12, Math.floor(cDet / 20) + 1);
+  // Combo multiplier of a heavy attack in steady state (wiki Melee Combo). A heavy attack spends (1 − efficiency) of the
+  // counter; spent Initial Combo refills at 40 points/s, so heavy attacks closer together than that come back before it
+  // is full. Hits between heavy attacks add combo at the combo count chance (a riven negative lowers it).
+  // Returns the average multiplier (it can be fractional when the number of counted hits varies throw to throw).
+  function comboMult(ic, hae, K, hitsBetween, period, ccc) {
+    const e = Math.min(0.9, Math.max(0, hae || 0));
+    const p = Math.max(0, 1 + (ccc || 0));
+    const refill = period > 0 ? 40 * period : 1e9;
+    const n = Math.max(0, K + (hitsBetween || 0)), g = n * p;
+    const base = (c) => { const kept = c * e; return kept >= ic ? kept : Math.min(ic, kept + refill); };
+    let c = ic + g;
+    for (let i = 0; i < 80; i++) c = base(c) + g;
+    if (p >= 1 || n <= 0) return comboTier(c);
+    const b = base(c), N = Math.max(1, Math.round(n)), q = g / N;
+    if (q >= 1) return comboTier(b + g);
+    let M = 0, pk = Math.pow(1 - q, N);
+    for (let k = 0; k <= N; k++) {
+      M += pk * comboTier(b + k);
+      pk = q >= 1 ? 0 : pk * ((N - k) / (k + 1)) * (q / (1 - q));
+    }
+    return Math.round(M * 100) / 100;
   }
-  const comboTier = (c) => Math.min(12, Math.floor(c / 20) + 1);
+  function comboTier(c) { return Math.min(12, Math.floor(c / 20) + 1); }
 
   function defaults() {
     return {
@@ -558,7 +574,7 @@
       // glaive: the thrown glaive's own hits build combo (explosion-only hits don't — wiki), a heavy-attack
       // detonation spends it; Volatile bounce explosions get no combo multiplier and spend nothing
       const gain = kind === "glaive" ? (o.scenario === "crowd" ? Math.min(3, K) : 1) : K;
-      M = kind === "tennokai" ? comboTier(o.meleeCombo) : atk.bounceOnly ? 1 : comboMult(a.ic + (ext.icAdd || 0), a.hae, gain, o.comboHits);
+      M = kind === "tennokai" ? comboTier(o.meleeCombo) : atk.bounceOnly ? 1 : comboMult(a.ic + (ext.icAdd || 0), a.hae, gain, o.comboHits, 1 / rate, a.ccc);
     } else if (kind === "melee") {
       rate = (atk.fr || 1) * Math.max(0.2, 1 + a.fr + (ext.asAdd || 0)) * 1.5;
     } else {
