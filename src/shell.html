@@ -41,6 +41,53 @@ select,input[type=text],input[type=number],input[type=search]{font:inherit;font-
 input[type=range]{width:100%;accent-color:var(--brass)}
 select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.guideview{max-width:1360px;margin:0 auto}
+.gwrap{display:grid;grid-template-columns:minmax(180px,220px) minmax(0,1fr);gap:20px;align-items:start}
+.glist{position:sticky;top:12px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px;display:flex;flex-direction:column;gap:10px;max-height:calc(100vh - 24px);overflow:auto}
+.gprog{font-size:12px;color:var(--muted)}.gprog b{color:var(--brass);font-size:16px}
+.gsel{display:none}
+.gbatch{display:flex;flex-wrap:wrap;gap:4px}
+.gbl{flex-basis:100%;font-size:11px;color:var(--muted);letter-spacing:.06em}
+.gitem{font-size:13px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:var(--ink);background:var(--bg)}
+.gitem.on{background:var(--void);color:var(--bg);border-color:var(--void)}
+.gitem.off{color:var(--muted);border-style:dashed;background:transparent;opacity:.7}
+.gmain{display:flex;flex-direction:column;gap:14px;min-width:0}
+.ghead h2{margin:4px 0 2px;font-size:26px}.ghead h2 small{font-size:14px;color:var(--muted);font-weight:400}
+.gsum{margin:0 0 8px;font-size:15px}
+.gmeta{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;color:var(--muted)}.gmeta b{color:var(--ink)}
+.card h3 small{font-size:12px;color:var(--muted);font-weight:400;margin-left:6px;letter-spacing:0;text-transform:none}
+.gab{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:10px;margin-bottom:8px}
+.gabc{border:1px solid var(--line);border-radius:6px;padding:10px;display:flex;flex-direction:column;gap:4px;background:var(--bg)}
+.gabc.r-main{border-color:var(--brass);background:linear-gradient(180deg,var(--brass-soft),var(--panel))}
+.gabt{display:flex;align-items:center;gap:8px}.gabt b{font-size:15px}
+.gslot{font-family:var(--f-mono);font-weight:600;width:1.6em;height:1.6em;display:inline-grid;place-items:center;border-radius:50%;background:var(--void);color:var(--bg);font-size:13px}
+.grole{margin-left:auto;font-size:11px;padding:1px 8px;border-radius:999px;border:1px solid var(--line)}
+.r-main .grole{background:var(--brass);color:var(--panel);border-color:var(--brass)}
+.r-surv .grole{border-color:var(--good);color:var(--good)}.r-helm .grole{border-style:dashed;color:var(--muted)}
+.gabc .gen{color:var(--muted);font-size:11px}.gabc p{margin:0;font-size:13px}
+.gsc{display:flex;flex-wrap:wrap;gap:4px}.gsc span{font-size:11px;padding:0 6px;border-radius:3px;background:var(--brass-soft)}
+.gprio{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:8px}
+.gprio li{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:6px;padding:8px 10px;position:relative;background:var(--bg)}
+.gprio li:first-child{border-color:var(--brass)}
+.gprio .gpn{font-family:var(--f-mono);color:var(--brass);font-size:12px}.gprio b{font-size:15px}.gprio small{color:var(--muted);font-size:12px}
+.gcalc summary{cursor:pointer;font-size:12px;color:var(--brass)}.gcalc p{margin:4px 0;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.gok{font-size:11px;padding:1px 7px;border-radius:999px;background:color-mix(in srgb, var(--good) 15%, transparent);color:var(--good);white-space:nowrap}
+.gno{font-size:11px;padding:1px 7px;border-radius:999px;border:1px dashed var(--line);color:var(--muted);white-space:nowrap}
+.greg{display:inline-block;font-size:11.5px;font-weight:600;padding:1px 8px;border-radius:999px;color:#fff}
+.g-KR{background:#2c5d9e}.g-NA{background:#8a3d3d}.g-CN{background:#a8322a}.g-JP{background:#7a5a8c}
+.gcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:10px;margin-top:12px}
+.gcard{border:1px solid var(--line);border-radius:6px;padding:12px;display:flex;flex-direction:column;gap:6px;background:var(--bg);min-width:0}
+.gct{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.gct small{color:var(--muted);font-size:12px}
+.gcard h4{margin:0;font-size:15px}.gcon{margin:0;font-size:13px}
+.gstats{display:flex;flex-direction:column;gap:3px}
+.gsb{display:grid;grid-template-columns:2.6em minmax(0,1fr) 3.6em;align-items:center;gap:6px;font-size:12px}
+.gsb span{color:var(--muted)}.gsb i{display:block;height:6px;border-radius:3px;background:var(--line);overflow:hidden}.gsb i b{display:block;height:100%;background:var(--brass)}
+.gsb em{font-style:normal;font-family:var(--f-mono);text-align:right}
+.gdl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;margin:0;font-size:12.5px}.gdl dt{color:var(--muted)}.gdl dd{margin:0}
+.gmods{display:flex;flex-wrap:wrap;gap:4px}.gmods span{font-size:12px;padding:2px 8px;border-radius:4px;border:1px solid var(--line);background:var(--panel)}
+.gsyn{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:12px}
+.gsyn h4{margin:0 0 4px;font-size:13px;color:var(--brass)}.gsyn p{margin:0;font-size:13.5px}
+@media (max-width: 900px){.gwrap{grid-template-columns:minmax(0,1fr)}.glist{position:static;max-height:none}.glistin{display:none}.gsel{display:block}}
 .rtoc{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:6px;padding:8px 0;margin-bottom:6px;background:var(--bg)}
 .rtoc button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer;min-height:32px}
 .rtoc button:hover{border-color:var(--brass)}
@@ -289,11 +336,13 @@ header.top p{flex-basis:100%}
   <span class="ver" id="ver" data-built="__BUILD_DATE__"></span>
   <nav class="viewtabs" role="tablist" aria-label="화면">
     <a href="#" class="on" data-view="calc" role="tab">계산기</a>
+    <a href="#frames" data-view="frames" role="tab">워프레임 가이드</a>
     <a href="#patch" data-view="patch" role="tab">패치 내역</a>
   </nav>
   <p>무기와 상황을 고르면, 장착 가능한 모든 모드 조합 중 가장 빨리 죽이는 세팅을 찾습니다 · 데이터 WFCD warframe-items · 위키 Module:Weapons</p>
 </header>
 <main class="patchview" id="patchview" hidden></main>
+<main class="guideview" id="guideview" hidden></main>
 <div class="wrap" id="calcview">
   <div class="rail">
     <div class="box">

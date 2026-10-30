@@ -1584,13 +1584,14 @@ self.onmessage = function (ev) {
       + CL.map((x, i) => `<section class="card${i === 0 ? " cur" : ""}"><h3><span class="pv">v${esc(x.v)}</span>${esc(x.title)}<span class="pd">${esc(x.date)}${i === 0 ? " · 현재 버전" : ""}</span></h3><ul>${x.items.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></section>`).join("");
   }
   function showView() {
-    const patch = location.hash === "#patch";
-    $("#patchview").hidden = !patch; $("#calcview").hidden = patch;
-    $$(".viewtabs a").forEach((a) => { const on = (a.dataset.view === "patch") === patch; a.classList.toggle("on", on); a.setAttribute("aria-selected", on ? "true" : "false"); });
+    const view = location.hash === "#patch" ? "patch" : /^#frames/.test(location.hash) ? "frames" : "calc";
+    $("#patchview").hidden = view !== "patch"; $("#calcview").hidden = view !== "calc"; $("#guideview").hidden = view !== "frames";
+    if (view === "frames" && window.WF_renderGuide) window.WF_renderGuide($("#guideview"));
+    $$(".viewtabs a").forEach((a) => { const on = a.dataset.view === view; a.classList.toggle("on", on); a.setAttribute("aria-selected", on ? "true" : "false"); });
   }
   $$(".viewtabs a").forEach((a) => a.addEventListener("click", (e) => {
     e.preventDefault();
-    const h = a.dataset.view === "patch" ? "#patch" : "";
+    const h = a.dataset.view === "patch" ? "#patch" : a.dataset.view === "frames" ? "#frames" : "";
     if (location.hash !== h) history.pushState(null, "", h || location.pathname + location.search);
     showView(); window.scrollTo(0, 0);
   }));

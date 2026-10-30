@@ -12,6 +12,7 @@
 - `src/buffs.js` 워프레임 어빌리티·헬민스·아콘 샤드
 - `src/app.js`, `src/shell.html` 화면
 - `src/ocr.js` 비교 세팅의 '스크린샷으로 채우기' (브라우저 안에서 tesseract.js로 글자 인식 → 모드·아케인 이름 대조)
+- `src/guide.js`, `src/guide_list.js`, `data/guides/*.json` '워프레임 가이드' 탭 (어빌리티 역할·능력치 우선순위·위키 공식으로 확인한 브레이크포인트·지역별 커뮤니티 추천 세팅, 프레임당 JSON 한 개)
 - `src/changelog.js` 버전·패치 내역 (페이지 맨 위 버전 표시와 '패치 내역' 탭, 주소 끝 `#patch`). 고칠 때마다 맨 앞에 항목을 추가합니다.
 - `src/convert.py`, `src/convert_frames.py`, `src/wiki_lua.py` WFCD·위키 데이터 → 계산기용 데이터
 - `scripts/fetch_data.sh` 최신 데이터 내려받기, `scripts/build.sh` 빌드

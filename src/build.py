@@ -9,6 +9,12 @@ src = rd("changelog.js")+"\n"+rd("engine.js")+"\n"+(rdd("mods_ko.js") if os.path
 if os.path.exists(os.path.join(DATA,"weapons_full.js")): src += rdd("weapons_full.js")+"\n"
 assert "</script" not in src
 import datetime
-html = rd("shell.html").replace("__BUILD_DATE__", datetime.date.today().isoformat()).replace("/*__SRC__*/", src).replace("/*__SRC_EXEC__*/", src).replace("/*__APP__*/", rd("ocr.js") + "\n" + rd("app.js"))
+import json, glob
+# warframe guides: one JSON per frame in data/guides (researched community builds, ability roles, breakpoints)
+guides = {}
+for f in sorted(glob.glob(os.path.join(DATA, "guides", "*.json"))):
+    g = json.load(open(f, encoding="utf-8")); guides[g["id"]] = g
+guide_js = "window.WF_GUIDES = " + json.dumps(guides, ensure_ascii=False).replace("</", "<\\/") + ";\n" + rd("guide_list.js") + "\n" + rd("guide.js") + "\n"
+html = rd("shell.html").replace("__BUILD_DATE__", datetime.date.today().isoformat()).replace("/*__SRC__*/", src).replace("/*__SRC_EXEC__*/", src).replace("/*__APP__*/", guide_js + rd("ocr.js") + "\n" + rd("app.js"))
 open(OUTF,"w",encoding="utf-8").write(html)
 print("ok", len(html))
