@@ -374,6 +374,9 @@ self.onmessage = function (ev) {
     d.innerHTML = `<summary><span class="cname">세팅 ${L}</span><span class="ccount">비어 있음</span><button type="button" class="cdel">삭제</button></summary>
       <div class="cbody">
         <label>이름<input type="text" class="cnamein" value="세팅 ${L}" maxlength="20"></label>
+        <div class="cocr"><button type="button" class="cocrbtn">스크린샷으로 채우기</button><input type="file" class="cocrfile" accept="image/*" multiple hidden>
+          <small>아스날 모드 화면 캡처를 올리면 모드·익실러스·아케인을 읽어서 칸을 채웁니다. 여러 장 가능, 이 칸에 끌어 놓거나 Ctrl+V로 붙여 넣어도 됩니다. 리벤 수치는 리벤 카드에 마우스를 올린 화면을 같이 올리면 읽습니다.</small>
+          <div class="cocrbar" hidden><i></i></div><p class="cocrmsg" hidden></p></div>
         <datalist id="ml-${L}"></datalist>
         <div class="mgrid">
           ${melee ? `<div class="mslot fixed top c2" title="스탠스는 계산에 영향이 없습니다"><span>스탠스</span><small>계산 제외</small></div>` : ""}
@@ -420,12 +423,73 @@ self.onmessage = function (ev) {
       fn(el);
     }
     d.querySelector(".cnamein").addEventListener("input", upd);
+    // screenshot → slots
+    const ocrBox = d.querySelector(".cocr"), ocrBtn = d.querySelector(".cocrbtn"), ocrFile = d.querySelector(".cocrfile");
+    d._ocr = (files) => ocrFill(d, files, { upd, showRiv });
+    ocrBtn.addEventListener("click", () => ocrFile.click());
+    ocrFile.addEventListener("change", () => { if (ocrFile.files.length) d._ocr([...ocrFile.files]); ocrFile.value = ""; });
+    ocrBox.addEventListener("dragover", (e) => { e.preventDefault(); ocrBox.classList.add("drag"); });
+    ocrBox.addEventListener("dragleave", () => ocrBox.classList.remove("drag"));
+    ocrBox.addEventListener("drop", (e) => { e.preventDefault(); ocrBox.classList.remove("drag"); const f = [...(e.dataTransfer.files || [])].filter((x) => /^image\//.test(x.type)); if (f.length) d._ocr(f); });
     d.querySelector(".cdel").addEventListener("click", (e) => {
       e.preventDefault();
       if ($("#sets").children.length === 1) { $("#sets").innerHTML = ""; addSet(); } else d.remove();
       $("#addset").hidden = $("#sets").children.length >= 5; queueCompare();
     });
     $("#addset").hidden = box.children.length >= 5;
+  }
+  // Ctrl+V anywhere: screenshots go to the open comparison set (the last one if several are open)
+  document.addEventListener("paste", (e) => {
+    const files = [...((e.clipboardData && e.clipboardData.files) || [])].filter((x) => /^image\//.test(x.type));
+    if (!files.length) return;
+    const open = $$("#sets .cset").filter((x) => x.open);
+    const d = open[open.length - 1];
+    if (!d || !d._ocr) return;
+    e.preventDefault(); d._ocr(files);
+  });
+  async function ocrFill(d, files, { upd, showRiv }) {
+    const btn = d.querySelector(".cocrbtn"), bar = d.querySelector(".cocrbar"), msg = d.querySelector(".cocrmsg");
+    if (btn.disabled) return;
+    btn.disabled = true; bar.hidden = false; msg.hidden = false;
+    msg.textContent = "글자 인식 준비 중… (처음 한 번은 인식 도구와 한국어 데이터 약 6MB를 받습니다)";
+    try {
+      const reads = await window.WF_OCR.read(files, (p, label) => { bar.firstElementChild.style.width = Math.round(p * 100) + "%"; msg.textContent = `${label}… ${Math.round(p * 100)}%`; });
+      const w = st.weapon;
+      const ctx = { mods: modCands.concat(exilusMods(w)), arcanes: arcanesFor(w).map(([k, v]) => ({ id: k, ko: v.ko })), weaponKo: w.ko };
+      const r = window.WF_OCR.match(reads, ctx);
+      const ins = [...d.querySelectorAll(".cm")];
+      const unsure = [], empty = [];
+      ins.forEach((el, i) => {
+        const s = r.slots[i];
+        el.value = s ? (s.id === "__riven" ? RIVEN_ENTRY.ko : s.ko) : "";
+        syncSlot(el, el.value ? resolveMod(el.value) : null);
+        const q = !!s && (!s.sure || s.guessRiv);
+        el.parentElement.classList.toggle("ocrq", q);
+        if (q) unsure.push(`${i + 1}번 ${s.ko}`);
+        if (!s) empty.push(i + 1);
+      });
+      const xin = d.querySelector(".cx"), ain = d.querySelector(".carc");
+      if (r.exilus) { xin.value = r.exilus.ko; syncEx(xin); xin.parentElement.classList.toggle("ocrq", !r.exilus.sure); if (!r.exilus.sure) unsure.push("익실러스 " + r.exilus.ko); }
+      if (r.arcane) { ain.value = r.arcane.ko; syncArc(ain); ain.parentElement.classList.toggle("ocrq", !r.arcane.sure); if (!r.arcane.sure) unsure.push("아케인 " + r.arcane.ko); }
+      let rivNote = "";
+      if (r.riven) {
+        const ks = [...d.querySelectorAll(".crk")], vs = [...d.querySelectorAll(".crv")];
+        const pos = r.riven.stats.filter((x) => !x.neg).slice(0, 3), neg = r.riven.stats.find((x) => x.neg);
+        const rows = [pos[0], pos[1], pos[2], neg];
+        rows.forEach((x, i) => {
+          const has = (k) => k && [...ks[i].options].some((o) => o.value === k);
+          ks[i].value = x && has(x.k) ? x.k : ""; vs[i].value = x ? x.v : "";
+          ks[i].parentElement.classList.toggle("ocrq", !!x && (x.guess || !has(x.k)));
+        });
+        const n = r.riven.stats.length;
+        rivNote = n ? ` 리벤 옵션 ${n}개를 읽었습니다${r.riven.stats.some((x) => x.guess || !x.k) ? " (점선 표시된 옵션은 이름을 확인해 주세요)" : ""}.` : " 리벤 수치는 리벤 카드에 마우스를 올린 화면을 같이 올리면 읽습니다.";
+      }
+      showRiv(); upd();
+      const got = r.slots.filter(Boolean).length + (r.exilus ? 1 : 0) + (r.arcane ? 1 : 0);
+      msg.innerHTML = `${got}칸을 채웠습니다.${unsure.length ? ` <b>점선 칸은 확인해 주세요</b>: ${esc(unsure.join(", "))}.` : ""}${empty.length ? ` 읽지 못한 칸: ${empty.join(", ")}번.` : ""}${r.orderSure ? "" : " 칸 순서는 화면 위치로 추정했습니다 (원소 순서에 영향)."}${esc(rivNote)}`;
+    } catch (e) {
+      msg.textContent = "읽지 못했습니다: " + (e && e.message ? e.message : e);
+    } finally { btn.disabled = false; bar.hidden = true; }
   }
   // read one set in slot order (empty slots skipped); conflicts are already blocked at input, this is a safety net
   function setMods(d) {

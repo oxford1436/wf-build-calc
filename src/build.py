@@ -9,6 +9,6 @@ src = rd("changelog.js")+"\n"+rd("engine.js")+"\n"+(rdd("mods_ko.js") if os.path
 if os.path.exists(os.path.join(DATA,"weapons_full.js")): src += rdd("weapons_full.js")+"\n"
 assert "</script" not in src
 import datetime
-html = rd("shell.html").replace("__BUILD_DATE__", datetime.date.today().isoformat()).replace("/*__SRC__*/", src).replace("/*__SRC_EXEC__*/", src).replace("/*__APP__*/", rd("app.js"))
+html = rd("shell.html").replace("__BUILD_DATE__", datetime.date.today().isoformat()).replace("/*__SRC__*/", src).replace("/*__SRC_EXEC__*/", src).replace("/*__APP__*/", rd("ocr.js") + "\n" + rd("app.js"))
 open(OUTF,"w",encoding="utf-8").write(html)
 print("ok", len(html))

@@ -105,6 +105,16 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
 .mslot.filled{border-color:var(--brass);background:linear-gradient(180deg,var(--brass-soft),var(--panel))}
 .mslot.riv{border-color:#8a5cc7;background:linear-gradient(180deg,color-mix(in srgb, #8a5cc7 22%, var(--panel)),var(--panel))}
 .mslot.bad{border-color:var(--bad);background:color-mix(in srgb, var(--bad) 10%, var(--panel))}
+.mslot.ocrq,.crivrow.ocrq select,.crivrow.ocrq input{outline:2px dashed var(--mid);outline-offset:1px}
+.cocr{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;border:1px dashed var(--line);border-radius:6px;padding:8px}
+.cocr.drag{border-color:var(--brass);background:var(--brass-soft)}
+.cocrbtn{font:inherit;font-size:12px;border:1px solid var(--brass);background:var(--brass-soft);color:var(--ink);border-radius:4px;padding:4px 10px;cursor:pointer}
+.cocrbtn:disabled{opacity:.6;cursor:wait}
+.cocr small{color:var(--muted);font-size:11px;flex:1 1 14em}
+.cocrbar{flex:1 1 100%;height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.cocrbar i{display:block;height:100%;width:0;background:var(--brass);transition:width .2s}
+.cocrmsg{margin:0;font-size:12px;line-height:1.5}
+.cocrmsg b{color:var(--mid)}
 @media (max-width: 440px){.mslot{font-size:10.5px;padding-left:3px;padding-right:3px}}
 .ghostbtn{font:inherit;font-size:13px;border:1px dashed var(--brass);background:transparent;color:var(--brass);border-radius:6px;padding:7px;cursor:pointer}
 .ghostbtn:hover{background:var(--brass-soft)}
