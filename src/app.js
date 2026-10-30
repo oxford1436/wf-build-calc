@@ -129,7 +129,7 @@ self.onmessage = function (ev) {
       const dmg = {}; for (const t in s.dmg) dmg[t] = +(s.plague ? s.dmg[t] + (total - base) / Object.keys(s.dmg).length : s.dmg[t] * total / base).toFixed(2);
       const tk = (s.kind || {})[g.hand] || "";
       return { id: "zaw_" + slugId(a + "_" + b + "_" + c), ko: `${s.ko} · ${g.ko} · ${l.ko}`, en: `Zaw ${a} / ${b} / ${c}`, slot: "melee", cls: "melee", type: "Melee", valence: false, modular: { kind, parts: [a, b, c] },
-        attacks: [{ name: "일반 공격 (휘두르기, 연속기 빌드)", en: "Normal Attack", kind: "melee", desc: `자우 ${ZTYPE_KO[tk] || tk} (${g.hand === "TwoHanded" ? "양손" : "한손"} 손잡이). 연속기 12배를 유지하며 휘두르는 운용 — 자우 강공 수치는 위키 데이터가 없어 휘두르기만 계산합니다`,
+        attacks: [{ name: "일반 공격 (휘두르기, 연속기 빌드)", en: "Normal Attack", kind: "melee", desc: `자우 ${ZTYPE_KO[tk] || tk} (${g.hand === "TwoHanded" ? "양손" : "한손"} 손잡이). 연속기를 쌓아 가며 휘두르는 운용 — 자우 강공 수치는 위키 데이터가 없어 휘두르기만 계산합니다`,
           dmg, cc: +(s.cc + l.cc).toFixed(3), cd: s.cd, sc: +(s.sc + l.sc).toFixed(3), fr: +(g.spd + l.spd + s.spd).toFixed(3) }] };
     }
     const ch = D.chambers[a], g = D.grips[b], l = D.loaders[c]; if (!ch || !g || !l || !ch.dmg[b]) return null;
@@ -221,6 +221,7 @@ self.onmessage = function (ev) {
     $("#atkstats").innerHTML = atkStatsHtml(atk);
     $("#valrow").hidden = !w.valence;
     $("#mercyrow").hidden = !w.mercyBuff;
+    $("#comborow").hidden = w.cls !== "melee";
     $("#aimrow").hidden = w.cls === "melee";
     renderArcanes();
     renderShards();
@@ -492,7 +493,7 @@ self.onmessage = function (ev) {
   function rivenOptionsHtml() {
     const cls = modClass(st.weapon);
     const base = Object.entries(RIV_KO).filter(([k]) => k !== "sd" && !(k === "ic" && cls !== "melee") && !(k === "ms" && cls === "melee")).map(([k, v]) => `<option value="${k}">${v}</option>`).join("") + `<option value="sd">상태이상 피해 (접합)</option>`;
-    const other = (cls === "melee" ? RIV_OTHER.melee : RIV_OTHER.gun).map(([k, v]) => `<option value="x_${k}">${v} (${RIV_HEAVY[k] ? "강공 연속기에만 반영" : "계산 영향 없음"})</option>`).join("");
+    const other = (cls === "melee" ? RIV_OTHER.melee : RIV_OTHER.gun).map(([k, v]) => `<option value="x_${k}">${v} (${k === "combochance" ? "연속기 쌓는 속도에 반영" : k === "hae" ? "강공 계산에 반영" : "계산 영향 없음"})</option>`).join("");
     return `<option value="">—</option>` + base + other;
   }
   function renderRivenSelects() {
@@ -645,6 +646,7 @@ self.onmessage = function (ev) {
     o.frameArcs = pickedFA().filter((id) => FRAME_ARC[id].kind === "weapon");
     o.exStr = frameStats().str;
     o.formaMax = $("#forma").value === "" ? null : +$("#forma").value;
+    o.comboWindow = +$("#combowin").value;
     o.frameSet = { gladiator: Math.max(0, Math.min(3, +$("#setglad").value || 0)), vigilante: Math.max(0, Math.min(2, +$("#setvig").value || 0)) };
     o.ext = buffExt(o.scenario);
     o.maxEnergy = o.ext.maxEnergy;
@@ -840,7 +842,7 @@ self.onmessage = function (ev) {
     html += `<section class="card"><h3>수치</h3><div class="kv">
       ${kv("치명타 확률", pct(r.cc))}${kv("치명타 피해", r.cd.toFixed(2) + "배")}
       ${kv("상태이상 확률", pct(r.sc) + (atk.kind === "gun" ? " /발" : ""))}${atk.kind === "gun" || atk.kind === "radial" ? kv("멀티샷", r.ms.toFixed(2)) : ""}
-      ${r.M > 1 ? kv("연속기 배율 (강공 때)", (Number.isInteger(r.M) ? r.M : "평균 " + r.M.toFixed(1)) + "배") : kv(atk.kind === "melee" ? "초당 타격" : "초당 발사", r.rate.toFixed(2))}${kv("기본 피해 보너스", "+" + pct(r.dmgb))}
+      ${r.M > 1 ? kv("연속기 배율 (강공 때)", (Number.isInteger(r.M) ? r.M : "평균 " + r.M.toFixed(1)) + "배") : kv(atk.kind === "melee" ? "초당 타격" : "초당 발사", r.rate.toFixed(2))}${atk.kind === "melee" ? kv(o.comboWindow > 0 ? `연속기 배율 (${o.comboWindow / 60}분 평균)` : "연속기 배율", (r.tierNow >= 11.995 ? "12" : r.tierNow.toFixed(1)) + "배") : ""}${kv("기본 피해 보너스", "+" + pct(r.dmgb))}
       ${kv("상태이상 피해", "+" + pct(r.sd))}${kv("상태이상 지속", pct(r.dur))}
       ${r.u ? kv("인플루언스 가동률", pct(r.u)) : ""}${kv(o.scenario === "crowd" && r.perF[o.factions[0]].Keff > r.K + 0.05 ? "한 발에 같이 잡히는 적 (폭발 포함)" : "한 번에 맞는 적", Math.max(r.K, o.scenario === "crowd" ? r.perF[o.factions[0]].Keff || 0 : 0).toFixed(1) + "명")}
       ${r.fallM && r.fallM < 0.995 ? kv("거리·폭발 가장자리 감쇠", pct(r.fallM)) : ""}${r.tenno ? kv("텐노카이 강공", `${Math.round(r.tenno.f * 100)}% 타격마다 1회`) : ""}
@@ -931,7 +933,7 @@ self.onmessage = function (ev) {
       <li>잡몹 무리: 반경 20m 안 12명, 한 발이 맞히는 수는 폭발 반경·관통으로 추정. 직격+폭발 무기는 주변 적이 폭발만 맞는다고 보고, 폭발만으로 죽는 속도만큼 같이 잡히는 것으로 계산합니다. 폭발 투사체는 관통이 적용되지 않습니다(위키 "Punch Through"). 갈바나이즈드 계열 피해 보너스와 세컨더리 이레디에이트 전파는 직격에만 적용합니다(위키). 처치 조건 효과(갈바나이즈드, 머시리스 등)는 잡몹·중장갑에서는 최대 중첩, 보스전에서는 0으로 계산합니다.</li>
       <li>코퍼스 실드는 독·출혈 도트만 관통하고 나머지는 실드를 먼저 깎습니다. 자성 중첩은 실드·오버가드 피해를 최대 4.25배로 올립니다.${o.og ? " 엑시무스 오버가드(위키 레벨 공식)는 방어구·바이러스 영향 없이 먼저 깎고, 보이드는 1.5배입니다." : ""}</li>
       <li>무기별 숨은 특성은 위키 무기 데이터에서 가져옵니다: 확정 상태이상(예: 조리스 회수 폭발의 전기·충격), 헤드샷 배율 변경, 거리별 피해 감소(잡몹은 2~20m에 고르게, 중장갑은 15m), 폭발 가장자리 피해 감소, 최대 탄약·탄약 소모.</li>
-      <li>근접 휘두르기는 연속기 12배 유지, 공격 속도 1당 초당 1.5타로 근사합니다. 텐노카이는 그 배율의 강공이 15%(디시플린즈 메리트는 4타마다) 섞이는 것으로 계산합니다. 글레이브·강공은 초기 연속기로 배율을 정합니다. 강공이 연속기를 쓰고 나면 초기 연속기는 초당 40씩 다시 차므로(위키), 강공 간격이 짧으면 덜 찬 배율로 터지고, 그 사이 맞힌 타수(연속기 획득 확률 반영)가 모자란 만큼을 메웁니다. 글레이브는 던지고 돌아오는 비행 시간(투척 속도 기준)을 주기에 넣습니다.</li>
+      <li>근접 휘두르기는 공격 속도 1당 초당 1.5타로 근사합니다. 연속기는 '근접 연속기' 옵션의 시간 동안 0(초기 연속기가 있으면 그 값)부터 쌓는 평균 배율을 씁니다. 한 번에 2명(잡몹) 또는 1명을 맞히고, 타격당 스탠스 배율 평균 1.5점에 연속기 획득 확률을 곱해 쌓이며, 220점(12배)에서 멈춥니다. 텐노카이는 그 배율의 강공이 15%(디시플린즈 메리트는 4타마다) 섞이는 것으로 계산합니다. 글레이브·강공은 초기 연속기로 배율을 정합니다. 강공이 연속기를 쓰고 나면 초기 연속기는 초당 40씩 다시 차므로(위키), 강공 간격이 짧으면 덜 찬 배율로 터지고, 그 사이 맞힌 타수(연속기 획득 확률 반영)가 모자란 만큼을 메웁니다. 글레이브는 던지고 돌아오는 비행 시간(투척 속도 기준)을 주기에 넣습니다.</li>
       <li>치명타는 확률을 그대로 반영한 기대값(평균)으로 계산합니다. 운이 좋고 나쁜 편차, 반동·명중 퍼짐, 투사체 비행 시간(15m 기준 0.1초 안팎)은 넣지 않습니다.</li>
       <li>모드 용량: 오로킨 카탈리스트(용량 = 최대 랭크×2), 모든 모드 최대 랭크 기준입니다. 같은 극성 칸은 소모 절반(올림), 다른 극성 칸은 25% 증가(올림)이고, 포르마 한도 안에서 들어가는 조합만 추천합니다.</li>
       <li>저격총은 조준 옵션을 켜면 최대 배율 줌 보너스와 저격 콤보(20초 연속 교전 평균)를 넣습니다. 익절티드 무기는 워프레임 위력 값을 기본 피해(또는 위키에 적힌 방식)에 반영합니다.</li>
@@ -1147,11 +1149,12 @@ self.onmessage = function (ev) {
     for (const [k, ko, tv] of other) {
       let s = 1, note = "";
       if (k === "range") { s = atk.kind === "melee" ? 0.8 : atk.kind === "heavy" && atk.radius ? 0.85 : 1; note = atk.kind === "melee" ? "휘두르기 사거리 감소" : atk.radius ? "슬램 반경 감소" : "투척·폭발에는 영향 없음"; }
-      else if (RIV_HEAVY[k] && (atk.kind === "heavy" || atk.kind === "glaive")) {
+      else if ((RIV_HEAVY[k] && (atk.kind === "heavy" || atk.kind === "glaive")) || (k === "combochance" && atk.kind === "melee" && st.results.o.comboWindow > 0)) {
         // modeled: combo count chance / heavy attack efficiency change how much combo is back by the next heavy attack
         const riv = Object.assign({}, posRiv, { [RIV_HEAVY[k]]: -tv * 1.2 * Math.abs(RIV_FORM["3+1"].neg) });
         s = evalBuild(restB.concat(["__riven"]), top.val, top.arcane, null, riv).score / withPos;
-        note = s >= 0.97 ? "강공 사이에 초기 연속기가 다 차서 거의 무해" : "강공 간격이 짧아 초기 연속기(초당 40 회복)가 덜 찬 채로 터짐";
+        note = atk.kind === "melee" ? (s >= 0.97 ? "연속기 배율을 쓰는 모드가 없어 거의 무해" : "연속기가 느리게 쌓여 블러드 러시·위핑 운즈 등이 약해짐")
+          : s >= 0.97 ? "강공 사이에 초기 연속기가 다 차서 거의 무해" : "강공 간격이 짧아 초기 연속기(초당 40 회복)가 덜 찬 채로 터짐";
       }
       else if (k === "combochance" || k === "combodur") { s = atk.kind === "melee" ? 0.9 : 1; note = atk.kind === "melee" ? "연속기 유지가 느려짐" : "초기 연속기로 유지되어 영향 없음"; }
       else if (k === "hae") { s = 1; note = "강공을 쓰지 않아 무관"; }

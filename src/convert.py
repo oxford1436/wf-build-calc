@@ -168,7 +168,7 @@ def conv(w, typ):
             cc, cd, sc = (norm.get("crit_chance") or 0) / 100, norm.get("crit_mult") or 1.5, (norm.get("status_chance") or 0) / 100
             atks = []
             if nd:
-                atks.append({"name": "일반 공격 (휘두르기, 연속기 빌드)", "en": "Normal Attack", "kind": "melee", "desc": "연속기 12배를 유지하며 휘두르는 운용. 블러드 러시·위핑 운즈·컨디션 오버로드가 여기서 힘을 냅니다", "dmg": nd, "cc": cc, "cd": cd, "sc": sc, "fr": norm.get("speed") or w.get("fireRate") or 1})
+                atks.append({"name": "일반 공격 (휘두르기, 연속기 빌드)", "en": "Normal Attack", "kind": "melee", "desc": "연속기를 쌓아 가며 휘두르는 운용. 블러드 러시·위핑 운즈·컨디션 오버로드가 여기서 힘을 냅니다", "dmg": nd, "cc": cc, "cd": cd, "sc": sc, "fr": norm.get("speed") or w.get("fireRate") or 1})
                 ha = w.get("heavyAttackDamage")
                 if ha:
                     tot = sum(nd.values())

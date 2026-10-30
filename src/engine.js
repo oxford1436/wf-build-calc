@@ -236,13 +236,28 @@
     return Math.round(M * 100) / 100;
   }
   function comboTier(c) { return Math.min(12, Math.floor(c / 20) + 1); }
+  // Swing builds: average combo multiplier over a continuous fight of W seconds. The counter starts at Initial Combo and
+  // rises g points/s (hits/s × enemies per swing × stance points per hit × combo count chance) until 12x at 220.
+  // W = 0 → the old assumption (always 12x, combo already built).
+  function comboAvg(c0, g, W) {
+    if (!(W > 0)) return 12;
+    if (!(g > 0)) return comboTier(c0);
+    let t = 0, sum = 0, c = c0;
+    while (t < W - 1e-9) {
+      const tier = comboTier(c);
+      if (tier >= 12) { sum += 12 * (W - t); break; }
+      const next = (Math.floor(c / 20) + 1) * 20, dt = Math.min(W - t, (next - c) / g);
+      sum += tier * dt; t += dt; c = next;
+    }
+    return sum / W;
+  }
 
   function defaults() {
     return {
       scenario: "crowd", tier: "light", factions: ["grineer", "corpus", "infested"], metric: "geo",
       level: 150, steel: true, crowdN: 12, density: 6 / (Math.PI * 7.9 * 7.9), hits: null,
       kills: true, hs: 0, aim: false, casting: false, energy: false,
-      ext: {}, val: null, arcane: null, mercy: false, throwOverhead: 0.5, comboHits: 0, meleeCombo: 220, og: false, frameArcs: [], armor: 0,
+      ext: {}, val: null, arcane: null, mercy: false, throwOverhead: 0.5, comboHits: 0, meleeCombo: 220, comboWindow: 120, comboPts: 1.5, og: false, frameArcs: [], armor: 0,
       targets: null, dt: 0.2, tmax: 60,
     };
   }
@@ -336,7 +351,7 @@
     const tn = atk.kind === "melee" ? tennoOf(mods, Object.assign({}, o, { kills: o.scenario === "boss" ? false : o.kills })) : null;
     if (tn) {
       const heavyAtk = (weapon.attacks || []).find((x) => x.en === "Heavy Attack") || atk;
-      parts = [atk, Object.assign({}, heavyAtk, { kind: "tennokai", name: atk.name, tenno: tn })];
+      parts = [atk, Object.assign({}, heavyAtk, { kind: "tennokai", name: atk.name, tenno: tn, swingFr: atk.fr })];
       weights = [1 / (1 + tn.f), tn.f / (1 + tn.f)];
     }
     // Volatile Quick Return with a detonation build: the first contact also sets off a bounce explosion
@@ -560,6 +575,13 @@
     }
 
     let rate, M = 1;
+    // combo built by swinging (shared by normal swings and Tennokai heavies)
+    const swingTier = (fr) => {
+      if (!(o.comboWindow > 0)) return comboTier(o.meleeCombo);
+      const hps = (fr || 1) * Math.max(0.2, 1 + a.fr + (ext.asAdd || 0)) * 1.5;
+      const Ks = o.scenario === "crowd" ? Math.min(o.crowdN, 2) : 1;
+      return comboAvg(a.ic + (ext.icAdd || 0), hps * Ks * (o.comboPts || 1.5) * Math.max(0, 1 + (a.ccc || 0)), o.comboWindow);
+    };
     if (isHeavy) {
       // wind-up (and glaive charged throws) only speed up with Heavy Attack Wind Up Speed, not attack speed (wiki "Attack Speed");
       // attack speed only shortens the heavy swing animation after the wind-up
@@ -574,7 +596,7 @@
       // glaive: the thrown glaive's own hits build combo (explosion-only hits don't — wiki), a heavy-attack
       // detonation spends it; Volatile bounce explosions get no combo multiplier and spend nothing
       const gain = kind === "glaive" ? (o.scenario === "crowd" ? Math.min(3, K) : 1) : K;
-      M = kind === "tennokai" ? comboTier(o.meleeCombo) : atk.bounceOnly ? 1 : comboMult(a.ic + (ext.icAdd || 0), a.hae, gain, o.comboHits, 1 / rate, a.ccc);
+      M = kind === "tennokai" ? swingTier(atk.swingFr) : atk.bounceOnly ? 1 : comboMult(a.ic + (ext.icAdd || 0), a.hae, gain, o.comboHits, 1 / rate, a.ccc);
     } else if (kind === "melee") {
       rate = (atk.fr || 1) * Math.max(0.2, 1 + a.fr + (ext.asAdd || 0)) * 1.5;
     } else {
@@ -587,7 +609,7 @@
     const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, atk.mag * (1 + a.mag)) : 0);
     const msLock = a.msLock > 0;
     const ms0 = (atk.pellets || 1) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)));
-    const tierNow = isHeavy ? M : (isMelee ? comboTier(o.meleeCombo) : 1);
+    const tierNow = isHeavy ? M : (isMelee ? swingTier(atk.fr) : 1);
     const ccMod = (isHeavy ? 2 * a.cc : a.cc) + a.ccHeavyNoDouble + (ext.ccAdd || 0);
     let ccBase = (atk.cc || 0) * (1 + ccMod + (a.br + (isMelee ? a.glad : 0)) * Math.max(0, tierNow - 1)) + a.ccFlat + (ext.ccFlat || 0);
     if (o.arcane === "melee_animosity" && isHeavy) ccBase += (atk.cc || 0) * 0.42 * 1.5;
@@ -739,7 +761,7 @@
         scoreSS += Math.log(Math.max(1e-9, dispDirect + dispDot + dispBlast));
       }
       if (!best || scoreSS > best.scoreSS) {
-        best = { nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, cc, cd, critf: 1 + cc * (cd - 1), sc, ms, rate, M, K, N, u, ntypes, gco, co, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, fArc, hsFrac, hsM,
+        best = { nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, cc, cd, critf: 1 + cc * (cd - 1), sc, ms, rate, M, tierNow, K, N, u, ntypes, gco, co, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, fArc, hsFrac, hsM,
           fallM, ogM: (arc && arc.ogMult ? arc.ogMult : 1) * (1 + 0.5 * (share.void || 0)), frozenM: arc && arc.frozenMult && isMelee ? arc.frozenMult : 0, coldVuln: arc && arc.coldVuln ? arc.coldVuln : 0 };
       }
     }
@@ -929,5 +951,5 @@
     return out;
   }
 
-  root.WFEngine = { evaluate, optimize, defaults, targetsFor, enemyStats, FACTIONS, UNITS, PRIM, COMBO, aggregate, comboMult, ttk, capacityPlan };
+  root.WFEngine = { evaluate, optimize, defaults, targetsFor, enemyStats, FACTIONS, UNITS, PRIM, COMBO, aggregate, comboMult, comboAvg, ttk, capacityPlan };
 })(typeof self !== "undefined" ? self : globalThis);
