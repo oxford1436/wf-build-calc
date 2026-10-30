@@ -322,6 +322,29 @@
     return p.tmax + hp / Math.max(1e-6, lastRate);
   }
 
+  // element concept chosen by the player, e.g. ["viral","slash"]. Distance 0 = every listed type is a real part of the
+  // damage (elements ≥ 10% of the damage, physical ≥ 5% of the damage or of the status procs); with o.conceptOnly, no
+  // other element over 10%. Partial builds get partial credit (one of two components of a combined element = half way),
+  // so the beam search can walk towards the concept instead of hitting a wall.
+  const PHYS_T = ["impact", "punct", "slash"];
+  const COMP = { blast: ["heat", "cold"], gas: ["heat", "tox"], rad: ["heat", "elec"], viral: ["cold", "tox"], corr: ["elec", "tox"], mag: ["cold", "elec"] };
+  function conceptDist(share, procs, o) {
+    const c = o.concept;
+    if (!c || !c.length) return 0;
+    let ptot = 0; for (const k in procs) ptot += procs[k];
+    const has = (b) => (share[b] || 0) >= 0.05 || Object.keys(COMP).some((x) => (share[x] || 0) >= 0.05 && COMP[x].includes(b));
+    let d = 0;
+    for (const T of c) {
+      if (PHYS_T.includes(T)) { if (Math.max(share[T] || 0, ptot > 0 ? (procs[T] || 0) / ptot : 0) < 0.05) d += 1; }
+      else if ((share[T] || 0) < 0.1) d += COMP[T] ? 1 - 0.5 * COMP[T].filter(has).length / 2 : 1;
+    }
+    if (o.conceptOnly) {
+      const parts = new Set(c.flatMap((T) => COMP[T] || []));
+      for (const k in share) if (!PHYS_T.includes(k) && !c.includes(k) && !parts.has(k) && k !== "void" && k !== "true" && share[k] >= 0.1) d += 1;
+    }
+    return d;
+  }
+
   // does the first attack alone (its hit and its own status procs, no damage over time) kill the enemy?
   function oneHit(p) { return ttk(Object.assign({}, p, { r: 0, dot: {}, blast: 0, F: 0 }), p.dt) >= p.hp - 1e-6; }
 
@@ -333,7 +356,8 @@
       let best = evaluate1(weapon, atk, mods, Object.assign({}, o, { layoutIdx: 0 }), riven);
       for (let i = 1; i < (best.nLayouts || 1); i++) {
         const r = evaluate1(weapon, atk, mods, Object.assign({}, o, { layoutIdx: i }), riven);
-        if (r.score > best.score) best = r;
+        const d = r.conceptD || 0, dB = best.conceptD || 0;
+        if (d < dB - 1e-9 || (Math.abs(d - dB) < 1e-9 && r.score > best.score)) best = r;
       }
       return best;
     }
@@ -451,7 +475,7 @@
         const tier = o.scenario === "boss" ? "boss" : "heavy";
         const tg = enemyStats(f, tier, lv, o.steel);
         const shc = 1 - (o.ext.shieldCut || 0);
-        return Object.assign({}, base, hitP, { hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar, og: o.scenario === "heavy" && o.og ? overguardAt(lv) : 0 });
+        return Object.assign({}, base, hitP, { hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar, og: o.og ? overguardAt(lv) : 0 });
       };
       const lo = solve(targets.lo[f]), hi = solve(targets.hi[f]), top = targets.top ? solve(targets.top[f]) : hi;
       // highest level where the first attack alone (with its own procs) still kills that enemy
@@ -465,7 +489,8 @@
       perF[f] = Object.assign({}, lo, { hi, top, oneLv, period, kps: Math.cbrt(lo.kps * hi.kps * top.kps), kpsLo: lo.kps, direct: disp.direct, dot: disp.dot, blast: disp.blast, dotBy: disp.dotBy, perShot: disp.direct + disp.dot + disp.blast });
     }
     const vals = o.factions.map((f) => perF[f].kps);
-    const score = o.metric === "min" ? Math.min(...vals) : Math.exp(vals.reduce((s, x) => s + Math.log(Math.max(x, 1e-9)), 0) / vals.length);
+    let score = o.metric === "min" ? Math.min(...vals) : Math.exp(vals.reduce((s, x) => s + Math.log(Math.max(x, 1e-9)), 0) / vals.length);
+    if (main.conceptD > 0 && o.conceptPenalty !== false) score *= Math.pow(0.01, main.conceptD);   // outside the element concept: ranks below builds inside it
     return Object.assign({}, main, { score, perF, kills, tenno: tn, parts: res.map((x, i) => ({ kind: parts[i].kind, radius: parts[i].radius || 0, share: x.share, bounce: !!parts[i].bounceOnly })) });
   }
 
@@ -785,8 +810,10 @@
         };
         scoreSS += Math.log(Math.max(1e-9, dispDirect + dispDot + dispBlast));
       }
+      const cD = conceptDist(share, procs, o);
+      scoreSS -= 50 * cD;      // a layout that breaks the element concept is used only when no layout keeps it
       if (!best || scoreSS > best.scoreSS) {
-        best = { nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, cc, cd, critf: 1 + cc * (cd - 1), sc, ms, rate, M, tierNow, K, N, u, ntypes, gco, co, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, fArc, hsFrac, hsM,
+        best = { conceptOk: cD === 0, conceptD: cD, nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, cc, cd, critf: 1 + cc * (cd - 1), sc, ms, rate, M, tierNow, K, N, u, ntypes, gco, co, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, fArc, hsFrac, hsM,
           fallM, ogM: (arc && arc.ogMult ? arc.ogMult : 1) * (1 + 0.5 * (share.void || 0)), frozenM: arc && arc.frozenMult && isMelee ? arc.frozenMult : 0, coldVuln: arc && arc.coldVuln ? arc.coldVuln : 0 };
       }
     }
@@ -982,5 +1009,5 @@
     return out;
   }
 
-  root.WFEngine = { evaluate, optimize, defaults, targetsFor, levelsOf, enemyStats, FACTIONS, UNITS, PRIM, COMBO, aggregate, comboMult, comboAvg, ttk, capacityPlan };
+  root.WFEngine = { evaluate, optimize, defaults, targetsFor, levelsOf, conceptDist, enemyStats, FACTIONS, UNITS, PRIM, COMBO, aggregate, comboMult, comboAvg, ttk, capacityPlan };
 })(typeof self !== "undefined" ? self : globalThis);

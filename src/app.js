@@ -209,6 +209,44 @@ self.onmessage = function (ev) {
     if (pendingOcr) { const reads = pendingOcr, d = $$("#sets .cset")[0]; if (d) ocrApply(d, reads, `${w.ko}(으)로 다시 맞춰 봤습니다. `); }
   }
 
+  /* ---------------- element concept, enemy, element order ---------------- */
+  const CONCEPT_TYPES = ["viral", "corr", "heat", "cold", "elec", "tox", "blast", "gas", "mag", "rad", "slash", "punct", "impact"];
+  function addConcept(v) {
+    const box = $("#concepts"), n = box.querySelectorAll("select").length;
+    if (n >= 4) return;
+    const sel = document.createElement("select");
+    sel.setAttribute("aria-label", `속성 ${n + 1}`);
+    sel.innerHTML = `<option value="">자동</option>` + CONCEPT_TYPES.map((t) => `<option value="${t}">${TYPE_KO[t]}</option>`).join("");
+    sel.value = v || "";
+    sel.addEventListener("change", conceptChanged);
+    box.insertBefore(sel, box.querySelector(".cadd"));
+    box.querySelector(".cadd").hidden = n + 1 >= 4;
+  }
+  function initConcepts() {
+    const box = $("#concepts");
+    box.innerHTML = `<button type="button" class="cadd">+ 속성 추가</button>`;
+    box.querySelector(".cadd").addEventListener("click", () => { addConcept(""); const l = $$("#concepts select"); l[l.length - 1].focus(); });
+    addConcept(""); addConcept("");
+  }
+  function conceptChanged() { if (typeof onUrlState === "function") onUrlState(); }
+  function setEnemy(v) {
+    const sc = $("#scenario");
+    if (v === "boss") sc.value = "boss"; else if (sc.value === "boss") sc.value = "crowd";
+    syncEnemySeg();
+    sc.dispatchEvent(new Event("change"));
+  }
+  function syncEnemySeg() {
+    const boss = $("#scenario").value === "boss";
+    $$("#enemyseg button").forEach((b) => { const on = (b.dataset.v === "boss") === boss; b.classList.toggle("on", on); b.setAttribute("aria-checked", on ? "true" : "false"); });
+  }
+  function renderElemOrder(w) {
+    const innate = Object.keys((w.attacks[st.atk] || {}).dmg || {}).filter((t) => ["heat", "cold", "elec", "tox"].includes(t));
+    const last = w.valence ? "무기 고유 원소·베일런스" : innate.length ? `무기 고유 원소 (${innate.map((t) => TYPE_KO[t]).join("·")})` : null;
+    const chips = [`<span class="ochip">① 모드 1→8번 칸 <small>(리벤은 그 칸 자리)</small></span>`, `<span class="ochip">② 보라 아콘 샤드 전기 <small>(전기 모드 자리, 없으면 모드 뒤)</small></span>`];
+    if (last) chips.push(`<span class="ochip">③ ${last} <small>(화염→냉기→전기→독)</small></span>`);
+    $("#eorder").innerHTML = `<b>원소가 합쳐지는 순서</b>${chips.join('<span class="oarr">→</span>')}<span>어빌리티(일렉트릭 실드 등)와 아케인이 주는 원소는 합쳐지지 않습니다.</span>`;
+  }
+
   function renderAll() {
     renderWeaponList();
     const w = st.weapon, atk = w.attacks[st.atk];
@@ -222,6 +260,7 @@ self.onmessage = function (ev) {
     $("#atkdesc").textContent = (atk.desc || "") + (w.exalted ? ` ${exaltedNote(w)}` : "");
     $("#atkstats").innerHTML = atkStatsHtml(atk);
     $("#valrow").hidden = !w.valence;
+    renderElemOrder(w);
     $("#mercyrow").hidden = !w.mercyBuff;
     $("#comborow").hidden = w.cls !== "melee";
     $("#aimrow").hidden = w.cls === "melee";
@@ -743,6 +782,9 @@ self.onmessage = function (ev) {
     o.ext = buffExt(o.scenario);
     o.maxEnergy = o.ext.maxEnergy;
     if (o.ext.weakFrac) { o.hs = Math.max(o.hs, o.ext.weakFrac); }
+    const cs = $$("#concepts select").map((x) => x.value);
+    o.concept = [...new Set(cs.filter(Boolean))];
+    o.conceptOnly = o.concept.length > 0 && cs.every(Boolean);
     o.targets = E.targetsFor(o);
     return o;
   }
@@ -833,7 +875,8 @@ self.onmessage = function (ev) {
   /* ---------------- evaluation helpers ---------------- */
   function evalBuild(ids, val, arcane, oOverride, rivEff, elemOrder) {
     const w = st.weapon, atk = w.attacks[st.atk];
-    const o = Object.assign({}, oOverride || st.results.o, { val, arcane, elemOrder: elemOrder || null, layoutTTK: true });
+    // shown speeds are real speeds: the element concept only steers the element layout here, it never scales the score
+    const o = Object.assign({}, oOverride || st.results.o, { val, arcane, elemOrder: elemOrder || null, layoutTTK: true, conceptPenalty: false });
     const mods = ids.map((id) => id === "__riven" ? { id: "__riven", eff: rivEff || (st.results.owned ? st.results.owned.eff : {}) } : MOD_BY_ID[id]);
     return E.evaluate(w, atk, mods, o);
   }
@@ -923,7 +966,8 @@ self.onmessage = function (ev) {
 
     html += `<section class="card hero"><div class="eyebrow">추천 세팅 · ${esc(st.weapon.ko)} · ${esc(atk.name)}</div>
       <h2>${finalElements(r)}</h2>
-      <div class="meta">${top.val ? `베일런스 <b>${TYPE_KO[top.val.type]} ${pct(top.val.pct)}</b> · ` : ""}아케인 <b>${top.arcane ? esc(ARC[top.arcane].ko) : "없음"}</b>${buffNames.length ? ` · 버프 <b>${esc(buffNames.join(", "))}</b>` : ""}</div>
+      <div class="meta">${o.concept && o.concept.length ? `속성 콘셉트 <b>${o.concept.map((t) => TYPE_KO[t]).join(" + ")}</b>${o.conceptOnly ? " (이 속성만)" : ""} · ` : ""}${top.val ? `베일런스 <b>${TYPE_KO[top.val.type]} ${pct(top.val.pct)}</b> · ` : ""}아케인 <b>${top.arcane ? esc(ARC[top.arcane].ko) : "없음"}</b>${buffNames.length ? ` · 버프 <b>${esc(buffNames.join(", "))}</b>` : ""}</div>
+      ${r.conceptOk === false ? `<p class="warn">고른 속성 콘셉트(${o.concept.map((t) => TYPE_KO[t]).join(" + ")})를 만족하는 세팅을 찾지 못해, 가장 빠른 세팅을 보여 드립니다. 이 무기·공격으로는 그 속성을 충분히 넣을 수 없습니다.</p>` : ""}
       <div class="slots">${groups.map((g) => `<div class="sgroup"><div class="slabel">${g.label}</div><div class="sgrid">${g.ids.map((id) => `<div class="slot${id === "__riven" ? " riv" : ""}">${esc(modName(id))}</div>`).join("")}</div></div>`).join("")}</div>
       <div class="sgroup"><div class="slabel">익실러스 칸</div><div class="sgrid"><div class="slot${xid ? "" : " free"}">${esc(xa.name)}</div></div><p class="hint" style="margin:4px 0 0">${esc(xa.why)}</p></div>
       <p class="capline">${capInfo(top.ids).text}<small> · 오로킨 카탈리스트·모드 최대 랭크 기준${st.weapon.slot === "melee" && !st.weapon.pseudo ? ", 같은 극성 스탠스 +10" : ""}${top.ids.includes("__riven") ? ", 리벤 18 (극성은 맞춘다고 가정)" : ""}</small></p>
@@ -1334,6 +1378,9 @@ self.onmessage = function (ev) {
     $("#addset").addEventListener("click", () => { addSet(); const l = $("#sets").lastElementChild; if (l) l.querySelector(".cm").focus(); });
     $("#valpct").addEventListener("input", (e) => { $("#valpctv").textContent = e.target.value + "%"; });
     ["#scenario", "#objective", "#level", "#steel"].forEach((s) => $(s).addEventListener("change", renderTargets));
+    $("#scenario").addEventListener("change", syncEnemySeg);
+    $$("#enemyseg button").forEach((b) => b.addEventListener("click", () => setEnemy(b.dataset.v)));
+    initConcepts();
     $("#rivmode").addEventListener("change", (e) => { $("#rivowned").hidden = e.target.value !== "owned"; });
     $("#frame").addEventListener("change", renderAbilities);
     $("#aura").addEventListener("change", renderFrameStats);

@@ -41,6 +41,24 @@ select,input[type=text],input[type=number],input[type=search]{font:inherit;font-
 input[type=range]{width:100%;accent-color:var(--brass)}
 select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.seg button{font:inherit;font-size:14px;font-weight:600;text-align:left;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;padding:8px 10px;cursor:pointer;min-height:44px;display:flex;flex-direction:column;gap:2px}
+.seg button small{font-size:11px;font-weight:400;color:var(--muted)}
+.seg button.on{border-color:var(--brass);box-shadow:inset 0 0 0 1px var(--brass);background:color-mix(in srgb, var(--brass) 12%, var(--bg))}
+.concept{display:flex;flex-direction:column;gap:6px;border-top:1px dashed var(--line);padding-top:10px}
+.clabel{font-size:12px;color:var(--muted)}.clabel small{margin-left:6px}
+.csels{display:grid;grid-template-columns:repeat(auto-fill,minmax(7.5em,1fr));gap:6px;align-items:center}
+.csels .cadd{font:inherit;font-size:12px;border:1px dashed var(--line);background:transparent;color:var(--ink);border-radius:4px;padding:6px 8px;cursor:pointer;min-height:32px}
+.eorder{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;line-height:1.4}
+.eorder b{color:var(--ink);font-weight:600}
+.eorder .ochip{border:1px solid var(--line);border-radius:999px;padding:1px 8px;background:var(--bg);color:var(--ink)}
+.eorder .oarr{color:var(--muted)}
+details.adv{border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+details.adv>summary{cursor:pointer;padding:12px 14px;font-family:var(--f-display);font-size:13px;letter-spacing:.12em;color:var(--brass);font-weight:600}
+details.adv>summary small{letter-spacing:0;color:var(--muted);font-family:var(--f-body);font-weight:400;margin-left:6px}
+details.adv[open]>summary{border-bottom:1px solid var(--line)}
+details.adv>.box{border:0;border-radius:0;background:transparent}
+details.adv>.box+.box{border-top:1px dashed var(--line)}
 .row3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px}
 .slot-tabs{display:flex;gap:4px;flex-wrap:wrap}
 .slot-tabs button{font:inherit;font-size:12px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:3px 10px;cursor:pointer}
@@ -264,19 +282,66 @@ header.top p{flex-basis:100%}
       <label>어떤 공격으로 잡나요?<select id="atk"></select></label>
       <p class="desc" id="atkdesc"></p>
       <div id="atkstats"></div>
+      <div class="concept" id="conceptrow">
+        <div class="clabel">속성 콘셉트 <small>비워 두면 가장 빠른 조합</small></div>
+        <div class="csels" id="concepts"></div>
+        <p class="hint" style="margin:0">고른 속성이 꼭 들어간 세팅을 찾습니다. 칸을 모두 채우면 그 속성만 씁니다.</p>
+      </div>
+      <div id="valrow" class="row2">
+        <label>베일런스 속성<select id="valtype"><option value="auto">자동 (7속성 비교)</option><option value="heat">화염</option><option value="cold">냉기</option><option value="elec">전기</option><option value="tox">독</option><option value="impact">충격</option><option value="mag">자성</option><option value="rad">방사능</option></select></label>
+        <label>베일런스 수치 <span id="valpctv">60%</span><input type="range" id="valpct" min="25" max="60" step="1" value="60"></label>
+      </div>
+      <div class="eorder" id="eorder"></div>
     </div>
 
     <div class="box">
-      <h2>어디서 쓰나요?</h2>
-      <label>적 종류<select id="scenario">
-        <option value="crowd">잡몹 무리 — 랜서·크루맨급 12명이 몰려오는 상황</option>
-        <option value="heavy">중장갑 한 명 — 헤비 거너·테크·에인션트급이 따로 떨어져 있을 때 (상태이상이 퍼질 주변 적 없음)</option>
-        <option value="boss">보스전 — 잡몹 없음, 처치로 쌓는 버프(갈바나이즈드·머시리스) 0</option>
-      </select></label>
+      <h2>적</h2>
+      <div class="seg" id="enemyseg" role="radiogroup" aria-label="적">
+        <button type="button" role="radio" data-v="crowd" class="on" aria-checked="true">일반<small>잡몹·중장갑·엑시무스 섞임</small></button>
+        <button type="button" role="radio" data-v="boss" aria-checked="false">보스<small>이름 있는 보스 · 잡몹 없음</small></button>
+      </div>
       <div class="row2">
         <label>적 레벨<input type="number" id="level" value="150" min="1" max="9999"></label>
         <label class="inline" style="align-self:end"><input type="checkbox" id="steel" checked>강철의 길 (체력·실드 2.5배)</label>
       </div>
+      <div class="targets" id="targets"></div>
+    </div>
+
+
+    <div class="box">
+      <h2>리벤</h2>
+      <p class="hint" id="rivnote" hidden style="margin:0">익절티드 무기에는 리벤이 나오지 않습니다.</p>
+      <label>리벤 모드<select id="rivmode">
+        <option value="none">없음 — 리벤 없는 최종 세팅</option>
+        <option value="plan">맞출 예정 — 어떤 옵션을 몇까지 뽑아야 하는지 보기</option>
+        <option value="owned">보유 리벤 고정 — 가진 리벤을 넣고 나머지 7칸 추천</option>
+      </select></label>
+      <div id="rivowned" hidden style="display:flex;flex-direction:column;gap:6px">
+        <p class="hint" style="margin:0">옵션과 수치를 넣고, 추천에 반영할 옵션만 체크하세요. 재순환할 생각인 옵션은 체크를 끄면 됩니다.</p>
+        <div class="row3"><select id="rk0" aria-label="긍정 1"></select><input type="number" id="rv0" placeholder="수치 %" aria-label="수치 1"><label class="inline"><input type="checkbox" id="ri0" checked>반영</label></div>
+        <div class="row3"><select id="rk1" aria-label="긍정 2"></select><input type="number" id="rv1" placeholder="수치 %" aria-label="수치 2"><label class="inline"><input type="checkbox" id="ri1" checked>반영</label></div>
+        <div class="row3"><select id="rk2" aria-label="긍정 3"></select><input type="number" id="rv2" placeholder="수치 %" aria-label="수치 3"><label class="inline"><input type="checkbox" id="ri2" checked>반영</label></div>
+        <div class="row3"><select id="rk3" aria-label="부정"></select><input type="number" id="rv3" placeholder="부정 수치 % (양수로)" aria-label="부정 수치"><label class="inline"><input type="checkbox" id="ri3" checked>반영</label></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2>비교할 세팅 <small>선택 · 최대 5개</small></h2>
+      <datalist id="arclist"></datalist><datalist id="exlist"></datalist>
+      <div id="sets"></div>
+      <button type="button" id="addset" class="ghostbtn">+ 세팅 추가</button>
+      <p class="hint" style="margin:0">칸 번호는 게임 모드 화면 순서입니다 (윗줄 왼쪽→오른쪽, 그다음 아랫줄). 원소는 입력한 칸 순서대로 합쳐서 계산하고, 같은 모드나 같이 낄 수 없는 모드(프라임드·아말감·갈바나이즈드 등 같은 계열)는 들어가지 않습니다. 내 세팅, 클랜원 세팅 등을 넣으면 결과에서 추천 세팅과 함께 빠른 순서로 표에 정리합니다. 계산 후에 바꾸면 비교표만 바로 다시 계산됩니다. 리벤을 넣으려면 아무 칸에 "리벤 모드"를 고르면 그 세팅 전용 리벤 옵션 칸이 열립니다. 익실러스 칸은 훨윈드(글레이브 투척 속도)·텐노카이 모드처럼 계산에 들어가는 것과, 탄약 변환처럼 탄약 계산에만 들어가는 것이 있습니다.</p>
+    </div>
+
+    <details class="adv" id="adv">
+      <summary>고급 설정 <small>세부 적 조건 · 아케인 · 포르마 · 워프레임 버프</small></summary>
+    <div class="box">
+      <h2>세부 조건</h2>
+      <label>일반 적의 계산 방식<select id="scenario">
+        <option value="crowd">잡몹 무리 — 랜서·크루맨급 12명이 몰려오는 상황</option>
+        <option value="heavy">중장갑 한 명 — 헤비 거너·테크·에인션트급이 따로 떨어져 있을 때 (상태이상이 퍼질 주변 적 없음)</option>
+        <option value="boss">보스전 — 잡몹 없음, 처치로 쌓는 버프(갈바나이즈드·머시리스) 0</option>
+      </select></label>
       <label>팩션<select id="objective">
         <option value="geo">어디든 쓰기 — 그리니어·코퍼스·인페스티드 평균이 가장 빠른 세팅</option>
         <option value="min">어디든 쓰기 — 가장 못 잡는 팩션(보통 그리니어)을 기준으로 고르는 세팅</option>
@@ -287,18 +352,11 @@ header.top p{flex-basis:100%}
         <option value="murmur">머머(속삭임) 전용 (알브레히트 연구소)</option>
       </select></label>
       <label class="inline" id="ogrow" hidden><input type="checkbox" id="og" checked><span>엑시무스 오버가드 포함<small>중장갑 한 명을 엑시무스로 보고 오버가드(방어구·바이러스 무시, 자성·보이드에 약함)를 먼저 깎습니다.</small></span></label>
-      <div class="targets" id="targets"></div>
-    </div>
+      <label class="inline" id="ogrow" hidden><input type="checkbox" id="og" checked><span>엑시무스 오버가드 포함<small>중장갑 한 명을 엑시무스로 보고 오버가드(방어구·바이러스 무시, 자성·보이드에 약함)를 먼저 깎습니다.</small></span></label>
 
-    <div class="box">
-      <h2>추가 조건 <small>기본은 전부 끔</small></h2>
       <label class="inline" id="aimrow"><input type="checkbox" id="aimmods"><span>조준·헤드샷이 필요한 모드·아케인도 후보에 넣기<small>갈바나이즈드 스코프, 데드헤드, 크럭스, 어큐이티 등. 헤드샷 50%를 가정합니다. 끄면 난사 기준으로 계산합니다.</small></span></label>
       <label class="inline"><input type="checkbox" id="castmods"><span>어빌리티를 자주 써서 "시전 후 9초" 조건 모드도 후보에 넣기<small>나노 어플리케이터, 카탈라이저 링크, 임베디드 카탈라이저</small></span></label>
       <label class="inline" id="mercyrow" hidden><input type="checkbox" id="mercy"><span>머시 처형 버프 유지 (바소시스트: 피해·멀티샷 +100%)</span></label>
-      <div id="valrow" class="row2">
-        <label>베일런스 속성<select id="valtype"><option value="auto">자동 (7속성 비교)</option><option value="heat">화염</option><option value="cold">냉기</option><option value="elec">전기</option><option value="tox">독</option><option value="impact">충격</option><option value="mag">자성</option><option value="rad">방사능</option></select></label>
-        <label>베일런스 수치 <span id="valpctv">60%</span><input type="range" id="valpct" min="25" max="60" step="1" value="60"></label>
-      </div>
       <label>아케인<select id="arc"></select></label>
       <label class="inline" id="ammorow"><input type="checkbox" id="ammoalways"><span>탄약 보완 세팅도 항상 보기<small>탄약이 30초 안에 바닥나는 무기는 자동으로 보여 줍니다.</small></span></label>
       <label>포르마 한도 <small>모드 용량 안에 들어가는 조합만 추천</small><select id="forma">
@@ -354,30 +412,7 @@ header.top p{flex-basis:100%}
       </details>
     </div>
 
-    <div class="box">
-      <h2>리벤</h2>
-      <p class="hint" id="rivnote" hidden style="margin:0">익절티드 무기에는 리벤이 나오지 않습니다.</p>
-      <label>리벤 모드<select id="rivmode">
-        <option value="none">없음 — 리벤 없는 최종 세팅</option>
-        <option value="plan">맞출 예정 — 어떤 옵션을 몇까지 뽑아야 하는지 보기</option>
-        <option value="owned">보유 리벤 고정 — 가진 리벤을 넣고 나머지 7칸 추천</option>
-      </select></label>
-      <div id="rivowned" hidden style="display:flex;flex-direction:column;gap:6px">
-        <p class="hint" style="margin:0">옵션과 수치를 넣고, 추천에 반영할 옵션만 체크하세요. 재순환할 생각인 옵션은 체크를 끄면 됩니다.</p>
-        <div class="row3"><select id="rk0" aria-label="긍정 1"></select><input type="number" id="rv0" placeholder="수치 %" aria-label="수치 1"><label class="inline"><input type="checkbox" id="ri0" checked>반영</label></div>
-        <div class="row3"><select id="rk1" aria-label="긍정 2"></select><input type="number" id="rv1" placeholder="수치 %" aria-label="수치 2"><label class="inline"><input type="checkbox" id="ri1" checked>반영</label></div>
-        <div class="row3"><select id="rk2" aria-label="긍정 3"></select><input type="number" id="rv2" placeholder="수치 %" aria-label="수치 3"><label class="inline"><input type="checkbox" id="ri2" checked>반영</label></div>
-        <div class="row3"><select id="rk3" aria-label="부정"></select><input type="number" id="rv3" placeholder="부정 수치 % (양수로)" aria-label="부정 수치"><label class="inline"><input type="checkbox" id="ri3" checked>반영</label></div>
-      </div>
-    </div>
-
-    <div class="box">
-      <h2>비교할 세팅 <small>선택 · 최대 5개</small></h2>
-      <datalist id="arclist"></datalist><datalist id="exlist"></datalist>
-      <div id="sets"></div>
-      <button type="button" id="addset" class="ghostbtn">+ 세팅 추가</button>
-      <p class="hint" style="margin:0">칸 번호는 게임 모드 화면 순서입니다 (윗줄 왼쪽→오른쪽, 그다음 아랫줄). 원소는 입력한 칸 순서대로 합쳐서 계산하고, 같은 모드나 같이 낄 수 없는 모드(프라임드·아말감·갈바나이즈드 등 같은 계열)는 들어가지 않습니다. 내 세팅, 클랜원 세팅 등을 넣으면 결과에서 추천 세팅과 함께 빠른 순서로 표에 정리합니다. 계산 후에 바꾸면 비교표만 바로 다시 계산됩니다. 리벤을 넣으려면 아무 칸에 "리벤 모드"를 고르면 그 세팅 전용 리벤 옵션 칸이 열립니다. 익실러스 칸은 훨윈드(글레이브 투척 속도)·텐노카이 모드처럼 계산에 들어가는 것과, 탄약 변환처럼 탄약 계산에만 들어가는 것이 있습니다.</p>
-    </div>
+    </details>
 
     <div class="runbar">
       <button type="button" id="runbtn">최적 세팅 계산</button>
