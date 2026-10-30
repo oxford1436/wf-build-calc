@@ -944,9 +944,9 @@ self.onmessage = function (ev) {
   function ttkTable(r, o) {
     const cell = (x) => `${x.one ? "한 방" : sec(x.ttk)}${x.targetHeavy ? ` / ${x.oneHeavy ? "한 방" : sec(x.ttkHeavy)}` : ""}${o.scenario === "crowd" ? `<br><small>12명 전멸 ${sec(x.clear)}</small>` : ""}`;
     const L = E.levelsOf(o);
-    return `<table class="tbl"><thead><tr><th>팩션 · 기준 적</th><th>${L[0]}레벨</th><th>${L[1]}레벨</th><th>${L[2]}레벨 (버티기)</th><th>한 방 유지</th></tr></thead><tbody>
+    return `<div class="tscroll"><table class="tbl ttk"><thead><tr><th>팩션 · 기준 적</th><th>${L[0]}레벨</th><th>${L[1]}레벨</th><th>${L[2]}레벨 (버티기)</th><th>한 방 유지</th></tr></thead><tbody>
       ${o.factions.map((f) => { const x = r.perF[f]; return `<tr><td>${E.FACTIONS[f].label} · ${esc(x.target.ko)}${x.targetHeavy ? " / " + esc(x.targetHeavy.ko) : ""}<br><small>${o.level}레벨 체력 ${fmt(x.target.hp)}${x.target.sh ? " · 실드 " + fmt(x.target.sh) : ""}${x.target.ar ? " · 방어구 " + x.target.ar.toFixed(0) : ""}${x.target.og ? " · 오버가드 " + fmt(x.target.og) : ""}${x.targetHeavy ? " / 체력 " + fmt(x.targetHeavy.hp) : ""}</small></td><td class="num">${cell(x)}</td><td class="num">${cell(x.hi)}</td><td class="num">${cell(x.top)}</td><td class="num">${oneLvTxt(x.oneLv)}</td></tr>`; }).join("")}
-    </tbody></table><p class="hint">"한 방"은 첫 공격과 그 공격의 상태이상만으로 죽는다는 뜻입니다 (도트 피해 제외). "한 방 유지"는 ${o.scenario === "boss" ? "보스" : "중장갑"}을 한 방에 잡는 가장 높은 레벨입니다. 잡몹 무리는 "잡몹 / 섞여 있는 중장갑" 순서입니다.</p>`;
+    </tbody></table></div><p class="hint">"한 방"은 첫 공격과 그 공격의 상태이상만으로 죽는다는 뜻입니다 (도트 피해 제외). "한 방 유지"는 ${o.scenario === "boss" ? "보스" : "중장갑"}을 한 방에 잡는 가장 높은 레벨입니다. 잡몹 무리는 "잡몹 / 섞여 있는 중장갑" 순서입니다.</p>`;
   }
 
   /* ---------------- results ---------------- */
@@ -965,21 +965,61 @@ self.onmessage = function (ev) {
     let html = shareBarHtml();
     try { if (/github\.io$/.test(location.hostname)) history.replaceState(null, "", "#s=" + b64e(JSON.stringify(captureState()))); } catch (e) {}
 
-    html += `<section class="card hero"><div class="eyebrow">추천 세팅 · ${esc(st.weapon.ko)} · ${esc(atk.name)}</div>
+    // per-slot importance: how much slower the build gets without that mod, and the best mod to put there instead
+    const imp = {};
+    top.ids.forEach((id, i) => {
+      const rest = top.ids.filter((_, j) => j !== i);
+      const rem = evalBuild(rest, top.val, top.arcane).score / ref;
+      let alt = null;
+      const isX = MOD_BY_ID[id] && MOD_BY_ID[id].exilus;
+      if (id !== "__riven") for (const c of candidateMods(st.weapon, atk, R.flags)) {
+        if (!!c.exilus !== !!isX || top.ids.includes(c.id)) continue;
+        if (c.group && rest.some((x) => MOD_BY_ID[x] && MOD_BY_ID[x].group === c.group)) continue;
+        const sc = evalBuild(rest.concat([c.id]), top.val, top.arcane).score / ref;
+        if (!alt || sc > alt.s) alt = { id: c.id, s: sc };
+      }
+      imp[id] = { d: rem - 1, alt };
+    });
+    const arcD = top.arcane ? evalBuild(top.ids, top.val, null).score / ref - 1 : 0;
+    const maxD = Math.max(0.01, ...Object.values(imp).map((x) => -x.d), -arcD);
+    const bar = (d) => `<span class="aimp"><i style="width:${Math.max(2, Math.min(100, (-d / maxD) * 100)).toFixed(0)}%"></i></span><small class="ad">빼면 <b>${pctDelta(1 + d)}</b></small>`;
+    const order = groups.flatMap((g) => g.ids.map((id) => ({ id, g })));
+    const legend = groups.filter((g) => g.label !== "그 외 (순서 무관)").map((g) => {
+      const nums = g.ids.map((id) => order.findIndex((x) => x.id === id) + 1);
+      return `<span class="lg"><b>${nums.join("·")}번</b> ${g.label}</span>`;
+    }).join("");
+    const slotCard = (x, n) => { const v = imp[x.id]; const el = x.g.label === "그 외 (순서 무관)" ? "" : x.g.label.replace(/^.* → /, "").replace(/ 단독$/, " 단독");
+      return `<div class="aslot${x.id === "__riven" ? " riv" : ""}"><i class="anum">${n}</i>${el ? `<span class="atag">${esc(el)}</span>` : ""}<b class="aname">${esc(modName(x.id))}</b>${v ? bar(v.d) : ""}${v && v.alt ? `<small class="aalt">대신 ${esc(modName(v.alt.id))} ${pctDelta(v.alt.s)}</small>` : ""}</div>`; };
+    const melee = st.weapon.slot === "melee" && !st.weapon.pseudo;
+    const topRow = `${melee ? `<div class="aslot fixed"><i class="anum">스탠스</i><b class="aname">아무거나</b><small class="aalt">계산 제외 · 같은 극성이면 용량 +10</small></div>` : ""}
+      <div class="aslot ex${xid ? "" : " free"}"><i class="anum">익실러스</i><b class="aname">${esc(xa.name)}</b>${xid && imp[xid] ? bar(imp[xid].d) : `<small class="aalt">처치 속도 영향 없음</small>`}</div>
+      <div class="aslot arcs"><i class="anum">아케인</i><b class="aname">${top.arcane ? esc(ARC[top.arcane].ko) : "없음"}</b>${top.arcane ? bar(arcD) : ""}</div>`;
+    // one-line concept: damage style, elements, key mods, enemies per attack, one-hit level
+    const keyMods = Object.entries(imp).filter(([id]) => !(MOD_BY_ID[id] && MOD_BY_ID[id].exilus)).sort((a, b) => a[1].d - b[1].d).slice(0, 2).map(([id]) => modName(id));
+    const statPer = r.sc * (atk.kind === "gun" || atk.kind === "radial" ? r.ms || 1 : 1);
+    const style = r.cc >= 0.5 && statPer >= 0.8 ? "치명타 + 상태이상" : r.cc >= 0.5 ? "치명타 중심" : statPer >= 0.8 ? "상태이상 중심" : "기본 피해 중심";
+    const keff = o.scenario === "crowd" ? Math.max(r.K, r.perF[o.factions[0]].Keff || 0) : 0;
+    const oneMin = Math.min(...o.factions.map((f) => r.perF[f].oneLv));
+    const chips = [style, `핵심 모드 ${keyMods.join(" · ")}`, keff >= 1.5 ? `한 번에 ${keff.toFixed(1)}명` : null,
+      `${o.scenario === "boss" ? "보스" : "중장갑"} 한 방 ${oneMin >= 9999 ? "9999레벨+" : oneMin > 0 ? `~${oneMin}레벨` : "안 됨"}`].filter(Boolean);
+    const sec = (n, title, sub, body, id) => `<div class="sec" id="${id}"><h2 class="sech"><span class="secn">${n}</span>${title}${sub ? `<small>${sub}</small>` : ""}</h2>${body}</div>`;
+
+    let h1 = `<section class="card hero"><div class="eyebrow">${esc(st.weapon.ko)} · ${esc(atk.name)}</div>
       <h2>${finalElements(r)}</h2>
-      <div class="meta">${o.concept && o.concept.length ? `속성 콘셉트 <b>${o.concept.map((t) => TYPE_KO[t]).join(" + ")}</b>${o.conceptOnly ? " (이 속성만)" : ""} · ` : ""}${top.val ? `베일런스 <b>${TYPE_KO[top.val.type]} ${pct(top.val.pct)}</b> · ` : ""}아케인 <b>${top.arcane ? esc(ARC[top.arcane].ko) : "없음"}</b>${buffNames.length ? ` · 버프 <b>${esc(buffNames.join(", "))}</b>` : ""}</div>
+      <div class="cchips">${chips.map((c) => `<span>${esc(c)}</span>`).join("")}</div>
+      <div class="meta">${o.concept && o.concept.length ? `속성 콘셉트 <b>${o.concept.map((t) => TYPE_KO[t]).join(" + ")}</b>${o.conceptOnly ? " (이 속성만)" : ""} · ` : ""}${top.val ? `베일런스 <b>${TYPE_KO[top.val.type]} ${pct(top.val.pct)}</b> · ` : ""}${buffNames.length ? `버프 <b>${esc(buffNames.join(", "))}</b>` : "워프레임 버프 없음 (범용)"}</div>
       ${r.conceptOk === false ? `<p class="warn">고른 속성 콘셉트(${o.concept.map((t) => TYPE_KO[t]).join(" + ")})를 만족하는 세팅을 찾지 못해, 가장 빠른 세팅을 보여 드립니다. 이 무기·공격으로는 그 속성을 충분히 넣을 수 없습니다.</p>` : ""}
-      <div class="slots">${groups.map((g) => `<div class="sgroup"><div class="slabel">${g.label}</div><div class="sgrid">${g.ids.map((id) => `<div class="slot${id === "__riven" ? " riv" : ""}">${esc(modName(id))}</div>`).join("")}</div></div>`).join("")}</div>
-      <div class="sgroup"><div class="slabel">익실러스 칸</div><div class="sgrid"><div class="slot${xid ? "" : " free"}">${esc(xa.name)}</div></div><p class="hint" style="margin:4px 0 0">${esc(xa.why)}</p></div>
-      <p class="capline">${capInfo(top.ids).text}<small> · 오로킨 카탈리스트·모드 최대 랭크 기준${st.weapon.slot === "melee" && !st.weapon.pseudo ? ", 같은 극성 스탠스 +10" : ""}${top.ids.includes("__riven") ? ", 리벤 18 (극성은 맞춘다고 가정)" : ""}</small></p>
-      <p class="hint">원소 모드는 위 묶음 순서대로 칸에 넣으세요. 같은 묶음 안의 모드끼리 먼저 합쳐집니다. ${o.aim ? "조준·헤드샷 조건 모드는 헤드샷 50%를 가정했습니다." : ""}</p>
+      <div class="ars"><div class="arow top">${topRow}</div><div class="arow">${order.map((x, i) => slotCard(x, i + 1)).join("")}</div></div>
+      ${legend ? `<div class="alegend">원소 순서 ${legend}</div>` : ""}
+      <p class="capline">${capInfo(top.ids).text}<small> · 오로킨 카탈리스트·모드 최대 랭크 기준${melee ? ", 같은 극성 스탠스 +10" : ""}${top.ids.includes("__riven") ? ", 리벤 18 (극성은 맞춘다고 가정)" : ""}</small></p>
+      <p class="hint">칸 번호는 게임 모드 화면 순서(윗줄 왼쪽→오른쪽, 그다음 아랫줄)입니다. 막대는 그 칸을 비웠을 때 느려지는 정도, "대신"은 그 칸에 넣을 수 있는 차선 모드와 그때의 처치 속도입니다. ${xa.why ? esc(xa.why) + " " : ""}${o.aim ? "조준·헤드샷 조건 모드는 헤드샷 50%를 가정했습니다." : ""}</p>
       ${ttkTable(r, o)}
-    </section>
-    <section class="card" id="cmpout" hidden></section>`;
-    if (rm0 === "plan" && R.rivBest) html += rivenPremiseSection(R, top, r);
+    </section>`;
+    let h3 = "", h4 = "", h5 = "";
+    if (rm0 === "plan" && R.rivBest) h3 += rivenPremiseSection(R, top, r);
 
     // stats + breakdown
-    html += `<section class="card"><h3>수치</h3><div class="kv">
+    h5 += `<section class="card"><h3>수치</h3><div class="kv">
       ${kv("치명타 확률", pct(r.cc))}${kv("치명타 피해", r.cd.toFixed(2) + "배")}
       ${kv("상태이상 확률", pct(r.sc) + (atk.kind === "gun" ? " /발" : ""))}${atk.kind === "gun" || atk.kind === "radial" ? kv("멀티샷", r.ms.toFixed(2)) : ""}
       ${r.M > 1 ? kv("연속기 배율 (강공 때)", (Number.isInteger(r.M) ? r.M : "평균 " + r.M.toFixed(1)) + "배") : kv(atk.kind === "melee" ? "초당 타격" : "초당 발사", r.rate.toFixed(2))}${atk.kind === "melee" ? kv(o.comboWindow > 0 ? `연속기 배율 (${o.comboWindow / 60}분 평균)` : "연속기 배율", (r.tierNow >= 11.995 ? "12" : r.tierNow.toFixed(1)) + "배") : ""}${kv("기본 피해 보너스", "+" + pct(r.dmgb))}
@@ -997,29 +1037,9 @@ self.onmessage = function (ev) {
     <p class="hint">방어구 적용 전 수치입니다. 처치 시간 계산에서는 바이러스·화염·부식 중첩이 쌓이는 시간과 방어구를 반영합니다.</p>
     </section>`;
 
-    // contributions
-    const contrib = top.ids.map((id, i) => {
-      if (id === "__riven") return null;
-      const rest = top.ids.filter((_, j) => j !== i);
-      const rem = evalBuild(rest, top.val, top.arcane).score / ref;
-      let bestAlt = null;
-      const isX = MOD_BY_ID[id] && MOD_BY_ID[id].exilus;
-      for (const c of candidateMods(st.weapon, atk, R.flags)) {
-        if (!!c.exilus !== !!isX) continue;
-        if (top.ids.includes(c.id)) continue;
-        if (c.group && rest.some((x) => MOD_BY_ID[x] && MOD_BY_ID[x].group === c.group)) continue;
-        const s = evalBuild(rest.concat([c.id]), top.val, top.arcane).score / ref;
-        if (!bestAlt || s > bestAlt.s) bestAlt = { id: c.id, s };
-      }
-      return { id, rem, bestAlt };
-    }).filter(Boolean).sort((a, b) => a.rem - b.rem);
-    html += `<section class="card"><h3>모드별 기여도</h3><p class="hint">"뺐을 때"는 그 칸을 비웠을 때 처치 속도 변화, "대체"는 그 자리에 넣을 수 있는 차선 모드입니다.</p><table class="tbl"><thead><tr><th>모드</th><th>뺐을 때</th><th>가장 나은 대체</th></tr></thead><tbody>
-      ${contrib.map((c) => `<tr><td>${esc(modName(c.id))}</td><td class="num neg">${pctDelta(c.rem)}</td><td>${c.bestAlt ? `${esc(modName(c.bestAlt.id))} <span class="num">${pctDelta(c.bestAlt.s)}</span>` : "-"}</td></tr>`).join("")}
-    </tbody></table></section>`;
-
     // alternatives
     const alts = res.slice(1, 8);
-    html += `<section class="card"><h3>다른 상위 세팅</h3><table class="tbl"><thead><tr><th>처치 속도</th><th>베일런스 · 아케인</th><th>모드 (다른 부분 강조)</th></tr></thead><tbody>
+    h5 += `<section class="card"><h3>다른 상위 세팅</h3><table class="tbl"><thead><tr><th>처치 속도</th><th>베일런스 · 아케인</th><th>모드 (다른 부분 강조)</th></tr></thead><tbody>
       ${alts.map((a) => `<tr><td class="num">${pct(a.score / ref, 1)}</td><td>${a.val ? TYPE_KO[a.val.type] : "-"} · ${a.arcane ? esc(ARC[a.arcane].ko) : "없음"}</td><td class="modlist">${diffMods(a.ids, top.ids)}<br><small>${capInfo(a.ids).short}</small></td></tr>`).join("")}
     </tbody></table></section>`;
 
@@ -1030,7 +1050,7 @@ self.onmessage = function (ev) {
         const same = evalBuild(top.ids, { type: t, pct: top.val.pct }, top.arcane).score / ref;
         return { t, same, own: own ? own.score / ref : null };
       }).sort((a, b) => (b.own || b.same) - (a.own || a.same));
-      html += `<section class="card"><h3>베일런스 속성 비교</h3><table class="tbl"><thead><tr><th>속성</th><th>추천 모드 그대로</th><th>그 속성에 맞춰 다시 짰을 때</th></tr></thead><tbody>
+      h4 += `<section class="card"><h3>베일런스 속성 비교</h3><table class="tbl"><thead><tr><th>속성</th><th>추천 모드 그대로</th><th>그 속성에 맞춰 다시 짰을 때</th></tr></thead><tbody>
         ${rows.map((x) => `<tr><td>${TYPE_KO[x.t]}</td><td class="num">${pct(x.same, 1)}</td><td class="num">${x.own ? pct(x.own, 1) : "-"}</td></tr>`).join("")}</tbody></table>
         <p class="hint">100% = 추천 세팅의 처치 속도. 오른쪽 열은 베일런스를 "자동"으로 두었을 때만 채워집니다.</p></section>`;
     }
@@ -1039,10 +1059,10 @@ self.onmessage = function (ev) {
     const arcs = arcAll.filter(([k, v]) => !v.none).map(([k]) => ({ k, s: evalBuild(top.ids, top.val, k).score / ref }));
     arcs.push({ k: null, s: evalBuild(top.ids, top.val, null).score / ref });
     const noneArcs = arcAll.filter(([k, v]) => v.none);
-    html += `<section class="card"><h3>무기 아케인 비교 (추천 모드 그대로)</h3><div class="kv">${arcs.sort((a, b) => b.s - a.s).map((a) => kv(a.k ? esc(ARC[a.k].ko) + (ARC[a.k].manual ? ' <span class="tag cond">조건부</span>' : "") : "없음", pct(a.s, 0))).join("")}</div>
+    h4 += `<section class="card"><h3>무기 아케인 비교 (추천 모드 그대로)</h3><div class="kv">${arcs.sort((a, b) => b.s - a.s).map((a) => kv(a.k ? esc(ARC[a.k].ko) + (ARC[a.k].manual ? ' <span class="tag cond">조건부</span>' : "") : "없음", pct(a.s, 0))).join("")}</div>
       <p class="hint">조건부: ${arcAll.filter(([k, v]) => v.manual).map(([k, v]) => `${esc(v.ko)}(${esc(v.note || "")})`).join(", ") || "없음"} — 자동 추천에서는 빼고, 조건을 채웠다고 가정한 값입니다.${noneArcs.length ? ` 무기 피해와 무관해 제외: ${noneArcs.map(([k, v]) => esc(v.ko)).join(", ")}.` : ""}</p></section>`;
-    html += frameArcaneSection(top, r, o);
-    html += ammoSection(top, r, o, xid);
+    h4 += frameArcaneSection(top, r, o);
+    h5 += ammoSection(top, r, o, xid);
 
     // buffs comparison
     if (R.nobuff && R.nobuff.length) {
@@ -1052,7 +1072,7 @@ self.onmessage = function (ev) {
       const nbWith = evalBuild(nb.ids, nb.val, nb.arcane);                  // no-buff-best, buff on
       const nbNo = evalBuild(nb.ids, nb.val, nb.arcane, oNo);
       const same = nb.ids.slice().sort().join() === top.ids.slice().sort().join() && (nb.arcane === top.arcane) && JSON.stringify(nb.val) === JSON.stringify(top.val);
-      html += `<section class="card"><h3>버프 없이 계산한 세팅과 비교</h3>
+      h5 += `<section class="card"><h3>버프 없이 계산한 세팅과 비교</h3>
         ${same ? `<p>버프를 빼고 계산해도 <b>같은 세팅</b>이 나옵니다. 범용 세팅 그대로 버프를 얹어 쓰시면 됩니다.</p>` :
           `<p>버프를 빼고 계산하면 아래 세팅이 1위입니다. 두 세팅을 버프 있을 때/없을 때로 비교했습니다.</p>
           <div class="modlist" style="margin-bottom:8px">${diffMods(nb.ids, top.ids)}</div>
@@ -1065,10 +1085,12 @@ self.onmessage = function (ev) {
 
     // riven
     const rm = $("#rivmode").value;
-    if (rm === "plan") html += rivenPlan(top, ref);
-    else if (rm === "owned" && R.owned) html += ownedRivenSection(R.owned);
+    if (rm === "plan") h3 += rivenPlan(top, ref);
+    else if (rm === "owned" && R.owned) h3 += ownedRivenSection(R.owned);
+    if (!h3) h3 = st.weapon.noRiven ? `<section class="card"><p class="hint" style="margin:0">익절티드 무기에는 리벤이 없습니다.</p></section>`
+      : `<section class="card"><p style="margin:0">왼쪽 <b>리벤</b>에서 "맞출 예정"을 고르고 계산하면 어떤 리벤 옵션을 노릴지(옵션 조합별 처치 속도, 한 칸 교체 효과, 괜찮은 부정 옵션)가 여기에 나옵니다. 가진 리벤이 있으면 "보유 리벤 고정"으로 넣어 보세요.</p></section>`;
 
-    html += `<section class="card notes"><h3>계산 가정</h3><ul>
+    h5 += `<section class="card notes"><h3>계산 가정</h3><ul>
       <li>처치 시간은 ${o.steel ? "강철의 길 " : ""}${o.level}레벨 기준 적의 체력·방어구(위키 레벨 공식)로 계산합니다. 바이러스·화염·부식·냉기 중첩은 시간에 따라 쌓입니다.</li>
       <li>잡몹 무리: 반경 20m 안 12명, 한 발이 맞히는 수는 폭발 반경·관통으로 추정. 직격+폭발 무기는 주변 적이 폭발만 맞는다고 보고, 폭발만으로 죽는 속도만큼 같이 잡히는 것으로 계산합니다. 폭발 투사체는 관통이 적용되지 않습니다(위키 "Punch Through"). 갈바나이즈드 계열 피해 보너스와 세컨더리 이레디에이트 전파는 직격에만 적용합니다(위키). 처치 조건 효과(갈바나이즈드, 머시리스 등)는 잡몹·중장갑에서는 최대 중첩, 보스전에서는 0으로 계산합니다.</li>
       <li>코퍼스 실드는 독·출혈 도트만 관통하고 나머지는 실드를 먼저 깎습니다. 자성 중첩은 실드·오버가드 피해를 최대 4.25배로 올립니다.${o.og ? " 엑시무스 오버가드(위키 레벨 공식)는 방어구·바이러스 영향 없이 먼저 깎고, 보이드는 1.5배입니다." : ""}</li>
@@ -1079,9 +1101,45 @@ self.onmessage = function (ev) {
       <li>저격총은 조준 옵션을 켜면 최대 배율 줌 보너스와 저격 콤보(20초 연속 교전 평균)를 넣습니다. 익절티드 무기는 워프레임 위력 값을 기본 피해(또는 위키에 적힌 방식)에 반영합니다.</li>
       <li>위키에 수치가 없는 어빌리티(사이트-09 시크·리서플라이)와 킷건·자우 전용 아케인, 자우 강공(위키 데이터 없음)은 아직 반영하지 않습니다.</li>
     </ul></section>`;
+    const toc = [["sec1", "① 추천 세팅"], ["sec2", "② 내 세팅과 비교"], ["sec3", "③ 리벤"], ["sec4", "④ 속성·아케인"], ["sec5", "⑤ 상세"]];
+    html += `<nav class="rtoc" aria-label="결과 목차">${toc.map(([id, t]) => `<button type="button" data-go="${id}">${t}</button>`).join("")}</nav>`
+      + sec("①", "추천 세팅", "리벤 없이 · 모든 모드 보유 전제", h1, "sec1")
+      + sec("②", "내 세팅과 비교", "왼쪽 '비교할 세팅'에 넣은 세팅", `<section class="card" id="cmpout"></section>`, "sec2")
+      + sec("③", "리벤", "어떤 리벤을 노릴까", h3, "sec3")
+      + sec("④", "속성·아케인", "추천 모드 그대로 바꿨을 때", h4, "sec4")
+      + sec("⑤", "상세", "수치 · 다른 세팅 · 계산 가정", h5, "sec5");
     $("#results").innerHTML = html;
     renderCompare();
   }
+
+  // "change only these": from a typed set toward the recommendation, one swap at a time (biggest gain first), up to 3 steps
+  function swapPath(s, top) {
+    const isX = (id) => MOD_BY_ID[id] && MOD_BY_ID[id].exilus;
+    const score = (ids, arc) => evalBuild(ids, top.val, arc, null, s.rivEff).score;
+    let cur = s.ids.slice(), arc = s.arcane, sc = score(cur, arc);
+    const steps = [];
+    for (let k = 0; k < 3; k++) {
+      let best = null;
+      for (const m of top.ids) {
+        if (cur.includes(m) || m === "__riven") continue;
+        const M = MOD_BY_ID[m];
+        const outs = cur.filter((c) => !top.ids.includes(c) && !!isX(c) === !!isX(m) && c !== "__riven");
+        if (cur.filter((c) => !!isX(c) === !!isX(m)).length < (isX(m) ? 1 : 8)) outs.push(null);    // free slot
+        for (const c of outs) {
+          const nx = cur.filter((x) => x !== c);
+          if (M && M.group && nx.some((x) => MOD_BY_ID[x] && MOD_BY_ID[x].group === M.group)) continue;
+          nx.push(m);
+          const v = score(nx, arc);
+          if (!best || v > best.v) best = { v, ids: nx, out: c, inn: m };
+        }
+      }
+      if (top.arcane !== arc) { const v = score(cur, top.arcane); if (!best || v > best.v) best = { v, ids: cur, arc: top.arcane, out: arc ? "arc:" + arc : null, inn: "arc:" + top.arcane }; }
+      if (!best || best.v < sc * 1.01) break;
+      steps.push(best); cur = best.ids; if (best.arc !== undefined) arc = best.arc; sc = best.v;
+    }
+    return steps;
+  }
+  const swapName = (id) => id && id.startsWith("arc:") ? (ARC[id.slice(4)] ? "아케인 " + ARC[id.slice(4)].ko : "아케인") : modName(id);
 
   /* ---------------- comparison table: 추천 + up to 5 sets, fastest first ---------------- */
   function renderCompare() {
@@ -1089,7 +1147,7 @@ self.onmessage = function (ev) {
     if (!box || !st.results || !st.results.res || !st.results.res.length) return;
     const R = st.results, o = R.o, top = R.res[0];
     const sets = $$("#sets .cset").map(setMods).filter((s) => s.ids.length || s.problems.length);
-    if (!sets.length) { box.hidden = true; box.innerHTML = ""; return; }
+    if (!sets.length) { box.hidden = false; box.innerHTML = `<p style="margin:0">왼쪽 <b>비교할 세팅</b>에 지금 쓰는 세팅을 넣으면(스크린샷으로 채우기 가능) 추천 세팅과의 처치 속도 차이와 <b>바꿀 모드만</b> 여기에 나옵니다.</p>`; return; }
     const rec = { name: "추천 세팅", rec: true, ids: top.ids, arcane: top.arcane, problems: [] };
     rec.r = evalBuild(rec.ids, top.val, rec.arcane);
     const ref = rec.r.score;
@@ -1100,7 +1158,7 @@ self.onmessage = function (ev) {
       const r = evalBuild(s.ids, top.val, s.arcane, null, s.rivEff, elemOrderOf(s.ids, s.rivInfo));
       const auto = evalBuild(s.ids, top.val, s.arcane, null, s.rivEff);
       const reorder = auto.score > r.score * 1.01 ? { k: auto.score / r.score, el: finalElements(auto), groups: orderMods(s.ids, auto, s.rivInfo).filter((g) => g.label !== "그 외 (순서 무관)") } : null;
-      return Object.assign(s, { r, reorder });
+      return Object.assign(s, { r, reorder, swaps: swapPath(s, top) });
     }));
     rows.sort((a, b) => b.r.score - a.r.score || (a.rec ? -1 : 1));
     const crowd = o.scenario === "crowd";
@@ -1122,6 +1180,7 @@ self.onmessage = function (ev) {
       if (x.rec) return x.ids.map((id) => `<span class="plain">${esc(modName(id))}</span>`).join("");
       const missing = top.ids.filter((id) => !x.ids.includes(id));
       return diffMods(x.ids, top.ids) + (x.rivInfo && x.rivInfo.length ? `<br><small>리벤: ${esc(rivenText(x.rivInfo))}</small>` : "") + (missing.length && missing.length < 8 ? `<br><small>추천에서 빠진 것: </small>${missing.map((id) => `<span class="miss">${esc(modName(id))}</span>`).join("")}` : "")
+        + (x.swaps && x.swaps.length ? `<div class="swaps"><b>이것만 바꾸세요</b>${x.swaps.map((w) => `<span class="sw">${w.out ? `<s>${esc(swapName(w.out))}</s>` : `<i>${w.inn.startsWith("arc:") ? "아케인 없음" : MOD_BY_ID[w.inn] && MOD_BY_ID[w.inn].exilus ? "익실러스 빈 칸" : "빈 칸"}</i>`} → <b>${esc(swapName(w.inn))}</b> <em>${pct(w.v / ref, 0)}</em></span>`).join("")}<small>오른쪽 %는 그 단계까지 바꿨을 때의 처치 속도 (추천 = 100%)</small></div>` : "")
         + (x.reorder ? `<div class="reorder">칸 순서만 바꿔도 <b>×${x.reorder.k.toFixed(2)}</b> 빨라집니다 (→ ${x.reorder.el}). 앞 칸부터 ${x.reorder.groups.map((g) => `<b>${g.label}</b>: ${g.ids.map((id) => esc(modName(id))).join(", ")}`).join(" → ")} 순서로 넣으세요.</div>` : "");
     };
     const what = crowd ? "12명 전멸" : "처치";
@@ -1509,6 +1568,8 @@ self.onmessage = function (ev) {
       <small>링크를 열면 같은 설정으로 다시 계산합니다. 오류 신고는 디스코드에 붙여 넣으면 됩니다.</small><p class="sharemsg" hidden></p></div>`;
   }
   document.addEventListener("click", (e) => {
+    const g = e.target.closest("[data-go]");
+    if (g) { const t = document.getElementById(g.dataset.go); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
     const b = e.target.closest("[data-share]"); if (!b) return;
     if (b.dataset.share === "link") copyText(shareUrl(), b, "링크를 복사했습니다.");
     else copyText(reportText(), b, "오류 신고 내용을 복사했습니다. 디스코드에 붙여 넣고 '무엇이 이상한가요'를 채워 주세요.");
