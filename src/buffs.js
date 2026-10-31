@@ -186,7 +186,25 @@
     { id: "swift_momentum", en: "Swift Momentum", ko: "스위프트 모멘텀", cls: ["melee"], fx: { windAdd: 0.3 }, note: "강공 준비 속도 +30%" },
     { id: "ready_steel", en: "Ready Steel", ko: "레디 스틸", cls: ["melee"], fx: { icAdd: 24 }, note: "초기 연속기 +24" },
     { id: "growing_power", en: "Growing Power", ko: "그로잉 파워", stat: { str: 0.25 }, note: "무기 상태이상 시 위력 +25% (계속 유지 가정)" },
-    { id: "power_donation", en: "Power Donation", ko: "파워 도네이션", stat: { str: -0.3 }, note: "본인 위력 −30% (아군 +30%)" },
+    { id: "power_donation", en: "Power Donation", ko: "파워 도네이션", stat: { str: -0.3 }, perm: true, note: "본인 위력 −30% (아군 +30%)" },
+    // conditional weapon damage the calculator does not assume
+    { id: "holster_amp", en: "Holster Amp", ko: "홀스터 앰프", cond: true, note: "무기를 꺼낸 뒤 3초간 무기 피해 +60% — 계속 교체한다고 볼 수 없어 계산하지 않음" },
+    { id: "mecha_empowered", en: "Mecha Empowered", ko: "메카 임파워드", cond: true, note: "메카 표식이 붙은 적에게 피해 +150% — 표식 대상만이라 계산하지 않음" },
+    // indirect: changes a warframe stat the calculator reads from the inputs (the arsenal already shows it)
+    { id: "sprint_boost", en: "Sprint Boost", ko: "스프린트 부스트", ind: true, note: "질주 속도 +15% — 질주 속도 입력값으로 반영 (질주 속도 1.2 조건 인카논 진화)" },
+    { id: "physique", en: "Physique", ko: "피지크", ind: true, note: "최대 체력 +20% — 체력 입력값으로 반영 (아케인 벨리코스)" },
+    { id: "stand_united", en: "Stand United", ko: "스탠드 유나이티드", ind: true, note: "방어력 +25% — 방어력 입력값으로 반영 (프라이머리 불워크·아케인 배터리·방어력 450 조건 진화)" },
+    { id: "brief_respite", en: "Brief Respite", ko: "브리프 리스파이트", ind: true, note: "쓴 에너지의 150%를 실드로 — 실드 유지에 도움 (밀리 리탈리에이션은 실드 입력값으로 계산)" },
+    // no effect on weapon kill speed
+    ...[["aerodynamic", "Aerodynamic", "에어로다이내믹", "공중 피해 감소·글라이드"], ["combat_discipline", "Combat Discipline", "컴뱃 디시플린", "처치 시 아군 체력 회복"],
+      ["dreamer_s_bond", "Dreamer's Bond", "드리머즈 본드", "에너지·체력 재생"], ["emp_aura", "EMP Aura", "Emp 오라", "코퍼스 적 정확도 감소"],
+      ["enemy_radar", "Enemy Radar", "에너미 레이더", "적 감지"], ["energy_siphon", "Energy Siphon", "에너지 사이펀", "에너지 재생"],
+      ["infested_impedance", "Infested Impedance", "인페스티드 임피던스", "인페스티드 이동 속도 감소"], ["loot_detector", "Loot Detector", "루트 디텍터", "아이템 감지"],
+      ["melee_guidance", "Melee Guidance", "밀리 가이던스", "아군 연속기 지속시간 (본인은 감소)"], ["rejuvenation", "Rejuvenation", "리쥬버네이션", "체력 재생"],
+      ["pistol_scavenger", "Pistol Scavenger", "피스톨 스캐빈저", "탄약 회복량"], ["rifle_scavenger", "Rifle Scavenger", "라이플 스캐빈저", "탄약 회복량"],
+      ["shotgun_scavenger", "Shotgun Scavenger", "샷건 스캐빈저", "탄약 회복량"], ["sniper_scavenger", "Sniper Scavenger", "스나이퍼 스캐빈저", "탄약 회복량"],
+      ["shepherd", "Shepherd", "셰퍼드", "동반자 체력·방어력"], ["summoner_s_wrath", "Summoner's Wrath", "서머너스 래스", "동반자·소환체 피해 (무기 아님)"],
+      ["toxin_resistance", "Toxin Resistance", "톡신 레지스턴스", "독성 저항"]].map(([id, en, ko, note]) => ({ id, en, ko, none: true, note })),
   ];
   root.WF_BUFFS = { abilities: A, augments: AUG, misc: MISC, shards: SHARDS, auras: AURAS, merge, scale };
 })(typeof self !== "undefined" ? self : globalThis);

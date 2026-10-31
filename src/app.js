@@ -803,18 +803,26 @@ self.onmessage = function (ev) {
   const pickedAura = () => (BUFFS.auras || []).find((x) => x.id === $("#aura").value) || null;
   function renderAuras() {
     const cur = $("#aura").value;
-    $("#aura").innerHTML = `<option value="">없음</option>` + (BUFFS.auras || []).map((A) => `<option value="${A.id}">${esc(A.ko)} — ${esc(A.note)}${auraOk(A, st.weapon) || A.stat ? "" : " (이 무기엔 효과 없음)"}</option>`).join("");
+    const tag = (A) => A.none ? " (무기 처치 속도와 무관)" : A.cond ? " (조건부 — 계산 안 함)" : A.ind ? "" : auraOk(A, st.weapon) || A.stat ? "" : " (이 무기엔 효과 없음)";
+    const one = (A) => `<option value="${A.id}">${esc(A.ko)} — ${esc(A.note)}${tag(A)}</option>`;
+    const L = BUFFS.auras || [];
+    $("#aura").innerHTML = `<option value="">없음</option><optgroup label="무기·어빌리티 계산에 반영">${L.filter((A) => !A.none && !A.cond && !A.ind).map(one).join("")}</optgroup>` +
+      `<optgroup label="입력값(체력·방어력·질주 속도·실드)으로 간접 반영">${L.filter((A) => A.ind).map(one).join("")}</optgroup>` +
+      `<optgroup label="계산하지 않음">${L.filter((A) => A.none || A.cond).map(one).join("")}</optgroup>`;
     $("#aura").value = cur;
   }
   function renderFrameList() {
     $("#frame").innerHTML = `<option value="">선택 안 함 (모든 워프레임 범용)</option>` + FRAMES.map((f) => `<option value="${f.id}">${esc(f.ko)}</option>`).join("");
+    // every Helminth ability in the game: those that change weapon numbers are calculated, the rest are listed with why not
     const hel = Object.entries(BUFFS.abilities).filter(([k, v]) => v.helminth && v.fx);
-    $("#helminth").innerHTML = `<option value="">없음</option>` + hel.map(([k, v]) => `<option value="${k}">${esc(v.ko)}</option>`).join("");
+    const rest = (window.WF_HELMINTH || []).filter((h) => !hel.some(([k]) => k === h.en)).sort((a, b) => a.ko.localeCompare(b.ko, "ko"));
+    const HK = { dmg: "피해·약화형 — 무기 처치 속도 계산에는 아직 없음", strip: "방어구 제거 — 계산에 아직 없음", group: "적을 한데 모음 — 여러 명 명중에 유리하지만 계산에 없음", util: "생존·이동·에너지 등 — 무기 처치 속도와 직접 관계없음" };
+    $("#helminth").innerHTML = `<option value="">없음</option><optgroup label="무기 계산에 반영">${hel.map(([k, v]) => `<option value="${esc(k)}">${esc(v.ko)}</option>`).join("")}</optgroup>` +
+      ["dmg", "strip", "group", "util"].map((kd) => { const xs = rest.filter((h) => h.kind === kd); return xs.length ? `<optgroup label="${HK[kd]}">${xs.map((h) => `<option value="x:${esc(h.en)}">${esc(h.ko)} (${esc(h.frame)})</option>`).join("")}</optgroup>` : ""; }).join("");
   }
   function renderAbilities() {
     const f = FRAMES.find((x) => x.id === $("#frame").value);
     const box = $("#abilities");
-    $("#framestats").hidden = !f && !$("#helminth").value;
     if (f && f.power) $("#energy").value = Math.round(f.power);
     if (!f) { box.innerHTML = ""; renderFrameStats(); return; }
     box.innerHTML = f.abilities.map((a) => {
@@ -826,6 +834,55 @@ self.onmessage = function (ev) {
     $$("#abilities .abil").forEach((el) => el.addEventListener("change", renderFrameStats));
     renderFrameStats();
   }
+  // warframe upgrade screen → frame, stat panel, aura, arcanes
+  function initFrameOcr() {
+    const box = $("#frameocr"), btn = $("#frameocrbtn"), file = $("#frameocrfile");
+    btn.addEventListener("click", () => file.click());
+    file.addEventListener("change", () => { if (file.files.length) frameOcrFill([...file.files]); file.value = ""; });
+    box.addEventListener("dragover", (e) => { e.preventDefault(); box.classList.add("drag"); });
+    box.addEventListener("dragleave", () => box.classList.remove("drag"));
+    box.addEventListener("drop", (e) => { e.preventDefault(); box.classList.remove("drag"); const f = [...(e.dataTransfer.files || [])].filter((x) => /^image\//.test(x.type)); if (f.length) frameOcrFill(f); });
+  }
+  const STAT_IN = [["health", "#health", "체력"], ["shield", "#shield", "실드"], ["armor", "#armor", "방어력"], ["energy", "#energy", "에너지"], ["sprint", "#sprint", "질주 속도"],
+    ["range", "#range", "거리"], ["str", "#strength", "위력"], ["dur", "#duration", "지속시간"], ["eff", "#efficiency", "효율"]];
+  async function frameOcrFill(files) {
+    const btn = $("#frameocrbtn"), bar = $("#frameocr .cocrbar"), msg = $("#frameocrmsg");
+    if (btn.disabled) return;
+    btn.disabled = true; bar.hidden = false; msg.hidden = false;
+    msg.textContent = "글자 인식 준비 중… (처음 한 번은 인식 도구와 한국어 데이터 약 6MB를 받습니다)";
+    try {
+      const reads = await window.WF_OCR.read(files, (p, label) => { bar.firstElementChild.style.width = Math.round(p * 100) + "%"; msg.textContent = `${label}… ${Math.round(p * 100)}%`; }, { crops: window.WF_OCR.FRAME_CROPS });
+      const FM = window.WF_FRAME_MODS ? Object.values(window.WF_FRAME_MODS) : [];
+      const r = window.WF_OCR.readFrame(reads, {
+        frames: FRAMES, auras: BUFFS.auras || [],
+        arcanes: Object.entries(FRAME_ARC).map(([k, v]) => ({ id: k, ko: v.ko })),
+        mods: FM.filter((m) => !/AURA/i.test(JSON.stringify(m.compat || ""))).map((m) => ({ id: m.id, ko: m.ko })),
+      });
+      const done = [], miss = [], unsure = [];
+      if (r.frame) { $("#frame").value = r.frame.id; renderAbilities(); done.push(r.frame.ko); } else miss.push("워프레임 이름");
+      // after the frame: picking a frame resets max energy to its base value
+      const S = r.stats || {};
+      for (const [k, sel, ko] of STAT_IN) { if (S[k] != null) { $(sel).value = S[k]; done.push(`${ko} ${k === "sprint" ? S[k] : fmt(S[k])}${["range", "str", "dur", "eff"].includes(k) ? "%" : ""}`); } else miss.push(ko); }
+      if (r.stats) $("#statincl").checked = true;
+      $("#aura").parentElement.classList.remove("ocrq");
+      if (r.aura) { $("#aura").value = r.aura.id; done.push("오라 " + r.aura.ko); if (!r.aura.sure) { unsure.push("오라"); $("#aura").parentElement.classList.add("ocrq"); } } else miss.push("오라");
+      ["#fa0", "#fa1"].forEach((id, i) => {
+        const el = $(id), a = r.arcanes[i];
+        el.parentElement.classList.toggle("ocrq", !!a && !a.sure);
+        el.value = a ? a.ko : ""; el.dispatchEvent(new Event("change"));
+        if (a) { done.push(a.ko); if (!a.sure) unsure.push(a.ko); }
+      });
+      if (r.arcanes.length < 2) miss.push(`아케인 ${2 - r.arcanes.length}개`);
+      renderFrameStats();
+      if (st.weapon) renderTargets();
+      $("#frame").dispatchEvent(new Event("input", { bubbles: true }));
+      msg.innerHTML = done.length
+        ? `읽은 값: ${esc(done.join(" · "))}.${unsure.length ? ` <b>점선 칸은 확인해 주세요</b>: ${esc(unsure.join(", "))}.` : ""}${miss.length ? ` 읽지 못함: ${esc(miss.join(", "))}.` : ""} 헬민스 어빌리티·켜 둘 어빌리티는 화면에 이름이 없어 직접 골라 주세요. 아콘 샤드는 위 능력치에 이미 들어 있습니다.`
+        : "워프레임 업그레이드 화면의 글자를 찾지 못했습니다. 왼쪽 능력치 칸이 다 보이는 화면으로 다시 올려 주세요.";
+    } catch (e) {
+      msg.textContent = "읽지 못했습니다: " + (e && e.message ? e.message : e);
+    } finally { btn.disabled = false; bar.hidden = true; }
+  }
   function shardPicks() {
     const out = [];
     for (let i = 0; i < 5; i++) { const sel = $("#sh" + i); if (!sel) continue; const id = sel.value; if (!id) continue; const s = BUFFS.shards.find((x) => x.id === id); if (s) out.push({ s, t: $("#tau" + i).checked }); }
@@ -833,9 +890,11 @@ self.onmessage = function (ev) {
   }
   function frameStats(faIds) {
     const st_ = { str: (+$("#strength").value || 100) / 100, dur: (+$("#duration").value || 100) / 100, rng: (+$("#range").value || 100) / 100, eff: (+$("#efficiency").value || 100) / 100, energy: +$("#energy").value || 300 };
-    for (const p of shardPicks()) if (p.s.kind === "stat") for (const k in p.s.stat) st_[k] += p.s.stat[k][p.t ? 1 : 0];
+    // arsenal values already include archon shards and always-on aura penalties (Power Donation); conditional ones are added
+    const incl = $("#statincl").checked;
+    if (!incl) for (const p of shardPicks()) if (p.s.kind === "stat") for (const k in p.s.stat) st_[k] += p.s.stat[k][p.t ? 1 : 0];
     const au = pickedAura();
-    if (au && au.stat) for (const k in au.stat) st_[k] += au.stat[k];
+    if (au && au.stat && !(incl && au.perm)) for (const k in au.stat) st_[k] += au.stat[k];
     for (const id of faIds || pickedFA()) {
       const A = FRAME_ARC[id]; if (!A) continue;
       if (A.stat) for (const k in A.stat) st_[k] += A.stat[k];
@@ -848,9 +907,8 @@ self.onmessage = function (ev) {
   }
   function renderFrameStats() {
     const s = frameStats();
-    $("#framestats").hidden = !$("#frame").value && !$("#helminth").value && !pickedFA().length;
     if (st.weapon && st.weapon.exalted) $("#atkdesc").textContent = (st.weapon.attacks[st.atk].desc || "") + " " + exaltedNote(st.weapon);
-    $("#statline").textContent = `샤드·아케인 반영 후: 위력 ${Math.round(s.str * 100)}% · 지속 ${Math.round(s.dur * 100)}% · 범위 ${Math.round(s.rng * 100)}% · 효율 ${Math.round(s.eff * 100)}% · 최대 에너지 ${Math.round(s.energy)}`;
+    $("#statline").textContent = `${$("#statincl").checked ? "아케인·조건부 버프" : "샤드·아케인"} 반영 후: 위력 ${Math.round(s.str * 100)}% · 지속 ${Math.round(s.dur * 100)}% · 범위 ${Math.round(s.rng * 100)}% · 효율 ${Math.round(s.eff * 100)}% · 최대 에너지 ${Math.round(s.energy)}`;
     $$("#abilities .abilcalc").forEach((el) => {
       const b = BUFFS.abilities[el.dataset.ab]; if (!b) return;
       const bits = [];
@@ -888,7 +946,9 @@ self.onmessage = function (ev) {
   function buffSummary() {
     const names = [];
     $$("#abilities .abil:checked").forEach((el) => names.push(BUFFS.abilities[el.value].ko));
-    const hk = $("#helminth").value; if (hk) names.push("헬민스 " + BUFFS.abilities[hk].ko);
+    const hk = $("#helminth").value;
+    if (hk && BUFFS.abilities[hk]) names.push("헬민스 " + BUFFS.abilities[hk].ko);
+    else if (hk) { const h = (window.WF_HELMINTH || []).find((x) => "x:" + x.en === hk); names.push("헬민스 " + (h ? h.ko : hk.slice(2)) + " (계산 영향 없음)"); }
     const picks = shardPicks().filter((p) => p.s.kind !== "none");
     if (picks.length) names.push(`아콘 샤드 ${picks.length}개`);
     for (const id of pickedFA()) names.push(FRAME_ARC[id].ko);
@@ -918,6 +978,8 @@ self.onmessage = function (ev) {
     o.mercy = $("#mercy").checked && !!st.weapon.mercyBuff;
     o.og = sc === "heavy" && $("#og").checked;
     o.armor = +$("#armor").value || 0;
+    o.shield = +$("#shield").value || 0;
+    o.sprint = +$("#sprint").value || 1;
     o.frameArcs = pickedFA().filter((id) => FRAME_ARC[id].kind === "weapon");
     o.exStr = frameStats().str;
     o.formaMax = $("#forma").value === "" ? null : +$("#forma").value;
@@ -1691,8 +1753,10 @@ self.onmessage = function (ev) {
     $("#rivmode").addEventListener("change", (e) => { $("#rivowned").hidden = e.target.value !== "owned"; });
     $("#frame").addEventListener("change", renderAbilities);
     $("#aura").addEventListener("change", renderFrameStats);
-    $("#helminth").addEventListener("change", () => { $("#framestats").hidden = !$("#frame").value && !$("#helminth").value; renderFrameStats(); });
-    ["#strength", "#duration", "#range", "#efficiency", "#energy", "#armor", "#health"].forEach((s) => $(s).addEventListener("input", renderFrameStats));
+    $("#helminth").addEventListener("change", renderFrameStats);
+    ["#strength", "#duration", "#range", "#efficiency", "#energy", "#armor", "#health", "#shield", "#sprint"].forEach((s) => $(s).addEventListener("input", renderFrameStats));
+    $("#statincl").addEventListener("change", renderFrameStats);
+    initFrameOcr();
     FA_NOTE = $("#fanote").innerHTML;
     $("#falist").innerHTML = Object.values(FRAME_ARC).slice().sort((a, b) => a.ko.localeCompare(b.ko, "ko")).map((v) => `<option value="${esc(v.ko)}"></option>`).join("");
     for (const id of ["#fa0", "#fa1"]) {
@@ -1700,7 +1764,7 @@ self.onmessage = function (ev) {
       const fix = () => {
         const m = resolveFA(el.value); if (m) el.value = m.ko; el.classList.toggle("fa-ok", !!m); el.classList.toggle("fa-bad", !!el.value.trim() && !m);
         const pk = pickedFA();
-        $("#fanote").innerHTML = pk.length ? pk.map((id) => { const A = FRAME_ARC[id]; return `<b>${esc(A.ko)}</b> ${A.kind === "none" ? '<span class="tag">계산 영향 없음</span>' : A.manual ? '<span class="tag cond">조건부</span>' : ""}<br><small>${esc((A.kd || []).join(" ").replace(/\n/g, " "))}</small>`; }).join("<br>") : FA_NOTE;
+        $("#fanote").innerHTML = pk.length ? pk.map((id) => { const A = FRAME_ARC[id]; return `<b>${esc(A.ko)}</b> ${A.ind ? `<span class="tag">입력값으로 간접 반영</span> <small>${esc(A.note)}</small>` : A.kind === "none" ? '<span class="tag">계산 영향 없음</span>' : A.manual ? '<span class="tag cond">조건부</span>' : ""}<br><small>${esc((A.kd || []).join(" ").replace(/\n/g, " "))}</small>`; }).join("<br>") : FA_NOTE;
         renderFrameStats();
       };
       el.addEventListener("change", fix); el.addEventListener("blur", fix);
@@ -1859,6 +1923,7 @@ self.onmessage = function (ev) {
   // the evolution auto-pick reads the shard/aura inputs, so they must exist before an Incarnon weapon is restored
   renderShards(); renderAuras();
   if (st.weapon.exalted || st.weapon.evos) selectWeapon(st.weapon); else renderAll();
+  renderFrameStats();
   F0 = captureFields();
   restoreFromHash();
 })();

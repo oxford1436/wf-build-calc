@@ -240,6 +240,7 @@ details.adv>.box+.box{border-top:1px dashed var(--line)}
 .mslot.riv{border-color:#8a5cc7;background:linear-gradient(180deg,color-mix(in srgb, #8a5cc7 22%, var(--panel)),var(--panel))}
 .mslot.bad{border-color:var(--bad);background:color-mix(in srgb, var(--bad) 10%, var(--panel))}
 .mslot.ocrq,.crivrow.ocrq select,.crivrow.ocrq input{outline:2px dashed var(--mid);outline-offset:1px}
+label.ocrq>select,label.ocrq>input{outline:2px dashed var(--mid);outline-offset:1px}
 .cocr{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;border:1px dashed var(--line);border-radius:6px;padding:8px}
 .cocr.drag{border-color:var(--brass);background:var(--brass-soft)}
 .cocrbtn{font:inherit;font-size:12px;border:1px solid var(--brass);background:var(--brass-soft);color:var(--ink);border-radius:4px;padding:4px 10px;cursor:pointer}
@@ -498,6 +499,9 @@ header.top p{flex-basis:100%}
 
     <div class="box">
       <h2>워프레임 <small>선택 안 하면 모든 프레임 범용</small></h2>
+      <div class="cocr" id="frameocr"><button type="button" class="cocrbtn" id="frameocrbtn">아스날 스크린샷으로 채우기</button><input type="file" id="frameocrfile" accept="image/*" hidden>
+        <small>워프레임 업그레이드 화면 — 워프레임·능력치(체력·실드·방어력·에너지·질주 속도·거리·위력·지속·효율)·오라·아케인을 읽습니다. 끌어다 놓아도 됩니다.</small>
+        <div class="cocrbar" hidden><i></i></div><p class="cocrmsg" id="frameocrmsg" hidden></p></div>
       <label>워프레임<select id="frame"></select></label>
       <div id="abilities"></div>
       <label>헬민스 어빌리티<select id="helminth"></select></label>
@@ -508,7 +512,7 @@ header.top p{flex-basis:100%}
         <label>워프레임 아케인 2<input type="text" id="fa1" list="falist" placeholder="이름 검색" autocomplete="off"></label>
       </div>
       <p class="hint" id="fanote" style="margin:0">무기 연사·피해를 올리는 아케인(액셀러레이션·퓨리 등)과 어빌리티 위력을 올리는 아케인(몰트 어그먼티드 등)을 모두 계산합니다. 결과에 아케인별 효과 순위가 나옵니다.</p>
-      <div id="framestats" hidden style="display:flex;flex-direction:column;gap:8px">
+      <div id="framestats" style="display:flex;flex-direction:column;gap:8px">
         <div class="stat4">
           <label>위력 %<input type="number" id="strength" value="100" min="10" max="600"></label>
           <label>지속시간 %<input type="number" id="duration" value="100" min="10" max="600"></label>
@@ -517,8 +521,11 @@ header.top p{flex-basis:100%}
           <label>최대 에너지<input type="number" id="energy" value="300" min="0" max="2000"></label>
           <label>방어력<input type="number" id="armor" value="0" min="0" max="20000"></label>
           <label>최대 체력<input type="number" id="health" value="0" min="0" max="20000"></label>
+          <label>최대 실드<input type="number" id="shield" value="0" min="0" max="20000"></label>
+          <label>질주 속도<input type="number" id="sprint" value="1" min="0.5" max="5" step="0.05"></label>
         </div>
-        <p class="hint" style="margin:0">모드 적용 후 아스날에 표시되는 값을 넣으세요. 아콘 샤드·워프레임 아케인은 고르면 자동으로 더해집니다. 방어력·체력은 프라이머리 불워크·아케인 배터리·아케인 벨리코스 계산에만 씁니다.</p>
+        <label class="inline"><input type="checkbox" id="statincl" checked><span>위 값은 아스날 표시값 (아콘 샤드·파워 도네이션이 이미 들어 있음) <small>끄면 아래에서 고른 아콘 샤드의 위력·지속·에너지를 위 값에 더합니다</small></span></label>
+        <p class="hint" style="margin:0">모드 적용 후 아스날에 표시되는 값을 넣으세요 (스크린샷으로 채우면 아스날 화면의 값을 그대로 읽습니다). 워프레임 아케인처럼 조건이 붙는 버프는 고르면 더해집니다. 방어력·체력·실드·질주 속도는 이 값에 반응하는 것들 — 프라이머리 불워크(방어력)·아케인 배터리(방어력)·아케인 벨리코스(체력)·밀리 리탈리에이션(실드)·방어력 450/에너지 700/질주 속도 1.2 조건의 인카논 진화 — 계산에 씁니다.</p>
         <p class="hint" id="statline" style="margin:0"></p>
       </div>
       <details><summary>기타 버프 (포커스·중재·기습)</summary>
@@ -527,7 +534,7 @@ header.top p{flex-basis:100%}
       </details>
       <details><summary>아콘 샤드 (5칸)</summary>
         <div id="shards" style="margin-top:8px;display:flex;flex-direction:column;gap:6px"></div>
-        <p class="hint">위력·지속시간(진홍), 최대 에너지(청색)는 어빌리티 계산에, 무기 관련 옵션은 무기 계산에 들어갑니다. 무기 피해와 무관한 옵션도 고를 수 있지만 계산에는 영향이 없습니다.</p>
+        <p class="hint">위력·지속시간(진홍), 최대 에너지(청색)는 아스날 표시값에 이미 들어 있어서, 위의 '아스날 표시값' 체크를 끈 경우에만 더합니다. 무기 관련 옵션은 무기 계산에 들어갑니다. 무기 피해와 무관한 옵션도 고를 수 있지만 계산에는 영향이 없습니다.</p>
       </details>
     </div>
 

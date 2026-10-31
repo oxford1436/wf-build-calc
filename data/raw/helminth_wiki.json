@@ -1,0 +1,332 @@
+[
+{
+"frame": "Ash",
+"ability": "Shuriken",
+"role": "Armor Strip"
+},
+{
+"frame": "Atlas",
+"ability": "Petrify",
+"role": "Crowd Control / Farming"
+},
+{
+"frame": "Banshee",
+"ability": "Silence",
+"role": "Damage Debuff / Disable Enemy Abilities / Stealth"
+},
+{
+"frame": "Baruuk",
+"ability": "Lull",
+"role": "Crowd Control / Stealth"
+},
+{
+"frame": "Caliban",
+"ability": "Sentient Wrath",
+"role": "Crowd Control / Damage Debuff"
+},
+{
+"frame": "Chroma",
+"ability": "Elemental Ward",
+"role": "Health Bonus / Shield Bonus / Reload Speed Bonus / Armor Bonus"
+},
+{
+"frame": "Citrine",
+"ability": "Fractured Blast",
+"role": "Crowd Control / Healing / Energy Restore"
+},
+{
+"frame": "Cyte-09",
+"ability": "Evade",
+"role": "Healing / Invisibility"
+},
+{
+"frame": "Dagath",
+"ability": "Wyrd Scythes",
+"role": "Crowd Control / Damage"
+},
+{
+"frame": "Dante",
+"ability": "Dark Verse",
+"role": "Damage"
+},
+{
+"frame": "Ember",
+"ability": "Fire Blast",
+"role": "Crowd Control / Armor Strip / Healing"
+},
+{
+"frame": "Equinox",
+"ability": "Rest & Rage",
+"role": "Crowd Control / Damage Debuff / Stealth"
+},
+{
+"frame": "Excalibur",
+"ability": "Radial Blind",
+"role": "Crowd Control"
+},
+{
+"frame": "Follie",
+"ability": "Self Portrait",
+"role": "Damage Reduction"
+},
+{
+"frame": "Frost",
+"ability": "Ice Wave",
+"role": "Crowd Control"
+},
+{
+"frame": "Gara",
+"ability": "Spectrorage",
+"role": "Crowd Control / Energy Restore"
+},
+{
+"frame": "Garuda",
+"ability": "Blood Altar",
+"role": "Healing"
+},
+{
+"frame": "Gauss",
+"ability": "Thermal Sunder",
+"role": "Crowd Control / Nuking / Damage Buff"
+},
+{
+"frame": "Grendel",
+"ability": "Nourish",
+"role": "Crowd Control / Damage Buff / Energy Restore"
+},
+{
+"frame": "Gyre",
+"ability": "Coil Horizon",
+"role": "Damage / Crowd Control"
+},
+{
+"frame": "Harrow",
+"ability": "Condemn",
+"role": "Crowd Control / Shield Restore"
+},
+{
+"frame": "Hildryn",
+"ability": "Pillage",
+"role": "Defense Strip / Shield Restore / Status Cleanse"
+},
+{
+"frame": "Hydroid",
+"ability": "Tempest Barrage",
+"role": "Crowd Control / Armor Strip"
+},
+{
+"frame": "Inaros",
+"ability": "Desiccation",
+"role": "Crowd Control"
+},
+{
+"frame": "Ivara",
+"ability": "Quiver",
+"role": "Stealth"
+},
+{
+"frame": "Jade",
+"ability": "Ophanim Eyes",
+"role": "Crowd Control / Defense Strip"
+},
+{
+"frame": "Khora",
+"ability": "Ensnare",
+"role": "Crowd Control"
+},
+{
+"frame": "Koumei",
+"ability": "Omamori",
+"role": "Healing"
+},
+{
+"frame": "Kullervo",
+"ability": "Wrathful Advance",
+"role": "Damage Buff / Movement"
+},
+{
+"frame": "Lavos",
+"ability": "Vial Rush",
+"role": "Crowd Control / Damage Buff"
+},
+{
+"frame": "Limbo",
+"ability": "Banish",
+"role": "Crowd Control / Support"
+},
+{
+"frame": "Loki",
+"ability": "Decoy",
+"role": "Crowd Control"
+},
+{
+"frame": "Mag",
+"ability": "Pull",
+"role": "Crowd Control"
+},
+{
+"frame": "Mesa",
+"ability": "Shooting Gallery",
+"role": "Damage Buff / Crowd Control"
+},
+{
+"frame": "Mirage",
+"ability": "Eclipse",
+"role": "Damage Buff / Damage Reduction"
+},
+{
+"frame": "Narin",
+"ability": "Neote",
+"role": "Crowd Control / Support"
+},
+{
+"frame": "Nekros",
+"ability": "Terrify",
+"role": "Armor Strip / Crowd Control"
+},
+{
+"frame": "Nezha",
+"ability": "Fire Walker",
+"role": "Crowd Control / Movement Speed / Status Cleanse"
+},
+{
+"frame": "Nidus",
+"ability": "Larva",
+"role": "Crowd Control"
+},
+{
+"frame": "Nokko",
+"ability": "Brightbonnet",
+"role": "Energy Restore / Strength Buff"
+},
+{
+"frame": "Nova",
+"ability": "Null Star",
+"role": "Damage Reduction"
+},
+{
+"frame": "Nyx",
+"ability": "Mind Control",
+"role": "Crowd Control / Support"
+},
+{
+"frame": "Oberon",
+"ability": "Smite",
+"role": "Armor Strip / Crowd Control / Damage Buff"
+},
+{
+"frame": "Octavia",
+"ability": "Resonator",
+"role": "Damage / Crowd Control"
+},
+{
+"frame": "Oraxia",
+"ability": "Webbed Embrace",
+"role": "Crowd Control / Damage Buff"
+},
+{
+"frame": "Protea",
+"ability": "Dispensary",
+"role": "Healing / Energy Restore"
+},
+{
+"frame": "Qorvex",
+"ability": "Chyrinka Pillar",
+"role": "Damage / Crowd Control"
+},
+{
+"frame": "Revenant",
+"ability": "Reave",
+"role": "Healing / Shield Restore / Invulnerability"
+},
+{
+"frame": "Rhino",
+"ability": "Roar",
+"role": "Damage Buff"
+},
+{
+"frame": "Saryn",
+"ability": "Molt",
+"role": "Crowd Control / Healing"
+},
+{
+"frame": "Sevagoth",
+"ability": "Gloom",
+"role": "Crowd Control / Healing"
+},
+{
+"frame": "Sirius & Orion",
+"ability": "Jade Stars",
+"role": "Damage (Jade Stars) / Decoy (Astral Shell)"
+},
+{
+"frame": "Styanax",
+"ability": "Tharros Strike",
+"role": ""
+},
+{
+"frame": "Temple",
+"ability": "Pyrotechnics",
+"role": "Damage"
+},
+{
+"frame": "Titania",
+"ability": "Spellbind",
+"role": "Crowd Control / Status Cleanse"
+},
+{
+"frame": "Trinity",
+"ability": "Well of Life",
+"role": "Healing / Crowd Control"
+},
+{
+"frame": "Uriel",
+"ability": "Remedium",
+"role": "Healing / Shield Restore / Status Cleanse / Invulnerability"
+},
+{
+"frame": "Valkyr",
+"ability": "Warcry",
+"role": "Attack Speed Buff / Armor Bonus"
+},
+{
+"frame": "Vauban",
+"ability": "Tesla Nervos",
+"role": "Crowd Control"
+},
+{
+"frame": "Volt",
+"ability": "Shock",
+"role": "Crowd Control / Damage Buff"
+},
+{
+"frame": "Voruna",
+"ability": "Lycath's Hunt",
+"role": "Healing / Energy Restore"
+},
+{
+"frame": "Wisp",
+"ability": "Breach Surge",
+"role": "Damage / Crowd Control"
+},
+{
+"frame": "Wukong",
+"ability": "Defy",
+"role": "Invulnerability / Armor Bonus / Status Cleanse"
+},
+{
+"frame": "Xaku",
+"ability": "Xata's Whisper",
+"role": "Damage Buff"
+},
+{
+"frame": "Yareli",
+"ability": "Aquablades",
+"role": "Crowd Control / Damage"
+},
+{
+"frame": "Zephyr",
+"ability": "Airburst",
+"role": "Crowd Control / Damage Buff"
+}
+]

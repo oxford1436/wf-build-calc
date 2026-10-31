@@ -122,6 +122,7 @@
       case "crowd": return o.scenario === "crowd";
       case "armor450": return (o.armor || 0) > 450;
       case "energy700": return (o.maxEnergy || 0) > 700;
+      case "sprint12": return (o.sprint || 1) >= 1.2;
       default: return false;
     }
   }
@@ -604,6 +605,8 @@
     }
     if (arc && arc.energyMs) a.ms += Math.min(3.5, arc.energyMs * (o.maxEnergy || 300) / 100);
     if (arc && arc.bulwark) a.dmg += Math.min(5, Math.max(0, ((o.armor || 0) - 1000) * 0.01));
+    // Melee Retaliation: +30% melee damage per 200 current shields (max 2,800 → +420%). No shield input → assume full.
+    if (arc && arc.retaliation) a.dmg += 0.3 * Math.floor(Math.min(2800, o.shield > 0 ? o.shield : 2800) / 200);
     if (o.mercy && weapon.mercyBuff) { a.dmg += 1; a.ms += 1; }
     if (weapon.type === "Bow" && a.frBow) a.fr += a.frBow;
     // exalted weapons (wiki ability pages): Ability Strength multiplies the base damage ("base"), or adds an innate

@@ -487,7 +487,8 @@ EVO_WHEN = [(r"^With Armor (?:Over|over|above) 450:\s*", "armor450", "방어력 
             (r"^With Channel+ed Ability [Aa]ctive:\s*", "cast", "채널링 어빌리티 사용 중"),
             (r"^On Kill: (?=.*for \d+s)", "kill", "처치 시"),
             (r"^On Reload [Ff]rom Empty(?: Magazine)?: (?=Increase Base Damage)", "always", "빈 탄창 재장전 후(계산 기준상 항상)"),
-            (r"^On Punch Through Hit: (?=.*for \d+s)", "ptHit", "관통 명중 시")]
+            (r"^On Punch Through Hit: (?=.*for \d+s)", "ptHit", "관통 명중 시"),
+            (r"^With Sprint Speed 1\.2 or Higher:\s*", "sprint12", "질주 속도 1.2 이상일 때")]
 EVO_NONE = [(r"Recoil", "반동"), (r"Accuracy", "정확도"), (r"Projectile Speed", "투사체 속도"), (r"Zoom", "확대율"), (r"Movement Speed", "이동 속도"),
             (r"^[+-]?\d+(?:\.\d+)? Range", "근접 사거리"), (r"Parry Angle", "막기 각도"), (r"Combo Duration", "연속기 지속시간"), (r"Slam Radius", "슬램 반경"),
             (r"Incarnon Transmutation", "인카논 충전"), (r"Magazine Reloaded", "보관 중 재장전")]
@@ -503,7 +504,7 @@ def evo_line(line):
                 if r.get("key"): r = dict(r, v=round(r["v"] * int(stk.group(1)), 4), ko=r["ko"] + f" ({stk.group(1)}중첩)")
                 inner = None
             if inner is not None: r = evo_line(inner)
-            if r.get("key") and r["key"] in ("pt", "ms", "fr", "blastR", "cd", "cc", "sc", "dmg", "reload", "ammoEff", "baseCD", "baseCC", "baseDmg"):
+            if r.get("key") and r["key"] in ("pt", "ms", "fr", "blastR", "cd", "cc", "sc", "dmg", "reload", "ammoEff", "baseCD", "baseCC", "baseDmg", "evoPst"):
                 # base-stat changes under a condition are applied by the engine (cdBase/ccBase/baseAdd) when the condition holds
                 k_ = {"baseCD": "cdBase", "baseCC": "ccBase", "baseDmg": "baseAdd"}.get(r["key"], r["key"])
                 return dict(r, key=k_, when=when, ko=wko + ": " + r["ko"])

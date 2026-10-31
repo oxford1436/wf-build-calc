@@ -297,7 +297,7 @@
     melee_duplicate: { ko: "밀리 듀플리케이트", slot: "melee" },
     melee_animosity: { ko: "밀리 애니모시티", slot: "melee" },
     melee_exposure: { ko: "밀리 익스포저", slot: "melee", eff: { corrm: 2.4 } },
-    melee_retaliation: { ko: "밀리 리탈리에이션", slot: "melee", manual: true, eff: { dmg: 4.2 }, note: "실드 2,800 이상 유지 가정" },
+    melee_retaliation: { ko: "밀리 리탈리에이션", en: "Melee Retaliation", slot: "melee", manual: true, retaliation: true, note: "현재 실드 200당 근접 피해 +30% (실드 2,800에서 최대 +420%) — 최대 실드 입력값 사용, 비워 두면 2,800 가정" },
     melee_doughty: { ko: "밀리 다우티", en: "Melee Doughty", slot: "melee", doughty: true, note: "관통 상태이상 확률 10%마다 치명타 피해 +1.0배" },
     melee_careen: { ko: "밀리 커린", en: "Melee Careen", slot: "melee", frozenMult: 2.5, note: "빙결(냉기 10중첩) 적에게 근접 피해 2.5배" },
     melee_crescendo: { ko: "밀리 크레센도", en: "Melee Crescendo", slot: "melee", manual: true, eff: { ic: 60 }, note: "피니셔 처치마다 초기 연속기 +6 (10회 = +60 가정)" },
@@ -452,6 +452,9 @@
     const id = a.en.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
     root.WF_FRAME_ARCANES[id] = { ko: a.ko, en: a.en, kind: "none", kd: a.kd, note: "무기 피해·어빌리티 수치에 영향 없음" };
   }
+  // no direct number, but it moves a warframe stat that another calculation reads from the inputs
+  const FA_IND = { "Arcane Expertise": "최대 실드 증가 — 아스날의 실드 값에 들어 있어 실드 입력값으로 밀리 리탈리에이션에 반영" };
+  for (const k in root.WF_FRAME_ARCANES) { const A = root.WF_FRAME_ARCANES[k]; if (FA_IND[A.en]) Object.assign(A, { ind: true, note: FA_IND[A.en] }); }
   root.WF_ARCANES = ARC;
   /* riven base values before disposition (now 1.2 for every weapon, Hotfix 44.1.3) and the stat-count multiplier.
    * wikiwiki "Riven Mod" stat tables (2026-10). Damage-relevant stats only; the rest live in app.js RIV_OTHER. */

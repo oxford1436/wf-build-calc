@@ -60,15 +60,24 @@
     }
     return [...lines.values()].map((L) => ({ img: L.img, pass: L.pass, text: L.words.join(" "), x0: L.x0, y0: L.y0, x1: L.x1, y1: L.y1 }));
   }
-  // read every screenshot with every pass; progress(0..1, label)
-  async function read(files, progress) {
+  // a region of the original-size screenshot (fractions of width/height), for small glowing text a shrunk image loses
+  function cropped(bmp, c) {
+    const x = Math.round(bmp.width * c.x0), y = Math.round(bmp.height * c.y0), w = Math.round(bmp.width * (c.x1 - c.x0)), h = Math.round(bmp.height * (c.y1 - c.y0));
+    const cv = document.createElement("canvas");
+    cv.width = w; cv.height = h;
+    cv.getContext("2d").drawImage(bmp, x, y, w, h, 0, 0, w, h);
+    return { cv, x, y };
+  }
+  // read every screenshot with every pass; progress(0..1, label). opts.crops: extra regions of big screenshots read at full size
+  async function read(files, progress, opts) {
     const w = await getWorker();
     const out = [];
     const bmps = [];
     for (const f of files) bmps.push(await createImageBitmap(f));
     // big screenshots are shrunk to MAX_W; a small crop (one riven card) is read at 1× and 2× and the lines merged
     const scalesOf = (b) => b.width < 1200 ? [1, 2] : [Math.min(1, MAX_W / b.width)];
-    const total = bmps.reduce((n, b) => n + scalesOf(b).length * PASSES.length, 0);
+    const cropsOf = (b) => b.width < 1200 ? [] : (opts && opts.crops) || [];
+    const total = bmps.reduce((n, b) => n + (scalesOf(b).length + cropsOf(b).length) * PASSES.length, 0);
     let done = 0;
     for (let fi = 0; fi < bmps.length; fi++) {
       const ks = scalesOf(bmps[fi]), base = scaled(bmps[fi], ks[0]);
@@ -81,6 +90,16 @@
           for (const L of parseTSV(r.data.tsv, fi, ks.length > 1 ? p.id + "@" + k : p.id)) { L.x0 *= f; L.x1 *= f; L.y0 *= f; L.y1 *= f; lines.push(L); }
           done++;
           if (progress) progress(done / total, `${fi + 1}번째 이미지 읽는 중`);
+        }
+      }
+      for (const [ci, c] of cropsOf(bmps[fi]).entries()) {
+        const { cv, x, y } = cropped(bmps[fi], c), k = ks[0];
+        for (const p of PASSES) {
+          logFn = (m) => { if (m.status === "recognizing text" && progress) progress((done + (m.progress || 0)) / total, `${fi + 1}번째 이미지 자세히 읽는 중`); };
+          const r = await w.recognize(binarize(cv, p.fn), {}, { text: false, blocks: false, tsv: true });
+          for (const L of parseTSV(r.data.tsv, fi, p.id + "@c" + ci)) { L.x0 = (L.x0 + x) * k; L.x1 = (L.x1 + x) * k; L.y0 = (L.y0 + y) * k; L.y1 = (L.y1 + y) * k; lines.push(L); }
+          done++;
+          if (progress) progress(done / total, `${fi + 1}번째 이미지 자세히 읽는 중`);
         }
       }
       out.push({ img: fi, w: base.width, h: base.height, canvas: base, lines });
@@ -337,6 +356,38 @@
       const nCols = 4, cells = new Array(rowC.length * nCols).fill(null);
       const colIdx = (cx) => colC.length === nCols ? near(colC, cx) : Math.round(((cx - colC[0]) / Math.max(1, (colC[colC.length - 1] - colC[0]) / Math.max(1, colC.length - 1))));
       for (const x of placed) { const k = near(rowC, x.cy) * nCols + Math.min(nCols - 1, Math.max(0, colIdx(x.cx))); if (!cells[k]) cells[k] = x; else rest.push(x); }
+      // an empty cell whose first line reads as a family prefix ("갈바나이즈드" over a second line the OCR can't read, e.g.
+      // 앱티튜드) is that family's unused mod — not a riven. The second line's width says how long the rest of the name is.
+      if (rowC.length === 2 && colC.length === nCols) {
+        const dx = (colC[colC.length - 1] - colC[0]) / Math.max(1, colC.length - 1), dy = Math.max(lineH * 2, rowC[1] - rowC[0]);
+        const lines = reads.filter((R) => R.img === refImg).flatMap((R) => R.lines);
+        for (let k = 0; k < cells.length; k++) {
+          if (cells[k]) continue;
+          const cx = colC[k % nCols], cy = rowC[Math.floor(k / nCols)];
+          const inCell = lines.filter((L) => Math.abs((L.x0 + L.x1) / 2 - cx) < dx * 0.5 && Math.abs((L.y0 + L.y1) / 2 - cy) < dy * 0.5);
+          const usedIds = new Set(cells.filter(Boolean).map((c) => c.id));
+          const usedGroups = new Set(cells.filter(Boolean).map((c) => (ctx.mods.find((m) => m.id === c.id) || {}).group).filter(Boolean));
+          let best = null;
+          for (const L of inCell) {
+            const t = norm(L.text);
+            if (t.length < 3 || !/[가-힣]{3}/.test(t)) continue;
+            const below = inCell.filter((B) => B !== L && B.y0 >= L.y1 - (L.y1 - L.y0) * 0.3 && B.y0 - L.y1 < (L.y1 - L.y0) * 1.2);
+            const charW = (L.x1 - L.x0) / t.length;
+            const estRest = below.length ? Math.max(...below.map((B) => (B.x1 - B.x0) / charW)) : null;
+            for (const m of ctx.mods) {
+              if (m.exilus || usedIds.has(m.id) || (m.group && usedGroups.has(m.group))) continue;
+              const n = m._n || (m._n = norm(m.ko));
+              if (n.length <= t.length) continue;
+              const sim = 1 - fitDist(t, n.slice(0, t.length + 1)) / t.length;
+              if (sim < 0.8) continue;
+              const fit = estRest == null ? 0 : -Math.abs((n.length - t.length) - estRest);
+              const score = sim * 10 + fit;
+              if (!best || score > best.score) best = { m, score, sim };
+            }
+          }
+          if (best) cells[k] = { id: best.m.id, ko: best.m.ko, sim: Math.min(0.8, best.sim * 0.8) };
+        }
+      }
       if (!hasRiv && normal.length === 7 && rowC.length === 2 && colC.length === nCols && cells.filter((c) => !c).length === 1) {
         hasRiv = true; cells[cells.indexOf(null)] = { id: "__riven", ko: "리벤 모드", sim: 0.6, guessRiv: true };
       }
@@ -366,5 +417,111 @@
     };
   }
 
-  root.WF_OCR = { read, match, findWeapon, parseTSV, segments, fitDist, norm, parseRiven, _passes: PASSES };
+  /* ---------- warframe upgrade screen: stat panel, aura, arcanes, frame name ---------- */
+  const STAT_LBL = { health: ["체력", "health"], shield: ["실드", "shields"], armor: ["방어력", "armor"], energy: ["에너지", "energy"], sprint: ["질주속도", "sprintspeed"],
+    range: ["거리", "range"], str: ["위력", "strength"], dur: ["지속시간", "duration"], eff: ["효율", "efficiency"] };
+  const TOP_ORDER = ["health", "shield", "armor", "energy", "sprint"];
+  // the ability block is sorted by the client's own names: Korean 거리·위력·지속 시간·효율, English Duration·Efficiency·Range·Strength
+  const AB_ORDER = { ko: ["range", "str", "dur", "eff"], en: ["dur", "eff", "range", "str"] };
+  function statNum(text) {
+    const s = String(text || "").replace(/\s+/g, "");
+    if (!s || /\//.test(s) || (s.match(/[가-힣A-Za-z]/g) || []).length > 1) return null;
+    const m = s.match(/(\d[\d,.]*)(%?)/);
+    if (!m || m[0].length < s.length - 2) return null;
+    const t = m[1].replace(/[.,]$/, "");
+    const v = /^\d{1,3}([,.]\d{3})+$/.test(t) ? +t.replace(/[,.]/g, "") : parseFloat(t.replace(/,/g, "."));
+    return isFinite(v) ? { v, pct: !!m[2] } : null;
+  }
+  function frameStatsOf(R) {
+    const nums = [];
+    for (const L of R.lines) {
+      if (L.x1 > R.w * 0.45) continue;
+      const n = statNum(L.text); if (!n) continue;
+      nums.push(Object.assign({ x0: L.x0, x1: L.x1, cy: (L.y0 + L.y1) / 2, h: L.y1 - L.y0, pass: L.pass }, n));
+    }
+    if (nums.length < 3) return null;
+    // the value column is right-aligned: the right edge shared by the most numbers
+    const h = nums.map((x) => x.h).sort((a, b) => a - b)[Math.floor(nums.length / 2)];
+    let col = null;
+    for (const a of nums) { const c = nums.filter((b) => Math.abs(b.x1 - a.x1) < h * 1.2); if (!col || c.length > col.length) col = c; }
+    // one row per height; passes that disagree → the reading most passes agree on
+    col.sort((a, b) => a.cy - b.cy);
+    const rows = [];
+    for (const x of col) { const r = rows[rows.length - 1]; if (r && x.cy - r.cy < h * 0.6) r.xs.push(x); else rows.push({ cy: x.cy, xs: [x] }); }
+    for (const r of rows) {
+      const tally = new Map();
+      for (const x of r.xs) { const k = x.v + (x.pct ? "%" : ""); tally.set(k, (tally.get(k) || 0) + 1); }
+      const best = [...tally.entries()].sort((a, b) => b[1] - a[1])[0][0];
+      const pick = r.xs.find((x) => x.v + (x.pct ? "%" : "") === best);
+      r.v = pick.v; r.pct = r.xs.some((x) => x.pct); r.x0 = Math.min(...r.xs.map((x) => x.x0));
+    }
+    // blocks: warframe stats, then (after the 어빌리티 header) ability stats
+    const gaps = rows.slice(1).map((r, i) => r.cy - rows[i].cy);
+    const step = gaps.length ? gaps.slice().sort((a, b) => a - b)[Math.floor(gaps.length / 3)] : h * 1.5;
+    const blocks = [[rows[0]]];
+    rows.slice(1).forEach((r, i) => { if (gaps[i] > step * 1.8) blocks.push([r]); else blocks[blocks.length - 1].push(r); });
+    const abI = blocks.findIndex((b) => b.filter((r) => r.pct).length >= Math.max(2, b.length / 2));
+    const ab = abI >= 0 ? blocks[abI] : null, top = abI > 0 ? blocks[abI - 1] : abI < 0 ? blocks[blocks.length - 1] : null;
+    // labels to the left of a row (when readable) settle which stat it is
+    const labelSim = (r, key) => {
+      let best = 0;
+      for (const L of R.lines) {
+        if (L.x1 > r.x0 - h || Math.abs((L.y0 + L.y1) / 2 - r.cy) > h * 0.7) continue;
+        const t = norm(L.text); if (t.length < 2) continue;
+        for (const n of STAT_LBL[key]) best = Math.max(best, 1 - fitDist(n, t) / n.length);
+      }
+      return best;
+    };
+    const out = {};
+    if (ab && ab.length) {
+      const score = (ord) => ab.reduce((s, r, i) => s + (ord[i] ? labelSim(r, ord[i]) : 0), 0);
+      const ord = score(AB_ORDER.en) > score(AB_ORDER.ko) + 0.5 ? AB_ORDER.en : AB_ORDER.ko;
+      ab.slice(0, 4).forEach((r, i) => { if (ab.length === 4 || labelSim(r, ord[i]) >= 0.5) out[ord[i]] = r.v; });
+    }
+    if (top && top.length) {
+      let keys;
+      if (top.length === 5) keys = TOP_ORDER;
+      else {
+        // a row missing (no shields, e.g. 이나로스): match the readable labels, the decimal last row is sprint speed
+        keys = top.map((r) => { const s = TOP_ORDER.map((k) => [k, labelSim(r, k)]).sort((a, b) => b[1] - a[1])[0]; return s[1] >= 0.5 ? s[0] : null; });
+        const last = top[top.length - 1];
+        if (!keys[top.length - 1] && last.v > 0 && last.v < 5) keys[top.length - 1] = "sprint";
+        const free = TOP_ORDER.filter((k) => k !== "sprint" && !keys.includes(k));
+        const noShield = free.filter((k) => k !== "shield");
+        const fill = keys.filter((k) => !k).length === noShield.length ? noShield : free;
+        keys = keys.map((k) => k || fill.shift() || null);
+      }
+      top.forEach((r, i) => { if (keys[i] && !(keys[i] in out)) out[keys[i]] = r.v; });
+    }
+    if (out.sprint != null && !(out.sprint > 0 && out.sprint < 5)) delete out.sprint;
+    return Object.keys(out).length ? out : null;
+  }
+  // ctx: { frames: [{id, ko}], auras: [{id, ko}], arcanes: [{id, ko}], mods: other warframe mods [{id, ko}] (optional) }
+  function readFrame(reads, ctx) {
+    let stats = null;
+    for (const R of reads) { const s = frameStatsOf(R); if (s && (!stats || Object.keys(s).length > Object.keys(stats).length)) stats = s; }
+    const frame = findWeapon(reads, ctx.frames);
+    const segs = [];
+    for (const R of reads) segs.push(...segments(R.lines));
+    let aura = null;
+    const arcs = new Map();
+    const W = new Map(reads.map((R) => [R.img, R.w]));
+    for (const s of segs) {
+      // a card that reads better as an ordinary warframe mod (블라인드 레이지) is that mod, not an aura or an arcane
+      const m = ctx.mods ? bestName(s, ctx.mods) : null;
+      const beats = (x) => x && (!m || x.sim * x.len >= m.sim * m.len);
+      const a = bestName(s, ctx.auras);
+      if (beats(a) && (!aura || a.sim * a.len > aura.sim * aura.len)) aura = a;
+      // the two arcane slots sit at the right edge of the upgrade screen
+      if (s.box.x0 < (W.get(s.box.img) || 0) * 0.55) continue;
+      const r = bestName(s, ctx.arcanes);
+      if (beats(r) && (!arcs.has(r.c.id) || arcs.get(r.c.id).sim < r.sim)) arcs.set(r.c.id, r);
+    }
+    const arcanes = [...arcs.values()].sort((a, b) => b.sim * b.len - a.sim * a.len).slice(0, 2).map((r) => ({ id: r.c.id, ko: r.c.ko, sure: r.sim >= 0.85 }));
+    return { frame, stats, aura: aura ? { id: aura.c.id, ko: aura.c.ko, sure: aura.sim >= 0.85 } : null, arcanes };
+  }
+
+  // the upgrade screen's arcane names glow and are small: read the right-hand column again at full size
+  const FRAME_CROPS = [{ x0: 0.74, y0: 0.18, x1: 1, y1: 0.9 }];
+  root.WF_OCR = { read, match, findWeapon, readFrame, FRAME_CROPS, parseTSV, segments, fitDist, norm, parseRiven, _passes: PASSES };
 })(typeof self !== "undefined" ? self : globalThis);
