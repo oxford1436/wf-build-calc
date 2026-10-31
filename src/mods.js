@@ -341,10 +341,10 @@
   };
 
 
-  // weapon augment with a crowd-wiping effect, modeled specially (engine: chain explosions on kill)
+  // weapon augment with a crowd-wiping effect, modeled specially (engine: an explosion on every kill; no chaining since Hotfix 44.1.3)
   // Sobek augment (wiki): next magazine +15% status chance and multishot per trigger pull landed, max 15 stacks (+225%)
   add("clip_delegation", "클립 델리게이션", "Clip Delegation", ["shotgun"], {}, { weapons: ["Sobek"], clipDeleg: { per: 0.15, max: 15 }, note: "다음 탄창 상태이상 확률·멀티샷 +15%×(이번 탄창 명중 발수), 최대 15중첩(+225%) — 탄창마다 15발 이상 맞힌다고 가정, 애시드 쉘즈 폭발에는 영향 없음" });
-  add("acid_shells", "애시드 쉘즈", "Acid Shells", ["shotgun"], {}, { weapons: ["Sobek"], killExplode: { pct: 0.45, flat: 450, r: 10 }, note: "처치한 적이 폭발해 10m 안에 부식 450 + 최대 체력 45% 피해 (연쇄 폭발)" });
+  add("acid_shells", "애시드 쉘즈", "Acid Shells", ["shotgun"], {}, { weapons: ["Sobek"], killExplode: { pct: 0.45, flat: 450, r: 10 }, note: "처치한 적이 폭발해 10m 안에 부식 450 + 최대 체력 45% 피해 (핫픽스 44.1.3부터 폭발로 죽은 적은 다시 터지지 않음)" });
 
   /* ---------------- every other weapon mod in the game data, read from its max-rank text ---------------- */
   const STAT = { "Damage": "dmg", "Melee Damage": "dmg", "Critical Chance": "cc", "Critical Damage": "cd", "Status Chance": "sc", "Status Duration": "dur",

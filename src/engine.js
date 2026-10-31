@@ -480,11 +480,20 @@
           let lights = Math.min(sweep, spread);
           clear = Math.max(lights, tHeavy + period);
           if (kx) {
-            // kill explosions (e.g. Acid Shells: 45% max health in 10 m): three kills close together chain through the pack
-            const need = Math.max(0, Math.ceil(Math.min(3, main.N) / Math.max(1, Keff)) - 1);
-            const casc = tHit + need * period + 0.3;
-            lights = Math.min(lights, casc);
-            clear = Math.max(lights, Math.min(tHeavy + period, casc + 0.3));
+            // kill explosions (Acid Shells: 450 + 45% max health in 10 m). Hotfix 44.1.3: enemies killed by the explosion don't
+            // explode again, so each kill only takes that share of health off the enemies around it (no chain through the pack)
+            const n10 = Math.min(main.N - 1, (o.density || 0) * Math.PI * kx.r * kx.r);
+            const frac = Math.min(1, kx.pct + kx.flat / Math.max(1, tg.hp));
+            const k2 = Math.min(main.N, Keff * (1 + n10 * frac));
+            lights = Math.min(lights, (main.N / k2) * period + tHit);
+            // the heavy mixed in also takes the explosions of the enemies killed near it
+            let tExp = Infinity;
+            if (tgs.heavy) {
+              const fh = Math.min(1, kx.pct + kx.flat / Math.max(1, tgs.heavy.hp));
+              const nearRate = (k2 / period) * n10 / Math.max(1, main.N - 1);
+              tExp = tHit + Math.ceil(1 / fh) / Math.max(1e-6, nearRate);
+            }
+            clear = Math.max(lights, Math.min(tHeavy, tExp) + period);
           }
           kps = main.N / Math.max(period, clear);
         } else { clear = Math.max(period, tHit); kps = 1 / clear; }
