@@ -83,7 +83,7 @@
   /* ---------- mods aggregation ---------- */
   const NUM_KEYS = ["dmg", "heavy", "ms", "cc", "ccHeavyNoDouble", "cd", "sc", "sd", "dur", "fr", "frneg", "lock", "mag", "reload", "wind",
     "ic", "hae", "ccc", "br", "ww", "co", "gco", "radius", "pt", "cdFlat", "ccFlat", "hsMult", "msLock", "hm", "ib", "welt",
-    "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot"];
+    "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot", "evoPst"];
   const EXTRA = ["radm", "magm", "gasm", "blastm", "viralm", "corrm", "heatx", "coldx", "elecx", "toxx", "voidx"];
   function newAgg() {
     const a = { elem: { heat: 0, cold: 0, elec: 0, tox: 0 }, phys: { impact: 0, punct: 0, slash: 0 }, extra: {} };
@@ -530,6 +530,8 @@
     const kills = o.scenario === "boss" ? false : o.kills;
     const oo = Object.assign({}, o, { kills });
     const a = aggregate(mods, oo, riven);
+    // Incarnon evolution perks that act like a mod (fire rate, reload, direct damage per status type…) ride on the attack
+    if (atk.evoEff) applyEff(a, atk.evoEff);
     const ext = o.ext || {};
     // ability elements (Electric Shield, Toxic Lash, Xata's Whisper, Nourish) stay separate — they never combine.
     // "*mod" keys (Violet shard electricity) behave like an elemental mod: added to a mod of that element, else after the mods.
@@ -772,7 +774,8 @@
       // statuses other sources keep on the target (abilities, teammates) also count for Condition Overload / Galvanized
       if (ext.statusExtra) ntypes = Math.min(14, ntypes + ext.statusExtra);
       // Galvanized Shot/Aptitude/Diffusion stacks need kills and boost direct hits only, not explosions (wiki)
-      const gco = kind === "radial" ? 0 : kills ? a.gco * ntypes : 0;
+      // Incarnon "+X% Direct Damage per Status Type" (no kill needed) counts the same way
+      const gco = kind === "radial" ? 0 : (kills ? a.gco * ntypes : 0) + (a.evoPst || 0) * ntypes;
       const co = isMelee && !atk.noCO ? a.co * ntypes : 0;
       const mbd = Btot * exS * (1 + dmgb + dmgArc + platedB) * fallM;
       let directMult = Btot * exS * (1 + dmgb + dmgArc + platedB + gco + co) * fallM;

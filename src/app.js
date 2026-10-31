@@ -72,7 +72,7 @@ self.onmessage = function (ev) {
   const freshWorker = () => { if (bgBusy && worker) { worker.terminate(); worker = null; } bgBusy = false; return getWorker(); };
 
   /* ---------------- state ---------------- */
-  const st = { weapon: WEAPONS.find((w) => w.id === "coda_pathocyst") || WEAPONS[0], atk: 0, results: null };
+  const st = { weapon: WEAPONS.find((w) => w.id === "coda_pathocyst") || WEAPONS[0], atk: 0, results: null, base: null, evoSel: {} };
   try { const s = JSON.parse(localStorage.getItem("wfopt2") || "null"); if (s && s.wid) { const w = WEAPONS.find((x) => x.id === s.wid); if (w) st.weapon = w; } } catch (e) {}
   const save = () => { try { localStorage.setItem("wfopt2", JSON.stringify(st.weapon.modular ? { mod: [st.weapon.modular.kind].concat(st.weapon.modular.parts) } : { wid: st.weapon.id })); } catch (e) {} };
 
@@ -124,7 +124,7 @@ self.onmessage = function (ev) {
     const slot = $(".slot-tabs .on")?.dataset.slot || "all";
     $("#wcount").textContent = WEAPONS.length + "종";
     const list = WEAPONS.filter((w) => (slot === "all" || w.slot === slot) && (!q || (w.ko || "").toLowerCase().includes(q) || (w.en || "").toLowerCase().includes(q))).slice(0, 80);
-    $("#wlist").innerHTML = list.map((w) => `<button type="button" class="witem${w === st.weapon ? " on" : ""}" data-id="${w.id}"><span class="wko">${esc(w.ko || w.en)}</span><span class="wen">${esc(w.en || "")}</span><span class="wcls">${w.exalted ? "익절티드 · " : ""}${w.sub === "glaive" ? "글레이브" : TYPE_LABEL[w.type] || CLS_KO[w.cls] || w.cls}${w.valence ? " · 베일런스" : ""}</span></button>`).join("") || `<p class="empty">검색 결과가 없습니다.</p>`;
+    $("#wlist").innerHTML = list.map((w) => `<button type="button" class="witem${w.id === st.weapon.id ? " on" : ""}" data-id="${w.id}"><span class="wko">${esc(w.ko || w.en)}</span><span class="wen">${esc(w.en || "")}</span><span class="wcls">${w.exalted ? "익절티드 · " : ""}${w.sub === "glaive" ? "글레이브" : TYPE_LABEL[w.type] || CLS_KO[w.cls] || w.cls}${w.valence ? " · 베일런스" : ""}</span></button>`).join("") || `<p class="empty">검색 결과가 없습니다.</p>`;
   }
   /* ---------------- Zaw / Kitgun assembly (wiki Module:Modular/data formulas) ---------------- */
   const MODU = window.WF_MODULAR || {};
@@ -211,7 +211,8 @@ self.onmessage = function (ev) {
     fill();
   }
   function selectWeapon(w) {
-    st.weapon = w; st.atk = defaultAttack(w); st.results = null; save();
+    st.base = w; st.evoSel = {}; st.evoManual = {}; st.weapon = w; st.atk = defaultAttack(w); st.results = null; save();
+    evolve();
     if (w.exalted && w.exalted.frame) {
       const f = FRAMES.find((x) => x.en === w.exalted.frame) || FRAMES.find((x) => x.en === w.exalted.frame.replace(/ (Prime|Umbra)$/, ""));
       if (f && $("#frame").value !== f.id) { $("#frame").value = f.id; renderAbilities(); }
@@ -258,6 +259,80 @@ self.onmessage = function (ev) {
     $("#eorder").innerHTML = `<b>원소가 합쳐지는 순서</b>${chips.join('<span class="oarr">→</span>')}<span>어빌리티(일렉트릭 실드 등)와 아케인이 주는 원소는 합쳐지지 않습니다.</span>`;
   }
 
+  /* ---------------- Incarnon evolutions ---------------- */
+  // st.evoSel[tier] = chosen perk index; tiers left out are "auto" (picked by a quick no-mod calculation). The weapon every
+  // calculation uses is the base weapon with the chosen perks applied: base-stat lines change the attack (damage, crit,
+  // status, magazine, multishot), mod-like lines (fire rate, reload, damage per status type…) ride on it as evoEff.
+  const isIncAtk = (a) => /^Incarnon/i.test(a.en || "") || (a.parts || []).some((p) => /^Incarnon/i.test(p.en || ""));
+  function evoItems(w, sel) {
+    const items = [];
+    for (const t of w.evos || []) { if (t.tier === 1) continue; const p = t.perks[sel[t.tier] != null ? sel[t.tier] : 0]; if (p) for (const it of p.items) if (it.key) items.push(it); }
+    return items;
+  }
+  function applyEvos(w, sel) {
+    if (!w.evos) return w;
+    const items = evoItems(w, sel);
+    const mod = (a, inc, dmgF) => {
+      const x = JSON.parse(JSON.stringify(a)), eff = {};
+      for (const it of items) {
+        if ((it.form === "inc" && !inc) || (it.form === "normal" && inc)) continue;   // no form = both forms
+        if (it.key === "baseDmg") { const f = dmgF != null ? dmgF : (() => { const tot = Object.values(x.dmg || {}).reduce((q, v) => q + v, 0); return tot > 0 ? (tot + it.v) / tot : 1; })(); for (const k in x.dmg) x.dmg[k] *= f; }
+        else if (it.key === "baseCC") x.cc = (x.cc || 0) + it.v;
+        else if (it.key === "baseCD") x.cd = (x.cd || 0) + it.v;
+        else if (it.key === "baseSC") x.sc = (x.sc || 0) + it.v;
+        else if (it.key === "baseMag") { if (x.mag) x.mag += it.v; }
+        else if (it.key === "basePellets") x.pellets = (x.pellets || 1) + it.v;
+        else eff[it.key] = (eff[it.key] || 0) + it.v;
+      }
+      if (Object.keys(eff).length) x.evoEff = Object.assign({}, x.evoEff || {}, eff);
+      return x;
+    };
+    return Object.assign({}, w, { attacks: w.attacks.map((a) => {
+      const inc = isIncAtk(a);
+      if (!a.parts) return mod(a, inc);
+      // a shot with a direct hit and a blast: "+X base damage" scales both parts by the direct hit's factor
+      const d0 = Object.values(a.parts[0].dmg || {}).reduce((q, v) => q + v, 0);
+      const add = items.filter((it) => it.key === "baseDmg" && !((it.form === "inc" && !inc) || (it.form === "normal" && inc))).reduce((q, it) => q + it.v, 0);
+      const f = d0 > 0 ? (d0 + add) / d0 : 1;
+      const y = mod(Object.assign({}, a, { parts: undefined }), inc, f); y.parts = a.parts.map((p) => mod(p, inc, f)); return y;
+    }) });
+  }
+  // auto choices: per tier, the perk that makes the chosen attack fastest with no mods (others at their current choice)
+  function autoEvo(w, sel) {
+    const out = Object.assign({}, sel);
+    if (!w.evos) return out;
+    const o = Object.assign(readOpts(), { layoutTTK: false });
+    for (const t of w.evos) {
+      if (t.tier === 1 || st.evoManual && st.evoManual[t.tier]) continue;
+      let best = 0, bs = -1;
+      t.perks.forEach((p, i) => { const ww = applyEvos(w, Object.assign({}, out, { [t.tier]: i })); const sc = E.evaluate(ww, ww.attacks[st.atk] || ww.attacks[0], [], o).score; if (sc > bs * 1.0001) { bs = sc; best = i; } });
+      out[t.tier] = best;
+    }
+    return out;
+  }
+  function evolve() {
+    const w = st.base || st.weapon;
+    if (!w.evos) { st.weapon = w; return; }
+    st.evoManual = st.evoManual || {};
+    st.evoSel = autoEvo(w, st.evoSel);
+    st.weapon = applyEvos(w, st.evoSel);
+  }
+  function renderEvoBox() {
+    const box = $("#evobox"), w = st.base || st.weapon;
+    if (!w.evos) { box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    const roman = ["", "I", "II", "III", "IV", "V"];
+    const desc = (p) => p.items.map((it) => it.key ? it.ko + (it.form === "inc" ? " (인카논 형태만)" : it.form === "normal" ? " (기본 형태만)" : "") : it.cond ? "조건부: " + it.ko : it.ko).join(" · ");
+    box.innerHTML = `<div class="clabel">인카논 진화 <small>게임에서 고른 진화를 고르세요 · 처음엔 계산으로 고른 값</small></div>
+      ${w.evos.map((t) => t.tier === 1 ? `<div class="evorow"><b>${roman[t.tier]}</b><span class="evofix">인카논 형태 해금</span></div>`
+        : `<label class="evorow"><b>${roman[t.tier] || t.tier}</b><select data-tier="${t.tier}">${t.perks.map((p, i) => `<option value="${i}"${st.evoSel[t.tier] === i ? " selected" : ""}>${esc(p.name)} — ${esc(desc(p))}${st.evoManual && st.evoManual[t.tier] ? "" : st.evoSel[t.tier] === i ? " [자동]" : ""}</option>`).join("")}</select></label>`).join("")}
+      <p class="hint" style="margin:0">기본 피해·치명타·상태이상·탄창·멀티샷·연사·재장전·상태이상당 피해는 계산에 넣고, 조건이 붙은 효과(오버실드일 때, 빈 탄창 재장전 시 등)와 반동·정확도 같은 효과는 넣지 않습니다. 위키 진화 표 기준.</p>`;
+    box.querySelectorAll("select").forEach((sel) => sel.addEventListener("change", () => {
+      st.evoManual = st.evoManual || {}; st.evoManual[sel.dataset.tier] = true; st.evoSel[sel.dataset.tier] = +sel.value;
+      st.weapon = applyEvos(st.base, st.evoSel); st.results = null; renderAll();
+    }));
+  }
+
   function renderAll() {
     renderWeaponList();
     const w = st.weapon, atk = w.attacks[st.atk];
@@ -272,6 +347,7 @@ self.onmessage = function (ev) {
     $("#atkstats").innerHTML = atkStatsHtml(atk);
     $("#valrow").hidden = !w.valence;
     renderElemOrder(w);
+    renderEvoBox();
     $("#mercyrow").hidden = !w.mercyBuff;
     $("#comborow").hidden = w.cls !== "melee";
     $("#aimrow").hidden = w.cls === "melee";
@@ -895,6 +971,26 @@ self.onmessage = function (ev) {
       </tbody></table></div>
       <p class="hint">"만들 수 없음"은 이 무기·공격으로 그 속성을 충분히 넣지 못하는 조합입니다 (원소는 10% 이상이고 다른 원소 없이, 물리 하나만 고른 줄은 그 물리 속성이 가장 커야 함). 칸 순서까지 반영한 계산이며, 원하는 조합으로 처음부터 다시 짜려면 왼쪽 "속성 콘셉트"에서 고르세요.</p>`;
   }
+  // Incarnon evolutions with the recommended build kept: each other perk of a tier, swapped in alone
+  function evoCompareHtml(top, ref) {
+    const w = st.base; if (!w || !w.evos) return "";
+    const roman = ["", "I", "II", "III", "IV", "V"];
+    const rows = [];
+    for (const t of w.evos) {
+      if (t.tier === 1 || t.perks.length < 2) continue;
+      t.perks.forEach((p, i) => {
+        const cur = st.evoSel[t.tier] === i;
+        const k = cur ? 1 : evalBuild(top.ids, top.val, top.arcane, null, null, null, applyEvos(w, Object.assign({}, st.evoSel, { [t.tier]: i }))).score / ref;
+        rows.push({ t: t.tier, i, p, k, cur, calc: p.items.some((it) => it.key) });
+      });
+    }
+    const better = rows.filter((x) => !x.cur && x.k > 1.02).sort((a, b) => b.k - a.k)[0];
+    return `<section class="card"><h3>인카논 진화 비교 <small>추천 모드 그대로 진화 하나만 바꿨을 때 (지금 선택 = 100%)</small></h3>
+      ${better ? `<p class="warn">진화 ${roman[better.t]}를 <b>${esc(better.p.name)}</b>(으)로 바꾸면 ×${better.k.toFixed(2)} 빨라집니다. <button type="button" class="ghostbtn" data-evo="${better.t}:${better.i}">이 진화로 다시 계산</button></p>` : ""}
+      <div class="tscroll"><table class="tbl"><thead><tr><th>진화</th><th>효과</th><th>처치 속도</th></tr></thead><tbody>
+      ${rows.map((x) => `<tr${x.cur ? ' class="rec"' : ""}><td><b>${roman[x.t]}</b> ${esc(x.p.name)}${x.cur ? " <small>(선택)</small>" : ""}</td><td><small>${esc(x.p.items.map((it) => it.key ? it.ko : it.cond ? "조건부(계산 제외)" : it.ko).join(" · "))}</small></td><td class="num">${x.calc || x.cur ? pct(x.k, 0) : "<small>계산 영향 없음</small>"}</td></tr>`).join("")}
+      </tbody></table></div></section>`;
+  }
   function updateConceptCard() { const el = document.getElementById("conceptcard"); if (el && st.results) el.innerHTML = conceptCardHtml(); }
 
   // "맞출 예정": after the riven-free search, give the build the best riven worth rolling (3 positives at the middle of
@@ -935,8 +1031,8 @@ self.onmessage = function (ev) {
   }
 
   /* ---------------- evaluation helpers ---------------- */
-  function evalBuild(ids, val, arcane, oOverride, rivEff, elemOrder) {
-    const w = st.weapon, atk = w.attacks[st.atk];
+  function evalBuild(ids, val, arcane, oOverride, rivEff, elemOrder, wOverride) {
+    const w = wOverride || st.weapon, atk = w.attacks[st.atk];
     // shown speeds are real speeds: the element concept only steers the element layout here, it never scales the score
     const o = Object.assign({}, oOverride || st.results.o, { val, arcane, elemOrder: elemOrder || null, layoutTTK: true, conceptPenalty: false });
     const mods = ids.map((id) => id === "__riven" ? { id: "__riven", eff: rivEff || (st.results.owned ? st.results.owned.eff : {}) } : MOD_BY_ID[id]);
@@ -1078,6 +1174,7 @@ self.onmessage = function (ev) {
       ${ttkTable(r, o)}
     </section>`;
     let h3 = "", h4 = `<section class="card" id="conceptcard">${conceptCardHtml()}</section>`, h5 = "";
+    h4 += evoCompareHtml(top, ref);
     if (rm0 === "plan" && R.rivBest) h3 += rivenPremiseSection(R, top, r);
 
     // stats + breakdown
@@ -1495,7 +1592,7 @@ self.onmessage = function (ev) {
     $("#wsearch").addEventListener("input", renderWeaponList);
     $$(".slot-tabs button").forEach((b) => b.addEventListener("click", () => { $$(".slot-tabs button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); renderWeaponList(); }));
     $("#wlist").addEventListener("click", (e) => { const b = e.target.closest(".witem"); if (!b) return; const w = WEAPONS.find((x) => x.id === b.dataset.id); if (w) selectWeapon(w); });
-    $("#atk").addEventListener("change", (e) => { st.atk = +e.target.value; renderAll(); });
+    $("#atk").addEventListener("change", (e) => { st.atk = +e.target.value; evolve(); renderAll(); });
     $("#runbtn").addEventListener("click", run);
     $("#addset").addEventListener("click", () => { addSet(); const l = $("#sets").lastElementChild; if (l) l.querySelector(".cm").focus(); });
     $("#valpct").addEventListener("input", (e) => { $("#valpctv").textContent = e.target.value + "%"; });
@@ -1545,7 +1642,7 @@ self.onmessage = function (ev) {
     for (const k in all) if (all[k] !== F0[k]) f[k] = all[k];
     const w = st.weapon;
     return {
-      v: 1, w: w.modular ? null : w.id, mod: w.modular ? [w.modular.kind].concat(w.modular.parts) : null, a: st.atk, f,
+      v: 1, evo: st.evoManual && Object.keys(st.evoManual).length ? Object.fromEntries(Object.keys(st.evoManual).map((t) => [t, st.evoSel[t]])) : null, w: w.modular ? null : w.id, mod: w.modular ? [w.modular.kind].concat(w.modular.parts) : null, a: st.atk, f,
       ab: $$("#abilities input.abil:checked").map((x) => x.value), mb: $$("#miscbuffs input.mb:checked").map((x) => x.value),
       c: $$("#concepts select").map((x) => x.value),
       s: $$("#sets .cset").map((d) => ({ n: d.querySelector(".cnamein").value, m: $$(".cm", d).map((x) => x.value), x: d.querySelector(".cx").value, ar: d.querySelector(".carc").value,
@@ -1559,7 +1656,8 @@ self.onmessage = function (ev) {
     if (S.mod) w = buildModular(...S.mod); else if (S.w) w = WEAPONS.find((x) => x.id === S.w);
     if (!w) return false;
     selectWeapon(w);
-    if (S.a != null && w.attacks[S.a]) { st.atk = S.a; renderAll(); }
+    if (S.a != null && w.attacks[S.a]) { st.atk = S.a; evolve(); renderAll(); }
+    if (S.evo && st.base && st.base.evos) { st.evoManual = {}; for (const t in S.evo) { st.evoManual[t] = true; st.evoSel[t] = +S.evo[t]; } st.weapon = applyEvos(st.base, st.evoSel); renderAll(); }
     const f = S.f || {};
     const setOne = (id) => {
       const el = document.getElementById(id); if (!el || !(id in f)) return;
@@ -1630,6 +1728,8 @@ self.onmessage = function (ev) {
       <small>링크를 열면 같은 설정으로 다시 계산합니다. 오류 신고는 디스코드에 붙여 넣으면 됩니다.</small><p class="sharemsg" hidden></p></div>`;
   }
   document.addEventListener("click", (e) => {
+    const ev = e.target.closest("[data-evo]");
+    if (ev) { const [t, i] = ev.dataset.evo.split(":").map(Number); st.evoManual = st.evoManual || {}; st.evoManual[t] = true; st.evoSel[t] = i; st.weapon = applyEvos(st.base, st.evoSel); renderAll(); run(); return; }
     const g = e.target.closest("[data-go]");
     if (g) { const t = document.getElementById(g.dataset.go); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
     const b = e.target.closest("[data-share]"); if (!b) return;
@@ -1667,7 +1767,8 @@ self.onmessage = function (ev) {
   renderModular();
   try { const sv = JSON.parse(localStorage.getItem("wfopt2") || "null"); if (sv && sv.mod) { const w = buildModular(...sv.mod); if (w) { st.weapon = w; st.atk = 0; } } } catch (e) {}
   bind();
-  if (st.weapon.exalted) selectWeapon(st.weapon); else renderAll();
+  st.base = st.weapon;
+  if (st.weapon.exalted || st.weapon.evos) selectWeapon(st.weapon); else renderAll();
   F0 = captureFields();
   restoreFromHash();
 })();

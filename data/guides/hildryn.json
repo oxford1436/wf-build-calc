@@ -7,134 +7,516 @@
   "checked": "2026-10-30",
   "summary": "실드를 에너지로 쓰며 4번 비행 중 베일파이어로 폭격하는 탱커형 딜러",
   "abilities": [
-    {"slot": 1, "name_ko": "베일파이어", "name_en": "Balefire",
-     "role": "sub",
-     "note": "익절 무기. 4번 중 이지스 게일 보조 발사가 주딜",
-     "scales": ["strength", "range", "efficiency"]},
-    {"slot": 2, "name_ko": "필리지", "name_en": "Pillage",
-     "role": "survival",
-     "note": "실드·방어력 강탈로 실드 회복, 상태이상 해제",
-     "scales": ["strength", "duration", "range", "efficiency"]},
-    {"slot": 3, "name_ko": "헤이븐", "name_en": "Haven",
-     "role": "helminth_target",
-     "note": "아군 실드 링크. 이지스 게일 빌드에선 이식 자리",
-     "scales": ["strength", "range", "efficiency"]},
-    {"slot": 4, "name_ko": "이지스 스톰", "name_en": "Aegis Storm",
-     "role": "main",
-     "note": "비행·적 띄우기·에너지 오브. 시전 중 2번·이식 사용",
-     "scales": ["strength", "range", "efficiency"]}
+    {
+      "slot": 1,
+      "name_ko": "베일파이어",
+      "name_en": "Balefire",
+      "role": "sub",
+      "note": "익절 무기. 4번 중 이지스 게일 보조 발사가 주딜",
+      "scales": [
+        "strength",
+        "range",
+        "efficiency"
+      ]
+    },
+    {
+      "slot": 2,
+      "name_ko": "필리지",
+      "name_en": "Pillage",
+      "role": "survival",
+      "note": "실드·방어력 강탈로 실드 회복, 상태이상 해제",
+      "scales": [
+        "strength",
+        "duration",
+        "range",
+        "efficiency"
+      ]
+    },
+    {
+      "slot": 3,
+      "name_ko": "헤이븐",
+      "name_en": "Haven",
+      "role": "helminth_target",
+      "note": "아군 실드 링크. 이지스 게일 빌드에선 이식 자리",
+      "scales": [
+        "strength",
+        "range",
+        "efficiency"
+      ]
+    },
+    {
+      "slot": 4,
+      "name_ko": "이지스 스톰",
+      "name_en": "Aegis Storm",
+      "role": "main",
+      "note": "비행·적 띄우기·에너지 오브. 시전 중 2번·이식 사용",
+      "scales": [
+        "strength",
+        "range",
+        "efficiency"
+      ]
+    }
   ],
-  "main_slots": [4, 2],
+  "main_slots": [
+    4,
+    2
+  ],
   "stat_priority": [
-    {"stat": "strength", "note": "필리지 제거율과 이지스 게일 피해. 1회 완전 제거는 코로시브 포함 328%"},
-    {"stat": "range", "note": "4번 장 반경, 베일파이어 폭발 반경. 145~280%"},
-    {"stat": "duration", "note": "필리지 확산 시간에만 영향. 70~130%면 충분"},
-    {"stat": "efficiency", "note": "실드 소모량만 줄임. 45~60%도 락사 쿠브로 등으로 유지 가능"}
+    {
+      "stat": "strength",
+      "note": "필리지 제거율과 이지스 게일 피해. 1회 완전 제거는 코로시브 포함 328%"
+    },
+    {
+      "stat": "range",
+      "note": "4번 장 반경, 베일파이어 폭발 반경. 145~280%"
+    },
+    {
+      "stat": "duration",
+      "note": "필리지 확산 시간에만 영향. 70~130%면 충분"
+    },
+    {
+      "stat": "efficiency",
+      "note": "실드 소모량만 줄임. 45~60%도 락사 쿠브로 등으로 유지 가능"
+    }
   ],
   "breakpoints": [
-    {"slot": 2, "stat": "strength", "value": "400% (코로시브 프로젝션 없음)",
-     "effect": "필리지 1회로 방어력 100% 제거",
-     "calc": "제거율 = 25% × 위력(총 방어력 기준) → 25% × 4.00 = 100%",
-     "verified": true,
-     "source": "https://wiki.warframe.com/w/Pillage"},
-    {"slot": 2, "stat": "strength", "value": "328% (코로시브 프로젝션 1개)",
-     "effect": "필리지 1회로 방어력 100% 제거",
-     "calc": "코로시브 18%와 필리지는 합연산: 18% + 25% × 3.28 = 18% + 82% = 100%. 질문의 '강철의 길 레벨 캡에서 328%'는 코로시브 1개가 있을 때만 맞음(없으면 400%). 적 레벨은 상관없음: 레벨 보정 방어력은 2,700에서 상한, 강철의 길은 방어력을 올리지 않고, 필리지는 총 방어력의 %를 깎기 때문",
-     "verified": true,
-     "source": "https://wiki.warframe.com/w/Pillage"},
-    {"slot": 2, "stat": "strength", "value": "200% (2회 시전) / 164% (2회+코로시브)",
-     "effect": "필리지 2회로 방어력 100% 제거",
-     "calc": "총 방어력 기준 감소는 반복 시전하면 가산: 2 × 25% × 2.00 = 100%. 코로시브 포함: 18% + 2 × 25% × 1.64 = 100%. 북미 ninjase 가이드의 '코로시브 시 183%'는 충분조건일 뿐 최소치는 164%",
-     "verified": true,
-     "source": "https://wiki.warframe.com/w/Armor"},
-    {"slot": 2, "stat": "strength", "value": "300% (코로시브 없음, 1회)",
-     "effect": "강철의 길 레벨 400에서 남는 방어력과 피해 감소",
-     "calc": "레벨 400 중장갑 방어력 = 상한 2,700. 피해 감소 = 90% × 방어력 ÷ 2,700. 300%: 75% 제거 → 675 남음 → 22.5%. 283%(한국 아파치 빌드): 70.75% → 790.9 → 26.4%. 300%+코로시브: 93% → 189 → 6.3%. 343%+코로시브(한국 게일 러쉬): 100% → 0%",
-     "verified": true,
-     "source": "https://wiki.warframe.com/w/Armor"}
+    {
+      "slot": 2,
+      "stat": "strength",
+      "value": "400% (코로시브 프로젝션 없음)",
+      "effect": "필리지 1회로 방어력 100% 제거",
+      "calc": "제거율 = 25% × 위력(총 방어력 기준) → 25% × 4.00 = 100%",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Pillage"
+    },
+    {
+      "slot": 2,
+      "stat": "strength",
+      "value": "328% (코로시브 프로젝션 1개)",
+      "effect": "필리지 1회로 방어력 100% 제거",
+      "calc": "코로시브 18%와 필리지는 합연산: 18% + 25% × 3.28 = 18% + 82% = 100%. 질문의 '강철의 길 레벨 캡에서 328%'는 코로시브 1개가 있을 때만 맞음(없으면 400%). 적 레벨은 상관없음: 레벨 보정 방어력은 2,700에서 상한, 강철의 길은 방어력을 올리지 않고, 필리지는 총 방어력의 %를 깎기 때문",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Pillage"
+    },
+    {
+      "slot": 2,
+      "stat": "strength",
+      "value": "200% (2회 시전) / 164% (2회+코로시브)",
+      "effect": "필리지 2회로 방어력 100% 제거",
+      "calc": "총 방어력 기준 감소는 반복 시전하면 가산: 2 × 25% × 2.00 = 100%. 코로시브 포함: 18% + 2 × 25% × 1.64 = 100%. 북미 ninjase 가이드의 '코로시브 시 183%'는 충분조건일 뿐 최소치는 164%",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Armor"
+    },
+    {
+      "slot": 2,
+      "stat": "strength",
+      "value": "300% (코로시브 없음, 1회)",
+      "effect": "강철의 길 레벨 400에서 남는 방어력과 피해 감소",
+      "calc": "레벨 400 중장갑 방어력 = 상한 2,700. 피해 감소 = 90% × 방어력 ÷ 2,700. 300%: 75% 제거 → 675 남음 → 22.5%. 283%(한국 아파치 빌드): 70.75% → 790.9 → 26.4%. 300%+코로시브: 93% → 189 → 6.3%. 343%+코로시브(한국 게일 러쉬): 100% → 0%",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Armor"
+    }
   ],
   "community": [
-    {"region": "KR", "site": "아카라이브 워프레임 채널",
-     "url": "https://arca.live/b/warframe/168386514", "date": "2026-10-28",
-     "title": "바이알 러쉬 이동형 이지스 게일",
-     "concept": "코로시브 기준 필리지 1회 방깎 컷(328%)을 맞춘 이지스 게일 딜러, 3번 바이알 러쉬로 이동·군중 제어",
-     "stats": {"strength": 343, "duration": 128, "range": 145, "efficiency": 60},
-     "aura": "코로시브 프로젝션", "exilus": "에비에이터",
-     "mods": ["보리얼 헤이트리드", "프라임드 리다이렉션", "이지스 게일", "트랜지언트 포티튜드", "스트레치", "프라임드 컨티뉴어티", "움브랄 인텐시파이", "블라인드 레이지"],
-     "arcanes": ["아케인 엑스퍼티즈", "아케인 벨로시티"],
-     "shards": ["타우 빨강(위력 +15%) ×3", "타우 노랑(시전 속도 +37.5%) ×2"],
-     "helminth": {"replace_slot": 3, "ability": "바이알 러쉬"},
-     "notes": "최초 2026-04-22, 2026-10-28 수정. 수정 때 스냅샷 방식 몰트 어그먼티드를 벨로시티로 교체. 인페스티드 상대는 필리지 실드 회복이 안 돼 비추천"},
-    {"region": "KR", "site": "아카라이브 워프레임 채널",
-     "url": "https://arca.live/b/warframe/177468454", "date": "2026-07-20",
-     "title": "파쿠르 속도 극대화 아파치 폭격기",
-     "concept": "회피 속도 약 4.4배로 빠르게 날며 지름 약 23m 베일파이어 폭발로 쓸어 담는 광역형",
-     "stats": {"strength": 283, "duration": 73, "range": 265, "efficiency": 45},
-     "aura": "그로잉 파워", "exilus": "아이스 스프링",
-     "mods": ["프라임드 리다이렉션", "오버익스텐디드", "블라인드 레이지", "트랜지언트 포티튜드", "스트레치", "어거 리치", "움브랄 인텐시파이", "이지스 게일"],
-     "arcanes": ["아케인 엑스퍼티즈", "아케인 벨로시티(몰트 어그먼티드로 교체 가능)"],
-     "shards": ["타우 빨강(위력 +15%) ×3", "타우 노랑(파쿠르 속도 +22.5%) ×2"],
-     "helminth": {"replace_slot": null, "ability": "자타 위스퍼"},
-     "notes": "몰트 어그먼티드를 쓰면 오라를 코로시브로 바꾸라고 안내(1회 방깎 목적). 위력 283%에 코로시브가 없어 필리지 1회 제거율은 70.75%"},
-    {"region": "NA", "site": "Overframe (HEKPYTO)",
-     "url": "https://overframe.gg/build/1013200/hildryn-prime/hildryn-prime-roar-aegis-gale-steel-path-level-cap/", "date": "2026-05-18",
-     "title": "로어 이지스 게일 레벨캡 내구형",
-     "concept": "로어→필리지→4번→게일 보조 발사 순환, 필리지 재시전으로 실드를 채우는 강철의 길 레벨캡용",
-     "stats": {"strength": 337, "duration": 127.5, "range": 100, "efficiency": 45},
-     "aura": "코로시브 프로젝션", "exilus": "프라임드 슈어 풋티드",
-     "mods": ["프라임드 리다이렉션", "프라임드 컨티뉴어티", "블라인드 레이지", "트랜지언트 포티튜드", "움브랄 인텐시파이", "어거 시크릿", "Amar's Hatred", "이지스 게일"],
-     "arcanes": ["몰트 어그먼티드", "Arcane Aegis"],
-     "shards": [],
-     "helminth": {"replace_slot": 3, "ability": "로어"},
-     "notes": "패치 42.0 기준. 337%+코로시브로 1회 완전 방깎을 명시(몰트 어그먼티드 최대 시 397%). 프슈풋이 없으면 파워 드리프트로 대체해 352%. 샤드는 선택(타우 노랑·빨강·하늘)"},
-    {"region": "NA", "site": "Overframe (ninjase, 1,876추천)",
-     "url": "https://overframe.gg/build/441552/hildryn-prime/the-aegis-general-use-steel-path-hildryn/", "date": "2026-06-18",
-     "title": "범위형 이지스 게일 범용 섬멸",
-     "concept": "범위 280%로 게일 보조 발사를 난사하고 필리지는 실드 회복·해제·방깎용으로 수시 사용",
-     "stats": {"strength": 139, "duration": 127.5, "range": 280, "efficiency": 100},
-     "aura": "코로시브 프로젝션", "exilus": "Cunning Drift",
-     "mods": ["어거 리치", "이지스 게일", "프라임드 컨티뉴어티", "스트레치", "트랜지언트 포티튜드", "움브랄 인텐시파이", "프라임드 리다이렉션", "오버익스텐디드"],
-     "arcanes": ["아케인 엑스퍼티즈", "아케인 벨로시티(엔드리스는 Arcane Aegis로)"],
-     "shards": ["노랑(시전 속도) ×1", "빨강(위력) ×4"],
-     "helminth": {"replace_slot": 3, "ability": "자타 위스퍼/로어/몰트/엘리멘탈 와드 중 택1"},
-     "notes": "2023년 작성, 2026-06(패치 43.0) 갱신. 한 번에 다 벗기면 다음 필리지에서 방어력분 실드를 못 얻으므로 2회 분할 제거를 권장. 2025-04부터 익절에 아케인 장착 가능(세컨더리 에너베이트)"},
-    {"region": "CN", "site": "bilibili (宕机_47)",
-     "url": "https://www.bilibili.com/video/BV12FiHBbEhF/", "date": "2026-01-05",
-     "title": "엑스퍼티즈 몰트 이식 일상형",
-     "concept": "아케인 엑스퍼티즈로 실드 9천대를 확보해 게일 피해를 키우고 몰트 이식으로 이동 속도 보완",
-     "stats": {"strength": 243, "duration": 95, "range": 205, "efficiency": 120},
-     "aura": "그로잉 파워", "exilus": "Cunning Drift(화면 표기 기준 추정)",
-     "mods": ["프라임드 리다이렉션", "오버익스텐디드", "프라임드 컨티뉴어티", "Fleeting Expertise(추정, '弹指瞬技')", "블라인드 레이지", "움브랄 인텐시파이", "이지스 게일", "판독 불가 1칸"],
-     "arcanes": ["아케인 엑스퍼티즈", "아케인 벨로시티(추정)"],
-     "shards": [],
-     "helminth": {"replace_slot": null, "ability": "몰트"},
-     "notes": "조회수 약 45만. 영상 프레임(360p)에서 판독, 실드 9,174 표시. 영상은 프리시전 인텐시파이가 4번 위력에 직접 붙지 않는다는 점과 엑스퍼티즈 구조를 설명"},
-    {"region": "JP", "site": "wikiwiki.jp (Warframe Wiki*)",
-     "url": "https://wikiwiki.jp/warframe/%E6%8E%83%E6%BB%85HILDRYN", "date": "2026-01-15",
-     "title": "고속 이동 소탕형",
-     "concept": "4번 이동 속도를 최대로 올려 날아다니며 베일파이어를 연사, 2·3번은 주기적으로만 사용",
-     "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
-     "aura": "그로잉 파워", "exilus": "Cunning Drift",
-     "mods": ["이지스 게일", "블라인드 레이지", "트랜지언트 포티튜드", "움브랄 인텐시파이", "프라임드 리다이렉션", "오버익스텐디드", "스트레치", "프라임드 컨티뉴어티(또는 아콘 컨티뉴어티)"],
-     "arcanes": ["아케인 엑스퍼티즈", "아케인 벨로시티"],
-     "shards": ["빨강(위력) 위주", "노랑(시전 속도) 1개 선택"],
-     "helminth": {"replace_slot": null, "ability": "몰트"},
-     "notes": "실드 소모가 크면 블라인드 레이지 대신 어거 리치/시크릿. 마두라이 슬링 스트렝스로 4번 전 위력 최대 +40%. 좁은 맵·인페스티드에 약함"},
-    {"region": "JP", "site": "note.com (マネージャー)",
-     "url": "https://note.com/manageconductor/n/n39a1ef606df9", "date": "2025-12-16",
-     "title": "에어버스트 이식 엑스퍼티즈 폭격",
-     "concept": "Airburst Rounds 증강 피해 배율 위에 엑스퍼티즈로 늘린 실드·위력을 얹어 게일 피해를 키움",
-     "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
-     "aura": "", "exilus": "",
-     "mods": [],
-     "arcanes": ["아케인 엑스퍼티즈"],
-     "shards": ["위력 ×3", "지속 ×2"],
-     "helminth": {"replace_slot": null, "ability": "Airburst(제피르, Airburst Rounds 증강 전제)"},
-     "notes": "모드 구성은 이미지라 읽지 못함. 같은 콘셉트의 wikiwiki 문서(2024-10-31)는 오라 Aerodynamic, 익실러스 에비에이터, 프리시전 인텐시파이, 타우 빨강 ×5, 몰트 어그먼티드+아케인 어벤저를 제시"}
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/168386514",
+      "date": "2026-10-28",
+      "title": "바이알 러쉬 이동형 이지스 게일",
+      "concept": "코로시브 기준 필리지 1회 방깎 컷(328%)을 맞춘 이지스 게일 딜러, 3번 바이알 러쉬로 이동·군중 제어",
+      "stats": {
+        "strength": 343,
+        "duration": 128,
+        "range": 145,
+        "efficiency": 60
+      },
+      "aura": "코로시브 프로젝션",
+      "exilus": "에비에이터",
+      "mods": [
+        "보리얼 헤이트리드",
+        "프라임드 리다이렉션",
+        "이지스 게일",
+        "트랜지언트 포티튜드",
+        "스트레치",
+        "프라임드 컨티뉴어티",
+        "움브랄 인텐시파이",
+        "블라인드 레이지"
+      ],
+      "arcanes": [
+        "아케인 엑스퍼티즈",
+        "아케인 벨로시티"
+      ],
+      "shards": [
+        "타우 빨강(위력 +15%) ×3",
+        "타우 노랑(시전 속도 +37.5%) ×2"
+      ],
+      "helminth": {
+        "replace_slot": 3,
+        "ability": "바이알 러쉬"
+      },
+      "notes": "최초 2026-04-22, 2026-10-28 수정. 수정 때 스냅샷 방식 몰트 어그먼티드를 벨로시티로 교체. 인페스티드 상대는 필리지 실드 회복이 안 돼 비추천"
+    },
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/185546834",
+      "date": "2026-10-10",
+      "title": "얼음의 결속용 라스풀 근접 서포터",
+      "concept": "4번 대신 라스풀을 이식해 근접 치명을 보충하고 락타 다크 대거의 방사능 타격 실드 회복으로 버티며, 3번 헤이븐 실드와 2번 방깎을 아군에 제공",
+      "stats": {
+        "strength": 329,
+        "duration": 156,
+        "range": 145,
+        "efficiency": 60
+      },
+      "aura": "코로시브 프로젝션",
+      "exilus": "프라임드 슈어 풋티드",
+      "mods": [
+        "프라임드 리다이렉션",
+        "트랜지언트 포티튜드",
+        "블라인드 레이지",
+        "프라임드 컨티뉴어티",
+        "스트레치",
+        "컨스티튜션",
+        "프리시전 인텐시파이",
+        "보리얼 헤이트리드"
+      ],
+      "arcanes": [
+        "아케인 엑스퍼티즈",
+        "Arcane Strike"
+      ],
+      "shards": [
+        "타우 빨강(위력 +15%) ×5"
+      ],
+      "helminth": {
+        "replace_slot": 4,
+        "ability": "라스풀(본문 표기, 캡처 로드아웃 이름 'wrathful')"
+      },
+      "notes": "공략/정보 탭, 추천 4. 얼음의 결속 전략 구속 '적란운'(공중에 있으면 지속 피해) 대응용. 위력 328% 이상+코로시브로 필리지 1회 완전 방깎을 유지하라고 명시. 프리시전 인텐시파이는 이식한 4번 강화용, 쿠브로는 락사. 원조 이지스 게일보다 딜은 낮다고 작성자가 인정. 캡처는 영문 UI"
+    },
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/177468454",
+      "date": "2026-07-20",
+      "title": "파쿠르 속도 극대화 아파치 폭격기",
+      "concept": "회피 속도 약 4.4배로 빠르게 날며 지름 약 23m 베일파이어 폭발로 쓸어 담는 광역형",
+      "stats": {
+        "strength": 283,
+        "duration": 73,
+        "range": 265,
+        "efficiency": 45
+      },
+      "aura": "그로잉 파워",
+      "exilus": "아이스 스프링",
+      "mods": [
+        "프라임드 리다이렉션",
+        "오버익스텐디드",
+        "블라인드 레이지",
+        "트랜지언트 포티튜드",
+        "스트레치",
+        "어거 리치",
+        "움브랄 인텐시파이",
+        "이지스 게일"
+      ],
+      "arcanes": [
+        "아케인 엑스퍼티즈",
+        "아케인 벨로시티(몰트 어그먼티드로 교체 가능)"
+      ],
+      "shards": [
+        "타우 빨강(위력 +15%) ×3",
+        "타우 노랑(파쿠르 속도 +22.5%) ×2"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "자타 위스퍼"
+      },
+      "notes": "몰트 어그먼티드를 쓰면 오라를 코로시브로 바꾸라고 안내(1회 방깎 목적). 위력 283%에 코로시브가 없어 필리지 1회 제거율은 70.75%"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (ninjase, 1,876추천)",
+      "url": "https://overframe.gg/build/441552/hildryn-prime/the-aegis-general-use-steel-path-hildryn/",
+      "date": "2026-06-18",
+      "title": "범위형 이지스 게일 범용 섬멸",
+      "concept": "범위 280%로 게일 보조 발사를 난사하고 필리지는 실드 회복·해제·방깎용으로 수시 사용",
+      "stats": {
+        "strength": 139,
+        "duration": 127.5,
+        "range": 280,
+        "efficiency": 100
+      },
+      "aura": "코로시브 프로젝션",
+      "exilus": "Cunning Drift",
+      "mods": [
+        "어거 리치",
+        "이지스 게일",
+        "프라임드 컨티뉴어티",
+        "스트레치",
+        "트랜지언트 포티튜드",
+        "움브랄 인텐시파이",
+        "프라임드 리다이렉션",
+        "오버익스텐디드"
+      ],
+      "arcanes": [
+        "아케인 엑스퍼티즈",
+        "아케인 벨로시티(엔드리스는 Arcane Aegis로)"
+      ],
+      "shards": [
+        "노랑(시전 속도) ×1",
+        "빨강(위력) ×4"
+      ],
+      "helminth": {
+        "replace_slot": 3,
+        "ability": "자타 위스퍼/로어/몰트/엘리멘탈 와드 중 택1"
+      },
+      "notes": "2023년 작성, 2026-06-18(패치 43.0) 갱신, 2026-10-31 기준 힐드린 최다 추천(현재 제목 'The Aegis | Aegis Gale Nuke Steel Path Hildryn'). 한 번에 다 벗기면 다음 필리지에서 방어력분 실드를 못 얻으므로 2회 분할 제거를 권장. 2025-04부터 익절에 아케인 장착 가능(세컨더리 에너베이트)"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (ninjase, 266추천)",
+      "url": "https://overframe.gg/build/441574/hildryn-prime/flying-fortress-molt-sculptor-speed-aegis-gale-nuke/",
+      "date": "2026-06-18",
+      "title": "몰트·스컬프터 고속 이지스 게일",
+      "concept": "3번에 몰트를 이식해 이동 속도와 아케인 스컬프터(효율 175%)를 얻고, 그 12초 안에 4번에 들어가 효율을 스냅숏해 효율 45%로도 실드 소모를 줄이는 범위형",
+      "stats": {
+        "strength": 183,
+        "duration": 155,
+        "range": 280,
+        "efficiency": 45
+      },
+      "aura": "코로시브 프로젝션",
+      "exilus": "Cunning Drift",
+      "mods": [
+        "어거 리치",
+        "움브랄 인텐시파이",
+        "이지스 게일",
+        "스트레치",
+        "블라인드 레이지",
+        "프라임드 컨티뉴어티",
+        "오버익스텐디드",
+        "프라임드 리다이렉션"
+      ],
+      "arcanes": [
+        "아케인 벨로시티",
+        "아케인 스컬프터"
+      ],
+      "shards": [],
+      "helminth": {
+        "replace_slot": 3,
+        "ability": "몰트"
+      },
+      "notes": "2023년 작성, 2026-06(패치 43.0) 갱신. 베일파이어 폭발 반경 = 3m × 1.44(Primed Fulmination) × 2.65(거리) ≈ 11.5m라고 설명. 샤드 미기재"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (Rainollon, 33추천)",
+      "url": "https://overframe.gg/build/770255/hildryn-prime/rainollons-hildyn-prime-aegis-gale-build/",
+      "date": "2026-10-03",
+      "title": "엑스퍼티즈 위력 314% 이지스 게일",
+      "concept": "타우 위력 샤드 5개와 아케인 엑스퍼티즈로 위력·실드를 함께 올려 게일 보조 발사 피해를 키우는 정석형, 3번은 몰트·로어·자타 위스퍼 중 이식",
+      "stats": {
+        "strength": 239,
+        "duration": 127.5,
+        "range": 235,
+        "efficiency": 45
+      },
+      "aura": "그로잉 파워",
+      "exilus": "Power Drift",
+      "mods": [
+        "Intensify",
+        "이지스 게일",
+        "프라임드 컨티뉴어티",
+        "스트레치",
+        "트랜지언트 포티튜드",
+        "블라인드 레이지",
+        "프라임드 리다이렉션",
+        "오버익스텐디드"
+      ],
+      "arcanes": [
+        "아케인 엑스퍼티즈",
+        "몰트 어그먼티드"
+      ],
+      "shards": [
+        "타우 빨강(위력 +15%) ×5"
+      ],
+      "helminth": {
+        "replace_slot": 3,
+        "ability": "몰트(또는 로어·자타 위스퍼)"
+      },
+      "notes": "2024-12 작성, 2026-10-03 갱신(패치 44.05). 업데이트 44 빌드 중 최다 추천. 표시 위력 239%는 샤드 제외값이며 샤드 포함 314%. 코로시브 오라가 없어 필리지 1회 제거율은 25% × 3.14 = 78.5%"
+    },
+    {
+      "region": "CN",
+      "site": "바이두 티에바 warframe吧 (shuibaopao)",
+      "url": "https://tieba.baidu.com/p/10906768790",
+      "date": "2026-07-30",
+      "title": "스컬프터·엑스퍼티즈 몰트 고속 비행형",
+      "concept": "3번 몰트 이식으로 아케인 스컬프터를 켜고 위력·효율을 잠근 채 4번 비행, 몰트 가속과 오퍼레이터 대시로 이동을 빠르게 한 일상 섬멸형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "Aerodynamic 또는 코로시브 프로젝션",
+      "exilus": "에비에이터 또는 Cunning Drift",
+      "mods": [
+        "이지스 게일",
+        "블라인드 레이지",
+        "트랜지언트 포티튜드",
+        "움브랄 인텐시파이",
+        "오버익스텐디드",
+        "스트레치",
+        "프라임드 리다이렉션",
+        "프라임드 컨티뉴어티"
+      ],
+      "arcanes": [
+        "아케인 스컬프터",
+        "아케인 엑스퍼티즈"
+      ],
+      "shards": [
+        "타우 빨강(위력) ×5"
+      ],
+      "helminth": {
+        "replace_slot": 3,
+        "ability": "몰트"
+      },
+      "notes": "추천 23. 텍스트 빌드(캡처 없음, 수치 미기재). 움브랄 인텐시파이로 몰트도 위력 영향을 받게 함. 익절 무기는 부식+화염, 펫은 가디언 하운드(실드 회복·링크 모드), 마두라이 포커스로 대시 위력 버프, 보조무기에 회피 속도 모드(본문 '并合扩散'). 댓글: 코로시브 오라+순수 전기 익절이 부식+화염과 딜이 비슷하고 연사 모드를 하나 더 넣을 수 있다는 의견"
+    },
+    {
+      "region": "CN",
+      "site": "bilibili (宕机_47)",
+      "url": "https://www.bilibili.com/video/BV12FiHBbEhF/",
+      "date": "2026-01-05",
+      "title": "엑스퍼티즈 몰트 이식 일상형",
+      "concept": "아케인 엑스퍼티즈로 실드 9천대를 확보해 게일 피해를 키우고 몰트 이식으로 이동 속도 보완",
+      "stats": {
+        "strength": 243,
+        "duration": 95,
+        "range": 205,
+        "efficiency": 120
+      },
+      "aura": "그로잉 파워",
+      "exilus": "Cunning Drift(화면 표기 기준 추정)",
+      "mods": [
+        "프라임드 리다이렉션",
+        "오버익스텐디드",
+        "프라임드 컨티뉴어티",
+        "Fleeting Expertise(추정, '弹指瞬技')",
+        "블라인드 레이지",
+        "움브랄 인텐시파이",
+        "이지스 게일",
+        "판독 불가 1칸"
+      ],
+      "arcanes": [
+        "아케인 엑스퍼티즈",
+        "아케인 벨로시티(추정)"
+      ],
+      "shards": [],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "몰트"
+      },
+      "notes": "조회수 약 45만. 영상 프레임(360p)에서 판독, 실드 9,174 표시. 영상은 프리시전 인텐시파이가 4번 위력에 직접 붙지 않는다는 점과 엑스퍼티즈 구조를 설명"
+    },
+    {
+      "region": "JP",
+      "site": "wikiwiki.jp (Warframe Wiki*)",
+      "url": "https://wikiwiki.jp/warframe/%E6%8E%83%E6%BB%85HILDRYN",
+      "date": "2026-01-15",
+      "title": "고속 이동 소탕형",
+      "concept": "4번 이동 속도를 최대로 올려 날아다니며 베일파이어를 연사, 2·3번은 주기적으로만 사용",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "그로잉 파워",
+      "exilus": "Cunning Drift",
+      "mods": [
+        "이지스 게일",
+        "블라인드 레이지",
+        "트랜지언트 포티튜드",
+        "움브랄 인텐시파이",
+        "프라임드 리다이렉션",
+        "오버익스텐디드",
+        "스트레치",
+        "프라임드 컨티뉴어티(또는 아콘 컨티뉴어티)"
+      ],
+      "arcanes": [
+        "아케인 엑스퍼티즈",
+        "아케인 벨로시티"
+      ],
+      "shards": [
+        "빨강(위력) 위주",
+        "노랑(시전 속도) 1개 선택"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "몰트"
+      },
+      "notes": "실드 소모가 크면 블라인드 레이지 대신 어거 리치/시크릿. 마두라이 슬링 스트렝스로 4번 전 위력 최대 +40%. 좁은 맵·인페스티드에 약함"
+    },
+    {
+      "region": "JP",
+      "site": "zawazawa (wikiwiki HILDRYN 댓글 #2113)",
+      "url": "https://zawazawa.jp/warframe_wiki/topic/707",
+      "date": "2026-07-29",
+      "title": "3번 이식 범용 운용(하로우 이식·락사 쿠브로)",
+      "concept": "1번은 4번 중 강화된 익절 무기라 남기고 3번 헤이븐을 하로우 이식기(실드 회복)나 Master's Summons로 교체, 실드는 2번+락사 쿠브로로 보충",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": [],
+      "helminth": {
+        "replace_slot": 3,
+        "ability": "Condemn(하로우) 또는 Master's Summons"
+      },
+      "notes": "댓글 토론에서 나온 이식 구성(모드 전체 아님). 1번을 덮으면 4번 중 들고 있는 익절이 강화 전 상태가 된다는 지적(#2108), 2번은 상태이상 해제·방깎 때문에 유지 권장(#2115), 3번에 라보스 이식으로 고속 비행하는 변형도 언급(#2117)"
+    },
+    {
+      "region": "JP",
+      "site": "note.com (マネージャー)",
+      "url": "https://note.com/manageconductor/n/n39a1ef606df9",
+      "date": "2025-12-16",
+      "title": "에어버스트 이식 엑스퍼티즈 폭격",
+      "concept": "Airburst Rounds 증강 피해 배율 위에 엑스퍼티즈로 늘린 실드·위력을 얹어 게일 피해를 키움",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [
+        "아케인 엑스퍼티즈"
+      ],
+      "shards": [
+        "위력 ×3",
+        "지속 ×2"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "Airburst(제피르, Airburst Rounds 증강 전제)"
+      },
+      "notes": "모드 구성은 이미지라 읽지 못함. 같은 콘셉트의 wikiwiki 문서(2024-10-31)는 오라 Aerodynamic, 익실러스 에비에이터, 프리시전 인텐시파이, 타우 빨강 ×5, 몰트 어그먼티드+아케인 어벤저를 제시. 같은 Airburst 콘셉트 wikiwiki 빌드의 zawazawa 댓글(2026-03-10~11)은 아케인 엑스퍼티즈가 4번 증강과 시너지, 베일파이어에는 세컨더리 에너베이트를 추천"
+    }
   ],
   "consensus": {
-    "common": "모든 지역이 4번 이지스 스톰+이지스 게일 보조 발사를 주딜로, 2번 필리지를 실드 회복·상태이상 해제·방깎으로 수시 사용. 3번 헤이븐은 이식 자리. 프라임드 리다이렉션, 블라인드 레이지/트랜지언트 포티튜드/움브랄 인텐시파이로 위력 확보. 2025-12 이후 아케인 엑스퍼티즈(위력→실드)가 거의 표준이고 벨로시티로 연사 보완",
-    "differences": "한국·북미(HEKPYTO): 코로시브 오라로 필리지 1회 완전 방깎(328%+)을 맞춤. 북미 ninjase: 범위 280%, 2회 나눠 벗기기 권장. 한국 아파치·일본 소탕형: 파쿠르/이동 속도 특화. 중국: 엑스퍼티즈+몰트 이식에 효율 보정 모드. 일본 note: 제피르 Airburst 이식 배율형. 이식은 바이알 러쉬(한국), 로어·자타(북미), 몰트(중국·일본), Airburst(일본)로 갈림"
+    "common": "모든 지역이 4번 이지스 스톰+이지스 게일 보조 발사를 주딜로 하고, 아케인 엑스퍼티즈(위력→실드)가 사실상 표준. 2026-06 아케인 스컬프터 추가 뒤 3번 헤이븐 자리에 몰트를 이식해 스컬프터(효율 175%)를 켜고 4번에 들어가는 '몰트 스컬프터' 구성이 북미·중국·한국에서 함께 퍼짐. 프라임드 리다이렉션·블라인드 레이지·트랜지언트 포티튜드·움브랄 인텐시파이와 타우 빨강 샤드 5개로 위력 240~340%를 맞춤",
+    "differences": "한국: 코로시브 오라+위력 328% 이상으로 필리지 1회 완전 방깎을 고집하고, 얼음의 결속 대응으로 4번을 라스풀로 바꾼 근접 서포터처럼 콘텐츠별 변형이 나옴. 북미(Overframe): ninjase 범위 280%형이 최다 추천, 새 상위권은 몰트 스컬프터형과 업데이트 44의 엑스퍼티즈+그로잉 파워형(Rainollon, 1회 방깎 포기). 중국: '母牛'로 불리며 엑스퍼티즈+스컬프터+가디언 하운드로 실드가 줄지 않는 운용을 강조, 심층 아르키메디아(科研)의 힐드린 견제 디버프(실드·펫 제한)에 불만이 많음. 일본: 2026-07 4번 증강 시야 판정 너프 검토와 아르키메디아 사용률 40% 공개 논란이 주된 화제였고, 2026-07-22 너프 없이 아르키메디아 완화로 결론. 빌드는 3번 이식(하로우·라보스 등) 실험 위주"
   },
   "notes": [
     "마지막 대규모 변경: 2024-10-02 업데이트 37.0(베일파이어 차지·이지스 스톰 재작업, 이지스 게일 추가, 4번 중 2번·이식 시전 가능)",
@@ -142,7 +524,10 @@
     "2025년 봄(ninjase 가이드 2025-04 갱신 기준, 정확한 패치 번호 미확인): 익절 무기에 아케인 장착 가능 → 베일파이어에 세컨더리 에너베이트 사용",
     "2025-12: 아케인 엑스퍼티즈 등 신규 아케인 추가(아카라이브 2025-12-10 정리글, note 2025-12-16) 이후 엑스퍼티즈 힐드린이 지역 공통 메타로 자리잡음",
     "2026-06(업데이트 43.0 시기): 아케인 스컬프터 추가(힐드린 빌드에서는 거의 쓰이지 않음)",
-    "적 방어력 상한 2,700(피해 감소 90%)·강철의 길 방어력 미증가는 2024-06 업데이트 36.0 방어력 개편 내용"
+    "적 방어력 상한 2,700(피해 감소 90%)·강철의 길 방어력 미증가는 2024-06 업데이트 36.0 방어력 개편 내용",
+    "2026-07(일본 wikiwiki 댓글 #2002·#2010·#2090): 4번 증강 공격에 시야 판정을 넣는 너프가 검토됐고 심층 아르키메디아 힐드린 사용률 약 40%가 공개됐으나, 2026-07-22 발표에서 너프 없이 아르키메디아 쪽을 완화하기로 함",
+    "2026-09~10(티에바): 개편된 심층 아르키메디아(科研)에 실드 최대치 감소·펫 금지 등 힐드린에 불리한 디버프가 늘었다는 불만 다수",
+    "업데이트 43: 베일파이어가 아크틱 엑시무스 보호막 등에 피해를 주지 못하던 문제 수정(일본 wikiwiki 댓글 #2064)"
   ],
   "gaps": [
     "필리지 2회 가산(200%/164%)은 위키의 '총 방어력 기준 감소는 반복 시 가산' 규칙과 일본 wikiwiki의 '2회 약 200%' 서술에 근거, 인게임 실측은 하지 못함",
@@ -150,6 +535,11 @@
     "중국: 河豚派蒙 영상(2025-12-27, BV1HCBrBUEpw)은 댓글만 확인했고 모드는 미판독. 宕机_47 영상은 360p 프레임이라 모드 1칸 판독 불가, 이식 슬롯 미표기. huijiwiki 블로그(Smile_slime_47/Hildryn配装)는 봇 확인 화면, tieba는 보안 인증 화면이라 읽지 못함",
     "일본 note 빌드는 모드가 이미지라 브라우저 렌더링 오류로 판독하지 못함",
     "한국 아파치 빌드와 일본 소탕형·중국 빌드는 이식 슬롯이 명시되지 않음(통상 3번 헤이븐)",
-    "Amar's Hatred, Cunning Drift, Fleeting Expertise, Arcane Aegis, Airburst는 한국어 인게임 명칭을 확인하지 못해 영어로 표기"
+    "Amar's Hatred, Cunning Drift, Fleeting Expertise, Arcane Aegis, Airburst는 한국어 인게임 명칭을 확인하지 못해 영어로 표기",
+    "2026-10-31 재조사(사용자 소스 목록 기준): Reddit r/Warframe은 브라우저 차단으로 미확인. 공식 Discord·NGA·X·일본 Discord는 로그인 필요로 제외",
+    "중국: bilibili 2026 힐드린 영상(BV1BjJ262Ehc 2026-10-15, BV12ugL6mENM 2026-08-12, BV1y6iQBCE4g 2026-01-08)은 설명란에 모드 정보가 없어 미사용. 티에바 '雕塑母牛' 글(2026-08-02)은 구체 모드 목록이 없어 콘셉트만 참고",
+    "북미 HEKPYTO 로어 빌드(2026-05-18)는 더 새롭고 추천이 많은 빌드로 교체하며 제외",
+    "일본: 5ch part1117~1118에는 힐드린 언급만 있고 세팅 글 없음. zawazawa #2113은 이식 구성만 있어 모드·수치 미기재",
+    "Arcane Strike, Intensify, Master's Summons, Condemn은 한국어 인게임 명칭을 확인하지 못함. 라스풀은 아카라이브 본문 표기를 그대로 사용"
   ]
 }

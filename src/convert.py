@@ -411,6 +411,78 @@ for slot_, key in (("secondary", "KitgunSecondary"), ("primary", "KitgunPrimary"
     MODULAR["kit_" + slot_] = {"chambers": ch, "grips": {n: {"ko": name_ko.get(n, n)} for n in K["Grip"]},
                                "loaders": {n: {"ko": name_ko.get(n, n), "cc": l.get("CritChance", 0), "cd": l.get("CritMultiplier", 0), "sc": l.get("StatusChance", 0),
                                                "mag": l.get("Magazine"), "reload": l.get("Reload", 1.5)} for n, l in K["Loader"].items()}}
+# Incarnon evolutions (scripts/fetch_incarnon.py → incarnon_evos.json): each perk line becomes either a base-stat change of
+# the attack, a mod-like effect, a known effect with no damage impact, or a conditional effect the calculator leaves out.
+EVO_RULES = [
+    (r"^Increase (?:Base )?Damage by \+?(\d+(?:\.\d+)?)\.?$", "baseDmg", 1, "기본 피해 +{v}"),
+    (r"^Increase Base Critical Chance by \+?(\d+(?:\.\d+)?)%\.?$", "baseCC", 0.01, "기본 치명타 확률 +{v}%"),
+    (r"^([+-]?\d+(?:\.\d+)?)% Critical Chance\.?$", "baseCC", 0.01, "치명타 확률 {s}%"),
+    (r"^Increase Critical Chance by \+?(\d+(?:\.\d+)?)%\.?$", "baseCC", 0.01, "치명타 확률 +{v}%"),
+    (r"^Increase Base Critical (?:Damage )?Multiplier by \+?(\d+(?:\.\d+)?)x?\.?$", "baseCD", 1, "기본 치명타 배율 +{v}"),
+    (r"^Increase Base Status(?: Chance)? by \+?(\d+(?:\.\d+)?)%(?: per projectile| for Incarnon Form)?\.?$", "baseSC", 0.01, "기본 상태이상 확률 +{v}%"),
+    (r"^([+-]?\d+(?:\.\d+)?)% Status Chance\.?$", "baseSC", 0.01, "상태이상 확률 {s}%"),
+    (r"^Increase Status Chance by \+?(\d+(?:\.\d+)?)%\.?$", "baseSC", 0.01, "상태이상 확률 +{v}%"),
+    (r"^Increase Base Magazine Capacity by \+?(\d+)\.?$", "baseMag", 1, "탄창 +{v}"),
+    (r"^\+?(\d+) Base Multishot\.?$", "basePellets", 1, "기본 멀티샷 +{v}"),
+    (r"^([+-]?\d+(?:\.\d+)?)% Reload Speed\.?$", "reload", 0.01, "재장전 속도 {s}%"),
+    (r"^([+-]?\d+(?:\.\d+)?)% (?:Fire Rate|Attack Speed)\.?$", "fr", 0.01, "연사·공격 속도 {s}%"),
+    (r"^([+-]?\d+(?:\.\d+)?)% Multishot\.?$", "ms", 0.01, "멀티샷 {s}%"),
+    (r"^([+-]?\d+(?:\.\d+)?)% Direct Damage per Status Type affecting the target\.?$", "evoPst", 0.01, "상태이상 종류당 직격 피해 {s}%"),
+    (r"^([+-]?\d+) Initial Combo\.?$", "ic", 1, "초기 연속기 {s}"),
+    (r"^([+-]?\d+(?:\.\d+)?)% Heavy Attack Wind ?Up Speed\.?$", "wind", 0.01, "강공 준비 속도 {s}%"),
+    (r"^(?:Base )?Heavy Attack Efficiency set at (\d+(?:\.\d+)?)%\.?$", "hae", 0.01, "강공 효율 {v}%"),
+    (r"^([+-]?\d+(?:\.\d+)?)% Headshot Damage\.?$", "hsMult", 0.01, "헤드샷 피해 {s}% (헤드샷 시)"),
+]
+EVO_NONE = [(r"Recoil", "반동"), (r"Accuracy", "정확도"), (r"Projectile Speed", "투사체 속도"), (r"Zoom", "확대율"), (r"Movement Speed", "이동 속도"),
+            (r"^[+-]?\d+(?:\.\d+)? Range", "근접 사거리"), (r"Parry Angle", "막기 각도"), (r"Combo Duration", "연속기 지속시간"), (r"Slam Radius", "슬램 반경"),
+            (r"Incarnon Transmutation", "인카논 충전"), (r"Magazine Reloaded", "보관 중 재장전")]
+def evo_line(line):
+    line = re.sub(r"([A-Za-z%.])\d$", r"\1", line.strip())      # footnote digit left over from the wiki markup
+    for rx, key, mul, ko in EVO_RULES:
+        m = re.match(rx, line.strip())
+        if m:
+            g = m.group(1); v = float(g); sv = g if g[0] in "+-" else "+" + g
+            return {"key": key, "v": round(v * mul, 4), "ko": ko.format(v=m.group(1).lstrip("+"), s=sv)}
+    for rx, ko in EVO_NONE:
+        if re.search(rx, line):
+            return {"key": None, "ko": ko + " (피해 무관)"}
+    return {"key": None, "cond": True, "ko": line}
+EVOS = {}
+try:
+    EVOS = json.load(open(A + "incarnon_evos.json", encoding="utf-8"))
+except Exception:
+    EVOS = {}
+def evo_form(line, notes):
+    # a note limits a line to one form; when the note names a stat ("Multishot bonus does not affect the Incarnon form"),
+    # only lines about that stat follow it
+    if "for incarnon form" in line.lower(): return "inc"
+    for n in notes:
+        t = n.lower()
+        kind = "normal" if re.search(r"not (?:affect|apply to) (?:the )?incarnon form", t) else "inc" if re.search(r"only (?:affects|applies to) (?:the )?incarnon form|incarnon form only", t) else None
+        if not kind: continue
+        subj = re.match(r"^(?:the )?([a-z ]+?) (?:bonus|buff|effect)?\s*(?:does|do|only)", t)
+        word = subj.group(1).strip() if subj else ""
+        if not word or word in ("the", "bonus", "this", "it", "effect") or word.split()[-1] in line.lower(): return kind
+    return "both"
+for W in weapons:
+    E = EVOS.get(W.get("en"))
+    if not E: continue
+    tiers = []
+    for t in E["tiers"]:
+        perks = []
+        for pk in t["perks"]:
+            items = [dict(evo_line(l), form=evo_form(l, pk.get("notes") or [])) for l in pk.get("lines") or []]
+            # a condition line ("On Equip from Primary:") makes the following lines conditional too
+            cond_on = False
+            for it, l in zip(items, pk.get("lines") or []):
+                if l.rstrip().endswith(":"): cond_on = True; it["key"] = None; it["cond"] = True; continue
+                if cond_on and it.get("key"): it["key"] = None; it["cond"] = True
+            for it in items:
+                if it.get("form") == "both": del it["form"]
+                if not it.get("key"): it.pop("key", None)
+            perks.append({"name": pk["name"], "items": items})
+        tiers.append({"tier": t["tier"], "perks": perks})
+    W["evos"] = tiers
 with open(os.path.join(OUT, "weapons_full.js"), "w", encoding="utf-8") as f:
     f.write("(function(root){root.WF_WEAPONS=" + json.dumps(weapons, ensure_ascii=False, separators=(",", ":"))
             + ";root.WF_MODULAR=" + json.dumps(MODULAR, ensure_ascii=False, separators=(",", ":")) + ";})(typeof self!=='undefined'?self:globalThis);\n")
