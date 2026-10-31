@@ -172,6 +172,7 @@
     ["치명타 확률", "cc"], ["치명타 피해", "cd"], ["재장전 속도", "reload"], ["탄창 용량", "mag"], ["탄약 최대량", "x_ammo"], ["두께 꿰뚫기", "x_pt"],
     ["발사체 속도", "x_speed"], ["투사체 속도", "x_speed"], ["확대율", "x_zoom"], ["반동", "x_recoil"], ["기본 연속기", "ic"], ["초기 연속기", "ic"],
     ["공격 속도", "fr"], ["연사력", "fr"], ["멀티샷", "ms"], ["사거리", "x_range"], ["화염", "heat"], ["냉기", "cold"], ["전기", "elec"], ["독성", "tox"],
+    ["바이러스", "viralm"], ["부식", "corrm"], ["가스", "gasm"], ["방사능", "radm"], ["폭발", "blastm"], ["자성", "magm"],
     ["충격", "impact"], ["관통", "punct"], ["베기", "slash"], ["그리니어", "x_faction"], ["코퍼스", "x_faction"], ["인페스티드", "x_faction"], ["오로킨", "x_faction"], ["피해", "dmg"],
   ].map(([ko, k]) => ({ ko, k, n: norm(ko) }));
   function rivenStatOf(rest) {

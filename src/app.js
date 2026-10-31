@@ -20,7 +20,13 @@
   const CLS_KO = { rifle: "소총·활·저격·런처", shotgun: "샷건", pistol: "보조무기", melee: "근접" };
   const TYPE_LABEL = { Rifle: "소총", Bow: "활", Sniper: "저격총", Launcher: "런처", Shotgun: "샷건", Pistol: "권총", "Dual Pistols": "쌍권총", Throwing: "투척", Melee: "근접" };
   const KIND_KO = { gun: "사격", radial: "폭발", melee: "휘두르기", heavy: "강공", glaive: "투척" };
-  const RIV_KO = { dmg: "피해", ms: "멀티샷", cc: "치명타 확률", cd: "치명타 피해", heat: "화염", cold: "냉기", elec: "전기", tox: "독", sc: "상태이상 확률", sd: "상태이상 피해 (접합 전용)", dur: "상태이상 지속시간", fr: "연사력/공격 속도", ic: "초기 연속기", impact: "충격", punct: "관통", slash: "베기", reload: "재장전 속도", mag: "탄창 용량" };
+  const RIV_KO = { dmg: "피해", ms: "멀티샷", cc: "치명타 확률", cd: "치명타 피해", heat: "화염", cold: "냉기", elec: "전기", tox: "독", sc: "상태이상 확률", sd: "상태이상 피해 (접합 전용)", dur: "상태이상 지속시간", fr: "연사력/공격 속도", ic: "초기 연속기", impact: "충격", punct: "관통", slash: "베기", reload: "재장전 속도", mag: "탄창 용량",
+    viralm: "바이러스 (접합)", corrm: "부식 (접합)", gasm: "가스 (접합)", radm: "방사능 (접합)", blastm: "폭발 (접합)", magm: "자성 (접합)" };
+  // Riven splicing (Update 44.1): two stats → one locked stat, at most one per riven. Combined elements keep the element
+  // base value (wikiwiki "Riven Mod"), stay their own type and never combine with the single elements.
+  const SPLICE_ELEM = { viralm: ["냉기", "독"], corrm: ["전기", "독"], gasm: ["화염", "독"], radm: ["화염", "전기"], blastm: ["화염", "냉기"], magm: ["냉기", "전기"] };
+  const SPLICED = new Set(["sd"].concat(Object.keys(SPLICE_ELEM)));
+  const rivBase = (table, k) => table[k] != null ? table[k] : SPLICE_ELEM[k] ? table.heat : 0;
   const RIV_FORM = { "3+1": { pos: 0.9375, neg: -0.75, ko: "3긍정 1부정" }, "2+1": { pos: 1.2375, neg: -0.495, ko: "2긍정 1부정" }, "3+0": { pos: 0.75, neg: 0, ko: "3긍정" }, "2+0": { pos: 0.99, neg: 0, ko: "2긍정" } };
   // riven stats outside the damage formula (for negative-option grading); base magnitudes at 1.0 disposition.
   // RIV_HEAVY ones still feed the heavy-attack combo model (combo count chance, heavy attack efficiency)
@@ -29,7 +35,9 @@
     melee: [["finisher", "마무리 일격 피해", 1.2], ["slidecc", "슬라이드 공격 치명타 확률", 1.2], ["combodur", "연속기 지속시간", 8.1], ["combochance", "연속기 획득 확률", 1.02], ["range", "사거리", 1.2], ["hae", "강공 효율", 0.73], ["faction", "특정 팩션 피해", 0.55]],
   };
   const RIV_HEAVY = { combochance: "ccc", hae: "hae" };
+  function RIV_KO_ELEM(k) { return RIV_KO[k].replace(" (접합)", ""); }
   const SPLICE = [
+    ...Object.entries(SPLICE_ELEM).map(([k, need]) => ({ out: k, ko: RIV_KO_ELEM(k), need, cls: ["rifle", "shotgun", "pistol", "melee"] })),
     { out: "sd", ko: "상태이상 피해", need: ["피해", "상태이상 확률"], cls: ["rifle", "shotgun", "pistol", "melee"] },
     { out: "wpd", ko: "약점 피해", need: ["피해", "확대율 또는 멀티샷"], cls: ["rifle", "shotgun", "pistol"] },
     { out: "wpcc", ko: "약점 치명타 확률", need: ["치명타 확률", "확대율 또는 멀티샷"], cls: ["rifle", "shotgun", "pistol"] },
@@ -623,7 +631,8 @@ self.onmessage = function (ev) {
 
   function rivenOptionsHtml() {
     const cls = modClass(st.weapon);
-    const base = Object.entries(RIV_KO).filter(([k]) => k !== "sd" && !(k === "ic" && cls !== "melee") && !(k === "ms" && cls === "melee")).map(([k, v]) => `<option value="${k}">${v}</option>`).join("") + `<option value="sd">상태이상 피해 (접합)</option>`;
+    const base = Object.entries(RIV_KO).filter(([k]) => !SPLICED.has(k) && !(k === "ic" && cls !== "melee") && !(k === "ms" && cls === "melee")).map(([k, v]) => `<option value="${k}">${v}</option>`).join("")
+      + `<optgroup label="접합 (Update 44.1)">` + [...SPLICED].map((k) => `<option value="${k}">${k === "sd" ? "상태이상 피해 (접합)" : RIV_KO[k]}</option>`).join("") + `</optgroup>`;
     const other = (cls === "melee" ? RIV_OTHER.melee : RIV_OTHER.gun).map(([k, v]) => `<option value="x_${k}">${v} (${k === "combochance" ? "연속기 쌓는 속도에 반영" : k === "hae" ? "강공 계산에 반영" : "계산 영향 없음"})</option>`).join("");
     return `<option value="">—</option>` + base + other;
   }
@@ -852,7 +861,7 @@ self.onmessage = function (ev) {
     const neg = modClass(w) === "melee" ? other.find((x) => x[0] === "finisher") : other.find((x) => x[0] === "recoil");
     const rivs = picks.map((p) => {
       const eff = {}, info = [];
-      for (const k of p.stats) { eff[k] = plan.table[k] * mult; info.push({ k, v: eff[k], inc: true }); }
+      for (const k of p.stats) { eff[k] = rivBase(plan.table, k) * mult; info.push({ k, v: eff[k], inc: true }); }
       if (neg) info.push({ k: "x_" + neg[0], v: -neg[2] * negBase, inc: true });
       return { eff, info };
     });
@@ -1305,18 +1314,18 @@ self.onmessage = function (ev) {
   function rivenCombos(top, ref) {
     const cls = modClass(st.weapon), atk = st.weapon.attacks[st.atk];
     const table = RIV[cls] || RIV.rifle;
-    const stats = Object.keys(table).filter((k) => !(k === "ic" && atk.kind !== "heavy" && atk.kind !== "glaive"));
+    const stats = Object.keys(table).filter((k) => !(k === "ic" && atk.kind !== "heavy" && atk.kind !== "glaive")).concat(Object.keys(SPLICE_ELEM));
     const out = [];
     for (const form of ["3+1", "2+1"]) {
       const n = form === "3+1" ? 3 : 2, mult = 1.2 * RIV_FORM[form].pos;
       const combos = [];
-      const rec = (start, acc) => { if (acc.length === n) { combos.push(acc.slice()); return; } for (let i = start; i < stats.length; i++) { acc.push(stats[i]); rec(i + 1, acc); acc.pop(); } };
+      const rec = (start, acc) => { if (acc.length === n) { if (acc.filter((k) => SPLICED.has(k)).length <= 1) combos.push(acc.slice()); return; } for (let i = start; i < stats.length; i++) { acc.push(stats[i]); rec(i + 1, acc); acc.pop(); } };
       rec(0, []);
       for (let i = 0; i < top.ids.length; i++) {
         if (MOD_BY_ID[top.ids[i]] && MOD_BY_ID[top.ids[i]].exilus) continue;     // a riven can't go in the exilus slot
         const rest = top.ids.filter((_, j) => j !== i);
         for (const c of combos) {
-          const riv = {}; for (const k of c) riv[k] = table[k] * mult;
+          const riv = {}; for (const k of c) riv[k] = rivBase(table, k) * mult;
           const s = evalBuild(rest.concat(["__riven"]), top.val, top.arcane, null, riv).score / ref;
           out.push({ form, slot: top.ids[i], stats: c, s });
         }
@@ -1330,12 +1339,12 @@ self.onmessage = function (ev) {
     const cached = st.results && st.results.rivPlan && st.results.rivPlanTop === top ? st.results.rivPlan : null;
     const { out, table } = cached || rivenCombos(top, ref);
     const best3 = out.filter((x) => x.form === "3+1").slice(0, 3), best2 = out.filter((x) => x.form === "2+1").slice(0, 2);
-    const rangeTxt = (k, form) => { const b = table[k] * 1.2 * RIV_FORM[form].pos; return k === "ic" ? `${(b * 0.9).toFixed(0)}~${(b * 1.1).toFixed(0)}` : `${pct(b * 0.9, 1)}~${pct(b * 1.1, 1)}`; };
+    const rangeTxt = (k, form) => { const b = rivBase(table, k) * 1.2 * RIV_FORM[form].pos; return k === "ic" ? `${(b * 0.9).toFixed(0)}~${(b * 1.1).toFixed(0)}` : `${pct(b * 0.9, 1)}~${pct(b * 1.1, 1)}`; };
     const row = (x) => `<tr><td>${RIV_FORM[x.form].ko}</td><td>${x.stats.map((k) => `${RIV_KO[k]} <small>(${rangeTxt(k, x.form)})</small>`).join("<br>")}</td><td>${esc(modName(x.slot))}</td><td class="num">×${x.s.toFixed(2)}</td></tr>`;
     // negatives: modeled via evaluation, others by rule
     const base = top.ids.slice(), bestSlot = out[0] ? out[0].slot : top.ids[top.ids.length - 1];
     const restB = base.filter((id) => id !== bestSlot);
-    const posRiv = {}; for (const k of out[0].stats) posRiv[k] = table[k] * 1.2 * RIV_FORM["3+1"].pos;
+    const posRiv = {}; for (const k of out[0].stats) posRiv[k] = rivBase(table, k) * 1.2 * RIV_FORM["3+1"].pos;
     const withPos = evalBuild(restB.concat(["__riven"]), top.val, top.arcane, null, posRiv).score;
     const negRows = [];
     for (const k of Object.keys(table)) {
@@ -1375,7 +1384,7 @@ self.onmessage = function (ev) {
       <h3>부정 옵션 고르기 (1순위 조합 기준)</h3>
       <table class="tbl"><thead><tr><th>부정 옵션</th><th>영향</th><th>판정</th><th>메모</th></tr></thead><tbody>
       ${negRows.map((x) => `<tr><td>${esc(x.ko)}</td><td class="num">${pctDelta(x.s)}</td><td>${grade(x.s)}</td><td><small>${esc(x.note)}</small></td></tr>`).join("")}</tbody></table>
-      ${splice.length ? `<h3>접합이 필요한 옵션</h3><ul class="plain">${splice.map((sp) => `<li><b>${sp.ko}</b>: ${sp.need.join(" + ")} 두 옵션을 접합합니다. 재료 두 옵션 모두 이 세팅에 쓸모가 있으니, 뜨는 대로 접합하면 손해가 없습니다.</li>`).join("")}</ul><p class="hint">접합 결과 수치는 일반 옵션과 같은 범위로 가정했습니다. 접합된 특성은 고정 특성으로 취급되지 않아 재순환 비용이 두 배가 되지 않습니다.</p>` : ""}
+      ${splice.length ? `<h3>접합이 필요한 옵션</h3><ul class="plain">${splice.map((sp) => `<li><b>${sp.ko}</b>: ${sp.need.join(" + ")} 두 옵션을 리벤 스플라이서로 접합합니다.${SPLICE_ELEM[sp.out] ? " 복합 원소는 모드의 단일 원소와 합쳐지지 않고 그대로 들어갑니다." : ""}</li>`).join("")}</ul><p class="hint">접합(Update 44.1)은 리벤 하나에 하나만, 재료 두 옵션 중 수치가 좋은 쪽의 비율을 이어받습니다(원소는 기본값이 같아 그대로). 접합하면 그 옵션이 고정되고 긍정·부정 개수가 유지되며, 특성 잠금과 달리 재순환 쿠바가 두 배가 되지 않습니다. 리벤 스플라이서는 주간 미션 "빙하의 속박"(Update 44.0) 보상입니다.</p>` : ""}
       <p class="hint">진행 순서: ① 3긍1부가 뜨면 1순위 옵션을 잠그고 재순환 → ② 부정 옵션은 위 "무해" 중에서 → ③ 수치는 범위 하한만 넘으면 성능 차이 10% 이내입니다.</p>
     </section>`;
   }
