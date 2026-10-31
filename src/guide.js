@@ -7,6 +7,7 @@
   const STAT_S = { strength: "위력", duration: "지속", range: "거리", efficiency: "효율" };
   const REGION = { KR: "한국", NA: "북미", CN: "중국", JP: "일본" };
   const DUO = { sirius: "시리우스", orion: "오리온", switching: "교체", celestial_clash: "4번 공유 어빌리티" };
+  const MST = { "복수 확인": "ms-ok", "작성자 실험": "ms-test", "작성자": "ms-claim", "반론": "ms-dis" };
   const pctv = (v) => v == null ? "–" : `${+v % 1 ? (+v).toFixed(1) : v}%`;
 
   // guides load one file at a time (data/guides/<id>.json next to the page); WF_GUIDE_IDS says which exist
@@ -68,6 +69,10 @@
           <td>${b.verified ? '<span class="gok">공식 확인</span>' : '<span class="gno">미확인</span>'}</td></tr>`).join("")}
         </tbody></table></div>
       </section>
+
+      ${(g.mechanics || []).length ? `<section class="card"><h3>숨은 메커니즘·버그 <small>커뮤니티 실험 · 확인 정도 표시</small></h3>
+        <ul class="gmech">${g.mechanics.map((m) => `<li><span class="gmst ${MST[m.status] || ""}">${esc(m.status || "작성자")}</span>${esc(m.text)}${m.source ? ` <a href="${esc(m.source)}" target="_blank" rel="noopener">출처</a>` : ""}${m.date ? ` <small>${esc(m.date)}</small>` : ""}</li>`).join("")}</ul>
+        <p class="hint" style="margin:0">복수 확인: 다른 글·댓글도 같은 결과 · 작성자 실험: 작성자가 시뮬라크럼 등에서 측정 · 작성자: 주장만 있음 · 반론: 댓글에 반대 의견이 있음</p></section>` : ""}
 
       <section class="card"><h3>커뮤니티 추천 세팅 <small>지역별 최신 글 · 날짜는 글 작성일</small></h3>
         <div class="tscroll"><table class="tbl gcmp"><thead><tr><th>지역 · 날짜</th><th>콘셉트</th><th>위력</th><th>지속</th><th>거리</th><th>효율</th><th>헬민스</th></tr></thead><tbody>
