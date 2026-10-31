@@ -33,6 +33,14 @@
   const DOT_TYPES = ["heat", "tox", "elec", "gas", "slash"];
   const PROC_WIN = { blast: 1.5, corr: 8, rad: 12, impact: 6 };
   const ARMOR_CAP = 2700;
+  // crowd geometry: enemies lined up behind the one you shoot ~ Poisson(2); a humanoid body uses ~0.6 m of punch through
+  // (wiki "Punch Through": 0.6 m passes a humanoid, 1.0 m a quadruped). Re-aiming to the next target takes ~0.2 s.
+  const LINE_MEAN = 2, BODY_PT = 0.6, T_ACQ = 0.2;
+  function lineHits(cap) {           // expected extra enemies hit = E[min(n, cap)], n ~ Poisson(LINE_MEAN)
+    let p = Math.exp(-LINE_MEAN), e = 0;
+    for (let n = 1; n < 30; n++) { p *= LINE_MEAN / n; e += p * Math.min(n, cap); }
+    return e;
+  }
 
   /* ---------- enemy scaling ---------- */
   // wiki renders the f2 coefficients as "2455", "3055", "3655": these are 24√5/5, 30√5/5, 36√5/5
@@ -451,6 +459,7 @@
       const nonP = { D: 0, blast: 0, dot: acc.dotNon, pv: acc.pvN, ph: acc.phN, pc: acc.pcN, pk: acc.pkN };
       const hasNon = Object.keys(acc.dotNon).some((T) => acc.dotNon[T] > 0);
       const period = 1 / Math.max(0.05, main.rate);
+      const tAcq = isMeleeKind(atk.kind) ? 0 : T_ACQ;
       const solve = (tgs) => {
         const tg = tgs.main;
         const shc = 1 - (o.ext.shieldCut || 0);
@@ -485,7 +494,8 @@
             const tA = ttk(Object.assign({}, base, aoe, { hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar }));
             Keff = Math.max(Keff, 1 + (Kaoe - 1) * Math.min(1, Math.max(tHit, period) / Math.max(tA, period)));
           }
-          const sweep = (main.N / Keff) * period + tHit;
+          // every new target costs re-aim time (guns), so past one-shot kills more fire rate stops paying off
+          const sweep = (main.N / Keff) * (period + tAcq) + tHit;
           const spread = isFinite(tNon) && tNon < 40 ? Math.max(tHit, tNon) : Infinity;
           let lights = Math.min(sweep, spread);
           clear = Math.max(lights, tHeavy + period);
@@ -495,7 +505,7 @@
             const n10 = Math.min(main.N - 1, (o.density || 0) * Math.PI * kx.r * kx.r);
             const frac = Math.min(1, kx.pct + kx.flat / Math.max(1, tg.hp));
             const k2 = Math.min(main.N, Keff * (1 + n10 * frac));
-            lights = Math.min(lights, (main.N / k2) * period + tHit);
+            lights = Math.min(lights, (main.N / k2) * (period + tAcq) + tHit);
             // the heavy mixed in also takes the explosions of the enemies killed near it
             let tExp = Infinity;
             if (tgs.heavy) {
@@ -641,10 +651,11 @@
       const key = (parentAtk || atk).name;
       if (o.hits && o.hits[key]) K = o.hits[key];
       else if (radius > 0) K = Math.max(1, Math.min(N, rho * Math.PI * radius * radius));
-      else if (atk.punch) K = Math.min(N, 4);
-      // punch-through: ~0.35 extra bodies per metre in a 12-enemy crowd. Explosive projectiles burst on first contact
+      else if (atk.punch) K = Math.min(N, 1 + lineHits(Infinity));
+      // punch-through: the enemies lined up behind the target (Poisson, mean 2) that the punch-through distance can pass
+      // (0.6 m per body) — 3 m already reaches almost all of them, so more distance adds little. Explosive projectiles burst on first contact
       // and can't use it (wiki "Punch Through": the stat is locked for projectile AoE weapons)
-      else if (!isMeleeKind(kind) && a.pt > 0 && !atk.ptLock && !(parentAtk && parentAtk.ptLock)) K = Math.min(N, 1 + 0.35 * a.pt);
+      else if (!isMeleeKind(kind) && a.pt > 0 && !atk.ptLock && !(parentAtk && parentAtk.ptLock)) K = Math.min(N, 1 + lineHits(a.pt / BODY_PT));
       else if (kind === "melee") K = Math.min(N, 2);
       else K = 1;
       n3 = Math.min(N, 1 + rho * Math.PI * 9);
