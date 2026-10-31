@@ -162,6 +162,13 @@ self.onmessage = function (ev) {
       return true;
     });
   }
+  // Incarnon guns: index of the Incarnon Form attack (-1 if the weapon has no separate normal gun attack)
+  const isGunAtk = (a) => a.kind === "gun" || (a.parts || []).some((p) => p.kind === "gun");
+  const incAtk = (a) => /^Incarnon/i.test(a.en || "") || (a.parts || []).some((p) => /^Incarnon/i.test(p.en || ""));
+  function incGunIdx(w) {
+    const i = w.attacks.findIndex((a) => incAtk(a) && isGunAtk(a));
+    return i >= 0 && w.attacks.some((a) => !incAtk(a) && isGunAtk(a)) ? i : -1;
+  }
   function defaultAttack(w) {
     const a = w.attacks;
     let i = a.findIndex((x) => x.kind === "glaive" && /Recall/.test(x.en));
@@ -266,9 +273,9 @@ self.onmessage = function (ev) {
   function selectWeapon(w) {
     st.base = w; st.evoSel = {}; st.evoManual = {}; st.weapon = w; st.atk = defaultAttack(w); st.results = null; save();
     evolve();
-    // Incarnon weapons: one loadout serves both forms, so start from the "both forms" choice
-    const ci = st.weapon.attacks.findIndex((a) => a.combo);
-    if (ci >= 0) { st.atk = ci; st.evoSel = {}; evolve(); }
+    // Incarnon guns: start from the Incarnon Form (where the weapon does its work); the normal shot stays one click away
+    const ii = incGunIdx(st.weapon);
+    if (ii >= 0 && ii !== st.atk) { st.atk = ii; st.evoSel = {}; evolve(); }
     if (w.exalted && w.exalted.frame) {
       const f = FRAMES.find((x) => x.en === w.exalted.frame) || FRAMES.find((x) => x.en === w.exalted.frame.replace(/ (Prime|Umbra)$/, ""));
       if (f && $("#frame").value !== f.id) { $("#frame").value = f.id; renderAbilities(); }
@@ -355,16 +362,6 @@ self.onmessage = function (ev) {
       const f = d0 > 0 ? (d0 + add) / d0 : 1;
       const y = mod(Object.assign({}, a, { parts: undefined }), inc, f); y.parts = a.parts.map((p) => mod(p, inc, f)); return y;
     });
-    // both forms share one mod loadout: a "both forms" choice scores a build on the normal shot and the Incarnon Form together
-    const isGun = (a) => a.kind === "gun" || (a.parts || []).some((p) => p.kind === "gun");
-    let iN = attacks.findIndex((a) => !isIncAtk(a) && isGun(a) && a.en === "Normal Attack");
-    if (iN < 0) iN = attacks.findIndex((a) => !isIncAtk(a) && isGun(a) && !a.primer);
-    const iI = attacks.findIndex((a) => isIncAtk(a) && isGun(a));
-    if (iN >= 0 && iI >= 0) {
-      const dm = {}; for (const a of [attacks[iN], attacks[iI]]) for (const q of a.parts || [a]) for (const k in q.dmg || {}) dm[k] = Math.max(dm[k] || 0, q.dmg[k]);
-      attacks.push(Object.assign({}, attacks[iI], { name: "두 형태 겸용 (기본 + 인카논)", en: "Both Forms", combo: [iN, iI], comboW: [0.5, 0.5], parts: undefined, dmg: dm, semi: false,
-        desc: `같은 모드로 ${attacks[iN].name}과 ${attacks[iI].name}을 둘 다 쓰는 운용 — 두 형태의 처치 속도를 반반 비중(기하평균)으로 함께 봅니다. 아래 시간·수치는 ${attacks[iI].name} 기준입니다.` }));
-    }
     return Object.assign({}, w, { attacks });
   }
   // auto choices: per tier, the perk that makes the chosen attack fastest with no mods (others at their current choice)
@@ -413,9 +410,8 @@ self.onmessage = function (ev) {
     $("#rivnote").hidden = !w.noRiven;
     $("#atk").innerHTML = w.attacks.map((a, i) => `<option value="${i}">${esc(a.name)}</option>`).join("");
     $("#atk").value = st.atk;
-    const hasCombo = w.attacks.some((a) => a.combo);
     $("#atkdesc").textContent = (atk.desc || "") + (w.exalted ? ` ${exaltedNote(w)}` : "")
-      + (hasCombo && !atk.combo ? " · 이 무기는 기본 형태와 인카논 형태가 같은 모드를 씁니다. 지금은 이 공격만 보고 짠 세팅이라 다른 형태에서는 약할 수 있습니다 — 두 형태를 다 쓰면 '두 형태 겸용'을 고르세요." : "");
+      + (incGunIdx(w) >= 0 && isGunAtk(atk) ? ` · 기본 형태와 인카논 형태는 같은 모드를 쓰지만 추천 세팅은 형태마다 다릅니다. 지금은 '${atk.name}' 기준이니, 다른 형태로 주로 싸우면 그 공격을 고르세요.` : "");
     $("#atkstats").innerHTML = atkStatsHtml(atk);
     $("#valrow").hidden = !w.valence;
     renderElemOrder(w);
@@ -1295,7 +1291,7 @@ self.onmessage = function (ev) {
       `${o.scenario === "boss" ? "보스" : "중장갑"} 한 방 ${oneMin >= 9999 ? "9999레벨+" : oneMin > 0 ? `~${oneMin}레벨` : "안 됨"}`].filter(Boolean);
     const sec = (n, title, sub, body, id) => `<div class="sec" id="${id}"><h2 class="sech"><span class="secn">${n}</span>${title}${sub ? `<small>${sub}</small>` : ""}</h2>${body}</div>`;
 
-    let h1 = `<section class="card hero"><div class="eyebrow">${esc(st.weapon.ko)} · ${esc(atk.name)}${atk.combo ? ` <small>— ${esc(atk.combo.map((i) => st.weapon.attacks[i].name).join(" · "))} 반반 비중, 아래 처치 시간은 ${esc(st.weapon.attacks[atk.combo[atk.combo.length - 1]].name)} 기준</small>` : ""}</div>
+    let h1 = `<section class="card hero"><div class="eyebrow">${esc(st.weapon.ko)} · ${esc(atk.name)}</div>
       <h2>${finalElements(r)}</h2>
       <div class="cchips">${chips.map((c) => `<span>${esc(c)}</span>`).join("")}</div>
       <div class="meta">${o.concept && o.concept.length ? `속성 콘셉트 <b>${o.concept.map((t) => TYPE_KO[t]).join(" + ")}</b>${o.conceptOnly ? " (이 속성만)" : ""} · ` : ""}${top.val ? `베일런스 <b>${TYPE_KO[top.val.type]} ${pct(top.val.pct)}</b> · ` : ""}${buffNames.length ? `버프 <b>${esc(buffNames.join(", "))}</b>` : "워프레임 버프 없음 (범용)"}</div>
@@ -1385,7 +1381,7 @@ self.onmessage = function (ev) {
     h5 += `<section class="card notes"><h3>계산 가정</h3><ul>
       <li>처치 시간은 ${o.steel ? "강철의 길 " : ""}${o.level}레벨 기준 적의 체력·방어구(위키 레벨 공식)로 계산합니다. 바이러스·화염·부식·냉기 중첩은 시간에 따라 쌓입니다.</li>
       <li>잡몹 무리: 12명(중장갑 1명 포함)이 반경 약 11m 안에 모여 있다고 봅니다(반경 7.9m에 6명 밀도 — 폭발 반경에 들어오는 수를 정함). 적 하나(와 그 뒤에 줄지은 적)를 죽을 때까지 쏜 뒤 다음 적으로 조준을 옮기는 데 0.2초가 든다고 봅니다. 한 발이 맞히는 수는 폭발 반경과 관통력(쏜 적 뒤에 평균 2명이 줄지어 있고, 몸통 하나에 관통력 약 0.6m)으로 추정. 직격+폭발 무기는 주변 적이 폭발만 맞는다고 보고, 폭발만으로 죽는 속도만큼 같이 잡히는 것으로 계산합니다. 폭발 투사체는 관통이 적용되지 않습니다(위키 "Punch Through"). 갈바나이즈드 계열 피해 보너스와 세컨더리 이레디에이트 전파는 직격에만 적용합니다(위키). 처치 조건 효과(갈바나이즈드, 머시리스 등)는 잡몹·중장갑에서는 최대 중첩, 보스전에서는 0으로 계산합니다.</li>
-      <li>상태이상(위키 "Status Effect"): 바이러스 체력 피해 최대 +325%, 부식 방어구 최대 80%, 화염 방어구 50%·도트, 자성 실드 피해 최대 +325%와 실드 파괴 시 전기, 냉기 치명타 배율 +0.5(빙결 +1.0), 관통 치명타 확률 +25%, 전기 3m 연쇄 도트, 가스 3~6m 구름, 독·출혈의 실드 관통을 넣었습니다. 방사능의 "적끼리 공격"과 충격의 자비의 일격 문턱, 관통의 적 공격력 감소처럼 처치 속도와 직접 관계없는 효과는 넣지 않습니다.</li>
+      <li>상태이상(위키 "Status Effect"): 바이러스 체력 피해 최대 +325%, 부식 방어구 최대 80%, 화염 방어구 50%·도트, 자성 실드 피해 최대 +325%와 실드 파괴 시 전기, 냉기 치명타 배율 +0.5(빙결 +1.0), 관통 치명타 확률 최대 +25%, 베기 출혈 도트(기본 피해 35%×6틱, 방어구·실드 무시), 전기 3m 연쇄 도트, 가스 3~6m 구름, 독·출혈의 실드 관통을 넣었습니다. 방사능의 "적끼리 공격"과 충격의 자비의 일격 문턱, 관통의 적 공격력 감소처럼 처치 속도와 직접 관계없는 효과는 넣지 않습니다.</li>
       <li>폭발 상태이상이 걸린 적이 죽으면 5m 안에 그 공격 기본 피해의 최대 300%로 터져(위키 "Blast Damage") 주변 적이 함께 깎이는 것으로 봅니다. 관통력은 모드와 무기 고유값(인카논 형태 등, 위키)을 더하고, 스풀 무기는 탄창마다 처음 몇 발이 느린 것, 펜모어 인카논 형태는 51발 점사 평균 연사(약 78%)로 계산합니다.</li>
       <li>코퍼스 실드는 독·출혈 도트만 관통하고 나머지는 실드를 먼저 깎습니다. 자성 중첩은 실드·오버가드 피해를 최대 4.25배로 올립니다.${o.og ? " 엑시무스 오버가드(위키 레벨 공식)는 방어구·바이러스 영향 없이 먼저 깎고, 보이드는 1.5배입니다." : ""}</li>
       <li>무기별 숨은 특성은 위키 무기 데이터에서 가져옵니다: 확정 상태이상(예: 조리스 회수 폭발의 전기·충격), 헤드샷 배율 변경, 거리별 피해 감소(잡몹은 2~20m에 고르게, 중장갑은 15m), 폭발 가장자리 피해 감소, 최대 탄약·탄약 소모.</li>
@@ -1528,7 +1524,6 @@ self.onmessage = function (ev) {
     const xs = exilusMods(st.weapon);
     const conv = st.weapon.exalted ? null : xs.filter((m) => m.eff.ammoConv).sort((a, b) => b.eff.ammoConv - a.eff.ammoConv)[0];   // exalted weapons use energy, not ammo
     if (r.ammo && r.ammo.sustain < 60 && conv) return { name: conv.ko, why: `탄약 보완 — 다른 종류 탄약 픽업을 이 무기 탄약으로 ${pct(conv.eff.ammoConv)} 바꿔 줍니다 (처치 속도 영향 없음, 탄약 ${Math.round(r.ammo.sustain)}초 만에 바닥)` };
-    if (atk.combo) return { name: "자유", why: `피해 계산에 영향 없는 칸입니다. 인카논 형태는 모드와 무관한 별도 탄을 쓰고, 기본 형태 탄약이 아쉬우면 ${conv ? conv.ko + "를" : "탄약 변환 모드를"} 끼우세요.` };
     if (r.inc) return { name: "자유", why: `피해 계산에 영향 없는 칸입니다. 인카논 형태는 모드와 무관한 별도 탄(${r.inc.rounds || "충전식"}${r.inc.rounds ? "발" : ""})을 쓰고 재장전이 없어서 탄약·탄창 모드도 효과가 없습니다. 기본 형태로 돌아갔을 때를 위해 탄약 변환 모드를 끼워도 됩니다.` };
     const proj = xs.find((m) => m.eff.projSpd);
     if (atk.kind === "melee" && xs.some((m) => m.eff.tenno)) return { name: "자유", why: "휘두르기 운용이 아니면 텐노카이가 의미 없어 피해 계산에 영향 없는 칸입니다" };

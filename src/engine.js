@@ -382,14 +382,6 @@
   // Element arrangement: o.elemOrder fixes it (slot order as typed). Otherwise every possible arrangement is a
   // candidate; o.layoutTTK picks the one with the best time-to-kill score (exact), else steady-state damage (fast).
   function evaluate(weapon, atk, mods, o, riven) {
-    // one loadout for two attacks (Incarnon weapons: normal shot + Incarnon Form): weighted geometric mean of their scores;
-    // the details shown are the last attack's (the Incarnon Form)
-    if (atk.combo) {
-      const rs = atk.combo.map((i) => evaluate(weapon, weapon.attacks[i], mods, o, riven));
-      const w = atk.comboW || rs.map(() => 1 / rs.length);
-      const score = Math.exp(rs.reduce((s, r, k) => s + w[k] * Math.log(Math.max(1e-12, r.score)), 0));
-      return Object.assign({}, rs[rs.length - 1], { score, comboScores: rs.map((r) => r.score) });
-    }
     if (o.layoutTTK && o.layoutIdx === undefined && !(o.elemOrder && o.elemOrder.length)) {
       let best = evaluate1(weapon, atk, mods, Object.assign({}, o, { layoutIdx: 0 }), riven);
       for (let i = 1; i < (best.nLayouts || 1); i++) {
