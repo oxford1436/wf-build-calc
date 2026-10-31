@@ -494,18 +494,21 @@
             const tA = ttk(Object.assign({}, base, aoe, { hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar }));
             Keff = Math.max(Keff, 1 + (Kaoe - 1) * Math.min(1, Math.max(tHit, period) / Math.max(tA, period)));
           }
-          // every new target costs re-aim time (guns), so past one-shot kills more fire rate stops paying off
-          const sweep = (main.N / Keff) * (period + tAcq) + tHit;
-          const spread = isFinite(tNon) && tNon < 40 ? Math.max(tHit, tNon) : Infinity;
+          // one engagement = keep firing until that target (and the ones lined up behind it) will die, then re-aim (guns).
+          // The heavy mixed in is one of the engagements. Past one-shot kills more fire rate stops paying off.
+          const eng = (t) => Math.max(period, t) + tAcq;
+          const nL = tgs.heavy ? main.N - 1 : main.N;
+          const sweep = (nL / Keff) * eng(tHit) + (tgs.heavy ? eng(tHeavy) : 0);
+          const spread = isFinite(tNon) && tNon < 40 ? Math.max(tHit, tNon) + (tgs.heavy ? eng(tHeavy) : 0) : Infinity;
           let lights = Math.min(sweep, spread);
-          clear = Math.max(lights, tHeavy + period);
+          clear = lights;
           if (kx) {
             // kill explosions (Acid Shells: 450 + 45% max health in 10 m). Hotfix 44.1.3: enemies killed by the explosion don't
             // explode again, so each kill only takes that share of health off the enemies around it (no chain through the pack)
             const n10 = Math.min(main.N - 1, (o.density || 0) * Math.PI * kx.r * kx.r);
             const frac = Math.min(1, kx.pct + kx.flat / Math.max(1, tg.hp));
             const k2 = Math.min(main.N, Keff * (1 + n10 * frac));
-            lights = Math.min(lights, (main.N / k2) * (period + tAcq) + tHit);
+            lights = Math.min(lights, (nL / k2) * eng(tHit) + (tgs.heavy ? eng(tHeavy) : 0));
             // the heavy mixed in also takes the explosions of the enemies killed near it
             let tExp = Infinity;
             if (tgs.heavy) {
@@ -513,7 +516,7 @@
               const nearRate = (k2 / period) * n10 / Math.max(1, main.N - 1);
               tExp = tHit + Math.ceil(1 / fh) / Math.max(1e-6, nearRate);
             }
-            clear = Math.max(lights, Math.min(tHeavy, tExp) + period);
+            clear = tgs.heavy ? Math.min(lights, (nL / k2) * eng(tHit) + eng(Math.min(tHeavy, tExp))) : lights;
           }
           kps = main.N / Math.max(period, clear);
         } else { clear = Math.max(period, tHit); kps = 1 / clear; }
