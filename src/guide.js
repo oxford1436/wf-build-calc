@@ -1,5 +1,6 @@
 /* Warframe guide tab (#frames, #frames/<id>): ability roles, stat priority, verified breakpoints and dated community builds
- * per region. Data: window.WF_GUIDES (data/guides/*.json), order and batches: window.WF_GUIDE_LIST. */
+ * per region. Data: window.WF_GUIDES (data/guides/*.json), list and roles: window.WF_GUIDE_LIST / WF_GUIDE_ROLES,
+ * top stat and summary for the list: window.WF_GUIDE_META. */
 (function (root) {
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const ROLE = { main: ["핵심", "r-main"], sub: ["보조", "r-sub"], survival: ["생존", "r-surv"], utility: ["유틸", "r-util"], helminth_target: ["헬민스 자리", "r-helm"] };
@@ -13,16 +14,57 @@
   // guides load one file at a time (data/guides/<id>.json next to the page); WF_GUIDE_IDS says which exist
   const G = root.WF_GUIDES = root.WF_GUIDES || {};
   const has = (id) => (root.WF_GUIDE_IDS || []).includes(id) || !!G[id];
+  // the frame list: grouped by main role, by top stat (guide's stat priority) or by Korean initial; a search box filters
+  const GMODES = [["role", "역할"], ["stat", "능력치"], ["abc", "가나다"]];
+  let gmode = (() => { try { const v = localStorage.getItem("wfGuideGroup"); return GMODES.some(([k]) => k === v) ? v : "role"; } catch (e) { return "role"; } })();
+  const CHO = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ", CHO_BASE = { "ㄲ": "ㄱ", "ㄸ": "ㄷ", "ㅃ": "ㅂ", "ㅆ": "ㅅ", "ㅉ": "ㅈ" };
+  const initial = (s) => { const c = String(s).charCodeAt(0); if (c >= 0xac00 && c <= 0xd7a3) { const ch = CHO[Math.floor((c - 0xac00) / 588)]; return CHO_BASE[ch] || ch; } return "A–Z"; };
+  const META = () => root.WF_GUIDE_META || {};
+  function groupsOf(L) {
+    const byKo = (a, b) => a.ko.localeCompare(b.ko, "ko");
+    if (gmode === "stat") {
+      const ST = [["strength", "위력 우선"], ["duration", "지속시간 우선"], ["range", "거리 우선"], ["efficiency", "효율 우선"]];
+      // the guide's stat priority #1
+      return ST.map(([k, ko]) => ({ ko, desc: "가이드 능력치 우선순위 1위", xs: L.filter((x) => (META()[x.id] || {}).s === k).sort(byKo) })).filter((g) => g.xs.length)
+        .concat([{ ko: "기타", desc: "", xs: L.filter((x) => !ST.some(([k]) => (META()[x.id] || {}).s === k)).sort(byKo) }].filter((g) => g.xs.length));
+    }
+    if (gmode === "abc") {
+      const m = new Map();
+      for (const x of L.slice().sort(byKo)) { const k = initial(x.ko); if (!m.has(k)) m.set(k, []); m.get(k).push(x); }
+      return [...m.entries()].sort((a, b) => (a[0] === "A–Z") - (b[0] === "A–Z") || a[0].localeCompare(b[0], "ko")).map(([ko, xs]) => ({ ko, desc: "", xs }));
+    }
+    return (root.WF_GUIDE_ROLES || []).map((r) => ({ ko: r.ko, desc: r.desc, xs: L.filter((x) => x.role === r.id).sort(byKo) })).filter((g) => g.xs.length);
+  }
   function listHtml(cur) {
     const L = root.WF_GUIDE_LIST || [];
-    const done = L.filter((x) => has(x.id)).length;
-    const byBatch = {};
-    for (const x of L) (byBatch[x.batch] = byBatch[x.batch] || []).push(x);
-    return `<div class="gprog"><b>${done}</b> / ${L.length}종 정리됨</div>
-      <select class="gsel" aria-label="워프레임 고르기">${L.map((x) => `<option value="${x.id}"${x.id === cur ? " selected" : ""}${has(x.id) ? "" : " disabled"}>${esc(x.ko)}${has(x.id) ? "" : ` (${x.batch}차 예정)`}</option>`).join("")}</select>
-      <div class="glistin">${Object.keys(byBatch).map((b) => `<div class="gbatch"><div class="gbl">${b === "1" ? "1차 (시범)" : b + "차"}</div>${byBatch[b].map((x) => has(x.id)
-        ? `<a href="#frames/${x.id}" class="gitem${x.id === cur ? " on" : ""}">${esc(x.ko)}</a>`
-        : `<span class="gitem off" title="${b}차에 정리 예정">${esc(x.ko)}</span>`).join("")}</div>`).join("")}</div>`;
+    const gs = groupsOf(L);
+    const tip = (x) => { const m = META()[x.id]; return m && m.t ? ` title="${esc(m.t)}"` : ""; };
+    return `<div class="gprog"><b>${L.filter((x) => has(x.id)).length}</b>종</div>
+      <div class="gmode" role="tablist" aria-label="묶는 기준">${GMODES.map(([k, ko]) => `<button type="button" data-m="${k}" class="${k === gmode ? "on" : ""}">${ko}</button>`).join("")}</div>
+      <input type="search" class="gfind" placeholder="이름 검색 (한글·영문)" aria-label="워프레임 이름 검색" autocomplete="off">
+      <select class="gsel" aria-label="워프레임 고르기">${gs.map((g) => `<optgroup label="${esc(g.ko)}">${g.xs.map((x) => `<option value="${x.id}"${x.id === cur ? " selected" : ""}${has(x.id) ? "" : " disabled"}>${esc(x.ko)}</option>`).join("")}</optgroup>`).join("")}</select>
+      <div class="glistin">${gs.map((g) => `<div class="gbatch"><div class="gbl">${esc(g.ko)}${g.desc ? `<small>${esc(g.desc)}</small>` : ""}</div>${g.xs.map((x) => has(x.id)
+        ? `<a href="#frames/${x.id}" class="gitem${x.id === cur ? " on" : ""}" data-q="${esc((x.ko + " " + ((META()[x.id] || {}).en || "")).toLowerCase().replace(/\s+/g, ""))}"${tip(x)}>${esc(x.ko)}</a>`
+        : `<span class="gitem off">${esc(x.ko)}</span>`).join("")}</div>`).join("")}</div>`;
+  }
+  function bindList(box, cur) {
+    const aside = box.querySelector(".glist"); if (!aside) return;
+    aside.querySelectorAll(".gmode button").forEach((b) => b.addEventListener("click", () => {
+      gmode = b.dataset.m; try { localStorage.setItem("wfGuideGroup", gmode); } catch (e) {}
+      aside.innerHTML = listHtml(cur); bindList(box, cur);
+    }));
+    const f = aside.querySelector(".gfind");
+    f.addEventListener("input", () => {
+      const q = f.value.toLowerCase().replace(/\s+/g, "");
+      aside.querySelectorAll(".gbatch").forEach((g) => {
+        let n = 0;
+        g.querySelectorAll(".gitem").forEach((a) => { const ok = !q || (a.dataset.q || a.textContent.toLowerCase()).includes(q); a.hidden = !ok; n += ok ? 1 : 0; });
+        g.hidden = !n;
+      });
+    });
+    f.addEventListener("keydown", (e) => { if (e.key !== "Enter") return; const a = aside.querySelector(".gitem:not([hidden]):not(.off)"); if (a) location.hash = a.getAttribute("href"); });
+    const sel = aside.querySelector(".gsel");
+    if (sel) sel.addEventListener("change", () => { location.hash = "#frames/" + sel.value; });
   }
 
   function detailHtml(g) {
@@ -109,7 +151,7 @@
     const L = root.WF_GUIDE_LIST || [];
     const m = /^#frames\/([a-z0-9_]+)/.exec(location.hash);
     let id = m ? m[1] : null;
-    if (!id || !has(id)) id = (L.find((x) => has(x.id)) || {}).id;
+    if (!id || !has(id)) { const first = groupsOf(L).flatMap((g) => g.xs).find((x) => has(x.id)); id = first ? first.id : null; }
     const g = id ? G[id] : null;
     if (id && !g) {
       fetch(`data/guides/${id}.json`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
@@ -118,8 +160,7 @@
     }
     box.innerHTML = `<div class="gwrap"><aside class="glist">${listHtml(id)}</aside><div class="gmain">${g ? detailHtml(g)
       : id ? `<div class="placeholder"><h3>불러오는 중…</h3></div>` : `<div class="placeholder"><h3>정리된 워프레임이 아직 없습니다</h3></div>`}</div></div>`;
-    const sel = box.querySelector(".gsel");
-    if (sel) sel.addEventListener("change", () => { location.hash = "#frames/" + sel.value; });
+    bindList(box, id);
     if (g && root.WF_FrameCalc) root.WF_FrameCalc.bind(box, g);
   };
 })(typeof window !== "undefined" ? window : globalThis);

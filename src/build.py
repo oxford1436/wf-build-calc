@@ -12,10 +12,12 @@ import datetime
 import json, glob
 # warframe guides: one JSON per frame in data/guides (researched community builds, ability roles, breakpoints)
 # the page only lists which guides exist; each guide loads from data/guides/<id>.json when opened
-gids = []
+gids, gmeta = [], {}
 for f in sorted(glob.glob(os.path.join(DATA, "guides", "*.json"))):
     g = json.load(open(f, encoding="utf-8")); assert g["id"] == os.path.basename(f)[:-5], f; gids.append(g["id"])
-guide_js = "window.WF_GUIDE_IDS = " + json.dumps(gids) + ";\n" + rd("guide_list.js") + "\n" + (rdd("frame_mods.js") if os.path.exists(os.path.join(DATA, "frame_mods.js")) else "") + "\n" + rd("framecalc.js") + "\n" + rd("guide.js") + "\n"
+    # what the frame list needs before a guide is opened: top stat, English name (search), one-line summary (tooltip)
+    gmeta[g["id"]] = {"s": (g.get("stat_priority") or [{}])[0].get("stat"), "en": g.get("name_en"), "t": g.get("summary", "")}
+guide_js = "window.WF_GUIDE_IDS = " + json.dumps(gids) + ";\nwindow.WF_GUIDE_META = " + json.dumps(gmeta, ensure_ascii=False) + ";\n" + rd("guide_list.js") + "\n" + (rdd("frame_mods.js") if os.path.exists(os.path.join(DATA, "frame_mods.js")) else "") + "\n" + rd("framecalc.js") + "\n" + rd("guide.js") + "\n"
 html = rd("shell.html").replace("__BUILD_DATE__", datetime.date.today().isoformat()).replace("/*__SRC__*/", src).replace("/*__SRC_EXEC__*/", src).replace("/*__APP__*/", guide_js + rd("ocr.js") + "\n" + rd("app.js"))
 open(OUTF,"w",encoding="utf-8").write(html)
 print("ok", len(html))
