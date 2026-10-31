@@ -544,6 +544,8 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.37", date: "2026-10-31", title: "인카논 무기를 마지막으로 쓴 경우 화면이 비던 문제 수정",
+      items: ["마지막으로 고른 무기가 인카논·익절티드 무기면 페이지를 다시 열 때 '어떤 공격으로 잡나요?' 칸이 비고 계산기가 멈추던 문제를 고쳤습니다. 진화 자동 선택이 아직 만들어지지 않은 샤드 칸을 읽다가 멈춘 것이 원인입니다."] },
     { v: "1.36", date: "2026-10-31", title: "무기 숨은 특성·인카논 진화 계산 바로잡기 (펜모어 메탈 어거 문제)",
       items: [
         "인카논 형태 등 위키에 적힌 공격별 고유 관통력(106개 공격, 예: 펜모어 인카논 형태 3m)을 계산에 넣었습니다. 지금까지는 빠져 있어서 메탈 어거 같은 관통력 모드가 과대평가됐습니다.",
@@ -2541,6 +2543,8 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.37", date: "2026-10-31", title: "인카논 무기를 마지막으로 쓴 경우 화면이 비던 문제 수정",
+      items: ["마지막으로 고른 무기가 인카논·익절티드 무기면 페이지를 다시 열 때 '어떤 공격으로 잡나요?' 칸이 비고 계산기가 멈추던 문제를 고쳤습니다. 진화 자동 선택이 아직 만들어지지 않은 샤드 칸을 읽다가 멈춘 것이 원인입니다."] },
     { v: "1.36", date: "2026-10-31", title: "무기 숨은 특성·인카논 진화 계산 바로잡기 (펜모어 메탈 어거 문제)",
       items: [
         "인카논 형태 등 위키에 적힌 공격별 고유 관통력(106개 공격, 예: 펜모어 인카논 형태 3m)을 계산에 넣었습니다. 지금까지는 빠져 있어서 메탈 어거 같은 관통력 모드가 과대평가됐습니다.",
@@ -6198,7 +6202,7 @@ self.onmessage = function (ev) {
   }
   function shardPicks() {
     const out = [];
-    for (let i = 0; i < 5; i++) { const id = $("#sh" + i).value; if (!id) continue; const s = BUFFS.shards.find((x) => x.id === id); if (s) out.push({ s, t: $("#tau" + i).checked }); }
+    for (let i = 0; i < 5; i++) { const sel = $("#sh" + i); if (!sel) continue; const id = sel.value; if (!id) continue; const s = BUFFS.shards.find((x) => x.id === id); if (s) out.push({ s, t: $("#tau" + i).checked }); }
     return out;
   }
   function frameStats(faIds) {
@@ -7225,6 +7229,8 @@ self.onmessage = function (ev) {
   try { const sv = JSON.parse(localStorage.getItem("wfopt2") || "null"); if (sv && sv.mod) { const w = buildModular(...sv.mod); if (w) { st.weapon = w; st.atk = 0; } } } catch (e) {}
   bind();
   st.base = st.weapon;
+  // the evolution auto-pick reads the shard/aura inputs, so they must exist before an Incarnon weapon is restored
+  renderShards(); renderAuras();
   if (st.weapon.exalted || st.weapon.evos) selectWeapon(st.weapon); else renderAll();
   F0 = captureFields();
   restoreFromHash();

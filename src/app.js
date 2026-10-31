@@ -828,7 +828,7 @@ self.onmessage = function (ev) {
   }
   function shardPicks() {
     const out = [];
-    for (let i = 0; i < 5; i++) { const id = $("#sh" + i).value; if (!id) continue; const s = BUFFS.shards.find((x) => x.id === id); if (s) out.push({ s, t: $("#tau" + i).checked }); }
+    for (let i = 0; i < 5; i++) { const sel = $("#sh" + i); if (!sel) continue; const id = sel.value; if (!id) continue; const s = BUFFS.shards.find((x) => x.id === id); if (s) out.push({ s, t: $("#tau" + i).checked }); }
     return out;
   }
   function frameStats(faIds) {
@@ -1855,6 +1855,8 @@ self.onmessage = function (ev) {
   try { const sv = JSON.parse(localStorage.getItem("wfopt2") || "null"); if (sv && sv.mod) { const w = buildModular(...sv.mod); if (w) { st.weapon = w; st.atk = 0; } } } catch (e) {}
   bind();
   st.base = st.weapon;
+  // the evolution auto-pick reads the shard/aura inputs, so they must exist before an Incarnon weapon is restored
+  renderShards(); renderAuras();
   if (st.weapon.exalted || st.weapon.evos) selectWeapon(st.weapon); else renderAll();
   F0 = captureFields();
   restoreFromHash();
