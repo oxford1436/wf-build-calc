@@ -359,6 +359,19 @@ if "coda_bassocyst" in byid:
 for pid in ("tenet_arca_plasmor", "arca_plasmor"):
     if pid in byid:
         byid[pid]["attacks"][0]["punch"] = True
+# weapons whose wiki page says they have innate "Infinite Body Punch Through" (checked over every weapon page, 2026-10-31):
+# None = every non-explosion attack, a tuple = only attacks whose name contains one of these words
+INF_BODY_PT = {"Alternox": None, "Alternox Prime": None, "Arca Plasmor": None, "Tenet Arca Plasmor": None, "Coda Bassocyst": None,
+               "Corufell": None, "Corufell Prime": None, "Cyanex": None, "Exergis": None, "Felarx": None, "Ignis": None, "Ignis Wraith": None,
+               "Lanka": None, "Nataruk": ("Charged", "Perfect"), "Nepheri": None, "Noctua": None, "Phantasma": None, "Phantasma Prime": None,
+               "Purgator 1": None, "Steflos": None, "Steflos Prime": None, "Stropha": None, "Tenet Agendus": None, "Verdilac": None}
+for w in weapons:
+    if w.get("en") not in INF_BODY_PT: continue
+    only = INF_BODY_PT[w["en"]]
+    for a in w["attacks"]:
+        if a.get("kind") == "radial": continue
+        if only and not any(x in (a.get("en") or "") for x in only): continue
+        a["punch"] = True
 
 # dedupe ids
 seen = {}
