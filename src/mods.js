@@ -271,7 +271,7 @@
     primary_compression: { ko: "프라이머리 컴프레션", en: "Primary Compression", slot: "primary", aoeOnly: true, compression: true, aim: true, note: "조준 시 폭발 반경 20%로 줄이고 줄어든 1m당 피해 +100%" },
     primary_bulwark: { ko: "프라이머리 불워크", en: "Primary Bulwark", slot: "primary", manual: true, bulwark: true, note: "워프레임 방어력 1,000 초과 1당 피해 +1% (최대 +500%) — 방어력 입력값 사용" },
     fractalized_reset: { ko: "프랙탈라이즈드 리셋", en: "Fractalized Reset", slot: "primary", cond: [{ when: "cast", eff: { reload: 1.2 } }], note: "시전 후 5초간 재장전 +240% (가동률 50% 가정)" },
-    primary_debilitate: { ko: "프라이머리 디빌리테이트", en: "Primary Debilitate", slot: "primary", none: true, note: "합성 상태이상 10중첩 대상에 구성 상태이상 추가 — 수치화 어려워 제외" },
+    primary_debilitate: { ko: "프라이머리 디빌리테이트", en: "Primary Debilitate", slot: "primary", debilitate: 1, note: "합성 상태이상이 10중첩인 적에게 명중마다 구성 기본 상태이상 1개 추가 (별도 피해라 팩션 보너스를 한 번 더 받음, 위키)" },
     primary_exhilarate: { ko: "프라이머리 익질러레이트", en: "Primary Exhilarate", slot: "primary", none: true, note: "에너지 회복" },
     primary_obstruct: { ko: "프라이머리 옵스트럭트", en: "Primary Obstruct", slot: "primary", none: true, note: "적 무기 고장" },
     longbow_sharpshot: { ko: "롱보우 샤프샷", en: "Longbow Sharpshot", slot: "primary", types: ["Bow"], cond: [{ when: "hs", eff: { dmg: 1.5 } }], note: "약점 명중 후 다음 발 +300% (헤드샷 50% 가정)" },

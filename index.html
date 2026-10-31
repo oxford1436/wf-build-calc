@@ -544,6 +544,13 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.39", date: "2026-10-31", title: "상태이상 효과 점검 (관통·냉기·자성·디빌리테이트)",
+      items: [
+        "관통 상태이상: 중첩마다 그 적에게 무기 치명타 확률 +5%(최대 +25%, 모드 적용 후 합산, 범위 피해 제외)를 넣었습니다. 지금까지 빠져 있었습니다.",
+        "냉기 상태이상: 치명타 배율 보너스를 위키대로 9중첩 +0.5, 10중첩(빙결) +1.0으로 고쳤습니다(지금까지는 +0.45 상한).",
+        "자성 상태이상: 실드를 다 벗기면 최대 실드의 3%×자성 중첩(최대 30%) 전기 상태이상이 터지는 효과를 넣었습니다.",
+        "프라이머리 디빌리테이트를 계산에 넣었습니다: 합성 상태이상 10중첩인 적에게 명중마다 구성 기본 상태이상을 추가로 걸고, 그 도트는 팩션 보너스를 한 번 더 받습니다(위키).",
+      ] },
     { v: "1.38", date: "2026-10-31", title: "디시 오디스 갤러리 조사 반영 (워프레임 가이드)",
       items: [
         "각 워프레임 가이드에 '숨은 메커니즘·버그' 칸을 새로 넣었습니다. 디시 오디스 갤러리 공략·개념글 216건에서 찾은 실험·주장 310건을 확인 정도(복수 확인·작성자 실험·작성자·반론)와 출처·날짜를 붙여 정리했습니다.",
@@ -1066,7 +1073,8 @@ header.top p{flex-basis:100%}
   /* ---------- time-to-kill simulation ---------- */
   // p: {hp, sh, ar0, strip, r, D, blast, dot:{T:X}, Tdur, pv, ph, pc, pk, cc, cd, corrMax, dt, tmax, firstShot}
   function ttk(p, until) {
-    let hp = p.hp, sh = p.sh, og = p.og || 0, t = 0, lastRate = 1, dealt = 0;
+    let hp = p.hp, sh = p.sh, og = p.og || 0, t = 0, lastRate = 1, dealt = 0, magT = -1, magDps = 0;
+    const sh0 = p.sh || 0;
     const dt = p.dt, r = p.r, Td = Math.max(0.5, p.Tdur);
     const stepsMax = until ? Math.ceil(until / dt) - 1 : Math.ceil(p.tmax / dt);
     for (let i = 0; i <= stepsMax; i++) {
@@ -1081,9 +1089,13 @@ header.top p{flex-basis:100%}
       let A = p.ar0 * (1 - 0.5 * hf) * (1 - cs) * (1 - p.strip);
       A = Math.min(A, ARMOR_CAP);
       const ar = A > 0 ? 1 - 0.9 * Math.sqrt(A / ARMOR_CAP) : 1;
-      const cdb = nk <= 0 ? 0 : nk < 1 ? 0.1 * nk : Math.min(0.45, 0.1 + 0.05 * (nk - 1));
+      // Cold (wiki): +0.1 crit multiplier on the first stack, +0.05 per stack to +0.5 at 9, +1.0 while frozen at 10.
+      // Puncture (wiki): +5% weapon crit chance per stack, +25% at 5, added after mods. Neither applies to area damage.
+      const cdb = p.aoeOnly || nk <= 0 ? 0 : nk < 1 ? 0.1 * nk : nk >= 10 ? 1.0 : Math.min(0.5, 0.1 + 0.05 * (nk - 1));
+      const ccp = p.aoeOnly ? 0 : Math.min(0.25, 0.05 * Math.min(5, (p.pp || 0) * shots));
+      const ccT = p.cc + ccp;
       // Devouring Attrition (p.nc): non-critical hits get 1 + chance x bonus on average
-      const critf = 1 + p.cc * (p.cd + cdb - 1) + (p.nc ? Math.max(0, 1 - p.cc) * p.nc : 0);
+      const critf = 1 + ccT * (p.cd + cdb - 1) + (p.nc ? Math.max(0, 1 - ccT) * p.nc : 0);
       let shieldable = p.D * r * critf + (i === 0 ? p.D * critf / dt : 0) + (t >= 1.5 ? p.blast * r * critf : 0) + (p.F || 0) * r;
       const nAct = r * Math.min(t, Td) + (t < Td ? 1 : 0);
       let toxRate = 0, slashRate = 0;
@@ -1091,6 +1103,8 @@ header.top p{flex-basis:100%}
         const v = (p.dot[T] / Td) * nAct * critf;
         if (T === "tox") toxRate += v; else if (T === "slash") slashRate += v; else shieldable += v;
       }
+      // Magnetic (wiki): stripping the shields triggers an Electricity proc of 3% of max shields per Magnetic stack (max 30%)
+      if (magT >= 0 && t < magT + 6) shieldable += magDps;
       let S = shieldable * dt * extraM, tx = toxRate * dt * extraM, sl = slashRate * dt * extraM;
       if (og > 0) {
         // overguard first: no armor, no Viral; Magnetic and Void boost it
@@ -1098,7 +1112,10 @@ header.top p{flex-basis:100%}
         if (raw < og) { og -= raw; lastRate = raw / dt; t += dt; continue; }
         const keep = 1 - og / Math.max(1e-9, raw); og = 0; S *= keep; tx *= keep; sl *= keep;
       }
-      if (sh > 0) { const take = Math.min(sh, S * magM); sh -= take; S -= take / magM; }
+      if (sh > 0) {
+        const take = Math.min(sh, S * magM); sh -= take; S -= take / magM;
+        if (sh <= 0 && nm > 0 && magT < 0) { magT = t; magDps = Math.min(0.3, 0.03 * nm) * sh0 / 6; }
+      }
       const dmgH = S * vm * ar + tx * vm * ar + sl * vm;
       hp -= dmgH; dealt += dmgH;
       lastRate = dmgH / dt;
@@ -1192,13 +1209,13 @@ header.top p{flex-basis:100%}
     const perF = {};
     for (const f of o.factions) {
       // sum per-shot params across parts (same trigger)
-      const acc = { D: 0, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
+      const acc = { D: 0, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
       res.forEach((r, ri) => {
         const x = r.perF[f], wgt = weights[ri];
         acc.D += x.D * wgt; acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt;
         for (const T in x.dot) acc.dot[T] = (acc.dot[T] || 0) + x.dot[T] * wgt;
         for (const T in x.dotNon) acc.dotNon[T] = (acc.dotNon[T] || 0) + x.dotNon[T] * wgt;
-        acc.pv += x.pv * wgt; acc.ph += x.ph * wgt; acc.pc += x.pc * wgt; acc.pk += x.pk * wgt; acc.pm += (x.pm || 0) * wgt;
+        acc.pv += x.pv * wgt; acc.ph += x.ph * wgt; acc.pc += x.pc * wgt; acc.pk += x.pk * wgt; acc.pm += (x.pm || 0) * wgt; acc.pp += (x.pp || 0) * wgt;
         acc.pvN += x.pvN * wgt; acc.phN += x.phN * wgt; acc.pcN += x.pcN * wgt; acc.pkN += x.pkN * wgt;
       });
       // explosion parts of a combined shot (direct hit + blast): the enemies around the target only take the blast
@@ -1219,7 +1236,7 @@ header.top p{flex-basis:100%}
       }
       const base = { strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, nc: main.nc || 0, corrMax: 10 + (o.ext.corrMax || 0), dt: o.dt, tmax: o.tmax, Tdur: main.Tdur,
         ogM: main.ogM || 1, frozenM: main.frozenM || 0, coldVuln: main.coldVuln || 0 };
-      const hitP = { D: acc.D, blast: acc.blast, F: acc.F, dot: acc.dot, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm };
+      const hitP = { D: acc.D, blast: acc.blast, F: acc.F, dot: acc.dot, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm, pp: acc.pp, aoeOnly: main && parts.every((q) => q.kind === "radial") };
       const nonP = { D: 0, blast: 0, dot: acc.dotNon, pv: acc.pvN, ph: acc.phN, pc: acc.pcN, pk: acc.pkN };
       const hasNon = Object.keys(acc.dotNon).some((T) => acc.dotNon[T] > 0);
       const period = 1 / Math.max(0.05, main.rate);
@@ -1575,6 +1592,17 @@ header.top p{flex-basis:100%}
         for (const t of types) procs[t] = (procs[t] || 0) + arc.encumber * tot / types.length;
       }
       if (arc && arc.punctCold) procs.cold = (procs.cold || 0) + arc.punctCold * (procs.punct || 0);
+      // Primary Debilitate (wiki): once a combined element sits at 10 stacks, every hit (each pellet is its own damage instance)
+      // adds one of its base statuses — as a separate instance, so faction damage multiplies those DoTs once more
+      let debil = null;
+      if (arc && arc.debilitate) {
+        const cmb = Object.keys(COMP).filter((T) => (procs[T] || 0) > 0).sort((x, y) => procs[y] - procs[x])[0];
+        if (cmb) {
+          const up = Math.min(1, procs[cmb] * rate * K * 6 / 10);     // share of the time the target holds 10 stacks
+          debil = { comps: COMP[cmb], n: arc.debilitate * ms * up };
+          for (const c of COMP[cmb]) procs[c] = (procs[c] || 0) + debil.n / 2;
+        }
+      }
       const procSum = Object.values(procs).reduce((x, y) => x + y, 0);
       // head portion (o.hs = real headshots): weak-point multiplier and doubled crit multiplier; ttk later multiplies by the body crit factor
       const hsReal = Math.min(1, o.hs || 0), hsBase = (atk.hsMult || 2) + a.hsMult;
@@ -1640,7 +1668,8 @@ header.top p{flex-basis:100%}
           if (xata) per *= 1 + xata * fac;      // every tick is a damage instance → its own Xata hit
           if (T === "elec") per *= n3;
           if (T === "gas") per *= ng;
-          dot[T] = p * per * spreadHit;
+          const dShare = debil && debil.comps.includes(T) && p > 0 ? (debil.n / 2) / p : 0;
+          dot[T] = p * per * spreadHit * (1 + dShare * (fac - 1));
           if (T !== "slash" && spreadNon > 0) dotNon[T] = p * per * spreadNon;
         }
         const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * M * (xata ? 1 + xata * fac : 1);
@@ -1650,6 +1679,7 @@ header.top p{flex-basis:100%}
         perF[fname] = {
           D, blast, dot, dotNon, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
           pv: (procs.viral || 0) * spreadHit, ph: (procs.heat || 0) * spreadHit, pc: (procs.corr || 0) * spreadHit, pk: (procs.cold || 0) * spreadHit, pm: (procs.mag || 0) * spreadHit,
+          pp: kind === "radial" ? 0 : (procs.punct || 0) * spreadHit,
           pvN: (procs.viral || 0) * spreadNon, phN: (procs.heat || 0) * spreadNon, pcN: (procs.corr || 0) * spreadNon, pkN: (procs.cold || 0) * spreadNon,
           dispDirect, dispDot, dispBlast, dispDotBy,
         };
@@ -2132,7 +2162,7 @@ header.top p{flex-basis:100%}
     primary_compression: { ko: "프라이머리 컴프레션", en: "Primary Compression", slot: "primary", aoeOnly: true, compression: true, aim: true, note: "조준 시 폭발 반경 20%로 줄이고 줄어든 1m당 피해 +100%" },
     primary_bulwark: { ko: "프라이머리 불워크", en: "Primary Bulwark", slot: "primary", manual: true, bulwark: true, note: "워프레임 방어력 1,000 초과 1당 피해 +1% (최대 +500%) — 방어력 입력값 사용" },
     fractalized_reset: { ko: "프랙탈라이즈드 리셋", en: "Fractalized Reset", slot: "primary", cond: [{ when: "cast", eff: { reload: 1.2 } }], note: "시전 후 5초간 재장전 +240% (가동률 50% 가정)" },
-    primary_debilitate: { ko: "프라이머리 디빌리테이트", en: "Primary Debilitate", slot: "primary", none: true, note: "합성 상태이상 10중첩 대상에 구성 상태이상 추가 — 수치화 어려워 제외" },
+    primary_debilitate: { ko: "프라이머리 디빌리테이트", en: "Primary Debilitate", slot: "primary", debilitate: 1, note: "합성 상태이상이 10중첩인 적에게 명중마다 구성 기본 상태이상 1개 추가 (별도 피해라 팩션 보너스를 한 번 더 받음, 위키)" },
     primary_exhilarate: { ko: "프라이머리 익질러레이트", en: "Primary Exhilarate", slot: "primary", none: true, note: "에너지 회복" },
     primary_obstruct: { ko: "프라이머리 옵스트럭트", en: "Primary Obstruct", slot: "primary", none: true, note: "적 무기 고장" },
     longbow_sharpshot: { ko: "롱보우 샤프샷", en: "Longbow Sharpshot", slot: "primary", types: ["Bow"], cond: [{ when: "hs", eff: { dmg: 1.5 } }], note: "약점 명중 후 다음 발 +300% (헤드샷 50% 가정)" },
@@ -2550,6 +2580,13 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.39", date: "2026-10-31", title: "상태이상 효과 점검 (관통·냉기·자성·디빌리테이트)",
+      items: [
+        "관통 상태이상: 중첩마다 그 적에게 무기 치명타 확률 +5%(최대 +25%, 모드 적용 후 합산, 범위 피해 제외)를 넣었습니다. 지금까지 빠져 있었습니다.",
+        "냉기 상태이상: 치명타 배율 보너스를 위키대로 9중첩 +0.5, 10중첩(빙결) +1.0으로 고쳤습니다(지금까지는 +0.45 상한).",
+        "자성 상태이상: 실드를 다 벗기면 최대 실드의 3%×자성 중첩(최대 30%) 전기 상태이상이 터지는 효과를 넣었습니다.",
+        "프라이머리 디빌리테이트를 계산에 넣었습니다: 합성 상태이상 10중첩인 적에게 명중마다 구성 기본 상태이상을 추가로 걸고, 그 도트는 팩션 보너스를 한 번 더 받습니다(위키).",
+      ] },
     { v: "1.38", date: "2026-10-31", title: "디시 오디스 갤러리 조사 반영 (워프레임 가이드)",
       items: [
         "각 워프레임 가이드에 '숨은 메커니즘·버그' 칸을 새로 넣었습니다. 디시 오디스 갤러리 공략·개념글 216건에서 찾은 실험·주장 310건을 확인 정도(복수 확인·작성자 실험·작성자·반론)와 출처·날짜를 붙여 정리했습니다.",
@@ -3072,7 +3109,8 @@ header.top p{flex-basis:100%}
   /* ---------- time-to-kill simulation ---------- */
   // p: {hp, sh, ar0, strip, r, D, blast, dot:{T:X}, Tdur, pv, ph, pc, pk, cc, cd, corrMax, dt, tmax, firstShot}
   function ttk(p, until) {
-    let hp = p.hp, sh = p.sh, og = p.og || 0, t = 0, lastRate = 1, dealt = 0;
+    let hp = p.hp, sh = p.sh, og = p.og || 0, t = 0, lastRate = 1, dealt = 0, magT = -1, magDps = 0;
+    const sh0 = p.sh || 0;
     const dt = p.dt, r = p.r, Td = Math.max(0.5, p.Tdur);
     const stepsMax = until ? Math.ceil(until / dt) - 1 : Math.ceil(p.tmax / dt);
     for (let i = 0; i <= stepsMax; i++) {
@@ -3087,9 +3125,13 @@ header.top p{flex-basis:100%}
       let A = p.ar0 * (1 - 0.5 * hf) * (1 - cs) * (1 - p.strip);
       A = Math.min(A, ARMOR_CAP);
       const ar = A > 0 ? 1 - 0.9 * Math.sqrt(A / ARMOR_CAP) : 1;
-      const cdb = nk <= 0 ? 0 : nk < 1 ? 0.1 * nk : Math.min(0.45, 0.1 + 0.05 * (nk - 1));
+      // Cold (wiki): +0.1 crit multiplier on the first stack, +0.05 per stack to +0.5 at 9, +1.0 while frozen at 10.
+      // Puncture (wiki): +5% weapon crit chance per stack, +25% at 5, added after mods. Neither applies to area damage.
+      const cdb = p.aoeOnly || nk <= 0 ? 0 : nk < 1 ? 0.1 * nk : nk >= 10 ? 1.0 : Math.min(0.5, 0.1 + 0.05 * (nk - 1));
+      const ccp = p.aoeOnly ? 0 : Math.min(0.25, 0.05 * Math.min(5, (p.pp || 0) * shots));
+      const ccT = p.cc + ccp;
       // Devouring Attrition (p.nc): non-critical hits get 1 + chance x bonus on average
-      const critf = 1 + p.cc * (p.cd + cdb - 1) + (p.nc ? Math.max(0, 1 - p.cc) * p.nc : 0);
+      const critf = 1 + ccT * (p.cd + cdb - 1) + (p.nc ? Math.max(0, 1 - ccT) * p.nc : 0);
       let shieldable = p.D * r * critf + (i === 0 ? p.D * critf / dt : 0) + (t >= 1.5 ? p.blast * r * critf : 0) + (p.F || 0) * r;
       const nAct = r * Math.min(t, Td) + (t < Td ? 1 : 0);
       let toxRate = 0, slashRate = 0;
@@ -3097,6 +3139,8 @@ header.top p{flex-basis:100%}
         const v = (p.dot[T] / Td) * nAct * critf;
         if (T === "tox") toxRate += v; else if (T === "slash") slashRate += v; else shieldable += v;
       }
+      // Magnetic (wiki): stripping the shields triggers an Electricity proc of 3% of max shields per Magnetic stack (max 30%)
+      if (magT >= 0 && t < magT + 6) shieldable += magDps;
       let S = shieldable * dt * extraM, tx = toxRate * dt * extraM, sl = slashRate * dt * extraM;
       if (og > 0) {
         // overguard first: no armor, no Viral; Magnetic and Void boost it
@@ -3104,7 +3148,10 @@ header.top p{flex-basis:100%}
         if (raw < og) { og -= raw; lastRate = raw / dt; t += dt; continue; }
         const keep = 1 - og / Math.max(1e-9, raw); og = 0; S *= keep; tx *= keep; sl *= keep;
       }
-      if (sh > 0) { const take = Math.min(sh, S * magM); sh -= take; S -= take / magM; }
+      if (sh > 0) {
+        const take = Math.min(sh, S * magM); sh -= take; S -= take / magM;
+        if (sh <= 0 && nm > 0 && magT < 0) { magT = t; magDps = Math.min(0.3, 0.03 * nm) * sh0 / 6; }
+      }
       const dmgH = S * vm * ar + tx * vm * ar + sl * vm;
       hp -= dmgH; dealt += dmgH;
       lastRate = dmgH / dt;
@@ -3198,13 +3245,13 @@ header.top p{flex-basis:100%}
     const perF = {};
     for (const f of o.factions) {
       // sum per-shot params across parts (same trigger)
-      const acc = { D: 0, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
+      const acc = { D: 0, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
       res.forEach((r, ri) => {
         const x = r.perF[f], wgt = weights[ri];
         acc.D += x.D * wgt; acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt;
         for (const T in x.dot) acc.dot[T] = (acc.dot[T] || 0) + x.dot[T] * wgt;
         for (const T in x.dotNon) acc.dotNon[T] = (acc.dotNon[T] || 0) + x.dotNon[T] * wgt;
-        acc.pv += x.pv * wgt; acc.ph += x.ph * wgt; acc.pc += x.pc * wgt; acc.pk += x.pk * wgt; acc.pm += (x.pm || 0) * wgt;
+        acc.pv += x.pv * wgt; acc.ph += x.ph * wgt; acc.pc += x.pc * wgt; acc.pk += x.pk * wgt; acc.pm += (x.pm || 0) * wgt; acc.pp += (x.pp || 0) * wgt;
         acc.pvN += x.pvN * wgt; acc.phN += x.phN * wgt; acc.pcN += x.pcN * wgt; acc.pkN += x.pkN * wgt;
       });
       // explosion parts of a combined shot (direct hit + blast): the enemies around the target only take the blast
@@ -3225,7 +3272,7 @@ header.top p{flex-basis:100%}
       }
       const base = { strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, nc: main.nc || 0, corrMax: 10 + (o.ext.corrMax || 0), dt: o.dt, tmax: o.tmax, Tdur: main.Tdur,
         ogM: main.ogM || 1, frozenM: main.frozenM || 0, coldVuln: main.coldVuln || 0 };
-      const hitP = { D: acc.D, blast: acc.blast, F: acc.F, dot: acc.dot, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm };
+      const hitP = { D: acc.D, blast: acc.blast, F: acc.F, dot: acc.dot, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm, pp: acc.pp, aoeOnly: main && parts.every((q) => q.kind === "radial") };
       const nonP = { D: 0, blast: 0, dot: acc.dotNon, pv: acc.pvN, ph: acc.phN, pc: acc.pcN, pk: acc.pkN };
       const hasNon = Object.keys(acc.dotNon).some((T) => acc.dotNon[T] > 0);
       const period = 1 / Math.max(0.05, main.rate);
@@ -3581,6 +3628,17 @@ header.top p{flex-basis:100%}
         for (const t of types) procs[t] = (procs[t] || 0) + arc.encumber * tot / types.length;
       }
       if (arc && arc.punctCold) procs.cold = (procs.cold || 0) + arc.punctCold * (procs.punct || 0);
+      // Primary Debilitate (wiki): once a combined element sits at 10 stacks, every hit (each pellet is its own damage instance)
+      // adds one of its base statuses — as a separate instance, so faction damage multiplies those DoTs once more
+      let debil = null;
+      if (arc && arc.debilitate) {
+        const cmb = Object.keys(COMP).filter((T) => (procs[T] || 0) > 0).sort((x, y) => procs[y] - procs[x])[0];
+        if (cmb) {
+          const up = Math.min(1, procs[cmb] * rate * K * 6 / 10);     // share of the time the target holds 10 stacks
+          debil = { comps: COMP[cmb], n: arc.debilitate * ms * up };
+          for (const c of COMP[cmb]) procs[c] = (procs[c] || 0) + debil.n / 2;
+        }
+      }
       const procSum = Object.values(procs).reduce((x, y) => x + y, 0);
       // head portion (o.hs = real headshots): weak-point multiplier and doubled crit multiplier; ttk later multiplies by the body crit factor
       const hsReal = Math.min(1, o.hs || 0), hsBase = (atk.hsMult || 2) + a.hsMult;
@@ -3646,7 +3704,8 @@ header.top p{flex-basis:100%}
           if (xata) per *= 1 + xata * fac;      // every tick is a damage instance → its own Xata hit
           if (T === "elec") per *= n3;
           if (T === "gas") per *= ng;
-          dot[T] = p * per * spreadHit;
+          const dShare = debil && debil.comps.includes(T) && p > 0 ? (debil.n / 2) / p : 0;
+          dot[T] = p * per * spreadHit * (1 + dShare * (fac - 1));
           if (T !== "slash" && spreadNon > 0) dotNon[T] = p * per * spreadNon;
         }
         const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * M * (xata ? 1 + xata * fac : 1);
@@ -3656,6 +3715,7 @@ header.top p{flex-basis:100%}
         perF[fname] = {
           D, blast, dot, dotNon, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
           pv: (procs.viral || 0) * spreadHit, ph: (procs.heat || 0) * spreadHit, pc: (procs.corr || 0) * spreadHit, pk: (procs.cold || 0) * spreadHit, pm: (procs.mag || 0) * spreadHit,
+          pp: kind === "radial" ? 0 : (procs.punct || 0) * spreadHit,
           pvN: (procs.viral || 0) * spreadNon, phN: (procs.heat || 0) * spreadNon, pcN: (procs.corr || 0) * spreadNon, pkN: (procs.cold || 0) * spreadNon,
           dispDirect, dispDot, dispBlast, dispDotBy,
         };
@@ -4138,7 +4198,7 @@ header.top p{flex-basis:100%}
     primary_compression: { ko: "프라이머리 컴프레션", en: "Primary Compression", slot: "primary", aoeOnly: true, compression: true, aim: true, note: "조준 시 폭발 반경 20%로 줄이고 줄어든 1m당 피해 +100%" },
     primary_bulwark: { ko: "프라이머리 불워크", en: "Primary Bulwark", slot: "primary", manual: true, bulwark: true, note: "워프레임 방어력 1,000 초과 1당 피해 +1% (최대 +500%) — 방어력 입력값 사용" },
     fractalized_reset: { ko: "프랙탈라이즈드 리셋", en: "Fractalized Reset", slot: "primary", cond: [{ when: "cast", eff: { reload: 1.2 } }], note: "시전 후 5초간 재장전 +240% (가동률 50% 가정)" },
-    primary_debilitate: { ko: "프라이머리 디빌리테이트", en: "Primary Debilitate", slot: "primary", none: true, note: "합성 상태이상 10중첩 대상에 구성 상태이상 추가 — 수치화 어려워 제외" },
+    primary_debilitate: { ko: "프라이머리 디빌리테이트", en: "Primary Debilitate", slot: "primary", debilitate: 1, note: "합성 상태이상이 10중첩인 적에게 명중마다 구성 기본 상태이상 1개 추가 (별도 피해라 팩션 보너스를 한 번 더 받음, 위키)" },
     primary_exhilarate: { ko: "프라이머리 익질러레이트", en: "Primary Exhilarate", slot: "primary", none: true, note: "에너지 회복" },
     primary_obstruct: { ko: "프라이머리 옵스트럭트", en: "Primary Obstruct", slot: "primary", none: true, note: "적 무기 고장" },
     longbow_sharpshot: { ko: "롱보우 샤프샷", en: "Longbow Sharpshot", slot: "primary", types: ["Bow"], cond: [{ when: "hs", eff: { dmg: 1.5 } }], note: "약점 명중 후 다음 발 +300% (헤드샷 50% 가정)" },
@@ -6695,6 +6755,7 @@ self.onmessage = function (ev) {
     h5 += `<section class="card notes"><h3>계산 가정</h3><ul>
       <li>처치 시간은 ${o.steel ? "강철의 길 " : ""}${o.level}레벨 기준 적의 체력·방어구(위키 레벨 공식)로 계산합니다. 바이러스·화염·부식·냉기 중첩은 시간에 따라 쌓입니다.</li>
       <li>잡몹 무리: 반경 20m 안 12명, 한 발이 맞히는 수는 폭발 반경·관통으로 추정. 직격+폭발 무기는 주변 적이 폭발만 맞는다고 보고, 폭발만으로 죽는 속도만큼 같이 잡히는 것으로 계산합니다. 폭발 투사체는 관통이 적용되지 않습니다(위키 "Punch Through"). 갈바나이즈드 계열 피해 보너스와 세컨더리 이레디에이트 전파는 직격에만 적용합니다(위키). 처치 조건 효과(갈바나이즈드, 머시리스 등)는 잡몹·중장갑에서는 최대 중첩, 보스전에서는 0으로 계산합니다.</li>
+      <li>상태이상(위키 "Status Effect"): 바이러스 체력 피해 최대 +325%, 부식 방어구 최대 80%, 화염 방어구 50%·도트, 자성 실드 피해 최대 +325%와 실드 파괴 시 전기, 냉기 치명타 배율 +0.5(빙결 +1.0), 관통 치명타 확률 +25%, 전기 3m 연쇄 도트, 가스 3~6m 구름, 독·출혈의 실드 관통을 넣었습니다. 방사능의 "적끼리 공격"과 충격의 자비의 일격 문턱, 관통의 적 공격력 감소처럼 처치 속도와 직접 관계없는 효과는 넣지 않습니다.</li>
       <li>폭발 상태이상이 걸린 적이 죽으면 5m 안에 그 공격 기본 피해의 최대 300%로 터져(위키 "Blast Damage") 주변 적이 함께 깎이는 것으로 봅니다. 관통력은 모드와 무기 고유값(인카논 형태 등, 위키)을 더하고, 스풀 무기는 탄창마다 처음 몇 발이 느린 것, 펜모어 인카논 형태는 51발 점사 평균 연사(약 78%)로 계산합니다.</li>
       <li>코퍼스 실드는 독·출혈 도트만 관통하고 나머지는 실드를 먼저 깎습니다. 자성 중첩은 실드·오버가드 피해를 최대 4.25배로 올립니다.${o.og ? " 엑시무스 오버가드(위키 레벨 공식)는 방어구·바이러스 영향 없이 먼저 깎고, 보이드는 1.5배입니다." : ""}</li>
       <li>무기별 숨은 특성은 위키 무기 데이터에서 가져옵니다: 확정 상태이상(예: 조리스 회수 폭발의 전기·충격), 헤드샷 배율 변경, 거리별 피해 감소(잡몹은 2~20m에 고르게, 중장갑은 15m), 폭발 가장자리 피해 감소, 최대 탄약·탄약 소모.</li>

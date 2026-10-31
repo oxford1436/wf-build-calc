@@ -284,7 +284,8 @@
   /* ---------- time-to-kill simulation ---------- */
   // p: {hp, sh, ar0, strip, r, D, blast, dot:{T:X}, Tdur, pv, ph, pc, pk, cc, cd, corrMax, dt, tmax, firstShot}
   function ttk(p, until) {
-    let hp = p.hp, sh = p.sh, og = p.og || 0, t = 0, lastRate = 1, dealt = 0;
+    let hp = p.hp, sh = p.sh, og = p.og || 0, t = 0, lastRate = 1, dealt = 0, magT = -1, magDps = 0;
+    const sh0 = p.sh || 0;
     const dt = p.dt, r = p.r, Td = Math.max(0.5, p.Tdur);
     const stepsMax = until ? Math.ceil(until / dt) - 1 : Math.ceil(p.tmax / dt);
     for (let i = 0; i <= stepsMax; i++) {
@@ -299,9 +300,13 @@
       let A = p.ar0 * (1 - 0.5 * hf) * (1 - cs) * (1 - p.strip);
       A = Math.min(A, ARMOR_CAP);
       const ar = A > 0 ? 1 - 0.9 * Math.sqrt(A / ARMOR_CAP) : 1;
-      const cdb = nk <= 0 ? 0 : nk < 1 ? 0.1 * nk : Math.min(0.45, 0.1 + 0.05 * (nk - 1));
+      // Cold (wiki): +0.1 crit multiplier on the first stack, +0.05 per stack to +0.5 at 9, +1.0 while frozen at 10.
+      // Puncture (wiki): +5% weapon crit chance per stack, +25% at 5, added after mods. Neither applies to area damage.
+      const cdb = p.aoeOnly || nk <= 0 ? 0 : nk < 1 ? 0.1 * nk : nk >= 10 ? 1.0 : Math.min(0.5, 0.1 + 0.05 * (nk - 1));
+      const ccp = p.aoeOnly ? 0 : Math.min(0.25, 0.05 * Math.min(5, (p.pp || 0) * shots));
+      const ccT = p.cc + ccp;
       // Devouring Attrition (p.nc): non-critical hits get 1 + chance x bonus on average
-      const critf = 1 + p.cc * (p.cd + cdb - 1) + (p.nc ? Math.max(0, 1 - p.cc) * p.nc : 0);
+      const critf = 1 + ccT * (p.cd + cdb - 1) + (p.nc ? Math.max(0, 1 - ccT) * p.nc : 0);
       let shieldable = p.D * r * critf + (i === 0 ? p.D * critf / dt : 0) + (t >= 1.5 ? p.blast * r * critf : 0) + (p.F || 0) * r;
       const nAct = r * Math.min(t, Td) + (t < Td ? 1 : 0);
       let toxRate = 0, slashRate = 0;
@@ -309,6 +314,8 @@
         const v = (p.dot[T] / Td) * nAct * critf;
         if (T === "tox") toxRate += v; else if (T === "slash") slashRate += v; else shieldable += v;
       }
+      // Magnetic (wiki): stripping the shields triggers an Electricity proc of 3% of max shields per Magnetic stack (max 30%)
+      if (magT >= 0 && t < magT + 6) shieldable += magDps;
       let S = shieldable * dt * extraM, tx = toxRate * dt * extraM, sl = slashRate * dt * extraM;
       if (og > 0) {
         // overguard first: no armor, no Viral; Magnetic and Void boost it
@@ -316,7 +323,10 @@
         if (raw < og) { og -= raw; lastRate = raw / dt; t += dt; continue; }
         const keep = 1 - og / Math.max(1e-9, raw); og = 0; S *= keep; tx *= keep; sl *= keep;
       }
-      if (sh > 0) { const take = Math.min(sh, S * magM); sh -= take; S -= take / magM; }
+      if (sh > 0) {
+        const take = Math.min(sh, S * magM); sh -= take; S -= take / magM;
+        if (sh <= 0 && nm > 0 && magT < 0) { magT = t; magDps = Math.min(0.3, 0.03 * nm) * sh0 / 6; }
+      }
       const dmgH = S * vm * ar + tx * vm * ar + sl * vm;
       hp -= dmgH; dealt += dmgH;
       lastRate = dmgH / dt;
@@ -410,13 +420,13 @@
     const perF = {};
     for (const f of o.factions) {
       // sum per-shot params across parts (same trigger)
-      const acc = { D: 0, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
+      const acc = { D: 0, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
       res.forEach((r, ri) => {
         const x = r.perF[f], wgt = weights[ri];
         acc.D += x.D * wgt; acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt;
         for (const T in x.dot) acc.dot[T] = (acc.dot[T] || 0) + x.dot[T] * wgt;
         for (const T in x.dotNon) acc.dotNon[T] = (acc.dotNon[T] || 0) + x.dotNon[T] * wgt;
-        acc.pv += x.pv * wgt; acc.ph += x.ph * wgt; acc.pc += x.pc * wgt; acc.pk += x.pk * wgt; acc.pm += (x.pm || 0) * wgt;
+        acc.pv += x.pv * wgt; acc.ph += x.ph * wgt; acc.pc += x.pc * wgt; acc.pk += x.pk * wgt; acc.pm += (x.pm || 0) * wgt; acc.pp += (x.pp || 0) * wgt;
         acc.pvN += x.pvN * wgt; acc.phN += x.phN * wgt; acc.pcN += x.pcN * wgt; acc.pkN += x.pkN * wgt;
       });
       // explosion parts of a combined shot (direct hit + blast): the enemies around the target only take the blast
@@ -437,7 +447,7 @@
       }
       const base = { strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, nc: main.nc || 0, corrMax: 10 + (o.ext.corrMax || 0), dt: o.dt, tmax: o.tmax, Tdur: main.Tdur,
         ogM: main.ogM || 1, frozenM: main.frozenM || 0, coldVuln: main.coldVuln || 0 };
-      const hitP = { D: acc.D, blast: acc.blast, F: acc.F, dot: acc.dot, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm };
+      const hitP = { D: acc.D, blast: acc.blast, F: acc.F, dot: acc.dot, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm, pp: acc.pp, aoeOnly: main && parts.every((q) => q.kind === "radial") };
       const nonP = { D: 0, blast: 0, dot: acc.dotNon, pv: acc.pvN, ph: acc.phN, pc: acc.pcN, pk: acc.pkN };
       const hasNon = Object.keys(acc.dotNon).some((T) => acc.dotNon[T] > 0);
       const period = 1 / Math.max(0.05, main.rate);
@@ -793,6 +803,17 @@
         for (const t of types) procs[t] = (procs[t] || 0) + arc.encumber * tot / types.length;
       }
       if (arc && arc.punctCold) procs.cold = (procs.cold || 0) + arc.punctCold * (procs.punct || 0);
+      // Primary Debilitate (wiki): once a combined element sits at 10 stacks, every hit (each pellet is its own damage instance)
+      // adds one of its base statuses — as a separate instance, so faction damage multiplies those DoTs once more
+      let debil = null;
+      if (arc && arc.debilitate) {
+        const cmb = Object.keys(COMP).filter((T) => (procs[T] || 0) > 0).sort((x, y) => procs[y] - procs[x])[0];
+        if (cmb) {
+          const up = Math.min(1, procs[cmb] * rate * K * 6 / 10);     // share of the time the target holds 10 stacks
+          debil = { comps: COMP[cmb], n: arc.debilitate * ms * up };
+          for (const c of COMP[cmb]) procs[c] = (procs[c] || 0) + debil.n / 2;
+        }
+      }
       const procSum = Object.values(procs).reduce((x, y) => x + y, 0);
       // head portion (o.hs = real headshots): weak-point multiplier and doubled crit multiplier; ttk later multiplies by the body crit factor
       const hsReal = Math.min(1, o.hs || 0), hsBase = (atk.hsMult || 2) + a.hsMult;
@@ -858,7 +879,8 @@
           if (xata) per *= 1 + xata * fac;      // every tick is a damage instance → its own Xata hit
           if (T === "elec") per *= n3;
           if (T === "gas") per *= ng;
-          dot[T] = p * per * spreadHit;
+          const dShare = debil && debil.comps.includes(T) && p > 0 ? (debil.n / 2) / p : 0;
+          dot[T] = p * per * spreadHit * (1 + dShare * (fac - 1));
           if (T !== "slash" && spreadNon > 0) dotNon[T] = p * per * spreadNon;
         }
         const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * M * (xata ? 1 + xata * fac : 1);
@@ -868,6 +890,7 @@
         perF[fname] = {
           D, blast, dot, dotNon, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
           pv: (procs.viral || 0) * spreadHit, ph: (procs.heat || 0) * spreadHit, pc: (procs.corr || 0) * spreadHit, pk: (procs.cold || 0) * spreadHit, pm: (procs.mag || 0) * spreadHit,
+          pp: kind === "radial" ? 0 : (procs.punct || 0) * spreadHit,
           pvN: (procs.viral || 0) * spreadNon, phN: (procs.heat || 0) * spreadNon, pcN: (procs.corr || 0) * spreadNon, pkN: (procs.cold || 0) * spreadNon,
           dispDirect, dispDot, dispBlast, dispDotBy,
         };
