@@ -496,7 +496,9 @@
           }
           // one engagement = keep firing until that target (and the ones lined up behind it) will die, then re-aim (guns).
           // The heavy mixed in is one of the engagements. Past one-shot kills more fire rate stops paying off.
-          const eng = (t) => Math.max(period, t) + tAcq;
+          // (the first shot goes off as soon as the crosshair is on it, so a one-shot kill costs only the re-aim time,
+          // unless the weapon's own fire interval is longer than that)
+          const eng = (t) => Math.max(period, tAcq + t);
           const nL = tgs.heavy ? main.N - 1 : main.N;
           const sweep = (nL / Keff) * eng(tHit) + (tgs.heavy ? eng(tHeavy) : 0);
           const spread = isFinite(tNon) && tNon < 40 ? Math.max(tHit, tNon) + (tgs.heavy ? eng(tHeavy) : 0) : Infinity;
