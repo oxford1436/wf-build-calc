@@ -83,8 +83,10 @@
     fx: (s, h) => ({ elem: { viralm: (h ? 0.45 : 0.75) * s.str } }), time: (s) => 25 * s.dur });
   add("Toxic Lash", { ko: "톡식 래시", note: "독 피해 추가 (위력 비례, 수치 추정)",
     fx: (s) => ({ elem: { toxx: 0.3 * s.str } }), time: (s) => 30 * s.dur });
-  add("Xata's Whisper", { ko: "자타의 속삭임", helminth: true, note: "보이드 피해 26%×위력 별도 추가",
-    fx: (s) => ({ elem: { voidx: 0.26 * s.str } }), time: (s) => 26 * s.dur });
+  // wiki: an extra Void hit per damage instance for 26% x strength of the total weapon damage (elemental mods included, weapon
+  // elements not diluted); it double-dips on faction damage and on body-part (weak point) multipliers
+  add("Xata's Whisper", { ko: "자타의 속삭임", helminth: true, note: "공격마다 총 피해의 26%×위력만큼 보이드 추가타 (팩션·약점 배율을 한 번 더 받음)",
+    fx: (s) => ({ xata: 0.26 * s.str }), time: (s) => 26 * s.dur });
   add("Reservoirs", { ko: "레저부아 (헤이스트 모트)", note: "연사 +30%, 공격 속도 +20% (설치 시 위력 비례)",
     fx: (s) => ({ frAdd: 0.3 * s.str, asAdd: 0.2 * s.str }) });
   add("Speed", { ko: "스피드", note: "근접 공격 속도 +75%×위력",

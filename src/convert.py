@@ -456,7 +456,8 @@ EVO_RULES = [
     # Devouring Attrition: 50% chance of +2000% on non-critical hits → non-critical hits deal 1 + 0.5 x 20 = 11x on average
     (r"^(\d+(?:\.\d+)?)% chance to deal \+(\d+(?:\.\d+)?)% damage on non-critical hits\.?$", "nc", None, "비치명타 공격 시 {g1}% 확률로 피해 +{g2}% (평균 {avg}배)"),
     (r"^Enemies suffering from fewer than 3 Status Effects will receive: \+(\d+(?:\.\d+)?)% Critical Damage\.?$", "cdFew", 0.01, "상태이상 2종 이하인 적에게 치명타 피해 +{v}% (모드 후 고정값)"),
-    (r"^On Full Burst Hit: \+(\d+(?:\.\d+)?)% Damage, resets on Reload\.?$", "evoMult", 0.01, "점사 전탄 명중 시 피해 +{v}% (곱연산)"),
+    (r"^On Full Burst Hit: \+(\d+(?:\.\d+)?)% Damage, resets on Reload\.?$", "dmg", 0.01, "점사 전탄 명중 시 피해 +{v}% (서레이션과 합연산)"),
+    (r"^\+(\d+(?:\.\d+)?)% Damage\.?$", "dmg", 0.01, "피해 +{v}% (서레이션과 합연산)"),
     (r"^Multishot consumes ammo directly from Capacity and increases Damage by \+(\d+(?:\.\d+)?)%\.?$", "evoMult", 0.01, "멀티샷이 탄약을 직접 소모, 피해 +{v}% (곱연산)"),
     (r"^Multishot consumes ammo directly from Capacity and increases Damage by \+(\d+(?:\.\d+)?)\.?$", "baseDmg", 1, "멀티샷이 탄약을 직접 소모, 기본 피해 +{v}"),
     (r"^Multishot consumes ammo directly from Capacity and does \+(\d+(?:\.\d+)?)% Damage\.?$", "evoMult", 0.01, "멀티샷이 탄약을 직접 소모, 피해 +{v}% (곱연산)"),
@@ -561,6 +562,9 @@ for W in weapons:
                 if flat and it.get("key") in ("baseCC", "baseSC", "baseCD"):
                     it["key"] = {"baseCC": "ccFlat", "baseSC": "scFlat", "baseCD": "cdFlat"}[it["key"]]
                     it["ko"] += " (모드 적용 후 고정값으로 더함)"
+                cap_ = next((int(m_.group(1)) for n_ in notes for m_ in [re.search(r"Caps at (\d+)x", n_)] if m_), None)
+                if cap_ and it.get("key") == "dmg" and "resets on Reload" in l:
+                    it["v"] = round(it["v"] * cap_, 4); it["ko"] += f" (최대 {cap_}중첩)"
                 if it.pop("incX2", False) and it.get("key"):
                     items.append(dict(it, form="normal"))
                     it = dict(it, v=round(it["v"] * 2, 4), form="inc")

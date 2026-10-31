@@ -836,17 +836,22 @@
         const fac_ = FACTIONS[fname];
         const fac = facAll + (a.bane && a.bane[fname] ? a.bane[fname] : 0);   // Roar-type buffs + faction damage mods (additive)
         let vuln = 0; for (const k in share) vuln += share[k] * (fac_.weak.includes(k) ? 1.5 : 1);
-        const D = directMult * total * ms * vuln * hsmC * fin * fac * M * dupf * stealthM;
+        let D = directMult * total * ms * vuln * hsmC * fin * fac * M * dupf * stealthM;
+        // Xata's Whisper (wiki): extra Void hit = 26% x strength of the hit, faction and weak-point multipliers applied again;
+        // Void has no faction weakness, so the element vulnerability of the hit is taken back out
+        const xata = ext.xata || 0;
+        if (xata) D *= 1 + xata * fac * hsmC / Math.max(0.25, vuln);
         const dot = {}, dotNon = {};
         for (const T of DOT_TYPES) {
           const p = procs[T] || 0; if (p <= 0) continue;
           let per = ticks * hsDot * (T === "slash" ? 0.35 : 0.5) * mbd * (1 + bonus[T]) * (1 + sd + (T === "tox" ? (ext.sdTox || 0) : 0)) * (fac_.weak.includes(T) ? 1.5 : 1) * fin * fac * fac * M;
+          if (xata) per *= 1 + xata * fac;      // every tick is a damage instance → its own Xata hit
           if (T === "elec") per *= n3;
           if (T === "gas") per *= ng;
           dot[T] = p * per * spreadHit;
           if (T !== "slash" && spreadNon > 0) dotNon[T] = p * per * spreadNon;
         }
-        const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * M;
+        const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * M * (xata ? 1 + xata * fac : 1);
         const vm0 = 4.25, dsum = Object.values(dot).reduce((s, x) => s + x, 0);
         const dispDirect = D * vm0, dispDot = dsum * vm0, dispBlast = blast * vm0;
         const dispDotBy = {}; for (const T in dot) dispDotBy[T] = dot[T] * vm0;
