@@ -6,16 +6,20 @@
   const STAT = { strength: "위력", duration: "지속시간", range: "거리", efficiency: "효율" };
   const STAT_S = { strength: "위력", duration: "지속", range: "거리", efficiency: "효율" };
   const REGION = { KR: "한국", NA: "북미", CN: "중국", JP: "일본" };
+  const DUO = { sirius: "시리우스", orion: "오리온", switching: "교체", celestial_clash: "4번 공유 어빌리티" };
   const pctv = (v) => v == null ? "–" : `${+v % 1 ? (+v).toFixed(1) : v}%`;
 
+  // guides load one file at a time (data/guides/<id>.json next to the page); WF_GUIDE_IDS says which exist
+  const G = root.WF_GUIDES = root.WF_GUIDES || {};
+  const has = (id) => (root.WF_GUIDE_IDS || []).includes(id) || !!G[id];
   function listHtml(cur) {
-    const G = root.WF_GUIDES || {}, L = root.WF_GUIDE_LIST || [];
-    const done = L.filter((x) => G[x.id]).length;
+    const L = root.WF_GUIDE_LIST || [];
+    const done = L.filter((x) => has(x.id)).length;
     const byBatch = {};
     for (const x of L) (byBatch[x.batch] = byBatch[x.batch] || []).push(x);
     return `<div class="gprog"><b>${done}</b> / ${L.length}종 정리됨</div>
-      <select class="gsel" aria-label="워프레임 고르기">${L.map((x) => `<option value="${x.id}"${x.id === cur ? " selected" : ""}${G[x.id] ? "" : " disabled"}>${esc(x.ko)}${G[x.id] ? "" : ` (${x.batch}차 예정)`}</option>`).join("")}</select>
-      <div class="glistin">${Object.keys(byBatch).map((b) => `<div class="gbatch"><div class="gbl">${b === "1" ? "1차 (시범)" : b + "차"}</div>${byBatch[b].map((x) => G[x.id]
+      <select class="gsel" aria-label="워프레임 고르기">${L.map((x) => `<option value="${x.id}"${x.id === cur ? " selected" : ""}${has(x.id) ? "" : " disabled"}>${esc(x.ko)}${has(x.id) ? "" : ` (${x.batch}차 예정)`}</option>`).join("")}</select>
+      <div class="glistin">${Object.keys(byBatch).map((b) => `<div class="gbatch"><div class="gbl">${b === "1" ? "1차 (시범)" : b + "차"}</div>${byBatch[b].map((x) => has(x.id)
         ? `<a href="#frames/${x.id}" class="gitem${x.id === cur ? " on" : ""}">${esc(x.ko)}</a>`
         : `<span class="gitem off" title="${b}차에 정리 예정">${esc(x.ko)}</span>`).join("")}</div>`).join("")}</div>`;
   }
@@ -36,6 +40,8 @@
         <p class="gsum">${esc(g.summary)}</p>
         <div class="gmeta"><span>마지막 리워크 <b>${esc(g.last_rework || "?")}</b></span><span>정보 확인 <b>${esc(g.checked || "?")}</b></span><span>핵심 어빌리티 <b>${(g.main_slots || []).map(abName).map(esc).join(", ")}</b></span></div>
       </section>
+
+      ${g.duo && typeof g.duo === "object" ? `<section class="card"><h3>두 캐릭터</h3><dl class="gdl gduo">${Object.entries(g.duo).map(([k, v]) => `<dt>${esc(DUO[k] || k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl></section>` : ""}
 
       <section class="card"><h3>어빌리티 역할</h3>
         <div class="gab">${ab.map((a) => { const r = ROLE[a.role] || [a.role, ""]; return `<div class="gabc ${r[1]}">
@@ -90,13 +96,18 @@
   }
 
   root.WF_renderGuide = function (box) {
-    const G = root.WF_GUIDES || {}, L = root.WF_GUIDE_LIST || [];
+    const L = root.WF_GUIDE_LIST || [];
     const m = /^#frames\/([a-z0-9_]+)/.exec(location.hash);
     let id = m ? m[1] : null;
-    if (!id || !G[id]) id = (L.find((x) => G[x.id]) || {}).id;
+    if (!id || !has(id)) id = (L.find((x) => has(x.id)) || {}).id;
     const g = id ? G[id] : null;
+    if (id && !g) {
+      fetch(`data/guides/${id}.json`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then((j) => { G[id] = j; if (!box.hidden) root.WF_renderGuide(box); })
+        .catch(() => { const el = box.querySelector(".gmain"); if (el) el.innerHTML = `<div class="placeholder"><h3>가이드 파일을 불러오지 못했습니다</h3><p>인터넷 연결을 확인하고 다시 열어 주세요.</p></div>`; });
+    }
     box.innerHTML = `<div class="gwrap"><aside class="glist">${listHtml(id)}</aside><div class="gmain">${g ? detailHtml(g)
-      : `<div class="placeholder"><h3>정리된 워프레임이 아직 없습니다</h3></div>`}</div></div>`;
+      : id ? `<div class="placeholder"><h3>불러오는 중…</h3></div>` : `<div class="placeholder"><h3>정리된 워프레임이 아직 없습니다</h3></div>`}</div></div>`;
     const sel = box.querySelector(".gsel");
     if (sel) sel.addEventListener("change", () => { location.hash = "#frames/" + sel.value; });
   };
