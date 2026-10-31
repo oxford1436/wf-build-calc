@@ -22,7 +22,7 @@
 
   function detailHtml(g) {
     const ab = (g.abilities || []).slice().sort((a, b) => a.slot - b.slot);
-    const abName = (slot) => { const a = ab.find((x) => x.slot === slot); return a ? `${slot} ${a.name_ko}` : `${slot}번`; };
+    const abName = (slot) => { if (!slot) return "공통"; const a = ab.find((x) => x.slot === slot); return a ? `${slot} ${a.name_ko}` : `${slot}번`; };
     const comm = (g.community || []).slice().sort((a, b) => ["KR", "NA", "CN", "JP"].indexOf(a.region) - ["KR", "NA", "CN", "JP"].indexOf(b.region) || (b.date || "").localeCompare(a.date || ""));
     const maxS = Math.max(100, ...comm.flatMap((c) => Object.values(c.stats || {}).filter((v) => v != null).map(Number)));
     const helm = (h) => !h || !h.ability || h.ability === "없음" ? "없음" : `${h.replace_slot ? h.replace_slot + "번 자리 ← " : ""}${h.ability}`;
