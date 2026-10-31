@@ -1,0 +1,276 @@
+{
+  "id": "vauban",
+  "name_en": "Vauban",
+  "name_ko": "바우반",
+  "has_prime": true,
+  "last_rework": "2026-02-11",
+  "checked": "2026-10-31",
+  "summary": "바스티유로 묶고 방깎한 뒤 레벨 비례 플레셋·포톤으로 녹이는 설치형 CC 딜러",
+  "abilities": [
+    {
+      "slot": 1,
+      "name_ko": "테슬라 너보스",
+      "name_en": "Tesla Nervos",
+      "role": "helminth_target",
+      "note": "적에 붙어 전기 기절(패시브 1.25배), 이식 후보",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    },
+    {
+      "slot": 2,
+      "name_ko": "마인레이어",
+      "name_en": "Minelayer",
+      "role": "main",
+      "note": "탭 테더-플레셋(레벨 비례 못), 홀드 가속·피해 패드",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    },
+    {
+      "slot": 3,
+      "name_ko": "포톤 스트라이크",
+      "name_en": "Photon Strike",
+      "role": "sub",
+      "note": "레벨 비례 폭발 포격, 오버가드 2배. 이식 후보",
+      "scales": ["strength", "range", "efficiency"]
+    },
+    {
+      "slot": 4,
+      "name_ko": "바스티유",
+      "name_en": "Bastille",
+      "role": "main",
+      "note": "인원 제한 없는 포획·방깎, 홀드 볼텍스로 흡입",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    }
+  ],
+  "main_slots": [2, 4],
+  "stat_priority": [
+    {
+      "stat": "strength",
+      "note": "플레셋·포톤 피해, 테슬라 전기 100%(200%), 볼텍스 자기 100%(250%), 바스티유 방깎 속도. 180~240%가 일반적"
+    },
+    {
+      "stat": "range",
+      "note": "바스티유·볼텍스 반경 10m×거리. 정점 볼텍스형은 235~280%, 일반 운용은 145%면 충분(일본 위키 댓글)"
+    },
+    {
+      "stat": "duration",
+      "note": "바스티유 15초·지뢰 25초·패드 버프 25초. 155% 전후가 표준"
+    },
+    {
+      "stat": "efficiency",
+      "note": "바스티유 100·포톤 50 에너지. 스컬프터(설치 시 175%)·이퀄리브리엄으로 45%까지 버리는 편"
+    }
+  ],
+  "breakpoints": [
+    {
+      "slot": 1,
+      "stat": "strength",
+      "value": "200%",
+      "effect": "테슬라 너보스 방전 전기 상태이상 100% → 패시브 1.25배 상시",
+      "calc": "상태이상 확률 = 50% × 위력(41.1 리터치부터 위력 비례) → 50% × 2.00 = 100%. 183%: 91.5%, 243%: 121.5%→100%",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Tesla_Nervos"
+    },
+    {
+      "slot": 4,
+      "stat": "strength",
+      "value": "250%",
+      "effect": "볼텍스 자기 상태이상 매 틱 100%",
+      "calc": "볼텍스 자기 확률 = 40% × 위력 → 40% × 2.50 = 100%. 183%: 73.2%, 243%: 97.2%",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Bastille"
+    },
+    {
+      "slot": 4,
+      "stat": "strength",
+      "value": "200%",
+      "effect": "바스티유 범위 안 적 방어력 5초 만에 완전 제거",
+      "calc": "초당 방깎 = 총 방어력의 10% × 위력 → 20%/초 → 100 ÷ 20 = 5초. 100%: 10초, 183%: 5.5초, 243%: 4.1초. 바스티유 지속 15초 × 지속 안에 끝남",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Bastille"
+    },
+    {
+      "slot": 3,
+      "stat": "strength",
+      "value": "강철의 길 레벨 400",
+      "effect": "포톤 스트라이크 폭발 피해",
+      "calc": "피해 = 2,500 × 위력 × ceil(레벨÷10). 레벨 400 → ×40 → 100,000 × 위력. 183%: 183,000, 행동불능 적 ×1.25 = 228,750, 오버가드 ×2",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Photon_Strike"
+    },
+    {
+      "slot": 2,
+      "stat": "strength",
+      "value": "강철의 길 레벨 400",
+      "effect": "테더-플레셋 못 1발 관통 피해",
+      "calc": "피해 = 300 × 위력 × ceil(레벨÷10). 레벨 400 → 12,000 × 위력. 183%: 21,960, 243%: 29,160. 치명 50%·2배라 평균 ×1.5, 무기 공용 버프(로어·패드)도 적용",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Minelayer"
+    },
+    {
+      "slot": 4,
+      "stat": "strength",
+      "value": "위력 비례(상한 1500)",
+      "effect": "바스티유 아군 방어력 상한 1500 도달 시간",
+      "calc": "적 1명당 0.2초마다 4 × 위력, 방깎 중인 적은 2배. 183%·방어 있는 적 5명: 4 × 1.83 × 2 × 5 = 73.2/0.2초 = 366/초 → 1500 ÷ 366 = 4.1초",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Bastille"
+    },
+    {
+      "slot": 4,
+      "stat": "duration",
+      "value": "모드 적용 지속의 2배",
+      "effect": "엔듀어링 바스티유 연장 상한",
+      "calc": "처치당 +2초 × 지속, 총 연장은 모드 적용 지속의 2배까지. 지속 155%: 기본 15 × 1.55 = 23.25초 → 처치당 3.1초, 최대 46.5초",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Enduring_Bastille"
+    }
+  ],
+  "community": [
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/181251383",
+      "date": "2026-08-27",
+      "title": "로어 이식 플레셋 오브 딜",
+      "concept": "3번 자리 로어로 2번 못(무기 공용 버프 적용) 피해를 키우고 벡터 패드 피해 증가를 겹치는 2번 주력형",
+      "stats": {"strength": 199, "duration": 128, "range": 145, "efficiency": 100},
+      "aura": "그로잉 파워",
+      "exilus": "프라임드 슈어 풋티드",
+      "mods": ["트랜지언트 포티튜드", "움브랄 인텐시파이", "프라임드 컨티뉴어티", "프라임드 플로우", "아콘 스트레치", "패스트 디플렉션", "프라임드 리다이렉션", "이퀄리브리엄"],
+      "arcanes": ["아케인 이지스", "몰트 어그먼티드"],
+      "shards": [],
+      "helminth": {"replace_slot": 3, "ability": "로어(라이노)"},
+      "notes": "공략/정보, 추천 11. 200레벨 방깎 봄버드 기준 못 1발: 로어+어그먼티드 7.4만~11.9만, 아라크네 교체 18.7만(벽에 붙어야 해 불편), 핫샷+제이드 스타즈 주황 치명형 6.7만~8.5만 → 로어형 결론. 댓글: 패드 4개 중첩 시 피해 증가도 중첩, 무기 취급은 버그성이라는 지적. 이식 위치는 캡처 아이콘 순서로 판단"
+    },
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/162216346",
+      "date": "2026-02-12",
+      "title": "오마모리 체방 테슬라 뱅크",
+      "concept": "3번 자리 오마모리+아케인 퍼시스턴스로 체력·방어력 탱킹, 바스티유+테슬라 뱅크 연쇄 폭발로 광역 처리",
+      "stats": {"strength": 243, "duration": 155, "range": 145, "efficiency": 75},
+      "aura": "그로잉 파워",
+      "exilus": "프라임드 슈어 풋티드",
+      "mods": ["프라임드 컨티뉴어티", "스트림라인", "아콘 스트레치", "움브랄 인텐시파이", "이퀄리브리엄", "블라인드 레이지", "어댑테이션", "테슬라 뱅크"],
+      "arcanes": ["아케인 퍼시스턴스", "아케인 배터리"],
+      "shards": ["타우 파랑(체력) ×2", "타우 파랑(방어력) ×2", "파랑(방어력) ×1"],
+      "helminth": {"replace_slot": 3, "ability": "오마모리(코우메이)"},
+      "notes": "리터치 다음 날 글, 추천 2. 스트림라인은 취향, 한방 방지로 바이탈리티 등 권장. 주무기 프라이머리 불워크 추천. 강균범 1000 도달 후 트락스에게 사망 기록. 댓글: 움브랄 3종이면 방어력 813으로 퍼시스턴스 운용"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (ninjase, 905추천)",
+      "url": "https://overframe.gg/build/273105/vauban-prime/galactic-immunisation-program-scaling-flechette-and-photon-strike-dps-one-shot-level-cap/",
+      "date": "2026-06-17",
+      "title": "노리쉬 플레셋·포톤 레벨 스케일",
+      "concept": "1번 자리에 노리쉬(또는 로어)를 이식, 레벨 비례로 커지는 플레셋 못과 포톤 스트라이크로 레벨 캡까지 한 방",
+      "stats": {"strength": 183, "duration": 155, "range": 235, "efficiency": 45},
+      "aura": "브리프 리스파이트",
+      "exilus": "아이스 스프링",
+      "mods": ["움브랄 인텐시파이", "오버익스텐디드", "이퀄리브리엄", "프라임드 플로우", "카탈라이징 실드", "아콘 스트레치", "블라인드 레이지", "프라임드 컨티뉴어티"],
+      "arcanes": ["몰트 어그먼티드", "아케인 스컬프터"],
+      "shards": ["노랑(시전 속도) ×2", "빨강(위력) ×2", "자유 1(파쿠르 등)"],
+      "helminth": {"replace_slot": 1, "ability": "노리쉬(그렌델), 대안 로어"},
+      "notes": "바우반 최다 추천, 2022 작성·2026-06-17 갱신. 노리쉬는 플레셋에 바이러스(45%×위력)를 붙이고 볼텍스로 바이러스를 빠르게 부여, 로어는 플레셋·포톤 모두에 곱해짐. 나라몬 Lethal Levitation으로 플레셋 최대 3배 언급"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (ninjase, 52추천)",
+      "url": "https://overframe.gg/build/616656/vauban-prime/battlecruiser-operational-photon-strike-vauban/",
+      "date": "2026-02-12",
+      "title": "포톤 리피터 3연속 포격",
+      "concept": "5명 이상 맞히면 다음 포톤이 무료+추가 2발, 거리 280%로 포격 반경 확대",
+      "stats": {"strength": 95, "duration": 127.5, "range": 280, "efficiency": 100},
+      "aura": "브리프 리스파이트",
+      "exilus": "커닝 드리프트",
+      "mods": ["어거 리치", "오버익스텐디드", "포톤 리피터", "프라임드 플로우", "스트레치", "이퀄리브리엄", "트랜지언트 포티튜드", "프라임드 컨티뉴어티"],
+      "arcanes": ["몰트 어그먼티드", "아케인 컨센트레이션"],
+      "shards": ["노랑(시전 속도) ×2", "노랑(파쿠르 속도) ×2", "빨강(위력) ×1 (또는 노랑 2+빨강 3)"],
+      "helminth": {"replace_slot": null, "ability": "미기재"},
+      "notes": "리터치 다음 날 갱신. 위력 95%여도 포톤은 레벨 배율로 커진다는 전제의 범위 특화. 이식 언급 없음"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (Ntrophy, 10추천)",
+      "url": "https://overframe.gg/build/972416/vauban-prime/vauban-reworked-tesla-bank-minelayer-crowd-eraser-v103/",
+      "date": "2026-06-04",
+      "title": "테슬라 뱅크 전기 연쇄",
+      "concept": "3번 자리 로어, 테슬라 전기 기절로 패시브 1.25배를 켜고 보라 샤드(감전 대상 어빌리티 피해)로 증폭",
+      "stats": {"strength": 183, "duration": 155, "range": 250, "efficiency": 45},
+      "aura": "브리프 리스파이트",
+      "exilus": "커닝 드리프트",
+      "mods": ["프라임드 컨티뉴어티", "움브랄 인텐시파이", "블라인드 레이지", "이퀄리브리엄", "아콘 스트레치", "오버익스텐디드", "프라임드 플로우", "테슬라 뱅크"],
+      "arcanes": ["몰트 어그먼티드", "아케인 서컴벤트"],
+      "shards": ["보라(감전 대상 어빌리티 피해) ×3~4", "보라(주무기 전기 피해) ×1", "노랑(시전 속도) ×1"],
+      "helminth": {"replace_slot": 3, "ability": "로어(라이노)"},
+      "notes": "2026-02-11 작성·06-04 갱신. 브리프 리스파이트+블라인드 레이지로 캐스트 게이팅, 서컴벤트로 오버가드·실드·방어력 강탈. 보라 샤드 피해는 패시브와 별도 곱연산(81~100% 총 증가)이라고 주장"
+    },
+    {
+      "region": "CN",
+      "site": "bilibili (宕机_47)",
+      "url": "https://www.bilibili.com/video/BV13cZEBmEwQ/",
+      "date": "2026-02-14",
+      "title": "포톤·치명 플레셋 리터치 바우반",
+      "concept": "제목 기준: 포톤 스트라이크 원거리 포격, 치명 플레셋, 강철의 길 회랑(钢回) 편의형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "미확인"},
+      "notes": "조회 약 14.8만. 설명란은 인사말뿐이라 모드·이식·샤드 미확인(영상 페이지는 열지 않음). 티에바 2026-10-02 질문글 댓글은 '범위·지속 최대로 4번 CC 보조, 딜은 팀원에게'가 다수"
+    },
+    {
+      "region": "JP",
+      "site": "zawazawa (wikiwiki VAUBAN 댓글 #2416)",
+      "url": "https://zawazawa.jp/warframe_wiki/topic/28",
+      "date": "2026-04-25",
+      "title": "서컴벤트 생존 강철 솔로",
+      "concept": "브리프 리스파이트+어거+롤링 가드로 생존을 쌓고 아케인 서컴벤트로 오버가드·방어력 강탈, 근접 아케인 병행",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "브리프 리스파이트",
+      "exilus": "",
+      "mods": ["어거 계열(종류 미기재)", "롤링 가드"],
+      "arcanes": ["아케인 서컴벤트", "근접 아케인 'カリーン'(한국명 미확인)"],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "미기재"},
+      "notes": "질문 #2414에 대한 조언 #2415를 반영한 작성자 후기. 강철 카비아 내구 20분 여유라고 기록. 'リチャ2種'의 정확한 모드 미확인"
+    },
+    {
+      "region": "JP",
+      "site": "zawazawa (wikiwiki VAUBAN 댓글 #2413)",
+      "url": "https://zawazawa.jp/warframe_wiki/topic/28",
+      "date": "2026-04-23",
+      "title": "노리쉬 감염 바스티유 장치",
+      "concept": "노리쉬 이식 시 2번 못·4번 볼텍스 흡입에 바이러스가 붙음. 바스티유 안에 테더 플레셋을 던져 자동 포획·방깎 장치를 만듦",
+      "stats": {"strength": null, "duration": null, "range": 145, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "노리쉬(그렌델)"},
+      "notes": "댓글 #2409·#2413. 위력은 바스티유 방깎 속도·볼텍스 상태이상에 영향하니 너무 낮추지 말 것, 넓은 곳 정점 볼텍스형이 아니면 거리 145%면 충분. 2번 못 상태이상 확률은 5% 고정"
+    }
+  ],
+  "consensus": {
+    "common": "2026-02-11 리터치 이후 지역 공통으로 2번 테더-플레셋과 4번 바스티유(포획·방깎)가 축. 위력 180~240%, 효율은 45~100%로 낮추고 스컬프터·이퀄리브리엄으로 보충. 헬민스는 로어·노리쉬가 양대 선택(1번 또는 3번 자리)",
+    "differences": "한국: 로어+플레셋 2번 주력 실험, 오마모리 체방+테슬라 뱅크 같은 생존형이 있고, 리터치 직후 '1번 지연·2번 노리쉬 미적용으로 연계가 나빠졌다'는 불만글도 있음. 북미: ninjase 노리쉬 플레셋·포톤 레벨 스케일형(905추천)이 표준, 포톤 리피터 3연사·테슬라 뱅크 전기 연쇄가 변형. 중국: 宕机_47 영상(포톤·치명 플레셋)이 기준이지만 티에바 다수 의견은 '범위·지속 CC 보조'. 일본: 서컴벤트 생존 솔로, 노리쉬+볼텍스 감염, '거리 145%면 충분'이라는 실전 조언"
+  },
+  "notes": [
+    "2026-02-11 업데이트 41.1 '바우반 리터치'(에어룸 스킨과 동시): 테슬라 상태이상 확률 위력 비례·대상 분산 AI, 마인레이어 4종→2종(탭 테더-플레셋 / 홀드 벡터-오버드라이브 패드, 밟으면 이동속도·무기 피해 1.25배·동반자 적용)",
+    "41.1 포톤 스트라이크: 강제 폭발 상태이상, 오버가드 2배, 에너지 50, 반경 7m, 레벨 배율 명시. 바스티유: 인원 제한 삭제(바스티유·볼텍스 각 4개), 범위 내 전원 방깎, 방어력 상한 1500, 볼텍스 자기 상태이상 위력 비례. 리펠링 바스티유→엔듀어링 바스티유",
+    "2026-02-12 핫픽스 41.1.1: 어빌리티 투사체가 바우반 이동 속도 반영, 포톤 섬광 제거",
+    "2026-03-25 업데이트 42.0: 패시브(행동불능 적 ×1.25)가 모든 전기 기절·화염 공황에 적용, 냉기는 10스택 빙결 때만",
+    "2026-06(업데이트 43.0 시기) 아케인 스컬프터: 오브젝트 설치 시 효율 175% 12초. 한·일 커뮤니티에서 바우반과 상성이 좋다는 평",
+    "2번 못에 로어·벡터 패드 등 무기 공용 버프가 붙는 건 버그성이라는 지적(아카 2026-08-27 댓글)"
+  ],
+  "gaps": [
+    "Reddit: 브라우저 차단·검색 결과 없음. 공식 Discord·NGA·X·일본 Discord는 로그인 필요로 제외",
+    "중국: 티에바에서 2026년 바우반 구체 빌드 글은 찾지 못함(질문글뿐). bilibili 영상 설명란에 모드 정보 없음",
+    "일본: 위키 추천 빌드 'パーシステンス・おじさん'은 작성일 미확인·리터치 전 내용으로 보여 제외. 5ch part1116에는 '방어계는 바우반으로 다 빨아들이기' 정도 언급뿐",
+    "일본 댓글의 'リチャ2種', 'カリーン'은 정확한 명칭 미확인(아카 글의 '밀리 카린'과 같은 근접 아케인으로 추정)",
+    "바스티유 방깎과 코로시브 프로젝션의 결합 규칙은 위키에 없어 계산하지 않음"
+  ]
+}
