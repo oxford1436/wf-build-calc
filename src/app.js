@@ -908,13 +908,14 @@ self.onmessage = function (ev) {
     const owned = ownedRiven();
     const locked = owned ? ["__riven"] : [];
     const jobs = [{ tag: "main" }];
+    if (owned) jobs.push({ tag: "free", locked: [] });      // riven-free best build, to grade the owned riven against
     if (o.ext.active || o.frameArcs.length) jobs.push({ tag: "nobuff", optsPatch: { ext: {}, frameArcs: [], hs: $("#aimmods").checked && w.cls !== "melee" ? 0.5 : 0 } });
     $("#runbtn").disabled = true; $("#progress").hidden = false; $("#progress .bar").style.width = "0%";
     const wk = freshWorker();
     wk.onmessage = (ev) => {
       if (ev.data.type === "progress") { $("#progress .bar").style.width = (ev.data.p * 100).toFixed(0) + "%"; return; }
       const out = {}; for (const x of ev.data.out) out[x.tag] = x.res;
-      st.results = { res: out.main, nobuff: out.nobuff || null, o, owned, flags };
+      st.results = { res: out.main, nobuff: out.nobuff || null, free: out.free || null, o, owned, flags };
       if ($("#rivmode").value === "plan" && !w.noRiven && out.main && out.main.length) { planRivenPhase(wk, w, o, cands, jobs.some((j) => j.tag === "nobuff")); return; }
       $("#runbtn").disabled = false; $("#progress").hidden = true;
       renderResults();
@@ -1245,7 +1246,7 @@ self.onmessage = function (ev) {
     // riven
     const rm = $("#rivmode").value;
     if (rm === "plan") h3 += rivenPlan(top, ref);
-    else if (rm === "owned" && R.owned) h3 += ownedRivenSection(R.owned);
+    else if (rm === "owned" && R.owned) h3 += ownedRivenSection(R.owned, R, top);
     if (!h3) h3 = st.weapon.noRiven ? `<section class="card"><p class="hint" style="margin:0">익절티드 무기에는 리벤이 없습니다.</p></section>`
       : `<section class="card"><p style="margin:0">왼쪽 <b>리벤</b>에서 "맞출 예정"을 고르고 계산하면 어떤 리벤 옵션을 노릴지(옵션 조합별 처치 속도, 한 칸 교체 효과, 괜찮은 부정 옵션)가 여기에 나옵니다. 가진 리벤이 있으면 "보유 리벤 고정"으로 넣어 보세요.</p></section>`;
 
@@ -1576,13 +1577,39 @@ self.onmessage = function (ev) {
       ${altTable}
       <p class="hint">리벤 수치는 3긍정 1부정 리벤의 각 옵션 범위 중간값으로 가정했습니다 (부정은 피해 계산에 영향 없는 옵션). ③은 한 칸 교체 기준 상위 리벤 옵션 조합 네 가지로 각각 다시 짜 본 뒤 가장 빠른 쪽입니다. 베일런스·아케인은 ①과 같게 두었습니다. 실제로 뽑은 리벤이 생기면 리벤 모드를 "보유 리벤 고정"으로 바꿔 그 수치로 계산하세요.</p></section>`;
   }
-  function ownedRivenSection(owned) {
+  function ownedRivenSection(owned, R, top) {
     const inc = owned.info.filter((x) => x.inc), exc = owned.info.filter((x) => !x.inc);
     const other = Object.fromEntries(RIV_OTHER.gun.concat(RIV_OTHER.melee).map(([k, v]) => ["x_" + k, v]));
     const txt = (x) => `${RIV_KO[x.k] || other[x.k] || x.k} ${x.k === "ic" ? x.v.toFixed(0) : pct(x.v, 1)}${x.k.startsWith("x_") && !RIV_HEAVY[x.k.slice(2)] ? " (피해 계산 영향 없음)" : ""}`;
-    return `<section class="card"><h3>보유 리벤 고정</h3>
+    let grade = "";
+    if (R && R.free && R.free.length) {
+      // grade: the owned riven against the best riven worth rolling, both swapped into the same riven-free build
+      const F = R.free[0], refF = evalBuild(F.ids, F.val, F.arcane).score;
+      const slots = F.ids.filter((id) => !(MOD_BY_ID[id] && MOD_BY_ID[id].exilus));
+      let bestSlot = null, sOwn = 0;
+      for (const id of slots) { const v = evalBuild(F.ids.filter((x) => x !== id).concat(["__riven"]), F.val, F.arcane, null, owned.eff).score / refF; if (v > sOwn) { sOwn = v; bestSlot = id; } }
+      const plan = (R.rivPlanFree && R.rivPlanFreeTop === F) ? R.rivPlanFree : rivenCombos(F, refF);
+      R.rivPlanFree = plan; R.rivPlanFreeTop = F;
+      const best = plan.out.find((x) => x.form === "3+1");
+      const full = top.score && R.free[0].score ? evalBuild(top.ids, top.val, top.arcane).score / refF : null;
+      // what each positive stat of the owned riven is worth (taken out one at a time)
+      const rest = F.ids.filter((x) => x !== bestSlot).concat(["__riven"]);
+      const per = inc.filter((x) => x.v > 0 && x.k in RIV_KO).map((x) => {
+        const e = Object.assign({}, owned.eff); delete e[x.k];
+        const v = evalBuild(rest, F.val, F.arcane, null, e).score / refF;
+        return { x, loss: sOwn / v };
+      }).sort((a, b) => b.loss - a.loss);
+      const ratio = best ? sOwn / best.s : null;
+      const verdict = ratio == null ? "" : ratio >= 0.95 ? "종결급 — 수치만 다듬으면 됩니다" : ratio >= 0.85 ? "좋음 — 그대로 써도 충분합니다" : ratio >= 0.7 ? "쓸 만함 — 아래 잠금 옵션을 고정하고 재순환을 노려 볼 만합니다" : "약함 — 재순환을 권합니다";
+      grade = `<div class="kv">${kv("리벤 한 칸 효과", "×" + sOwn.toFixed(2))}${best ? kv("최고 리벤(3긍1부 중간값)", "×" + best.s.toFixed(2)) : ""}${ratio != null ? kv("최고 대비", pct(ratio, 0)) : ""}${full ? kv("리벤 넣고 다시 짠 세팅", "×" + full.toFixed(2)) : ""}</div>
+        ${verdict ? `<p><b>${verdict}</b>${best ? ` · 최고 조합: ${best.stats.map((k) => RIV_KO[k]).join(" + ")}` : ""}</p>` : ""}
+        ${per.length ? `<table class="tbl"><thead><tr><th>옵션</th><th>빼면</th><th>판단</th></tr></thead><tbody>${per.map((p, i) => `<tr><td>${esc(txt(p.x))}</td><td class="num">${pctDelta(1 / p.loss)}</td><td>${i === 0 && per.length > 1 ? '<span class="g ok">잠금 추천</span>' : p.loss < 1.03 ? '<span class="g bad">재순환 대상</span>' : '<span class="g mid">유지</span>'}</td></tr>`).join("")}</tbody></table>
+        <p class="hint">"빼면"은 그 옵션만 없을 때 리벤 칸 효과의 변화입니다. 재순환할 때는 가장 큰 옵션을 특성 잠금(Update 44.0, 쿠바 두 배)하고 돌리세요. 접합(Update 44.1)으로 쓸모없는 옵션 두 개를 복합 원소 하나로 바꾸는 방법도 있습니다.</p>` : ""}`;
+    }
+    return `<section class="card"><h3>보유 리벤 평가</h3>
       <p>반영한 옵션: <b>${inc.map(txt).join(", ") || "없음"}</b>${exc.length ? ` · 반영하지 않은 옵션(재순환 예정): ${exc.map(txt).join(", ")}` : ""}</p>
-      <p class="hint">리벤을 한 칸에 고정하고 나머지 7칸을 다시 최적화한 결과가 위 추천 세팅입니다.</p></section>`;
+      ${grade}
+      <p class="hint">위 추천 세팅은 리벤을 한 칸에 고정하고 나머지 7칸을 다시 최적화한 결과입니다. 평가는 리벤 없이 짠 최고 세팅의 한 칸을 이 리벤으로 바꿨을 때와, 계산기가 추천하는 최고 리벤으로 바꿨을 때를 비교합니다.</p></section>`;
   }
 
   const placeholder = () => `<div class="placeholder"><h3>준비됐습니다</h3><p>왼쪽에서 무기와 상황을 고른 뒤 <b>최적 세팅 계산</b>을 누르세요. 장착 가능한 모드 전부를 후보로 넣고(모두 보유 전제) 가장 빨리 죽이는 조합을 찾습니다. 무기 하나에 10~60초 걸립니다.</p></div>`;

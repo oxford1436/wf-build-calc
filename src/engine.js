@@ -836,7 +836,7 @@
     } else if (best && weapon.ammoMax && !isMelee) {
       const magN = (atk.mag || 0) * (1 + a.mag), maxA = weapon.ammoMax * (1 + a.ammoMax);
       const cost = atk.ammoCost != null ? atk.ammoCost : atk.parts && atk.parts[0].ammoCost != null ? atk.parts[0].ammoCost : 1;
-      const use = rate * cost * (1 - Math.min(0.95, a.ammoEff));
+      const use = rate * cost * (1 - Math.min(0.75, a.ammoEff));      // all sources together cap at 75% (Hotfix 44.1.3)
       best.ammo = { sustain: (magN + maxA) / Math.max(1e-6, use), use, mag: magN, max: maxA, pickup: weapon.ammoPickup || 0,
         packsPerMin: weapon.ammoPickup ? use * 60 / weapon.ammoPickup : null, conv: a.ammoConv };
     }
