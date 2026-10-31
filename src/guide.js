@@ -42,6 +42,9 @@
       </section>
 
       ${g.duo && typeof g.duo === "object" ? `<section class="card"><h3>두 캐릭터</h3><dl class="gdl gduo">${Object.entries(g.duo).map(([k, v]) => `<dt>${esc(DUO[k] || k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl></section>` : ""}
+      ${g.shadow && typeof g.shadow === "object" ? `<section class="card"><h3>섀도우 형태</h3>${g.shadow.summary ? `<p class="gsum" style="font-size:14px">${esc(g.shadow.summary)}</p>` : ""}
+        ${(g.shadow.abilities || []).length ? `<div class="gab">${g.shadow.abilities.map((a) => `<div class="gabc"><div class="gabt"><span class="gslot">${a.slot}</span><b>${esc(a.name_ko)}</b></div><small class="gen">${esc(a.name_en || "")}</small><p>${esc(a.note || "")}</p></div>`).join("")}</div>` : ""}
+        ${Object.entries(g.shadow).filter(([k]) => k !== "summary" && k !== "abilities").map(([k, v]) => `<p class="hint" style="margin:4px 0 0">${esc(typeof v === "string" ? v : JSON.stringify(v))}</p>`).join("")}</section>` : ""}
 
       <section class="card"><h3>어빌리티 역할</h3>
         <div class="gab">${ab.map((a) => { const r = ROLE[a.role] || [a.role, ""]; return `<div class="gabc ${r[1]}">
