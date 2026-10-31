@@ -101,6 +101,15 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
 .fcs strong{font-family:var(--f-mono);text-align:right;font-weight:600}
 .fcalc .bad{color:var(--bad)}
 .fch{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:14px}
+.fcflow{margin:0 0 10px;padding-left:20px;font-size:13px;line-height:1.6;color:var(--muted)}.fcflow b{color:var(--ink)}
+.fcalc .fc-ocr{margin-bottom:10px}
+.fc-run{font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:.03em;background:var(--brass);color:#fff;border:0;border-radius:6px;padding:10px;cursor:pointer;width:100%}
+.fc-mine{border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-bottom:10px;font-size:13px}
+.fcmine-h{display:flex;align-items:center;gap:8px;margin-bottom:6px}.fcmine-h .ghostbtn{margin-left:auto;padding:3px 10px;font-size:12px}
+.fcmine-m{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:4px 10px;margin-bottom:6px}
+.fcmine-m span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fcmine-m i{font-style:normal;color:var(--muted);font-size:11px;margin-right:5px}
+.fcmine-m span.ocrq{outline:2px dashed var(--mid);outline-offset:1px}
+.fcmine-s{color:var(--muted)}.fcmine-s b{color:var(--ink);font-weight:600}
 .fcchips{display:flex;flex-wrap:wrap;gap:4px 14px}
 .fcdirs{display:flex;flex-direction:column;gap:6px}
 .fcdir{display:grid;grid-template-columns:4.2em minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr);gap:6px;align-items:center;font-size:13px}
@@ -369,7 +378,7 @@ header.top p{flex-basis:100%}
   <span class="ver" id="ver" data-built="__BUILD_DATE__"></span>
   <nav class="viewtabs" role="tablist" aria-label="화면">
     <a href="#" class="on" data-view="calc" role="tab">계산기</a>
-    <a href="#frames" data-view="frames" role="tab">워프레임 가이드</a>
+    <a href="#frames" data-view="frames" role="tab">워프레임 계산기·가이드</a>
     <a href="#patch" data-view="patch" role="tab">패치 내역</a>
   </nav>
   <p>무기와 상황을 고르면, 장착 가능한 모든 모드 조합 중 가장 빨리 죽이는 세팅을 찾습니다 · 데이터 WFCD warframe-items · 위키 Module:Weapons</p>

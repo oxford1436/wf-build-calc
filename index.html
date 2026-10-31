@@ -101,6 +101,15 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
 .fcs strong{font-family:var(--f-mono);text-align:right;font-weight:600}
 .fcalc .bad{color:var(--bad)}
 .fch{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:14px}
+.fcflow{margin:0 0 10px;padding-left:20px;font-size:13px;line-height:1.6;color:var(--muted)}.fcflow b{color:var(--ink)}
+.fcalc .fc-ocr{margin-bottom:10px}
+.fc-run{font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:.03em;background:var(--brass);color:#fff;border:0;border-radius:6px;padding:10px;cursor:pointer;width:100%}
+.fc-mine{border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-bottom:10px;font-size:13px}
+.fcmine-h{display:flex;align-items:center;gap:8px;margin-bottom:6px}.fcmine-h .ghostbtn{margin-left:auto;padding:3px 10px;font-size:12px}
+.fcmine-m{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:4px 10px;margin-bottom:6px}
+.fcmine-m span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fcmine-m i{font-style:normal;color:var(--muted);font-size:11px;margin-right:5px}
+.fcmine-m span.ocrq{outline:2px dashed var(--mid);outline-offset:1px}
+.fcmine-s{color:var(--muted)}.fcmine-s b{color:var(--ink);font-weight:600}
 .fcchips{display:flex;flex-wrap:wrap;gap:4px 14px}
 .fcdirs{display:flex;flex-direction:column;gap:6px}
 .fcdir{display:grid;grid-template-columns:4.2em minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr);gap:6px;align-items:center;font-size:13px}
@@ -369,7 +378,7 @@ header.top p{flex-basis:100%}
   <span class="ver" id="ver" data-built="2026-10-31"></span>
   <nav class="viewtabs" role="tablist" aria-label="화면">
     <a href="#" class="on" data-view="calc" role="tab">계산기</a>
-    <a href="#frames" data-view="frames" role="tab">워프레임 가이드</a>
+    <a href="#frames" data-view="frames" role="tab">워프레임 계산기·가이드</a>
     <a href="#patch" data-view="patch" role="tab">패치 내역</a>
   </nav>
   <p>무기와 상황을 고르면, 장착 가능한 모든 모드 조합 중 가장 빨리 죽이는 세팅을 찾습니다 · 데이터 WFCD warframe-items · 위키 Module:Weapons</p>
@@ -551,6 +560,13 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.42", date: "2026-10-31", title: "워프레임 세팅 계산기: 내 세팅 스크린샷 · 찾기 쉽게",
+      items: [
+        "워프레임 계산기를 찾기 쉽게 했습니다: 위쪽 탭 이름을 '워프레임 계산기·가이드'로 바꾸고, 각 워프레임 페이지 맨 위 카드를 '워프레임 세팅 계산기'로 이름 붙이고 사용 순서(내 세팅 불러오기 → 조건 고르기 → 결과 보기)를 적었습니다. 조건을 바꾸면 바로 다시 계산하는 방식은 그대로이고, '이 조건으로 계산' 버튼을 누르면 결과로 이동합니다.",
+        "'내 세팅 스크린샷으로 불러오기'를 넣었습니다. 워프레임 업그레이드 화면에서 모드 8칸·익실러스·오라·아케인 2개·위력·거리·지속시간·효율을 읽어 '내 세팅'으로 두고, 조건(오라·아케인·능력치와 무관한 모드 고정·빨강 샤드 칸 수)을 내 세팅에 맞춘 뒤 '내 세팅과 비교' 표(능력치 차이·브레이크포인트 달성·뺄 모드와 넣을 모드)를 보여 줍니다. 끌어다 놓기·Ctrl+V도 됩니다.",
+        "빨강 샤드는 화면에 이름이 없어서, 아스날의 위력·지속시간에서 모드 합계를 뺀 나머지로 개수(10%, 타우포지드 15% 단위)를 추정합니다. 모드를 다 읽고 거리·효율이 모드 합계와 맞을 때만 확정으로, 아니면 '(추정)'으로 표시합니다.",
+        "다른 워프레임의 스크린샷을 올리면 그 워프레임 페이지로 넘어가서 채웁니다.",
+      ] },
     { v: "1.41", date: "2026-10-31", title: "워프레임 스크린샷 읽기 · 실드·질주 속도 · 모든 헬민스·오라",
       items: [
         "고급 설정의 워프레임 칸에 '아스날 스크린샷으로 채우기'를 넣었습니다. 워프레임 업그레이드 화면에서 워프레임 이름, 체력·실드·방어력·에너지·질주 속도, 거리·위력·지속시간·효율, 오라, 아케인 2개를 읽어 채웁니다. 아케인 이름처럼 작게 빛나는 글자는 원본 크기로 한 번 더 읽습니다.",
@@ -2645,6 +2661,13 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.42", date: "2026-10-31", title: "워프레임 세팅 계산기: 내 세팅 스크린샷 · 찾기 쉽게",
+      items: [
+        "워프레임 계산기를 찾기 쉽게 했습니다: 위쪽 탭 이름을 '워프레임 계산기·가이드'로 바꾸고, 각 워프레임 페이지 맨 위 카드를 '워프레임 세팅 계산기'로 이름 붙이고 사용 순서(내 세팅 불러오기 → 조건 고르기 → 결과 보기)를 적었습니다. 조건을 바꾸면 바로 다시 계산하는 방식은 그대로이고, '이 조건으로 계산' 버튼을 누르면 결과로 이동합니다.",
+        "'내 세팅 스크린샷으로 불러오기'를 넣었습니다. 워프레임 업그레이드 화면에서 모드 8칸·익실러스·오라·아케인 2개·위력·거리·지속시간·효율을 읽어 '내 세팅'으로 두고, 조건(오라·아케인·능력치와 무관한 모드 고정·빨강 샤드 칸 수)을 내 세팅에 맞춘 뒤 '내 세팅과 비교' 표(능력치 차이·브레이크포인트 달성·뺄 모드와 넣을 모드)를 보여 줍니다. 끌어다 놓기·Ctrl+V도 됩니다.",
+        "빨강 샤드는 화면에 이름이 없어서, 아스날의 위력·지속시간에서 모드 합계를 뺀 나머지로 개수(10%, 타우포지드 15% 단위)를 추정합니다. 모드를 다 읽고 거리·효율이 모드 합계와 맞을 때만 확정으로, 아니면 '(추정)'으로 표시합니다.",
+        "다른 워프레임의 스크린샷을 올리면 그 워프레임 페이지로 넘어가서 채웁니다.",
+      ] },
     { v: "1.41", date: "2026-10-31", title: "워프레임 스크린샷 읽기 · 실드·질주 속도 · 모든 헬민스·오라",
       items: [
         "고급 설정의 워프레임 칸에 '아스날 스크린샷으로 채우기'를 넣었습니다. 워프레임 업그레이드 화면에서 워프레임 이름, 체력·실드·방어력·에너지·질주 속도, 거리·위력·지속시간·효율, 오라, 아케인 2개를 읽어 채웁니다. 아케인 이름처럼 작게 빛나는 글자는 원본 크기로 한 번 더 읽습니다.",
@@ -4949,7 +4972,7 @@ header.top p{flex-basis:100%}
   }
 
   const pct = (v) => `${+(v * 100).toFixed(1)}%`;
-  function resultHtml(g, r, ui, d) {
+  function resultHtml(g, r, ui, d, mine) {
     const { sA, s4, cfg } = r;
     const has4 = cfg.main.includes(4) && STATS.some((k) => Math.abs(s4[k] - sA[k]) > 1e-9);
     const slot = (m, n, tag) => `<div class="aslot${tag ? " fixed" : ""}"><i class="anum">${n}</i>${tag ? `<span class="atag">${tag}</span>` : ""}<b class="aname">${esc(m ? m.ko : "빈 칸")}</b>${m ? `<small class="aalt">${esc((m.text || []).join(" · ").slice(0, 80))}</small>` : ""}</div>`;
@@ -4977,7 +5000,127 @@ header.top p{flex-basis:100%}
         const b = g.breakpoints[x.i], t = { k: x.k, v: x.v, slot: x.slot || 0, max: x.max };
         return `<tr><td>${esc(b.slot ? b.slot + "번 " : "")}${esc(b.effect)}</td><td class="num">${STAT_KO[x.k]} ${pct(x.v)} ${x.max ? "이하" : "이상"}</td><td class="num">${pct(valOf(t))}</td><td>${okOf(t) ? '<span class="gok">달성</span>' : '<span class="gno">미달</span>'}</td></tr>`; }).join("")}</tbody></table></div>` : ""}
       ${med ? `<p class="hint" style="margin:6px 0 0">참고: 커뮤니티 세팅 ${d.n}개의 중앙값은 ${esc(med)}입니다.</p>` : ""}
+      ${mine ? compareHtml(g, r, ui, mine) : ""}
       <p class="hint" style="margin:6px 0 0">모든 모드 최대 랭크, 오로킨 리액터 장착(용량 60) 기준입니다. 움브랄 세트 보너스, 그로잉 파워(무기 상태이상 시 위력 +25%), 아케인 최대 중첩 효과를 넣었습니다. 프리시젼 인텐시파이는 4번에만 적용합니다.</p>`;
+  }
+
+  /* ---------- my setting from a screenshot of the upgrade screen ---------- */
+  // ability stats from mods alone, as the arsenal shows them (no conditional auras, no 4th-ability-only mods)
+  function rawStats(mods) {
+    const s = { str: 1, dur: 1, rng: 1, eff: 1 };
+    const umb = mods.filter((m) => m && m.umbral).length, um = umb >= 3 ? 1.75 : umb === 2 ? 1.25 : 1;
+    for (const m of mods) { if (!m || SLOT4_ONLY[m.id] || COND[m.id]) continue; for (const k of STATS) if (m.stats[k]) s[k] += m.stats[k] * (m.umbral ? um : 1); }
+    return s;
+  }
+  // crimson shards hide in the arsenal numbers: what is left after the mods, in steps of 10% (tauforged 15%)
+  function shardGuess(mine) {
+    const mods = mine.mods.filter(Boolean).concat([mine.aura, mine.ex]).filter(Boolean).map((x) => BY_ID[x.id]).filter(Boolean);
+    const raw = rawStats(mods), S = mine.stats;
+    if (S.str == null || S.dur == null) return null;
+    // range and efficiency have no shard: if they don't add up, a mod was misread or left unread
+    const clean = ["rng", "eff"].every((k) => S[k] == null || Math.abs(S[k] - raw[k]) < 0.015);
+    const dS = S.str - raw.str, dD = S.dur - raw.dur;
+    for (const per of [0.10, 0.15]) {
+      const a = dS / per, b = dD / per, ra = Math.round(a), rb = Math.round(b);
+      if (Math.abs(a - ra) < 0.12 && Math.abs(b - rb) < 0.12 && ra >= 0 && rb >= 0 && ra + rb <= 5) return { str: ra, dur: rb, tau: per === 0.15 && ra + rb > 0, sure: clean && mine.mods.every(Boolean) };
+    }
+    return { str: null, dur: null, sure: false, dS, dD };
+  }
+  // the comparison numbers for my setting: arsenal values (mods + shards) + the arcanes' full-stack effect, like the recommendation
+  function mineStats(mine) {
+    const arcX = {}; for (const a of mine.arcs) { const s = arcStats(ARCS.find((x) => x.en === a.id)); for (const k in s) arcX[k] = k === "effFix" ? s[k] : (arcX[k] || 0) + s[k]; }
+    const mods = mine.mods.filter(Boolean).concat([mine.aura, mine.ex]).filter(Boolean).map((x) => BY_ID[x.id]).filter(Boolean);
+    const raw = rawStats(mods), sA = {};
+    for (const k of STATS) sA[k] = (mine.stats[k] != null ? mine.stats[k] : raw[k]) + (arcX[k] || 0);
+    for (const m of mods) { const c = COND[m.id]; if (c) for (const k in c) sA[k] += c[k]; }
+    if (arcX.effFix) sA.eff = Math.max(sA.eff, arcX.effFix);
+    sA.eff = Math.min(1.75, sA.eff);
+    const pi = mods.find((m) => SLOT4_ONLY[m.id]);
+    const s4 = Object.assign({}, sA, { str: sA.str + (pi ? pi.stats.str || 0 : 0) });
+    return { sA, s4, arcX, mods };
+  }
+  function compareHtml(g, r, ui, mine) {
+    const M = mineStats(mine), { sA, s4, cfg } = r;
+    const W = cfg.W;
+    const diff = (k, a, b) => { const d = (b - a) * 100; if (Math.abs(d) < 0.05) return '<span class="gno">같음</span>'; const good = (W[k] || 0) >= 0 ? d > 0 : d < 0; return `<span class="${good ? "gok" : "gno"}">${d > 0 ? "+" : ""}${+d.toFixed(1)}%p</span>`; };
+    const row = (lab, k, a, b) => `<tr><td>${lab}</td><td class="num">${pct(a)}</td><td class="num">${pct(b)}</td><td>${diff(k, a, b)}</td></tr>`;
+    const has4 = cfg.main.includes(4) && (Math.abs(s4.str - sA.str) > 1e-9 || Math.abs(M.s4.str - M.sA.str) > 1e-9);
+    const okOf = (S, S4, x) => { const v = (x.slot === 4 ? S4 : S)[x.k]; return x.max ? v <= x.v + 1e-9 : v >= x.v - 1e-9; };
+    const badge = (ok) => ok ? '<span class="gok">달성</span>' : '<span class="gno">미달</span>';
+    const bpRows = ui.bps.map((x) => { const b = g.breakpoints[x.i]; return `<tr><td>${esc(b.slot ? b.slot + "번 " : "")}${esc(b.effect)} <small>${STAT_KO[x.k]} ${pct(x.v)} ${x.max ? "이하" : "이상"}</small></td><td>${badge(okOf(M.sA, M.s4, x))}</td><td>${badge(okOf(sA, s4, x))}</td><td></td></tr>`; }).join("");
+    const mineIds = new Set(mine.mods.filter(Boolean).map((x) => x.id));
+    const recMods = cfg.fixed.concat(r.mods), recIds = new Set(recMods.map((m) => m.id));
+    const out = mine.mods.filter((x) => x && !recIds.has(x.id)), inn = recMods.filter((m) => !mineIds.has(m.id));
+    const exSwap = (mine.ex ? mine.ex.id : "") !== (r.ex ? r.ex.id : "");
+    const auraSwap = (mine.aura ? mine.aura.id : "") !== (cfg.aura ? cfg.aura.id : "");
+    const unread = mine.mods.filter((x) => !x).length;
+    const swaps = [];
+    if (out.length || inn.length) swaps.push(`모드: ${out.length ? `<b>빼기</b> ${out.map((x) => esc(x.ko)).join(", ")}` : ""}${out.length && inn.length ? " → " : ""}${inn.length ? `<b>넣기</b> ${inn.map((m) => esc(m.ko)).join(", ")}` : ""}`);
+    if (exSwap) swaps.push(`익실러스: ${esc(mine.ex ? mine.ex.ko : "없음")} → <b>${esc(r.ex ? r.ex.ko : "없음")}</b>`);
+    if (auraSwap) swaps.push(`오라: ${esc(mine.aura ? mine.aura.ko : "없음")} → <b>${esc(cfg.aura ? cfg.aura.ko : "없음")}</b>`);
+    return `<h4 class="fch">내 세팅과 비교 <small>내 세팅 = 스크린샷의 아스날 값(모드·샤드 포함) + 아케인 최대 효과 · 추천 = 위 조건으로 계산한 세팅</small></h4>
+      <div class="tscroll"><table class="tbl"><thead><tr><th>능력치</th><th>내 세팅</th><th>추천</th><th>추천 − 내 세팅</th></tr></thead><tbody>
+        ${STATS.map((k) => row(STAT_KO[k], k, M.sA[k], sA[k])).join("")}${has4 ? row("4번 위력", "str", M.s4.str, s4.str) : ""}
+        ${bpRows ? `<tr><th colspan="4">브레이크포인트</th></tr>${bpRows}` : ""}</tbody></table></div>
+      <p class="hint" style="margin:6px 0 0">${swaps.length ? "추천으로 바꾸려면 — " + swaps.join(" · ") + "." : "모드 구성이 추천과 같습니다."}${unread ? ` 읽지 못한 칸 ${unread}개는 빈 칸으로 보고 추천이 그 칸까지 채웠습니다 — 그 칸의 모드를 '고정 모드'에 적어 넣으면 정확해집니다.` : ""} 차이 색: 이 조건에서 원하는 방향이면 초록.</p>`;
+  }
+  async function ocrFill(card, g, files, go) {
+    const btn = card.querySelector(".fc-ocrbtn"), bar = card.querySelector(".fc-ocr .cocrbar"), msg = card.querySelector(".fc-ocrmsg");
+    if (!root.WF_OCR) { msg.hidden = false; msg.textContent = "글자 인식 도구가 없습니다. 페이지를 새로 고쳐 주세요."; return; }
+    if (btn.disabled) return;
+    btn.disabled = true; bar.hidden = false; msg.hidden = false;
+    msg.textContent = "글자 인식 준비 중… (처음 한 번은 인식 도구와 한국어 데이터 약 6MB를 받습니다)";
+    try {
+      const reads = await root.WF_OCR.read(files, (p, label) => { bar.firstElementChild.style.width = Math.round(p * 100) + "%"; msg.textContent = `${label}… ${Math.round(p * 100)}%`; }, { crops: root.WF_OCR.FRAME_CROPS });
+      // another warframe's screen: open that warframe's page and fill there
+      const fr = root.WF_OCR.findWeapon(reads, root.WF_FRAMES || []);
+      if (fr) {
+        const bid = fr.id.replace(/_prime$/, "");
+        if (bid !== g.id && (root.WF_GUIDE_IDS || []).includes(bid)) { root.WF_FC_PENDING = { id: bid, reads, lead: `스크린샷의 워프레임 ${fr.ko}(으)로 바꿨습니다. ` }; location.hash = "#frames/" + bid; return; }
+      }
+      applyMine(card, g, reads, "", fr, go);
+    } catch (e) {
+      msg.textContent = "읽지 못했습니다: " + (e && e.message ? e.message : e);
+    } finally { btn.disabled = false; bar.hidden = true; }
+  }
+  function applyMine(card, g, reads, lead, fr, go) {
+    const q = (sel) => card.querySelector(sel), msg = q(".fc-ocrmsg");
+    msg.hidden = false;
+    const base = String(g.name_en || "").replace(/ Prime$/, "");
+    if (fr === undefined) fr = root.WF_OCR.findWeapon(reads, root.WF_FRAMES || []);
+    const arcC = ARCS.map((a) => ({ id: a.en, ko: a.ko }));
+    const rf = root.WF_OCR.readFrame(reads, { frames: root.WF_FRAMES || [], auras: MODS.filter((m) => m.compat === "AURA").map((m) => ({ id: m.id, ko: m.ko })), arcanes: arcC,
+      mods: MODS.filter((m) => m.compat !== "AURA").map((m) => ({ id: m.id, ko: m.ko })) });
+    const mm = root.WF_OCR.match(reads, { mods: MODS.filter((m) => m.compat === "WARFRAME" || m.compat === base).map((m) => ({ id: m.id, ko: m.ko, exilus: !!m.ex, group: m.fam })), arcanes: arcC, noRiven: true });
+    const S = rf.stats || {};
+    const mods = mm.slots.slice(0, 8); while (mods.length < 8) mods.push(null);
+    const mine = { variant: fr ? (/_prime$/.test(fr.id) ? "prime" : "base") : null, mods, ex: mm.exilus, aura: rf.aura, arcs: rf.arcanes,
+      stats: { str: S.str != null ? S.str / 100 : null, rng: S.range != null ? S.range / 100 : null, dur: S.dur != null ? S.dur / 100 : null, eff: S.eff != null ? S.eff / 100 : null } };
+    const got = mods.filter(Boolean).length + (mine.ex ? 1 : 0) + (mine.aura ? 1 : 0) + mine.arcs.length + STATS.filter((k) => mine.stats[k] != null).length;
+    if (!got) { msg.textContent = "워프레임 업그레이드 화면의 글자를 찾지 못했습니다. 모드 칸과 왼쪽 능력치가 다 보이는 화면으로 다시 올려 주세요."; return; }
+    // the conditions follow my setting: same aura and arcanes, my non-stat mods (augments, survival) stay fixed,
+    // the stat mods and a stat exilus are left to the calculator
+    const v = q(".fc-var"); if (v && mine.variant) v.value = mine.variant;
+    const setSel = (sel, val) => { const el = q(sel); if (el && [...el.options].some((o) => o.value === val)) el.value = val; };
+    setSel(".fc-aura", mine.aura ? mine.aura.id : "");
+    setSel(".fc-a0", mine.arcs[0] ? mine.arcs[0].id : ""); setSel(".fc-a1", mine.arcs[1] ? mine.arcs[1].id : "");
+    const keep = mods.filter((x) => x && BY_ID[x.id] && !isStatMod(BY_ID[x.id]));
+    q(".fc-fixed").value = keep.map((x) => x.ko).join(", ");
+    setSel(".fc-ex", mine.ex && BY_ID[mine.ex.id] && !isStatMod(BY_ID[mine.ex.id]) ? mine.ex.id : "auto");
+    const sg = shardGuess(mine);
+    if (sg && sg.str != null) { setSel(".fc-crim", String(sg.str + sg.dur)); if (sg.str + sg.dur > 0) q(".fc-tau").checked = !!sg.tau; }
+    card._mine = mine;
+    const unsure = mods.map((x, i) => x && !x.sure ? `${i + 1}번 ${x.ko}` : null).filter(Boolean).concat(mine.ex && !mine.ex.sure ? ["익실러스 " + mine.ex.ko] : [], mine.aura && !mine.aura.sure ? ["오라 " + mine.aura.ko] : [], mine.arcs.filter((a) => !a.sure).map((a) => a.ko));
+    const empty = mods.map((x, i) => x ? null : i + 1).filter(Boolean);
+    const box = q(".fc-mine");
+    box.hidden = false;
+    box.innerHTML = `<div class="fcmine-h"><b>내 세팅</b>${mine.variant ? ` <small>${esc(g.name_ko)}${mine.variant === "prime" ? " 프라임" : ""}</small>` : ""}<button type="button" class="ghostbtn fc-mine-x">지우기</button></div>
+      <div class="fcmine-m">${[["오라", mine.aura], ["익실러스", mine.ex]].map(([n, x]) => `<span><i>${n}</i>${x ? esc(x.ko) : "—"}</span>`).join("")}${mods.map((x, i) => `<span${x && !x.sure ? ' class="ocrq"' : ""}><i>${i + 1}</i>${x ? esc(x.ko) : "읽지 못함"}</span>`).join("")}</div>
+      <div class="fcmine-s">아케인 <b>${mine.arcs.map((a) => esc(a.ko)).join(" · ") || "—"}</b> · ${STATS.map((k) => `${STAT_KO[k]} <b>${mine.stats[k] != null ? pct(mine.stats[k]) : "—"}</b>`).join(" · ")}
+        ${sg ? ` · 빨강 샤드 <b>${sg.str != null ? `위력 ${sg.str} · 지속 ${sg.dur}${sg.tau ? " (타우포지드)" : ""}` : "추정 못 함"}</b>${sg.str != null && !sg.sure ? " (추정)" : ""}` : ""}</div>`;
+    box.querySelector(".fc-mine-x").addEventListener("click", () => { card._mine = null; box.hidden = true; box.innerHTML = ""; msg.hidden = true; go(); });
+    msg.innerHTML = `${esc(lead)}읽은 칸 ${got}개를 '내 세팅'에 넣고, 조건(오라·아케인·고정 모드·빨강 샤드 칸 수)을 내 세팅에 맞췄습니다.${unsure.length ? ` <b>점선은 확인해 주세요</b>: ${esc(unsure.join(", "))}.` : ""}${empty.length ? ` 읽지 못한 모드 칸: ${empty.join(", ")}번 — 고정 모드에 직접 적어 넣어 주세요.` : ""} 헬민스와 빨강 외 샤드는 화면에 이름이 없어 직접 넣어 주세요.`;
+    go(true);
   }
 
   function readUi(card, g) {
@@ -5021,7 +5164,14 @@ header.top p{flex-basis:100%}
       const arcOpts = (sel) => `<option value="">없음</option>` + ARCS.slice().sort((a, b) => a.ko.localeCompare(b.ko, "ko")).map((a) => `<option value="${esc(a.en)}"${a.en === sel ? " selected" : ""}>${esc(a.ko)}</option>`).join("");
       const exDefault = d.exilus && !isStatMod(BY_ID[d.exilus]) ? d.exilus : "auto";
       const hasPrime = g.has_prime && POL[g.name_en + " Prime"];
-      return `<section class="card fcalc"><h3>내 콘셉트로 세팅 계산 <small>조건을 바꾸면 바로 다시 계산합니다</small></h3>
+      return `<section class="card fcalc"><h3>워프레임 세팅 계산기 <small>${esc(g.name_ko)} — 조건을 바꾸면 바로 다시 계산합니다</small></h3>
+        <ol class="fcflow"><li><b>내 세팅 불러오기</b> (선택) — 업그레이드 화면 스크린샷으로 지금 세팅을 읽어 비교 기준으로 둡니다</li>
+          <li><b>조건 고르기</b> — 주력 어빌리티·능력치 방향·맞출 브레이크포인트, 오른쪽의 고정 모드·오라·아케인·샤드</li>
+          <li><b>결과 보기</b> — 맨 아래 '추천 세팅'이 조건을 바꿀 때마다 자동으로 다시 계산됩니다 (계산 버튼은 결과로 이동)</li></ol>
+        <div class="cocr fc-ocr"><button type="button" class="cocrbtn fc-ocrbtn">내 세팅 스크린샷으로 불러오기</button><input type="file" class="fc-ocrfile" accept="image/*" hidden>
+          <small>워프레임 업그레이드(아스날) 화면 — 모드 8칸·익실러스·오라·아케인 2개·위력·거리·지속시간·효율을 읽습니다. 끌어다 놓거나 Ctrl+V로 붙여 넣어도 됩니다.</small>
+          <div class="cocrbar" hidden><i></i></div><p class="cocrmsg fc-ocrmsg" hidden></p></div>
+        <div class="fc-mine" hidden></div>
         <div class="fcgrid">
           <div class="fccol">
             ${hasPrime ? `<label>워프레임<select class="fc-var"><option value="prime" selected>${esc(g.name_ko)} 프라임</option><option value="base">${esc(g.name_ko)}</option></select></label>` : ""}
@@ -5043,6 +5193,7 @@ header.top p{flex-basis:100%}
             <label>나머지 샤드<input type="text" class="fc-rest" value="${esc(d.rest)}"></label></div>
             <label class="inline"><input type="checkbox" class="fc-tau"${d.tau ? " checked" : ""}><span>타우포지드 샤드 (빨강 +15%)</span></label>
             <label>헬민스<input type="text" class="fc-helm" value="${esc(d.helm)}"></label>
+            <button type="button" class="fc-run">이 조건으로 계산 — 결과 보기 ↓</button>
             <button type="button" class="ghostbtn fc-reset">커뮤니티 기본값으로 되돌리기</button>
           </div>
         </div>
@@ -5052,23 +5203,47 @@ header.top p{flex-basis:100%}
       const card = box.querySelector(".fcalc"); if (!card) return;
       const out = card.querySelector(".fc-out"), d = communityDefaults(g);
       let tm = 0;
-      const go = () => {
-        clearTimeout(tm);
-        tm = setTimeout(() => {
-          const ui = readUi(card, g);
-          let r = null; try { r = run(g, ui); } catch (e) { console.error(e); }
-          out.innerHTML = r ? resultHtml(g, r, ui, d) : `<p class="warn">계산할 수 있는 모드가 없습니다.</p>`;
-        }, 120);
+      const calc = () => {
+        const ui = readUi(card, g);
+        let r = null; try { r = run(g, ui); } catch (e) { console.error(e); }
+        out.innerHTML = r ? resultHtml(g, r, ui, d, card._mine) : `<p class="warn">계산할 수 있는 모드가 없습니다.</p>`;
       };
-      card.addEventListener("change", go);
+      const go = (now) => { clearTimeout(tm); if (now === true) calc(); else tm = setTimeout(calc, 120); };
+      card.addEventListener("change", (e) => { if (!e.target.matches(".fc-ocrfile")) go(); });
       card.addEventListener("input", (e) => { if (e.target.matches("input[type=number],input[type=text]")) go(); });
+      card.querySelector(".fc-run").addEventListener("click", () => { go(true); out.scrollIntoView({ behavior: "smooth", block: "start" }); });
+      // screenshot of my setting: button, drag and drop, Ctrl+V (the paste handler is shared by every card ever bound)
+      const ocrBox = card.querySelector(".fc-ocr"), file = card.querySelector(".fc-ocrfile");
+      card._ocr = (files) => ocrFill(card, g, files, go);
+      card.querySelector(".fc-ocrbtn").addEventListener("click", () => file.click());
+      file.addEventListener("change", () => { if (file.files.length) card._ocr([...file.files]); file.value = ""; });
+      ocrBox.addEventListener("dragover", (e) => { e.preventDefault(); ocrBox.classList.add("drag"); });
+      ocrBox.addEventListener("dragleave", () => ocrBox.classList.remove("drag"));
+      ocrBox.addEventListener("drop", (e) => { e.preventDefault(); ocrBox.classList.remove("drag"); const f = [...(e.dataTransfer.files || [])].filter((x) => /^image\//.test(x.type)); if (f.length) card._ocr(f); });
+      if (!root.WF_FC_PASTE) {
+        root.WF_FC_PASTE = true;
+        document.addEventListener("paste", (e) => {
+          const c = document.querySelector("#guideview:not([hidden]) .fcalc");
+          const files = [...((e.clipboardData && e.clipboardData.files) || [])].filter((x) => /^image\//.test(x.type));
+          if (!c || !c._ocr || !files.length) return;
+          e.preventDefault(); c._ocr(files);
+        });
+      }
       card.querySelector(".fc-reset").addEventListener("click", () => {
         const fresh = document.createElement("div"); fresh.innerHTML = root.WF_FrameCalc.html(g);
         card.replaceWith(fresh.firstElementChild); root.WF_FrameCalc.bind(box, g);
       });
       go();
+      // a screenshot read on another warframe's page that switched here (the page may render twice on one hash change:
+      // whichever card is still on the page takes it)
+      const P = root.WF_FC_PENDING;
+      if (P && P.id === g.id) setTimeout(() => {
+        if (!card.isConnected || root.WF_FC_PENDING !== P) return;
+        root.WF_FC_PENDING = null;
+        try { applyMine(card, g, P.reads, P.lead, undefined, go); } catch (e) { console.error(e); }
+      }, 250);
     },
-    _run: run, _defaults: communityDefaults, _dir: dirDefault, _tiers: bpTiers,
+    _run: run, _defaults: communityDefaults, _dir: dirDefault, _tiers: bpTiers, _shardGuess: shardGuess, _mineStats: mineStats,
   };
 })(typeof window !== "undefined" ? window : globalThis);
 
@@ -5492,7 +5667,8 @@ header.top p{flex-basis:100%}
     return best ? best.w : null;
   }
 
-  // ctx: { mods: [{id, ko, exilus, group}], arcanes: [{id, ko}], all: every mod and arcane in the game (any weapon class) }
+  // ctx: { mods: [{id, ko, exilus, group}], arcanes: [{id, ko}], all: every mod and arcane in the game (any weapon class),
+  //        noRiven: warframe screens (no riven card, an unread cell stays empty) }
   function match(reads, ctx) {
     const segs = [];
     for (const R of reads) segs.push(...segments(R.lines));
@@ -5527,8 +5703,8 @@ header.top p{flex-basis:100%}
       const nearMod = normal.some((p) => p.box.img === L.img && Math.abs((p.box.y0 + p.box.y1) / 2 - (L.y0 + L.y1) / 2) < (p.box.y1 - p.box.y0) * 3);
       if (nearMod && (!rivBoxes[L.img] || L.y0 < rivBoxes[L.img].y0)) rivBoxes[L.img] = L;
     }
-    const anyRiv = Object.values(rivBoxes)[0] || null;
-    const rivStats = parseRiven(reads, anyRiv);
+    const anyRiv = ctx.noRiven ? null : Object.values(rivBoxes)[0] || null;
+    const rivStats = ctx.noRiven ? null : parseRiven(reads, anyRiv);
     let hasRiv = !!(anyRiv || (rivStats && rivStats.length >= 2));
     if (normal.length > (hasRiv ? 7 : 8)) normal = normal.sort((a, b) => b.sim - a.sim).slice(0, hasRiv ? 7 : 8);
     // positions from one screenshot (the one showing the most of these mods); same-size screenshots share the layout
@@ -5588,7 +5764,7 @@ header.top p{flex-basis:100%}
           if (best) cells[k] = { id: best.m.id, ko: best.m.ko, sim: Math.min(0.8, best.sim * 0.8) };
         }
       }
-      if (!hasRiv && normal.length === 7 && rowC.length === 2 && colC.length === nCols && cells.filter((c) => !c).length === 1) {
+      if (!hasRiv && !ctx.noRiven && normal.length === 7 && rowC.length === 2 && colC.length === nCols && cells.filter((c) => !c).length === 1) {
         hasRiv = true; cells[cells.indexOf(null)] = { id: "__riven", ko: "리벤 모드", sim: 0.6, guessRiv: true };
       }
       if (rivItem) {
@@ -6354,7 +6530,7 @@ self.onmessage = function (ev) {
   // Ctrl+V anywhere: screenshots go to the open comparison set (the last one if several are open)
   document.addEventListener("paste", (e) => {
     const files = [...((e.clipboardData && e.clipboardData.files) || [])].filter((x) => /^image\//.test(x.type));
-    if (!files.length) return;
+    if (!files.length || $("#calcview").hidden) return;
     const open = $$("#sets .cset").filter((x) => x.open);
     const d = open[open.length - 1];
     if (!d || !d._ocr) return;

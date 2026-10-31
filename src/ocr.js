@@ -292,7 +292,8 @@
     return best ? best.w : null;
   }
 
-  // ctx: { mods: [{id, ko, exilus, group}], arcanes: [{id, ko}], all: every mod and arcane in the game (any weapon class) }
+  // ctx: { mods: [{id, ko, exilus, group}], arcanes: [{id, ko}], all: every mod and arcane in the game (any weapon class),
+  //        noRiven: warframe screens (no riven card, an unread cell stays empty) }
   function match(reads, ctx) {
     const segs = [];
     for (const R of reads) segs.push(...segments(R.lines));
@@ -327,8 +328,8 @@
       const nearMod = normal.some((p) => p.box.img === L.img && Math.abs((p.box.y0 + p.box.y1) / 2 - (L.y0 + L.y1) / 2) < (p.box.y1 - p.box.y0) * 3);
       if (nearMod && (!rivBoxes[L.img] || L.y0 < rivBoxes[L.img].y0)) rivBoxes[L.img] = L;
     }
-    const anyRiv = Object.values(rivBoxes)[0] || null;
-    const rivStats = parseRiven(reads, anyRiv);
+    const anyRiv = ctx.noRiven ? null : Object.values(rivBoxes)[0] || null;
+    const rivStats = ctx.noRiven ? null : parseRiven(reads, anyRiv);
     let hasRiv = !!(anyRiv || (rivStats && rivStats.length >= 2));
     if (normal.length > (hasRiv ? 7 : 8)) normal = normal.sort((a, b) => b.sim - a.sim).slice(0, hasRiv ? 7 : 8);
     // positions from one screenshot (the one showing the most of these mods); same-size screenshots share the layout
@@ -388,7 +389,7 @@
           if (best) cells[k] = { id: best.m.id, ko: best.m.ko, sim: Math.min(0.8, best.sim * 0.8) };
         }
       }
-      if (!hasRiv && normal.length === 7 && rowC.length === 2 && colC.length === nCols && cells.filter((c) => !c).length === 1) {
+      if (!hasRiv && !ctx.noRiven && normal.length === 7 && rowC.length === 2 && colC.length === nCols && cells.filter((c) => !c).length === 1) {
         hasRiv = true; cells[cells.indexOf(null)] = { id: "__riven", ko: "리벤 모드", sim: 0.6, guessRiv: true };
       }
       if (rivItem) {

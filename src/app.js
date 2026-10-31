@@ -626,7 +626,7 @@ self.onmessage = function (ev) {
   // Ctrl+V anywhere: screenshots go to the open comparison set (the last one if several are open)
   document.addEventListener("paste", (e) => {
     const files = [...((e.clipboardData && e.clipboardData.files) || [])].filter((x) => /^image\//.test(x.type));
-    if (!files.length) return;
+    if (!files.length || $("#calcview").hidden) return;
     const open = $$("#sets .cset").filter((x) => x.open);
     const d = open[open.length - 1];
     if (!d || !d._ocr) return;
