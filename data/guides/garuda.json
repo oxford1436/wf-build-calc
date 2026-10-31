@@ -1,0 +1,246 @@
+{
+  "id": "garuda",
+  "name_en": "Garuda",
+  "name_ko": "가루다",
+  "has_prime": true,
+  "last_rework": "2022-03-16",
+  "checked": "2026-10-31",
+  "summary": "블러드레팅 무한 에너지로 1번 피의 구슬과 4번 베기를 쏟는 딜러",
+  "abilities": [
+    {
+      "slot": 1,
+      "name_ko": "드레드 미러",
+      "name_en": "Dread Mirror",
+      "role": "main",
+      "note": "적 체력 10%+받은 피해×2를 저장해 폭발, 정면 방패",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    },
+    {
+      "slot": 2,
+      "name_ko": "블러드 얼터",
+      "name_en": "Blood Altar",
+      "role": "helminth_target",
+      "note": "적을 꽂아 회복장. 이식 자리 1순위",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    },
+    {
+      "slot": 3,
+      "name_ko": "블러드레팅",
+      "name_en": "Bloodletting",
+      "role": "utility",
+      "note": "체력 50%→에너지 40%÷(2-효율), 상태이상 해제",
+      "scales": ["efficiency"]
+    },
+    {
+      "slot": 4,
+      "name_ko": "시킹 탈론즈",
+      "name_en": "Seeking Talons",
+      "role": "sub",
+      "note": "베기 확정 표식(75%×위력), 블렌딩 탈론즈로 광역 탭",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    }
+  ],
+  "main_slots": [1, 4],
+  "stat_priority": [
+    {"stat": "range", "note": "1번 폭발 10m·블렌딩 탈론즈 9m·돌진 30m가 모두 비례. 235~280%"},
+    {"stat": "strength", "note": "4번 베기 표식 134%에서 100%. 그 위는 1번 흡수 배수·이식 강화. 139~214%"},
+    {"stat": "efficiency", "note": "블러드레팅 회복량. 160%면 1회 100%지만 다수는 45%로 버리고 몰트 리컨스트럭트로 회복"},
+    {"stat": "duration", "note": "1번 방패 20초·4번 표식 10초. 100~155%면 충분"}
+  ],
+  "breakpoints": [
+    {
+      "slot": 4,
+      "stat": "strength",
+      "value": "134%",
+      "effect": "시킹 탈론즈 표식 대상 베기 상태이상 확률 100%",
+      "calc": "확률 = 75% × 위력 → 75% × 1.334 = 100.05%(이론상 133.3%). 아카 2026-01-16 글의 '위력 135 이상(4번 상확 요구 수치)'·캡처 139%에서 100%와 일치",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Seeking_Talons"
+    },
+    {
+      "slot": 3,
+      "stat": "efficiency",
+      "value": "160%",
+      "effect": "블러드레팅 1회로 최대 에너지 100% 회복",
+      "calc": "회복 = 40% ÷ (2 - 효율) → 40 ÷ 0.40 = 100%. 45%: 40÷1.55 = 25.8%(인게임 25%), 145%: 72.7%, 155%: 88.9%, 165%: 114%(아카 2026-09-15 글 실측 72.72/88.8/114%와 일치). 체력이 50% 미만이면 비례 감소",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Bloodletting"
+    },
+    {
+      "slot": 1,
+      "stat": "range",
+      "value": "280%",
+      "effect": "드레드 미러 폭발 반경 28m, 돌진 사거리 84m",
+      "calc": "폭발 = 10m × 거리 → 10 × 2.80 = 28m, 돌진 = 30m × 2.80 = 84m(아카 2026-01-16 글 캡처와 일치). 235%: 23.5m",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Dread_Mirror"
+    },
+    {
+      "slot": 4,
+      "stat": "range",
+      "value": "235% / 280%",
+      "effect": "블렌딩 탈론즈 탭 광역 반경 21.15m / 25.2m",
+      "calc": "반경 = 9m × 거리 → 9 × 2.35 = 21.15m(Overframe Reapz 설명), 9 × 2.80 = 25.2m(아카 캡처). 거리 100%: 9m",
+      "verified": true,
+      "source": "https://overframe.gg/build/411353/garuda-prime/malevolent-maiden-ability-nuker-weapons-platform-infinite-energy-in-depth-garuda-guide/"
+    },
+    {
+      "slot": 1,
+      "stat": "strength",
+      "value": "139%",
+      "effect": "드레드 미러 흡수 피해 배수 2.78배",
+      "calc": "배수 = 2배 × 위력 → 2 × 1.39 = 2.78배(아카 캡처와 일치). 즉사 한계 40%와 체력 흡수 10%(즉사 시 20%)는 위력 무관",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Dread_Mirror"
+    }
+  ],
+  "community": [
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/183059900",
+      "date": "2026-09-15",
+      "title": "스컬프터 브리치 서지 가루다",
+      "concept": "1번 방패 생성으로 아케인 스컬프터(3랭) 효율 155%를 받아 블러드레팅 회복을 늘리고, 브리치 서지로 광역 피해·CC",
+      "stats": {"strength": 183, "duration": 100, "range": 265, "efficiency": 45},
+      "aura": "브리프 리스파이트",
+      "exilus": "프라임드 슈어 풋티드",
+      "mods": ["블렌딩 탈론즈", "블라인드 레이지", "오버익스텐디드", "스트레치", "프라임드 플로우", "움브랄 인텐시파이", "어거 리치", "카탈라이징 실드"],
+      "arcanes": ["아케인 스컬프터(3랭)", "몰트 리컨스트럭트"],
+      "shards": ["타우 노랑(시전 속도) ×3", "타우 하늘(체력) ×1", "타우 하늘(방어력) ×1"],
+      "helminth": {"replace_slot": 2, "ability": "브리치 서지(위습)"},
+      "notes": "공략/정보 탭, 추천 2. 효율 45%는 아스날 표기, 스컬프터 발동 시 155%. 스컬프터 2/3/4랭 효율 145/155/165%에서 블러드레팅 72.7/88.8/114%를 측정. 사이클 1→2→4→1꾹(에너지 부족 시 3 추가). 어거 리치는 어거 메시지·시크릿츠·프라임드 컨티뉴어티로 교체 가능. 샤드 캡처는 10-15 추가"
+    },
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/159771982",
+      "date": "2026-01-16",
+      "title": "드레드 미러 피의 구슬 딜러",
+      "concept": "1번으로 적 체력을 계속 저장해 28m 폭발로 9999 원킬, 3번+몰트 리컨스트럭트로 무한 에너지·체력",
+      "stats": {"strength": 139, "duration": 155, "range": 280, "efficiency": 45},
+      "aura": "브리프 리스파이트",
+      "exilus": "커닝 드리프트",
+      "mods": ["비거러스 스왑", "어거 리치", "블라인드 레이지", "프라임드 컨티뉴어티", "오버익스텐디드", "블렌딩 탈론즈", "스트레치", "프라임드 플로우"],
+      "arcanes": ["몰트 어그먼티드", "몰트 리컨스트럭트"],
+      "shards": ["노랑(시전 속도) ×5"],
+      "helminth": {"replace_slot": 2, "ability": "노리쉬(그렌델)"},
+      "notes": "공략/정보 탭, 추천 15. 거리 최대·위력 135% 이상·효율 최하·지속 무관으로 정리. 1번 폭발은 비거러스 스왑 영향, 너무 많이 쌓으면 오버플로로 피해가 안 들어간다고 경고. 노리쉬 에너지 배수로 블러드레팅 회복이 절반 가까이로 늘어난다고 설명. 동반자 셰이드"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (ninjase, 1,234추천)",
+      "url": "https://overframe.gg/build/314683/garuda-prime/the-slow-bleed-gloom-garuda-for-general-use-steel-path-endurance-levelcap/",
+      "date": "2026-02-06",
+      "title": "글룸 이식 감속 범용 가루다",
+      "concept": "블러드 얼터 자리에 글룸을 넣어 감속·회복을 얻고, 블러드레팅으로 글룸의 높은 에너지 소모를 메움",
+      "stats": {"strength": 214, "duration": 127.5, "range": 175, "efficiency": 100},
+      "aura": "코로시브 프로젝션",
+      "exilus": "파워 드리프트",
+      "mods": ["프라임드 플로우", "트랜지언트 포티튜드", "스트레치", "어거 리치", "프라임드 컨티뉴어티", "움브랄 인텐시파이", "카탈라이징 실드", "블렌딩 탈론즈"],
+      "arcanes": ["몰트 어그먼티드", "아케인 아라크네"],
+      "shards": ["노랑(시전 속도) ×2", "빨강(위력) 1~2(글룸 최대 감속 위력 272%)", "하늘(에너지 최대치) 나머지"],
+      "helminth": {"replace_slot": 2, "ability": "글룸(세바고스)"},
+      "notes": "가루다 프라임 최다 추천. 2022-05 작성, 2026-02-06 갱신(패치 41.04). 드레드 미러가 넉다운·경직 면역을 줘 프슈풋 불필요(2022-06 변경). Overframe 화면엔 이식 표시가 없고 가이드 본문 기준"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (Reapz, 193추천)",
+      "url": "https://overframe.gg/build/411353/garuda-prime/malevolent-maiden-ability-nuker-weapons-platform-infinite-energy-in-depth-garuda-guide/",
+      "date": "2026-06-21",
+      "title": "노리쉬 이식 어빌 핵·거치대 겸용",
+      "concept": "노리쉬 바이럴이 1번 폭발·4번 탈론즈에도 붙어 어빌만으로 바이럴+베기를 깔고, 무기는 바이럴을 안 넣어도 됨",
+      "stats": {"strength": 183, "duration": 155, "range": 235, "efficiency": 45},
+      "aura": "브리프 리스파이트",
+      "exilus": "자유(커닝·파워 드리프트, 카밧 그레이스 등)",
+      "mods": ["오버익스텐디드", "스트레치", "프라임드 리다이렉션", "프라임드 플로우", "블렌딩 탈론즈", "블라인드 레이지", "움브랄 인텐시파이", "프라임드 컨티뉴어티"],
+      "arcanes": ["몰트 리컨스트럭트", "자유 1칸"],
+      "shards": ["노랑(시전 속도) 2~5(작성자 3)", "노랑(파쿠르 속도) ×2(작성자)"],
+      "helminth": {"replace_slot": 2, "ability": "노리쉬(그렌델)"},
+      "notes": "2023-01 작성, 2026-06-21 갱신(패치 43.05). 대안 이식으로 브리치 서지·로어·자타 위스퍼·써멀 선더 제시"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (Rainollon, 21추천)",
+      "url": "https://overframe.gg/build/780918/garuda-prime/rainollons-garuda-prime-nuke-build/",
+      "date": "2026-09-27",
+      "title": "노리쉬 이식 실드 게이팅 핵",
+      "concept": "브리프 리스파이트·어거 리치·카탈라이징 실드로 실드 게이팅, 거리 265%로 1번·4번 광역 핵",
+      "stats": {"strength": 183, "duration": 100, "range": 265, "efficiency": 45},
+      "aura": "브리프 리스파이트",
+      "exilus": "카밧 그레이스",
+      "mods": ["프라임드 플로우", "움브랄 인텐시파이", "스트레치", "카탈라이징 실드", "블라인드 레이지", "오버익스텐디드", "어거 리치", "블렌딩 탈론즈"],
+      "arcanes": ["몰트 리컨스트럭트", "아케인 컨센트레이션"],
+      "shards": ["타우 노랑(시전 속도) ×4", "노랑(파쿠르 속도) ×1"],
+      "helminth": {"replace_slot": 2, "ability": "노리쉬(그렌델)"},
+      "notes": "2025-01 작성, 2026-09-27 갱신(패치 44.03). 지속 부족은 아케인 컨센트레이션으로 해결, 카밧 그레이스는 3·4번 시전 시 하드 랜딩 방지용"
+    },
+    {
+      "region": "CN",
+      "site": "바이두 티에바 warframe吧 (질문글 답글)",
+      "url": "https://tieba.baidu.com/p/10793462720",
+      "date": "2026-06-15",
+      "title": "써멀 선더 이식 박수 가루다",
+      "concept": "지속을 버리고 효율 160%(블러드레팅 1회=에너지 100%), 4번 자리 써멀 선더를 프리시젼 인텐시파이로 키워 연타",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": 160},
+      "aura": "",
+      "exilus": "",
+      "mods": ["프리시젼 인텐시파이", "바이탈리티"],
+      "arcanes": ["아케인 컨센트레이션", "몰트 리컨스트럭트"],
+      "shards": [],
+      "helminth": {"replace_slot": 4, "ability": "써멀 선더(가우스)"},
+      "notes": "'拍手血妈'(써멀 선더 가루다) 요청글의 답글(4·6층). 답변자도 '저레벨은 되지만 강철의 길에선 약하다, 너프된 이유가 있다'고 평가. 거리 280%·지속 모드 없는 변형도 언급. 효율 160%는 블러드레팅 100% 브레이크포인트와 일치"
+    },
+    {
+      "region": "JP",
+      "site": "zawazawa (wikiwiki GARUDA 댓글 #2262)",
+      "url": "https://zawazawa.jp/warframe_wiki/topic/679",
+      "date": "2025-11-30",
+      "title": "리컨스트럭트 무한 순환 공격 이식",
+      "concept": "3번+몰트 리컨스트럭트로 에너지·체력을 무한 순환하며 이식 공격 어빌(대개 써멀 선더)을 연타, 4번 무적으로 상황 리셋",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": ["몰트 리컨스트럭트"],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "써멀 선더(가우스) 등 공격 어빌"},
+      "notes": "위키 댓글. 4번 가치는 방어력 개편 후 줄었지만 무적·익스퍼다이트 서퍼링/하모니 등 피해 지수 증가에 여전히 유효하다고 언급"
+    },
+    {
+      "region": "JP",
+      "site": "zawazawa (wikiwiki GARUDA 댓글 #2280)",
+      "url": "https://zawazawa.jp/warframe_wiki/topic/679",
+      "date": "2026-04-02",
+      "title": "최저 효율 글룸 가루다",
+      "concept": "효율을 최저로 해도 블러드레팅으로 글룸을 유지할 수 있고, 시전 순간만 마두라이로 위력을 보태 감속 95% 달성",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "글룸(세바고스)"},
+      "notes": "바로 위 #2279(2026-03-31)는 CC용 브리치 서지·화력용 익스퍼다이트 서퍼링을 무난한 이식으로 꼽음. #2296(2026-05)은 캐스케이드에서 스마이트 이식도 궁합이 좋다고 언급"
+    }
+  ],
+  "consensus": {
+    "common": "지역 공통으로 블러드 얼터 자리를 헬민스로 바꾸고, 블러드레팅+몰트 리컨스트럭트(또는 노리쉬 배수)로 사실상 무한 에너지를 만든 뒤 거리 위주(235~280%)로 1번 피의 구슬·4번 블렌딩 탈론즈 광역을 돌림. 위력은 4번 베기 확률 100%(134%)만 넘기면 되고, 시전 속도 샤드를 여러 개 넣는 것이 거의 고정",
+    "differences": "한국: 노리쉬 이식 1번 구슬 딜러와, 아케인 스컬프터로 효율을 올린 브리치 서지형이 최신. 북미: 최다 추천은 여전히 글룸 이식 범용형(ninjase), 업데이트 44 기준으론 노리쉬 이식 실드 게이팅 핵형이 다수. 중국: 써멀 선더 이식 '박수 가루다'와 글룸형이 화제지만 강철의 길에선 약하다는 평가. 일본: 위키 댓글에서 써멀 선더·글룸·브리치 서지·익스퍼다이트 서퍼링 등 이식 공격 어빌을 무한 에너지로 연타하는 사용법이 주류이고, 조작이 바쁘다는 단점이 반복 언급됨"
+  },
+  "notes": [
+    "2025-03-19 업데이트 38.5: 가루다 탈론즈(패시브 근접 무기)에 아케인 슬롯 추가",
+    "2025-08-28 핫픽스 39.1.2: 드레드 미러·블러드 얼터의 시야 판정(기둥 등 수직 장애물) 완화",
+    "2025-10-15 업데이트 40.0, 2026-03-25 업데이트 42.0: 드레드 와드·블렌딩 탈론즈 반복 시전 시 클라이언트 기능 상실 버그 수정. 일본 위키 댓글은 드레드 와드 무적이 안 걸리는 버그가 2026-04에도 남아 있다고 지적",
+    "2025-12-10 업데이트 41.0: 아케인 퍼시스턴스는 블러드레팅 체력 소모를 줄여 주지 않음(위키)",
+    "2026-06 업데이트 43 시기: 가루다 프로토프레임 스킨(Vena)과 가루다 전승 추가, 탈론즈 외형을 스킨과 따로 바꿀 수 있게 됨(일본 위키 댓글)",
+    "2026-10 핫픽스 44.1.3 탄약 효율 상한 75%: 블러드 포지는 예비 탄약에서 장전할 뿐 탄약을 만들지 않음(위키)"
+  ],
+  "gaps": [
+    "Reddit: 브라우저 차단으로 미확인(브리프 지침). 공식 Discord·NGA·X·일본 Discord는 로그인 필요로 제외",
+    "중국: 티에바에서 2025~2026년 가루다 완성 세팅 글은 찾지 못하고 질문글 답글만 사용(血妈·garuda·鸟姐 검색, 鸟姐는 제피르였음). bilibili는 시간상 검색하지 않음",
+    "일본: 위키 댓글은 이식·아케인 수준 언급뿐, 모드 전체가 있는 빌드는 없음. 5ch part1117의 가루다 언급은 감상(조작이 바쁨, 블러드 포지 리로드)뿐",
+    "Overframe ninjase·Reapz 빌드는 화면에 헬민스가 표시되지 않아 가이드 본문 기준으로 기재",
+    "블렌딩 탈론즈 9m 기준 반경은 공식 위키 증강 페이지가 아닌 Overframe 설명·아카 캡처로 확인"
+  ]
+}
