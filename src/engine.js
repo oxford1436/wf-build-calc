@@ -83,7 +83,7 @@
   /* ---------- mods aggregation ---------- */
   const NUM_KEYS = ["dmg", "heavy", "ms", "cc", "ccHeavyNoDouble", "cd", "sc", "sd", "dur", "fr", "frneg", "lock", "mag", "reload", "wind",
     "ic", "hae", "ccc", "br", "ww", "co", "gco", "radius", "pt", "cdFlat", "ccFlat", "hsMult", "msLock", "hm", "ib", "welt",
-    "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot", "evoPst"];
+    "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot", "evoPst", "wpcc"];
   const EXTRA = ["radm", "magm", "gasm", "blastm", "viralm", "corrm", "heatx", "coldx", "elecx", "toxx", "voidx"];
   function newAgg() {
     const a = { elem: { heat: 0, cold: 0, elec: 0, tox: 0 }, phys: { impact: 0, punct: 0, slash: 0 }, extra: {} };
@@ -682,6 +682,8 @@
     let hsFrac = o.hs || 0, hsM = (atk.hsMult || 2) + a.hsMult;
     if (ext.weakFrac) { hsFrac = Math.max(hsFrac, ext.weakFrac); hsM = Math.max(hsM, ext.weakMult || 1); }
     const hsm = hsFrac > 0 ? (1 - hsFrac) + hsFrac * hsM : 1;
+    // riven "weak point critical chance" (Update 44.1 splice): extra crit chance on weak point hits only
+    if (a.wpcc > 0 && hsFrac > 0) ccBase += (atk.cc || 0) * a.wpcc * Math.min(1, hsFrac);
     const facAll = 1 + (ext.faction || 0);
     // sniper combo (scoped): x1.5 at SniperComboMin hits, +0.5 each time the count triples; hits = shots x multishot.
     // Averaged over 20 s of continuous fighting (the counter carries over between targets while you keep hitting).

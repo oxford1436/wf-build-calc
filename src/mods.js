@@ -453,11 +453,12 @@
     root.WF_FRAME_ARCANES[id] = { ko: a.ko, en: a.en, kind: "none", kd: a.kd, note: "무기 피해·어빌리티 수치에 영향 없음" };
   }
   root.WF_ARCANES = ARC;
-  /* riven base values (before disposition 1.2 and type multiplier) */
+  /* riven base values before disposition (now 1.2 for every weapon, Hotfix 44.1.3) and the stat-count multiplier.
+   * wikiwiki "Riven Mod" stat tables (2026-10). Damage-relevant stats only; the rest live in app.js RIV_OTHER. */
   root.WF_RIVEN = {
-    rifle: { dmg: 1.65, ms: 0.9, cc: 1.5, cd: 1.2, heat: 0.9, cold: 0.9, elec: 0.9, tox: 0.9, sc: 0.9, sd: 0.9, dur: 1.0, fr: 0.6 },
-    shotgun: { dmg: 1.65, ms: 1.2, cc: 0.9, cd: 0.9, heat: 0.9, cold: 0.9, elec: 0.9, tox: 0.9, sc: 0.9, sd: 0.9, dur: 0.99, fr: 0.89 },
-    pistol: { dmg: 2.2, ms: 1.2, cc: 1.5, cd: 0.9, heat: 0.9, cold: 0.9, elec: 0.9, tox: 0.9, sc: 0.9, sd: 0.9, dur: 0.99, fr: 0.75 },
-    melee: { dmg: 1.65, cc: 1.8, cd: 0.9, heat: 0.9, cold: 0.9, elec: 0.9, tox: 0.9, sc: 0.9, sd: 0.9, dur: 0.99, fr: 0.55, ic: 24.5 },
+    rifle: { dmg: 1.65, ms: 0.9, cc: 1.4999, cd: 1.19997, heat: 0.9, cold: 0.9, elec: 0.9, tox: 0.9, impact: 1.1997, punct: 1.1997, slash: 1.1997, sc: 0.9, sd: 0.9, dur: 0.9999, fr: 0.6003, reload: 0.49995, mag: 0.49995 },
+    shotgun: { dmg: 1.647, ms: 1.197, cc: 0.9, cd: 0.9, heat: 0.9, cold: 0.9, elec: 0.9, tox: 0.9, impact: 1.1997, punct: 1.1997, slash: 1.1997, sc: 0.9, sd: 0.9, dur: 0.9999, fr: 0.9, reload: 0.49995, mag: 0.49995 },
+    pistol: { dmg: 2.196, ms: 1.197, cc: 1.4999, cd: 0.9, heat: 0.9, cold: 0.9, elec: 0.9, tox: 0.9, impact: 1.1997, punct: 1.1997, slash: 1.1997, sc: 0.9, sd: 0.9, dur: 0.9999, fr: 0.747, reload: 0.49995, mag: 0.49995 },
+    melee: { dmg: 1.647, cc: 1.8, cd: 0.9, heat: 0.9, cold: 0.9, elec: 0.9, tox: 0.9, impact: 1.197, punct: 1.197, slash: 1.197, sc: 0.9, sd: 0.9, dur: 0.9999, fr: 0.549, ic: 24.5 },
   };
 })(typeof self !== "undefined" ? self : globalThis);

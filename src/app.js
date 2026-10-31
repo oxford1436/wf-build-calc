@@ -20,29 +20,82 @@
   const CLS_KO = { rifle: "소총·활·저격·런처", shotgun: "샷건", pistol: "보조무기", melee: "근접" };
   const TYPE_LABEL = { Rifle: "소총", Bow: "활", Sniper: "저격총", Launcher: "런처", Shotgun: "샷건", Pistol: "권총", "Dual Pistols": "쌍권총", Throwing: "투척", Melee: "근접" };
   const KIND_KO = { gun: "사격", radial: "폭발", melee: "휘두르기", heavy: "강공", glaive: "투척" };
-  const RIV_KO = { dmg: "피해", ms: "멀티샷", cc: "치명타 확률", cd: "치명타 피해", heat: "화염", cold: "냉기", elec: "전기", tox: "독", sc: "상태이상 확률", sd: "상태이상 피해 (접합 전용)", dur: "상태이상 지속시간", fr: "연사력/공격 속도", ic: "초기 연속기", impact: "충격", punct: "관통", slash: "베기", reload: "재장전 속도", mag: "탄창 용량",
-    viralm: "바이러스 (접합)", corrm: "부식 (접합)", gasm: "가스 (접합)", radm: "방사능 (접합)", blastm: "폭발 (접합)", magm: "자성 (접합)" };
-  // Riven splicing (Update 44.1): two stats → one locked stat, at most one per riven. Combined elements keep the element
-  // base value (wikiwiki "Riven Mod"), stay their own type and never combine with the single elements.
-  const SPLICE_ELEM = { viralm: ["냉기", "독"], corrm: ["전기", "독"], gasm: ["화염", "독"], radm: ["화염", "전기"], blastm: ["화염", "냉기"], magm: ["냉기", "전기"] };
-  const SPLICED = new Set(["sd"].concat(Object.keys(SPLICE_ELEM)));
-  const rivBase = (table, k) => table[k] != null ? table[k] : SPLICE_ELEM[k] ? table.heat : 0;
   const RIV_FORM = { "3+1": { pos: 0.9375, neg: -0.75, ko: "3긍정 1부정" }, "2+1": { pos: 1.2375, neg: -0.495, ko: "2긍정 1부정" }, "3+0": { pos: 0.75, neg: 0, ko: "3긍정" }, "2+0": { pos: 0.99, neg: 0, ko: "2긍정" } };
-  // riven stats outside the damage formula (for negative-option grading); base magnitudes at 1.0 disposition.
-  // RIV_HEAVY ones still feed the heavy-attack combo model (combo count chance, heavy attack efficiency)
-  const RIV_OTHER = {
-    gun: [["zoom", "확대율", 0.6], ["recoil", "반동", 0.9], ["ammo", "최대 탄약", 0.9], ["pt", "관통력", 2.7], ["speed", "투사체 속도", 0.9], ["faction", "특정 팩션 피해", 0.55]],
-    melee: [["finisher", "마무리 일격 피해", 1.2], ["slidecc", "슬라이드 공격 치명타 확률", 1.2], ["combodur", "연속기 지속시간", 8.1], ["combochance", "연속기 획득 확률", 1.02], ["range", "사거리", 1.2], ["hae", "강공 효율", 0.73], ["faction", "특정 팩션 피해", 0.55]],
-  };
-  const RIV_HEAVY = { combochance: "ccc", hae: "hae" };
-  function RIV_KO_ELEM(k) { return RIV_KO[k].replace(" (접합)", ""); }
-  const SPLICE = [
-    ...Object.entries(SPLICE_ELEM).map(([k, need]) => ({ out: k, ko: RIV_KO_ELEM(k), need, cls: ["rifle", "shotgun", "pistol", "melee"] })),
-    { out: "sd", ko: "상태이상 피해", need: ["피해", "상태이상 확률"], cls: ["rifle", "shotgun", "pistol", "melee"] },
-    { out: "wpd", ko: "약점 피해", need: ["피해", "확대율 또는 멀티샷"], cls: ["rifle", "shotgun", "pistol"] },
-    { out: "wpcc", ko: "약점 치명타 확률", need: ["치명타 확률", "확대율 또는 멀티샷"], cls: ["rifle", "shotgun", "pistol"] },
-    { out: "ammoeff", ko: "탄약 효율 (상한 75%)", need: ["탄창 용량+재장전 속도", "또는 반동+최대 탄약"], cls: ["rifle", "shotgun", "pistol"] },
+  // Every riven stat (wikiwiki "Riven Mod" stat tables, 2026-10): base value before disposition (1.2 for every weapon since
+  // Hotfix 44.1.3) and the stat-count multiplier. grp: dmg = changes kill speed, heavy = heavy attack / combo model,
+  // none = no effect on kill speed, splice = Riven Splicer result (Update 44.1, one per riven, made from `need`).
+  // eff: engine key (defaults to the stat key), {bane: faction}, a function value → effect, or null (no effect).
+  const RB = (r, s, p, m) => ({ rifle: r, shotgun: s, pistol: p, melee: m });
+  const RIV_DEF = [
+    { k: "dmg", ko: "피해", cls: "all", grp: "dmg", base: RB(1.65, 1.647, 2.196, 1.647) },
+    { k: "ms", ko: "멀티샷", cls: "gun", grp: "dmg", base: RB(0.9, 1.197, 1.197, 0) },
+    { k: "cc", ko: "치명타 확률", cls: "all", grp: "dmg", base: RB(1.4999, 0.9, 1.4999, 1.8) },
+    { k: "cd", ko: "치명타 피해", cls: "all", grp: "dmg", base: RB(1.19997, 0.9, 0.9, 0.9) },
+    { k: "heat", ko: "화염", cls: "all", grp: "dmg", base: 0.9 }, { k: "cold", ko: "냉기", cls: "all", grp: "dmg", base: 0.9 },
+    { k: "elec", ko: "전기", cls: "all", grp: "dmg", base: 0.9 }, { k: "tox", ko: "독", cls: "all", grp: "dmg", base: 0.9 },
+    { k: "impact", ko: "충격", cls: "all", grp: "dmg", base: RB(1.1997, 1.1997, 1.1997, 1.197) },
+    { k: "punct", ko: "관통", cls: "all", grp: "dmg", base: RB(1.1997, 1.1997, 1.1997, 1.197) },
+    { k: "slash", ko: "베기", cls: "all", grp: "dmg", base: RB(1.1997, 1.1997, 1.1997, 1.197) },
+    { k: "sc", ko: "상태이상 확률", cls: "all", grp: "dmg", base: 0.9 },
+    { k: "dur", ko: "상태이상 지속시간", cls: "all", grp: "dmg", base: 0.9999 },
+    { k: "fr", ko: "연사력/공격 속도", cls: "all", grp: "dmg", base: RB(0.6003, 0.9, 0.747, 0.549) },
+    { k: "reload", ko: "재장전 속도", cls: "gun", grp: "dmg", base: 0.49995 },
+    { k: "mag", ko: "탄창 용량", cls: "gun", grp: "dmg", base: 0.49995 },
+    { k: "fac_g", ko: "대 그리니어 피해", cls: "all", grp: "dmg", base: 0.45, eff: { bane: "grineer" } },
+    { k: "fac_c", ko: "대 코퍼스 피해", cls: "all", grp: "dmg", base: 0.45, eff: { bane: "corpus" } },
+    { k: "fac_i", ko: "대 인페스티드 피해", cls: "all", grp: "dmg", base: 0.45, eff: { bane: "infested" } },
+    { k: "x_pt", ko: "관통력", cls: "gun", grp: "dmg", base: 2.7, unit: "m", eff: "pt" },
+    { k: "ic", ko: "초기 연속기", cls: "melee", grp: "dmg", base: 24.5, unit: "n" },
+    { k: "x_hae", ko: "강공 효율", cls: "melee", grp: "heavy", base: 0.7344, eff: "hae" },
+    { k: "x_combochance", ko: "추가 연속기 카운트 확률", cls: "melee", grp: "heavy", base: 0.5877, negBase: 1.0485, eff: "ccc" },
+    { k: "x_ammo", ko: "최대 탄약", cls: "gun", grp: "none", base: RB(0.4995, 0.9, 0.9, 0), eff: "ammoMax", note: "탄약 계산에만 반영" },
+    { k: "x_zoom", ko: "확대율", cls: "gun", grp: "none", base: RB(0.5999, 0.41994, 0.801, 0), eff: null },
+    { k: "x_recoil", ko: "반동", cls: "gun", grp: "none", base: 0.9, eff: null },
+    { k: "x_speed", ko: "투사체 속도", cls: "gun", grp: "none", base: 0.9, eff: null },
+    { k: "x_finisher", ko: "마무리 일격 피해", cls: "melee", grp: "none", base: 1.197, eff: null },
+    { k: "x_slidecc", ko: "슬라이드 공격 치명타 확률", cls: "melee", grp: "none", base: 1.2, eff: null },
+    { k: "x_combodur", ko: "연속기 지속시간", cls: "melee", grp: "none", base: 8.1, unit: "s", eff: null },
+    { k: "x_range", ko: "근접 사거리", cls: "melee", grp: "none", base: 1.94, unit: "m", eff: null },
+    { k: "viralm", ko: "바이러스", cls: "all", grp: "splice", base: 0.9, need: ["냉기", "독"] },
+    { k: "corrm", ko: "부식", cls: "all", grp: "splice", base: 0.9, need: ["전기", "독"] },
+    { k: "gasm", ko: "가스", cls: "all", grp: "splice", base: 0.9, need: ["화염", "독"] },
+    { k: "radm", ko: "방사능", cls: "all", grp: "splice", base: 0.9, need: ["화염", "전기"] },
+    { k: "blastm", ko: "폭발", cls: "all", grp: "splice", base: 0.9, need: ["화염", "냉기"] },
+    { k: "magm", ko: "자성", cls: "all", grp: "splice", base: 0.9, need: ["냉기", "전기"] },
+    { k: "sd", ko: "상태이상 피해", cls: "all", grp: "splice", base: 0.9, need: ["피해", "상태이상 확률"] },
+    { k: "fac_o", ko: "대 오로킨 피해", cls: "all", grp: "splice", base: 0.45, eff: { bane: "corrupted" }, need: ["대 코퍼스 피해", "대 그리니어 피해"] },
+    { k: "fac_t", ko: "대 테크롯 피해", cls: "all", grp: "splice", base: 0.45, eff: { bane: "techrot" }, need: ["대 코퍼스 피해", "대 인페스티드 피해"] },
+    { k: "fac_s", ko: "대 스칼드라 피해", cls: "all", grp: "splice", base: 0.45, eff: { bane: "scaldra" }, need: ["대 인페스티드 피해", "대 그리니어 피해"] },
+    { k: "wpd", ko: "약점 피해", cls: "gun", grp: "splice", base: 2.25, eff: (v) => ({ hsMult: 2 * v }), need: ["피해", "확대율 또는 멀티샷"], note: "헤드샷 때만" },
+    { k: "wpcc", ko: "약점 치명타 확률", cls: "gun", grp: "splice", base: 2.475, eff: "wpcc", need: ["치명타 확률", "확대율 또는 멀티샷"], note: "헤드샷 때만" },
+    { k: "ammoeff", ko: "탄약 효율", cls: "gun", grp: "splice", base: 0.45, eff: "ammoEff", need: ["탄창 용량 + 재장전 속도", "또는 반동 + 최대 탄약"], note: "탄약 계산에만 반영, 상한 75%" },
+    { k: "holster", ko: "보관 중 탄창 재장전", cls: "gun", grp: "splice", base: 0.9, eff: null, need: ["최대 탄약", "재장전 속도 또는 탄창 용량"] },
+    { k: "heavyd", ko: "강공 피해", cls: "melee", grp: "splice", base: 1.197, eff: "heavy", need: ["강공 효율", "추가 연속기 카운트 확률"] },
+    { k: "windup", ko: "강공 준비 속도", cls: "melee", grp: "splice", base: 1.197, eff: "wind", need: ["강공 효율", "연속기 지속시간"] },
+    { k: "block", ko: "막기 각도", cls: "melee", grp: "splice", base: 0.81, eff: null, need: ["공격 속도", "근접 사거리"] },
+    { k: "slam", ko: "슬램 피해", cls: "melee", grp: "splice", base: 1.197, eff: null, need: ["피해", "공격 속도"] },
   ];
+  const RIV_D = Object.fromEntries(RIV_DEF.map((d) => [d.k, d]));
+  const RIV_KO = Object.fromEntries(RIV_DEF.map((d) => [d.k, d.ko + (d.grp === "splice" ? " (접합)" : "")]));
+  const SPLICED = new Set(RIV_DEF.filter((d) => d.grp === "splice").map((d) => d.k));
+  const SPLICE_ELEM = Object.fromEntries(RIV_DEF.filter((d) => /^(viral|corr|gas|rad|blast|mag)m$/.test(d.k)).map((d) => [d.k, d.need]));
+  const SPLICE = RIV_DEF.filter((d) => d.grp === "splice").map((d) => ({ out: d.k, ko: d.ko, need: d.need, cls: d.cls === "all" ? ["rifle", "shotgun", "pistol", "melee"] : d.cls === "gun" ? ["rifle", "shotgun", "pistol"] : ["melee"] }));
+  const RIV_HEAVY = { combochance: "ccc", hae: "hae" };
+  const rivBaseOf = (cls, k) => { const d = RIV_D[k]; if (!d) return 0; return typeof d.base === "number" ? d.base : (d.base[cls] || 0); };
+  const rivFits = (d, cls) => d.cls === "all" || (d.cls === "melee") === (cls === "melee");
+  // add one riven stat (value as a fraction, metres, seconds or a count) to an engine effect object
+  function addRivEff(eff, k, v) {
+    const d = RIV_D[k];
+    if (!d || d.eff === null) return eff;
+    const e = d.eff === undefined ? k : d.eff;
+    if (typeof e === "string") eff[e] = (eff[e] || 0) + v;
+    else if (typeof e === "function") { const x = e(v); for (const q in x) eff[q] = (eff[q] || 0) + x[q]; }
+    else if (e.bane) { eff.bane = Object.assign({}, eff.bane || {}); eff.bane[e.bane] = (eff.bane[e.bane] || 0) + v; }
+    return eff;
+  }
+  const effFromStats = (pairs) => pairs.reduce((eff, [k, v]) => addRivEff(eff, k, v), {});
+  const rivVal = (k, v) => { const u = (RIV_D[k] || {}).unit; return u === "n" ? Math.abs(v).toFixed(0) : u === "m" ? Math.abs(v).toFixed(1) + "m" : u === "s" ? Math.abs(v).toFixed(1) + "초" : pct(Math.abs(v), 1); };
+  function RIV_KO_ELEM(k) { return (RIV_D[k] || {}).ko || k; }
   /* ---------------- worker ---------------- */
   const src = $("#wf-src").textContent;
   const workerSrc = src + "\n" + `
@@ -710,10 +763,9 @@ self.onmessage = function (ev) {
 
   function rivenOptionsHtml() {
     const cls = modClass(st.weapon);
-    const base = Object.entries(RIV_KO).filter(([k]) => !SPLICED.has(k) && !(k === "ic" && cls !== "melee") && !(k === "ms" && cls === "melee")).map(([k, v]) => `<option value="${k}">${v}</option>`).join("")
-      + `<optgroup label="접합 (Update 44.1)">` + [...SPLICED].map((k) => `<option value="${k}">${k === "sd" ? "상태이상 피해 (접합)" : RIV_KO[k]}</option>`).join("") + `</optgroup>`;
-    const other = (cls === "melee" ? RIV_OTHER.melee : RIV_OTHER.gun).map(([k, v]) => `<option value="x_${k}">${v} (${k === "combochance" ? "연속기 쌓는 속도에 반영" : k === "hae" ? "강공 계산에 반영" : "계산 영향 없음"})</option>`).join("");
-    return `<option value="">—</option>` + base + other;
+    const opt = (d) => `<option value="${d.k}">${d.ko}${d.note ? ` (${d.note})` : ""}</option>`;
+    const grp = (label, g) => { const l = RIV_DEF.filter((d) => d.grp === g && rivFits(d, cls)); return l.length ? `<optgroup label="${label}">${l.map(opt).join("")}</optgroup>` : ""; };
+    return `<option value="">—</option>` + grp("처치 속도에 반영", "dmg") + grp("강공·연속기 계산에 반영", "heavy") + grp("접합 (Update 44.1)", "splice") + grp("계산 영향 없음", "none");
   }
   function renderRivenSelects() {
     const html = rivenOptionsHtml();
@@ -724,10 +776,11 @@ self.onmessage = function (ev) {
     const r = {}, info = [];
     rows.forEach(({ k, v, inc }, i) => {
       if (!k || !v) return;
-      const val = (i === 3 ? -1 : 1) * (k === "ic" ? Math.abs(v) : Math.abs(v) / 100);
+      if (k === "x_faction") k = "fac_g";      // older links: one "faction" stat
+      const u = (RIV_D[k] || {}).unit;
+      const val = (i === 3 ? -1 : 1) * (u === "n" || u === "m" || u === "s" ? Math.abs(v) : Math.abs(v) / 100);
       info.push({ k, v: val, inc });
-      if (inc && !k.startsWith("x_") && k in RIV_KO) r[k] = (r[k] || 0) + val;
-      else if (inc && RIV_HEAVY[k.slice(2)]) { const e = RIV_HEAVY[k.slice(2)]; r[e] = (r[e] || 0) + val; }
+      if (inc) addRivEff(r, k, val);
     });
     return { eff: r, info };
   }
@@ -735,7 +788,7 @@ self.onmessage = function (ev) {
     const ks = [...d.querySelectorAll(".crk")], vs = [...d.querySelectorAll(".crv")];
     return parseRiven(ks.map((el, i) => ({ k: el.value, v: +vs[i].value, inc: true })));
   }
-  const rivenText = (info) => info.map((x) => `${x.v < 0 ? "부정 " : ""}${RIV_KO[x.k] || (RIV_OTHER.gun.concat(RIV_OTHER.melee).find((o) => "x_" + o[0] === x.k) || [0, x.k])[1]} ${x.v > 0 ? "+" : "−"}${x.k === "ic" ? Math.abs(x.v).toFixed(0) : pct(Math.abs(x.v), Math.abs(Math.round(x.v * 1000) % 10) ? 1 : 0)}`).join(", ");
+  const rivenText = (info) => info.map((x) => `${x.v < 0 ? "부정 " : ""}${RIV_KO[x.k] || x.k} ${x.v > 0 ? "+" : "−"}${rivVal(x.k, x.v)}`).join(", ");
 
   /* ---------------- frames ---------------- */
   const pickedMisc = () => $$("#miscbuffs .mb:checked").map((el) => (BUFFS.misc || []).find((x) => x.id === el.value)).filter(Boolean);
@@ -1006,13 +1059,11 @@ self.onmessage = function (ev) {
     for (const x of plan.out) { if (x.form !== "3+1") continue; const key = x.stats.slice().sort().join(); if (picks.some((p) => p.key === key)) continue; picks.push({ key, stats: x.stats }); if (picks.length >= 4) break; }
     if (!picks.length) { $("#runbtn").disabled = false; $("#progress").hidden = true; renderResults(); return; }
     const mult = 1.2 * RIV_FORM["3+1"].pos, negBase = 1.2 * Math.abs(RIV_FORM["3+1"].neg);
-    const other = (modClass(w) === "melee" ? RIV_OTHER.melee : RIV_OTHER.gun);
-    const neg = modClass(w) === "melee" ? other.find((x) => x[0] === "finisher") : other.find((x) => x[0] === "recoil");
+    const cls = modClass(w), neg = cls === "melee" ? "x_finisher" : "x_recoil";
     const rivs = picks.map((p) => {
-      const eff = {}, info = [];
-      for (const k of p.stats) { eff[k] = rivBase(plan.table, k) * mult; info.push({ k, v: eff[k], inc: true }); }
-      if (neg) info.push({ k: "x_" + neg[0], v: -neg[2] * negBase, inc: true });
-      return { eff, info };
+      const info = p.stats.map((k) => ({ k, v: rivBaseOf(cls, k) * mult, inc: true }));
+      info.push({ k: neg, v: -rivBaseOf(cls, neg) * negBase, inc: true });
+      return { eff: effFromStats(info.map((x) => [x.k, x.v])), info };
     });
     const jobs2 = [];
     rivs.forEach((rv, i) => jobs2.push({ tag: "riv" + i, riven: rv.eff, locked: ["__riven"], valOptions: [top0.val], arcOptions: [top0.arcane], beam: 70 }));
@@ -1463,9 +1514,24 @@ self.onmessage = function (ev) {
   /* ---------------- riven advisor ---------------- */
   // every riven stat combo in every slot of a riven-free build (score relative to that build)
   function rivenCombos(top, ref) {
-    const cls = modClass(st.weapon), atk = st.weapon.attacks[st.atk];
-    const table = RIV[cls] || RIV.rifle;
-    const stats = Object.keys(table).filter((k) => !(k === "ic" && atk.kind !== "heavy" && atk.kind !== "glaive")).concat(Object.keys(SPLICE_ELEM));
+    const cls = modClass(st.weapon), atk = st.weapon.attacks[st.atk], o = st.results.o;
+    const table = Object.fromEntries(RIV_DEF.map((d) => [d.k, rivBaseOf(cls, d.k)]));
+    const heavyAtk = atk.kind === "heavy" || atk.kind === "glaive";
+    const fac1 = o.factions.length === 1 ? o.factions[0] : null;
+    // candidates: every stat that can change kill speed here (faction damage only against a single chosen faction,
+    // weak-point stats only with headshots on, heavy-attack stats only for heavy attacks)
+    let cand = RIV_DEF.filter((d) => rivFits(d, cls) && (d.grp === "dmg" || d.grp === "splice" || (d.grp === "heavy" && heavyAtk)) && d.eff !== null && rivBaseOf(cls, d.k) > 0)
+      .filter((d) => !(d.k === "ic" && !heavyAtk) && !((d.k === "reload" || d.k === "mag") && !atk.mag) && !(d.k === "x_pt" && o.scenario !== "crowd"))
+      .filter((d) => !(d.eff && d.eff.bane) || d.eff.bane === fac1)
+      .filter((d) => !["wpd", "wpcc"].includes(d.k) || o.hs > 0)
+      .filter((d) => !["heavyd", "windup"].includes(d.k) || heavyAtk)
+      .filter((d) => !["ammoeff", "x_ammo"].includes(d.k))
+      .map((d) => d.k);
+    // screen: each stat alone as an extra mod; the combo search keeps the 11 best plain stats and the 3 best spliced ones
+    const m31 = 1.2 * RIV_FORM["3+1"].pos;
+    const gain = Object.fromEntries(cand.map((k) => [k, evalBuild(top.ids.concat(["__riven"]), top.val, top.arcane, null, addRivEff({}, k, rivBaseOf(cls, k) * m31)).score / ref]));
+    const pick = (l, n) => l.sort((a, b) => gain[b] - gain[a]).slice(0, n);
+    const stats = pick(cand.filter((k) => !SPLICED.has(k)), 11).concat(pick(cand.filter((k) => SPLICED.has(k)), 3));
     const out = [];
     for (const form of ["3+1", "2+1"]) {
       const n = form === "3+1" ? 3 : 2, mult = 1.2 * RIV_FORM[form].pos;
@@ -1476,55 +1542,46 @@ self.onmessage = function (ev) {
         if (MOD_BY_ID[top.ids[i]] && MOD_BY_ID[top.ids[i]].exilus) continue;     // a riven can't go in the exilus slot
         const rest = top.ids.filter((_, j) => j !== i);
         for (const c of combos) {
-          const riv = {}; for (const k of c) riv[k] = rivBase(table, k) * mult;
+          const riv = effFromStats(c.map((k) => [k, rivBaseOf(cls, k) * mult]));
           const s = evalBuild(rest.concat(["__riven"]), top.val, top.arcane, null, riv).score / ref;
           out.push({ form, slot: top.ids[i], stats: c, s });
         }
       }
     }
     out.sort((a, b) => b.s - a.s);
-    return { out, table, stats };
+    return { out, table, stats, cls };
   }
+  const heavyAtkOf = (atk) => atk.kind === "heavy" || atk.kind === "glaive";
   function rivenPlan(top, ref) {
     const cls = modClass(st.weapon), atk = st.weapon.attacks[st.atk];
     const cached = st.results && st.results.rivPlan && st.results.rivPlanTop === top ? st.results.rivPlan : null;
     const { out, table } = cached || rivenCombos(top, ref);
     const best3 = out.filter((x) => x.form === "3+1").slice(0, 3), best2 = out.filter((x) => x.form === "2+1").slice(0, 2);
-    const rangeTxt = (k, form) => { const b = rivBase(table, k) * 1.2 * RIV_FORM[form].pos; return k === "ic" ? `${(b * 0.9).toFixed(0)}~${(b * 1.1).toFixed(0)}` : `${pct(b * 0.9, 1)}~${pct(b * 1.1, 1)}`; };
+    const rangeTxt = (k, form) => { const b = rivBaseOf(cls, k) * 1.2 * RIV_FORM[form].pos; return `${rivVal(k, b * 0.9)}~${rivVal(k, b * 1.1)}`; };
     const row = (x) => `<tr><td>${RIV_FORM[x.form].ko}</td><td>${x.stats.map((k) => `${RIV_KO[k]} <small>(${rangeTxt(k, x.form)})</small>`).join("<br>")}</td><td>${esc(modName(x.slot))}</td><td class="num">×${x.s.toFixed(2)}</td></tr>`;
     // negatives: modeled via evaluation, others by rule
     const base = top.ids.slice(), bestSlot = out[0] ? out[0].slot : top.ids[top.ids.length - 1];
     const restB = base.filter((id) => id !== bestSlot);
-    const posRiv = {}; for (const k of out[0].stats) posRiv[k] = rivBase(table, k) * 1.2 * RIV_FORM["3+1"].pos;
+    const posPairs = out[0].stats.map((k) => [k, rivBaseOf(cls, k) * 1.2 * RIV_FORM["3+1"].pos]);
+    const posRiv = effFromStats(posPairs);
     const withPos = evalBuild(restB.concat(["__riven"]), top.val, top.arcane, null, posRiv).score;
     const negRows = [];
-    for (const k of Object.keys(table)) {
-      if (out[0].stats.includes(k)) continue;
-      if (k === "sd") continue;
-      if (k === "ic") continue;   // rivens never roll negative Initial Combo (wiki Melee Combo)
-      const riv = Object.assign({}, posRiv, { [k]: table[k] * 1.2 * RIV_FORM["3+1"].neg });
-      const s = evalBuild(restB.concat(["__riven"]), top.val, top.arcane, null, riv).score / withPos;
-      const isElem = ["heat", "cold", "elec", "tox"].includes(k);
-      negRows.push({ ko: RIV_KO[k], s, note: isElem && s >= 0.97 ? "이 원소 모드를 안 쓰는 세팅이라 무해. 그 원소를 쓰면 치명" : "" });
-    }
-    const other = cls === "melee" ? RIV_OTHER.melee : RIV_OTHER.gun;
-    for (const [k, ko, tv] of other) {
-      let s = 1, note = "";
-      if (k === "range") { s = atk.kind === "melee" ? 0.8 : atk.kind === "heavy" && atk.radius ? 0.85 : 1; note = atk.kind === "melee" ? "휘두르기 사거리 감소" : atk.radius ? "슬램 반경 감소" : "투척·폭발에는 영향 없음"; }
-      else if ((RIV_HEAVY[k] && (atk.kind === "heavy" || atk.kind === "glaive")) || (k === "combochance" && atk.kind === "melee" && st.results.o.comboWindow > 0)) {
-        // modeled: combo count chance / heavy attack efficiency change how much combo is back by the next heavy attack
-        const riv = Object.assign({}, posRiv, { [RIV_HEAVY[k]]: -tv * 1.2 * Math.abs(RIV_FORM["3+1"].neg) });
-        s = evalBuild(restB.concat(["__riven"]), top.val, top.arcane, null, riv).score / withPos;
-        note = atk.kind === "melee" ? (s >= 0.97 ? "연속기 배율을 쓰는 모드가 없어 거의 무해" : "연속기가 느리게 쌓여 블러드 러시·위핑 운즈 등이 약해짐")
-          : s >= 0.97 ? "강공 사이에 초기 연속기가 다 차서 거의 무해" : "강공 간격이 짧아 초기 연속기(초당 40 회복)가 덜 찬 채로 터짐";
-      }
-      else if (k === "combochance" || k === "combodur") { s = atk.kind === "melee" ? 0.9 : 1; note = atk.kind === "melee" ? "연속기 유지가 느려짐" : "초기 연속기로 유지되어 영향 없음"; }
-      else if (k === "hae") { s = 1; note = "강공을 쓰지 않아 무관"; }
-      else if (k === "faction") { s = 0.55; note = "그 팩션 상대 −45%. 다른 팩션엔 무해"; }
-      else if (k === "speed") { s = 0.97; note = "투사체 무기만 사거리·명중 영향"; }
-      else if (k === "ammo") { s = 0.97; note = "장기전 탄약 압박"; }
-      else if (k === "pt") { s = atk.punch ? 1 : 0.97; note = "관통 모드 안 쓰면 무해"; }
-      negRows.push({ ko, s, note });
+    // every stat a riven can roll as a negative (splice results and Initial Combo can't be negative)
+    for (const d of RIV_DEF) {
+      if (!rivFits(d, cls) || d.grp === "splice" || d.k === "ic" || out[0].stats.includes(d.k) || !rivBaseOf(cls, d.k)) continue;
+      const nv = -(d.negBase || rivBaseOf(cls, d.k)) * 1.2 * Math.abs(RIV_FORM["3+1"].neg);
+      let s = 1, note = d.note || "";
+      if (d.eff !== null && d.k !== "x_ammo") {
+        s = evalBuild(restB.concat(["__riven"]), top.val, top.arcane, null, effFromStats(posPairs.concat([[d.k, nv]]))).score / withPos;
+        if (["heat", "cold", "elec", "tox"].includes(d.k) && s >= 0.97) note = "이 원소 모드를 안 쓰는 세팅이라 무해. 그 원소를 쓰면 치명";
+        else if (d.eff && d.eff.bane) note = s >= 0.97 ? "그 팩션 상대만 약해짐 (다른 팩션엔 무해)" : "그 팩션 상대만 약해짐";
+        else if (d.k === "x_combochance") note = atk.kind === "melee" ? (s >= 0.97 ? "연속기 배율을 쓰는 모드가 없어 거의 무해" : "연속기가 느리게 쌓여 블러드 러시·위핑 운즈 등이 약해짐") : heavyAtkOf(atk) ? (s >= 0.97 ? "강공 사이에 초기 연속기가 다 차서 거의 무해" : "강공 간격이 짧아 초기 연속기가 덜 찬 채로 터짐") : "";
+        else if (d.k === "x_hae") note = heavyAtkOf(atk) ? "" : "강공을 쓰지 않아 무관";
+      } else if (d.k === "x_range") note = atk.kind === "melee" ? "휘두르기 사거리만 줄어듦 (계산 미반영, 체감상 불리)" : "투척·폭발에는 영향 없음";
+      else if (d.k === "x_ammo") { note = "장기전 탄약 압박 (처치 속도 영향 없음)"; }
+      else if (d.k === "x_combodur") note = "연속기 유지 시간만 줄어듦 (계산 미반영)";
+      else note = "처치 속도 영향 없음";
+      negRows.push({ ko: d.ko, s, note });
     }
     negRows.sort((a, b) => b.s - a.s);
     const grade = (s) => s >= 0.97 ? '<span class="g ok">무해</span>' : s >= 0.85 ? '<span class="g mid">경미</span>' : '<span class="g bad">치명</span>';
@@ -1579,8 +1636,7 @@ self.onmessage = function (ev) {
   }
   function ownedRivenSection(owned, R, top) {
     const inc = owned.info.filter((x) => x.inc), exc = owned.info.filter((x) => !x.inc);
-    const other = Object.fromEntries(RIV_OTHER.gun.concat(RIV_OTHER.melee).map(([k, v]) => ["x_" + k, v]));
-    const txt = (x) => `${RIV_KO[x.k] || other[x.k] || x.k} ${x.k === "ic" ? x.v.toFixed(0) : pct(x.v, 1)}${x.k.startsWith("x_") && !RIV_HEAVY[x.k.slice(2)] ? " (피해 계산 영향 없음)" : ""}`;
+    const txt = (x) => { const d = RIV_D[x.k] || {}; return `${RIV_KO[x.k] || x.k} ${x.v < 0 ? "−" : ""}${rivVal(x.k, x.v)}${d.eff === null ? " (처치 속도 영향 없음)" : d.note ? ` (${d.note})` : ""}`; };
     let grade = "";
     if (R && R.free && R.free.length) {
       // grade: the owned riven against the best riven worth rolling, both swapped into the same riven-free build
@@ -1594,8 +1650,8 @@ self.onmessage = function (ev) {
       const full = top.score && R.free[0].score ? evalBuild(top.ids, top.val, top.arcane).score / refF : null;
       // what each positive stat of the owned riven is worth (taken out one at a time)
       const rest = F.ids.filter((x) => x !== bestSlot).concat(["__riven"]);
-      const per = inc.filter((x) => x.v > 0 && x.k in RIV_KO).map((x) => {
-        const e = Object.assign({}, owned.eff); delete e[x.k];
+      const per = inc.filter((x) => x.v > 0 && RIV_D[x.k] && RIV_D[x.k].eff !== null).map((x) => {
+        const e = effFromStats(inc.filter((y) => y !== x).map((y) => [y.k, y.v]));
         const v = evalBuild(rest, F.val, F.arcane, null, e).score / refF;
         return { x, loss: sOwn / v };
       }).sort((a, b) => b.loss - a.loss);
