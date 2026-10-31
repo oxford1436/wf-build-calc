@@ -334,13 +334,19 @@
     let ptot = 0; for (const k in procs) ptot += procs[k];
     const has = (b) => (share[b] || 0) >= 0.05 || Object.keys(COMP).some((x) => (share[x] || 0) >= 0.05 && COMP[x].includes(b));
     let d = 0;
+    const purePhys = c.every((T) => PHYS_T.includes(T));
     for (const T of c) {
-      if (PHYS_T.includes(T)) { if (Math.max(share[T] || 0, ptot > 0 ? (procs[T] || 0) / ptot : 0) < 0.05) d += 1; }
+      if (purePhys) {
+        // a physical-only concept: that type has to lead the physical damage
+        const mx = Math.max(...PHYS_T.filter((x) => !c.includes(x)).map((x) => share[x] || 0));
+        if ((share[T] || 0) < mx) d += Math.min(1, (mx - (share[T] || 0)) / Math.max(0.01, mx));
+      } else if (PHYS_T.includes(T)) { if (Math.max(share[T] || 0, ptot > 0 ? (procs[T] || 0) / ptot : 0) < 0.05) d += 1; }
       else if ((share[T] || 0) < 0.1) d += COMP[T] ? 1 - 0.5 * COMP[T].filter(has).length / 2 : 1;
     }
     if (o.conceptOnly) {
       const parts = new Set(c.flatMap((T) => COMP[T] || []));
-      for (const k in share) if (!PHYS_T.includes(k) && !c.includes(k) && !parts.has(k) && k !== "void" && k !== "true" && share[k] >= 0.1) d += 1;
+      // other elements: a leftover component of a wanted combined element counts less (it is on the way there)
+      for (const k in share) if (!PHYS_T.includes(k) && !c.includes(k) && k !== "void" && k !== "true" && share[k] >= 0.1) d += parts.has(k) ? 0.3 : 1;
     }
     return d;
   }

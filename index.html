@@ -121,6 +121,9 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
 .swaps .sw s{color:var(--muted)}.swaps .sw i{color:var(--muted);font-style:normal}
 .swaps .sw em{font-style:normal;font-family:var(--f-mono);color:var(--good)}
 .swaps small{flex-basis:100%;color:var(--muted);font-size:11px}
+.ccmp td{vertical-align:middle}.ccmp tr.no td{color:var(--muted)}.ccmp tr.no b{font-weight:400}
+.cbar{display:inline-block;width:70px;height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-right:8px;vertical-align:middle}
+.cbar i{display:block;height:100%;background:var(--brass)}
 .sharebar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-bottom:12px}
 .sharebar small{color:var(--muted);font-size:12px;flex:1 1 16em}
 .sharemsg{flex-basis:100%;margin:0;font-size:12px;color:var(--ink)}
@@ -511,6 +514,12 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.20", date: "2026-10-31", title: "④ 속성 조합별 최고 세팅",
+      items: [
+        "결과 ④에 '속성 조합별 최고 세팅' 표 추가: 단일 원소 10종(바이러스·부식·가스·방사능·폭발·자성·화염·냉기·전기·독), 복합+단일 12종(바이러스+화염 등), 물리 3종(베기·관통·충격)마다 원소·물리 모드만 다시 골라 처치 속도(추천 = 100%), 최종 속성, 바뀐 모드를 보여 줍니다. 만들 수 없는 조합은 따로 표시합니다.",
+        "이 표는 추천 결과가 나온 뒤 이어서 계산합니다 (약 1분, 진행률 표시). 그동안 다른 결과는 바로 볼 수 있고, 새로 계산을 누르면 진행 중이던 표 계산은 멈춥니다.",
+        "속성 콘셉트: 물리 하나만 고르면 그 물리 속성이 가장 큰 세팅을, 복합 원소를 고르면 남는 재료 원소가 없는 세팅을 우선합니다.",
+      ] },
     { v: "1.19", date: "2026-10-31", title: "리벤 접합: 복합 원소",
       items: [
         "리벤 가이드가 리벤 스플라이서 접합(Update 44.1)으로 만드는 복합 원소(바이러스·부식·가스·방사능·폭발·자성)도 후보로 넣습니다. 리벤 하나에 접합 옵션은 하나까지만 고르고, 수치는 원소 기본값(단일 원소와 같음) 기준입니다. 복합 원소는 모드의 단일 원소와 합쳐지지 않고 그대로 들어갑니다.",
@@ -989,13 +998,19 @@ header.top p{flex-basis:100%}
     let ptot = 0; for (const k in procs) ptot += procs[k];
     const has = (b) => (share[b] || 0) >= 0.05 || Object.keys(COMP).some((x) => (share[x] || 0) >= 0.05 && COMP[x].includes(b));
     let d = 0;
+    const purePhys = c.every((T) => PHYS_T.includes(T));
     for (const T of c) {
-      if (PHYS_T.includes(T)) { if (Math.max(share[T] || 0, ptot > 0 ? (procs[T] || 0) / ptot : 0) < 0.05) d += 1; }
+      if (purePhys) {
+        // a physical-only concept: that type has to lead the physical damage
+        const mx = Math.max(...PHYS_T.filter((x) => !c.includes(x)).map((x) => share[x] || 0));
+        if ((share[T] || 0) < mx) d += Math.min(1, (mx - (share[T] || 0)) / Math.max(0.01, mx));
+      } else if (PHYS_T.includes(T)) { if (Math.max(share[T] || 0, ptot > 0 ? (procs[T] || 0) / ptot : 0) < 0.05) d += 1; }
       else if ((share[T] || 0) < 0.1) d += COMP[T] ? 1 - 0.5 * COMP[T].filter(has).length / 2 : 1;
     }
     if (o.conceptOnly) {
       const parts = new Set(c.flatMap((T) => COMP[T] || []));
-      for (const k in share) if (!PHYS_T.includes(k) && !c.includes(k) && !parts.has(k) && k !== "void" && k !== "true" && share[k] >= 0.1) d += 1;
+      // other elements: a leftover component of a wanted combined element counts less (it is on the way there)
+      for (const k in share) if (!PHYS_T.includes(k) && !c.includes(k) && k !== "void" && k !== "true" && share[k] >= 0.1) d += parts.has(k) ? 0.3 : 1;
     }
     return d;
   }
@@ -2357,6 +2372,12 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.20", date: "2026-10-31", title: "④ 속성 조합별 최고 세팅",
+      items: [
+        "결과 ④에 '속성 조합별 최고 세팅' 표 추가: 단일 원소 10종(바이러스·부식·가스·방사능·폭발·자성·화염·냉기·전기·독), 복합+단일 12종(바이러스+화염 등), 물리 3종(베기·관통·충격)마다 원소·물리 모드만 다시 골라 처치 속도(추천 = 100%), 최종 속성, 바뀐 모드를 보여 줍니다. 만들 수 없는 조합은 따로 표시합니다.",
+        "이 표는 추천 결과가 나온 뒤 이어서 계산합니다 (약 1분, 진행률 표시). 그동안 다른 결과는 바로 볼 수 있고, 새로 계산을 누르면 진행 중이던 표 계산은 멈춥니다.",
+        "속성 콘셉트: 물리 하나만 고르면 그 물리 속성이 가장 큰 세팅을, 복합 원소를 고르면 남는 재료 원소가 없는 세팅을 우선합니다.",
+      ] },
     { v: "1.19", date: "2026-10-31", title: "리벤 접합: 복합 원소",
       items: [
         "리벤 가이드가 리벤 스플라이서 접합(Update 44.1)으로 만드는 복합 원소(바이러스·부식·가스·방사능·폭발·자성)도 후보로 넣습니다. 리벤 하나에 접합 옵션은 하나까지만 고르고, 수치는 원소 기본값(단일 원소와 같음) 기준입니다. 복합 원소는 모드의 단일 원소와 합쳐지지 않고 그대로 들어갑니다.",
@@ -2835,13 +2856,19 @@ header.top p{flex-basis:100%}
     let ptot = 0; for (const k in procs) ptot += procs[k];
     const has = (b) => (share[b] || 0) >= 0.05 || Object.keys(COMP).some((x) => (share[x] || 0) >= 0.05 && COMP[x].includes(b));
     let d = 0;
+    const purePhys = c.every((T) => PHYS_T.includes(T));
     for (const T of c) {
-      if (PHYS_T.includes(T)) { if (Math.max(share[T] || 0, ptot > 0 ? (procs[T] || 0) / ptot : 0) < 0.05) d += 1; }
+      if (purePhys) {
+        // a physical-only concept: that type has to lead the physical damage
+        const mx = Math.max(...PHYS_T.filter((x) => !c.includes(x)).map((x) => share[x] || 0));
+        if ((share[T] || 0) < mx) d += Math.min(1, (mx - (share[T] || 0)) / Math.max(0.01, mx));
+      } else if (PHYS_T.includes(T)) { if (Math.max(share[T] || 0, ptot > 0 ? (procs[T] || 0) / ptot : 0) < 0.05) d += 1; }
       else if ((share[T] || 0) < 0.1) d += COMP[T] ? 1 - 0.5 * COMP[T].filter(has).length / 2 : 1;
     }
     if (o.conceptOnly) {
       const parts = new Set(c.flatMap((T) => COMP[T] || []));
-      for (const k in share) if (!PHYS_T.includes(k) && !c.includes(k) && !parts.has(k) && k !== "void" && k !== "true" && share[k] >= 0.1) d += 1;
+      // other elements: a leftover component of a wanted combined element counts less (it is on the way there)
+      for (const k in share) if (!PHYS_T.includes(k) && !c.includes(k) && k !== "void" && k !== "true" && share[k] >= 0.1) d += parts.has(k) ? 0.3 : 1;
     }
     return d;
   }
@@ -4754,8 +4781,11 @@ self.onmessage = function (ev) {
   }
   self.postMessage({ type: "done", out });
 };`;
-  let worker = null;
+  let worker = null, bgBusy = false;
   const getWorker = () => worker || (worker = new Worker(URL.createObjectURL(new Blob([workerSrc], { type: "text/javascript" }))));
+  // a new calculation while a background phase (④ element combinations) still runs: drop that worker so its late answer
+  // can't land in the new run
+  const freshWorker = () => { if (bgBusy && worker) { worker.terminate(); worker = null; } bgBusy = false; return getWorker(); };
 
   /* ---------------- state ---------------- */
   const st = { weapon: WEAPONS.find((w) => w.id === "coda_pathocyst") || WEAPONS[0], atk: 0, results: null };
@@ -5520,7 +5550,7 @@ self.onmessage = function (ev) {
     const jobs = [{ tag: "main" }];
     if (o.ext.active || o.frameArcs.length) jobs.push({ tag: "nobuff", optsPatch: { ext: {}, frameArcs: [], hs: $("#aimmods").checked && w.cls !== "melee" ? 0.5 : 0 } });
     $("#runbtn").disabled = true; $("#progress").hidden = false; $("#progress .bar").style.width = "0%";
-    const wk = getWorker();
+    const wk = freshWorker();
     wk.onmessage = (ev) => {
       if (ev.data.type === "progress") { $("#progress .bar").style.width = (ev.data.p * 100).toFixed(0) + "%"; return; }
       const out = {}; for (const x of ev.data.out) out[x.tag] = x.res;
@@ -5529,10 +5559,59 @@ self.onmessage = function (ev) {
       $("#runbtn").disabled = false; $("#progress").hidden = true;
       renderResults();
       $("#results").scrollIntoView({ behavior: "smooth", block: "start" });
+      conceptPhase(wk, w, o, cands);
     };
     wk.onerror = (e) => { $("#runbtn").disabled = false; $("#progress").hidden = true; $("#results").innerHTML = `<div class="placeholder"><h3>계산 중 오류</h3><p>${esc(e.message)}</p></div>`; };
     wk.postMessage({ weapon: JSON.parse(JSON.stringify(w)), atk: st.atk, opts: o, cands, locked, beam: 100, valOptions: valOptions(), arcOptions: arcOptions(), riven: owned ? owned.eff : null, jobs });
   }
+
+  // ④ element combinations: keep every other mod of the recommendation and re-pick only the element and physical-damage
+  // mods for each concept (single, combined, combined + single, physical). Quick searches that run after the results show.
+  const CONCEPT_SET = (() => {
+    const singles = ["viral", "corr", "gas", "rad", "blast", "mag", "heat", "cold", "elec", "tox"].map((t) => [t]);
+    const plus = { viral: ["heat", "elec"], corr: ["heat", "cold"], gas: ["cold", "elec"], rad: ["cold", "tox"], blast: ["elec", "tox"], mag: ["heat", "tox"] };
+    return singles.concat(Object.entries(plus).flatMap(([c, xs]) => xs.map((x) => [c, x])), [["slash"], ["punct"], ["impact"]]);
+  })();
+  const ELEM_KEYS = new Set(["heat", "cold", "elec", "tox", "impact", "punct", "slash", "viralm", "corrm", "gasm", "radm", "blastm", "magm"]);
+  const isElemMod = (id) => { const m = MOD_BY_ID[id]; if (!m) return false; return [m.eff || {}].concat((m.cond || []).map((c) => c.eff || {})).some((e) => Object.keys(e).some((k) => ELEM_KEYS.has(k))); };
+  function conceptPhase(wk, w, o, cands) {
+    const R = st.results; if (!R || !R.res || !R.res.length) return;
+    const top = R.res[0];
+    const locked = top.ids.filter((id) => !isElemMod(id));
+    if (locked.length === top.ids.length) { R.concepts = []; updateConceptCard(); return; }
+    const jobs = CONCEPT_SET.map((c, i) => ({ tag: "c" + i, locked, optsPatch: { concept: c, conceptOnly: true }, valOptions: [top.val], arcOptions: [top.arcane], beam: 30 }));
+    R.concepts = null; R.conceptProg = 0; bgBusy = true; updateConceptCard();
+    wk.onmessage = (ev) => {
+      if (st.results !== R) return;
+      if (ev.data.type === "progress") { R.conceptProg = ev.data.p; updateConceptCard(); return; }
+      bgBusy = false;
+      const out = {}; for (const x of ev.data.out) out[x.tag] = x.res;
+      const ref = evalBuild(top.ids, top.val, top.arcane).score;
+      R.concepts = CONCEPT_SET.map((c, i) => {
+        const b = out["c" + i] && out["c" + i][0]; if (!b) return null;
+        const oc = Object.assign({}, R.o, { concept: c, conceptOnly: true });
+        const r = evalBuild(b.ids, b.val, b.arcane, oc);
+        return { c, ids: b.ids, r, k: r.score / ref, ok: r.conceptOk !== false };
+      }).filter(Boolean).sort((a, b) => (b.ok - a.ok) || (b.k - a.k));
+      updateConceptCard();
+    };
+    wk.postMessage({ weapon: JSON.parse(JSON.stringify(w)), atk: st.atk, opts: o, cands, locked, beam: 30, valOptions: [top.val], arcOptions: [top.arcane], riven: R.owned ? R.owned.eff : null, jobs });
+  }
+  function conceptCardHtml() {
+    const R = st.results, top = R.res[0];
+    const head = `<h3>속성 조합별 최고 세팅 <small>원소·물리 모드만 바꾸고 나머지는 추천 그대로</small></h3>`;
+    if (!R.concepts) return head + `<p class="hint" style="margin:0">계산 중… ${Math.round((R.conceptProg || 0) * 100)}% — 단일 원소 10종, 복합+단일 12종, 물리 3종을 하나씩 다시 짜고 있습니다.</p>`;
+    if (!R.concepts.length) return head + `<p class="hint" style="margin:0">추천 세팅에 원소·물리 모드가 없어 비교할 조합이 없습니다.</p>`;
+    const name = (c) => c.map((t) => TYPE_KO[t]).join(" + ");
+    const maxK = Math.max(1, ...R.concepts.map((x) => x.k));
+    return head + `<div class="tscroll"><table class="tbl ccmp"><thead><tr><th>속성 조합</th><th>처치 속도 <small>추천 = 100%</small></th><th>최종 속성</th><th>바뀐 모드</th></tr></thead><tbody>
+      ${R.concepts.map((x) => `<tr${x.ok ? "" : ' class="no"'}><td><b>${name(x.c)}</b></td>
+        <td class="num"><span class="cbar"><i style="width:${Math.min(100, (x.k / maxK) * 100).toFixed(0)}%"></i></span>${x.ok ? pct(x.k, 0) : "만들 수 없음"}</td>
+        <td><small>${finalElements(x.r)}</small></td><td class="modlist">${x.ids.filter((id) => !top.ids.includes(id)).map((id) => `<span class="diff">${esc(modName(id))}</span>`).join("") || "<small>추천과 같음</small>"}</td></tr>`).join("")}
+      </tbody></table></div>
+      <p class="hint">"만들 수 없음"은 이 무기·공격으로 그 속성을 충분히 넣지 못하는 조합입니다 (원소는 10% 이상이고 다른 원소 없이, 물리 하나만 고른 줄은 그 물리 속성이 가장 커야 함). 칸 순서까지 반영한 계산이며, 원하는 조합으로 처음부터 다시 짜려면 왼쪽 "속성 콘셉트"에서 고르세요.</p>`;
+  }
+  function updateConceptCard() { const el = document.getElementById("conceptcard"); if (el && st.results) el.innerHTML = conceptCardHtml(); }
 
   // "맞출 예정": after the riven-free search, give the build the best riven worth rolling (3 positives at the middle of
   // their range + a harmless negative) and search the other slots again with it locked — so the recommendation and the
@@ -5566,6 +5645,7 @@ self.onmessage = function (ev) {
       R.rivAlts = rivs.map((rv, i) => out["riv" + i] && out["riv" + i][0] ? { riv: rv, top: out["riv" + i][0] } : null).filter(Boolean);
       renderResults();
       $("#results").scrollIntoView({ behavior: "smooth", block: "start" });
+      conceptPhase(wk, w, o, cands);
     };
     wk.postMessage({ weapon: JSON.parse(JSON.stringify(w)), atk: st.atk, opts: o, cands, locked: [], beam: 70, valOptions: [top0.val], arcOptions: [top0.arcane], riven: null, jobs: jobs2 });
   }
@@ -5713,7 +5793,7 @@ self.onmessage = function (ev) {
       <p class="hint">칸 번호는 게임 모드 화면 순서(윗줄 왼쪽→오른쪽, 그다음 아랫줄)입니다. 막대는 그 칸을 비웠을 때 느려지는 정도, "대신"은 그 칸에 넣을 수 있는 차선 모드와 그때의 처치 속도입니다. ${xa.why ? esc(xa.why) + " " : ""}${o.aim ? "조준·헤드샷 조건 모드는 헤드샷 50%를 가정했습니다." : ""}</p>
       ${ttkTable(r, o)}
     </section>`;
-    let h3 = "", h4 = "", h5 = "";
+    let h3 = "", h4 = `<section class="card" id="conceptcard">${conceptCardHtml()}</section>`, h5 = "";
     if (rm0 === "plan" && R.rivBest) h3 += rivenPremiseSection(R, top, r);
 
     // stats + breakdown
