@@ -1532,6 +1532,7 @@ header.top p{flex-basis:100%}
       const share = {}; for (const k in coef) share[k] = coef[k] / total;
       const bonus = { heat: 0, tox: 0, elec: 0, gas: 0, slash: 0 };
       for (const T of ["heat", "tox", "elec"]) if (L.mp[T] === T && a.elem[T] > 0) bonus[T] = a.elem[T];
+      bonus.gas = Math.max(0, a.extra.gasm || 0);   // gas ticks grow only with standalone Gas mods (wiki), not heat + toxin
       for (const [p, x] of tail) if (L.mp[p] === p && bonus[p] !== undefined) bonus[p] += x;
       // arcane proc stacks (frostbite/blight/flare/voltage)
       let fArc = 1, ms = ms0, cd = cdBase, dmgArc = 0, procs;
@@ -3528,6 +3529,7 @@ header.top p{flex-basis:100%}
       const share = {}; for (const k in coef) share[k] = coef[k] / total;
       const bonus = { heat: 0, tox: 0, elec: 0, gas: 0, slash: 0 };
       for (const T of ["heat", "tox", "elec"]) if (L.mp[T] === T && a.elem[T] > 0) bonus[T] = a.elem[T];
+      bonus.gas = Math.max(0, a.extra.gasm || 0);   // gas ticks grow only with standalone Gas mods (wiki), not heat + toxin
       for (const [p, x] of tail) if (L.mp[p] === p && bonus[p] !== undefined) bonus[p] += x;
       // arcane proc stacks (frostbite/blight/flare/voltage)
       let fArc = 1, ms = ms0, cd = cdBase, dmgArc = 0, procs;
