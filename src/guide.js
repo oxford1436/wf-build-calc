@@ -41,6 +41,8 @@
         <div class="gmeta"><span>마지막 리워크 <b>${esc(g.last_rework || "?")}</b></span><span>정보 확인 <b>${esc(g.checked || "?")}</b></span><span>핵심 어빌리티 <b>${(g.main_slots || []).map(abName).map(esc).join(", ")}</b></span></div>
       </section>
 
+      ${root.WF_FrameCalc ? root.WF_FrameCalc.html(g) : ""}
+
       ${g.duo && typeof g.duo === "object" ? `<section class="card"><h3>두 캐릭터</h3><dl class="gdl gduo">${Object.entries(g.duo).map(([k, v]) => `<dt>${esc(DUO[k] || k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl></section>` : ""}
       ${g.shadow && typeof g.shadow === "object" ? `<section class="card"><h3>섀도우 형태</h3>${g.shadow.summary ? `<p class="gsum" style="font-size:14px">${esc(g.shadow.summary)}</p>` : ""}
         ${(g.shadow.abilities || []).length ? `<div class="gab">${g.shadow.abilities.map((a) => `<div class="gabc"><div class="gabt"><span class="gslot">${a.slot}</span><b>${esc(a.name_ko)}</b></div><small class="gen">${esc(a.name_en || "")}</small><p>${esc(a.note || "")}</p></div>`).join("")}</div>` : ""}
@@ -113,5 +115,6 @@
       : id ? `<div class="placeholder"><h3>불러오는 중…</h3></div>` : `<div class="placeholder"><h3>정리된 워프레임이 아직 없습니다</h3></div>`}</div></div>`;
     const sel = box.querySelector(".gsel");
     if (sel) sel.addEventListener("change", () => { location.hash = "#frames/" + sel.value; });
+    if (g && root.WF_FrameCalc) root.WF_FrameCalc.bind(box, g);
   };
 })(typeof window !== "undefined" ? window : globalThis);
