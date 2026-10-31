@@ -1100,7 +1100,7 @@ self.onmessage = function (ev) {
         <td class="num"><span class="cbar"><i style="width:${Math.min(100, (x.k / maxK) * 100).toFixed(0)}%"></i></span>${x.ok ? pct(x.k, 0) : "만들 수 없음"}</td>
         <td><small>${finalElements(x.r)}</small></td><td class="modlist">${x.ids.filter((id) => !top.ids.includes(id)).map((id) => `<span class="diff">${esc(modName(id))}</span>`).join("") || "<small>추천과 같음</small>"}</td></tr>`).join("")}
       </tbody></table></div>
-      <p class="hint">"만들 수 없음"은 이 무기·공격으로 그 속성을 충분히 넣지 못하는 조합입니다 (원소는 10% 이상이고 다른 원소 없이, 물리 하나만 고른 줄은 그 물리 속성이 가장 커야 함). 칸 순서까지 반영한 계산이며, 원하는 조합으로 처음부터 다시 짜려면 왼쪽 "속성 콘셉트"에서 고르세요.</p>`;
+      <p class="hint">"만들 수 없음"은 추천 세팅에서 원소·물리 모드가 차지한 칸 수 안에서는 그 속성을 충분히 넣지 못하는 조합입니다 (원소는 10% 이상이고 다른 원소 없이, 물리 하나만 고른 줄은 그 물리 속성이 가장 커야 함). 칸이 더 필요한 조합(예: 원소 모드가 1칸뿐인 세팅에서 바이러스 + 화염)도 여기서는 만들 수 없음으로 나옵니다. 칸 순서까지 반영한 계산이며, 원하는 조합으로 처음부터 다시 짜려면 왼쪽 "속성 콘셉트"에서 고르세요.</p>`;
   }
   // Incarnon evolutions with the recommended build kept: each other perk of a tier, swapped in alone
   function evoCompareHtml(top, ref) {
@@ -1500,6 +1500,9 @@ self.onmessage = function (ev) {
     const why = [];
     if (x.ids.includes("__riven") && !top.ids.includes("__riven")) why.push(`이 세팅에는 리벤(${esc(rivenText(x.rivInfo || []))})이 들어 있는데, 추천 세팅은 <b>리벤 없이</b> 찾은 세팅입니다${$("#rivmode").value === "plan" && st.results.rivBest ? ' (리벤을 넣은 기준은 표의 "추천 + 리벤" 줄)' : ""}. 리벤 한 장이 좋은 모드 두 장 몫을 하기 때문에 이런 차이가 납니다 — 이 버튼은 입력하신 리벤 수치를 그대로 고정하고 나머지 칸을 다시 고릅니다. <button type="button" class="ghostbtn rivrerun" data-set="${esc(x.name)}">이 리벤으로 추천 다시 계산</button>`);
     if (x.arcane && ARC[x.arcane] && ARC[x.arcane].manual) why.push(`${esc(ARC[x.arcane].ko)}는 조건부 아케인이라 자동 추천 후보에서 빠집니다 (조건을 계속 채운다는 가정으로 계산한 값).`);
+    // an element concept was chosen: the recommendation was searched inside it, a set outside it can be faster
+    const oc = st.results && st.results.o && st.results.o.concept;
+    if (oc && oc.length && x.r && x.r.conceptD > 0) why.push(`추천 세팅은 고른 속성 콘셉트(${oc.map((t) => TYPE_KO[t]).join(" + ")}${st.results.o.conceptOnly ? ", 이 속성만" : ""}) 안에서 찾은 세팅이고, 이 세팅은 그 콘셉트 밖이라 더 빠를 수 있습니다. 콘셉트를 비우면 둘을 같은 조건으로 비교합니다.`);
     if (!why.length) why.push("자동 탐색이 놓친 조합입니다. 그 세팅을 그대로 쓰셔도 되고, 알려 주시면 탐색을 보강하겠습니다.");
     return why.join(" ");
   }
