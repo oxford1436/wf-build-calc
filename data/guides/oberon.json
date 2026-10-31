@@ -152,6 +152,47 @@
       "calc": "45% × 2.00 = 90% → 다운 시간 약 10배",
       "verified": true,
       "source": "https://wiki.warframe.com/w/Renewal"
+    },
+    {
+      "slot": 1,
+      "stat": "strength",
+      "value": "200%(타우 황옥 3개) / 180%(타우 황옥 4개)",
+      "effect": "로어 없이 스마이트 원탭(방사능 상태 적)",
+      "calc": "대상 피해 = 현재 체력 35% × 위력 × (1 + 황옥 '방사능 적 어빌리티 피해'). 타우 황옥 15% × 3 = 45%: 0.35 × 2.00 × 1.45 = 101.5%, × 4 = 60%: 0.35 × 1.80 × 1.60 = 100.8%(75% 상한 전). 황옥은 2·4번으로 먼저 방사능을 묻혀야 적용",
+      "verified": false,
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488920"
+    }
+  ],
+  "mechanics": [
+    {
+      "text": "3번 리뉴얼 방어 버프는 오베론 현재 방어력 기준이고 아군은 2배: 위력 200%·방어력 1,350이면 50m 안 아군 방어력 +2,700(피해 감소 90%, 피해 감소 = 방어력 ÷ (방어력 + 300)). 동면 장치·루어·드론·인질 같은 방어 대상에도 적용",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=421800",
+      "date": "2025-10-25"
+    },
+    {
+      "text": "2번 할로우드 그라운드 위에서는 상태이상 면역·넘어지지 않아 화염 방어 감소를 받지 않으므로 퍼시스턴스는 방어력 700만 맞추면 됨(3·4번 방어 버프로 스틸 파이버 없이 700 초과)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07"
+    },
+    {
+      "text": "2번 장판 도트+4번 증강 할로우드 레코닝 도트에 이식 제이드 스타즈가 반응해 자동 사냥, 방사능 스택으로 아케인 유니버설 폴아웃 오브가 끊이지 않음",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07"
+    },
+    {
+      "text": "이식 제이드 스타즈는 2026-07-22 데브쇼츠 예고 뒤 시야(LOS) 판정이 추가돼 벽 너머 적은 맞히지 못함(시리우스 본인 제외)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470716",
+      "date": "2026-07-22"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
     }
   ],
   "community": [
@@ -495,6 +536,96 @@
         "ability": "미기재"
       },
       "notes": "모드 일부만 명시. 프라임드 플로우는 불필요하다고 함. 같은 토픽 #2624(2026-10-12)는 폴아웃+배터리에 4번을 노리쉬로 교체, #2632(2026-10-20)는 패러시틱 아머 이식으로 아군 방어 2만~4만을 언급"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07",
+      "title": "제이드스타 오베론",
+      "concept": "이식 제이드 스타즈를 2번 장판·4번 증강 도트에 반응시켜 자동 사냥하고 유니버설 폴아웃으로 오브를 무한 수급",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "할로우드 레코닝"
+      ],
+      "arcanes": [
+        "아케인 유니버설 폴아웃"
+      ],
+      "shards": [
+        "타우 황옥(방사능 적 어빌리티 피해) ×4",
+        "노랑(시작 에너지) ×1"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "제이드 스타즈(시리우스)"
+      },
+      "notes": "추천 10. 2번 위에선 상태이상 면역이라 퍼시스턴스는 방어력 700만 맞추면 됨. 3·4번 방어 버프로 스틸 파이버 불필요"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488920",
+      "date": "2026-10-09",
+      "title": "스마이트 원탭 제이드스타 오베론",
+      "concept": "3번 자리 제이드 스타즈, 로어 대신 황옥 샤드로 방사능 적을 스마이트 원탭",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "이퀄리브리엄",
+        "카탈라이징 실드"
+      ],
+      "arcanes": [
+        "아케인 유니버설 폴아웃"
+      ],
+      "shards": [
+        "타우 황옥(방사능 적 어빌리티 피해) ×3~4"
+      ],
+      "helminth": {
+        "replace_slot": 3,
+        "ability": "제이드 스타즈(시리우스)"
+      },
+      "notes": "추천 7. 황옥 3개면 위력 200%, 4개면 180%로 원탭. 2·4번으로 방사능 광역. 실드 370을 못 채워 카탈라이징 실드"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=421800",
+      "date": "2025-10-25",
+      "title": "체방 전도사 오베론",
+      "concept": "방어력을 1,350까지 쌓고 위력 200% 리뉴얼로 50m 안 아군에게 방어력 +2,700을 나눠 주는 체력·방어 서포터",
+      "stats": {
+        "strength": 200,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "카르니스 카라페이스"
+      ],
+      "arcanes": [],
+      "shards": [
+        "타우 파랑(방어력) ×3"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "미기재"
+      },
+      "notes": "추천 12. 오베론 프라임 방어 450+카라페이스 55% = 697, 타우 파랑 방어 3개 → 1,372. 3움브랄이면 기본 방어 1,260"
     }
   ],
   "consensus": {

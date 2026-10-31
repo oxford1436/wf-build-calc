@@ -124,6 +124,32 @@
       "source": "https://wiki.warframe.com/w/Enduring_Bastille"
     }
   ],
+  "mechanics": [
+    {
+      "text": "아케인 스컬프터 발동 어빌(해외 실험 정리): 바우반은 1번(이식 자리 포함)·4번 바스티유·2번 테더-플레셋으로 발동하고, 2번 벡터-오버드라이브 패드는 소환물이 아니라 발동하지 않음(466185 댓글)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=464340",
+      "date": "2026-06-21"
+    },
+    {
+      "text": "세컨더리 포티파이어+스커지(보이드 상태이상)로 오버가드를 15,000까지 쌓고 서컴벤트·밀리 커린 쉬버링으로 생존, 카탈라이징 실드+보조 무기 어거 모드로 실드 게이팅",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=443789",
+      "date": "2026-02-12"
+    },
+    {
+      "text": "중재에서는 벡터-오버드라이브 패드 4개를 한곳에 겹쳐 무기 피해 버프를 중첩",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=497029",
+      "date": "2026-10-31"
+    },
+    {
+      "text": "이식 브라이트보닛은 설치 즉시 첫 파장이 시전 비용보다 많은 에너지를 돌려주고 아케인 스컬프터도 발동해 사실상 무한 에너지. 위력 버프는 약 +71%p(마두라이·그로잉 파워 켠 상태), 6.38초, 반경 15m",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470569",
+      "date": "2026-07-21"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -252,6 +278,54 @@
       "shards": [],
       "helminth": {"replace_slot": null, "ability": "노리쉬(그렌델)"},
       "notes": "댓글 #2409·#2413. 위력은 바스티유 방깎 속도·볼텍스 상태이상에 영향하니 너무 낮추지 말 것, 넓은 곳 정점 볼텍스형이 아니면 거리 145%면 충분. 2번 못 상태이상 확률은 5% 고정"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=443789",
+      "date": "2026-02-12",
+      "title": "폭격기 바우반",
+      "concept": "4번 바스티유 자리에 로어를 넣고 3번 포톤 스트라이크만 쏘는 폭격형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["카탈라이징 실드"],
+      "arcanes": ["아케인 서컴벤트", "세컨더리 포티파이어(무기 아케인)"],
+      "shards": ["빨강(지속) ×3", "노랑(시전 속도) ×1", "보라(이퀄리브리엄 효과) ×1"],
+      "helminth": {"replace_slot": 4, "ability": "로어"},
+      "notes": "추천 19, 리터치 다음 날 글. 생존: 스커지+서컴벤트+밀리 커린(쉬버링)+보조 무기 어거. 댓글: 포티파이어+스커지로 오버가드 15,000"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=466760",
+      "date": "2026-07-03",
+      "title": "어빌딜러 바우반 2종",
+      "concept": "아케인 스컬프터로 포톤 스트라이크를 주력화하고 1번 자리 로어를 넣은 포격형(스마이트 이식 체력 비례 변형 포함)",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": ["아케인 스컬프터"],
+      "shards": ["노랑(시전 속도) ×1", "보라(전기 피해) ×2", "황옥(방사능 적 어빌리티 피해) ×2(스마이트형)"],
+      "helminth": {"replace_slot": 1, "ability": "로어(변형: 스마이트)"},
+      "notes": "추천 12. 3번 증강 포톤 리피터는 실드 게이팅용 에너지 소모 때문에 미채용"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=497029",
+      "date": "2026-10-31",
+      "title": "중재 세팅 최신화(바우반)",
+      "concept": "4번 자리 브라이트보닛, 벡터 패드 4개를 겹쳐 무기 버프를 주는 중재 버퍼",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": ["빨강(위력) ×5"],
+      "helminth": {"replace_slot": 4, "ability": "브라이트보닛(놋코)"},
+      "notes": "추천 19. 포커스 마두라이"
     }
   ],
   "consensus": {

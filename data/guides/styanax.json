@@ -123,6 +123,20 @@
       "source": "https://wiki.warframe.com/w/Final_Stand"
     }
   ],
+  "mechanics": [
+    {
+      "text": "프라이머리 오버차지는 현재 에너지 90% 이상일 때 멀티샷을 주는데 상한이 최대 에너지에 비례(100당 +35%, 1,000에서 최대 +350%: 997 → 349%, 855 → 300%, 572 → 200%, 400 → 140%). 스티아낙스는 헬스 컨버전 3중첩+프라임드 플로우로 최대 에너지 1,100 이상을 만들어 상한을 채움(441768)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=432936",
+      "date": "2025-12-14"
+    },
+    {
+      "text": "노리쉬를 이식하면 노리쉬 에너지 배율과 3번 랠리 포인트 아군 범위 에너지가 겹쳐 초당 약 20 에너지가 회복됨",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=441768",
+      "date": "2026-01-27"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -372,6 +386,40 @@
         "ability": "노리쉬"
       },
       "notes": "2023-08 갱신된 위키 빌드 페이지(프라임·타로스 리썰리티 이전)로 참고용. 휴라스 쿠브로 은신 유지 시 3번에 이식하라는 변형 소개"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=441768",
+      "date": "2026-01-27",
+      "title": "2·4개조 오버차지 스티아낙스",
+      "concept": "노리쉬 이식으로 에너지를 돌리고 최대 에너지 1,100으로 프라이머리 오버차지를 켠 뒤 인트레피드 스탠드·타로스 리썰리티를 쓰는 주무기 거치대",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "인트레피드 스탠드",
+        "타로스 리썰리티",
+        "헬스 컨버전",
+        "프라임드 플로우"
+      ],
+      "arcanes": [
+        "프라이머리 오버차지(무기 아케인)"
+      ],
+      "shards": [
+        "노랑(시작 에너지)",
+        "노랑(시전 속도) ×1~2"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "노리쉬(그렌델)"
+      },
+      "notes": "타로스 리썰리티는 실드·방어력 100% 감소+치명 피해, 인트레피드 스탠드는 오버가드·상태이상 차단. 초당 약 20 에너지"
     }
   ],
   "consensus": {

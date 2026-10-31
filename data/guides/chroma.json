@@ -94,6 +94,32 @@
       "source": "https://wiki.warframe.com/w/Elemental_Ward"
     }
   ],
+  "mechanics": [
+    {
+      "text": "4번 자리 파이어 블래스트(엠버)를 이식하면 증강 힐링 플레임 회복량이 크로마 3번 증강보다 훨씬 큼. 1번 스펙트럴 스크림 브레스 중에도 근접 공격이 가능해 밀리 어플릭션즈와 병행",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=486101",
+      "date": "2026-10-01"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    },
+    {
+      "text": "퍼시스턴스+퀵 싱킹은 글마다 결론이 다름: 476113은 체력 2에서 500 피해가 에너지 200으로 빠지고 체력 변동이 없어 1초 카운트가 안 생기므로 사실상 200 상한이라 분석, 크로마 글(435126)은 '같이 안 먹힌다'는 전언",
+      "status": "반론",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    },
+    {
+      "text": "화염 상태이상은 방어력을 50% 깎으므로 퍼시스턴스(방어력 700 조건)를 화염에도 유지하려면 실질 방어력 1,400이 필요",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -222,6 +248,38 @@
       "shards": ["파랑(체력) 계열"],
       "helminth": {"replace_slot": null, "ability": "노리쉬"},
       "notes": "솔로 레벨 캡 캐스케이드 달성 보고. 자성 빔·널리파이어에 닿으면 즉사 위험이 있다고 작성자가 언급. 답글은 상태이상 대책으로 스펠바인드 이식을 권장"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=486101",
+      "date": "2026-10-01",
+      "title": "1번 메인 용가리 크로마",
+      "concept": "4번 자리 파이어 블래스트로 방깎·화염·회복을 챙기고 1번 브레스를 주력으로 쓰는 예능형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["힐링 플레임"],
+      "arcanes": ["아케인 퍼시스턴스", "아케인 블레싱"],
+      "shards": [],
+      "helminth": {"replace_slot": 4, "ability": "파이어 블래스트(엠버)"},
+      "notes": "생존: 퍼시스턴스+블레싱+어댑테이션+힐링 플레임. 에너지는 레이지 또는 헌터 아드레날린. 팬저 불파파일라 필수(딜 10배라고 작성자 주장). 같은 날 아카라이브 글과 같은 콘셉트"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=435126",
+      "date": "2025-12-22",
+      "title": "퍼시 크로마",
+      "concept": "화염 와드 최대 체력+아케인 퍼시스턴스 체력 탱커에 글룸 흡혈을 더한 구성",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["헌터 아드레날린"],
+      "arcanes": ["아케인 퍼시스턴스"],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "글룸(세바고스, 자리 미기재)"},
+      "notes": "추천 13. 냉기 와드 피해 반사에 베나토를 쓰면 반사 피해에 타우 상태이상이 붙는다는 시너지도 소개(실전성 불명). 같은 글에 퍼시스턴스 라보스(글룸)도 있음"
     }
   ],
   "consensus": {

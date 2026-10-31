@@ -115,6 +115,20 @@
       "source": "https://wiki.warframe.com/w/Xata%27s_Whisper"
     }
   ],
+  "mechanics": [
+    {
+      "text": "초록 샤드의 '부식 상태 적 어빌리티 피해'는 최종 피해에 곱해지는 증가라는 주장(1번 자리 템페스트 배러지 이식 어빌형에서 4개 채용)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=400505",
+      "date": "2025-05-03"
+    },
+    {
+      "text": "이식 제이드 스타즈는 2026-07-22 데브쇼츠 예고 뒤 시야(LOS) 판정이 추가돼 벽 너머 적은 맞히지 못함(시리우스 본인 제외)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470716",
+      "date": "2026-07-22"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -243,6 +257,22 @@
       "shards": ["타우 노랑(시전 속도) ×1", "타우 녹색(부식 최대 중첩) ×1", "타우 녹색(부식 적 상대 어빌 피해 +15%) ×3"],
       "helminth": {"replace_slot": 3, "ability": "노리쉬"},
       "notes": "버전 38.0.5 기준, Overframe 777146 연동. 위력은 몰트 어그먼티드 포함 최대 199%. 3번 없이도 충분히 처치한다는 입장. DoT엔 래피드 리질리언스 권장, 롤링 가드는 쿨 때문에 비추천. 단단한 적은 1번+주무기(세력 모드 권장)"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=400505",
+      "date": "2025-05-03",
+      "title": "성능충 시리즈 1/3(자쿠)",
+      "concept": "1번 자타 위스퍼 자리에 템페스트 배러지를 이식하고 초록 샤드로 어빌 피해를 올린 어빌형(2호기는 3번 자리 오마모리)",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["이퀄리브리엄"],
+      "arcanes": [],
+      "shards": ["노랑(시전 속도) ×1", "초록(부식 적 어빌리티 피해) ×4"],
+      "helminth": {"replace_slot": 1, "ability": "템페스트 배러지(하이드로이드)"},
+      "notes": "2025-05 글. 동반자 휴라스 쿠브로"
     }
   ],
   "consensus": {

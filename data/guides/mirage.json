@@ -106,6 +106,50 @@
       "source": "https://wiki.warframe.com/w/Prism"
     }
   ],
+  "mechanics": [
+    {
+      "text": "필리지 오버실드로 2.5초 실드 게이팅 중 브리프 리스파이트·어거 같은 새 실드를 소량 얻으면 짧은 게이팅으로 덮어씀(실드 1,150·2.5초 중 50 획득 → 0.5초)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470347",
+      "date": "2026-07-19"
+    },
+    {
+      "text": "이식 필리지+아케인 스컬프터 프리즘형: 프리즘(10초)이 스컬프터(12초)보다 짧아 끝날 때마다 재시전하면 효율 175%가 이어져 노리쉬·브라이트보닛이 필요 없음",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470347",
+      "date": "2026-07-19"
+    },
+    {
+      "text": "글룸 흡혈은 범위와 무관하고, 트락스 센츄리온의 상시 자성 때문에 퍼시스턴스가 꺼지므로 아케인 리퍼 대신 서컴벤트 오버가드로 자성에 대비",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=478656",
+      "date": "2026-09-04"
+    },
+    {
+      "text": "3번 이클립스는 붙어 있는 템포럴 아르키메디아 방어 대상(템플)에도 피해 감소 90%가 들어감",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=408466",
+      "date": "2025-07-14"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    },
+    {
+      "text": "퍼시스턴스+퀵 싱킹은 글마다 결론이 다름: 476113은 체력 2에서 500 피해가 에너지 200으로 빠지고 체력 변동이 없어 1초 카운트가 안 생기므로 사실상 200 상한이라 분석, 크로마 글(435126)은 '같이 안 먹힌다'는 전언",
+      "status": "반론",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    },
+    {
+      "text": "화염 상태이상은 방어력을 50% 깎으므로 퍼시스턴스(방어력 700 조건)를 화염에도 유지하려면 실질 방어력 1,400이 필요",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -266,6 +310,38 @@
       "shards": ["빨강(지속)", "노랑(시전 속도)", "황옥(폭발 처치 시 실드·체력)"],
       "helminth": {"replace_slot": 2, "ability": "Energized Munitions(2번 또는 4번 자리)"},
       "notes": "빌드 페이지 최종 수정일 기준(리워크 이후). 효율은 올리지 않고 범위는 버림. 자성 상태이상·에너지 흡수 엑시무스·어빌 봉인 주의"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470347",
+      "date": "2026-07-19",
+      "title": "미라지(프리즘·거치대·엘맹)",
+      "concept": "이식 필리지와 아케인 스컬프터로 프리즘을 연타하는 프리즘형(거치대·엘리트 맹습 변형 포함)",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": ["아케인 스컬프터"],
+      "shards": ["노랑(시전 속도) ×3", "보라(이퀄리브리엄 효과) ×2"],
+      "helminth": {"replace_slot": null, "ability": "필리지(힐드린)"},
+      "notes": "추천 11. 거치대형은 토탈 이클립스로 분신도 이클립스를 받음. 엘리트 맹습형은 익스플로시브 레저더메인(오브·탄약 → 지뢰)+로어 또는 브라이트보닛, 샤드 초록(독 상태이상 피해)·초록(부식 적 어빌리티 피해)"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=478656",
+      "date": "2026-09-04",
+      "title": "강범 글룸 미라지",
+      "concept": "저범위·극지속 글룸 흡혈에 퍼시스턴스·퀵 싱킹·서컴벤트 오버가드를 겹친 강철의 길 범용 탱커",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["퀵 싱킹", "프레퍼레이션", "프라임드 플로우", "헌터 아드레날린"],
+      "arcanes": ["아케인 퍼시스턴스", "아케인 서컴벤트"],
+      "shards": ["빨강(위력)", "타우 파랑(체력) ×2", "노랑(시전 속도)"],
+      "helminth": {"replace_slot": null, "ability": "글룸(세바고스)"},
+      "notes": "추천 11. 샤드 합계 본문 표기: 위력 +15·체력 +450·시전 속도 +70. 지속·위력 200%대, 거리·효율 버림"
     }
   ],
   "consensus": {

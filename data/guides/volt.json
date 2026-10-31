@@ -106,6 +106,44 @@
       "source": "https://wiki.warframe.com/w/Electric_Shield"
     }
   ],
+  "mechanics": [
+    {
+      "text": "3번 일렉트릭 실드 효과(전기 +50% 합연산·치명 피해 2배 1회)는 펠릿마다 따로 적용되고 앰프에도 붙으며, 실드 전방 넉백은 무효. 일부 어빌·근접 투사체(건블레이드 펠릿, 테넷 아젠더스, 엠버 화염구, 바우반 플레셋 등)도 통과하면 강화",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470989",
+      "date": "2026-07-23"
+    },
+    {
+      "text": "패시브 스태틱 디스차지는 이동 1m당 10, 최대 1,000의 별도 타격이고 치명·약점이 적용됨. 어빌리티를 해제하는 바이올런스에도 3번 실드는 유지",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470989",
+      "date": "2026-07-23"
+    },
+    {
+      "text": "실드를 두 번 연속으로 쓴 뒤 오퍼레이터 전이하면 들고 있던 실드를 내려놓지 않음",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=493696",
+      "date": "2026-10-22"
+    },
+    {
+      "text": "이식 이베이드+글레이브: 던진 글레이브를 적 머리 위에서 터뜨리면 헤드샷 판정이라 은신이 연장됨",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=469886",
+      "date": "2026-07-17"
+    },
+    {
+      "text": "라이카스 헌트를 헬민스로 이식하면 지속이 20초로 고정(지속 모드 영향 없음)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=474428",
+      "date": "2026-08-14"
+    },
+    {
+      "text": "이식 레메디움은 시전 중 무적(시전 속도 0% 기준 약 1.5초)이라 시전 속도가 낮을수록 무적이 길고, 체력을 먼저 채운 뒤 남는 양을 오버실드로 바꿔 카탈라이징 실드와 묶으면 브리프 리스파이트 없이 실드 게이팅",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=435390",
+      "date": "2025-12-23"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -250,6 +288,38 @@
       "shards": [],
       "helminth": {"replace_slot": null, "ability": ""},
       "notes": "댓글 수준의 구성(모드 일부만). 같은 스레드 #2114는 위력형 4번+시리우스 2번 이식으로 강철 데디컨트 235를 2회에 처리했다고 언급, #2104는 4번 자리에 Xaku 이식+1번 증강 화력형 언급"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470989",
+      "date": "2026-07-23",
+      "title": "섭종까지 우려먹을 볼트 3종(전볼협)",
+      "concept": "일렉트릭 실드를 활용한 진압 방패(슈팅 갤러리 이식)·다중 방패(이클립스)·보디가드(배니시) 세 가지 서포트·딜형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["스피드 드리프트", "커패시턴스"],
+      "arcanes": ["아케인 에너자이즈"],
+      "shards": ["타우 노랑(시전 속도) ×1 필수"],
+      "helminth": {"replace_slot": null, "ability": "슈팅 갤러리 / 이클립스 / 배니시"},
+      "notes": "추천 21. 2번 스피드 기본 재장전 25%·질주 75%·근접 공속 75%, 25m 안 아군·NPC. 실드는 펠릿별 적용·치명 피해 2배"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=469886",
+      "date": "2026-07-17",
+      "title": "볼트 프라임 모딩 22개",
+      "concept": "필리지·로어·이지스·노리쉬·레메디움(위력 276%)·3움브랄 퍼시스턴스(라이카스 헌트)·널 스타 핫 샷·이클립스 이지스 등 22가지 구성 모음",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": ["타우 빨강(위력) ×5"],
+      "helminth": {"replace_slot": null, "ability": "구성별 상이"},
+      "notes": "추천 22. 이베이드 글레이브: 글레이브를 머리 위에서 터뜨려 헤드샷 판정 은신 연장"
     }
   ],
   "consensus": {

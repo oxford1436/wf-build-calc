@@ -4,7 +4,7 @@
   "name_ko": "새린",
   "has_prime": true,
   "last_rework": "2020-03-05",
-  "checked": "2026-10-30",
+  "checked": "2026-10-31",
   "summary": "부식 포자를 퍼뜨려 방깎·광역 섬멸, 3번으로 무기까지 강화하는 독 딜러",
   "abilities": [
     {
@@ -117,6 +117,38 @@
       "calc": "총기 30% × 위력, 근접 60% × 위력 → 254%: 총기 76.2%, 근접 152.4%. 361%: 총기 108.3%",
       "verified": true,
       "source": "https://wiki.warframe.com/w/Saryn/Abilities"
+    }
+  ],
+  "mechanics": [
+    {
+      "text": "퍼시스턴스 새린은 2번 몰트로 부식·화염·자성 상태이상을 해제해 방어력 감소·퍼시스턴스 비활성을 끊고, 4번 미아즈마 자리 오마모리로 체력을 회복",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=436086",
+      "date": "2025-12-26"
+    },
+    {
+      "text": "몰트 이동 속도 버프 시간과 스컬프터 12초가 거의 같아 몰트를 다시 쓸 때마다 스컬프터가 이어짐",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=469224",
+      "date": "2026-07-14"
+    },
+    {
+      "text": "쿠바 오그리스 나이트워치 네이팜 장판에도 새린 속성 피해(톡식 래쉬)가 묻음",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=496473",
+      "date": "2026-10-29"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    },
+    {
+      "text": "화염 상태이상은 방어력을 50% 깎으므로 퍼시스턴스(방어력 700 조건)를 화염에도 유지하려면 실질 방어력 1,400이 필요",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07"
     }
   ],
   "community": [
@@ -534,6 +566,100 @@
         "ability": "로어(또는 자타 위스퍼·노리쉬)"
       },
       "notes": "고정 8칸이 아닌 필수·추천 목록형 문서. 2024-06 방어력 개편(업데이트 36) 이전 작성이지만 부식 공식 계산은 현행 위키와 일치. 소벡 애시드 쉘즈 시너지도 소개"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=496473",
+      "date": "2026-10-29",
+      "title": "쿠그리스 새린",
+      "concept": "로어+아케인 스컬프터+실드 게이팅으로 쿠바 오그리스 나이트워치 네이팜(바이러스+화염 베일런스)을 키우는 무기 거치대",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [
+        "아케인 스컬프터"
+      ],
+      "shards": [
+        "초록(독 상태이상 피해) ×4",
+        "초록(부식 최대 중첩) ×1"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "로어"
+      },
+      "notes": "쿠바 오그리스 6060 바이러스+화염 베일런스, 리벤 2+1-(탄약 효율) 필수라고 작성자 표기(핫픽스 44.1.3 이후 탄약 효율 상한 75% 주의)"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=469224",
+      "date": "2026-07-14",
+      "title": "스컬프터 오큐 새린",
+      "concept": "아케인 스컬프터+노리쉬로 에너지를 해결하고 오큐코어 깡독+자성으로 쓸어 담는 강철의 길 범용형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "아이스 스프링"
+      ],
+      "arcanes": [
+        "아케인 스컬프터",
+        "세컨더리 포티파이어(무기 아케인)"
+      ],
+      "shards": [
+        "초록(독 상태이상 피해) ×3",
+        "노랑(시전 속도) ×1",
+        "초록(부식 최대 중첩) ×1"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "노리쉬(그렌델)"
+      },
+      "notes": "추천 14. 포티파이어 오버가드로 생존. 몰트 이속 버프와 스컬프터 시간이 거의 같음"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=436086",
+      "date": "2025-12-26",
+      "title": "노 움브라 포르마 3움브랄 퍼시 새린",
+      "concept": "4번 자리 오마모리, 2번 몰트로 상태이상을 풀며 3움브랄 퍼시스턴스로 버티는 슬램 근접형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "스틸 차지",
+      "exilus": "",
+      "mods": [
+        "움브랄 인텐시파이",
+        "움브랄 바이탈리티",
+        "움브랄 파이버",
+        "어댑테이션"
+      ],
+      "arcanes": [
+        "아케인 퍼시스턴스",
+        "아케인 서컴벤트"
+      ],
+      "shards": [],
+      "helminth": {
+        "replace_slot": 4,
+        "ability": "오마모리(코우메이)"
+      },
+      "notes": "추천 13. 나이라 세트 2개(1개는 0랭)로 3움브랄 수용량을 맞춤, 어댑테이션 8랭. 근접 젯 키타그·삼포테스 슬램, 서컴벤트로 오버가드"
     }
   ],
   "consensus": {

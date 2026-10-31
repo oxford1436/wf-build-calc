@@ -94,6 +94,20 @@
       "source": "https://wiki.warframe.com/w/Rift_Surge"
     }
   ],
+  "mechanics": [
+    {
+      "text": "1번 배니쉬에 맞은 적은 넘어져 그라운드 피니셔로 이어갈 수 있고, 아군·소환수도 리프트로 보낼 수 있음. 리프트 안 처치는 적이 어느 차원에 있든 에너지 10",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=434496",
+      "date": "2025-12-19"
+    },
+    {
+      "text": "1번 증강 리프트 헤이븐은 리프트 안 아군을 초당 25%×위력 회복, 4번 증강 카타클리즈믹 컨티뉴엄은 지속 모드 영향이 없다는 댓글",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=434496",
+      "date": "2025-12-19"
+    }
+  ],
   "community": [
     {
       "region": "KR",

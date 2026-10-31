@@ -116,6 +116,47 @@
       "calc": "킬당 = 1 + 채널량 × 15% ÷ (2 − 효율) × 위력, 약점 처치 ×4(위키 예: 위력·효율 130%, 25 채널 → 7.96). 약점 100 → 킬당 25 → 채널 = 24 × 1.55 ÷ (0.15 × 1.99) = 124.6. 위력 314%: 24 × 1.55 ÷ 0.471 = 79. 효율 175%면 분모 0.25로 같은 채널에서 6.2배",
       "verified": true,
       "source": "https://wiki.warframe.com/w/Thurible"
+    },
+    {
+      "slot": 1,
+      "stat": "strength",
+      "value": "328%(코로시브 프로젝션 1개) / 400%",
+      "effect": "이식 필리지 1회로 방어력·실드 100% 제거",
+      "calc": "제거율 = 25% × 위력(이식판도 같고 비용만 에너지 50) → 100 ÷ 25 = 400%. 코로시브 프로젝션 18% 가산: 18 + 25 × 3.28 = 100%(위키 명시). 디시 441482는 타우 빨강 2개 또는 일반 빨강 3개로 맞춤",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Pillage"
+    }
+  ],
+  "mechanics": [
+    {
+      "text": "프라이머리 오버차지(최대 에너지 1,000에서 멀티샷 +350%, 현재 에너지 90% 이상 필요)를 3번 튜러블로 유지: 프라임드 플로우만으로는 최대 에너지 541 → 헬스 컨버전(+오브 동반자)+아케인 배터리로 1,000 돌파. 오버차지 유지를 위해 3번은 이식 금지(프라이머리 불워크를 쓰면 헬스 컨버전만으로 충족돼 3번 이식 가능)",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=441482",
+      "date": "2026-01-25"
+    },
+    {
+      "text": "아콘 인텐시파이는 2번 페넌스 흡혈 회복으로도 발동",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=400510",
+      "date": "2025-05-03"
+    },
+    {
+      "text": "엘리트 맹습에서는 이식 써멀 선더를 1번 자리에 넣어야 어빌리티가 잠기지 않음(거리>>>위력>지속, 3번 에너지 40이면 블라인드 레이지도 가능)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447800",
+      "date": "2026-03-16"
+    },
+    {
+      "text": "아케인 컨센트레이션은 어빌리티 사용 후 3초 동안 지속 +60%이고 두 번째 어빌부터 적용",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=432936",
+      "date": "2025-12-14"
+    },
+    {
+      "text": "이식 레메디움은 시전 중 무적(시전 속도 0% 기준 약 1.5초)이라 시전 속도가 낮을수록 무적이 길고, 체력을 먼저 채운 뒤 남는 양을 오버실드로 바꿔 카탈라이징 실드와 묶으면 브리프 리스파이트 없이 실드 게이팅",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=435390",
+      "date": "2025-12-23"
     }
   ],
   "community": [
@@ -353,6 +394,66 @@
         "ability": "필리지(힐드린)"
       },
       "notes": "#1433(우리엘 이식을 1번에?) 질문에 대한 답. 2026-10-29 댓글은 리벤 탄약 효율·약점 피해 옵션 추가로 해로우가 가장 이득이라고 평가"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=441482",
+      "date": "2026-01-25",
+      "title": "오버차지 배터리 해로우",
+      "concept": "3번 튜러블로 에너지를 90% 이상 유지해 프라이머리 오버차지 멀티샷을 상시 켜는 거치대",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "헬스 컨버전",
+        "프라임드 플로우"
+      ],
+      "arcanes": [
+        "아케인 배터리",
+        "프라이머리 오버차지(무기 아케인)"
+      ],
+      "shards": [
+        "노랑(시전 속도) ×2 필수"
+      ],
+      "helminth": {
+        "replace_slot": 1,
+        "ability": "필리지(힐드린, 선택)"
+      },
+      "notes": "최대 에너지 541(프라임드 플로우) → 헬스 컨버전·오브 동반자·배터리로 1,000 돌파. 3번 이식 금지. 필리지는 코로시브 기준 위력 328%. 같은 글 예시 추가로 써멀 해로우도 소개"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447800",
+      "date": "2026-03-16",
+      "title": "엘맹 정상화 써멀 해로우",
+      "concept": "1번 자리 써멀 선더로 엘리트 맹습에서 어빌 잠김을 피하는 범위 핵",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "블라인드 레이지"
+      ],
+      "arcanes": [
+        "아케인 컨센트레이션"
+      ],
+      "shards": [],
+      "helminth": {
+        "replace_slot": 1,
+        "ability": "써멀 선더(가우스)"
+      },
+      "notes": "거리>>>위력>지속. 3번 에너지 40이면 블라인드 레이지도 가능"
     }
   ],
   "consensus": {

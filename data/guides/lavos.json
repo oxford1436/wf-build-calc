@@ -124,6 +124,44 @@
       "source": "https://wiki.warframe.com/w/Lavos"
     }
   ],
+  "mechanics": [
+    {
+      "text": "3번 트랜스뮤테이션 프로브는 이식한 이베이드의 쿨다운도 줄여 무한 은신이 가능(크리퍼스큘러+컴뱃 디시플린·어벤저, 위력 40%로도 운용)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=425891",
+      "date": "2025-11-15"
+    },
+    {
+      "text": "가스·전기 상태이상 틱은 헤드샷(약점) 판정을 가질 수 있는 유일한 두 속성이라 이식 이베이드 은신 연장이 쉬움(화염 틱은 안 됨)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=425891",
+      "date": "2025-11-15"
+    },
+    {
+      "text": "글룸을 이식하면 라보스에선 지속형 스킬처럼 바뀌어 적 수 비례 소모 페널티가 사라짐",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=435126",
+      "date": "2025-12-22"
+    },
+    {
+      "text": "아케인 스컬프터 발동 어빌(해외 실험 정리): 라보스는 3번 프로브뿐 아니라 4번 카탈라이즈로도 발동",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=464340",
+      "date": "2026-06-21"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    },
+    {
+      "text": "화염 상태이상은 방어력을 50% 깎으므로 퍼시스턴스(방어력 700 조건)를 화염에도 유지하려면 실질 방어력 1,400이 필요",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -236,6 +274,38 @@
       "shards": ["녹색(부식 최대 중첩) ×1~2", "나머지 위력·지속·실드·시전 속도 취향"],
       "helminth": {"replace_slot": null, "ability": "없음"},
       "notes": "플리팅 엑스퍼티즈는 상태이상 지속을 깎아 금지, 어거 모드는 에너지를 안 써 실드가 안 차 비추천. 부식 주입 1번은 부식 4중첩, 독 주입+아콘 컨티뉴어티는 2중첩. 같은 위키 댓글(2026-10-07)의 '왕도' 샤드는 시전 속도 1·지속 3·녹색 1"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=425891",
+      "date": "2025-11-15",
+      "title": "무한 은신 이베이드 라보스",
+      "concept": "이식 이베이드 쿨을 3번 프로브로 줄여 무한 은신을 유지하고 크리퍼스큘러·어벤저로 치명을 올린 무기 거치대",
+      "stats": {"strength": 40, "duration": null, "range": null, "efficiency": null},
+      "aura": "컴뱃 디시플린",
+      "exilus": "",
+      "mods": ["스위프트 바이트", "베일런스 포메이션", "내로우 마인디드", "오버익스텐디드"],
+      "arcanes": ["아케인 크리퍼스큘러", "아케인 어벤저"],
+      "shards": ["초록(부식 최대 중첩) ×3", "노랑(시전 속도) ×2", "파랑(체력 재생) ×1"],
+      "helminth": {"replace_slot": null, "ability": "이베이드(Cyte-09)"},
+      "notes": "추천 16. 위력 40%도 가능. 가스·전기 틱 헤드샷 판정으로 이베이드 연장(화염 안 됨, 작성자 실험)"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=435126",
+      "date": "2025-12-22",
+      "title": "퍼시 라보스(글룸)",
+      "concept": "글룸 이식으로 흡혈하고 아케인 퍼시스턴스로 버티는 체력 탱커",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["헌터 아드레날린"],
+      "arcanes": ["아케인 퍼시스턴스"],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "글룸(세바고스)"},
+      "notes": "추천 13, 퍼시스턴스 크로마와 같은 글. 라보스에선 글룸이 지속형처럼 바뀌어 적 수 비례 소모가 없음"
     }
   ],
   "consensus": {

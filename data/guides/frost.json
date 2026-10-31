@@ -106,6 +106,44 @@
       "source": "https://wiki.warframe.com/w/Avalanche"
     }
   ],
+  "mechanics": [
+    {
+      "text": "마크드 포 데스(헬민스 고유, 2번 자리) 발산 피해는 무기 판정이라 원소를 복사하지만 표식 적의 현재 체력을 넘지 못함 → 바이팅 프로스트(빙결 10스택 적 치명 확률·치명 피해 +200%, 현재 치명 확률에 곱하는 계수)와 아케인 트러큘런스 바이러스 10스택으로 상한을 우회. 쿠브로처럼 표식 적을 먼저 죽이는 동반자는 금지",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470353",
+      "date": "2026-07-19"
+    },
+    {
+      "text": "오버가드에는 피해 감소·방어력이 적용되지 않아, 방어력 비례인 아이시 아발란체 오버가드를 늘리려고 방어력을 올리는 효율이 낮음",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=478362",
+      "date": "2026-09-02"
+    },
+    {
+      "text": "4번 아발란체 시전 속도는 상한 50%라 노랑(시전 속도) 샤드는 일반 2개면 충분(타우는 낭비)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=464424",
+      "date": "2026-06-21"
+    },
+    {
+      "text": "바이팅 프로스트(패시브 증강, 무기 버프)는 위력 영향이 없어 저위력 이식 거치대가 가능: 이식 제이드 스타즈는 위력 100%만 넘기면 되고, 200%로 화염 2스택이어도 핫 샷은 1스택",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=478362",
+      "date": "2026-09-02"
+    },
+    {
+      "text": "44.0 증강 콜드 프론트는 생존 보완이 미미하다는 평",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=483376",
+      "date": "2026-09-24"
+    },
+    {
+      "text": "이식 제이드 스타즈는 2026-07-22 데브쇼츠 예고 뒤 시야(LOS) 판정이 추가돼 벽 너머 적은 맞히지 못함(시리우스 본인 제외)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470716",
+      "date": "2026-07-22"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -266,6 +304,38 @@
       "shards": [],
       "helminth": {"replace_slot": null, "ability": "미기재"},
       "notes": "오버가드 유지 시 방어력 +1350·에너지 +405라고 계산. 답글 #1866 '서킷에서 대호평'. 콜드 프론트 이전 글"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470353",
+      "date": "2026-07-19",
+      "title": "마크드 포 데스 프로스트(술식반전)",
+      "concept": "2번 자리 마크드 포 데스로 무기 피해를 광역 복사하고 바이팅 프로스트·트러큘런스 바이러스로 표식 적 체력 상한을 우회하는 런처형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["바이팅 프로스트", "아이시 아발란체"],
+      "arcanes": ["아케인 트러큘런스"],
+      "shards": ["타우 파랑(방어력) ×3", "노랑(시작 에너지) ×1", "노랑(시전 속도) ×1"],
+      "helminth": {"replace_slot": 2, "ability": "마크드 포 데스(헬민스)"},
+      "notes": "추천 15. 상태이상 확률 좋은 단발 무기(벡티스 등). 쿠브로 금지"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=478362",
+      "date": "2026-09-02",
+      "title": "무기 거치대 프로스트",
+      "concept": "바이팅 프로스트 무기 버프를 저위력 이식(제이드 스타즈 등)과 함께 쓰는 무기 거치대",
+      "stats": {"strength": null, "duration": null, "range": 205, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["바이팅 프로스트", "프라임드 플로우"],
+      "arcanes": [],
+      "shards": ["파랑(최대 에너지) ×1"],
+      "helminth": {"replace_slot": null, "ability": "미기재"},
+      "notes": "추천 14. 거리 205%면 4번 31m(160%면 24m). 프라임드 플로우만으로 보라 샤드 500 미달이라 파랑 1개. 3번 스노우 글로브로 스컬프터 발동(글로브 4초 무적). 4번이 방깎을 하니 무기 부식 비추천, 냉기 없이도 프라이머리 프로스트바이트 가능"
     }
   ],
   "consensus": {

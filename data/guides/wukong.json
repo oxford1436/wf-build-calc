@@ -135,6 +135,44 @@
       "source": "https://wiki.warframe.com/w/Cloud_Walker"
     }
   ],
+  "mechanics": [
+    {
+      "text": "슬램 범위가 낙하 높이에 비례하게 바뀐 뒤로는 불릿 점프 캔슬 슬램이 필수라 레디 스틸·아케인 스트라이크로 공속을 확보",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=418537",
+      "date": "2025-10-05"
+    },
+    {
+      "text": "2번 클라우드 워커 시전 속도는 약 125%(내츄럴 탈런트 50%+노랑(시전 속도) 샤드 2개 75%)가 체감 한계로, 마두라이로 175%까지 올려도 차이가 없음",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=418537",
+      "date": "2025-10-05"
+    },
+    {
+      "text": "2번 클라우드 워커는 토글이 아니라 사용 중에도 에너지 넥서스 재생이 들어옴",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=400505",
+      "date": "2025-05-03"
+    },
+    {
+      "text": "합성 집정관 샤드(초록·황옥·보라)의 '상태이상 적에게 어빌리티 피해 +15%'는 익절 무기 피해에 적용되지 않음(티타니아 익절 부식·전기 피해가 599/1,199로 동일) → 프라이멀 퓨리 여의봉(익절)에는 어빌리티 피해 합성 샤드 대신 다른 샤드",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447619",
+      "date": "2026-03-14"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    },
+    {
+      "text": "화염 상태이상은 방어력을 50% 깎으므로 퍼시스턴스(방어력 700 조건)를 화염에도 유지하려면 실질 방어력 1,400이 필요",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -417,6 +455,37 @@
         "ability": "널 스타(노바)"
       },
       "notes": "위키 댓글. 1번 분신 미끼·2번 긴급 회피·4번 인플루언스 유사 CC로 실드형도 단단하다고 작성. 같은 토픽의 2026-06-30 댓글: '슬램 범위가 높이에 의존하게 바뀐 뒤 슬램 오공은 약해졌고, 분신 빌드도 죽어 지금은 2번 실드 게이트형이 주류'. 위키 빌드 '棒神話：Wukong'(2025-03-30)은 이식 없이 프리시젼 인텐시파이·프라이멀 레이지·트랜지언트 포티튜드·스틸 차지·아케인 스트라이크/퓨리+에너자이즈 구성"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=418537",
+      "date": "2025-10-05",
+      "title": "2025 다시 돌아온 슬램 오공",
+      "concept": "불릿 점프 캔슬 슬램을 레디 스틸·아케인 스트라이크 공속으로 돌리는 슬램형(자타 위스퍼·퍼스피캐시티·몰트 이식 변형)",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "레디 스틸",
+      "exilus": "",
+      "mods": [
+        "내츄럴 탈런트"
+      ],
+      "arcanes": [
+        "아케인 스트라이크"
+      ],
+      "shards": [
+        "노랑(시전 속도) ×2",
+        "보라(근접 치명 피해) ×3 이상"
+      ],
+      "helminth": {
+        "replace_slot": 3,
+        "ability": "자타 위스퍼(또는 3번 퍼스피캐시티(Perspicacity, 해킹)·4번 자리 몰트)"
+      },
+      "notes": "추천 20, 12/23 수정. 보라 근접 치명 피해 샤드 3개 이상이면 새크리피셜 세트가 갈바나이즈드 스틸·프라임드 프레셔 포인트보다 나음. 몰트형은 2번 이속 극대화+프리시젼 인텐시파이"
     }
   ],
   "consensus": {

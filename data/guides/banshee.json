@@ -113,6 +113,89 @@
       "calc": "레저넌스 파동이 35m × 거리를 초속 20m로 끝까지 가야 다음 발동 → 1.75초 × 거리. 124%: 2.17초, 145%: 2.54초, 280%: 4.9초",
       "verified": true,
       "source": "https://wiki.warframe.com/w/Resonance"
+    },
+    {
+      "slot": 2,
+      "stat": "strength",
+      "value": "177%(인텐시파이+바이탈리티) / 167%(움브랄 2세트)",
+      "effect": "이식 레메디움 오버실드 상한 1,200 도달(블레싱 풀스택, 아케인 벨리코스 없음)",
+      "calc": "회복량 = 최대 체력 × 35% × 위력, 체력을 채운 뒤 남는 양이 실드 → 오버실드(상한 1,200)로 넘어감(위키 공식). 체력이 가득일 때 필요 위력 = 1,200 ÷ (0.35 × 최대 체력). 작성자 수치: 무모드 137%: 740, 인텐시파이+바이탈리티 172%: 1,170, 움브랄 2개 186%: 1,263, 움브랄 2세트 203%: 1,450 → 역산 체력 약 1,943이면 176.5%, 약 2,041이면 168%(작성자 표기 167%). 타우 파랑(체력 +225)이면 일반 인텐시파이+바이탈리티로도 상한",
+      "verified": false,
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=486325"
+    }
+  ],
+  "mechanics": [
+    {
+      "text": "프라이머리 디빌리테이트가 추가로 거는 1차 속성 틱에는 팩션 모드가 3번(1.55³ = 3.72배), 약점 배율도 3번 곱해짐: 기본 29 × 4.5(바디샷+어큐이티) × 소나 5 = 652.5 → ×22.5 → ×0.5×22.5 = 165,161(약 11,390배)",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=491760",
+      "date": "2026-10-18"
+    },
+    {
+      "text": "디빌리테이트 밴쉬 속성은 전기 포함 2차 속성 권장(전기 틱은 즉발): 무기 상태이상 확률이 넉넉하면 자성, 동반자로 10스택을 채우면 부식·방사능. 어큐이티는 멀티샷을 고정하지만 리벤 '약점 피해' 옵션은 고정이 없고 산탄총에도 붙음",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=491760",
+      "date": "2026-10-18"
+    },
+    {
+      "text": "세컨더리 이레디에이트는 갈바나이즈드 샷 미적용·시야 필요·약점 불가 페널티가 있지만 약점 치명 확률 모드가 이레디에이트 범위 피해에 이중 적용됨(정확한 식은 미확인)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=491760",
+      "date": "2026-10-18"
+    },
+    {
+      "text": "소나와 실제 약점은 곱연산(25 × 3 × 5 = 375, 어큐이티면 25 × 4.5 × 5 = 562.5)이고, 자타 위스퍼 추가타에는 약점 배율이 2번 곱해짐: 25 × 4.5 × 5 × 4.5 × 5 × 0.26 = 3,290(506배), 위력 337%+서레이션이면 227,466(5,749배)",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=486255",
+      "date": "2026-10-02"
+    },
+    {
+      "text": "소나 약점 처치도 정식 약점 처치라 아케인 피스톨리어가 발동하고, 오키나 프라임 인카논 영체 단검 처치로도 이베이드가 갱신되고 레저넌스가 발동(자동 사냥 가능, 패치 우려 댓글)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=494363",
+      "date": "2026-10-23"
+    },
+    {
+      "text": "가스·전기 상태이상 틱은 헤드샷(약점) 판정을 가질 수 있는 유일한 두 속성이라 이식 이베이드 은신 연장이 쉬움(화염 틱은 안 됨)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=483151",
+      "date": "2026-09-24"
+    },
+    {
+      "text": "소닉 사이펀은 같은 적을 반복해서 맞혀도 방어력이 계속 쌓여 퍼시스턴스 방어 조건과 프라이머리 불워크(1,500)를 채우기 쉬움. 증강이 켜졌는지는 버프 아이콘으로만 확인 가능",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=485806",
+      "date": "2026-09-30"
+    },
+    {
+      "text": "4번 사운드 퀘이크 상자깡: 극거리에서 반경 56m·벽 관통(자쿠 70m, 림보 44.8m). 시야 판정은 가시어스 퀘이크(증강)에만 있고 상자에는 적용 안 됨",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=487193",
+      "date": "2026-10-05"
+    },
+    {
+      "text": "1→2→2→2(소나 중첩) 후 테넷 플링크스 보조 발사로 원샷 가능, 어빌리티를 해제하는 바이올런스는 사일런스로 정상화",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=484008",
+      "date": "2026-09-25"
+    },
+    {
+      "text": "이식 레메디움은 시전 중 무적(시전 속도 0% 기준 약 1.5초)이라 시전 속도가 낮을수록 무적이 길고, 체력을 먼저 채운 뒤 남는 양을 오버실드로 바꿔 카탈라이징 실드와 묶으면 브리프 리스파이트 없이 실드 게이팅",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=435390",
+      "date": "2025-12-23"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    },
+    {
+      "text": "화염 상태이상은 방어력을 50% 깎으므로 퍼시스턴스(방어력 700 조건)를 화염에도 유지하려면 실질 방어력 1,400이 필요",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07"
     }
   ],
   "community": [
@@ -275,6 +358,54 @@
       "shards": [],
       "helminth": {"replace_slot": null, "ability": "블레싱(트리니티)"},
       "notes": "답글 #1530 '퍼시스턴스 축 의외로 괜찮다'. 5ch part1116 #47(2026-09-26)도 '버섯 이식 4번 증강 축 / 이베이드 투명 피스톨리어 2번 축 / 1번 증강 퍼시스턴스 고릴라' 세 가지를 소개"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=491760",
+      "date": "2026-10-18",
+      "title": "디빌리 밴쉬 & 이라디 밴쉬",
+      "concept": "소나 약점 배율이 프라이머리 디빌리테이트 추가 틱에 세 번 곱해지는 점을 이용한 무기 거치대(세컨더리 이레디에이트 변형 포함)",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": ["프라이머리 디빌리테이트(무기 아케인)"],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "자유"},
+      "notes": "추천 32. 무기 모딩: 어큐이티 계열+엘리멘탈리스트 계열(+AOE 무기면 서레이션). 속성은 전기 포함 2차 속성, 상확이 넉넉하면 자성·동반자로 10스택이면 부식·방사능. 자타 위스퍼형보다 헬민스 칸이 자유. 프레임 모드는 캡처"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=486255",
+      "date": "2026-10-02",
+      "title": "어큐이티 자타 밴쉬",
+      "concept": "자타 위스퍼 추가타에 실제 약점·소나 배율이 두 번 곱해지는 점을 노린 어큐이티 무기 딜형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["블라인드 레이지"],
+      "arcanes": ["아케인 이지스"],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "자타 위스퍼(자쿠)"},
+      "notes": "추천 21. 생존은 실드 게이팅 모드 2개+아케인 이지스+보조 무기 세컨더리 포티파이어 오버가드. 실험 기준 위력 337%(+서레이션)에서 추가타 227,466. 레벨캡 상대는 바자린. 트락스를 영체화해도 소나가 남음"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=486044",
+      "date": "2026-10-01",
+      "title": "밴쉬 모딩 3종(이베이드형)",
+      "concept": "4번 자리 이베이드를 소나 약점 처치로 유지하고 크리퍼스큘러·피스톨리어로 은신 무기 딜",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["블라인드 레이지", "트랜지언트 포티튜드", "움브랄 인텐시파이", "프라임드 컨티뉴어티", "스트레치", "레저넌스", "프라임드 플로우", "롤링 가드"],
+      "arcanes": ["아케인 크리퍼스큘러", "아케인 피스톨리어"],
+      "shards": ["보라(이퀄리브리엄 효과) ×2"],
+      "helminth": {"replace_slot": 4, "ability": "이베이드(Cyte-09)"},
+      "notes": "추천 19. 같은 글의 사운드 퀘이크형(1번 자리 브라이트보닛, 극거리, 효율은 보닛+스컬프터, 패치 후 시야 판정 체감)과 듀플 본드형(4번 자리 노리쉬, 2번 연타)도 소개"
     }
   ],
   "consensus": {

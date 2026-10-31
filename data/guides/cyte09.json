@@ -85,6 +85,50 @@
       "source": "https://wiki.warframe.com/w/Ability_Efficiency"
     }
   ],
+  "mechanics": [
+    {
+      "text": "3번 이베이드는 천장·벽을 맞혀도 헤드샷 판정이 나서 지속이 연장된다는 주장(위키는 약점 '처치'만 연장으로 기재, 2025-05 글)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=400505",
+      "date": "2025-05-03"
+    },
+    {
+      "text": "가스·전기 상태이상 틱은 헤드샷(약점) 판정을 가질 수 있는 유일한 두 속성이라 이식 이베이드 은신 연장이 쉬움(화염 틱은 안 됨)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=425891",
+      "date": "2025-11-15"
+    },
+    {
+      "text": "가스 상태이상 틱 = 0.5 × 모딩된 기본 피해 × (1+가스 모드) × (1+팩션) × (1+상태이상 피해) × 추가 배율 → 화염·독 모드는 무관하고 단일 가스 모드와 라보스 베일런스 포메이션만 반영(영문 위키 번역)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=491210",
+      "date": "2026-10-16"
+    },
+    {
+      "text": "쿠바 소벡 가스형은 가스 구름 처치도 애시드 쉘즈 처치 트리거가 되지만 전기형(보라 샤드 4+쇼크 증강+노리쉬+팩션)보다 즉발 화력이 약함. 핫픽스 44.1.3 이후 애시드 쉘즈 연쇄 폭발 불가·범위 15m→10m라 소벡 섬멸형 전반이 약해짐",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488933",
+      "date": "2026-10-09"
+    },
+    {
+      "text": "소벡 전이(폭발) 피해에는 사이트의 경우 '들어간 전기 모드'만, 오락시아·새린은 '독 모드'만 영향을 줘 나머지 모드는 첫 처치용(핫픽스 44.1.3 전 글)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=455531",
+      "date": "2026-05-01"
+    },
+    {
+      "text": "중재 클라이언트 사이트는 아케인 템포를 빼야 함: 연사·멀티샷이 높으면 렉이 생김(arbi.guide·해외 디스코드 전언)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=497029",
+      "date": "2026-10-31"
+    },
+    {
+      "text": "이식 레메디움은 시전 중 무적(시전 속도 0% 기준 약 1.5초)이라 시전 속도가 낮을수록 무적이 길고, 체력을 먼저 채운 뒤 남는 양을 오버실드로 바꿔 카탈라이징 실드와 묶으면 브리프 리스파이트 없이 실드 게이팅",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=435390",
+      "date": "2025-12-23"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -181,6 +225,54 @@
       "shards": ["노랑(시작 에너지) ×1", "노랑(시전 속도) ×2", "보라(주무기 전기) ×2"],
       "helminth": {"replace_slot": null, "ability": "미기재"},
       "notes": "댓글 빌드(모드 미기재). 같은 토픽 #704(2026-10-29): 현재 중재 메타는 보어 프라임+관통·연사 위주로 2번을 연타하며 스폰 즉시 처치. #694·#696: 44.1.3 애시드 쉘즈 너프 뒤 소벡형 섬멸력이 눈에 띄게 줄었지만 중재에선 여전히 사이트. #666: 2번이 재장전을 대신해 크럭스 같은 탄약 효율 증강이 필요 없음"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=497029",
+      "date": "2026-10-31",
+      "title": "중재 세팅 최신화(클라이언트 사이트)",
+      "concept": "4번 자리 라스풀 어드밴스를 넣은 중재 클라이언트용 순간이동 저격 사이트",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": ["노랑(시전 속도) ×2", "노랑(파쿠르 속도) ×3"],
+      "helminth": {"replace_slot": 4, "ability": "라스풀 어드밴스(쿨레르보)"},
+      "notes": "추천 19, 나린 업데이트 기준 중재 조합 글. 포커스 유나이루. 클라이언트는 연사·멀티샷 과다로 렉이 나지 않게 아케인 템포 제외. 같은 글에 바우반·나이더스·라이노(4번 자리 브라이트보닛)·위습(4번 자리 써멀 선더)·제이드(4번 자리 워크라이) 구성"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=457885",
+      "date": "2026-05-18",
+      "title": "네트라셀 3분 컷 사이트",
+      "concept": "쿠바 소벡 자성 베일런스로 네트라셀을 빠르게 도는 이동·저격형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["프라임드 플로우", "프레퍼레이션"],
+      "arcanes": ["아케인 스테드패스트", "아케인 어질리티"],
+      "shards": ["보라(주무기 전기 피해) ×4", "노랑(시전 속도) ×1"],
+      "helminth": {"replace_slot": null, "ability": "미기재"},
+      "notes": "추천 20. 파쿠르 모드 채용, 아케인 어질리티는 네트라셀 자해 패널티와 궁합. 동반자 웜 프라임(터네이셔스 본드·리인포스드 본드). 핫픽스 44.1.3 애시드 쉘즈 너프 전 글"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=455531",
+      "date": "2026-05-01",
+      "title": "레메디움 사이트",
+      "concept": "3번 또는 4번 자리에 레메디움을 이식해 최대 체력 비례 회복·오버실드로 버티는 범용형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "레메디움(우리엘, 3번 또는 4번 자리)"},
+      "notes": "추천 7. 소벡 전용이면 쇼크 이식+보라 전기 샤드가 고점이라는 언급. 핫픽스 44.1.3 전 글"
     }
   ],
   "consensus": {

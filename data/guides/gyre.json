@@ -94,6 +94,20 @@
       "source": "https://wiki.warframe.com/w/Cathode_Grace"
     }
   ],
+  "mechanics": [
+    {
+      "text": "아케인 서컴벤트는 구를 때마다 주변(반경 약 3m) 적 방어력 50%를 15초 빼앗고(상한 1,000, 쿨 없음) 합연산이라 두 번 구르면 완전 방깎 → 필리지·고위력 없이도 방깎, 밀리 커린(구르기 냉기 10스택)+아케인 아이스 스톰과 조합",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=435424",
+      "date": "2025-12-23"
+    },
+    {
+      "text": "2번 증강 드리블: 코일 호라이즌 증강으로 던진 구체를 다시 불러와 근접 공격으로 밀어 굴리며 스택을 쌓은 뒤 2번 길게 눌러 터뜨림(맵 타일 때문에 실전은 불편)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=454245",
+      "date": "2026-04-24"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -254,6 +268,38 @@
       "shards": [],
       "helminth": {"replace_slot": 2, "ability": "필리지"},
       "notes": "wikiwiki 빌드 예시(날짜 미표기)에 #724(2026-03-30) '필리지 이식형으로 강철의 길 캐스케이드 레벨 캡 가능' 댓글로 날짜 부여. 트랜지언트 포티튜드를 쓰면 지속 73%여도 3·4번 유지 가능, 서킷 발굴처럼 적이 적으면 컨티뉴어티 필요"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=435424",
+      "date": "2025-12-23",
+      "title": "서컴벤트 자이어",
+      "concept": "2번 자리 로어, 아케인 서컴벤트 구르기 두 번으로 방깎하고 밀리 커린 냉기로 아이스 스톰을 쌓는 범용형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "코로시브 프로젝션",
+      "exilus": "",
+      "mods": [],
+      "arcanes": ["아케인 서컴벤트", "아케인 아이스 스톰", "밀리 커린(근접)"],
+      "shards": ["노랑(시전 속도) ×1", "보라(전기 추가 피해, 본문 표기) ×4"],
+      "helminth": {"replace_slot": 2, "ability": "로어"},
+      "notes": "추천 21. 아이스 스톰 20스택. 보조 무기 아말감 배럴 디퓨젼, 포커스 마두라이"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=454245",
+      "date": "2026-04-24",
+      "title": "2개조 자이어",
+      "concept": "1번 자리 로어, 코일 호라이즌 증강 구체를 근접으로 드리블해 스택을 쌓고 2번 길게 눌러 극딜",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": [],
+      "helminth": {"replace_slot": 1, "ability": "로어"},
+      "notes": "추천 19. 작성자도 실전은 맵 타일 때문에 불편하다고 평가"
     }
   ],
   "consensus": {

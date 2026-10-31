@@ -144,6 +144,38 @@
       "source": "https://wiki.warframe.com/w/Ember/Abilities"
     }
   ],
+  "mechanics": [
+    {
+      "text": "화염 상속 역시너지: 화염 상태이상은 다시 걸 때마다 기존 피해에 합산되는데 먼저 건 쪽의 화염·팩션 모드로 계산됨. 인페르노·파이어볼 같은 엠버 화염이(가) 먼저 맞으면 화염 무기 불틱이 화염 모드 없는 값으로 떨어짐(실바&이지스 4,442 → 1,777, 사이크론 80,579 → 24,578) → 핫 샷 거치대는 비화염 무기, 화염 무기를 쓸 땐 화염 어빌 금지",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=457130",
+      "date": "2026-05-13"
+    },
+    {
+      "text": "화염 상속을 역이용하는 동반자 거치대: 하운드 전기 구체에 로어+화염을 먼저 묻히고 엠버 4번+로어로 덮으면 하운드 판정 화염 틱이 되어 컨테이저스 본드로 전이. 화염 틱 = 기본 × (1+팩션) × 0.5 × (1+화염 모드) × (1+팩션)이고 로어는 팩션 자리에 들어감",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=429652",
+      "date": "2025-12-06"
+    },
+    {
+      "text": "엠버 패시브(불타는 적 1명당 위력 +5%)로 실전 위력이 +50~90% 오르므로 3번을 먼저 써서 화염을 깔고 시작",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=429652",
+      "date": "2025-12-06"
+    },
+    {
+      "text": "힐링 플레임 오버가드가 모두 걷히는 순간 짧은 무적(오버가드 게이트)이 생겨 아케인 트러큘런스형의 생존 수단이 됨. 에너지는 노랑(에너지 오브 효과) 샤드+엑소써믹이 필수",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=438217",
+      "date": "2026-01-06"
+    },
+    {
+      "text": "이식 브라이트보닛은 설치 즉시 첫 파장이 시전 비용보다 많은 에너지를 돌려주고 아케인 스컬프터도 발동해 사실상 무한 에너지. 위력 버프는 약 +71%p(마두라이·그로잉 파워 켠 상태), 6.38초, 반경 15m → 엠버는 위력 +약 70%p로 인페르노 화염 틱 약 11,000, 12초마다 1번(스컬프터) 후 3·4번 반복(471907)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470569",
+      "date": "2026-07-21"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -400,6 +432,93 @@
         "ability": "쇼크(볼트)"
       },
       "notes": "답글(#2002, 2026-01-21)은 두 원소가 결합 없이 따로 붙는지 질문. 같은 스레드 #1993(2025-11-23): 1·3번 개조+핫 샷·어벤저로 치명·화염 특화, 4번엔 에너지 공급 어빌 이식 권장. #1969(2025-11-01): 템플 1번 이식은 래그돌 적에 다단히트해 핫 샷 50중첩이 즉시 참"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=471907",
+      "date": "2026-07-30",
+      "title": "무한 에너지 극위력 4번 난사 엠버",
+      "concept": "브라이트보닛 이식+아케인 스컬프터로 에너지를 무한으로 돌리며 3·4번을 반복하는 어빌 딜러",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [
+        "아케인 스컬프터"
+      ],
+      "shards": [
+        "노랑(시전 속도) ×3",
+        "빨강(위력) ×2(표기 불명확)"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "브라이트보닛(놋코)"
+      },
+      "notes": "추천 21. 보닛 위력 버프로 인페르노 화염 약 11,000. 12초마다 1번, 3·4번 반복. 같은 콘셉트의 아카라이브 2026-07-22 글과 별개 게시물"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=438217",
+      "date": "2026-01-06",
+      "title": "트러큘런스 엠버",
+      "concept": "1번 자리 브리치 서지, 힐링 플레임 적중당 오버가드로 아케인 트러큘런스 바이러스를 계속 터뜨리는 어빌 난사형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "힐링 플레임",
+        "엑소써믹"
+      ],
+      "arcanes": [
+        "아케인 트러큘런스",
+        "아케인 핫 샷 또는 몰트 어그먼티드"
+      ],
+      "shards": [
+        "노랑(에너지 오브 효과) 필수"
+      ],
+      "helminth": {
+        "replace_slot": 1,
+        "ability": "브리치 서지(위습)"
+      },
+      "notes": "추천 27. 패시브 때문에 3번을 먼저. 오버가드가 다 걷히는 순간의 무적으로 생존"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=429652",
+      "date": "2025-12-06",
+      "title": "동반자 거치대 어빌 딜러 엠버",
+      "concept": "2번 자리 로어, 하운드가 먼저 건 화염에 엠버 4번을 덮어 화염 상속으로 하운드 판정 화염 틱을 컨테이저스 본드로 퍼뜨리는 동반자 거치대",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "파이어볼 프렌지"
+      ],
+      "arcanes": [],
+      "shards": [],
+      "helminth": {
+        "replace_slot": 2,
+        "ability": "로어"
+      },
+      "notes": "추천 19. 작성자는 로어+화염 부여가 가능한 프레임이 가우스·엠버·라이노뿐이라고 주장. 패시브로 실전 위력 +50~90%"
     }
   ],
   "consensus": {

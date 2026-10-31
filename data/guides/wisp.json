@@ -112,6 +112,32 @@
       "source": "https://wiki.warframe.com/w/Wil-O-Wisp"
     }
   ],
+  "mechanics": [
+    {
+      "text": "임파워(헬민스) 이식 레저부아 위력 극대화 순서: 임파워 → 에너지 오브(에너지 컨버전) → 그리모어 봄 인보케이션(+60%) 풀스택 → 오퍼레이터 슬링+2번 후 레저부아 설치 → 위력 685%(헤이스트 공속 +137%), 반복하면 770%(공속 154%·체력 +2,310), 강철의 길 균열 최대 2,245%(공속 449%·체력 +6,740). 나이더스 스펙터는 곱연산 +28%",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=432168",
+      "date": "2025-12-12"
+    },
+    {
+      "text": "1번 쇼크 모트는 맞은 적이 기절해 자리 잡기를 방해하므로 켜지 않는 편",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=417029",
+      "date": "2025-09-24"
+    },
+    {
+      "text": "2번 윌-오-위습으로는 상태이상이 풀리지 않음(작성자 정정). 퍼시스턴스 위습은 몰트 리컨스트럭트로 브리치 서지 77 에너지마다 체력 462 회복, 방어력 1,400 확보",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=456791",
+      "date": "2026-05-10"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -240,6 +266,54 @@
       "shards": ["빨강(위력) ×3", "이퀄리브리엄 유사 효과 ×2(종류 미기재)"],
       "helminth": {"replace_slot": null, "ability": "로어"},
       "notes": "스탯 우선순위 위력>범위=지속>효율. #1974~1975(2026-02-04): 로어+모트 전부+4번 개조가 알기 쉽게 강함, 4번 축이면 2번 자리 이식이라 생존 궁리 필요. #1990~1991(2026-05-14): 폴아웃+핫 샷 사용자에게 4번 개조·3번 모두에 적용되는 아케인 아라크네 추천"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=432168",
+      "date": "2025-12-12",
+      "title": "위습으로 ㅅㅅ하는법(버프 위습)",
+      "concept": "4번 솔 게이트를 임파워로 바꾸고 위력 버프를 순서대로 겹쳐 레저부아를 위력 685~770%로 설치하는 분대 버퍼",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "그로잉 파워",
+      "exilus": "",
+      "mods": ["퓨즈드 레저부아", "움브랄 인텐시파이", "움브랄 바이탈리티", "에너지 컨버전"],
+      "arcanes": ["아케인 벨리코스"],
+      "shards": ["타우 빨강(위력) ×5"],
+      "helminth": {"replace_slot": 4, "ability": "임파워(헬민스)"},
+      "notes": "추천 24. 마두라이 슬링 스트렝스 +40%(체인 슬링을 방해하는 Far Sling 미선택), 그리모어 봄 인보케이션 +60%, 나이더스 스펙터 +28%(곱연산). 3움브랄이면 벨리코스 시작부터 24%"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=497029",
+      "date": "2026-10-31",
+      "title": "중재 세팅 최신화(위습)",
+      "concept": "4번 자리 써멀 선더로 중재 버퍼 겸 광역 처리",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": ["빨강(위력) ×5"],
+      "helminth": {"replace_slot": 4, "ability": "써멀 선더(가우스)"},
+      "notes": "추천 19. 아펜티스 프라임 필수, 포커스 마두라이"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=480309",
+      "date": "2026-09-10",
+      "title": "4개조 실게 로어 위습",
+      "concept": "2번 자리 로어, 4번 증강 카타클리즈믹 게이트와 어거 리치 실드 게이팅으로 버티는 광역형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["카타클리즈믹 게이트", "어거 리치"],
+      "arcanes": ["아케인 유니버설 폴아웃 또는 아케인 스컬프터"],
+      "shards": ["파랑(최대 에너지) ×1", "빨강(위력) ×1", "노랑(시전 속도) ×2", "노랑(파쿠르 속도) ×1"],
+      "helminth": {"replace_slot": 2, "ability": "로어"},
+      "notes": "2026-09-10 글"
     }
   ],
   "consensus": {

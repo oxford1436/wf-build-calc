@@ -94,6 +94,44 @@
       "source": "https://wiki.warframe.com/w/Arcane_Bellicose"
     }
   ],
+  "mechanics": [
+    {
+      "text": "4번 자리 제이드 스타즈 이식: 화염 확률이 위력 비례라 위력 300%면 화염 3스택, 아콘 바이탈리티는 2배가 아니라 +1(4스택)",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=471194",
+      "date": "2026-07-25"
+    },
+    {
+      "text": "볼래틸 레컴펜스 단검(20m 자동 공격)의 범위 피해가 널리파이어 보호막을 깎고, 단검 적중마다 어빌 콤보가 쌓임 → 아케인 트러큘런스(오버가드)와 조합",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=471194",
+      "date": "2026-07-25"
+    },
+    {
+      "text": "4번 자리 워크라이 이식 시 방어력 버프만으로 퍼시스턴스 조건을 넘김(다른 이식이면 파랑(방어력) 샤드 1개 필요)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=480834",
+      "date": "2026-09-13"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    },
+    {
+      "text": "이식 제이드 스타즈는 2026-07-22 데브쇼츠 예고 뒤 시야(LOS) 판정이 추가돼 벽 너머 적은 맞히지 못함(시리우스 본인 제외)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470716",
+      "date": "2026-07-22"
+    },
+    {
+      "text": "화염 상태이상은 방어력을 50% 깎으므로 퍼시스턴스(방어력 700 조건)를 화염에도 유지하려면 실질 방어력 1,400이 필요",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -222,6 +260,38 @@
       "shards": [],
       "helminth": {"replace_slot": 4, "ability": "Breach Surge"},
       "notes": "신규 텐노젠 스킨 화제 중 나온 구성. 같은 스레드: 이식 추천으로 Shock 증강 인플루언스(#724), 제이드 스타즈 전이 루프(#729), 볼래틸이 반응하지 않는 적(보스·무효화 버블·오브젝트 판정)은 약점(#704, #720)"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=471194",
+      "date": "2026-07-25",
+      "title": "어빌 딜러 쿨레르보",
+      "concept": "4번 자리 제이드 스타즈와 볼래틸 레컴펜스 단검 자동 공격, 아케인 트러큘런스로 굴리는 편한 어빌 딜러",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["볼래틸 레컴펜스"],
+      "arcanes": ["아케인 트러큘런스"],
+      "shards": [],
+      "helminth": {"replace_slot": 4, "ability": "제이드 스타즈(시리우스)"},
+      "notes": "추천 18. 위력 300%면 화염 3스택, 아콘 바이탈리티는 +1. 단검이 널리파이어 보호막을 깎음"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=480834",
+      "date": "2026-09-13",
+      "title": "퀵밀리 쿨레르보+건블레이드",
+      "concept": "4번 자리 워크라이로 방어력과 공속을 챙겨 퍼시스턴스를 켜고 건블레이드로 퀵 근접",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["이터널 워"],
+      "arcanes": ["아케인 퍼시스턴스"],
+      "shards": [],
+      "helminth": {"replace_slot": 4, "ability": "워크라이(발키르)"},
+      "notes": "추천 12. 다른 이식을 쓰면 퍼시스턴스용 파랑(방어력) 샤드 1개 필요"
     }
   ],
   "consensus": {

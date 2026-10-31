@@ -85,6 +85,32 @@
       "source": "https://wiki.warframe.com/w/Nourish"
     }
   ],
+  "mechanics": [
+    {
+      "text": "3번 펄버라이즈(공) 상태에서 노리쉬를 쓰며 공을 해제하면 공의 가속이 기본 상태에 그대로 남는 버그(노리쉬 버프가 없을 때만) → 이동 속도가 크게 오르고 내리막에서 미끄러짐",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447516",
+      "date": "2026-03-13"
+    },
+    {
+      "text": "보조 무기를 빼면 삼킨 적을 노리쉬로 소화한 뒤에도 가스트로파레시스 가스 효과가 남는 버그성 현상",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=492422",
+      "date": "2026-10-20"
+    },
+    {
+      "text": "가스 상태이상 틱 = 0.5 × 모딩된 기본 피해 × (1+가스 모드) × (1+팩션) × (1+상태이상 피해) × 추가 배율 → 화염·독 모드는 무관하고 단일 가스 모드와 라보스 베일런스 포메이션만 반영(영문 위키 번역)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=491210",
+      "date": "2026-10-16"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    }
+  ],
   "community": [
     {
       "region": "KR",

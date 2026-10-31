@@ -103,6 +103,20 @@
       "source": "https://wiki.warframe.com/w/Roar"
     }
   ],
+  "mechanics": [
+    {
+      "text": "아케인 스컬프터 발동 어빌(해외 실험 정리): 프로티아는 1번 그레네이드 팬 위성·2번 포탑·3번 디스펜서리(이식해도) 모두 발동",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=464340",
+      "date": "2026-06-21"
+    },
+    {
+      "text": "착지 직전에 1번 실드 위성을 쓰면 헤비 랜딩을 무시하고 실드를 얻음. 짧게/길게 누르기 반전 설정 강력 추천",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=417029",
+      "date": "2025-09-24"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -231,6 +245,22 @@
       "shards": [],
       "helminth": {"replace_slot": 4, "ability": "로어(대안: 증강 하이드로이드, 코일 호라이즌, Larva, Gloom)"},
       "notes": "답글: 집결 이식은 포탑 무한 관통과 시너지, 증강 하이드로이드가 투명 유지·무효화 버블 파괴로 최고라는 의견 다수. 노리쉬는 포탑에 바이러스가 안 붙음(#1076)"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=464490",
+      "date": "2026-06-21",
+      "title": "이퀄 없는 2·4개조 스컬프터 프로티아",
+      "concept": "3번 없이 포탑을 도배해 스컬프터를 상시 켜고 이퀄리브리엄 대신 움브랄 인텐시파이를 넣은 2·4번 증강형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "그로잉 파워",
+      "exilus": "",
+      "mods": ["템포럴 아틸러리", "템포럴 이로전", "움브랄 인텐시파이"],
+      "arcanes": ["아케인 스컬프터"],
+      "shards": ["노랑(시전 속도) ×2"],
+      "helminth": {"replace_slot": null, "ability": "로어(그로잉 파워 포함 124%)"},
+      "notes": "추천 12. 강철의 길 서큘러스에서 에너지가 600 아래로 거의 안 떨어진다고 작성자 언급. 프라임드 플로우까지 빼는 극단 버전(보라(이퀄리브리엄 효과) 샤드·제누릭으로 보충)도 소개"
     }
   ],
   "consensus": {

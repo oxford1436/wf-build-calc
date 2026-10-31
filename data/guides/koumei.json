@@ -115,6 +115,38 @@
       "source": "https://zawazawa.jp/warframe_wiki/topic/1119"
     }
   ],
+  "mechanics": [
+    {
+      "text": "카탈라이징 실드를 끼면 실드량(1만이어도)과 무관하게 실드 게이팅이 1.33초로 고정돼 오버실드 2.5초 게이팅을 얻지 못함",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=417029",
+      "date": "2025-09-24"
+    },
+    {
+      "text": "4번 분라쿠는 시전이 느려 노랑(시전 속도) 샤드를 최소 3개 권장",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=400510",
+      "date": "2025-05-03"
+    },
+    {
+      "text": "4번 자리 널 스타를 이식하면 거리 140%에서 입자가 적에게 돌진해 금방 꺼짐",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=413284",
+      "date": "2025-08-25"
+    },
+    {
+      "text": "디크리 추가 피해가 컨디션 오버로드와 곱연산으로 붙는 버그가 있고, 헤드샷으로 건 독 디크리가 아크건 아케인을 발동시킴",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=495481",
+      "date": "2026-10-26"
+    },
+    {
+      "text": "43.0 1번 증강 쿠미히모 로딩(주사위 복사)은 효과가 1번 한정이라 비추천이라는 평(아카라이브 대회 빌드는 핵심으로 채용)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=463282",
+      "date": "2026-06-18"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -415,6 +447,40 @@
         "ability": "브리치 서지(또는 템페스트 배러지)"
       },
       "notes": "샘플 빌드는 이미지라 본문 필수·추천 모드 기준으로 정리, 수치 미기재. 아콘 플로우는 분라쿠가 관통 피해라 발동 안 하니 프라임드 플로우 권장. 무기는 프라이머리 디빌리테이트로 기초 4원소 과제를 쉽게"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=400510",
+      "date": "2025-05-03",
+      "title": "성능충 시리즈 2/3(코우메이)",
+      "concept": "움브랄 3세트와 브리프 리스파이트·카탈라이징 실드 하이브리드 생존에 2번 증강을 쓰는 범용형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "움브랄 인텐시파이",
+        "움브랄 바이탈리티",
+        "움브랄 파이버",
+        "브리프 리스파이트",
+        "카탈라이징 실드",
+        "오미쿠지 포츈"
+      ],
+      "arcanes": [],
+      "shards": [
+        "초록(부식 최대 중첩) ×1",
+        "노랑(시전 속도) ×4"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "미기재(1번 쿠미히모가 이식 후보)"
+      },
+      "notes": "2025-05 글. 4번 분라쿠 시전 속도가 답답해 시전 속도 샤드 최소 3개. 댓글: 카탈라이징 실드는 실드량과 무관하게 1.33초"
     }
   ],
   "consensus": {

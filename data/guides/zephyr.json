@@ -94,6 +94,20 @@
       "source": "https://wiki.warframe.com/w/Xata%27s_Whisper"
     }
   ],
+  "mechanics": [
+    {
+      "text": "아케인 스테드패스트(무료 시전) 2스택일 때 1번을 길게 눌러 비행한 뒤 1번으로 하강하면 1번 증강 타겟 픽세이션 스택이 초기화되지 않고 에너지도 들지 않아 무한 박치기(2025-08 버그 빌드 생존 정리에서도 생존 확인)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=411238",
+      "date": "2025-08-05"
+    },
+    {
+      "text": "패시브 공중 치명 확률 +150%가 붙으므로 밀리 듀플리케이트·이클립스 빌드에선 무기 리벤의 치명 확률 옵션을 빼는 편이 나음",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=411238",
+      "date": "2025-08-05"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -206,6 +220,22 @@
       "shards": [],
       "helminth": {"replace_slot": null, "ability": "널 스타(노바)"},
       "notes": "위키 댓글 빌드(모드 일부만 명시). 작성자가 추기에서 세컨더리 에너베이트 없이 데드헤드만으로도 충분했다고 정정. 토네이도와 함께 쓰면 유사 광역 공격도 가능"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=411238",
+      "date": "2025-08-05",
+      "title": "강범 제피르",
+      "concept": "2번 증강 에어버스트 라운즈 무기 딜러(자타 위스퍼·이클립스·로어·사일런스 이식), 1번 증강 무한 박치기형, 컨테이전 조우형(거리 175% 이상)을 정리",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["에어버스트 라운즈", "타겟 픽세이션"],
+      "arcanes": ["아케인 스테드패스트"],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "자타 위스퍼 / 이클립스 / 로어 / 사일런스 / 라스풀 어드밴스(1번 또는 2번 자리)"},
+      "notes": "추천 14, 2025-08 글. 1번 증강 피해는 높이 비례. 컨테이전 조우형은 봄바드 대비 거리 175% 이상"
     }
   ],
   "consensus": {

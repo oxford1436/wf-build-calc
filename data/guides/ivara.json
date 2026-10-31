@@ -135,6 +135,20 @@
       "source": "https://wiki.warframe.com/w/Artemis_Bow"
     }
   ],
+  "mechanics": [
+    {
+      "text": "3번 프라울·4번 아르테미스 보우는 시전 순간의 스탯을 스냅샷 → 1번 대시와이어(짚라인)를 설치해 아케인 스컬프터를 켠 뒤 3·4번을 시전하면 효율 175%가 유지된 채 고정됨",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=466937",
+      "date": "2026-07-04"
+    },
+    {
+      "text": "프라이머리 오버차지는 현재 에너지 90% 이상일 때 멀티샷을 주는데 상한이 최대 에너지에 비례(100당 +35%, 1,000에서 최대 +350%: 997 → 349%, 855 → 300%, 572 → 200%, 400 → 140%). 이바라는 프라임드 플로우 기준 최대 에너지 855 → 멀티샷 +300%(466937)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=432936",
+      "date": "2025-12-14"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -383,6 +397,68 @@
         "ability": "미기재"
       },
       "notes": "위키 댓글(모드 일부만). 한 방에 처치해 에너지 소모가 적다고 작성, 보조무기에 아말감 서레이션 권장. 같은 시기 댓글에 '위력·지속 + 라스풀 어드밴스 이식 후 짚라인 위에서 글레이브 투척'(#2175), 2026-06-20 '거리 280%+프라임드 파이어스톰 4번 증강에 프라이머리 컴프레션 1814%'(#2219) 계산도 있음"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=466937",
+      "date": "2026-07-04",
+      "title": "스컬프터 오버차지 4개조 이바라",
+      "concept": "대시와이어로 스컬프터를 켠 뒤 3·4번을 스냅샷하고 프라이머리 오버차지 멀티샷까지 얹은 4번 증강 활 딜형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "컨센트레이티드 애로우",
+        "프라임드 플로우"
+      ],
+      "arcanes": [
+        "아케인 스컬프터",
+        "프라이머리 오버차지(무기 아케인)"
+      ],
+      "shards": [
+        "보라(이퀄리브리엄 효과) ×1",
+        "노랑(시전 속도) ×2"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "미기재"
+      },
+      "notes": "활 모딩: 갈바나이즈드 스코프, 크리티컬 딜레이(활은 연사 계수 2배 적용). 최대 에너지 855로 멀티샷 +300%. 4번 증강 폭발은 지형(시야)에 막힘"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=496591",
+      "date": "2026-10-30",
+      "title": "이바라+듀톡소",
+      "concept": "1번 증강 임파워드 퀴버 짚라인 치명 피해 버프를 받으며 보조 무기 듀얼 톡소시스트로 싸우는 무기 거치대",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "임파워드 퀴버"
+      ],
+      "arcanes": [],
+      "shards": [
+        "타우 황옥(화염 처치 시 보조무기 치명 확률) ×4",
+        "노랑(파쿠르 속도) ×1"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "미기재"
+      },
+      "notes": "세컨더리 데드헤드 고정, 리벤에 약점 피해 필수. 보이드리그·본위도우는 바이러스 면역이고 부식 방깎이 안 됨. 같은 글에 자타 위스퍼 계산식"
     }
   ],
   "consensus": {

@@ -4,7 +4,7 @@
   "name_ko": "힐드린",
   "has_prime": true,
   "last_rework": "2024-10-02",
-  "checked": "2026-10-30",
+  "checked": "2026-10-31",
   "summary": "실드를 에너지로 쓰며 4번 비행 중 베일파이어로 폭격하는 탱커형 딜러",
   "abilities": [
     {
@@ -115,6 +115,38 @@
       "calc": "레벨 400 중장갑 방어력 = 상한 2,700. 피해 감소 = 90% × 방어력 ÷ 2,700. 300%: 75% 제거 → 675 남음 → 22.5%. 283%(한국 아파치 빌드): 70.75% → 790.9 → 26.4%. 300%+코로시브: 93% → 189 → 6.3%. 343%+코로시브(한국 게일 러쉬): 100% → 0%",
       "verified": true,
       "source": "https://wiki.warframe.com/w/Armor"
+    }
+  ],
+  "mechanics": [
+    {
+      "text": "이식 몰트의 이동 속도 버프(위력 비례)는 4번 이지스 스톰 중에도 적용돼 라스풀 어드밴스 없이도 빠르게 이동. 몰트는 시전 모션 없이 즉발로 상태이상 해제·분신 생성",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447732",
+      "date": "2026-03-15"
+    },
+    {
+      "text": "세컨더리 에너베이트를 베일파이어에 끼우면 범위·지연 피해에는 '치명 6회' 카운트가 들지 않는데 치명 확률 +10% 스택은 계속 오름(2025-09 글, 업데이트 42의 에너베이트 수정 이후 재확인 필요)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=417029",
+      "date": "2025-09-24"
+    },
+    {
+      "text": "1번 베일파이어를 다른 어빌로 이식해 바꾸면 4번 증강(이지스 게일)이 터지지 않음 — '터진다'는 주장은 댓글 검증으로 부정됨",
+      "status": "반론",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=426993",
+      "date": "2025-11-20"
+    },
+    {
+      "text": "아케인 엑스퍼티즈는 위력 비율을 기본 실드에 곱해 실드가 약 1만(3번 자리 엘리멘탈 와드 전기 이식 시 약 1만 5천)까지 오르므로 위력을 깎으면 실드도 줄어듦",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=433319",
+      "date": "2025-12-15"
+    },
+    {
+      "text": "합성 집정관 샤드(초록·황옥·보라)의 '상태이상 적에게 어빌리티 피해 +15%'는 익절 무기 피해에 적용되지 않음(티타니아 익절 부식·전기 피해가 599/1,199로 동일) → 베일파이어(익절)에는 어빌리티 피해 합성 샤드 대신 다른 샤드",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447619",
+      "date": "2026-03-14"
     }
   ],
   "community": [
@@ -512,6 +544,61 @@
         "ability": "Airburst(제피르, Airburst Rounds 증강 전제)"
       },
       "notes": "모드 구성은 이미지라 읽지 못함. 같은 콘셉트의 wikiwiki 문서(2024-10-31)는 오라 Aerodynamic, 익실러스 에비에이터, 프리시젼 인텐시파이, 타우 빨강 ×5, 몰트 어그먼티드+아케인 어벤저를 제시. 같은 Airburst 콘셉트 wikiwiki 빌드의 zawazawa 댓글(2026-03-10~11)은 아케인 엑스퍼티즈가 4번 증강과 시너지, 베일파이어에는 세컨더리 에너베이트를 추천"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447732",
+      "date": "2026-03-15",
+      "title": "이속 빠른 몰트 힐드린",
+      "concept": "이식 몰트 이동 속도 버프를 4번 중에도 받아 템포럴 아르키메디아를 빠르게 도는 이지스 게일형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": [
+        "노랑(시전 속도) ×1",
+        "빨강(위력) ×4"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "몰트(새린)"
+      },
+      "notes": "추천 16. 몰트는 상태이상 해제·분신·즉발. 라스풀 어드밴스 이동이 필요 없음"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=433319",
+      "date": "2025-12-15",
+      "title": "너무 강해진 힐드린(엑스퍼티즈)",
+      "concept": "아케인 엑스퍼티즈로 실드를 약 1만까지 올리고 4번 방깎·로어 버프를 크게 키운 위력형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [
+        "아케인 엑스퍼티즈"
+      ],
+      "shards": [
+        "타우 빨강(위력·지속)"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "로어"
+      },
+      "notes": "추천 13. 4번 방깎 63m·82%, 로어 107%(작성자 캡처 기준). 댓글: 엘리멘탈 와드 이식이면 실드 15,000"
     }
   ],
   "consensus": {

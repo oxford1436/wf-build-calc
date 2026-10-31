@@ -103,6 +103,20 @@
       "source": "https://wiki.warframe.com/w/Resonator"
     }
   ],
+  "mechanics": [
+    {
+      "text": "1번 말렛은 땅에 닿아 설치되는 순간 아케인 스컬프터를 발동시키고(2번 자리 이식 어빌로도 발동), 말렛 폭발은 시야(LOS) 영향을 받음",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476722",
+      "date": "2026-08-24"
+    },
+    {
+      "text": "말렛 반사 피해는 적 레벨에 비례하므로 반사 딜러형은 위력보다 거리를 극대화하고 4번 앰프로 반사를 강화. 녹턴 은신은 앉았다 일어나기를 반복해 유지",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476722",
+      "date": "2026-08-24"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -215,6 +229,22 @@
       "shards": ["타우 빨강(지속) ×2~3"],
       "helminth": {"replace_slot": null, "ability": "미기재"},
       "notes": "내로우 마인디드로 지속만 올리려던 질문자에게 '특화보다 균형, 효율만 버린다'는 답변 묶음. wikiwiki 본문 우선순위도 지속◎·범위◎·위력○·효율×"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476722",
+      "date": "2026-08-24",
+      "title": "반사딜러 옥타비아",
+      "concept": "1번 말렛 광역 어그로·반사 피해를 극거리로 키우고 2번 자리에 이쿼녹스 어빌을 넣어 취약·공이속을 더한 반사 딜러",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": ["아케인 크리퍼스큘러", "아케인 에너자이즈 또는 아케인 스컬프터"],
+      "shards": [],
+      "helminth": {"replace_slot": 2, "ability": "이쿼녹스 어빌(취약+공이속, 레스트 & 레이지로 추정)"},
+      "notes": "말렛 반사 피해는 적 레벨 비례 → 극거리. 스컬프터는 말렛이 땅에 설치될 때 발동"
     }
   ],
   "consensus": {

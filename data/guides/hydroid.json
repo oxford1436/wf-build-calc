@@ -85,6 +85,38 @@
       "source": "https://wiki.warframe.com/w/Tempest_Barrage"
     }
   ],
+  "mechanics": [
+    {
+      "text": "하이드로이드 어빌은 아케인 스컬프터를 직접 발동하지 못하고 이식 몰트로만 발동(스컬프터는 12초, 본문 '15초'는 오기)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=478002",
+      "date": "2026-08-31"
+    },
+    {
+      "text": "2번 타이달 서지를 연속 시전해 이동할 때 이동 거리는 지속·이동 속도·파쿠르 속도와 무관",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=478002",
+      "date": "2026-08-31"
+    },
+    {
+      "text": "1번 증강 바이럴 템페스트(바이러스+부식)와 패시브 방깎 위에 제이드 스타즈를 이식해 어빌 딜러로 쓰는 구성도 가능(시야 판정 너프 후 기준)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=487928",
+      "date": "2026-10-07"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    },
+    {
+      "text": "화염 상태이상은 방어력을 50% 깎으므로 퍼시스턴스(방어력 700 조건)를 화염에도 유지하려면 실질 방어력 1,400이 필요",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -181,6 +213,22 @@
       "shards": [],
       "helminth": {"replace_slot": 4, "ability": "자유"},
       "notes": "위키 댓글 빌드(모드 일부만 명시). 3번 방어력을 버리면 위력·거리·지속을 크게 올릴 필요가 없다고 설명. 답글 작성자는 퍼시스턴스 축이라 시전 속도 없이도 문제없었다고 함"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=478002",
+      "date": "2026-08-31",
+      "title": "초패스트 하이드로이드 섬멸",
+      "concept": "이식 몰트로 스컬프터를 켜고 2번 타이달 서지 연타로 맵을 쓸고 다니는 섬멸형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": ["노랑(시전 속도)", "노랑(시작 에너지)"],
+      "helminth": {"replace_slot": null, "ability": "몰트(새린)"},
+      "notes": "근접 무기 생티 마기스타. 타이달 서지 이동 거리는 지속·이속·파쿠르 속도와 무관"
     }
   ],
   "consensus": {

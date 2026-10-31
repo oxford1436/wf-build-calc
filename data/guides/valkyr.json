@@ -126,6 +126,38 @@
       "source": "https://wiki.warframe.com/w/Rip_Line"
     }
   ],
+  "mechanics": [
+    {
+      "text": "이터널 워·프롤롱드 퍼랠러시스는 0랭크로 충분: 이터널 워는 처치당 연장 차이가 약 1초뿐, 프롤롱드 퍼랠러시스는 랭크가 피해 취약·몹몰이에 영향 없음 → 수용량을 아껴 3움브랄+스틸 차지 오라",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=457945",
+      "date": "2026-05-19"
+    },
+    {
+      "text": "노리쉬 바이러스는 피해 중 전기 비율을 낮춰 탈론즈 밀리 인플루언스(전기 전파)와 상성이 나쁨. 탈론즈 인플루언스 전파 반경은 최대 20m, 밀리 익스포저는 7.15m이고 상태이상 최대 4중첩인 피해 감쇠 적에게는 둘이 비슷",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=412361",
+      "date": "2025-08-15"
+    },
+    {
+      "text": "합성 집정관 샤드(초록·황옥·보라)의 '상태이상 적에게 어빌리티 피해 +15%'는 익절 무기 피해에 적용되지 않음(티타니아 익절 부식·전기 피해가 599/1,199로 동일) → 히스테리아 탈론즈(익절)에는 어빌리티 피해 합성 샤드 대신 다른 샤드",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447619",
+      "date": "2026-03-14"
+    },
+    {
+      "text": "라이카스 헌트를 헬민스로 이식하면 지속이 20초로 고정(지속 모드 영향 없음)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=474428",
+      "date": "2026-08-14"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -487,6 +519,104 @@
         "ability": "이클립스(미라지)"
       },
       "notes": "탈론즈는 인플루언스·전기·폭발. 같은 토픽 #3100(2026-04-23)은 노바 널 스타 이식+뉴트론 스타 증강+아케인 핫 샷으로 익스포저 운용을 제안"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=457945",
+      "date": "2026-05-19",
+      "title": "3개조 3브랄 쌀먹 발키르",
+      "concept": "움브랄 3세트+오버익스텐디드·스트레치로 거리 235%, 2·3번 증강을 0랭으로 끼워 퍼시스턴스+배터리로 버티는 가성비형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": 235,
+        "efficiency": null
+      },
+      "aura": "스틸 차지",
+      "exilus": "",
+      "mods": [
+        "움브랄 인텐시파이",
+        "움브랄 바이탈리티",
+        "움브랄 파이버",
+        "오버익스텐디드",
+        "스트레치",
+        "컨티뉴어티",
+        "이터널 워",
+        "프롤롱드 퍼랠러시스"
+      ],
+      "arcanes": [
+        "아케인 퍼시스턴스",
+        "아케인 배터리"
+      ],
+      "shards": [
+        "노랑(시전 속도) ×2",
+        "보라(이퀄리브리엄 효과) ×1",
+        "보라(근접 치명 피해) ×2"
+      ],
+      "helminth": {
+        "replace_slot": 1,
+        "ability": "노리쉬·로어(인플루언스)·자타 위스퍼(강공·슬램)·사일런스·라이카스 헌트 중"
+      },
+      "notes": "추천 19. 2·3번 증강은 0랭으로 충분하다고 작성자 주장"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=464773",
+      "date": "2026-06-22",
+      "title": "오벡스 발키르",
+      "concept": "1번 자리 사일런스+새비지 사일런스, 트리커리+크리퍼스큘러로 프리즈마 오벡스 마무리 일격을 돌리는 피니셔형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "새비지 사일런스",
+        "트랜지언트 포티튜드(에너지가 불안하면 프라임드 플로우)"
+      ],
+      "arcanes": [
+        "아케인 트리커리",
+        "아케인 크리퍼스큘러"
+      ],
+      "shards": [
+        "노랑(시전 속도) ×2",
+        "보라(이퀄리브리엄 효과) ×2",
+        "보라(근접 치명 피해)"
+      ],
+      "helminth": {
+        "replace_slot": 1,
+        "ability": "사일런스(밴쉬)"
+      },
+      "notes": "추천 19. 오벡스 인카논 진화 2-3-3. 3번으로 몰고 그라운드 피니셔"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=412361",
+      "date": "2025-08-15",
+      "title": "뉴네오 발키르 모딩",
+      "concept": "뉴비 → 강철의 길 → 3움브랄까지 단계별로 정리한 탈론즈 인플루언스 발키르",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": [],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "미기재"
+      },
+      "notes": "추천 15, 2025-08(리워크 후). 노리쉬 바이러스는 인플루언스와 상성이 나쁘고, 탈론즈 인플루언스 20m vs 익스포저 7.15m. 단계별 모드·스탯은 캡처"
     }
   ],
   "consensus": {

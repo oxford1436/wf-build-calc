@@ -146,6 +146,44 @@
       "source": "https://wiki.warframe.com/w/Virulence"
     }
   ],
+  "mechanics": [
+    {
+      "text": "새 아군에게 패러시틱 링크를 다시 걸면 패러시틱 바이탈리티 체력이 가득 참(리터치 전엔 3번을 껐다 켜면 풀피)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=463488",
+      "date": "2026-06-18"
+    },
+    {
+      "text": "링크 재시전 풀피 리필이 가끔 안 된다는 보고(버그 의심)",
+      "status": "반론",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=464319",
+      "date": "2026-06-21"
+    },
+    {
+      "text": "노리쉬를 이식하면 1번 적중당 회수량(15.5)에 노리쉬 에너지 배율(4.32배)이 붙어 한 마리만 맞혀도 비용 100% 환급, 1번이 2스택씩 쌓임",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=463753",
+      "date": "2026-06-19"
+    },
+    {
+      "text": "1번 증강 티밍 비럴런스로 주무기 치명 확률 600%를 보장하고, 패러시틱 바이탈리티 최대 스택 체력 약 2만 5천이면 퍼시스턴스+벨리코스가 반고정",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=463488",
+      "date": "2026-06-18"
+    },
+    {
+      "text": "43.0 이후 2번 증강 라바 버스트는 잡은 적 수만큼 독 스택을 쌓고, 아콘 컨티뉴어티는 부식을 1스택만 묻힘",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=464508",
+      "date": "2026-06-21"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -394,6 +432,95 @@
         "ability": "글룸(세바고스)"
       },
       "notes": "#3182: 나이더스 체력 재생과 아케인 그레이스 조합이 좋아 일반 강철의 길은 퍼시스턴스로 거의 안 죽지만 자성 상태이상에 주의. #3218: 이식 로어 병용 시 화력이 크나 넉백 대책(프라임드 슈어 풋티드) 필수"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=463488",
+      "date": "2026-06-18",
+      "title": "순정 1·3개조 나이더스(업데이트 43)",
+      "concept": "이식 없이 1·3번 증강과 헌터 아드레날린으로 에너지를 무한 순환하고 패러시틱 바이탈리티 체력으로 퍼시스턴스를 반고정",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": 190,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "티밍 비럴런스",
+        "패러시틱 바이탈리티",
+        "헌터 아드레날린",
+        "프라임드 컨티뉴어티"
+      ],
+      "arcanes": [
+        "아케인 퍼시스턴스",
+        "아케인 벨리코스"
+      ],
+      "shards": [
+        "노랑(시전 속도) ×1 필수",
+        "파랑(최대 에너지)"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "없음"
+      },
+      "notes": "추천 23. 움브랄 2장 또는 0장(방어력 약 200 차이). 범위 190%면 충분(스트레치만으로는 1번 촉수가 안 닿을 때가 있음). 프라임드 컨티뉴어티 하나로 3번 90초·4번 60초. 헌터 아드레날린이라 프라임드 플로우 제외"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=463753",
+      "date": "2026-06-19",
+      "title": "무한동력 노리쉬 나이더스",
+      "concept": "노리쉬를 이식해 1번 회수량에 에너지 배율을 붙여 한 마리만 맞혀도 비용을 전액 돌려받는 무한 1번형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": [],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "노리쉬(그렌델)"
+      },
+      "notes": "작성자 계산: 회수 15.5 × 노리쉬 4.32배 ≥ 비용 62(효율 45%)"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=464319",
+      "date": "2026-06-21",
+      "title": "2·3개조 브리치 서지 나이더스",
+      "concept": "4번 자리 브리치 서지, 아케인 배터리로 위력·에너지를 받치는 2·3번 증강형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "움브랄 파이버 또는 스틸 파이버"
+      ],
+      "arcanes": [
+        "아케인 배터리(벨리코스 대안)"
+      ],
+      "shards": [
+        "타우 파랑 ×2~3"
+      ],
+      "helminth": {
+        "replace_slot": 4,
+        "ability": "브리치 서지(위습)"
+      },
+      "notes": "리터치 후 글. 회복은 코다 헤마. 링크 재시전 풀피가 가끔 안 찬다는 댓글"
     }
   ],
   "consensus": {

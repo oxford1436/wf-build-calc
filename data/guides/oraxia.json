@@ -85,6 +85,26 @@
       "source": "https://wiki.warframe.com/w/Webbed_Embrace"
     }
   ],
+  "mechanics": [
+    {
+      "text": "4번 실큰 스트라이드의 체력 복사: 다리를 편 상태 체력이 기본 체력(예: 400) 아래로 내려가지 않았다면 4번을 껐다 켜는 것만으로 풀피",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476790",
+      "date": "2026-08-25"
+    },
+    {
+      "text": "3번 자리에 스마이트(오베론)를 이식하면 대상 체력을 크게 깎아 1번 머시스 키스(체력 50% 이하 즉사)로 확정 처치하는 연계가 됨",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=439834",
+      "date": "2026-01-15"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -181,6 +201,38 @@
       "shards": ["파랑(방어력) — #593은 타우 파랑 ×2+방어 +100% 모드로 퍼시스턴스 발동"],
       "helminth": {"replace_slot": null, "ability": "미기재(#598은 폭력·악의 대처용 사일런스 권장)"},
       "notes": "같은 토픽 #578: 움브랄 3장 세트가 위력과 체력을 함께 올려 효율적. #573(2026-07-07): 몰트(새린) 이식+증강, 아케인 스컬프터, 지속·위력 위주, 퍼시스턴스+몰트 미끼로 거의 안 죽는다는 세팅. #587~591: 새 증강은 거미 돌격 판정이 개체별이라 무기 없이도 싸울 만하지만 범위가 작아 한 칸 쓸 정도인지 의견이 갈림"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476790",
+      "date": "2026-08-25",
+      "title": "소벡수저 오락시아",
+      "concept": "3번 자리 노리쉬, 4번 독 추가타·상태이상 면역·체력 증가를 위력으로 키우고 3움브랄+퍼시스턴스로 버티는 무기 거치대",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["움브랄 인텐시파이", "움브랄 바이탈리티", "움브랄 파이버", "이퀄리브리엄"],
+      "arcanes": ["아케인 퍼시스턴스", "아케인 크리퍼스큘러"],
+      "shards": [],
+      "helminth": {"replace_slot": 3, "ability": "노리쉬(그렌델)"},
+      "notes": "추천 12. 벽에 붙으면(월 래치 포함) 8초 은신 → 크리퍼스큘러, 벽에 붙어 때리면 피해 증가. 이퀄리브리엄은 1번 처형 오브용 필수. 무기 쿠바 소벡(레벨 2,000 이후)·오큐코어. 핫픽스 44.1.3 애시드 쉘즈 너프 전 글"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=439834",
+      "date": "2026-01-15",
+      "title": "퍼시스턴스 스마이트 오락시아",
+      "concept": "3번 자리 스마이트+1번 확정 처치, 아케인 퍼시스턴스·그레이스로 버티는 체력 탱커(일본 유튜브 요약)",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["레이지 또는 헌터 아드레날린"],
+      "arcanes": ["아케인 퍼시스턴스", "아케인 그레이스"],
+      "shards": ["초록(독 상태이상 피해)"],
+      "helminth": {"replace_slot": 3, "ability": "스마이트(오베론)"},
+      "notes": "추천 16. 마두라이 슬링 스트렝스. 움브라 포르마 없는 버전도 제공. 4번을 껐다 켜면 바로 풀피라는 댓글"
     }
   ],
   "consensus": {

@@ -115,6 +115,38 @@
       "source": "https://wiki.warframe.com/w/Tribute"
     }
   ],
+  "mechanics": [
+    {
+      "text": "4번 레이저윙 중에는 동반자 액티브 프리셉트(니게이트·버큠 등)가 작동하지 않고, 4번 흡입 반경은 약 10m로 고정",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=417029",
+      "date": "2025-09-24"
+    },
+    {
+      "text": "센티넬 무기는 '보조 무기' 판정이라 어거 시커·어거 팩트를 끼워 어거 세트 효과를 채울 수 있음(카탈라이징 실드와 조합)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=417029",
+      "date": "2025-09-24"
+    },
+    {
+      "text": "4번 변신으로 장착한 근접 무기의 인카논 폼이 해제됨 → '근접 인카논 N회 발동' 의뢰를 반복 처리할 때 유용(위키 기재, 실험 확인)",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=443609",
+      "date": "2026-02-11"
+    },
+    {
+      "text": "합성 집정관 샤드(초록·황옥·보라)의 '상태이상 적에게 어빌리티 피해 +15%'는 익절 무기 피해에 적용되지 않음(티타니아 익절 부식·전기 피해가 599/1,199로 동일) → 덱스 픽시아·디와타 익절 딜형에는 어빌리티 피해 합성 샤드 대신 다른 샤드",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447619",
+      "date": "2026-03-14"
+    },
+    {
+      "text": "카탈라이징 실드를 끼면 실드량(1만이어도)과 무관하게 실드 게이팅이 1.33초로 고정돼 오버실드 2.5초 게이팅을 얻지 못함",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=417029",
+      "date": "2025-09-24"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -227,6 +259,38 @@
       "shards": [],
       "helminth": {"replace_slot": null, "ability": "자타 위스퍼"},
       "notes": "#2525: 2년 된 빌드로도 대부분 미션 클리어. #2527: 타우론 무기 아케인(세컨더리에 독자 화염 부여, 오퍼레이터 처치로 미션 내내 유지)으로 폭발·독·화염. #2503(2026-01-06): 폭발+독, 자타 이식, 독은 실드 무시+아콘 컨티뉴어티 부식, 무기 아케인 세컨더리 에너베이트. #2501: 이레디에이트는 불안정. 별도로 #2488·#2492(2025-11~12)는 4번 자리에 로어 등을 이식하는 비주류 빌드 소개"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=432304",
+      "date": "2025-12-13",
+      "title": "반란 티타니아",
+      "concept": "4번 이동 속도로 반란을 돌며 익절 폭발+독과 자타 위스퍼로 쓸어 담는 형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": [],
+      "helminth": {"replace_slot": 3, "ability": "자타 위스퍼(자쿠)"},
+      "notes": "추천 17. 아크건 만도넬, 포커스 마두라이(보조 피해+연사)"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=417029",
+      "date": "2025-09-24",
+      "title": "성능충 시리즈 3/3(티타니아)",
+      "concept": "카탈라이징 실드와 센티넬 무기 어거 세트로 실드 게이팅, 3번 자리 자타 위스퍼와 레이저윙 블릿츠로 픽시아 딜",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["카탈라이징 실드", "레이저윙 블릿츠", "아콘 컨티뉴어티"],
+      "arcanes": [],
+      "shards": ["노랑(시전 속도) ×1", "빨강(위력) ×2", "파랑(최대 에너지) ×2"],
+      "helminth": {"replace_slot": 3, "ability": "자타 위스퍼(자쿠)"},
+      "notes": "2025-09 글. 센티넬 무기에 어거 시커·어거 팩트. 카탈라이징 실드는 실드가 1만이어도 1.33초 게이팅"
     }
   ],
   "consensus": {

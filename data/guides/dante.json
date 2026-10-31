@@ -115,6 +115,26 @@
       "source": "https://wiki.warframe.com/w/Light_Verse"
     }
   ],
+  "mechanics": [
+    {
+      "text": "234(라이트 벌스로 소환한 녹투아 사본)도 세컨더리 인컴버를 발동시켜 아케인 임페터스 스택이 쌓이고, 1번을 로어로 바꿔도 234 소환은 유지됨",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=400505",
+      "date": "2025-05-03"
+    },
+    {
+      "text": "녹투아를 폭발+독으로 모딩하면 폭발 상태이상 틱에도 234가 발사돼 폭발→234 연쇄가 생김",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=417288",
+      "date": "2025-09-26"
+    },
+    {
+      "text": "43.0 1번 증강 녹투아 스웜(부엉이 영역)은 적당 에너지 2 고정이라 비추천이라는 평과 '에너지 잘 찬다'는 반박이 갈림",
+      "status": "반론",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=463282",
+      "date": "2026-06-18"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -397,6 +417,40 @@
         "ability": "없음"
       },
       "notes": "문서 최종 수정 2026-09-10, 본문은 'Update 38 기준'. 수치는 문서의 Overframe 링크 값(샤드 제외). 녹투아는 자타 인보케이션·프라임드 컨벌전, 갈바나이즈드 샷은 직접 피해 계산 오류로 제외. 아케인 에너자이즈 대신 벨로시티"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=417288",
+      "date": "2025-09-26",
+      "title": "강범 단테",
+      "concept": "1번 자리 로어, 아케인 임페터스 13스택으로 효율 39%를 메우며 녹투아 폭발+독으로 234 연쇄를 노리는 강철의 길 범용형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": 39
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "에너지 넥서스",
+        "아콘 스트레치",
+        "프로톤 펄스"
+      ],
+      "arcanes": [
+        "아케인 임페터스",
+        "아케인 스테드패스트"
+      ],
+      "shards": [
+        "노랑(시전 속도) ×2",
+        "빨강(지속) ×3"
+      ],
+      "helminth": {
+        "replace_slot": 1,
+        "ability": "로어"
+      },
+      "notes": "추천 16. 에너지는 임페터스+스테드패스트+에너지 넥서스+아콘 스트레치+프라이머리 익질러레이트로 충당. 프로톤 펄스는 월 래치 상태에서 오퍼레이터 전이로 상시 유지"
     }
   ],
   "consensus": {

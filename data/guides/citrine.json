@@ -97,6 +97,56 @@
       "source": "https://wiki.warframe.com/w/Citrine/Abilities"
     }
   ],
+  "mechanics": [
+    {
+      "text": "3번 프리즈매틱 젬은 무기 타격마다 화염→냉기→전기→독 4타를 넣어 무기 1타+젬 4타 = 이식 제이드 스타즈 5회 발동",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=486683",
+      "date": "2026-10-03"
+    },
+    {
+      "text": "이식 제이드 스타즈는 3번 무기 상태이상 확률 보너스를 받아 화염 확률 = 100% × 위력 × (1 + 3번 보너스): 무모드 200%(화염 11스택), 위력 200% 600%(31스택). 아콘 바이탈리티는 첫 스택만 2배라 37스택",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=486683",
+      "date": "2026-10-03"
+    },
+    {
+      "text": "4번 크리스탈라이즈(결정 치명 확률 300%)는 위력 보정이 없음",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=453472",
+      "date": "2026-04-20"
+    },
+    {
+      "text": "4번 자리 냉기 엘리멘탈 와드를 이식하면 와드 반사 피해가 밀리 인플루언스로 전파되고 프리즈매틱 젬 광선도 발사됨. 쿠브로 버닝·쇼킹 클로는 메자이 프레데사이트 기본 바이러스를 지움",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=443498",
+      "date": "2026-02-10"
+    },
+    {
+      "text": "프라이머리 오버차지는 현재 에너지 90% 이상일 때 멀티샷을 주는데 상한이 최대 에너지에 비례(100당 +35%, 1,000에서 최대 +350%: 997 → 349%, 855 → 300%, 572 → 200%, 400 → 140%). 시트린은 프라임드 플로우+아케인 배터리로 최대 에너지 997 → 멀티샷 +349%, 스트림라인으로 에너지 90% 유지(453472)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=432936",
+      "date": "2025-12-14"
+    },
+    {
+      "text": "화염 상속 역시너지: 화염 상태이상은 다시 걸 때마다 기존 피해에 합산되는데 먼저 건 쪽의 화염·팩션 모드로 계산됨. 이식 제이드 스타즈·젬 화염 광선이(가) 먼저 맞으면 화염 무기 불틱이 화염 모드 없는 값으로 떨어짐(실바&이지스 4,442 → 1,777, 사이크론 80,579 → 24,578) → 핫 샷 거치대는 비화염 무기, 화염 무기를 쓸 땐 화염 어빌 금지",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=457130",
+      "date": "2026-05-13"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    },
+    {
+      "text": "화염 상태이상은 방어력을 50% 깎으므로 퍼시스턴스(방어력 700 조건)를 화염에도 유지하려면 실질 방어력 1,400이 필요",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -209,6 +259,54 @@
       "shards": [],
       "helminth": {"replace_slot": null, "ability": "웰 오브 라이프(트리니티, 검토)"},
       "notes": "#398(2026-10-06): 체력·화력이 충분하면 우리엘(레메디움) 이식이 편하다는 평. #396~397(2026-10-04): 3번 증강을 끼우면 스컬프터가 발동 안 함(동반자 버프 취급). #390~393: 아콘 플로우는 어빌 처치 조건이라 거의 안 터짐"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=486683",
+      "date": "2026-10-03",
+      "title": "제이드 스타 시트린",
+      "concept": "4번 자리 제이드 스타즈를 이식해 젬 4연타와 무기 상태이상 보너스로 화염을 수십 중첩 쌓는 어빌 발사대",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": ["노랑(시전 속도) ×1", "노랑(시작 에너지) ×1", "빨강(위력) ×2", "초록(부식 최대 중첩) ×1"],
+      "helminth": {"replace_slot": 4, "ability": "제이드 스타즈(시리우스)"},
+      "notes": "추천 12. 3번 증강(프리즈매틱 컴패니언)을 빼면 젬이 고정돼 아케인 스컬프터 채용 가능. 위력 200%에서 화염 31스택, 아콘 바이탈리티로 37스택"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=443498",
+      "date": "2026-02-10",
+      "title": "메카 인플 와드 시트린",
+      "concept": "4번 자리 냉기 엘리멘탈 와드 반사 피해를 메카 세트·밀리 인플루언스로 퍼뜨리는 스피너렉스 근접형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["프리즈매틱 컴패니언", "아콘 컨티뉴어티"],
+      "arcanes": [],
+      "shards": ["초록(독 상태이상 피해) ×4", "초록(부식 최대 중첩) ×1"],
+      "helminth": {"replace_slot": 4, "ability": "엘리멘탈 와드(크로마, 냉기)"},
+      "notes": "추천 19. 메카 세트 2개. 무기 스피너렉스, 동반자 메자이 프레데사이트(버닝·쇼킹 클로를 쓰면 기본 바이러스가 지워짐). 나머지 모드는 캡처"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=453472",
+      "date": "2026-04-20",
+      "title": "300% 치확 시트린",
+      "concept": "4번 결정 치명 확률 300%·3번 상태이상 보너스·프라이머리 오버차지 멀티샷을 겹친 무기 거치대",
+      "stats": {"strength": null, "duration": 130, "range": null, "efficiency": 100},
+      "aura": "",
+      "exilus": "",
+      "mods": ["헬스 컨버전", "프라임드 플로우", "스트림라인"],
+      "arcanes": ["아케인 배터리", "프라이머리 오버차지(무기 아케인)"],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "미기재"},
+      "notes": "추천 13. 거리 100% 이상·위력 200% 근처. 헬스 컨버전 방어 1,350 상시라 퍼시스턴스도 쉽다고 언급, 최대 에너지 997로 프라이머리 오버차지 멀티샷 +349%. 3번 상확 보너스는 모드와 합산이라 60% 대신 90% 모드로 충분"
     }
   ],
   "consensus": {

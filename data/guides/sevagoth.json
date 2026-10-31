@@ -162,6 +162,38 @@
       "source": "https://wiki.warframe.com/w/Gloom"
     }
   ],
+  "mechanics": [
+    {
+      "text": "1-1-2 또는 2-1-1 콤보로(로어 기준) 적 현재 체력 100% 고정 피해, 적이 모여 있으면 2-1만으로 연쇄 폭발(보스·교란 제외)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=417029",
+      "date": "2025-09-24"
+    },
+    {
+      "text": "섀도우 3번으로 적을 뽑아 평타로 처치해도 2-1과 같은 폭발이 나고, 몰트 리컨스트럭트(효율 45%)는 2번 1회 465·2-1 연타 697.5 회복",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=435820",
+      "date": "2025-12-25"
+    },
+    {
+      "text": "패시브 셀프 부활을 하면 황옥(폭발 처치 시 체력) 샤드 스택과 몰트 어그먼티드 예열이 초기화됨",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447164",
+      "date": "2026-03-09"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    },
+    {
+      "text": "화염 상태이상은 방어력을 50% 깎으므로 퍼시스턴스(방어력 700 조건)를 화염에도 유지하려면 실질 방어력 1,400이 필요",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -529,6 +561,69 @@
         "ability": "뷔르드 사이즈(다가스) 또는 로어"
       },
       "notes": "댓글 #1833(2026-04-30)에서 빌드 항목을 새로 작성했다고 알림. 감염형은 요구 모드가 적어 초보~상급 모두 추천, 로어형은 고랭크 모드 요구가 커 구축 난도 높음. 1번 취약은 피해 뒤 적용이라 단일 적은 2회 필요, 밀집 시 폭발 중첩으로 1회 즉사"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447164",
+      "date": "2026-03-09",
+      "title": "노리쉬 체방 세바고스",
+      "concept": "3움브랄+황옥 샤드로 최대 체력 2,386을 만들고 퍼시스턴스로 버티는 노리쉬 이식 체력·방어형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "컴뱃 디시플린",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [
+        "아케인 퍼시스턴스",
+        "몰트 어그먼티드(강범이면 아케인 블레싱)"
+      ],
+      "shards": [
+        "황옥(폭발 처치 시 체력) ×3",
+        "파랑(방어력) ×1 필수"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "노리쉬(그렌델)"
+      },
+      "notes": "추천 12. 방어 샤드 1개가 퍼시스턴스 최소 방어력용. 팬저 헌터 리커버리. 셀프 부활 시 황옥 스택·어그먼티드 예열 초기화"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=435820",
+      "date": "2025-12-25",
+      "title": "든든한 3부랄 체방 세바고스",
+      "concept": "3번 자리 로어, 헌터 아드레날린+퍼시스턴스+몰트 리컨스트럭트로 체력을 돌리는 3움브랄 체력·방어형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": 45
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [
+        "헌터 아드레날린"
+      ],
+      "arcanes": [
+        "아케인 퍼시스턴스",
+        "몰트 리컨스트럭트"
+      ],
+      "shards": [
+        "파랑(체력) ×3",
+        "파랑(방어력) ×1",
+        "노랑(시전 속도) ×1"
+      ],
+      "helminth": {
+        "replace_slot": 3,
+        "ability": "로어"
+      },
+      "notes": "추천 11. 방어 샤드 1개가 없으면 방어력 700 미달. 작성자: 퍼시스턴스 생존 시간은 체력 500당 1초"
     }
   ],
   "consensus": {

@@ -103,6 +103,44 @@
       "source": "https://wiki.warframe.com/w/Shooting_Gallery"
     }
   ],
+  "mechanics": [
+    {
+      "text": "이식 브라이트보닛은 설치 즉시 첫 파장이 시전 비용보다 많은 에너지를 돌려주고 아케인 스컬프터도 발동해 사실상 무한 에너지. 위력 버프는 약 +71%p(마두라이·그로잉 파워 켠 상태), 6.38초, 반경 15m → 메사는 1번 자리 브라이트보닛으로 위력 519%(기본 293+프리시젼 인텐시파이 90+슬링 스트렝스 40+보닛 71+그로잉 파워 25)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470569",
+      "date": "2026-07-21"
+    },
+    {
+      "text": "아스트랄 쉘(오리온) 이식: 지속 62초 동안 5초마다 분신이 생겨 그때마다 스컬프터 12초가 갱신 → 시전 1회로 약 70초 효율 175%",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=468703",
+      "date": "2026-07-12"
+    },
+    {
+      "text": "핫 샷 유지용 이식 비교: 노리쉬는 바이러스 비중 때문에 핫 샷 유지가 어렵고, 제이드 스타즈는 화염 없이 핫 샷을 유지하지만 에너지가 따로 필요, 아스트랄 쉘은 원거리라 안 맞으면 끊김",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470569",
+      "date": "2026-07-21"
+    },
+    {
+      "text": "레귤레이터즈에 탄약 모드를 넣으면 주무기·보조무기·아크건 탄약 최대치도 함께 늘어나는 버그(티타니아 익절은 안 됨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=494621",
+      "date": "2026-10-24"
+    },
+    {
+      "text": "합성 집정관 샤드(초록·황옥·보라)의 '상태이상 적에게 어빌리티 피해 +15%'는 익절 무기 피해에 적용되지 않음(티타니아 익절 부식·전기 피해가 599/1,199로 동일) → 레귤레이터즈(익절)에는 어빌리티 피해 합성 샤드 대신 다른 샤드",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447619",
+      "date": "2026-03-14"
+    },
+    {
+      "text": "화염 상속 역시너지: 화염 상태이상은 다시 걸 때마다 기존 피해에 합산되는데 먼저 건 쪽의 화염·팩션 모드로 계산됨. 이식 제이드 스타즈 화염이(가) 먼저 맞으면 화염 무기 불틱이 화염 모드 없는 값으로 떨어짐(실바&이지스 4,442 → 1,777, 사이크론 80,579 → 24,578) → 핫 샷 거치대는 비화염 무기, 화염 무기를 쓸 땐 화염 어빌 금지",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=457130",
+      "date": "2026-05-13"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -199,6 +237,38 @@
       "shards": ["황옥(남는 타우 소모 목적)"],
       "helminth": {"replace_slot": null, "ability": "프라울"},
       "notes": "2026-10-26 답글: 1번 자리 이식 후보로 자타 위스퍼·오마모리·제이드 스타즈·프라울·브라이트보닛·노리쉬가 거론, 로어·자타 위험을 고려하면 노리쉬가 결론"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470569",
+      "date": "2026-07-21",
+      "title": "초고위력 스컬프터 핫 샷 메사",
+      "concept": "1번 자리 브라이트보닛으로 무한 에너지·스컬프터·위력 +71%를 받아 피스메이커를 위력 519%로 쏘는 핫 샷형",
+      "stats": {"strength": 519, "duration": null, "range": null, "efficiency": null},
+      "aura": "그로잉 파워",
+      "exilus": "",
+      "mods": ["프리시젼 인텐시파이"],
+      "arcanes": ["아케인 스컬프터", "아케인 핫 샷"],
+      "shards": ["황옥(화염 처치 시 보조무기 치명 확률) ×5"],
+      "helminth": {"replace_slot": 1, "ability": "브라이트보닛(놋코)"},
+      "notes": "추천 18. 포커스 마두라이(슬링 스트렝스 40). 내로우 마인디드가 필요 없어 피스메이커 조준 원·2번 재밍 거리 손해가 줄어듦. 레귤레이터즈 피해 증폭은 갈바나이즈드 샷·호넷 스트라이크 같은 피해 모드와 합연산(댓글 확인)"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=468703",
+      "date": "2026-07-12",
+      "title": "0포작 스컬프터 폭독 왈츠 메사",
+      "concept": "아스트랄 쉘 이식으로 5초마다 스컬프터를 갱신하고 3번 섀터 실드 95%+어댑테이션으로 버티는 폭발+독 레귤레이터즈형",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["어댑테이션"],
+      "arcanes": ["아케인 스컬프터", "아케인 서컴벤트"],
+      "shards": ["노랑(시작 에너지)", "노랑(시전 속도) ×2", "나머지 자유"],
+      "helminth": {"replace_slot": null, "ability": "아스트랄 쉘(시리우스 & 오리온)"},
+      "notes": "추천 21, 포르마 0. 레귤레이터즈 폭발+독에 세컨더리 에너베이트·엘리멘탈리스트"
     }
   ],
   "consensus": {

@@ -145,6 +145,20 @@
       "source": "https://wiki.warframe.com/w/Exalted_Blade"
     }
   ],
+  "mechanics": [
+    {
+      "text": "밀리 어플릭션즈는 넉다운·랙돌 같은 제어 효과를 건 적에게 상태이상을 복사해 벽·적을 관통하는 익절 강공 검기와 궁합이 좋음. 자타 위스퍼 이식은 검기가 흔들려 비추천",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=414901",
+      "date": "2025-09-07"
+    },
+    {
+      "text": "합성 집정관 샤드(초록·황옥·보라)의 '상태이상 적에게 어빌리티 피해 +15%'는 익절 무기 피해에 적용되지 않음(티타니아 익절 부식·전기 피해가 599/1,199로 동일) → 익절티드 블레이드 딜형에는 어빌리티 피해 합성 샤드 대신 다른 샤드",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447619",
+      "date": "2026-03-14"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -406,6 +420,34 @@
         "ability": "자유(작성자는 레이디얼 자벨린을 이식 자리로 사용)"
       },
       "notes": "위력은 모드 합산(4번은 프리시젼 인텐시파이로 254%). 익절: 화염·독(가스), 컨디션 오버로드, 블러드 러쉬, 밀리/갈바나이즈드 엘리멘탈리스트, 텐노카이(오퍼튜니티즈 리치→디시플린즈 메리트), 라이프 스트라이크, 몰튼 임팩트 + 밀리 인플루언스. 2025-07 작성, 2025-08·12 갱신. 일반판은 샤드 없이도 충분, 내구가 낮으니 1·2번 활용"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=414901",
+      "date": "2025-09-07",
+      "title": "강공으로 썰어버리는 어플 엑칼",
+      "concept": "밀리 어플릭션즈로 넉다운 적에게 상태이상을 복사하며 익절 강공 검기로 관통 처리하는 체력·방어 탱커형",
+      "stats": {
+        "strength": null,
+        "duration": null,
+        "range": null,
+        "efficiency": null
+      },
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [
+        "밀리 어플릭션즈(익절)"
+      ],
+      "shards": [
+        "파랑(최대 에너지) ×4"
+      ],
+      "helminth": {
+        "replace_slot": null,
+        "ability": "라스풀 어드밴스(쿨레르보, 자리 미기재)"
+      },
+      "notes": "추천 18. 깡 가스 속성. 글에 있던 '크로마틱 블레이드 색 속성이 강공 검기에 안 묻는다'는 문제는 핫픽스 42.0.9(2026-05-04)에서 수정됨"
     }
   ],
   "consensus": {

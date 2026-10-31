@@ -106,6 +106,44 @@
       "source": "https://wiki.warframe.com/w/Dagath/Abilities"
     }
   ],
+  "mechanics": [
+    {
+      "text": "둠은 화염·전기 같은 상태이상 틱 피해를 저장하지 않음 → 로어+바이러스·화염 토리드보다 부식 폭발+자타 위스퍼가 강함",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=486259",
+      "date": "2026-10-02"
+    },
+    {
+      "text": "둠은 '최종 피해' 비례로 저장돼 로어·자타 위스퍼 같은 딜 버프와 곱연산이고, 오버가드를 깎은 피해도 저장돼 고정 피해로 터짐(자성 에피타프로 트락스·엑시무스 오버가드를 깎아 처치)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=486170",
+      "date": "2026-10-02"
+    },
+    {
+      "text": "둠은 치명타 시 또는 2초 뒤 저장 피해를 고정 피해로 다시 넣어 4번 자리 리브(체력 비례)가 한 번 더 적용됨: 위력 286% 이상이면 오버가드 적은 자성 1스택, 그 외는 바이러스 1스택만으로 즉사 컷",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=444346",
+      "date": "2026-02-17"
+    },
+    {
+      "text": "3번 증강 스펙트럴 스피릿 상태에서는 헬민스 어빌(리브·제이드 스타즈 등)에도 둠이 묻음. 이식 제이드 스타즈는 컴뱃 디시플린+아케인 어벤저로 치명이 터짐",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=487928",
+      "date": "2026-10-07"
+    },
+    {
+      "text": "2번 둠을 이식으로 없애면 3번 증강 둠 추가타가 아예 안 뜬다는 댓글 실험이 있음(위키는 '둠 수치만 모딩 영향 없음'으로 기재, 미확정)",
+      "status": "반론",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=486259",
+      "date": "2026-10-02"
+    },
+    {
+      "text": "이식 제이드 스타즈는 2026-07-22 데브쇼츠 예고 뒤 시야(LOS) 판정이 추가돼 벽 너머 적은 맞히지 못함(시리우스 본인 제외)",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470716",
+      "date": "2026-07-22"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -234,6 +272,38 @@
       "shards": [],
       "helminth": {"replace_slot": null, "ability": "이클립스(미라지)"},
       "notes": "#477: 지속 300%·무적 30초 구성이면 2번 이식해도 위력 영향 없음, 3번 증강 중 둠을 걸어도 축적치 2배가 안 됨(위키상 의도된 사양). #495(2026-08-21): 둠이 킬을 빼앗아 갈바나이즈드 모드·아케인 스택이 안 쌓임. #497(2026-10-04): 4번은 버섯 스컬프터 등과 함께 충분히 강하다는 평"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=444346",
+      "date": "2026-02-17",
+      "title": "리브 다가스",
+      "concept": "4번 자리 리브를 둠이 고정 피해로 한 번 더 넣게 해 바이러스·자성 1스택만으로 즉사시키는 어빌 딜러",
+      "stats": {"strength": 286, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": ["빨강(위력) ×3", "노랑(시전 속도) ×2"],
+      "helminth": {"replace_slot": 4, "ability": "리브(레버넌트)"},
+      "notes": "추천 27. 위력 286% 이상 필수(둠 축적 100%). 3번 증강으로 헬민스 어빌에도 둠. 스탯 외 모드는 캡처"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=486170",
+      "date": "2026-10-02",
+      "title": "딜 하나는 미치도록 센 다가스",
+      "concept": "2번 둠을 유지한 채 컴뱃 디시플린+아케인 어벤저로 치명을 올리고 둠 최종 피해 곱연산을 노리는 무기 거치대",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "컴뱃 디시플린",
+      "exilus": "",
+      "mods": ["프리시젼 인텐시파이", "롤링 가드", "카탈라이징 실드"],
+      "arcanes": ["아케인 어벤저"],
+      "shards": ["보라(이퀄리브리엄 효과) ×2", "파랑(최대 에너지) ×2", "초록(부식 최대 중첩) ×1"],
+      "helminth": {"replace_slot": null, "ability": "미기재(2번은 유지)"},
+      "notes": "추천 16. 위력 287%에서 둠 전이 100%(영문 위키 인용). 보조 무기 어거 모드+카탈라이징 실드로 실드 게이팅. 엔트로픽 대처법 포함"
     }
   ],
   "consensus": {

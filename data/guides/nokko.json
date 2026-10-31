@@ -85,6 +85,20 @@
       "source": "https://wiki.warframe.com/w/Brightbonnet"
     }
   ],
+  "mechanics": [
+    {
+      "text": "버섯 위를 점프로 밟거나 4번 투사체가 버섯에 튕기면 버섯 효과가 즉시 다시 발동",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=420063",
+      "date": "2025-10-16"
+    },
+    {
+      "text": "아케인 스컬프터 발동 어빌(해외 실험 정리): 놋코는 1·2번 버섯 설치(다른 프레임에 이식해도 발동)와 4번 스포어스프링으로 발동",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=464340",
+      "date": "2026-06-21"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -165,6 +179,38 @@
       "shards": [],
       "helminth": {"replace_slot": null, "ability": "미기재"},
       "notes": "댓글 빌드(모드 미기재). 상급 아르키메데아에서도 통한다고 함. 같은 토픽 #381(2026-10-01)은 '스컬프터와 버섯 이식이 너무 강해 게임이 버섯게임이 됐다', #369는 3번 증강은 4번이 먼저 다 잡아 약하다는 평"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=420063",
+      "date": "2025-10-16",
+      "title": "강범 어빌놋코",
+      "concept": "1번 버섯 4개·2번 버섯 2개를 깔고 4번 스포어스프링 튕김으로 버섯을 재발동시키는 강철의 길 어빌 딜러",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["롤링 가드"],
+      "arcanes": [],
+      "shards": ["초록(독 상태이상 피해) ×3", "노랑(시전 속도) ×2"],
+      "helminth": {"replace_slot": null, "ability": "미기재"},
+      "notes": "출시 당일 글. 3번 리루트는 지속 내내 무적+자동 회복, 재사용 대기 없음. 패시브는 버섯이 있으면 사망 시 꼬마 버섯이 되고, 버섯에 못 닿으면 즉사"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=419978",
+      "date": "2025-10-16",
+      "title": "쉽고 세고 에너지 걱정 없는 어빌딜러 놋코",
+      "concept": "4번 구체를 2번 버섯에 맞혀 위력 버프를 2배로 키운 어빌 딜러",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": ["몰트 계열 2개"],
+      "shards": ["노랑(시전 속도) ×2 이상", "초록(부식 적 어빌리티 피해)", "파랑(체력) ×1"],
+      "helminth": {"replace_slot": null, "ability": "미기재"},
+      "notes": "출시 당일 글"
     }
   ],
   "consensus": {

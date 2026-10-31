@@ -92,6 +92,29 @@
       "calc": "배수 = 2배 × 위력 → 2 × 1.39 = 2.78배(아카 캡처와 일치). 즉사 한계 40%와 체력 흡수 10%(즉사 시 20%)는 위력 무관",
       "verified": true,
       "source": "https://wiki.warframe.com/w/Dread_Mirror"
+    },
+    {
+      "slot": 2,
+      "stat": "strength",
+      "value": "231%",
+      "effect": "이식 레메디움 오버실드로 실드 게이팅 최대 2.5초(체력 1,526, 체력 가득 상태)",
+      "calc": "오버실드 = 최대 체력 × 35% × 위력(이식판, 위키) → 1,526 × 0.35 × 2.31 ≈ 1,234 ≥ 2.5초 게이팅 기준(실드 1,150 이상). 타우 파랑(체력) 2개(체력 약 1,301)면 약 1,052로 약 2.4초",
+      "verified": false,
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=436488"
+    }
+  ],
+  "mechanics": [
+    {
+      "text": "2번 자리 레메디움 이식: 체력을 먼저 채우고 남는 양이 오버실드가 돼 최대 체력·위력이 실드 게이팅 길이를 정함. 타우 파랑(체력) 3개로 체력 1,526+벨리코스(위력 231%)면 체력이 가득일 때 실드 게이팅 2.5초 상한(2개면 약 2.4초, 블레싱이면 1개 줄여도 됨)",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=436488",
+      "date": "2025-12-28"
+    },
+    {
+      "text": "이식 레메디움은 시전 중 무적(시전 속도 0% 기준 약 1.5초)이라 시전 속도가 낮을수록 무적이 길고, 체력을 먼저 채운 뒤 남는 양을 오버실드로 바꿔 카탈라이징 실드와 묶으면 브리프 리스파이트 없이 실드 게이팅",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=435390",
+      "date": "2025-12-23"
     }
   ],
   "community": [
@@ -222,6 +245,22 @@
       "shards": [],
       "helminth": {"replace_slot": null, "ability": "글룸(세바고스)"},
       "notes": "바로 위 #2279(2026-03-31)는 CC용 브리치 서지·화력용 익스퍼다이트 서퍼링을 무난한 이식으로 꼽음. #2296(2026-05)은 캐스케이드에서 스마이트 이식도 궁합이 좋다고 언급"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=436488",
+      "date": "2025-12-28",
+      "title": "레메디움 무기 거치대 가루다",
+      "concept": "2번 블러드 얼터 자리에 레메디움을 넣어 체력 비례 오버실드로 실드 게이팅을 돌리는 무기 거치대",
+      "stats": {"strength": 231, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["오버익스텐디드", "스트레치"],
+      "arcanes": ["아케인 벨리코스"],
+      "shards": ["타우 노랑(시전 속도) ×2", "타우 파랑(체력) ×3"],
+      "helminth": {"replace_slot": 2, "ability": "레메디움(우리엘)"},
+      "notes": "추천 17. 오버익스텐디드+스트레치는 1번 폭발 범위용, 4번 증강은 선택. 블레싱을 쓰면 체력 샤드 1개 줄여도 됨"
     }
   ],
   "consensus": {

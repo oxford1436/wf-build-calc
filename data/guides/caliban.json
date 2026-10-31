@@ -123,6 +123,29 @@
       "calc": "환급 = 비용의 25%/적(효율이 낮아 비용이 커지면 환급도 커짐) → 4명 × 25% = 100%, 5명부터 흑자",
       "verified": true,
       "source": "https://wiki.warframe.com/w/Razor_Gyre"
+    },
+    {
+      "slot": 3,
+      "stat": "strength",
+      "value": "400%",
+      "effect": "컨큘리스트 협동 퓨전 스트라이크로 방어력·실드 100% 제거",
+      "calc": "4번 시전 시 컨큘리스트가 피해·박리 0.5배의 퓨전 스트라이크를 함께 쏨(위키) → 박리 = 0.5 × 50% × 위력 = 25% × 위력 → 100 ÷ 25 = 400%. 디시 410501도 '위력 400% 초과 시 완전 박리' 주장",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Lethal_Progeny"
+    }
+  ],
+  "mechanics": [
+    {
+      "text": "위력별 소환수 유효 체력: 오르토리스트 100% 24,186 → 200% 267,468 → 300% 117만 → 500% 447만, 컨큘리스트 200% 57만 → 500% 1,518만(코랄리스트 200% 10.7만 → 500% 109만). 체력·레벨이 함께 오르니 위력 200→300%에서 약 4배",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=410501",
+      "date": "2025-07-30"
+    },
+    {
+      "text": "서멀리스트는 AI 문제로 코랄리스트 실드 리필을 자주 하지 않음. 템포럴 아르키메디아까지는 위력 200%, 4자리 레벨은 300% 이상 권장(1번 증강을 쓰면 2번을 버림)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=410501",
+      "date": "2025-07-30"
     }
   ],
   "community": [

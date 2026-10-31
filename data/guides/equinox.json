@@ -135,6 +135,26 @@
    "source": "https://wiki.warframe.com/w/Terrify"
   }
  ],
+ "mechanics": [
+  {
+   "text": "4번(멘드 & 메임) 증강을 끼면 낮↔밤 전환 때 4번 저장 스택이 유지됨 → 밤에 쌓고 낮으로 바꿔 터뜨림(일반 몹 약 500만, 어콜라이트 800만~900만 쌓이면 전환)",
+   "status": "작성자",
+   "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=459320",
+   "date": "2026-05-29"
+  },
+  {
+   "text": "메임 저장 피해는 방어력에 막히는 일반 피해라 고레벨에선 방깎(테리파이 이식 등)이 필수. 낮 4번은 아군 처치까지 포함해 42.3m 안 처치 체력을 저장",
+   "status": "작성자",
+   "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=496871",
+   "date": "2026-10-30"
+  },
+  {
+   "text": "미션 중에는 낮·밤 혼합 폼을 쓸 수 없고, 아케인 파워 램프보다 몰트 어그먼티드(36% → 60%)가 고점",
+   "status": "작성자",
+   "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=496871",
+   "date": "2026-10-30"
+  }
+ ],
  "community": [
   {
    "region": "KR",
@@ -319,6 +339,64 @@
     "ability": "테리파이"
    },
    "notes": "위키 빌드 페이지(마지막 수정 2024-11-12, 이쿼녹스는 이후 변경 없음). 포커스 제나리크 사실상 필수, 근접 프레이도스 추천. 해제 시전이 느려 시전 속도가 섬멸 속도와 직결. 2026 댓글: 낮 4번 특화엔 테리파이 또는 필리지(힐드린) 이식이면 충분하고 증강 불필요(#2004, 2026-06-04), 에너자이즈드 뮤니션즈 이식 해제형(#1973), 사일런스 이식(#2010)"
+  },
+  {
+   "region": "KR",
+   "site": "디시 오디스 갤러리",
+   "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=496871",
+   "date": "2026-10-30",
+   "title": "테리파이 이쿼녹스",
+   "concept": "2번 자리 테리파이로 방깎을 해 낮 4번 메임 저장 피해를 그대로 전달하는 낮 고정형",
+   "stats": {
+    "strength": null,
+    "duration": 105,
+    "range": null,
+    "efficiency": 170
+   },
+   "aura": "",
+   "exilus": "",
+   "mods": [],
+   "arcanes": [
+    "몰트 어그먼티드"
+   ],
+   "shards": [],
+   "helminth": {
+    "replace_slot": 2,
+    "ability": "테리파이(네크로스)"
+   },
+   "notes": "추천 8. 지속 105%·효율 170%면 채널 초당 1·시전 15 에너지. 낮 3번 프로보크 37.6m·아군 위력 +42%, 낮 4번 42.3m"
+  },
+  {
+   "region": "KR",
+   "site": "디시 오디스 갤러리",
+   "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=459320",
+   "date": "2026-05-29",
+   "title": "무기딜&어빌딜 이쿼녹스",
+   "concept": "노리쉬 이식과 4번 증강으로 밤에 저장해 낮으로 바꿔 터뜨리고 무기 딜도 겸하는 전환형",
+   "stats": {
+    "strength": null,
+    "duration": null,
+    "range": null,
+    "efficiency": null
+   },
+   "aura": "",
+   "exilus": "",
+   "mods": [
+    "패스트 디플렉션",
+    "피스풀 프로보케이션"
+   ],
+   "arcanes": [
+    "아케인 이지스"
+   ],
+   "shards": [
+    "노랑(시전 속도) ×2",
+    "보라(이퀄리브리엄 효과) ×1"
+   ],
+   "helminth": {
+    "replace_slot": null,
+    "ability": "노리쉬(그렌델)"
+   },
+   "notes": "추천 11. 4번 증강 필수(폼 전환 시 스택 유지). 밤 4번 처치 실드 재생+패스트 디플렉션+이지스로 생존. 센티넬 데스큐브+베르글라"
   }
  ],
  "consensus": {

@@ -112,6 +112,32 @@
       "source": "https://wiki.warframe.com/w/Ensnare"
     }
   ],
+  "mechanics": [
+    {
+      "text": "4번 스트랭글돔으로 아케인 스컬프터가 발동하지만 12초 안에 다시 써야 효율 175%를 계속 받을 수 있어 번거롭다는 평과, 에너지 부족 해결에 좋다는 댓글이 갈림",
+      "status": "반론",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=464424",
+      "date": "2026-06-21"
+    },
+    {
+      "text": "라이카스 헌트를 헬민스로 이식하면 지속이 20초로 고정(지속 모드 영향 없음)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=474428",
+      "date": "2026-08-14"
+    },
+    {
+      "text": "아케인 퍼시스턴스는 '1초 동안 받는 총피해 500'으로 판정: 1초 안에 500을 넘기면 남은 시간 무적, 한 번에 1,000을 맞아도 500만 들어옴. 오버가드가 있으면 1초에 한 번만 500 초과 피해를 500으로 줄여서 1,000+1,000 = 1,500, 1,000+10,000 = 10,500(첫 피격부터 1초 쿨)",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=476113",
+      "date": "2026-08-21"
+    },
+    {
+      "text": "화염 상태이상은 방어력을 50% 깎으므로 퍼시스턴스(방어력 700 조건)를 화염에도 유지하려면 실질 방어력 1,400이 필요",
+      "status": "복수 확인",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=488073",
+      "date": "2026-10-07"
+    }
+  ],
   "community": [
     {
       "region": "KR",

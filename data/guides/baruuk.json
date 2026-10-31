@@ -103,6 +103,38 @@
       "source": "https://arca.live/b/warframe/187466902"
     }
   ],
+  "mechanics": [
+    {
+      "text": "타우 노랑(시전 속도) 샤드 2개면 2번 럴이 즉발",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470423",
+      "date": "2026-07-20"
+    },
+    {
+      "text": "3번 데솔레이트 핸즈 단검이 동반자에게도 복사돼, 비스트류 동반자가 단검을 적에게 운반하면서 절제가 줄어듦",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470423",
+      "date": "2026-07-20"
+    },
+    {
+      "text": "밀리 어시밀레이션(처치당 실드 30%)을 데저트 윈드에 끼우면 처치마다 실드가 다시 차서 사실상 무한 실드 게이팅",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470423",
+      "date": "2026-07-20"
+    },
+    {
+      "text": "1번 증강 일루시브 레트리뷰션은 오버익스텐디드+커닝 드리프트가 사실상 필수라 위력이 줄어 비추천",
+      "status": "작성자",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470423",
+      "date": "2026-07-20"
+    },
+    {
+      "text": "합성 집정관 샤드(초록·황옥·보라)의 '상태이상 적에게 어빌리티 피해 +15%'는 익절 무기 피해에 적용되지 않음(티타니아 익절 부식·전기 피해가 599/1,199로 동일) → 데저트 윈드(익절) 딜형에는 어빌리티 피해 합성 샤드 대신 다른 샤드",
+      "status": "작성자 실험",
+      "source": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=447619",
+      "date": "2026-03-14"
+    }
+  ],
   "community": [
     {
       "region": "KR",
@@ -231,6 +263,22 @@
       "shards": [],
       "helminth": {"replace_slot": 2, "ability": "히디어스 레지스턴스(밴시 리워크 후 사일런스로 바꿀 예정)"},
       "notes": "위키 댓글. 같은 스레드 #972(2026-08-13)는 '리액티브 스톰+인플루언스 축'을 추천, #973은 이식 없는 지속 감소·전기+가스형을 소개"
+    },
+    {
+      "region": "KR",
+      "site": "디시 오디스 갤러리",
+      "url": "https://gall.dcinside.com/mgallery/board/view/?id=ordis&no=470423",
+      "date": "2026-07-20",
+      "title": "여래신장 슬램 바루크",
+      "concept": "노리쉬를 이식하고 2번 럴 즉발로 절제를 깎아 데저트 윈드 가스 슬램으로 한 번에 정리, 밀리 어시밀레이션으로 무한 실드 게이팅",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": ["아케인 어질리티", "밀리 어시밀레이션(데저트 윈드)"],
+      "shards": ["타우 노랑(시전 속도) ×2"],
+      "helminth": {"replace_slot": null, "ability": "노리쉬(그렌델, 자리 미기재)"},
+      "notes": "추천 19. 데저트 윈드: 새크리피셜·갈바나이즈드 혼용, 리액티브 스톰, 가스. 공속형은 나라몬·스위프트 모멘텀. 노리쉬라 지속을 버리지 않음. 스탯은 캡처"
     }
   ],
   "consensus": {
