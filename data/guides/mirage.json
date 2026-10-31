@@ -1,0 +1,291 @@
+{
+  "id": "mirage",
+  "name_en": "Mirage",
+  "name_ko": "미라지",
+  "has_prime": true,
+  "last_rework": "2024-03-27",
+  "checked": "2026-10-31",
+  "summary": "분신과 솔라 이클립스로 무기 화력을 몇 배로 늘리는 거치대",
+  "abilities": [
+    {
+      "slot": 1,
+      "name_ko": "홀 오브 미러즈",
+      "name_en": "Hall of Mirrors",
+      "role": "main",
+      "note": "분신 4명(사격 2명), 피해 40%×위력씩 추가",
+      "scales": ["strength", "duration", "efficiency"]
+    },
+    {
+      "slot": 2,
+      "name_ko": "슬레이트 오브 핸드",
+      "name_en": "Sleight of Hand",
+      "role": "helminth_target",
+      "note": "주변 오브젝트 함정화, 증강 시 섬멸형으로 변신",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    },
+    {
+      "slot": 3,
+      "name_ko": "이클립스",
+      "name_en": "Eclipse",
+      "role": "main",
+      "note": "탭 루나(피해감소 75%), 홀드 솔라(무기 +200%)",
+      "scales": ["strength", "duration", "efficiency"]
+    },
+    {
+      "slot": 4,
+      "name_ko": "프리즘",
+      "name_en": "Prism",
+      "role": "sub",
+      "note": "레이저 누적 증폭 섬멸, 프리즘 가드로 머리 위 고정",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    }
+  ],
+  "main_slots": [1, 3],
+  "stat_priority": [
+    {
+      "stat": "strength",
+      "note": "솔라 이클립스·분신 피해를 키움. 분신은 250%에서 무기와 같은 치명/상태이상 확률. 루나 이클립스는 120%에서 상한"
+    },
+    {
+      "stat": "duration",
+      "note": "1·3번 유지 시간(25초×지속). 프리즘 가드는 4초라 250% 전후 필요. 레저더메인 섬멸형은 버리기도 함"
+    },
+    {
+      "stat": "range",
+      "note": "무기형은 34%로 버림(토탈 이클립스 반경도 5m로 줄어듦). 레저더메인·프리즘형은 124~235%"
+    },
+    {
+      "stat": "efficiency",
+      "note": "1·3번은 1분에 한 번 수준이라 45%로 충분. 프리즘·2번 연타형은 스컬프터·노리쉬·이퀼리브리엄으로 보완"
+    }
+  ],
+  "breakpoints": [
+    {
+      "slot": 3,
+      "stat": "strength",
+      "value": "120%",
+      "effect": "루나 이클립스 피해 감소 90% 상한",
+      "calc": "피해 감소 = 75% × 위력, 상한 90% → 90 ÷ 75 = 1.20. 헬민스 이식판은 상한 75%라 위력 100%에서 이미 상한",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Eclipse"
+    },
+    {
+      "slot": 1,
+      "stat": "strength",
+      "value": "250%",
+      "effect": "홀 오브 미러즈 사격 분신이 무기 피해 100%, 치명·상태이상 확률 감소 없음",
+      "calc": "주무기·보조무기는 분신 2명만 사격, 1명당 피해 = 40% × 위력 → 0.40 × 2.50 = 100%. 100% 미만이면 치명·상태이상 확률도 같은 비율로 감소(위력 199%: 79.6%, 262%: 104.8%). 근접은 4명 모두 20% × 위력 → 500% 필요. ninjase 빌드도 '최소 250%' 명시",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Hall_of_Mirrors"
+    },
+    {
+      "slot": 3,
+      "stat": "strength",
+      "value": "상한 없음",
+      "effect": "솔라 이클립스 무기 피해 +200% × 위력(다른 피해 버프와 곱연산)",
+      "calc": "배율 = 1 + 2.0 × 위력. 199%: ×4.98, 262%: ×6.24, 298%: ×6.96. 이식판은 기본 30%라 위력 300%여도 +90%",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Eclipse"
+    },
+    {
+      "slot": 4,
+      "stat": "duration",
+      "value": "약 250%",
+      "effect": "프리즘 가드(지속 4초로 고정) 프리즘이 약 10초 유지",
+      "calc": "4초 × 2.54 = 10.16초(Overframe ninjase 254%), 4초 × 2.57 = 10.28초(일본 위키 빌드 257%, 본문은 10.26초). 기본 프리즘은 12초 × 지속",
+      "verified": true,
+      "source": "https://overframe.gg/build/234415/mirage-prime/disco-ball-of-death-prism-guard-nuke-mirage/"
+    },
+    {
+      "slot": 4,
+      "stat": "strength",
+      "value": "—",
+      "effect": "프리즘 레이저는 맞을 때마다 전체 피해 +25%(솔라 이클립스 중 +50%)씩 누적",
+      "calc": "레이저 20개, 기본 250 방사능 × 위력 / 0.5초. n번째 적중 피해 = 기본 × (1 + 0.25n). 루나 이클립스 중엔 프리즘 에너지 소모 50% 감소(효율 적용 후)",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Prism"
+    }
+  ],
+  "community": [
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/181579309",
+      "date": "2026-08-31",
+      "title": "브라이트 보닛 레저더메인 맹습·방어",
+      "concept": "2번 증강으로 바닥 탄약·오브를 지뢰로 바꿔 무한 연타, 놋코 브라이트 보닛+아케인 스컬프터로 에너지 해결",
+      "stats": {"strength": 262, "duration": 73, "range": 235, "efficiency": 45},
+      "aura": "그로잉 파워",
+      "exilus": "프라임드 슈어 풋티드",
+      "mods": ["오버익스텐디드", "아콘 스트레치", "롤링 가드", "어거 시크릿츠", "블라인드 레이지", "익스플로시브 레저더메인", "트랜지언트 포티튜드", "움브랄 인텐시파이"],
+      "arcanes": ["아케인 스컬프터", "몰트 어그먼티드"],
+      "shards": ["파랑(에너지) — 개수 미기재"],
+      "helminth": {"replace_slot": 1, "ability": "브라이트 보닛(놋코)"},
+      "notes": "추천 4. 운영: 보닛→3번 솔라→4번으로 첫 드롭→2번 연타, 스컬프터 12초마다 보닛. 랭작·포커스작 최고지만 일반 80렙에서도 스치면 사망 → 그로잉 파워를 브리프 리스파이트, 롤링 가드를 카탈라이징 실드로 바꾸면 탱킹 가능. 강철 고티어는 어려움. 모드는 캡처로 확인, 이식은 1번 아이콘 기준"
+    },
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/181579309",
+      "date": "2026-08-31",
+      "title": "에너자이즈드 뮤니션 런처 미라지",
+      "concept": "강철·두비리용: 지속·위력만 올리고 3번 딜증+탄약 이식으로 분신과 런처 폭격, 실드 탱킹",
+      "stats": {"strength": 199, "duration": 254, "range": 34, "efficiency": 45},
+      "aura": "그로잉 파워",
+      "exilus": "프라임드 슈어 풋티드",
+      "mods": ["내로우 마인디드", "프라임드 플로우", "프라임드 리다이렉션", "비질란티 비거", "프라임드 컨티뉴어티", "홀 오브 멀레벌런스", "블라인드 레이지", "패스트 디플렉션"],
+      "arcanes": ["아케인 이지스", "몰트 어그먼티드"],
+      "shards": [],
+      "helminth": {"replace_slot": 2, "ability": "Energized Munitions(본문 '에자뮤')"},
+      "notes": "같은 글의 두 번째 구성. 런처를 안 쓰면 워크라이나 자타 위스퍼 이식 추천. 실드가 깨지면 즉시 루나 이클립스(탭/홀드 반전 권장), 이지스 미발동·독 상태이상에 취약"
+    },
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/182194948",
+      "date": "2026-09-16",
+      "title": "레메디움 이식 쿠바 톤코어 거치대",
+      "concept": "1번+3번 무기 거치대에 레메디움(2번 자리)으로 실드·상태이상 대응, 블레싱·헬스 컨버전 생존",
+      "stats": {"strength": 298, "duration": 201, "range": 34, "efficiency": 45},
+      "aura": "그로잉 파워",
+      "exilus": "프라임드 슈어 풋티드",
+      "mods": ["움브랄 인텐시파이", "프라임드 플로우", "트랜지언트 포티튜드", "블라인드 레이지", "헬스 컨버전", "홀 오브 멀레벌런스", "토탈 이클립스", "내로우 마인디드"],
+      "arcanes": ["아케인 에너자이즈", "아케인 블레싱"],
+      "shards": ["지속 샤드 언급(개수 미기재)"],
+      "helminth": {"replace_slot": 2, "ability": "레메디움"},
+      "notes": "2026-09-06 작성, 09-16 갱신(엑스퍼티즈·어그먼티드·움브랄 바이탈리티 → 블레싱·에너자이즈·헬스 컨버전). 세트 무기 쿠바 톤코어+프라이머리 컴프레션, 동반자 바이러스 팬저. 모드는 캡처로 확인"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (ninjase, 2,063추천)",
+      "url": "https://overframe.gg/build/191180/mirage-prime/total-malevolence-mirage-dual-augment-max-dps-weapon-platform-solo-steel-path/",
+      "date": "2026-09-07",
+      "title": "두 증강 분신 극딜 거치대",
+      "concept": "홀 오브 멀레벌런스×토탈 이클립스를 분신에 곱해 분신 1명당 무기 피해 최대 약 10배, 패시브 실드 재생으로 생존",
+      "stats": {"strength": 199, "duration": 199, "range": 34, "efficiency": 45},
+      "aura": "코로시브 프로젝션",
+      "exilus": "Ice Spring",
+      "mods": ["홀 오브 멀레벌런스", "토탈 이클립스", "비질란티 비거", "패스트 디플렉션", "롤링 가드", "카탈라이징 실드", "블라인드 레이지", "내로우 마인디드"],
+      "arcanes": ["아케인 이지스", "몰트 어그먼티드"],
+      "shards": ["노랑(시전 속도) ×2", "빨강(지속) ×3"],
+      "helminth": {"replace_slot": 2, "ability": "노리쉬(대안: Omamori·Pillage·라스풀 어드밴스·Energized Munitions)"},
+      "notes": "패치 43.0, 미라지 최다 추천. '분신이 무기와 같은 치명/상태이상을 가지려면 위력 250% 이상' 명시. 근접 슬램·글레이브 폭발엔 분신 효과 없어 두 증강을 빼라고 안내. 오라는 그로잉 파워도 가능"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (ninjase, 559추천)",
+      "url": "https://overframe.gg/build/234415/mirage-prime/disco-ball-of-death-prism-guard-nuke-mirage/",
+      "date": "2026-10-22",
+      "title": "프리즘 가드 디스코볼 섬멸",
+      "concept": "프리즘 가드로 머리 위에 띄운 프리즘을 솔라 이클립스로 누적 증폭, 스컬지 흡인 거품으로 단일 대상도 처리",
+      "stats": {"strength": 139, "duration": 254, "range": 124, "efficiency": 45},
+      "aura": "코로시브 프로젝션",
+      "exilus": "프라임드 슈어 풋티드",
+      "mods": ["프리즘 가드", "롤링 가드", "블라인드 레이지", "프라임드 컨티뉴어티", "오버익스텐디드", "이퀼리브리엄", "프라임드 플로우", "내로우 마인디드"],
+      "arcanes": ["아케인 컨센트레이션", "몰트 어그먼티드"],
+      "shards": ["타우 노랑(시전 속도) 2~3개 필수", "나머지 지속"],
+      "helminth": {"replace_slot": null, "ability": "선택(노리쉬 또는 Pillage)"},
+      "notes": "패치 44.0 갱신. 스컬지 대체 발사 거품·보이드 상태(자타 위스퍼 등)에 프리즘을 통과시켜 20개 레이저를 한 적에 집중. 에너지 부족 시 아케인 스컬프터(프리즘이 발동 조건) 언급"
+    },
+    {
+      "region": "CN",
+      "site": "바이두 티에바 warframe吧 (greatzhygtx)",
+      "url": "https://tieba.baidu.com/p/9655668035",
+      "date": "2025-04-19",
+      "title": "강철 방어 4인 파티 레저더메인",
+      "concept": "미라지·라이노·제이드·이퀴녹스 고정 파티에서 미라지는 적이 죽어 드롭이 생기면 2번만 반복하는 섬멸 담당",
+      "stats": {"strength": 209, "duration": 128, "range": 235, "efficiency": 45},
+      "aura": "Power Donation(중문 '献出力量')",
+      "exilus": "Power Drift(중문 '力量窜升')",
+      "mods": ["아콘 바이탈리티", "Archon Flow", "오버익스텐디드", "트랜지언트 포티튜드", "블라인드 레이지", "아콘 스트레치", "익스플로시브 레저더메인", "아콘 컨티뉴어티"],
+      "arcanes": ["몰트 어그먼티드", "아케인 에너자이즈(본문: Molt Vigor로 교체 권장)"],
+      "shards": ["자유(작성자: 요구 없음)"],
+      "helminth": {"replace_slot": null, "ability": "없음"},
+      "notes": "좋아요 약 63. 4인 모두 Power Donation 오라로 서로 위력 공유(캡처 위력 209%, 조건 반영 시 194% 표시). 무기는 1개만 들어 어빌 타락 확률 증가 등 팀 운영 요령 포함. 강철 방어(웨이브 3개/라운드 개편 후) 기준. 모드는 캡처로 판독"
+    },
+    {
+      "region": "CN",
+      "site": "바이두 티에바 warframe吧 (黑色盏 질문·답변)",
+      "url": "https://tieba.baidu.com/p/10917320786",
+      "date": "2026-08-04",
+      "title": "보조무기 치명 거치대 샤드 논쟁",
+      "concept": "위력 285% 치명 보조무기 거치대에서 샤드를 타우 빨강(위력) 5개 vs 주황(치명) 5개 중 무엇으로 할지 문답",
+      "stats": {"strength": 285, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": ["답변 다수: 타우 빨강(위력) ×5 (미라지는 주황보다 약 2배 이득)", "대안: 빨강 ×3 + 에메랄드(부식) ×2"],
+      "helminth": {"replace_slot": null, "ability": "Pillage 이식 예정(작성자)"},
+      "notes": "댓글 14. 완전한 모드 구성은 없음. '분신 스플래시가 있는 폭발 무기는 위력을 쌓을수록 이득'이라는 답변"
+    },
+    {
+      "region": "JP",
+      "site": "zawazawa (wikiwiki MIRAGE 댓글 #1473)",
+      "url": "https://zawazawa.jp/warframe_wiki/topic/19",
+      "date": "2026-07-03",
+      "title": "프로테아 이식 2번 증강 미라지",
+      "concept": "익스플로시브 레저더메인 연타형에 프로테아 이식으로 안정성 확보, 위력 최대·범위 175% 이상",
+      "stats": {"strength": null, "duration": null, "range": 175, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["익스플로시브 레저더메인", "이퀼리브리엄(필수)", "Archon Flow", "아콘 모드(작성자: 장점은 크지 않음)"],
+      "arcanes": ["몰트 어그먼티드", "아케인 임페터스 또는 Arcane Steadfast"],
+      "shards": ["타우 빨강(위력) ×5"],
+      "helminth": {"replace_slot": null, "ability": "프로테아 어빌리티(종류 미기재)"},
+      "notes": "우선순위 위력 ≥ 범위 > 지속 >> 효율. 일반 30~60레벨 고속 방어용, 균열엔 못 씀이라고 평가. 범위는 175%여도 운용 가능(오버익스텐디드는 취향)"
+    },
+    {
+      "region": "JP",
+      "site": "wikiwiki.jp (빌드 페이지 '4番増強型Mirage')",
+      "url": "https://wikiwiki.jp/warframe/%E3%83%9F%E3%83%A9%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%AB%E3%82%92%E8%83%8C%E8%B2%A0%E3%81%A3%E3%81%A6%E6%95%B5%E6%AE%B2%E6%BB%85Mirage(4%E7%95%AA%E5%A2%97%E5%BC%B7%E5%9E%8BMirage)",
+      "date": "2025-02-09",
+      "title": "미러볼 메고 다니는 프리즘 가드",
+      "concept": "1번+솔라 3번 후 프리즘 가드를 켜고 돌아다니며 섬멸, 서킷·ESO용. 지속 > 범위 > 위력",
+      "stats": {"strength": null, "duration": 257, "range": null, "efficiency": null},
+      "aura": "브리프 리스파이트(대안 그로잉 파워·코로시브 프로젝션)",
+      "exilus": "Cunning Drift 또는 Power Drift(대안 프라임드 슈어 풋티드)",
+      "mods": ["프라임드 컨티뉴어티", "내로우 마인디드", "오버익스텐디드", "스트레치", "움브랄 인텐시파이", "트랜지언트 포티튜드", "프리즘 가드", "어거 리치"],
+      "arcanes": ["아케인 에너자이즈", "몰트 어그먼티드"],
+      "shards": ["타우 노랑(시전 속도) ×2", "타우 빨강(지속) ×2", "1칸 자유"],
+      "helminth": {"replace_slot": 2, "ability": "노리쉬 또는 Pillage"},
+      "notes": "빌드 페이지 최종 수정일 기준. 지속 257%로 4번 약 10초(ESO 연속 사용 쿨다운 회피 목표). 효율·최대 에너지 투자 없음, 동반자 데스큐브 Energy Generator로 보충. 매우 취약해 프레임 외 생존 수단 필요"
+    },
+    {
+      "region": "JP",
+      "site": "wikiwiki.jp (빌드 페이지 'MIRAGEの超爆発祭')",
+      "url": "https://wikiwiki.jp/warframe/MIRAGE%E3%81%AE%E8%B6%85%E7%88%86%E7%99%BA%E7%A5%AD(1%E7%95%AA3%E7%95%AA%20+%20Energized%20Munitions%E7%A7%BB%E6%A4%8D)",
+      "date": "2024-11-14",
+      "title": "에너자이즈드 뮤니션 AoE 난사",
+      "concept": "1번+3번에 탄약 소모 1/4 이식을 더해 분신과 AoE 무기를 강철에서 난사",
+      "stats": {"strength": 154, "duration": 253, "range": null, "efficiency": null},
+      "aura": "코로시브 프로젝션",
+      "exilus": "프라임드 슈어 풋티드",
+      "mods": ["프라임드 컨티뉴어티", "내로우 마인디드", "어거 메시지", "움브랄 인텐시파이", "어거 시크릿츠", "홀 오브 멀레벌런스", "선택: 토탈 이클립스·롤링 가드·프라임드 리다이렉션 등"],
+      "arcanes": ["몰트 어그먼티드", "몰트 이피션시"],
+      "shards": ["빨강(지속)", "노랑(시전 속도)", "황옥(폭발 처치 시 실드·체력)"],
+      "helminth": {"replace_slot": 2, "ability": "Energized Munitions(2번 또는 4번 자리)"},
+      "notes": "빌드 페이지 최종 수정일 기준(리워크 이후). 효율은 올리지 않고 범위는 버림. 자성 상태이상·에너지 흡수 엑시무스·어빌 봉인 주의"
+    }
+  ],
+  "consensus": {
+    "common": "모든 지역에서 1번 분신+3번 솔라 이클립스 무기 거치대가 기본이고, 거리 34%(내로우 마인디드)·위력 200~300%·효율 45% 구성이 흔함. 2번 자리는 헬민스 이식(노리쉬·레메디움·Energized Munitions 등)이 일반적이며, 섬멸형은 2번 증강 익스플로시브 레저더메인 또는 4번 프리즘 가드를 씀. 생존은 실드 게이팅(카탈라이징 실드, 비질란티 비거+패스트 디플렉션)·아케인 이지스·롤링 가드·위기 시 루나 이클립스",
+    "differences": "한국: 용도별 세분 — 맹습·방어용 레저더메인(놋코 브라이트 보닛 이식+아케인 스컬프터, 지속 73%), 강철 런처(Energized Munitions), 레메디움 이식 톤코어 거치대. 북미(Overframe): ninjase 두 증강(멀레벌런스+토탈 이클립스) 거치대가 2천 추천대로 압도적이고 '위력 250%'를 목표로 제시, 프리즘 가드는 스컬지 거품 연계. 중국(티에바): 강철 방어 4인 고정 파티의 레저더메인 미라지(Power Donation 오라 공유), 거치대 샤드는 타우 빨강 5개 선호. 일본: 위키에 EM 이식·프리즘 가드 빌드 페이지, 2026 댓글은 프로테아 이식 레저더메인·스컬프터 프리즘, 5ch는 신규 빙하 이벤트에서 토탈 이클립스 배포·프리즘 추천 정도"
+  },
+  "notes": [
+    "2024-03-27 업데이트 35.5(마지막 리워크): 이클립스 탭=루나(피해감소 75%)/홀드=솔라(무기 +200%), 조명 영향 제거, 피해감소 상한 95→90%. 헬민스 솔라는 30%로 하향. 프리즘은 솔라 중 피해 2배, 루나 중 에너지 소모 절반",
+    "2025-03-19 업데이트 38.5: 프로스트 스노우 글로브 안 적에게 프리즘 피해가 안 들어가던 문제 수정",
+    "2026-06-17 업데이트 43.0: 어거 계열 모드 장착 시 분신이 투명해지지 않던 문제 수정. 같은 업데이트의 아케인 스컬프터는 프리즘이 발동 조건(공식 위키 유효 목록)",
+    "2026-09-28 핫픽스 44.0.2: 분신·홀 오브 미러즈로 처치한 엑시무스가 Entropic Kuva·리벤 조각을 떨어뜨리도록 수정",
+    "홀 오브 멀레벌런스는 처치당 +5%, 최대 +50%(10킬)에서 멈춤(공식 위키 표·일본 위키 댓글)",
+    "분신 처치는 어빌리티 처치로 집계돼 무기 종류 한정 과제(나이트웨이브 등)에 잡히지 않음(일본 위키 댓글)"
+  ],
+  "gaps": [
+    "Reddit: 브라우저 차단·검색 결과 없음으로 미확인. 공식 Discord·NGA·X·일본 Discord는 로그인 필요로 제외",
+    "중국: 티에바 2025~2026 미라지 글 대부분이 질문글. 완전한 구성은 2025-04 강철 방어 글 1건뿐이고, bilibili 텍스트 빌드(cv36728475)는 본문을 읽지 못함",
+    "일본: 5ch part1117~1118은 미라지 언급(빙하 이벤트·미러 방어)뿐 구체 세팅 없음. zawazawa #1473의 프로테아 이식 어빌리티 종류 미기재",
+    "핫픽스 44.1.3의 탄약 효율 상한 75%가 Energized Munitions 이식 런처 빌드와 겹치는지 확인 못 함",
+    "한국 런처·레메디움 빌드의 샤드, 맹습 빌드의 파랑 샤드 개수는 캡처·본문에 없음",
+    "한국어 인게임 명칭 미확인(영어 표기): Energized Munitions, Pillage, Omamori, Ice Spring, Power Drift, Cunning Drift, Power Donation, Archon Flow, Molt Vigor, Arcane Steadfast"
+  ]
+}

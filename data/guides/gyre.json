@@ -1,0 +1,281 @@
+{
+  "id": "gyre",
+  "name_en": "Gyre",
+  "name_ko": "자이어",
+  "has_prime": true,
+  "last_rework": "2022-04-27",
+  "checked": "2026-10-31",
+  "summary": "3·4번을 켜 두고 킬로 연장하며 전기 치명 어빌로 쓸어 담는 섬멸·무기 버퍼",
+  "abilities": [
+    {
+      "slot": 1,
+      "name_ko": "아크스피어",
+      "name_en": "Arcsphere",
+      "role": "sub",
+      "note": "전기장 구체. 증강 시 통과 탄에 전기+75%·확정 감전",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    },
+    {
+      "slot": 2,
+      "name_ko": "코일 호라이즌",
+      "name_en": "Coil Horizon",
+      "role": "helminth_target",
+      "note": "튕기는 구체 폭발로 집결. 조작이 번거로워 이식 자리",
+      "scales": ["strength", "range", "efficiency"]
+    },
+    {
+      "slot": 3,
+      "name_ko": "캐소드 그레이스",
+      "name_en": "Cathode Grace",
+      "role": "main",
+      "note": "무기·어빌 치확과 에너지 회복. 킬로 연장, 쿨 60초",
+      "scales": ["strength", "duration", "efficiency"]
+    },
+    {
+      "slot": 4,
+      "name_ko": "로터스웰",
+      "name_en": "Rotorswell",
+      "role": "main",
+      "note": "주변 전기장+치명타 시 연쇄 방전. 증강 시 뎀감",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    }
+  ],
+  "main_slots": [4, 3],
+  "stat_priority": [
+    {"stat": "strength", "note": "3번 어빌 치확·에너지, 4번 방전 피해. 4번 증강 뎀감 캡 215%, 실사용 190~370%"},
+    {"stat": "range", "note": "4번 전기장·방전 사거리, 1·2번 반경. 145~265%"},
+    {"stat": "duration", "note": "3번 초기 시간만 중요(이후 킬로 연장, 60초 상한 고정). 73~155%"},
+    {"stat": "efficiency", "note": "3번 에너지 회복+아콘 스트레치로 45%도 유지"}
+  ],
+  "breakpoints": [
+    {
+      "slot": 3,
+      "stat": "strength",
+      "value": "200%",
+      "effect": "캐소드 그레이스만으로 어빌 치명 확률 100%(모든 어빌 피해가 치명)",
+      "calc": "어빌 치확 = 50%p × 위력, 패시브(전기 상태 1스택당 +10%p)와 합산, 상한 300% → 50 × 2.00 = 100%p",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Cathode_Grace"
+    },
+    {
+      "slot": 3,
+      "stat": "strength",
+      "value": "368% / 272% / 139%",
+      "effect": "어빌 치확 상한 300%까지 필요한 적의 전기 상태 스택 수",
+      "calc": "필요 스택 = (300 − 50 × 위력) ÷ 10. 368%(한국 로어형): 184%p → 12스택(2스택부터 빨강 치명). 272%(중국 제이드형): 136%p → 17스택. 139%(북미 ninjase, 샤드 제외): 69.5%p → 24스택. 패시브만으로는 30스택",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Gyre/Abilities"
+    },
+    {
+      "slot": 4,
+      "stat": "strength",
+      "value": "215% (리버스 로터스웰 장착)",
+      "effect": "4번 증강 피해 감소 75% 상한",
+      "calc": "35% × 2.15 = 75.25% → 75%. 4번 시전 순간 위력으로 고정. 한국 제이드형 198%+그로잉 파워 25% = 223%로 충족, 일본 댓글의 트랜지언트+움브랄+타우 빨강 214%는 74.9%, 중국 科研형 190%는 66.5%",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Reverse_Rotorswell"
+    },
+    {
+      "slot": 3,
+      "stat": "duration",
+      "value": "130%",
+      "effect": "캐소드 그레이스 초기 10.4초, 킬당 +3.9초(최대 60초)",
+      "calc": "8초 × 1.30 = 10.4초, 3초 × 1.30 = 3.9초. 60초 상한·쿨다운은 지속 모드 영향 없음. 한국 공략의 실측값과 일치",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Cathode_Grace"
+    },
+    {
+      "slot": 3,
+      "stat": "strength",
+      "value": "200% / 368%",
+      "effect": "캐소드 그레이스 에너지 회복 초당 3.0 / 5.5",
+      "calc": "1.5 EP/s × 위력: 1.5 × 2.00 = 3.0, 1.5 × 3.68 = 5.52. 다른 어빌 시전 직후 1초간 정지",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Cathode_Grace"
+    }
+  ],
+  "community": [
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/182517451",
+      "date": "2026-09-09",
+      "title": "로어·컨덕티브 스피어 스컬프터 섬멸형",
+      "concept": "구체가 오브젝트라 아케인 스컬프터가 상시 켜지는 점을 이용해 효율을 버리고 위력 368%로 몰아 1234 연속 시전, 로어 이식으로 피해 버프",
+      "stats": {"strength": 368, "duration": 73, "range": 145, "efficiency": 45},
+      "aura": "브리프 리스파이트",
+      "exilus": "프라임드 슈어 풋티드",
+      "mods": ["블라인드 레이지", "트랜지언트 포티튜드", "인텐시파이", "카탈라이징 실드", "아콘 스트레치", "어거 시크릿츠", "캐소드 커런트", "컨덕티브 스피어"],
+      "arcanes": ["아케인 스컬프터", "아케인 서컴벤트"],
+      "shards": ["타우 빨강(위력 +15%) ×4", "타우 노랑(시전 속도 +37.5%) ×1"],
+      "helminth": {"replace_slot": null, "ability": "로어"},
+      "notes": "공략/정보, 추천 2. 마두라이 보이드 슬링 2회 후 시전하면 위력 400% 이상 → 이식 로어 120% 초과. 브리프 리스파이트+카탈라이징 실드 로우게이팅, 근접은 투사체가 구체를 통과하는 스트로파+밀리 어시밀레이션. 적이 적은 미션에선 3번이 끊겨 부적합. 이식 슬롯 미기재"
+    },
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/182283684",
+      "date": "2026-09-07",
+      "title": "제이드 스타즈 치명 무기 거치대",
+      "concept": "3번+아케인 핫 샷으로 무기 치확 약 400%를 주고 2번 자리 제이드 스타즈로 어빌 딜 보충, 4번 증강 뎀감 75%와 실드 재생 모드로 생존",
+      "stats": {"strength": 198, "duration": 130, "range": 235, "efficiency": 45},
+      "aura": "그로잉 파워",
+      "exilus": "프라임드 슈어 풋티드",
+      "mods": ["움브랄 인텐시파이", "비질란티 비거", "아콘 스트레치", "오버익스텐디드", "블라인드 레이지", "패스트 디플렉션", "캐소드 커런트", "리버스 로터스웰"],
+      "arcanes": ["아케인 핫 샷", "아케인 스컬프터"],
+      "shards": ["타우 빨강(지속 +15%) ×2", "타우 빨강(위력 +15%) ×1", "타우 노랑(시전 속도 +37.5%) ×1", "타우 보라(전기 상태 적에게 어빌 피해 +15%) ×1"],
+      "helminth": {"replace_slot": 2, "ability": "제이드 스타즈"},
+      "notes": "최초 2026-01-07, 2026-09-07 빌드 리메이크. 그로잉 파워 포함 위력 223%로 4번 뎀감 캡 충족. 시전 순서 1(스컬프터)→4→3(적을 잡을 수 있을 때만)→2. 포마 4개"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (ninjase, 845추천)",
+      "url": "https://overframe.gg/build/935597/gyre-prime/flux-dancer-gyre-steel-path-aoe-weapon-platform-passive-shield-gate/",
+      "date": "2026-07-25",
+      "title": "서컴벤트 구르기 무기 플랫폼",
+      "concept": "1번 증강으로 무기에 확정 감전·전기 피해를 주고 3·4번 증강으로 4번을 무한 연장, 실드 재충전 지연을 줄인 패시브 실드 게이팅과 서컴벤트 구르기로 생존",
+      "stats": {"strength": 139, "duration": 100, "range": 235, "efficiency": 45},
+      "aura": "코로시브 프로젝션",
+      "exilus": "Lightning Dash",
+      "mods": ["컨덕티브 스피어", "캐소드 커런트", "오버익스텐디드", "카탈라이징 실드", "비질란티 비거", "패스트 디플렉션", "아콘 스트레치", "블라인드 레이지"],
+      "arcanes": ["Arcane Aegis", "아케인 서컴벤트"],
+      "shards": ["노랑(시전 속도) ×1", "선택: 보라(전기 어빌 피해 또는 주무기 전기) 2~4"],
+      "helminth": {"replace_slot": 2, "ability": "노리쉬(대안 Omamori, 로어)"},
+      "notes": "2025-12-15 작성, 2026-07-25 갱신(패치 43.0), 자이어 프라임 최다 추천. 표시 위력은 샤드 제외. 방깎은 Tharros Strike(200%)·필리지(코로시브 시 328%) 이식도 제시. 저레벨 강철의 길은 리버스 로터스웰+어댑테이션 탱킹 변형 권장"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (ninjase, 125추천)",
+      "url": "https://overframe.gg/build/939628/gyre-prime/pure-ability-nuke-gyre-mecha-set/",
+      "date": "2026-06-29",
+      "title": "메카 세트 로어 순수 어빌 섬멸",
+      "concept": "1번 자리에 로어를 이식하고 후라스 쿠브로 메카 세트로 상태이상을 퍼뜨리는 순수 어빌 딜 구성",
+      "stats": {"strength": 139, "duration": 155, "range": 265, "efficiency": 45},
+      "aura": "Mecha Empowered",
+      "exilus": "프레퍼레이션",
+      "mods": ["캐소드 커런트", "Mecha Pulse", "어거 리치", "오버익스텐디드", "프라임드 컨티뉴어티", "프라임드 플로우", "아콘 스트레치", "블라인드 레이지"],
+      "arcanes": ["아케인 서컴벤트"],
+      "shards": ["노랑(시전 속도) ×1", "보라(전기 상태 적 어빌 피해) ×4"],
+      "helminth": {"replace_slot": 1, "ability": "로어"},
+      "notes": "2025-12-21 작성. 후라스가 없으면 오라 코로시브, Mecha Pulse 대신 프라임드 플로우·이퀼리브리엄·롤링 가드. 두 번째 아케인 미표시"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (SAGETHEGOD0, 47추천)",
+      "url": "https://overframe.gg/build/959631/gyre-prime/gyre-prime-the-electrifying-elemental-ward-goddess-259-409-strength-build/",
+      "date": "2026-09-25",
+      "title": "엑스퍼티즈 엘리멘탈 와드 위력형",
+      "concept": "타우 빨강 4개로 위력 259%를 맞춰 4번 증강 뎀감 캡을 넘기고 엘리멘탈 와드 이식·롤링 가드·어댑테이션으로 버티는 1·3·4번 증강 구성",
+      "stats": {"strength": 199, "duration": 155, "range": 160, "efficiency": 45},
+      "aura": "브리프 리스파이트",
+      "exilus": "Cunning Drift",
+      "mods": ["블라인드 레이지", "컨덕티브 스피어", "아콘 스트레치", "리버스 로터스웰", "캐소드 커런트", "롤링 가드", "어댑테이션", "프라임드 컨티뉴어티"],
+      "arcanes": ["아케인 엑스퍼티즈", "아케인 서컴벤트"],
+      "shards": ["타우 빨강(위력 +15%) ×4", "타우 보라(전기 어빌 피해) ×1"],
+      "helminth": {"replace_slot": null, "ability": "엘리멘탈 와드"},
+      "notes": "2026-01-20 작성, 2026-09-25 갱신(패치 44.06). 표시 199%는 샤드 제외, 샤드 포함 259%(버프 시 409%). 이식 슬롯 미기재"
+    },
+    {
+      "region": "CN",
+      "site": "바이두 티에바 warframe吧 (黑人留学生)",
+      "url": "https://tieba.baidu.com/p/10876408008",
+      "date": "2026-07-18",
+      "title": "제이드 스타즈·스컬프터 자동 섬멸",
+      "concept": "1234로 시작한 뒤 1번 구체만 뿌리며 이동, 스컬프터로 에너지를 대고 이식 제이드 스타즈로 200레벨 엑시무스에 화염 DoT를 쌓는 범위형",
+      "stats": {"strength": 272, "duration": 128, "range": 250, "efficiency": 45},
+      "aura": "코로시브 프로젝션",
+      "exilus": "Cunning Drift",
+      "mods": ["블라인드 레이지", "트랜지언트 포티튜드", "아콘 스트레치", "움브랄 인텐시파이", "오버익스텐디드", "프라임드 컨티뉴어티", "어거 시크릿츠", "캐소드 커런트"],
+      "arcanes": ["아케인 스컬프터", "아케인 컨센트레이션"],
+      "shards": ["보라(전기 상태 적 어빌 피해) — 개수 미기재"],
+      "helminth": {"replace_slot": null, "ability": "제이드 스타즈"},
+      "notes": "댓글 22. 캡처는 미강화 표시 상태. 제이드 스타즈는 치명이 안 터진다는 지적, 컨센트레이션을 쓰면 4321 순서 권장, 소형 적 처리용 무기 필요. 이식 슬롯 미기재"
+    },
+    {
+      "region": "CN",
+      "site": "바이두 티에바 warframe吧 (宕机_47 빌드 복제)",
+      "url": "https://tieba.baidu.com/p/10574029674",
+      "date": "2026-03-21",
+      "title": "심층 아르키메디아용 4번 증강 생존형",
+      "concept": "bilibili 宕机_47(2025-12-14 영상, 조회 약 26만)의 科研(심층 아르키메디아)용 구성. 1·3·4번 증강+어댑테이션으로 3·4번이 켜지면 죽지 않는 형태",
+      "stats": {"strength": 190, "duration": 150, "range": 145, "efficiency": 50},
+      "aura": "코로시브 프로젝션",
+      "exilus": "슈어 풋티드",
+      "mods": ["블라인드 레이지", "리버스 로터스웰", "컨덕티브 스피어", "아콘 스트레치", "어댑테이션", "프라임드 컨티뉴어티", "캐소드 커런트", "프라임드 플로우"],
+      "arcanes": ["아케인 컨센트레이션", "Arcane Aegis"],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "미기재"},
+      "notes": "댓글 34. 위력 190%라 4번 뎀감은 66.5%(캡 미달). 3번 60초 쿨·킬 의존으로 멀티에서 시동이 어렵다는 불만이 다수, 작성자 본인 댓글: 아크윙·강한 무기로 시동 권장"
+    },
+    {
+      "region": "JP",
+      "site": "zawazawa (wikiwiki GYRE 댓글 #768)",
+      "url": "https://zawazawa.jp/warframe_wiki/topic/926",
+      "date": "2026-10-03",
+      "title": "1번 증강 무기 중심 캐스케이드형",
+      "concept": "강철의 길 보이드 캐스케이드처럼 무기로 수백만 피해가 필요한 곳은 1번 증강+타우 보라 5개로 무기 중심 운용",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["컨덕티브 스피어"],
+      "arcanes": [],
+      "shards": ["타우 보라 ×5"],
+      "helminth": {"replace_slot": null, "ability": "미기재"},
+      "notes": "어빌만으로는 고레벨 처치가 어렵다는 질문(#766~767)에 대한 답. 일본 댓글 다수가 '저레벨은 3·4번 어빌, 고레벨은 4번 CC+1번 증강·3번 무기 버프로 싸운다'는 운용을 지지(#725)"
+    },
+    {
+      "region": "JP",
+      "site": "zawazawa (wikiwiki GYRE 댓글 #680)",
+      "url": "https://zawazawa.jp/warframe_wiki/topic/926",
+      "date": "2026-02-11",
+      "title": "증강 3장+Shock 이식 무기형",
+      "concept": "1·3·4번 증강에 볼트 Shock을 이식하고 그 증강(Shock Trooper)까지 넣어 무기 전기 피해를 겹치는 구성",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["컨덕티브 스피어", "캐소드 커런트", "리버스 로터스웰", "Shock Trooper"],
+      "arcanes": [],
+      "shards": ["타우 보라"],
+      "helminth": {"replace_slot": 2, "ability": "Shock(볼트)"},
+      "notes": "이식 슬롯은 같은 스레드 #693(2번에 볼트 이식)·#696~698(1번 증강 75%+Shock 전기가 상태 피해로 증폭) 기준. 모드 전체는 미기재"
+    },
+    {
+      "region": "JP",
+      "site": "wikiwiki.jp GYRE 빌드 예시 + zawazawa #724",
+      "url": "https://wikiwiki.jp/warframe/GYRE",
+      "date": "2026-03-30",
+      "title": "필리지 이식 방깎·오버실드형",
+      "concept": "2번에 필리지를 이식해 위력 330~400%로 방어력 제거와 오버실드·상태이상 해제를 함께 얻는 고레벨 대응형(대안: Tharros Strike 200%)",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "코로시브 프로젝션",
+      "exilus": "",
+      "mods": ["블라인드 레이지"],
+      "arcanes": ["몰트 어그먼티드", "아케인 에너자이즈"],
+      "shards": [],
+      "helminth": {"replace_slot": 2, "ability": "필리지"},
+      "notes": "wikiwiki 빌드 예시(날짜 미표기)에 #724(2026-03-30) '필리지 이식형으로 강철의 길 캐스케이드 레벨 캡 가능' 댓글로 날짜 부여. 트랜지언트 포티튜드를 쓰면 지속 73%여도 3·4번 유지 가능, 서킷 발굴처럼 적이 적으면 컨티뉴어티 필요"
+    }
+  ],
+  "consensus": {
+    "common": "모든 지역이 3번 캐소드 그레이스+4번 로터스웰을 함께 켜고 킬로 둘 다 연장하는 운용이 기본이며, 3번 증강 캐소드 커런트가 사실상 필수. 블라인드 레이지로 위력 190~370%, 거리 145~265%, 효율 45%. 2025년 추가된 1번 증강 컨덕티브 스피어(무기 확정 감전·전기)와 4번 증강 리버스 로터스웰(뎀감 75%, 위력 215%)이 표준 후보이고 2번 코일 호라이즌은 대부분 이식 자리. 2026-06 이후 구체가 오브젝트라 아케인 스컬프터가 상시 발동해 한·중에서 효율을 버린 구성이 늘었고, 2025-12 아케인 서컴벤트 구르기 운용도 북미·한국·일본 공통",
+    "differences": "한국: 스컬프터 축에 로어 이식(1234 연속 시전) 섬멸형과 제이드 스타즈+핫 샷 치명 무기 거치대 두 갈래, 근접은 스트로파 투사체를 구체에 통과시키는 방식. 북미(Overframe): ninjase의 무기 플랫폼형(패시브 실드 게이팅, 노리쉬 이식)이 압도적 최다 추천, 순수 어빌은 메카 세트+1번 자리 로어, 엑스퍼티즈 259%로 4번 뎀감 캡을 맞추는 신규형도 상위. 중국: '电妹'로 불리며 제이드 스타즈+스컬프터 섬멸과 宕机_47의 심층 아르키메디아용 4번 증강 생존형이 퍼졌으나 3번 60초 쿨·킬 의존에 대한 불만이 많음. 일본: 저레벨은 어빌, 고레벨은 1번 증강+타우 보라 5개 무기 중심으로 나누고, 필리지·Shock·Orion 등 2번 이식 실험이 활발. 3·4번은 거의 동시에 켜라는 팁이 공통"
+  },
+  "notes": [
+    "리워크 없음: 2022-04-27 출시 이후 어빌 수치 변경이 없어 last_rework는 출시일",
+    "2025-03-19 업데이트 38.5: 1번 증강 컨덕티브 스피어 추가(통과 탄에 전기 +75%, 확정 감전)",
+    "2025-05-21 업데이트 38.6: 증강 전기 보너스가 상태이상 피해에도 붙도록 수정(위키는 전기 기본 피해에 안 들어가는 버그로 기록)",
+    "2025-10-15 업데이트 40.0: 4번 증강 리버스 로터스웰 추가(피해 감소 35% × 위력, 상한 75%)",
+    "2025-12-10 업데이트 41.0: 자이어 프라임 출시. 같은 시기 아케인 서컴벤트(구르기로 방어력·실드·오버가드 50% 강탈) 추가 후 자이어 구르기 운용 유행",
+    "2026-06(업데이트 43): 아케인 스컬프터 추가, 자이어 구체가 오브젝트로 인정(한국·중국 글). 2번 코일 호라이즌을 이식해도 스컬프터 발동(티에바 2026-06-18)",
+    "2026-10: 아케인 크리퍼스큘러의 치명 피해 증가가 자이어 어빌 치명에는 적용되지 않음(아카라이브 2026-10-03, 일본 댓글 #769). 냉기 치명 피해 증가도 어빌 치명엔 미적용(아카라이브 2026-06-21)"
+  ],
+  "gaps": [
+    "Reddit은 브라우저 차단·검색 미노출로 읽지 못함. 공식 Discord·NGA·X·일본 Discord는 로그인 필요로 제외",
+    "YouTube: Hunkpain Gaming 'GYRE PRIME 9999'(2025-12-19) 설명란에 모드 목록 없음, 조회수는 봇 확인 페이지로 미확인",
+    "중국: bilibili 宕机_47 영상(BV1g8mvBiEbC, 2025-12-14) 설명란에 세팅 없음 → 티에바 복제 캡처로 대체. 티에바 10876408008의 두 번째 이미지는 연결 끊김으로 받지 못함",
+    "한국 로어형과 중국 두 빌드는 이식 슬롯 미기재(통상 2번 코일 호라이즌 자리)",
+    "일본: 5ch part1117~1118에는 자이어 언급만 있고 세팅 없음. wikiwiki 빌드 예시에는 작성일이 없어 관련 댓글 날짜를 사용",
+    "아케인 컨센트레이션의 효과(일본 댓글: 다음 시전 지속 +60%)는 위키에서 확인하지 못함",
+    "한국어 인게임 명칭 미확인으로 영어 표기: Coil Recharge, Lightning Dash, Cunning Drift, Mecha Empowered, Mecha Pulse, Arcane Aegis, Shock Trooper, Omamori, Tharros Strike"
+  ]
+}

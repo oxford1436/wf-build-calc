@@ -2,7 +2,7 @@
 (function (root) {
   const B = [
     [1, "nova:노바", "hildryn:힐드린", "saryn:새린"],
-    [2, "octavia:옥타비아", "wisp:위습", "mesa:메사", "khora:코라", "gyre:가이어", "kullervo:쿨러보", "protea:프로테아", "volt:볼트", "mirage:미라지", "trinity:트리니티"],
+    [2, "octavia:옥타비아", "wisp:위습", "mesa:메사", "khora:코라", "gyre:자이어", "kullervo:쿨레르보", "protea:프로티아", "volt:볼트", "mirage:미라지", "trinity:트리니티"],
     [3, "narin:나린", "sirius_orion:시리우스 & 오리온", "follie:폴리", "uriel:우리엘", "nokko:노코", "oraxia:오락시아", "temple:템플", "cyte09:사이트-09", "koumei:코우메이", "jade:제이드", "dante:단테"],
     [4, "qorvex:코벡스", "dagath:다가스", "citrine:시트린", "voruna:보루나", "styanax:스티아낙스", "caliban:칼리반", "yareli:야렐리", "sevagoth:세바고스", "lavos:라보스", "xaku:자쿠", "gauss:가우스"],
     [5, "grendel:그렌델", "garuda:가루다", "baruuk:바루크", "revenant:레버넌트", "excalibur_umbra:엑스칼리버 엄브라", "harrow:해로우", "gara:가라", "nidus:니더스", "titania:티타니아", "inaros:이나로스", "nezha:네자"],

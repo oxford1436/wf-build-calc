@@ -1,0 +1,259 @@
+{
+  "id": "trinity",
+  "name_en": "Trinity",
+  "name_ko": "트리니티",
+  "has_prime": true,
+  "last_rework": "2024-12-13",
+  "checked": "2026-10-31",
+  "summary": "링크·블레싱 피해감소에 방깍·치확 버프를 얹는 서포터 겸 거치대",
+  "abilities": [
+    {
+      "slot": 1,
+      "name_ko": "웰 오브 라이프",
+      "name_en": "Well of Life",
+      "role": "survival",
+      "note": "치유 장판·상태이상 면역, 사망 1회 대신 막음(60초)",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    },
+    {
+      "slot": 2,
+      "name_ko": "에너지 뱀파이어",
+      "name_en": "Energy Vampire",
+      "role": "utility",
+      "note": "적 1명에서 에너지 펄스 25×위력, 현재 체력 % 피해",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    },
+    {
+      "slot": 3,
+      "name_ko": "링크",
+      "name_en": "Link",
+      "role": "main",
+      "note": "받는 피해 75%를 적에게 전가, 증강으로 방어력 제거",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    },
+    {
+      "slot": 4,
+      "name_ko": "블레싱",
+      "name_en": "Blessing",
+      "role": "main",
+      "note": "숙련도 범위 아군 회복·피해감소, 증강으로 치확 +350%",
+      "scales": ["strength", "duration", "efficiency"]
+    }
+  ],
+  "main_slots": [3, 4],
+  "stat_priority": [
+    {
+      "stat": "duration",
+      "note": "링크 20초·블레싱 15초·챔피언즈 블레싱 30초 유지가 핵심. 200~254%. 에너지 뱀파이어는 100% 넘으면 펄스 수 증가"
+    },
+    {
+      "stat": "strength",
+      "note": "어베이팅 링크 방깍 100%는 167%(코로시브 프로젝션 있으면 137%), 블레싱 피해감소 상한 150%. 그 이상은 EV·링크 연결 수"
+    },
+    {
+      "stat": "range",
+      "note": "링크 반경(20m×거리)·웰 오브 라이프 반경용. 124~235%. 블레싱은 숙련도(어피니티) 범위라 무관"
+    },
+    {
+      "stat": "efficiency",
+      "note": "에너지 뱀파이어·프라임드 플로우로 45%까지 버려도 됨"
+    }
+  ],
+  "breakpoints": [
+    {
+      "slot": 4,
+      "stat": "strength",
+      "value": "150%",
+      "effect": "블레싱 피해 감소 75% 상한",
+      "calc": "피해 감소 = 50% × 위력 → 50 × 1.50 = 75%(상한). 방어 목표물은 50%가 상한",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Blessing"
+    },
+    {
+      "slot": 3,
+      "stat": "strength",
+      "value": "166.7% (코로시브 프로젝션 1명 있으면 137%)",
+      "effect": "어베이팅 링크로 연결된 적 방어력 100% 제거",
+      "calc": "방깍 = 60% × 위력 → 60 × 1.667 = 100%. CP 18% 합산: 60 × 1.37 = 82.2 + 18 = 100.2%. 강철 레벨 400 기준 장갑 상한 2700(위키: 적 장갑 200~2700으로 고정)일 때 피해감소 = 0.9 × √(장갑/2700): 위력 154%면 92.4% 제거 → 장갑 205 → 0.9 × √(205/2700) = 24.8%, 139%면 83.4% → 448 → 36.7%, 167% 이상이면 0%",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Abating_Link"
+    },
+    {
+      "slot": 3,
+      "stat": "strength",
+      "value": "133.4% / 166.7% / 200%",
+      "effect": "링크 최대 연결 수 4 / 5 / 6명",
+      "calc": "최대 연결 = 내림(3 × 위력): 1.334→4, 1.667→5, 2.00→6. 위력 139%: 4명, 170%: 5명. 피해는 나눠지지 않고 연결된 모두에게 100% 전달",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Link"
+    },
+    {
+      "slot": 2,
+      "stat": "duration",
+      "value": "100% (이하 4회, 초과 시 비례 증가)",
+      "effect": "에너지 뱀파이어 펄스 횟수",
+      "calc": "펄스 간격 = 2.25초 × 지속(최대 2.25초), 효과 시간 = 9초 × 지속. 지속 100% 이하: 9D ÷ 2.25D = 4회(13%여도 4회를 빠르게). 200%: 18 ÷ 2.25 = 8회, 254%: 22.86 ÷ 2.25 = 10회. 펄스당 에너지 25 × 위력, 펄스당 대상 현재 체력 6.25%(체력 25% 이하면 최대 체력 기준 1.5625%) 고정 피해",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Energy_Vampire"
+    },
+    {
+      "slot": 3,
+      "stat": "strength",
+      "value": "링크 75% + 블레싱 75%",
+      "effect": "두 피해 감소를 같이 켜면 받는 피해 약 6%",
+      "calc": "1 − (1 − 0.75) × (1 − 0.75) = 0.9375 → 93.75%. 링크 75%는 위력 영향 없음, 블레싱은 위력 150%에서 75%. ninjase '93%', 아카 글 '약 94%'와 일치",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Link"
+    }
+  ],
+  "community": [
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/184829344",
+      "date": "2026-10-16",
+      "title": "코다 헤마 챔피언즈 블레싱 고속 예열",
+      "concept": "헤마 개조(재장전 시 체력 소모)→블레싱 회복 사이클로 챔피언즈 블레싱 치확 +350%를 약 45초 만에 채우는 무기 거치대",
+      "stats": {"strength": 170, "duration": 200, "range": 145, "efficiency": 100},
+      "aura": "컴뱃 디시플린",
+      "exilus": "프레퍼레이션",
+      "mods": ["움브랄 인텐시파이", "움브랄 바이탈리티", "프라임드 컨티뉴어티", "스트레치", "내츄럴 탈렌트", "프라임드 플로우", "어베이팅 링크", "챔피언즈 블레싱"],
+      "arcanes": ["아케인 어벤저", "아케인 컨센트레이션"],
+      "shards": ["타우 빨강(지속) ×3", "타우 빨강(위력) ×1", "타우 노랑(시전 속도) ×1"],
+      "helminth": {"replace_slot": 1, "ability": "자타 위스퍼"},
+      "notes": "2026-10-03 작성, 10-16 수정, 추천 4. 우선순위 지속 > 위력(방깍 167% 근처) > 거리. 헤마 네크로페이직 비거는 클라이언트로 참가하면 버프가 안 걸리는 버그(26/10/16 기준 미수정). 헤마는 프라임드 슈레드+바일 액셀러레이션, 아케인 프랙탈라이즈드 리셋. 모드·샤드 캡처로 확인"
+    },
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/165888327",
+      "date": "2026-03-26",
+      "title": "디코이 이식 서포트 트리니티",
+      "concept": "블레싱·웰 오브 라이프 팀 지원+컴뱃·어벤저 치확, 로키 디코이(데미지 디코이)로 어그로 분산",
+      "stats": {"strength": 139, "duration": 200, "range": 235, "efficiency": 45},
+      "aura": "컴뱃 디시플린",
+      "exilus": "프레퍼레이션",
+      "mods": ["오버익스텐디드", "블라인드 레이지", "아콘 컨티뉴어티", "아콘 스트레치", "에너지 넥서스", "프라임드 플로우", "데미지 디코이", "어베이팅 링크"],
+      "arcanes": ["아케인 어벤저", "아케인 임페터스"],
+      "shards": ["타우 빨강(지속) ×3", "타우 노랑(시전 속도) ×1", "타우 파랑(체력 +225) ×1"],
+      "helminth": {"replace_slot": 2, "ability": "디코이(로키)"},
+      "notes": "추천 9. 에너지 뱀파이어를 빼고 지속·에너지 넥서스·아케인 임페터스(효율 +)로 에너지 보완. 본문은 '링크 최대 6명·100% 방깍'이라 했지만 캡처 위력 139%면 4명·83% 방깍(임페터스 등 조건부 위력이 필요). 웰 오브 라이프 47m·초당 217 회복이라고 기재"
+    },
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/186619492",
+      "date": "2026-10-21",
+      "title": "테슬라 너보스 폭발 트리니티(실험)",
+      "concept": "3번 자리에 바우반 테슬라 너보스(+개조)를 이식하고 에너지 뱀파이어의 체력 % 피해로 테슬라를 빨리 터뜨리는 섬멸 아이디어",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "브리프 리스파이트(예정)",
+      "exilus": "프라임드 슈어 풋티드 또는 Cunning Drift(예정)",
+      "mods": ["아콘 인텐시파이", "트랜지언트 포티튜드", "블라인드 레이지", "아콘 스트레치", "프라임드 플로우", "테슬라 너보스 개조"],
+      "arcanes": ["아케인 블레싱", "Arcane Bellicose"],
+      "shards": ["보라(전기 피해) ×2", "빨강(위력) ×2", "노랑(시전 속도) ×1"],
+      "helminth": {"replace_slot": 3, "ability": "테슬라 너보스(바우반)"},
+      "notes": "작성자가 '실험도 안 해 본' 일반글(추천 4, 비추 1). 영상은 포르마·샤드 없이 시험. 댓글: 마스크 포 데드(Mask of the Dead) 넣은 EV 빌드도 있었고, 장점은 보라 샤드로 EV 첫 틱 원킬 정도라는 평"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (ninjase, 1,110추천)",
+      "url": "https://overframe.gg/build/242612/trinity-prime/avenging-angel-trinity-weapon-platform-armor-strip-red-crits-champions-blessing/",
+      "date": "2026-01-01",
+      "title": "어베이팅 링크·챔피언즈 블레싱 치명 거치대",
+      "concept": "어베이팅 링크 100% 방깍+챔피언즈 블레싱 치확 최대 350%+아케인 어벤저로 레드 크리, 링크·블레싱 93% 피해감소",
+      "stats": {"strength": 154, "duration": 254, "range": 124, "efficiency": 45},
+      "aura": "컴뱃 디시플린",
+      "exilus": "Power Drift",
+      "mods": ["Vampire Leech", "프라임드 컨티뉴어티", "프라임드 플로우", "내로우 마인디드", "어베이팅 링크", "오버익스텐디드", "블라인드 레이지", "챔피언즈 블레싱"],
+      "arcanes": ["아케인 컨센트레이션", "아케인 어벤저"],
+      "shards": ["타우 노랑(시전 속도) ×1", "나머지: 타우 보라(전기 대상 어빌 피해) ×4 또는 지속 2~3+파쿠르"],
+      "helminth": {"replace_slot": null, "ability": "선택(Silence 언급)"},
+      "notes": "패치 41.0 기준, 트리니티 최다 추천. 표시 위력 154%라 방깍 100%(167%)엔 샤드·몰트 어그먼티드 등 조건부 위력이 필요. 솔로 예열 2~5분(컴뱃 디시플린 자해 1/10로 감소), 동반자나 블리딩 드래곤 키로 단축 가능. 보라 샤드 4개+바이럴 10중첩이면 위력 236%에서 EV 첫 펄스로 오버가드 없는 적 원킬 주장"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (OnCallSupport, 83추천)",
+      "url": "https://overframe.gg/build/645696/trinity-prime/support-goddess-%E0%A6%8C-%E0%BB%92-heros-never-die-%F0%93%86%A9%F0%93%86%AA/",
+      "date": "2026-10-30",
+      "title": "범위형 서포트 여신 트리니티",
+      "concept": "거리 190%로 링크·웰 오브 라이프를 넓게, 챔피언즈 블레싱+어벤저 치명 버프, 프라임드 리다이렉션 실드 탱킹",
+      "stats": {"strength": 130, "duration": 155, "range": 190, "efficiency": 50},
+      "aura": "컴뱃 디시플린",
+      "exilus": "Coaction Drift",
+      "mods": ["챔피언즈 블레싱", "블라인드 레이지(랭크 9)", "프라임드 플로우", "프라임드 리다이렉션", "Vampire Leech", "어베이팅 링크", "프라임드 컨티뉴어티", "오버익스텐디드"],
+      "arcanes": ["아케인 어벤저", "몰트 어그먼티드"],
+      "shards": ["타우 노랑(시전 속도) ×2", "타우 빨강(위력) ×3"],
+      "helminth": {"replace_slot": null, "ability": "노리쉬 권장(이식 없이 웰 오브 라이프 유지도 가능, 대안 Silence·로어)"},
+      "notes": "패치 44.0, 2026-10-30 갱신. 표시 위력 130%에 타우 빨강 3개(+45%)면 175%로 방깍 100%. 상황에 따라 오라를 Power Donation·그로잉 파워 등으로 교체. 무기 코다 헤마(재장전 체력 소모로 챔피언즈 블레싱 누적) 또는 토리드, 포커스 바자린"
+    },
+    {
+      "region": "CN",
+      "site": "bilibili (宕机_47, 조회 약 15.5만)",
+      "url": "https://www.bilibili.com/video/BV1BBwEe2Epw/",
+      "date": "2025-01-17",
+      "title": "리워크 트리니티 4종 용도 소개",
+      "concept": "총기 거치대형·EV 체력% 원킬형·웰 오브 라이프 대신 죽기형·에이돌론(삼마)형 네 가지 운용을 묶은 리워크 후 추천 영상",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": ""},
+      "notes": "영상 설명란에는 용도 요약만 있고 모드·아케인·샤드 정보 없음(WebFetch 기준). 티에바에서는 리워크 이후 트리니티 구성 글을 찾지 못해 이 영상으로 대체"
+    },
+    {
+      "region": "JP",
+      "site": "zawazawa (wikiwiki TRINITY 댓글 #1389·#1379)",
+      "url": "https://zawazawa.jp/warframe_wiki/topic/27",
+      "date": "2026-04-23",
+      "title": "퍼시스턴스 챔피언즈 블레싱형",
+      "concept": "아케인 퍼시스턴스와 챔피언즈 블레싱을 조합한 치명 거치대, 써 보니 1번(웰 오브 라이프)이 의외로 강함",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["챔피언즈 블레싱"],
+      "arcanes": ["Arcane Persistence"],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "#1379(2026-04-01): 4번 증강 축이면 닉스 이식이 간편"},
+      "notes": "댓글 수준 구성. 답글: 1번 범위 안 아군 즉시 부활·전도 포함 모든 상태이상 무효로 오퍼레이터 봉인 아르키메디아에서 사망 방지 역할. #1374는 주무기를 버리면 증강 코다 헤마 추천"
+    },
+    {
+      "region": "JP",
+      "site": "zawazawa (wikiwiki TRINITY 댓글 #1333·#1340)",
+      "url": "https://zawazawa.jp/warframe_wiki/topic/27",
+      "date": "2024-12-25",
+      "title": "타우 파랑 장갑 5개+배터리 탱크",
+      "concept": "타우 파랑(장갑) 5개와 아케인 배터리로 에너지를 늘려 패시브(최대 에너지 50%를 체력으로) 체력까지 올리고 블레싱으로 단단하게",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": ["Arcane Battery"],
+      "shards": ["타우 파랑(장갑) ×5"],
+      "helminth": {"replace_slot": null, "ability": ""},
+      "notes": "리워크 직후 댓글. 반론: 링크·블레싱 피해감소와 이지스 쉴드게이팅만으로 체력까지 피해가 잘 안 와 장갑은 과잉. #1340: 배터리 착용 시 타우 파랑 1개로 에너지 +67.5, 패시브 체력 +33.75"
+    }
+  ],
+  "consensus": {
+    "common": "2024-12 리워크 이후 지역 공통으로 '버프 캐스터+무기 거치대'로 정착: 3번 링크(어베이팅 링크 방깍 100% = 위력 약 167%)와 4번 블레싱(챔피언즈 블레싱 치확 최대 +350%)을 지속 155~254%로 유지하고, 아케인 어벤저·컴뱃 디시플린으로 치명을 보탬. 생존은 링크+블레싱 약 94% 피해감소로 해결, 효율은 에너지 뱀파이어·플로우로 45%까지 버림",
+    "differences": "한국: 코다 헤마(네크로페이직 비거)로 챔피언즈 블레싱을 빠르게 예열하는 자타 위스퍼 1번 이식형, 디코이 이식 서포터, 테슬라 너보스 이식 실험 등 무기·이식 조합 위주. 북미(Overframe): ninjase Avenging Angel(Vampire Leech·Arcane Avenger)이 1천 추천대 표준이고, 최신 갱신은 거리 190% 범위 서포트형. 중국: 티에바에선 리워크 후 구성 글이 거의 없고 bilibili 宕机_47 영상이 4가지 용도(거치대·EV 원킬·대신 죽기·에이돌론)를 정리. 일본: 위키 빌드는 리워크 전이라 무효, 댓글에서 퍼시스턴스·닉스 이식 챔피언즈형, 장갑 샤드+배터리 탱크형, 1번의 사망 방지 가치가 재평가됨"
+  },
+  "notes": [
+    "2024-12-13 업데이트 38.0(마지막 리워크): 새 패시브(숙련도 범위 아군이 트리니티 최대 에너지 50%를 체력으로), 웰 오브 라이프 3개·사망 1회 방지(60초 쿨, 이식판 120초)·이동 시전, 에너지 뱀파이어 4펄스 상한 제거, 링크 연결 수가 위력 비례·지속 20초, 블레싱 15초, Vampire Leech 225%, 챔피언즈 블레싱 30초",
+    "2025-02-06 핫픽스 38.0.8: 웰 오브 라이프 사망 방지가 면역 적·보스·아군 소환물을 즉사시키던 문제 수정 → 최대 2만 피해 흡수로 변경",
+    "2025-03-19 업데이트 38.5: 링크 시전 시 근접 무기가 사라지던 문제, 횔바니아에서 패시브 미작동 수정",
+    "2025-05-21 업데이트 38.6: 트리니티가 나가도 패시브가 남던 문제 수정",
+    "2026-03(일본 위키 댓글): 트리니티 프라임 리서전스 복귀",
+    "2026-06-17 업데이트 43.0: 아케인 스컬프터 추가 — 웰 오브 라이프가 발동 조건(공식 위키 유효 목록)",
+    "링크 반사 피해는 어빌리티 피해로 취급돼 아콘 모드·어빌 피해 발동 아케인(아케인 임페터스 등)이 반응(일본 위키 댓글 #1360·#1361)"
+  ],
+  "gaps": [
+    "Reddit: 브라우저 차단·검색 결과 없음으로 미확인. 공식 Discord·NGA·X·일본 Discord는 로그인 필요로 제외",
+    "중국: 티에바 '奶妈 配卡'·'trinity'·'三位一体 配卡'·'奶妈 祝福' 검색에서 2024-12 리워크 이후 구성 글을 찾지 못함. bilibili 영상은 설명란에 모드 정보 없음",
+    "일본: wikiwiki 빌드 페이지('パワー過剰供給TRINITY', 2024-06-24)와 본문 빌드 항목은 리워크 이전이라 제외. 5ch part1117~1118은 빙하 이벤트 추천 프레임으로 이름만 언급",
+    "에너지 뱀파이어 펄스 수 반올림(10.16회 → 10회)은 위키에 명시 없음, 인게임 실측 못 함",
+    "한국어 인게임 명칭 미확인(영어 표기): Vampire Leech, Power Drift, Coaction Drift, Cunning Drift, Silence, Arcane Bellicose, Arcane Persistence, Arcane Battery, Power Donation"
+  ]
+}

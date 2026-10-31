@@ -1,0 +1,250 @@
+{
+  "id": "kullervo",
+  "name_en": "Kullervo",
+  "name_ko": "쿨레르보",
+  "has_prime": false,
+  "last_rework": "2023-07-06",
+  "checked": "2026-10-31",
+  "summary": "1번 치명 버프와 3번 피해 전이로 근접을 극대화하는 오버가드 근접 프레임",
+  "abilities": [
+    {
+      "slot": 1,
+      "name_ko": "라스풀 어드밴스",
+      "name_en": "Wrathful Advance",
+      "role": "main",
+      "note": "강공 순간이동+근접 최종 치확 +200%×위력",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    },
+    {
+      "slot": 2,
+      "name_ko": "레컴펜스",
+      "name_en": "Recompense",
+      "role": "survival",
+      "note": "단검 명중마다 체력·오버가드. 증강 시 25초 상시화",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    },
+    {
+      "slot": 3,
+      "name_ko": "콜렉티브 커스",
+      "name_en": "Collective Curse",
+      "role": "main",
+      "note": "저주로 묶인 적끼리 피해 전이(방어력 무시)",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    },
+    {
+      "slot": 4,
+      "name_ko": "스톰 오브 우코",
+      "name_en": "Storm of Ukko",
+      "role": "helminth_target",
+      "note": "단검 비 장판·콤보 적립. 대부분 이식 자리",
+      "scales": ["strength", "duration", "range", "efficiency"]
+    }
+  ],
+  "main_slots": [1, 3],
+  "stat_priority": [
+    {"stat": "strength", "note": "3번 전이 100%는 200%에서 끝, 그 위는 1번 치확·2번 오버가드 상한. 200~320%"},
+    {"stat": "duration", "note": "1번 치확 버프·3번 저주 유지, 2번 증강 시간. 128~155%"},
+    {"stat": "range", "note": "1번 순간이동·2번 단검·3번 파동 거리. 100~265%"},
+    {"stat": "efficiency", "note": "45%도 프라임드 플로우+이퀼리브리엄·에너지 넥서스로 유지"}
+  ],
+  "breakpoints": [
+    {
+      "slot": 3,
+      "stat": "strength",
+      "value": "200%",
+      "effect": "콜렉티브 커스 피해 전이율 100% 상한",
+      "calc": "전이율 50% × 2.00 = 100%(상한). 북미 ninjase도 '200%만 맞추면 된다'고 명시",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Collective_Curse"
+    },
+    {
+      "slot": 3,
+      "stat": "strength",
+      "value": "200% (강철의 길 레벨 400)",
+      "effect": "중장갑에 전이 피해가 방어력을 무시해 직접 타격 대비 약 10배 효율",
+      "calc": "레벨 400 중장갑 방어력 상한 2,700 → 피해 감소 90%. 전이 피해는 트루 데미지(방어 무시, 고유 피해 감소는 적용) → 1 ÷ (1 − 0.9) = 10배. 오버가드에 들어간 피해와 상태이상은 전이 안 됨",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Collective_Curse"
+    },
+    {
+      "slot": 1,
+      "stat": "strength",
+      "value": "150% / 243% / 322%",
+      "effect": "근접 최종 치확 +300 / +486 / +644%p",
+      "calc": "보너스 = 200%p × 위력, 모드 적용 후 최종 치확에 가산. 150%: +300%p → 무기 치확 0%라도 3단계(빨강) 치명 확정. 243%(북미 ninjase) → +486%p, 322%(한국 몰트형) → +644%p. 상한 없음",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Wrathful_Advance"
+    },
+    {
+      "slot": 2,
+      "stat": "strength",
+      "value": "264%",
+      "effect": "오버가드 상한 26,400",
+      "calc": "상한 10,000 × 2.64 = 26,400(북미 KnickKnacks 표기 26,200). 회복량은 단검당 325 × 위력",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Recompense"
+    },
+    {
+      "slot": null,
+      "stat": "strength",
+      "value": "최대 체력 2,980",
+      "effect": "아케인 벨리코스 위력 +72% 상한",
+      "calc": "보너스 = round(최대 체력 ÷ 250 × 6). 2,980 ÷ 250 × 6 = 71.5 → 72%. 한국 10포마형 체력 2,771 → 66.5 → 67%, 북미 KnickKnacks·중국 3,374 → 상한 72%",
+      "verified": true,
+      "source": "https://wiki.warframe.com/w/Arcane_Bellicose"
+    }
+  ],
+  "community": [
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널 (질문글 추천 댓글)",
+      "url": "https://arca.live/b/warframe/173219499",
+      "date": "2026-06-09",
+      "title": "노리쉬 볼래틸 기본형",
+      "concept": "생존은 볼래틸 레컴펜스 하나로 해결하고 체력·방어 모드를 빼 위력·지속·거리와 에너지(노리쉬+에너지 넥서스)에 투자",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "레디 스틸",
+      "exilus": "프레퍼레이션",
+      "mods": ["블라인드 레이지(또는 트랜지언트 포티튜드)", "움브랄 인텐시파이", "프라임드 컨티뉴어티", "스트레치", "Natural Talent", "볼래틸 레컴펜스", "에너지 넥서스", "프라임드 플로우"],
+      "arcanes": ["몰트 어그먼티드·아케인 퓨리·아케인 컨센트레이션·아케인 퍼시스턴스 중 택2"],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "노리쉬(또는 라이카스 헌트+이퀼리브리엄)"},
+      "notes": "3움브랄 질문글(조회 844)에 달린 구성. 3움브랄은 불필요하고 고레벨만 아니면 2번 증강으로 충분, 3움브랄을 쓸 거면 높은 방어력으로 퍼시스턴스까지. 아케인 에너자이즈가 있으면 사용. 2026-10-25 다른 글 댓글도 '볼래틸 필수, 블라인드 레이지로 효율 버리고 위력·지속'으로 같은 방향"
+    },
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널 (세팅 검토 요청글)",
+      "url": "https://arca.live/b/warframe/158990712",
+      "date": "2026-01-08",
+      "title": "몰트·컨센트레이션 위력 322% 라이카스형",
+      "concept": "컨센트레이션과 프라임드 컨티뉴어티로 지속을 챙기고 나머지는 위력에 몰아 1번 치확을 키우며 에너지는 라이카스 헌트+이퀼리브리엄으로 충당",
+      "stats": {"strength": 322, "duration": 128, "range": 100, "efficiency": 45},
+      "aura": "레디 스틸",
+      "exilus": "프레퍼레이션",
+      "mods": ["트랜지언트 포티튜드", "블라인드 레이지", "프라임드 컨티뉴어티", "프라임드 플로우", "볼래틸 레컴펜스", "어거 시크릿츠", "움브랄 인텐시파이", "이퀼리브리엄"],
+      "arcanes": ["몰트 어그먼티드", "아케인 컨센트레이션"],
+      "shards": ["타우 보라(근접 치명 피해) ×5 예정"],
+      "helminth": {"replace_slot": 4, "ability": "라이카스 헌트"},
+      "notes": "캡처 위력 298% → 322%(어거 시크릿츠 포함으로 보임). 댓글: 어거 시크릿츠 대신 스트레치로 3번 거리 보강, 3번 전이 피해는 근접 판정이 아니라 라이카스가 안 터질 수 있음, 대안은 4번 자리 프랙쳐드 블래스트(헬스 오브)"
+    },
+    {
+      "region": "KR",
+      "site": "아카라이브 워프레임 채널",
+      "url": "https://arca.live/b/warframe/141339863",
+      "date": "2025-07-03",
+      "title": "10포마 벨리코스 체력형",
+      "concept": "움브랄 바이탈리티로 체력 2,771을 확보해 아케인 벨리코스 위력을 받고 볼래틸 레컴펜스로 상시 오버가드, 거리 265%로 단검·저주 범위 확대",
+      "stats": {"strength": 162, "duration": 155, "range": 265, "efficiency": 100},
+      "aura": "스위프트 모멘텀",
+      "exilus": "프레퍼레이션",
+      "mods": ["프라임드 플로우", "움브랄 바이탈리티", "프라임드 컨티뉴어티", "어거 리치", "볼래틸 레컴펜스", "오버익스텐디드", "움브랄 인텐시파이", "스트레치"],
+      "arcanes": ["아케인 벨리코스", "아케인 블레싱"],
+      "shards": [],
+      "helminth": {"replace_slot": null, "ability": "미기재"},
+      "notes": "추천 6, 2026-10-28 '쿨레르보 프라임 기원' 글에서 재인용. 체력 2,771 → 벨리코스 약 +67%. 댓글: 생존은 2번 증강이 나와서 3움브랄은 굳이 필요 없다는 의견"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (ninjase, 775추천)",
+      "url": "https://overframe.gg/build/494014/",
+      "date": "2026-08-14",
+      "title": "볼래틸·퍼시스턴스 범용 근접",
+      "concept": "1번 탭 순간이동 강공으로 치확 +486%p를 유지하고 3번으로 피해 100% 전이, 생존은 볼래틸 레컴펜스+아케인 퍼시스턴스로 레벨 캡까지",
+      "stats": {"strength": 243, "duration": 155, "range": 175, "efficiency": 45},
+      "aura": "코로시브 프로젝션",
+      "exilus": "아이스 스프링",
+      "mods": ["스트레치", "움브랄 인텐시파이", "블라인드 레이지", "이퀼리브리엄", "볼래틸 레컴펜스", "프라임드 컨티뉴어티", "어거 리치", "프라임드 플로우"],
+      "arcanes": ["아케인 퍼시스턴스", "아케인 스테드패스트"],
+      "shards": ["노랑(시전 속도) 1~2", "하늘색(방어력) ×1", "나머지 타우 보라(근접 치명 피해) 또는 파쿠르 속도"],
+      "helminth": {"replace_slot": 4, "ability": "Shock·로어·노리쉬·Eclipse·Breach Surge·Silence 중 택1"},
+      "notes": "2023 작성, 2026-08-14 갱신. 쿨레르보 최다 추천. 퍼시스턴스는 방어력 700 이상 필요(쿨레르보 650 → 방어력 샤드 1개 또는 Stand United 오라). 1번 탭/홀드 반전 권장. 무기는 강공 연타·슬램·글레이브·12배 하이브리드 목록 제공"
+    },
+    {
+      "region": "NA",
+      "site": "Overframe (KnickKnacks, 89추천)",
+      "url": "https://overframe.gg/build/498557/",
+      "date": "2025-10-26",
+      "title": "3움브랄 벨리코스 탱커",
+      "concept": "3움브랄로 체력 3,374·방어력 1,820을 만들어 벨리코스 +72%(위력 264%)와 아케인 배터리 에너지를 받고 4번 자리 라이카스 헌트로 오브 순환",
+      "stats": {"strength": 192, "duration": 155, "range": 145, "efficiency": 100},
+      "aura": "Steel Charge",
+      "exilus": "Power Drift",
+      "mods": ["아콘 스트레치", "헬스 컨버전", "에너지 넥서스", "볼래틸 레컴펜스", "움브랄 인텐시파이", "프라임드 컨티뉴어티", "움브랄 파이버", "움브랄 바이탈리티"],
+      "arcanes": ["Arcane Battery", "아케인 벨리코스"],
+      "shards": ["노랑(에너지 오브 효과) ×1 필수", "보라(체력 오브→에너지) ×1 필수", "선택: 보라(근접 치명 피해)"],
+      "helminth": {"replace_slot": 4, "ability": "라이카스 헌트"},
+      "notes": "2023 작성, 2025-10-26 갱신(업데이트 40). 벨리코스 포함 위력 264% → 오버가드 26,200·전이 100%·치확 +528%p. 헬스 컨버전 스택 시 방어력 3,170"
+    },
+    {
+      "region": "CN",
+      "site": "바이두 티에바 warframe吧 (FBI-11℃)",
+      "url": "https://tieba.baidu.com/p/10231513638",
+      "date": "2025-11-21",
+      "title": "워크라이 이식 3움브랄 이론 구성",
+      "concept": "3번 자리에 발키르 Warcry(증강 Eternal War)를 이식해 방어력·공속을 얻고, 3움브랄 체력으로 벨리코스 72%를 채우며 증강 3장으로 시전 빈도를 줄인 '쿨레르보 프라임 대비' 고비용 설계",
+      "stats": {"strength": 132, "duration": 155, "range": 190, "efficiency": 100},
+      "aura": "스위프트 모멘텀",
+      "exilus": "Power Drift",
+      "mods": ["움브랄 인텐시파이", "움브랄 바이탈리티", "움브랄 파이버", "프라임드 컨티뉴어티", "볼래틸 레컴펜스", "Wrath of Ukko", "Eternal War", "오버익스텐디드"],
+      "arcanes": ["아케인 벨리코스", "Arcane Battery"],
+      "shards": ["보라(근접 치명 피해) ×3", "보라(체력 오브→에너지) ×2"],
+      "helminth": {"replace_slot": 3, "ability": "Warcry(발키르)"},
+      "notes": "댓글 33. 표시 위력 132%, 벨리코스 포함 204%. 댓글: 3움브랄은 과하고 벨리코스는 체력 3천이면 충분, 1번 위주와 4번 위주는 충돌(4번 쓰려면 로어 이식 필요). 중국에선 쿨레르보 본체보다 1번을 볼트·오공 등에 이식하는 '刀哥 이식'이 더 흔함"
+    },
+    {
+      "region": "JP",
+      "site": "zawazawa (wikiwiki KULLERVO 댓글 #690)",
+      "url": "https://zawazawa.jp/warframe_wiki/topic/1024",
+      "date": "2026-01-04",
+      "title": "노리쉬 이식 빨강 치명 인플루언스",
+      "concept": "2번을 깔아 두고 1번 빨강 치명 상태로 인플루언스 근접을 휘두르는 단순 운용, 노리쉬 이식",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": [],
+      "arcanes": [],
+      "shards": ["타우 보라 ×5"],
+      "helminth": {"replace_slot": null, "ability": "노리쉬"},
+      "notes": "근접은 Dual Viciss 또는 인카논 Okina. 같은 질문 답변 #686: 위력·지속 높게, 거리 적당, 4번에 로어/노리쉬, 3번 후 헤비 슬램이면 200레벨 엑시무스도 즉사. #685: 화력 부족 시 로어 영향이 가장 큼"
+    },
+    {
+      "region": "JP",
+      "site": "zawazawa (wikiwiki KULLERVO 댓글 #735)",
+      "url": "https://zawazawa.jp/warframe_wiki/topic/1024",
+      "date": "2026-10-31",
+      "title": "브리치 서지 이식 프레데터형",
+      "concept": "2번 증강·3번을 유지하고 4번 자리에 Breach Surge를 이식, 투명 쿠브로에 공격을 맡기고 강적만 1번+근접으로 처리",
+      "stats": {"strength": null, "duration": null, "range": null, "efficiency": null},
+      "aura": "",
+      "exilus": "",
+      "mods": ["볼래틸 레컴펜스"],
+      "arcanes": [],
+      "shards": [],
+      "helminth": {"replace_slot": 4, "ability": "Breach Surge"},
+      "notes": "신규 텐노젠 스킨 화제 중 나온 구성. 같은 스레드: 이식 추천으로 Shock 증강 인플루언스(#724), 제이드 스타즈 전이 루프(#729), 볼래틸이 반응하지 않는 적(보스·무효화 버블·오브젝트 판정)은 약점(#704, #720)"
+    }
+  ],
+  "consensus": {
+    "common": "모든 지역이 2번 증강 볼래틸 레컴펜스(2025-06)를 사실상 필수로 보고, 생존을 이것에 맡긴 뒤 위력 200% 이상(3번 전이 100%)·지속 128~155%로 1번 치확 버프와 3번 전이를 굴리는 근접 운용이 기본. 4번 스톰 오브 우코는 대부분 이식 자리(로어·노리쉬·라이카스 헌트가 단골), 효율은 45~100%로 블라인드 레이지 채용 여부가 갈림. 볼래틸이 보스·무효화 버블에 반응하지 않는 점이 공통 약점",
+    "differences": "한국: 공략 탭 글은 드물고 질문·검토글 댓글로 '볼래틸+블라인드 레이지, 노리쉬 또는 라이카스'가 정석으로 굳음, 레디 스틸·프레퍼레이션 조합이 자주 보임. 북미(Overframe): ninjase의 퍼시스턴스+볼래틸 범용형이 압도적, 벨리코스·3움브랄 탱커형도 상위. 중국: 본체 세팅 글은 적고 1번 라스풀 어드밴스를 볼트·오공 등에 이식하는 용도가 주류, 3움브랄+Warcry 이식 같은 이론 구성 정도. 일본: 2번 증강 안정감 칭찬이 많고 이식은 노리쉬·로어 외 Breach Surge·제이드 스타즈·Shock 증강 등 실험적, 연말 쿨레르보 프라임을 기다리며 포마 투자를 미루는 분위기"
+  },
+  "notes": [
+    "리워크 없음: 마지막 어빌 수치 변경은 2023-07-06 핫픽스 33.5.5(오버가드 상한 10,000으로 상향+위력 비례, 회복량 상향, 2번 시전 무적 추가)",
+    "2024-03-27 업데이트 35.5: 4번 증강 Wrath of Ukko 추가(1번 순간이동 위치로 4번 이동, 지속 +6초)",
+    "2024-12-13 업데이트 38.0: 아케인 벨리코스(체력 250당 위력 +6%, 최대 72%) 추가 → 고체력 쿨레르보 빌드에 채용",
+    "2025-06-25 업데이트 39.0: 2번 증강 볼래틸 레컴펜스 추가(25초간 단검이 돌며 폭발 피해, 0.6초마다 오버가드) → 지역 공통 필수 모드",
+    "2025-06(북미 ninjase 갱신): 아케인 퍼시스턴스(방어력 700 이상이면 초당 500 이상 피해 차단)+볼래틸로 레벨 캡 생존이 정석화",
+    "2025-12(일본 댓글 #679): 신규 아케인으로 오버가드+체력 이중 게이팅이 가능해졌다는 평가(아케인 이름 미확인)",
+    "2026-02-11 업데이트 41.1: 1번이 Thalys 인카논 형태를 발동하도록 수정. 2026-03-25 업데이트 42.0: 1번 끊김·시전 실패 수정",
+    "2026-10: 한국·일본·중국 모두 쿨레르보 프라임을 2026년 말 다음 프라임으로 예상(공식 발표 아님)"
+  ],
+  "gaps": [
+    "Reddit은 브라우저 차단·검색 미노출로 읽지 못함. 공식 Discord·NGA·X·일본 Discord는 로그인 필요로 제외",
+    "한국: 2025-07 이후 쿨레르보 공략/정보 탭 글을 찾지 못해 질문·검토글의 추천 댓글과 2025-07 빌드로 대체",
+    "중국: 티에바 '刀哥'·'kullervo' 검색에서 본체 세팅은 이론 구성 1건뿐. bilibili 陈年橘子C 영상(BV1J5Y9zEE5p, 2025-08-21) 설명란에 세팅 없음",
+    "YouTube: 'KULLERVO Build 2026'(AJazGaming6149, 2026-08-16) 설명란은 아케인(퓨리·에너자이즈·몰트 어그먼티드·배터리)만 있고 모드·샤드 미기재라 항목에서 제외",
+    "일본: 5ch part1117~1118은 프라임 예상·이식 이야기뿐. 댓글 빌드는 모드 전체 미기재",
+    "아케인 퍼시스턴스 700 방어력 조건은 위키 확인, 방어력 샤드 수치는 북미 가이드 기준(직접 미확인)",
+    "한국어 인게임 명칭 미확인으로 영어 표기: Wrath of Ukko, Eternal War, Warcry, Steel Charge, Power Drift, Arcane Battery, Natural Talent, Breach Surge, Shock, Eclipse, Silence. '레디 스틸'은 캡처 표기 그대로"
+  ]
+}
