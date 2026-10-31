@@ -9,7 +9,7 @@
   add("serration", "세레이션", "Serration", ["rifle"], { dmg: 1.65 }, { group: "r_dmg" });
   add("amalgam_serration", "아말감 세레이션", "Amalgam Serration", ["rifle"], { dmg: 1.55 }, { group: "r_dmg" });
   add("heavy_caliber", "헤비 칼리버", "Heavy Caliber", ["rifle"], { dmg: 1.65 });
-  add("semi_rifle_cannonade", "세미 라이플 캐노네이드", "Semi-Rifle Cannonade", ["rifle"], { dmg: 2.4, lock: 1 }, { req: "semi" });
+  add("semi_rifle_cannonade", "세미 라이플 캐노네이드", "Semi-Rifle Cannonade", ["rifle"], { dmg: 2.4, pt: 1.5, lock: 1 }, { req: "semi" });
   add("split_chamber", "스플릿 챔버", "Split Chamber", ["rifle"], { ms: 0.9 }, { group: "r_ms" });
   add("galvanized_chamber", "갈바나이즈드 챔버", "Galvanized Chamber", ["rifle"], { ms: 0.8 }, { group: "r_ms", cond: [{ when: "kill", eff: { ms: 1.5 } }] });
   add("vigilante_armaments", "비질란테 아마먼트", "Vigilante Armaments", ["rifle"], { ms: 0.6 });
@@ -22,12 +22,12 @@
   add("bladed_rounds", "블레이디드 라운드", "Bladed Rounds", ["rifle"], {}, { cond: [{ when: "aim", eff: { cd: 1.2 } }], note: "조준 중 처치" });
   add("rifle_aptitude", "라이플 앱티튜드", "Rifle Aptitude", ["rifle"], { sc: 0.9 }, { group: "r_sc" });
   add("galvanized_aptitude", "갈바나이즈드 앱티튜드", "Galvanized Aptitude", ["rifle"], { sc: 0.8 }, { group: "r_sc", cond: [{ when: "kill", eff: { gco: 0.8 } }] });
-  add("rifle_elementalist", "라이플 엘리멘탈리스트", "Rifle Elementalist", ["rifle"], { sd: 0.9 });
+  add("rifle_elementalist", "라이플 엘리멘탈리스트", "Rifle Elementalist", ["rifle"], { sd: 0.9, pt: 0.6 });
   add("continuous_misery", "컨티뉴어스 미저리", "Continuous Misery", ["rifle"], { dur: 1.0 });
   add("speed_trigger", "스피드 트리거", "Speed Trigger", ["rifle"], { fr: 0.6 });
   add("vile_acceleration", "바일 액셀러레이션", "Vile Acceleration", ["rifle"], { fr: 0.9, dmg: -0.15 });
-  add("shred", "슈레드", "Shred", ["rifle"], { fr: 0.3 }, { group: "r_shred" });
-  add("primed_shred", "프라임드 슈레드", "Primed Shred", ["rifle"], { fr: 0.55 }, { group: "r_shred" });
+  add("shred", "슈레드", "Shred", ["rifle"], { fr: 0.3, pt: 1.2 }, { group: "r_shred" });
+  add("primed_shred", "프라임드 슈레드", "Primed Shred", ["rifle"], { fr: 0.55, pt: 2.2 }, { group: "r_shred" });
   add("hellfire", "헬파이어", "Hellfire", ["rifle"], { heat: 0.9 });
   add("cryo_rounds", "크라이오 라운드", "Cryo Rounds", ["rifle"], { cold: 0.9 }, { group: "r_cold" });
   add("primed_cryo_rounds", "프라임드 크라이오 라운드", "Primed Cryo Rounds", ["rifle"], { cold: 1.65 }, { group: "r_cold" });
@@ -42,7 +42,7 @@
   /* ---------------- SHOTGUN ---------------- */
   add("point_blank", "포인트 블랭크", "Point Blank", ["shotgun"], { dmg: 0.9 }, { group: "s_dmg" });
   add("primed_point_blank", "프라임드 포인트 블랭크", "Primed Point Blank", ["shotgun"], { dmg: 1.65 }, { group: "s_dmg" });
-  add("semi_shotgun_cannonade", "세미 샷건 캐노네이드", "Semi-Shotgun Cannonade", ["shotgun"], { dmg: 2.4, lock: 1 }, { req: "semi" });
+  add("semi_shotgun_cannonade", "세미 샷건 캐노네이드", "Semi-Shotgun Cannonade", ["shotgun"], { dmg: 2.4, pt: 1.5, lock: 1 }, { req: "semi" });
   add("vicious_spread", "비셔스 스프레드", "Vicious Spread", ["shotgun"], { dmg: 0.9 });
   add("blaze", "블레이즈", "Blaze", ["shotgun"], { dmg: 0.6, heat: 0.6 });
   add("frail_momentum", "프레일 모멘텀", "Frail Momentum", ["shotgun"], { fr: 0.9, dmg: -0.15 });
@@ -75,9 +75,9 @@
 
   /* ---------------- PISTOL ---------------- */
   add("hornet_strike", "호넷 스트라이크", "Hornet Strike", ["pistol"], { dmg: 2.2 });
-  add("magnum_force", "매그넘 포스", "Magnum Force", ["pistol"], { dmg: 0.66 });
+  add("magnum_force", "매그넘 포스", "Magnum Force", ["pistol"], { dmg: 1.65 });
   add("augur_pact", "어거 팩트", "Augur Pact", ["pistol"], { dmg: 0.9 });
-  add("semi_pistol_cannonade", "세미 피스톨 캐노네이드", "Semi-Pistol Cannonade", ["pistol"], { dmg: 2.4, lock: 1 }, { req: "semi" });
+  add("semi_pistol_cannonade", "세미 피스톨 캐노네이드", "Semi-Pistol Cannonade", ["pistol"], { dmg: 3.0, pt: 1.5, lock: 1 }, { req: "semi" });
   add("barrel_diffusion", "배럴 디퓨전", "Barrel Diffusion", ["pistol"], { ms: 1.2 }, { group: "p_ms" });
   add("galvanized_diffusion", "갈바나이즈드 디퓨전", "Galvanized Diffusion", ["pistol"], { ms: 1.1 }, { group: "p_ms", cond: [{ when: "kill", eff: { ms: 1.2 } }] });
   add("amalgam_barrel_diffusion", "아말감 배럴 디퓨전", "Amalgam Barrel Diffusion", ["pistol"], { ms: 1.1 }, { group: "p_ms" });
@@ -193,7 +193,7 @@
   add("pummel", "퍼멜", "Pummel", ["pistol"], { impact: 1.2 });
   add("augur_seeker", "어거 시커", "Augur Seeker", ["pistol"], { dur: 0.9 }, { group: "p_dur" });
   add("perpetual_agony", "퍼페추얼 애거니", "Perpetual Agony", ["pistol"], { dur: 0.9 }, { group: "p_dur" });
-  add("merciless_gunfight", "머시리스 건파이트", "Merciless Gunfight", ["pistol"], { cd: 0.45 });
+  add("merciless_gunfight", "머시리스 건파이트", "Merciless Gunfight", ["pistol"], { cd: 0.45, pt: 1.2 });
   add("stunning_speed", "스터닝 스피드", "Stunning Speed", ["pistol"], { sc: 0.3, reload: 0.4 });
   add("hemorrhage", "헤모리지", "Hemorrhage", ["pistol"], { ib: 0.35 });
   add("embedded_catalyzer", "임베디드 카탈라이저", "Embedded Catalyzer", ["pistol"], {}, { cond: [{ when: "cast", eff: { sc: 0.9 } }], note: "어빌리티 사용 후 조준" });
@@ -213,7 +213,7 @@
   add("magnetic_rush", "마그네틱 러시", "Magnetic Rush", ["melee"], { magm: 0.6, fr: 0.2 });
   add("quickening", "퀴크닝", "Quickening", ["melee"], { fr: 0.4 });
   add("gladiator_vice", "글래디에이터 바이스", "Gladiator Vice", ["melee"], { fr: 0.3 });
-  add("reflex_coil", "리플렉스 코일", "Reflex Coil", ["melee"], { hae: 1.1 }, { req: "heavy", group: "m_reflex" });
+  add("reflex_coil", "리플렉스 코일", "Reflex Coil", ["melee"], { hae: 0.6 }, { req: "heavy", group: "m_reflex" });
 
   /* ---------------- magazine / reload (ammo-supplement candidates) ---------------- */
   add("primed_magazine_warp", "프라임드 매거진 워프", "Primed Magazine Warp", ["rifle"], { mag: 0.55 }, { group: "r_mag", ammo: true });
@@ -224,7 +224,7 @@
   add("tainted_clip", "테인티드 클립", "Tainted Clip", ["pistol"], { mag: 0.6, reload: -0.3 }, { group: "p_mag", ammo: true });
   add("primed_fast_hands", "프라임드 패스트 핸즈", "Primed Fast Hands", ["rifle"], { reload: 0.55 });
   add("primed_tactical_pump", "프라임드 택티컬 펌프", "Primed Tactical Pump", ["shotgun"], { reload: 1.0 });
-  add("quickdraw", "퀵드로우", "Quickdraw", ["pistol"], { reload: 0.2 });
+  add("quickdraw", "퀵드로우", "Quickdraw", ["pistol"], { reload: 0.48 });
 
   /* ---------------- EXILUS slot (utility mods; only these fit the exilus slot) ---------------- */
   // ammoConv: other-ammo pickups converted to this weapon's pickups; ammoMax: +max ammo; throwSpd/projSpd: projectile speed
@@ -234,18 +234,18 @@
   X("primed_sniper_ammo_mutation", "프라임드 스나이퍼 애모 뮤테이션", "Primed Sniper Ammo Mutation", ["rifle"], { ammoConv: 0.92 }, { group: "x_ammo", types: ["Sniper"] });
   X("arrow_mutation", "애로우 뮤테이션", "Arrow Mutation", ["rifle"], { ammoConv: 0.92 }, { group: "x_ammo", types: ["Bow"] });
   X("vigilante_supplies", "비질란티 서플라이즈", "Vigilante Supplies", ["rifle", "shotgun"], { ammoConv: 0.3 }, { group: "x_ammo" });
-  X("ammo_drum", "애모 드럼", "Ammo Drum", ["rifle"], { ammoMax: 0.1 });
+  X("ammo_drum", "애모 드럼", "Ammo Drum", ["rifle"], { ammoMax: 0.9 });
   X("primed_shotgun_ammo_mutation", "프라임드 샷건 애모 뮤테이션", "Primed Shotgun Ammo Mutation", ["shotgun"], { ammoConv: 0.92 }, { group: "x_ammo" });
   X("shotgun_ammo_mutation", "샷건 애모 뮤테이션", "Shotgun Ammo Mutation", ["shotgun"], { ammoConv: 0.5 }, { group: "x_ammo" });
-  X("shell_compression", "쉘 컴프레션", "Shell Compression", ["shotgun"], { ammoMax: 0.12 });
+  X("shell_compression", "쉘 컴프레션", "Shell Compression", ["shotgun"], { ammoMax: 0.9 });
   X("primed_pistol_ammo_mutation", "프라임드 피스톨 애모 뮤테이션", "Primed Pistol Ammo Mutation", ["pistol"], { ammoConv: 0.92 }, { group: "x_ammo" });
   X("pistol_ammo_mutation", "피스톨 애모 뮤테이션", "Pistol Ammo Mutation", ["pistol"], { ammoConv: 0.5 }, { group: "x_ammo" });
-  X("trick_mag", "트릭 매거진", "Trick Mag", ["pistol"], { ammoMax: 0.4 });
+  X("trick_mag", "트릭 매거진", "Trick Mag", ["pistol"], { ammoMax: 0.9 });
   X("terminal_velocity", "터미널 벨로시티", "Terminal Velocity", ["rifle"], { projSpd: 0.6 }, { group: "x_proj" });
   X("fatal_acceleration", "페이탈 액셀러레이션", "Fatal Acceleration", ["shotgun"], { projSpd: 0.4 }, { group: "x_proj" });
   X("galvanized_acceleration", "갈바나이즈드 액셀러레이션", "Galvanized Acceleration", ["shotgun"], { projSpd: 0.3 }, { group: "x_proj", cond: [{ when: "kill", eff: { projSpd: 0.6 } }] });
   X("lethal_momentum", "리썰 모멘텀", "Lethal Momentum", ["pistol"], { projSpd: 0.4 }, { group: "x_proj" });
-  X("whirlwind", "훨윈드", "Whirlwind", ["melee"], { throwSpd: 1.2 }, { req: "glaive" });
+  X("whirlwind", "훨윈드", "Whirlwind", ["melee"], { throwSpd: 1.8 }, { req: "glaive" });
   // Tennokai (melee swing style): a heavy attack that does not consume combo, opened every few hits
   X("mentors_legacy", "멘토즈 레거시", "Mentor's Legacy", ["melee"], { tenno: { on: 1 } }, { req: "swing", group: "x_tenno" });
   X("masters_edge", "마스터즈 엣지", "Master's Edge", ["melee"], { tenno: { on: 1, dmg: 0.6 } }, { req: "swing", group: "x_tenno" });

@@ -83,7 +83,8 @@
   /* ---------- mods aggregation ---------- */
   const NUM_KEYS = ["dmg", "heavy", "ms", "cc", "ccHeavyNoDouble", "cd", "sc", "sd", "dur", "fr", "frneg", "lock", "mag", "reload", "wind",
     "ic", "hae", "ccc", "br", "ww", "co", "gco", "radius", "pt", "cdFlat", "ccFlat", "hsMult", "msLock", "hm", "ib", "welt",
-    "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot", "evoPst", "wpcc"];
+    "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot", "evoPst", "wpcc",
+    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd"];
   const EXTRA = ["radm", "magm", "gasm", "blastm", "viralm", "corrm", "heatx", "coldx", "elecx", "toxx", "voidx"];
   function newAgg() {
     const a = { elem: { heat: 0, cold: 0, elec: 0, tox: 0 }, phys: { impact: 0, punct: 0, slash: 0 }, extra: {} };
@@ -110,6 +111,9 @@
       case "cast": return o.casting;
       case "energy": return o.energy;
       case "always": return true;
+      case "crowd": return o.scenario === "crowd";
+      case "armor450": return (o.armor || 0) > 450;
+      case "energy700": return (o.maxEnergy || 0) > 700;
       default: return false;
     }
   }
@@ -296,7 +300,8 @@
       A = Math.min(A, ARMOR_CAP);
       const ar = A > 0 ? 1 - 0.9 * Math.sqrt(A / ARMOR_CAP) : 1;
       const cdb = nk <= 0 ? 0 : nk < 1 ? 0.1 * nk : Math.min(0.45, 0.1 + 0.05 * (nk - 1));
-      const critf = 1 + p.cc * (p.cd + cdb - 1);
+      // Devouring Attrition (p.nc): non-critical hits get 1 + chance x bonus on average
+      const critf = 1 + p.cc * (p.cd + cdb - 1) + (p.nc ? Math.max(0, 1 - p.cc) * p.nc : 0);
       let shieldable = p.D * r * critf + (i === 0 ? p.D * critf / dt : 0) + (t >= 1.5 ? p.blast * r * critf : 0) + (p.F || 0) * r;
       const nAct = r * Math.min(t, Td) + (t < Td ? 1 : 0);
       let toxRate = 0, slashRate = 0;
@@ -430,7 +435,7 @@
         const k = (atk.primerRate || 0.25) / Math.max(0.05, main.rate);
         acc.pv += pr.pv * k; acc.ph += pr.ph * k; acc.pc += pr.pc * k; acc.pk += pr.pk * k;
       }
-      const base = { strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, corrMax: 10 + (o.ext.corrMax || 0), dt: o.dt, tmax: o.tmax, Tdur: main.Tdur,
+      const base = { strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, nc: main.nc || 0, corrMax: 10 + (o.ext.corrMax || 0), dt: o.dt, tmax: o.tmax, Tdur: main.Tdur,
         ogM: main.ogM || 1, frozenM: main.frozenM || 0, coldVuln: main.coldVuln || 0 };
       const hitP = { D: acc.D, blast: acc.blast, F: acc.F, dot: acc.dot, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm };
       const nonP = { D: 0, blast: 0, dot: acc.dotNon, pv: acc.pvN, ph: acc.phN, pc: acc.pcN, pk: acc.pkN };
@@ -453,6 +458,16 @@
           const dirP = Object.assign({}, base, { D: d0.D * w0, blast: d0.blast * w0, F: (d0.F || 0) * w0, dot: Object.fromEntries(Object.entries(d0.dot).map(([T, v]) => [T, v * w0])),
             pv: d0.pv * w0, ph: d0.ph * w0, pc: d0.pc * w0, pk: d0.pk * w0, pm: (d0.pm || 0) * w0, hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar });
           Keff = 1 + (main.K - 1) * Math.min(1, Math.max(tHit, period) / Math.max(ttk(dirP), period));
+        }
+        // Blast status (wiki "Blast Damage"): an enemy that dies with Blast stacks — or from a killing blow that procs Blast —
+        // explodes for up to 300% of the hit's base damage in 5 m. Each kill then takes a share of its neighbours with it.
+        const pbl = (main.procs && main.procs.blast) || 0;
+        if (o.scenario === "crowd" && pbl > 0 && acc.blast > 0) {
+          const unit = acc.blast / pbl;
+          const onDeath = 1 - Math.exp(-pbl * Math.max(1, tHit * main.rate));
+          const dealt = ttk(Object.assign({}, base, { D: unit * 10, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, r: 0, cc: 0, nc: 0, hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar }), o.dt);
+          const n5 = Math.min(main.N - 1, (o.density || 0) * Math.PI * 25);
+          Keff = Math.min(main.N, Keff * (1 + onDeath * n5 * Math.min(1, dealt / Math.max(1, tg.hp))));
         }
         if (o.scenario === "crowd") {
           // bystanders in the blast die together with the target when the blast alone kills them about as fast
@@ -532,6 +547,14 @@
     const a = aggregate(mods, oo, riven);
     // Incarnon evolution perks that act like a mod (fire rate, reload, direct damage per status type…) ride on the attack
     if (atk.evoEff) applyEff(a, atk.evoEff);
+    // conditional perks whose condition the calculator can check (armor, max energy, channeled ability, kills, crowd …);
+    // "on punch-through hit" needs punch through and more than one enemy in line
+    if (atk.evoCond) for (const c of atk.evoCond) {
+      const on = c.when === "ptHit" ? o.scenario === "crowd" && (a.pt + (atk.pt || 0)) > 0 : condActive(c.when, oo);
+      if (on) applyEff(a, c.eff);
+    }
+    a.pt += atk.pt || 0;                 // innate punch through of the attack (wiki), e.g. Phenmor Incarnon Form 3 m
+    const sp = atk.evoSp || {};          // perks that read the weapon's own final stats (Prelude of Might, Wiseman's Regard …)
     const ext = o.ext || {};
     // ability elements (Electric Shield, Toxic Lash, Xata's Whisper, Nourish) stay separate — they never combine.
     // "*mod" keys (Violet shard electricity) behave like an elemental mod: added to a mod of that element, else after the mods.
@@ -589,7 +612,7 @@
     if (arc && arc.compression && atk.radius && o.aim) { const lost = atk.radius * 0.8; a.dmg += lost; a.ammoEff += 0.055 * lost; radiusMul = 0.2; }
     const base0 = Object.values(atk.dmg).reduce((s, x) => s + x, 0);
     const vpct = o.val && o.val.type ? o.val.pct : 0;
-    const Btot = base0 * (1 + vpct);
+    const Btot = (base0 + (a.baseAdd || 0)) * (1 + vpct);
 
     const rho = o.density;
     const radius = ((atk.radius || 0) * (kind === "glaive" ? 1 : 1 + a.blastR) + (kind === "glaive" ? a.radius : 0)) * radiusMul;
@@ -659,9 +682,14 @@
     } else {
       let fr = a.lock > 0 && atk.semi ? atk.fr : atk.fr * Math.max(0.05, 1 + a.fr + a.frneg + (ext.frAdd || 0));
       if (atk.semi) fr = Math.min(fr, 3.5);   // realistic semi-auto click rate
+      // spool-down while the trigger is held (Phenmor Incarnon Form: 100% → 60% over 51 shots, reset on release):
+      // short bursts, so the average rate over one 51-shot burst
+      if (atk.spoolDown) { const to = atk.spoolDown[1]; fr *= (1 - to) / Math.log(1 / to); }
       const mag = Math.max(1, (atk.mag || 30) * (1 + a.mag));
       const reload = (atk.reload || 2) * (atk.byRound ? Math.max(0.1, 1 + a.mag) : 1) / Math.max(0.1, 1 + a.reload);
-      rate = atk.mag ? mag / (mag / fr + reload) : fr;
+      // spool-up (Gorgon, Soma, Cestra …: wiki "Spool" shots, starting near 60% fire rate): ~0.28 x shots of extra time per magazine
+      const spoolT = atk.spool && atk.mag ? 0.277 * atk.spool / fr : 0;
+      rate = atk.mag ? mag / (mag / fr + spoolT + reload) : fr;
     }
     const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, atk.mag * (1 + a.mag)) : 0);
     const msLock = a.msLock > 0;
@@ -669,13 +697,20 @@
     const ms0 = atk.noMs ? 1 : (atk.pellets || 1) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)));
     const tierNow = isHeavy ? M : (isMelee ? swingTier(atk.fr) : 1);
     const ccMod = (isHeavy ? 2 * a.cc : a.cc) + a.ccHeavyNoDouble + (ext.ccAdd || 0);
-    let ccBase = (atk.cc || 0) * (1 + ccMod + (a.br + (isMelee ? a.glad : 0)) * Math.max(0, tierNow - 1)) + a.ccFlat + (ext.ccFlat || 0);
+    const scMul = 1 + a.sc + a.ww * Math.max(0, tierNow - 1) + (ext.scAdd || 0) + (tenno ? tenno.sc || 0 : 0) + (isHeavy ? ext.heavySc || 0 : 0);
+    // High Ground / Decisive Stature: base crit chance + a share of the current status chance
+    const hgAdd = sp.highground ? Math.min(sp.highground.cap, sp.highground.v * Math.max(0, (atk.sc || 0) * scMul + a.scFlat)) : 0;
+    let ccBase = ((atk.cc || 0) + a.ccBase + hgAdd) * (1 + ccMod + (a.br + (isMelee ? a.glad : 0)) * Math.max(0, tierNow - 1)) + a.ccFlat + (ext.ccFlat || 0);
+    ccBase = Math.max(0, ccBase);
     if (o.arcane === "melee_animosity" && isHeavy) ccBase += (atk.cc || 0) * 0.42 * 1.5;
     if (arc && arc.enervate) ccBase = enervateCC(ccBase);
     // Vigilante set: a crit has a chance to go one tier higher = same average as that much more crit chance on crits
     if (a.vigil && weapon.slot === "primary") ccBase += a.vigil * Math.min(1, ccBase);
-    const cdBase = ((atk.cd || 1.5) * (1 + a.cd + (ext.cdAdd || 0) + (tenno ? tenno.cd || 0 : 0)) + a.cdFlat) * (ext.cdMult && !isMelee ? ext.cdMult : 1) * cdFinal;
-    const sc = (atk.sc || 0) * (1 + a.sc + a.ww * Math.max(0, tierNow - 1) + (ext.scAdd || 0) + (tenno ? tenno.sc || 0 : 0) + (isHeavy ? ext.heavySc || 0 : 0));
+    const preludeAdd = sp.prelude && ccBase < sp.prelude.below ? sp.prelude.v : 0;   // Prelude of Might: low crit chance → higher base crit multiplier
+    const cdBase = (((atk.cd || 1.5) + a.cdBase + preludeAdd) * (1 + a.cd + (ext.cdAdd || 0) + (tenno ? tenno.cd || 0 : 0)) + a.cdFlat) * (ext.cdMult && !isMelee ? ext.cdMult : 1) * cdFinal;
+    // Wiseman's Regard: base status chance + a share of the current crit chance; "added after mods" evolution bonuses (scFlat)
+    const wiseAdd = sp.wise ? Math.min(sp.wise.cap, sp.wise.v * ccBase) : 0;
+    const sc = Math.max(0, ((atk.sc || 0) + wiseAdd) * scMul + a.scFlat);
     const sd = a.sd + (isHeavy ? ext.heavySd || 0 : 0);
     const influence = o.arcane === "melee_influence" && isMelee;
     const dupD = o.arcane === "melee_duplicate" ? 1 : o.arcane === "melee_duplicate1" ? 0.4 : 0;
@@ -694,7 +729,7 @@
       for (let i = 0; i < n; i++) { const c = hps * 20 * (i + 0.5) / n; s += c < mn ? 1 : 1.5 + 0.5 * Math.floor(Math.log(c / mn) / Math.log(3) + 1e-9); }
       sniperM = s / n;
     }
-    const fin = (ext.final || 1) * (tenno ? 1 + (tenno.dmg || 0) : 1) * exChain * sniperM;
+    const fin = (ext.final || 1) * (tenno ? 1 + (tenno.dmg || 0) : 1) * exChain * sniperM * (1 + (a.evoMult || 0));   // evoMult: Incarnon "unique multiplier" perks
     // falloff: distance (bullets/pellets) and blast edge (enemies around the centre of an explosion)
     let fallM = distFall(atk.fo, o);
     if (atk.rfo && o.scenario === "crowd" && K > 1) fallM *= (1 + (K - 1) * (1 - atk.rfo * 2 / 3)) / K;
@@ -775,6 +810,8 @@
       }
       // statuses other sources keep on the target (abilities, teammates) also count for Condition Overload / Galvanized
       if (ext.statusExtra) ntypes = Math.min(14, ntypes + ext.statusExtra);
+      // Spiteful Defilement: +100% crit damage (flat) on targets with fewer than 3 status types
+      if (a.cdFew) cd += a.cdFew * Math.max(0, Math.min(1, 3 - ntypes));
       // Galvanized Shot/Aptitude/Diffusion stacks need kills and boost direct hits only, not explosions (wiki)
       // Incarnon "+X% Direct Damage per Status Type" (no kill needed) counts the same way
       const gco = kind === "radial" ? 0 : (kills ? a.gco * ntypes : 0) + (a.evoPst || 0) * ntypes;
@@ -824,7 +861,7 @@
       const cD = conceptDist(share, procs, o);
       scoreSS -= 50 * cD;      // a layout that breaks the element concept is used only when no layout keeps it
       if (!best || scoreSS > best.scoreSS) {
-        best = { conceptOk: cD === 0, conceptD: cD, nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, cc, cd, critf: 1 + cc * (cd - 1), sc, ms, rate, M, tierNow, K, N, u, ntypes, gco, co, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, fArc, hsFrac, hsM,
+        best = { conceptOk: cD === 0, conceptD: cD, nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, cc, cd, critf: 1 + cc * (cd - 1) + (a.nc ? Math.max(0, 1 - cc) * a.nc : 0), sc, ms, rate, M, tierNow, K, N, u, ntypes, gco, co, nc: a.nc || 0, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, fArc, hsFrac, hsM,
           fallM, ogM: (arc && arc.ogMult ? arc.ogMult : 1) * (1 + 0.5 * (share.void || 0)), frozenM: arc && arc.frozenMult && isMelee ? arc.frozenMult : 0, coldVuln: arc && arc.coldVuln ? arc.coldVuln : 0 };
       }
     }

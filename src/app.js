@@ -335,6 +335,9 @@ self.onmessage = function (ev) {
         else if (it.key === "baseSC") x.sc = (x.sc || 0) + it.v;
         else if (it.key === "baseMag") { if (x.mag) x.mag += it.v; }
         else if (it.key === "basePellets") x.pellets = (x.pellets || 1) + it.v;
+        else if (it.key === "setSC") x.sc = it.v;
+        else if (it.key === "prelude" || it.key === "wise" || it.key === "highground") { x.evoSp = Object.assign({}, x.evoSp || {}, { [it.key]: { v: it.v, below: it.below, cap: it.cap } }); }
+        else if (it.when) { x.evoCond = (x.evoCond || []).concat([{ when: it.when, eff: { [it.key]: it.v } }]); }
         else eff[it.key] = (eff[it.key] || 0) + it.v;
       }
       if (Object.keys(eff).length) x.evoEff = Object.assign({}, x.evoEff || {}, eff);
@@ -376,10 +379,10 @@ self.onmessage = function (ev) {
     box.hidden = false;
     const roman = ["", "I", "II", "III", "IV", "V"];
     const desc = (p) => p.items.map((it) => it.key ? it.ko + (it.form === "inc" ? " (인카논 형태만)" : it.form === "normal" ? " (기본 형태만)" : "") : it.cond ? "조건부: " + it.ko : it.ko).join(" · ");
-    box.innerHTML = `<div class="clabel">인카논 진화 <small>게임에서 고른 진화를 고르세요 · 처음엔 계산으로 고른 값</small></div>
+    box.innerHTML = `<div class="clabel">인카논 진화 <small>게임에서 고른 진화를 고르세요 · 번호는 게임 진화 화면의 왼쪽부터 · 처음엔 계산으로 고른 값</small></div>
       ${w.evos.map((t) => t.tier === 1 ? `<div class="evorow"><b>${roman[t.tier]}</b><span class="evofix">인카논 형태 해금</span></div>`
-        : `<label class="evorow"><b>${roman[t.tier] || t.tier}</b><select data-tier="${t.tier}">${t.perks.map((p, i) => `<option value="${i}"${st.evoSel[t.tier] === i ? " selected" : ""}>${esc(p.name)} — ${esc(desc(p))}${st.evoManual && st.evoManual[t.tier] ? "" : st.evoSel[t.tier] === i ? " [자동]" : ""}</option>`).join("")}</select></label>`).join("")}
-      <p class="hint" style="margin:0">기본 피해·치명타·상태이상·탄창·멀티샷·연사·재장전·상태이상당 피해는 계산에 넣고, 조건이 붙은 효과(오버실드일 때, 빈 탄창 재장전 시 등)와 반동·정확도 같은 효과는 넣지 않습니다. 위키 진화 표 기준.</p>`;
+        : `<label class="evorow"><b>${roman[t.tier] || t.tier}</b><select data-tier="${t.tier}">${t.perks.map((p, i) => `<option value="${i}"${st.evoSel[t.tier] === i ? " selected" : ""}>${i + 1}. ${esc(p.name)} — ${esc(desc(p))}${st.evoManual && st.evoManual[t.tier] ? "" : st.evoSel[t.tier] === i ? " [자동]" : ""}</option>`).join("")}</select></label>`).join("")}
+      <p class="hint" style="margin:0">위키 진화 표 기준입니다. 기본 피해·치명타·상태이상·탄창·멀티샷·연사·재장전·관통력, "모드 적용 후 고정값" 보너스, 비치명타 피해 보너스, 곱연산 피해 보너스, 자기 능력치를 읽는 효과(치명타 확률 50% 미만일 때 등)는 계산에 넣습니다. 방어력 450 초과·최대 에너지 700 초과·채널링 어빌리티·처치 시·무리 상대 같은 조건은 왼쪽 설정이 그 조건을 채울 때만 넣습니다. "조건부"로 표시된 효과(오버실드일 때, 빈 탄창 재장전 시, 체력 절반 이하 적 등)와 반동·정확도는 넣지 않습니다.</p>`;
     box.querySelectorAll("select").forEach((sel) => sel.addEventListener("change", () => {
       st.evoManual = st.evoManual || {}; st.evoManual[sel.dataset.tier] = true; st.evoSel[sel.dataset.tier] = +sel.value;
       st.weapon = applyEvos(st.base, st.evoSel); st.results = null; renderAll();
@@ -1040,9 +1043,9 @@ self.onmessage = function (ev) {
     }
     const better = rows.filter((x) => !x.cur && x.k > 1.02).sort((a, b) => b.k - a.k)[0];
     return `<section class="card"><h3>인카논 진화 비교 <small>추천 모드 그대로 진화 하나만 바꿨을 때 (지금 선택 = 100%)</small></h3>
-      ${better ? `<p class="warn">진화 ${roman[better.t]}를 <b>${esc(better.p.name)}</b>(으)로 바꾸면 ×${better.k.toFixed(2)} 빨라집니다. <button type="button" class="ghostbtn" data-evo="${better.t}:${better.i}">이 진화로 다시 계산</button></p>` : ""}
+      ${better ? `<p class="warn">진화 ${roman[better.t]}를 <b>${better.i + 1}번 ${esc(better.p.name)}</b>(으)로 바꾸면 ×${better.k.toFixed(2)} 빨라집니다. <button type="button" class="ghostbtn" data-evo="${better.t}:${better.i}">이 진화로 다시 계산</button></p>` : ""}
       <div class="tscroll"><table class="tbl"><thead><tr><th>진화</th><th>효과</th><th>처치 속도</th></tr></thead><tbody>
-      ${rows.map((x) => `<tr${x.cur ? ' class="rec"' : ""}><td><b>${roman[x.t]}</b> ${esc(x.p.name)}${x.cur ? " <small>(선택)</small>" : ""}</td><td><small>${esc(x.p.items.map((it) => it.key ? it.ko : it.cond ? "조건부(계산 제외)" : it.ko).join(" · "))}</small></td><td class="num">${x.calc || x.cur ? pct(x.k, 0) : "<small>계산 영향 없음</small>"}</td></tr>`).join("")}
+      ${rows.map((x) => `<tr${x.cur ? ' class="rec"' : ""}><td><b>${roman[x.t]}-${x.i + 1}</b> ${esc(x.p.name)}${x.cur ? " <small>(선택)</small>" : ""}</td><td><small>${esc(x.p.items.map((it) => it.key ? it.ko : it.cond ? "조건부(계산 제외): " + it.ko : it.ko).join(" · "))}</small></td><td class="num">${x.calc || x.cur ? pct(x.k, 0) : "<small>계산 영향 없음</small>"}</td></tr>`).join("")}
       </tbody></table></div></section>`;
   }
   function updateConceptCard() { const el = document.getElementById("conceptcard"); if (el && st.results) el.innerHTML = conceptCardHtml(); }
@@ -1304,6 +1307,7 @@ self.onmessage = function (ev) {
     h5 += `<section class="card notes"><h3>계산 가정</h3><ul>
       <li>처치 시간은 ${o.steel ? "강철의 길 " : ""}${o.level}레벨 기준 적의 체력·방어구(위키 레벨 공식)로 계산합니다. 바이러스·화염·부식·냉기 중첩은 시간에 따라 쌓입니다.</li>
       <li>잡몹 무리: 반경 20m 안 12명, 한 발이 맞히는 수는 폭발 반경·관통으로 추정. 직격+폭발 무기는 주변 적이 폭발만 맞는다고 보고, 폭발만으로 죽는 속도만큼 같이 잡히는 것으로 계산합니다. 폭발 투사체는 관통이 적용되지 않습니다(위키 "Punch Through"). 갈바나이즈드 계열 피해 보너스와 세컨더리 이레디에이트 전파는 직격에만 적용합니다(위키). 처치 조건 효과(갈바나이즈드, 머시리스 등)는 잡몹·중장갑에서는 최대 중첩, 보스전에서는 0으로 계산합니다.</li>
+      <li>폭발 상태이상이 걸린 적이 죽으면 5m 안에 그 공격 기본 피해의 최대 300%로 터져(위키 "Blast Damage") 주변 적이 함께 깎이는 것으로 봅니다. 관통력은 모드와 무기 고유값(인카논 형태 등, 위키)을 더하고, 스풀 무기는 탄창마다 처음 몇 발이 느린 것, 펜모어 인카논 형태는 51발 점사 평균 연사(약 78%)로 계산합니다.</li>
       <li>코퍼스 실드는 독·출혈 도트만 관통하고 나머지는 실드를 먼저 깎습니다. 자성 중첩은 실드·오버가드 피해를 최대 4.25배로 올립니다.${o.og ? " 엑시무스 오버가드(위키 레벨 공식)는 방어구·바이러스 영향 없이 먼저 깎고, 보이드는 1.5배입니다." : ""}</li>
       <li>무기별 숨은 특성은 위키 무기 데이터에서 가져옵니다: 확정 상태이상(예: 조리스 회수 폭발의 전기·충격), 헤드샷 배율 변경, 거리별 피해 감소(잡몹은 2~20m에 고르게, 중장갑은 15m), 폭발 가장자리 피해 감소, 최대 탄약·탄약 소모.</li>
       <li>근접 휘두르기는 공격 속도 1당 초당 1.5타로 근사합니다. 연속기는 '근접 연속기' 옵션의 시간 동안 0(초기 연속기가 있으면 그 값)부터 쌓는 평균 배율을 씁니다. 한 번에 2명(잡몹) 또는 1명을 맞히고, 타격당 스탠스 배율 평균 1.5점에 연속기 획득 확률을 곱해 쌓이며, 220점(12배)에서 멈춥니다. 텐노카이는 그 배율의 강공이 15%(디시플린즈 메리트는 4타마다) 섞이는 것으로 계산합니다. 글레이브·강공은 초기 연속기로 배율을 정합니다. 강공이 연속기를 쓰고 나면 초기 연속기는 초당 40씩 다시 차므로(위키), 강공 간격이 짧으면 덜 찬 배율로 터지고, 그 사이 맞힌 타수(연속기 획득 확률 반영)가 모자란 만큼을 메웁니다. 글레이브는 던지고 돌아오는 비행 시간(투척 속도 기준)을 주기에 넣습니다.</li>

@@ -21,6 +21,9 @@ except Exception as e:  # keep building without it
     print("wiki data skipped:", e)
 
 
+# fire rate falling while the trigger is held (wiki weapon pages): [shots, fire rate reached]. Phenmor Incarnon Form: 100% → 60%
+# over 51 shots, reset when the trigger is released.
+SPOOL_DOWN = {"Phenmor": {"Incarnon Form": [51, 0.6]}}
 # radial attacks that the wiki says get no multishot bonus (one explosion per trigger pull)
 NO_MS_RADIAL = {"Burston Prime": ("Incarnon Form Radial Attack",)}
 
@@ -35,6 +38,11 @@ def wiki_traits(at, wa):
         at["forced"] = fp
     if wa.get("ExtraHeadshotDmg"):
         at["hsMult"] = max(1, 2 + float(wa["ExtraHeadshotDmg"]))
+    if wa.get("PunchThrough"):
+        at["pt"] = float(wa["PunchThrough"])          # innate punch through (Incarnon forms, Ignis Wraith, Boltor …)
+    trig = str(wa.get("Trigger") or "")
+    if re.search(r"auto|held", trig, re.I) and "semi" not in trig.lower() and at.get("semi"):
+        at.pop("semi")                                # e.g. Phenmor: semi-auto rifle, full-auto Incarnon Form
 
 
 def wiki_attack(wk, name):
@@ -135,6 +143,11 @@ def conv(w, typ):
                     at["noMs"] = True     # wiki weapon page: the radial attack gets no multishot bonus
                 if a.get("charge_time"):
                     at["charge"] = a["charge_time"]
+                wk_ = WIKI.get(name) or {}
+                if wk_.get("Spool") and "Spool" in str(wk_.get("Trigger") or "") and not at.get("inc"):
+                    at["spool"] = int(wk_["Spool"])
+                if a["name"] in SPOOL_DOWN.get(name, {}):
+                    at["spoolDown"] = SPOOL_DOWN[name][a["name"]]
                 if at["kind"] == "radial" and "hsMult" not in at:
                     at["hsMult"] = 1      # Update 32: radial damage gets no headshot bonus
                 at["desc"] = {"Normal Attack": "기본 사격만 하는 운용", "Alt-Fire": "보조 사격만 계산", "Incarnon Form": "인카논 형태 (진화 후) 사격",
@@ -431,18 +444,81 @@ EVO_RULES = [
     (r"^([+-]?\d+) Initial Combo\.?$", "ic", 1, "초기 연속기 {s}"),
     (r"^([+-]?\d+(?:\.\d+)?)% Heavy Attack Wind ?Up Speed\.?$", "wind", 0.01, "강공 준비 속도 {s}%"),
     (r"^(?:Base )?Heavy Attack Efficiency set at (\d+(?:\.\d+)?)%\.?$", "hae", 0.01, "강공 효율 {v}%"),
-    (r"^([+-]?\d+(?:\.\d+)?)% Headshot Damage\.?$", "hsMult", 0.01, "헤드샷 피해 {s}% (헤드샷 시)"),
+    (r"^([+-]?\d+(?:\.\d+)?)% Headshot [Dd]amage\.?$", "hsMult", 0.01, "헤드샷 피해 {s}% (헤드샷 시)"),
+    (r"^On 2 headshots within 2 seconds: ([+-]?\d+(?:\.\d+)?)% Headshot damage for \d+ seconds\.?$", "hsMult", 0.01, "헤드샷 피해 {s}% (헤드샷 연속 시)"),
+    (r"^([+-]?\d+(?:\.\d+)?) Punch Through\.?$", "pt", 1, "관통력 {s}m"),
+    (r"^([+-]?\d+(?:\.\d+)?)% Magazine Capacity\.?$", "mag", 0.01, "탄창 {s}%"),
+    (r"^([+-]?\d+(?:\.\d+)?)% Ammo [Ee]fficiency\.?$", "ammoEff", 0.01, "탄약 효율 {s}%"),
+    # emptying the magazine before reloading is the calculator's firing model, so "on reload from empty" is always met
+    (r"^On Reload [Ff]rom Empty(?: Magazine)?: \+?(\d+(?:\.\d+)?)% Reload Speed(?: for \d+ seconds)?\.?$", "reload", 0.01, "빈 탄창 재장전 시 재장전 속도 +{v}% (탄창을 비우고 재장전하는 계산 기준이라 항상 적용)"),
+    (r"^([+-]?\d+(?:\.\d+)?)% Blast Radius\.?$", "blastR", 0.01, "폭발 반경 {s}%"),
+    (r"^Increase Base Status Chance to (\d+(?:\.\d+)?)%\.?$", "setSC", 0.01, "기본 상태이상 확률 {v}%로"),
+    # Devouring Attrition: 50% chance of +2000% on non-critical hits → non-critical hits deal 1 + 0.5 x 20 = 11x on average
+    (r"^(\d+(?:\.\d+)?)% chance to deal \+(\d+(?:\.\d+)?)% damage on non-critical hits\.?$", "nc", None, "비치명타 공격 시 {g1}% 확률로 피해 +{g2}% (평균 {avg}배)"),
+    (r"^Enemies suffering from fewer than 3 Status Effects will receive: \+(\d+(?:\.\d+)?)% Critical Damage\.?$", "cdFew", 0.01, "상태이상 2종 이하인 적에게 치명타 피해 +{v}% (모드 후 고정값)"),
+    (r"^On Full Burst Hit: \+(\d+(?:\.\d+)?)% Damage, resets on Reload\.?$", "evoMult", 0.01, "점사 전탄 명중 시 피해 +{v}% (곱연산)"),
+    (r"^Multishot consumes ammo directly from Capacity and increases Damage by \+(\d+(?:\.\d+)?)%\.?$", "evoMult", 0.01, "멀티샷이 탄약을 직접 소모, 피해 +{v}% (곱연산)"),
+    (r"^Multishot consumes ammo directly from Capacity and increases Damage by \+(\d+(?:\.\d+)?)\.?$", "baseDmg", 1, "멀티샷이 탄약을 직접 소모, 기본 피해 +{v}"),
+    (r"^Multishot consumes ammo directly from Capacity and does \+(\d+(?:\.\d+)?)% Damage\.?$", "evoMult", 0.01, "멀티샷이 탄약을 직접 소모, 피해 +{v}% (곱연산)"),
+    (r"^On Firing: \+(\d+(?:\.\d+)?)% Multishot\. Stacks up to (\d+)x\.?$", "ms", "stack", "사격 중 멀티샷 +{v}%씩 최대 {g2}중첩 (계속 쏠 때 최대)"),
+    (r"^On Firing: \+(\d+(?:\.\d+)?) Base Multishot\. Stacks up to (\d+)x\.?$", "basePellets", "stack1", "사격 중 기본 멀티샷 +{v}씩 최대 {g2}중첩 (계속 쏠 때 최대)"),
+    (r"^With Critical Chance [Bb]elow (\d+)%: Increase Base Critical Damage Multiplier by \+(\d+(?:\.\d+)?)x?\.?$", "prelude", None, "치명타 확률 {g1}% 미만일 때 기본 치명타 배율 +{g2}"),
+    (r"^Increase Base Status Chance by (\d+(?:\.\d+)?)% of current Critical Chance, up to (\d+(?:\.\d+)?)%\.?$", "wise", None, "현재 치명타 확률의 {g1}%만큼 기본 상태이상 확률 증가 (최대 {g2}%)"),
+    (r"^Increase Base Critical Chance by (\d+(?:\.\d+)?)% of current Status Chance, up to (\d+(?:\.\d+)?)%\.?$", "highground", None, "현재 상태이상 확률의 {g1}%만큼 기본 치명타 확률 증가 (최대 {g2}%)"),
+    (r"^\+(\d+(?:\.\d+)?)% Attack Speed per enemy within \d+m, stacks up to (\d+)x\.?$", "fr", "stackCrowd", "주변 적 1명당 공격 속도 +{v}% (최대 {g2}명, 무리 상대일 때)"),
 ]
+# "With …:" conditions the calculator can check from its own inputs (armor, max energy, channeled ability, kills)
+EVO_WHEN = [(r"^With Armor (?:Over|over|above) 450:\s*", "armor450", "방어력 450 초과 시"),
+            (r"^With Energy Max (?:Over|over|above) 700:\s*", "energy700", "최대 에너지 700 초과 시"),
+            (r"^With Channel+ed Ability [Aa]ctive:\s*", "cast", "채널링 어빌리티 사용 중"),
+            (r"^On Kill: (?=.*for \d+s)", "kill", "처치 시"),
+            (r"^On Reload [Ff]rom Empty(?: Magazine)?: (?=Increase Base Damage)", "always", "빈 탄창 재장전 후(계산 기준상 항상)"),
+            (r"^On Punch Through Hit: (?=.*for \d+s)", "ptHit", "관통 명중 시")]
 EVO_NONE = [(r"Recoil", "반동"), (r"Accuracy", "정확도"), (r"Projectile Speed", "투사체 속도"), (r"Zoom", "확대율"), (r"Movement Speed", "이동 속도"),
             (r"^[+-]?\d+(?:\.\d+)? Range", "근접 사거리"), (r"Parry Angle", "막기 각도"), (r"Combo Duration", "연속기 지속시간"), (r"Slam Radius", "슬램 반경"),
             (r"Incarnon Transmutation", "인카논 충전"), (r"Magazine Reloaded", "보관 중 재장전")]
 def evo_line(line):
     line = re.sub(r"([A-Za-z%.])\d$", r"\1", line.strip())      # footnote digit left over from the wiki markup
+    for rx, when, wko in EVO_WHEN:
+        m = re.match(rx, line)
+        if m and line[m.end():].strip():
+            inner = re.sub(r"\s*for \d+s\.?$", "", line[m.end():].strip())
+            stk = re.search(r"\.\s*Stacks up to (\d+)x\.?$", inner)
+            if stk and when == "always":
+                r = evo_line(inner[:stk.start()] + ".")
+                if r.get("key"): r = dict(r, v=round(r["v"] * int(stk.group(1)), 4), ko=r["ko"] + f" ({stk.group(1)}중첩)")
+                inner = None
+            if inner is not None: r = evo_line(inner)
+            if r.get("key") and r["key"] in ("pt", "ms", "fr", "blastR", "cd", "cc", "sc", "dmg", "reload", "ammoEff", "baseCD", "baseCC", "baseDmg"):
+                # base-stat changes under a condition are applied by the engine (cdBase/ccBase/baseAdd) when the condition holds
+                k_ = {"baseCD": "cdBase", "baseCC": "ccBase", "baseDmg": "baseAdd"}.get(r["key"], r["key"])
+                return dict(r, key=k_, when=when, ko=wko + ": " + r["ko"])
+            return {"key": None, "cond": True, "ko": line}
+    dbl = re.search(r"\.?\s*Effect doubles in Incarnon Form\.?$", line)
+    if dbl:
+        r = evo_line(line[:dbl.start()] + ".")
+        if r.get("key"):
+            return dict(r, incX2=True, ko=r["ko"] + " (인카논 형태에서 2배)")
     for rx, key, mul, ko in EVO_RULES:
         m = re.match(rx, line.strip())
         if m:
             g = m.group(1); v = float(g); sv = g if g[0] in "+-" else "+" + g
-            return {"key": key, "v": round(v * mul, 4), "ko": ko.format(v=m.group(1).lstrip("+"), s=sv)}
+            gs = m.groups()
+            fmt = dict(v=m.group(1).lstrip("+"), s=sv, g1=gs[0], g2=gs[1] if len(gs) > 1 else "")
+            if key == "nc":
+                p_, b_ = float(gs[0]) / 100, float(gs[1]) / 100
+                return {"key": "nc", "v": round(p_ * b_, 4), "ko": ko.format(avg=f"{1 + p_ * b_:g}", **fmt)}
+            if key == "prelude":
+                return {"key": "prelude", "v": float(gs[1]), "below": float(gs[0]) / 100, "ko": ko.format(**fmt)}
+            if key in ("wise", "highground"):
+                return {"key": key, "v": float(gs[0]) / 100, "cap": float(gs[1]) / 100, "ko": ko.format(**fmt)}
+            if mul == "stack":
+                return {"key": key, "v": round(v * int(gs[1]) / 100, 4), "ko": ko.format(**fmt)}
+            if mul == "stack1":
+                return {"key": key, "v": round(v * int(gs[1]), 4), "ko": ko.format(**fmt)}
+            if mul == "stackCrowd":
+                return {"key": key, "v": round(v * int(gs[1]) / 100, 4), "when": "crowd", "ko": ko.format(**fmt)}
+            return {"key": key, "v": round(v * mul, 4), "ko": ko.format(**fmt)}
     for rx, ko in EVO_NONE:
         if re.search(rx, line):
             return {"key": None, "ko": ko + " (피해 무관)"}
@@ -471,10 +547,27 @@ for W in weapons:
     for t in E["tiers"]:
         perks = []
         for pk in t["perks"]:
-            items = [dict(evo_line(l), form=evo_form(l, pk.get("notes") or [])) for l in pk.get("lines") or []]
+            notes = pk.get("lines") and pk.get("notes") or []
+            lines = []
+            for l in pk.get("lines") or []:
+                # "Increase Base Damage by +30. +50% Ammo Efficiency" → two lines (only when both halves parse)
+                pre = next((m_.group(0) for rx_, _, _ in EVO_WHEN for m_ in [re.match(rx_, l)] if m_), "")
+                bits = [pre + b.strip() for b in re.split(r"(?<=[\w%])\.\s+(?=[+\-A-Z])", l[len(pre):]) if b.strip()]
+                lines += bits if len(bits) > 1 and all(evo_line(b).get("key") for b in bits) else [l]
+            items = []
+            flat = any(re.search(r"added after mods as a flat value", n_, re.I) for n_ in notes)
+            for l in lines:
+                it = dict(evo_line(l), form=evo_form(l, notes))
+                if flat and it.get("key") in ("baseCC", "baseSC", "baseCD"):
+                    it["key"] = {"baseCC": "ccFlat", "baseSC": "scFlat", "baseCD": "cdFlat"}[it["key"]]
+                    it["ko"] += " (모드 적용 후 고정값으로 더함)"
+                if it.pop("incX2", False) and it.get("key"):
+                    items.append(dict(it, form="normal"))
+                    it = dict(it, v=round(it["v"] * 2, 4), form="inc")
+                items.append(it)
             # a condition line ("On Equip from Primary:") makes the following lines conditional too
             cond_on = False
-            for it, l in zip(items, pk.get("lines") or []):
+            for it, l in zip(items, lines):
                 if l.rstrip().endswith(":"): cond_on = True; it["key"] = None; it["cond"] = True; continue
                 if cond_on and it.get("key"): it["key"] = None; it["cond"] = True
             for it in items:

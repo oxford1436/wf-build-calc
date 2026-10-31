@@ -4789,7 +4789,9 @@
       "lines": [
        "Weakpoint Hits charge Incarnon Transmutation; Alt Fire transmutes. Switching back will expend any remaining charge."
       ],
-      "notes": []
+      "notes": [
+       "Incarnon Form changes the weapon from a semi-auto to full-auto with increased fire rate, reduced recoil, direct shots have increased Impact damage but no longer deal Slash damage, and its shots explode in a 2 meter radius inflicting Radiation damage."
+      ]
      }
     ]
    },
@@ -4827,21 +4829,28 @@
       "lines": [
        "On Headshot: +30% Reload Speed for 12 seconds. Stacks up to 3 times."
       ],
-      "notes": []
+      "notes": [
+       "Affects untransformed Laetum and Incarnon Form mode switching.",
+       "Stacks decay incrementally; when the buff times out, one stack is lost and the buff duration resets."
+      ]
      },
      {
       "name": "Awakened Readiness",
       "lines": [
        "30% Magazine Reloaded per second while Holstered"
       ],
-      "notes": []
+      "notes": [
+       "Only affects untransformed Laetum."
+      ]
      },
      {
       "name": "Feather of Justice",
       "lines": [
        "Gain 60% Ammo Efficiency while Aim Gliding or Sliding."
       ],
-      "notes": []
+      "notes": [
+       "Does not affect Incarnon Form"
+      ]
      }
     ]
    },
@@ -4853,14 +4862,19 @@
       "lines": [
        "+50% Headshot damage"
       ],
-      "notes": []
+      "notes": [
+       "Affects both modes."
+      ]
      },
      {
       "name": "Incarnon Efficiency",
       "lines": [
        "Headshots Build +50% more Incarnon Transmutation charge."
       ],
-      "notes": []
+      "notes": [
+       "Reduces the number of weakpoint hits required to fully charge Transmutation to 8.",
+       "Each weakpoint hit generates 27 charge, up from 18."
+      ]
      },
      {
       "name": "Elemental Excess",
@@ -4868,7 +4882,9 @@
        "+20% Status Chance",
        "-10% Critical Chance"
       ],
-      "notes": []
+      "notes": [
+       "Bonuses are added after mods as a flat value."
+      ]
      }
     ]
    },
@@ -4880,21 +4896,29 @@
       "lines": [
        "50% chance to deal +2000% damage on non-critical hits"
       ],
-      "notes": []
+      "notes": [
+       "Affects both forms.",
+       "Damage bonus is multiplicative to base damage bonuses such as Hornet Strike."
+      ]
      },
      {
       "name": "Reaper's Plenty",
       "lines": [
        "On Headshot: +40% Ammo Efficiency for 6 seconds."
       ],
-      "notes": []
+      "notes": [
+       "Does not affect Incarnon Form"
+      ]
      },
      {
       "name": "Overwhelming Attrition",
       "lines": [
        "On Hit that is neither Critical nor applies a Status Effect: +400% damage for 10 seconds. Stacks up to 3 times."
       ],
-      "notes": []
+      "notes": [
+       "Damage bonus is additive to base damage bonuses such as Hornet Strike.",
+       "When the buff times out, one stack is lost and the buff duration resets."
+      ]
      }
     ]
    }
@@ -7010,30 +7034,19 @@
   "tiers": [
    {
     "tier": 1,
-    "perks": []
-   },
-   {
-    "tier": 1,
     "perks": [
      {
       "name": "Incarnon Form",
       "lines": [
        "Bullets ricochet."
       ],
-      "notes": []
-     },
-     {
-      "name": "Incarnon Form",
-      "lines": [
-       "Bullets ricochet."
-      ],
-      "notes": []
+      "notes": [
+       "Base damage, base Critical Chance, and base Critical Multiplier are increased. Sicarus also gains increased base Status Chance.",
+       "Shots ricochet to 1 nearby enemy within 6 meters of the main target and any subsequent targets struck by punch through.",
+       "Ricochets can hit weakpoints, but not reliably."
+      ]
      }
     ]
-   },
-   {
-    "tier": 2,
-    "perks": []
    },
    {
     "tier": 2,
@@ -7044,15 +7057,9 @@
        "Increase Base Damage by +50.",
        "+40% Damage to enemies below half Health."
       ],
-      "notes": []
-     },
-     {
-      "name": "Feigned Retreat",
-      "lines": [
-       "Increase Base Damage by +X.",
-       "+40% Damage to enemies below half Health."
-      ],
-      "notes": []
+      "notes": [
+       "Bonus damage is additive with mods such as Hornet Strike but does not take into account the Base Damage increase from this perk."
+      ]
      },
      {
       "name": "King's Gambit",
@@ -7060,21 +7067,13 @@
        "Increase Base Damage by +50.",
        "x0 Critical Chance on Bodyshots, +150% Critical Chance on Weakpoint Hits."
       ],
-      "notes": []
-     },
-     {
-      "name": "King's Gambit",
-      "lines": [
-       "Increase Base Damage by +X.",
-       "x0 Critical Chance on Bodyshots, +150% Critical Chance on Weakpoint Hits."
-      ],
-      "notes": []
+      "notes": [
+       "Bodyshot modifier is multiplicative with all sources of Critical Chance, effectively making non-headshot critical hits impossible.",
+       "'s Crystallize is an exception to this.",
+       "Weakpoint modifier is additive with mods such as Pistol Gambit"
+      ]
      }
     ]
-   },
-   {
-    "tier": 3,
-    "perks": []
    },
    {
     "tier": 3,
@@ -7083,20 +7082,6 @@
       "name": "Void's Guidance",
       "lines": [
        "+40% Accuracy."
-      ],
-      "notes": []
-     },
-     {
-      "name": "Void's Guidance",
-      "lines": [
-       "+40% Accuracy."
-      ],
-      "notes": []
-     },
-     {
-      "name": "Rapid Reinforcement",
-      "lines": [
-       "+50% Reload Speed."
       ],
       "notes": []
      },
@@ -7113,19 +7098,8 @@
        "Increase Base Magazine Capacity by +9."
       ],
       "notes": []
-     },
-     {
-      "name": "Extended Volley",
-      "lines": [
-       "Increase Base Magazine Capacity by +X."
-      ],
-      "notes": []
      }
     ]
-   },
-   {
-    "tier": 4,
-    "perks": []
    },
    {
     "tier": 4,
@@ -7138,13 +7112,6 @@
       "notes": []
      },
      {
-      "name": "Commodore's Fortune",
-      "lines": [
-       "Increase Base Critical Chance by +X%."
-      ],
-      "notes": []
-     },
-     {
       "name": "Survivor's Edge",
       "lines": [
        "Increase Base Critical Chance by 12%.",
@@ -7153,26 +7120,16 @@
       "notes": []
      },
      {
-      "name": "Survivor's Edge",
-      "lines": [
-       "Increase Base Critical Chance by X%.",
-       "Increase Base Status Chance to Y%."
-      ],
-      "notes": []
-     },
-     {
       "name": "Wiseman's Regard",
       "lines": [
        "Increase Base Status Chance by 30% of current Critical Chance, up to 40%"
       ],
-      "notes": []
-     },
-     {
-      "name": "Wiseman's Regard",
-      "lines": [
-       "Increase Base Status Chance by 30% of current Critical Chance, up to 40%"
-      ],
-      "notes": []
+      "notes": [
+       "Maximum Base Status Chance increase is gained at 134% Critical Chance, achievable with +734% (Sicarus) / +434% (Prime) modded Critical Chance, or +567% (Sicarus) / +345% (Prime) in Incarnon Form.",
+       "Incarnon Form Status Chance is displayed in the Arsenal screen as if using the normal form's Critical Chance, but will properly use its' own Critical chance while in-mission.",
+       "In addition to regular Critical Chance mods, it is also affected by both parts of Galvanized Crosshairs while aiming, , , , , 's Passive, 's Passive, Covenant's baseline Critical Chance bonus but not the 4x multiplier on headshots, and Cat's Eye.",
+       "Not affected by the King's Gambit Evolution II perk, , Crystallize, or Shadow Haze."
+      ]
      }
     ]
    }
@@ -7189,7 +7146,11 @@
       "lines": [
        "Bullets ricochet."
       ],
-      "notes": []
+      "notes": [
+       "Base damage, base Critical Chance, and base Critical Multiplier are increased. Sicarus also gains increased base Status Chance.",
+       "Shots ricochet to 1 nearby enemy within 6 meters of the main target and any subsequent targets struck by punch through.",
+       "Ricochets can hit weakpoints, but not reliably."
+      ]
      }
     ]
    },
@@ -7202,7 +7163,9 @@
        "Increase Base Damage by +40.",
        "+40% Damage to enemies below half Health."
       ],
-      "notes": []
+      "notes": [
+       "Bonus damage is additive with mods such as Hornet Strike but does not take into account the Base Damage increase from this perk."
+      ]
      },
      {
       "name": "King's Gambit",
@@ -7210,7 +7173,11 @@
        "Increase Base Damage by +40.",
        "x0 Critical Chance on Bodyshots, +150% Critical Chance on Weakpoint Hits."
       ],
-      "notes": []
+      "notes": [
+       "Bodyshot modifier is multiplicative with all sources of Critical Chance, effectively making non-headshot critical hits impossible.",
+       "'s Crystallize is an exception to this.",
+       "Weakpoint modifier is additive with mods such as Pistol Gambit"
+      ]
      }
     ]
    },
@@ -7263,7 +7230,12 @@
       "lines": [
        "Increase Base Status Chance by 30% of current Critical Chance, up to 40%"
       ],
-      "notes": []
+      "notes": [
+       "Maximum Base Status Chance increase is gained at 134% Critical Chance, achievable with +734% (Sicarus) / +434% (Prime) modded Critical Chance, or +567% (Sicarus) / +345% (Prime) in Incarnon Form.",
+       "Incarnon Form Status Chance is displayed in the Arsenal screen as if using the normal form's Critical Chance, but will properly use its' own Critical chance while in-mission.",
+       "In addition to regular Critical Chance mods, it is also affected by both parts of Galvanized Crosshairs while aiming, , , , , 's Passive, 's Passive, Covenant's baseline Critical Chance bonus but not the 4x multiplier on headshots, and Cat's Eye.",
+       "Not affected by the King's Gambit Evolution II perk, , Crystallize, or Shadow Haze."
+      ]
      }
     ]
    }
@@ -9425,7 +9397,11 @@
       "lines": [
        "Weakpoint Hits charge Incarnon Transmutation; Alt Fire transmutes. Switching back will expend any remaining charge."
       ],
-      "notes": []
+      "notes": [
+       "Incarnon Form changes the weapon to semi-automatic and fires large energy projectiles with higher accuracy and critical multiplier, 0.5 meter punch through, and its status chance per projectile is increased to 20%. However, its shots inflict Radiation and Impact damage instead of Puncture and Slash, it loses shotgun multishot mechanics and has a base multishot of 1, and its fire rate and total damage are reduced.",
+       "Despite the explosive visual effect, there is no radial damage.",
+       "As the per-shell reload makes the Felarx be able to interrupt it's reload while firing, the switching can also be interrupted."
+      ]
      }
     ]
    },
@@ -9444,14 +9420,18 @@
       "lines": [
        "-50% Weapon Recoil"
       ],
-      "notes": []
+      "notes": [
+       "Only applies while aiming."
+      ]
      },
      {
       "name": "Frictionless Flight",
       "lines": [
        "+50% Projectile Speed"
       ],
-      "notes": []
+      "notes": [
+       "Only applies while aiming."
+      ]
      }
     ]
    },
@@ -9463,7 +9443,12 @@
       "lines": [
        "Reload toggles the weapon between +100% Projectile Speed and +4m Punch Through."
       ],
-      "notes": []
+      "notes": [
+       "Toggles for every shell loaded. For example, reloading all 6 shells will toggle 6 times, leaving it on the mode it started on.",
+       "\"Reload when holstered\" effects do toggle Dual-Mode Chamber.",
+       "Reloading via 's Blood Forge or 's Resupply does not switch chamber mode.",
+       "Affects Incarnon Form."
+      ]
      },
      {
       "name": "Evolved Autoloader",
@@ -9477,7 +9462,16 @@
       "lines": [
        "Reload increases Fire Rate by +10% per shell. Resets on reload."
       ],
-      "notes": []
+      "notes": [
+       "Increasing Magazine size increases the potential bonus, but also the reload time as shells are loaded individually.",
+       "Stacks up to 99x (+990% Fire Rate).",
+       "Affects Incarnon Form.",
+       "Activating Incarnon Form will add one stack to the counter. Deactivating Incarnon Form will reload the normal form's magazine while retaining stacks; this allows stacks to be sustained and built for as long as Incarnon charge can be built without reloading.",
+       "Deactivating Incarnon Form will also add stacks to the counter for each remaining unit of ammo missing from the magazine when Incarnon Form was activated. For example, if Incarnon Form is activated with 4 shells spent from the magazine and 10 stacks, deactivating Incarnon Form results in a total of 14 stacks.",
+       "Holstering will reset stacks.",
+       "\"Reload when holstered\" effects such as Lock and Load will build stacks after resetting.",
+       "Reloading via 's Blood Forge does not reset nor build stacks. Reloading via 's Resupply however will build 1 stack."
+      ]
      }
     ]
    },
@@ -9490,14 +9484,20 @@
        "+10% Critical Chance",
        "+10% Status Chance"
       ],
-      "notes": []
+      "notes": [
+       "Bonuses are added after mods as a flat value.",
+       "Status Chance bonus is divided by the base multishot of 4, for only +2.5% Status Chance per pellet."
+      ]
      },
      {
       "name": "Incarnon Catalyst",
       "lines": [
        "Headshots Build +50% more Incarnon Transmutation charge."
       ],
-      "notes": []
+      "notes": [
+       "Reduces the number of headshots required to fully charge Transmutation to 20.",
+       "Each headshotting-bullet generates 3 charge, up from 2."
+      ]
      },
      {
       "name": "Racking Wrath",
@@ -9505,7 +9505,10 @@
        "+20% Status Chance",
        "-10% Critical Chance"
       ],
-      "notes": []
+      "notes": [
+       "Bonuses are added after mods as a flat value.",
+       "Status Chance bonus is divided by the base multishot of 4, for only +5% Status Chance per pellet."
+      ]
      }
     ]
    },
@@ -9517,7 +9520,10 @@
       "lines": [
        "50% chance to deal +2000% damage on non-critical hits"
       ],
-      "notes": []
+      "notes": [
+       "Affects both forms.",
+       "Damage bonus is multiplicative to base damage bonuses such as Serration."
+      ]
      },
      {
       "name": "Ruptured Plentitude",
@@ -9551,7 +9557,14 @@
        "+3 Range",
        "+40% Attack Speed"
       ],
-      "notes": []
+      "notes": [
+       "Aim glide melee attacks launch projectiles which deal 360 Radiation damage.",
+       "Projectile has infinite Punch Through.",
+       "Projectile has a range of 21 meters.",
+       "Projectiles do not contribute to but benefit from Melee Combo Counter.",
+       "Finishers grant Incarnon Resilience, increasing Damage Reduction by 10% up to four stacks. These stacks are multiplicative to each other and last for the duration of Incarnon Form.",
+       "Mercy finishers with a Parazon do not apply a stack of Incarnon Resilience."
+      ]
      }
     ]
    },
@@ -9589,7 +9602,10 @@
       "lines": [
        "Gain 5 Combo for every 10m of continuous slide"
       ],
-      "notes": []
+      "notes": [
+       "Only counts slide distance while grounded.",
+       "Weapon must be in hand for perk to apply."
+      ]
      },
      {
       "name": "Skyborne Hunter",
@@ -9622,7 +9638,10 @@
       "lines": [
        "On Airborne Melee Kill: +50% Melee Damage for 10s. Stacks up to 3x."
       ],
-      "notes": []
+      "notes": [
+       "Stacks additively with Pressure Point and similar bonuses.",
+       "Incarnon Form projectile and Slash, Heat, and Toxin Status Effect kills while airborne count towards generating stacks."
+      ]
      },
      {
       "name": "Protracted Execution",
@@ -9672,7 +9691,12 @@
       "lines": [
        "Weakpoint Hits charge Incarnon Transmutation; Alt Fire transmutes. Switching back will expend any remaining charge."
       ],
-      "notes": []
+      "notes": [
+       "Incarnon Form changes the weapon from an automatic hand cannon to charging Arm-Cannon. Holding down the trigger releases a wide beam that inflicts Radiation damage. The beam narrows and increases in damage the longer the charge is held. Once fully charged, the Arm Cannon releases a powerful Heat shot with guaranteed status, 5 meter Punch Through, and explodes in a 3 meter radius.",
+       "Beam damage scales linearly up to 2.5x damage. Resets after releasing the trigger or firing a charged shot.",
+       "Onos consumes 1 round per tick of damage, then 50 rounds upon releasing the Heat beam. The charged beam will deal full damage even if there iss less than 50 charges remaining.",
+       "Incarnon Form uses Arm-Cannon animations. Contrary to its appearance, the Onos is still considered a Secondary weapon."
+      ]
      }
     ]
    },
@@ -9710,21 +9734,28 @@
       "lines": [
        "+10 Base Magazine Capacity"
       ],
-      "notes": []
+      "notes": [
+       "*Only affects untransformed Onos."
+      ]
      },
      {
       "name": "Rapid Reinforcement",
       "lines": [
        "+30% Reload Speed"
       ],
-      "notes": []
+      "notes": [
+       "Affects untransformed Onos and transformation into Incarnon mode."
+      ]
      },
      {
       "name": "Hunter's Rearmament",
       "lines": [
        "On Kill: 10% chance to replenish 10 Ammo"
       ],
-      "notes": []
+      "notes": [
+       "Only affects untransformed Onos.",
+       "Ammo is replenished to the reserve pool, not to the magazine."
+      ]
      }
     ]
    },
@@ -9736,14 +9767,19 @@
       "lines": [
        "On Kill: +2.5 Punch Through for 20s"
       ],
-      "notes": []
+      "notes": [
+       "Affects both modes."
+      ]
      },
      {
       "name": "Incarnon Efficiency",
       "lines": [
        "Headshots Build +50% more Incarnon Transmutation charge."
       ],
-      "notes": []
+      "notes": [
+       "Reduces the number of weakpoint hits required to fully charge Transmutation to 8.",
+       "Each weakpoint hit generates 75 charge, up from 50."
+      ]
      },
      {
       "name": "Elemental Excess",
@@ -9751,7 +9787,9 @@
        "+20% Status Chance",
        "-10% Critical Chance"
       ],
-      "notes": []
+      "notes": [
+       "Bonuses are added after mods as a flat value."
+      ]
      }
     ]
    },
@@ -9770,14 +9808,19 @@
       "lines": [
        "On Punch Through Hit: +200% Damage for 10s."
       ],
-      "notes": []
+      "notes": [
+       "Damage bonus is additive to other base damage mods like Hornet Strike."
+      ]
      },
      {
       "name": "Devastation Cascade",
       "lines": [
        "Hitting enemies in Incarnon Form increases the Critical Chance and Critical Damage of the fully charged blast by +5%. Stacks up to 50 times."
       ],
-      "notes": []
+      "notes": [
+       "Bonuses are additive to mods.",
+       "Also triggers on DoT Status Effects applied by the charge-up beam, including damage caused to enemies caught in Gas clouds."
+      ]
      }
     ]
    }
@@ -9794,7 +9837,11 @@
       "lines": [
        "Weakpoint Hits charge Incarnon Transmutation; Alt Fire transmutes. Switching back will expend any remaining charge."
       ],
-      "notes": []
+      "notes": [
+       "Incarnon Form changes the weapon from a semi-auto to full-auto with increased fire rate, 3 meter punch through, and its shots inflict Radiation and Slash damage but no longer inflicts Puncture damage.",
+       "Incarnon Form uses Archgun animations. Contrary to its appearance, the Phenmor is still considered a Primary weapon and will not impair Aim Glide time.",
+       "Incarnon Form's fire rates spools down from 100% to 60% over 51 shots as the trigger is held. Spool resets once the player stops firing, encouraging brief bursts of fire rather than sustained fire."
+      ]
      }
     ]
    },
@@ -9832,21 +9879,27 @@
       "lines": [
        "+50% Magazine Capacity"
       ],
-      "notes": []
+      "notes": [
+       "Does not affect Incarnon Form."
+      ]
      },
      {
       "name": "Ready Retaliation",
       "lines": [
        "On Reload from Empty: +100% Reload Speed for 6 seconds"
       ],
-      "notes": []
+      "notes": [
+       "Affects untransformed Phenmor. Can affect transition into Incarnon form with a well-timed manual reload. Does not affect transition from Incarnon back to base form."
+      ]
      },
      {
       "name": "Executioner's Fortune",
       "lines": [
        "On Headshot kill: 20% chance to instant Reload."
       ],
-      "notes": []
+      "notes": [
+       "Does not affect Incarnon Form"
+      ]
      }
     ]
    },
@@ -9859,14 +9912,19 @@
        "+10% Critical Chance",
        "+10% Status Chance"
       ],
-      "notes": []
+      "notes": [
+       "Bonuses are added after mods as a flat value."
+      ]
      },
      {
       "name": "Incarnon Efficiency",
       "lines": [
        "Headshots Build +50% more Incarnon Transmutation charge."
       ],
-      "notes": []
+      "notes": [
+       "Reduces the number of weakpoint hits required to fully charge Transmutation to 8.",
+       "Each weakpoint hit generates 51 charge, up from 34."
+      ]
      },
      {
       "name": "Elemental Excess",
@@ -9874,7 +9932,9 @@
        "+20% Status Chance",
        "-10% Critical Chance"
       ],
-      "notes": []
+      "notes": [
+       "Bonuses are added after mods as a flat value."
+      ]
      }
     ]
    },
@@ -9886,21 +9946,29 @@
       "lines": [
        "50% chance to deal +2000% damage on non-critical hits"
       ],
-      "notes": []
+      "notes": [
+       "Affects both forms.",
+       "Damage bonus is multiplicative to base damage bonuses such as Serration."
+      ]
      },
      {
       "name": "Spiteful Defilement",
       "lines": [
        "Enemies suffering from fewer than 3 Status Effects will receive: +100% Critical Damage"
       ],
-      "notes": []
+      "notes": [
+       "Bonus is added after mods as a flat value.",
+       "Multiple instances of the same status effect are not counted separately, e.g. having 5 corrosive and 5 radiation status effects on a target will not disable this buff."
+      ]
      },
      {
       "name": "Lingering Judgement",
       "lines": [
        "On 2 headshots within 2 seconds: +50% Headshot damage for 8 seconds."
       ],
-      "notes": []
+      "notes": [
+       "Headshot damage bonus stacks additively with headshot damage bonus."
+      ]
      }
     ]
    }
@@ -10045,7 +10113,11 @@
        "-35% Max Melee Attack Speed",
        "+100% of Impact Damage converted to Puncture Damage"
       ],
-      "notes": []
+      "notes": [
+       "Heavy Slam attacks impale enemies within 8 meters on Void spikes for 1.5s + 1.0s * (combo multiplier - 1), for a maximum total duration of 12.5 seconds.",
+       "The height from which the slam is performed does not affect the impale radius.",
+       "Melee Attack Speed curse is multiplicative to all other attack speed buffs."
+      ]
      }
     ]
    },
@@ -10090,7 +10162,9 @@
       "lines": [
        "+60% Slam Radius"
       ],
-      "notes": []
+      "notes": [
+       "Does not affect the impale radius from Heavy Slam attacks."
+      ]
      },
      {
       "name": "Adept Reflexes",
@@ -10142,7 +10216,11 @@
       "lines": [
        "Impaled enemies are +35% more vulnerable to Status Chance"
       ],
-      "notes": []
+      "notes": [
+       "The status chance boost is a flat 35%, allowing damage sources with 0% status chance to inflict status procs.",
+       "Any source of damage can benefit from status chance vulnerability, not just Ruvox. This includes abilities.",
+       "AoE Status Effects from other enemies such as Electricity can trigger new status effects on vulnerable enemies, allowing exponential damage growth with prolonged chaining."
+      ]
      },
      {
       "name": "Permanent Perforation",
@@ -10169,7 +10247,23 @@
        "+3 Range",
        "+40% Attack Speed"
       ],
-      "notes": []
+      "notes": [
+       "Light attacks (not slam attacks or heavy attacks) embed a shard in enemies which lasts for 15 seconds. Each enemy can only be embedded with one shard at a time.",
+       "Embedding a shard deals no damage to the main target, but triggers all shards embedded in other enemies, dealing damage to their host.",
+       "Shards can be triggered regardless of the distance between the newly embedded enemy and any previously embedded enemies.",
+       "Triggering a shard does not remove it from its host and it can still be triggered by new shards.",
+       "Shard trigger damage is 75% of Thalys's base damage, for a total of 157.5 Slash Damage and 67.5 Puncture Damage.",
+       "If the triggering attack has a damage multiplier from a melee stance combo, it will also multiply the shard damage.",
+       "Is affected by base damage bonuses such as Pressure Point and Vex Armor, but not Condition Overload.",
+       "Is not affected by IPS, elemental, or faction damage bonuses. Does not trigger forced procs from Valence Formation or Toxic Lash.",
+       "0% status chance, can be increased with flat bonuses like Proton Snap and Shroud of Dynar.",
+       "Status duration is not affected by Lasting Sting.",
+       "0% critical chance, can be increased with flat bonuses like and Wrathful Advance.",
+       "1.0x critical multiplier, affected by mods like Organ Shatter and .",
+       "'s bonus scales with Thalys's normal melee stats, not the shard stats, allowing the shards to gain a significant critical multiplier.",
+       "Cannot trigger even when the shards themselves crit.",
+       "Shard damage is considered an instance of Unattributed Damage."
+      ]
      }
     ]
    },
@@ -10260,21 +10354,44 @@
       "lines": [
        "Shards grow when a new shard is created, up to 3 times. Fully grown shards erupt out of the embedded enemy, dealing x2 damage and impaling them on the spot."
       ],
-      "notes": []
+      "notes": [
+       "New shards still trigger existing shards to deal damage, in addition to the growth effect.",
+       "Shard growth is limited to 1 stage per melee swing, regardless of how many new enemies are embedded with a shard. However, a shard can be embedded and grow by 1 stage in the same melee swing.",
+       "Impaled enemies are stunned for 5 seconds while suspended in the air. After the impale ends, the enemy will fall to ground before taking a second to stand back up.",
+       "Impaling an enemy removes the shard on them. They cannot be embedded with a new shard until the impale is over.",
+       "Impale damage is 2x the normal shard trigger damage, but otherwise has the same stats and is affected by the same mods.",
+       "Condition Overload is an exception, as it affects the impale damage but not the shard damage (likely a bug).",
+       "Impale effect does not trigger despite being somewhat similar to Lifted."
+      ]
      },
      {
       "name": "Chain Shatter",
       "lines": [
        "Heavy attacks detonate shards. Shards caught within the blast radius will also detonate"
       ],
-      "notes": []
+      "notes": [
+       "Heavy slams will also detonate shards.",
+       "Detonated shards deal 200% of Thalys's base damage (420 Slash and 180 Puncture) to their host.",
+       "Has a damaging radius of only about ~1m with ?% falloff.",
+       "The detonation will also trigger other shards within ~5m to detonate, which can cause a chain reaction.",
+       "Combo multiplier will only multiply the detonation damage to the shard's host and enemies in the 1m damaging radius. Other shards detonated by the explosion will not benefit from the combo multiplier.",
+       "Is affected by base damage bonuses (including Condition Overload), as well as IPS and elemental bonuses (unlike the shard trigger damage).",
+       "Is not affected by faction damage bonuses.",
+       "Has 24% status chance, 0% crit chance, and a 1x critical multiplier.",
+       "Does not trigger forced procs from Valence Formation or Toxic Lash.",
+       "Can trigger .",
+       "Cannot trigger .",
+       "Enemies that have been detonated are still able to have a new shard embedded in them by further melee attacks, allowing them to be detonated again."
+      ]
      },
      {
       "name": "Void Splinters",
       "lines": [
        "Shard duration is increased to 30s. Shards become weak spots that have +100% Critical Chance when damaged. Shard damage is reduced by -50%."
       ],
-      "notes": []
+      "notes": [
+       "Critical Chance bonus is additive to mods such as Point Strike, Pistol Gambit and True Steel."
+      ]
      }
     ]
    }

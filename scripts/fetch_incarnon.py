@@ -46,7 +46,10 @@ def parse(text, single=None):
     j = text.find("\n|}", i)
     tbl = text[i:j]
     head = tbl.split("\n|-", 2)
-    variants = [clean(v) for v in re.findall(r"\{\{Weapon\|([^}|]+)", tbl.split("! EVO")[0])] or ([single] if single else [])
+    head_ = re.split(r"\n!\s*(?:rowspan=\"?\d+\"?\s*\|)?\s*EVO", tbl)[0]      # header row only ("! EVO1" or "!EVO1")
+    hdr = list(dict.fromkeys(clean(v) for v in re.findall(r"\{\{Weapon\|([^}|]+)", head_)))
+    variants = hdr or ([single] if single else [])
+    nval = len(hdr)          # value columns (one per variant on Genesis pages); native Incarnon pages have none
     rows = re.split(r"\n\|-[^\n]*\n", tbl)
     out = {v: [] for v in variants}
     cur = None
@@ -67,7 +70,7 @@ def parse(text, single=None):
         rest = cells[2:]
         # variant value cells: one cell spanning all variants, or one per variant; last cell = notes
         vals, k = [], 0
-        while k < len(rest) and len(vals) < len(variants):
+        while k < len(rest) and len(vals) < nval:
             span = colspan(rest[k]); vals += [cell_text(rest[k])] * span; k += 1
         notes = rest[k] if k < len(rest) else ""
         bl = lambda c: [clean(x) for x in re.findall(r"^\*+([^\n]+)", c, re.M) if clean(x)]
