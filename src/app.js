@@ -555,7 +555,7 @@ self.onmessage = function (ev) {
       const x = resolveMod(ins[i].value);
       if (!x) continue;
       if (x.id === m.id) return { slot: i + 1, mod: x, same: true };
-      if (m.group && x.group === m.group) return { slot: i + 1, mod: x, same: false };
+      if (E.clash(m, x)) return { slot: i + 1, mod: x, same: false };
     }
     return null;
   }
@@ -742,7 +742,7 @@ self.onmessage = function (ev) {
       const m = resolveMod(t);
       if (!m) { problems.push(`인식 못 한 이름 "${t}"`); continue; }
       if (ids.includes(m.id)) continue;
-      if (m.group && ids.some((x) => MOD_BY_ID[x] && MOD_BY_ID[x].group === m.group)) continue;
+      if (ids.some((x) => E.clash(m, MOD_BY_ID[x]))) continue;
       if (m.id === "__riven" && st.weapon.noRiven) { problems.push("익절티드 무기에는 리벤이 없습니다"); continue; }
       if (m.id === "__riven" && !Object.keys(setRiven(d).eff).length) { problems.push("리벤 모드: 아래 리벤 옵션 칸에 옵션과 수치를 넣어야 계산됩니다"); continue; }
       ids.push(m.id);
@@ -1362,7 +1362,7 @@ self.onmessage = function (ev) {
       const isX = MOD_BY_ID[id] && MOD_BY_ID[id].exilus;
       if (id !== "__riven") for (const c of candidateMods(st.weapon, atk, R.flags)) {
         if (!!c.exilus !== !!isX || top.ids.includes(c.id)) continue;
-        if (c.group && rest.some((x) => MOD_BY_ID[x] && MOD_BY_ID[x].group === c.group)) continue;
+        if (rest.some((x) => E.clash(c, MOD_BY_ID[x]))) continue;
         const sc = evalBuild(rest.concat([c.id]), top.val, top.arcane).score / ref;
         if (!alt || sc > alt.s) alt = { id: c.id, s: sc };
       }
@@ -1527,7 +1527,7 @@ self.onmessage = function (ev) {
         if (cur.filter((c) => !!isX(c) === !!isX(m)).length < (isX(m) ? 1 : 8)) outs.push(null);    // free slot
         for (const c of outs) {
           const nx = cur.filter((x) => x !== c);
-          if (M && M.group && nx.some((x) => MOD_BY_ID[x] && MOD_BY_ID[x].group === M.group)) continue;
+          if (M && nx.some((x) => E.clash(M, MOD_BY_ID[x]))) continue;
           nx.push(m);
           const v = score(nx, arc);
           if (!best || v > best.v) best = { v, ids: nx, out: c, inn: m };
@@ -1684,7 +1684,7 @@ self.onmessage = function (ev) {
       if (id === "__riven" || id === xid) return;
       const rest = top.ids.filter((_, j) => j !== i);
       for (const m of magMods) {
-        if (m.id === id || rest.includes(m.id) || (m.group && rest.some((x) => MOD_BY_ID[x] && MOD_BY_ID[x].group === m.group))) continue;
+        if (m.id === id || rest.includes(m.id) || rest.some((x) => E.clash(m, MOD_BY_ID[x]))) continue;
         const rr = evalBuild(rest.concat([m.id]), top.val, top.arcane);
         if (!rr.ammo) continue;
         const cand = { out: id, m, k: rr.score / r.score, S: rr.ammo.sustain };
@@ -2076,6 +2076,6 @@ self.onmessage = function (ev) {
   renderFrameStats();
   F0 = captureFields();
   // read-only handle for checking results from the browser console / test scripts
-  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID };
+  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven };
   restoreFromHash();
 })();

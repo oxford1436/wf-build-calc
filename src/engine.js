@@ -1047,10 +1047,17 @@
   }
 
   /* ---------- optimizer (beam + 1-swap) ---------- */
+  // two mods that can't be equipped together: variants of one mod (group) or the game's "Incompatible Mods" list (wiki
+  // Module:Mods/data, e.g. Critical Delay ↔ Point Strike, Comet/Ripper/Serrated Rounds)
+  function clash(a, b) {
+    if (!a || !b || a === b) return false;
+    if (a.group && b.group && a.group === b.group) return true;
+    return !!((a.excl && b.en && a.excl.includes(b.en)) || (b.excl && a.en && b.excl.includes(a.en)));
+  }
   function conflicts(mod, chosen) {
     for (const m of chosen) {
       if (m.id === mod.id) return true;
-      if (mod.group && m.group && mod.group === m.group) return true;
+      if (clash(mod, m)) return true;
     }
     return false;
   }
@@ -1157,5 +1164,5 @@
     return out;
   }
 
-  root.WFEngine = { evaluate, optimize, defaults, targetsFor, levelsOf, conceptDist, enemyStats, FACTIONS, UNITS, PRIM, COMBO, aggregate, comboMult, comboAvg, ttk, capacityPlan };
+  root.WFEngine = { clash, evaluate, optimize, defaults, targetsFor, levelsOf, conceptDist, enemyStats, FACTIONS, UNITS, PRIM, COMBO, aggregate, comboMult, comboAvg, ttk, capacityPlan };
 })(typeof self !== "undefined" ? self : globalThis);

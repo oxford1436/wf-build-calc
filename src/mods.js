@@ -436,6 +436,9 @@
   // capacity drain at max rank and polarity (game data); riven: 18 at rank 8, polarity treated as matching any slot
   const DR = {}; for (const e of root.WF_MODS_ALL || []) if (e.d != null && !(e.en in DR)) DR[e.en] = [e.d, e.p, e.f, e.r];
   for (const m of M) if (DR[m.en]) { m.drain = DR[m.en][0]; m.pol = DR[m.en][1]; m.maxRank = DR[m.en][2]; m.rarity = DR[m.en][3]; }
+  // the game's "Incompatible Mods" (wiki): e.g. Critical Delay can't go with Point Strike
+  const EXCL = root.WF_MOD_EXCL || {};
+  for (const m of M) if (EXCL[m.en]) m.excl = EXCL[m.en];
   const KO = root.WF_KO || {};
   for (const x of M) if (KO[x.en]) x.ko = KO[x.en];
   root.WF_MODS = M;

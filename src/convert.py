@@ -662,11 +662,33 @@ for a_ in ARCS:
     seen_a.add(a_["name"])
     k = KO.get(a_["uniqueName"]) or {}
     frame_arcs.append({"en": a_["name"], "ko": k.get("name") or a_["name"], "s": st_, "kd": top_stats(a_, k) if k.get("levelStats") else st_})
+# mods that can't be equipped together (wiki Module:Mods/data "Incompatible"): the full module when it was downloaded,
+# else the weapon-mod pairs saved in data/raw/wiki_mod_incompat.json
+excl = {}
+def _pair(a, b):
+    if a and b and a != b:
+        excl.setdefault(a, set()).add(b); excl.setdefault(b, set()).add(a)
+_lua = os.path.join(A, "wiki_mods.lua")
+if os.path.exists(_lua):
+    _t = open(_lua, encoding="utf-8", errors="replace").read()
+    for _m in re.finditer(r'\["([^"\]]+)"\] = \{([\s\S]*?)\n\t\t\}', _t):
+        _b = re.search(r'\n\t\t\tIncompatible = \{([^}]*)\}', _m.group(2))
+        if _b:
+            for _x in re.findall(r'"([^"]+)"', _b.group(1)):
+                if not re.search(r"Riven Mod$", _m.group(1)):
+                    _pair(_m.group(1), _x)
+_js = os.path.join(A, "wiki_mod_incompat.json")
+if os.path.exists(_js):
+    for _p in json.load(open(_js, encoding="utf-8")).get("pairs", []):
+        _pair(*_p.split("|", 1))
+excl = {k: sorted(v) for k, v in excl.items()}
+print("incompatible mod entries", len(excl))
 with open(os.path.join(OUT, "mods_ko.js"), "w", encoding="utf-8") as f:
     f.write("(function(root){root.WF_KO=" + json.dumps(mod_ko, ensure_ascii=False, separators=(",", ":"))
             + ";root.WF_EXILUS_EXTRA=" + json.dumps(xextra, ensure_ascii=False, separators=(",", ":"))
             + ";root.WF_MODS_ALL=" + json.dumps(mods_all, ensure_ascii=False, separators=(",", ":"))
             + ";root.WF_FRAME_ARC_ALL=" + json.dumps(frame_arcs, ensure_ascii=False, separators=(",", ":"))
+            + ";root.WF_MOD_EXCL=" + json.dumps(excl, ensure_ascii=False, separators=(",", ":"))
             + ";})(typeof self!=='undefined'?self:globalThis);\n")
 print("mods_all", len(mods_all), "frame arcanes", len(frame_arcs))
 from collections import Counter

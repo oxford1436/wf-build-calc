@@ -32,6 +32,8 @@ for s in primary secondary melee; do
   fetch "https://wiki.warframe.com/w/Module:Weapons/data/${s}?action=raw" "$OUT/wiki_${s}.lua" lua
 done
 fetch "https://wiki.warframe.com/w/Module:Modular/data?action=raw" "$OUT/wiki_modular.lua" lua
+# mod data: the "Incompatible" lists (mods that can't be equipped together)
+fetch "https://wiki.warframe.com/w/Module:Mods/data?action=raw" "$OUT/wiki_mods.lua" lua
 # Incarnon evolution tables (wiki pages); keeps the previous copy if the download or parse fails
 python3 "$(dirname "$0")/fetch_incarnon.py" "$OUT/incarnon_evos.json" || echo "keep  $OUT/incarnon_evos.json"
 
