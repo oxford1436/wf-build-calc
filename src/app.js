@@ -641,9 +641,16 @@ self.onmessage = function (ev) {
     $("#addset").hidden = box.children.length >= 5;
   }
   // Ctrl+V anywhere: screenshots go to the open comparison set (the last one if several are open)
+  // the element under the mouse pointer (where a Ctrl+V should go)
+  let lastOver = null;
+  document.addEventListener("mouseover", (e) => { lastOver = e.target; });
+  document.addEventListener("mouseout", (e) => { if (!e.relatedTarget) lastOver = null; });
   document.addEventListener("paste", (e) => {
     const files = [...((e.clipboardData && e.clipboardData.files) || [])].filter((x) => /^image\//.test(x.type));
     if (!files.length || $("#calcview").hidden) return;
+    // mouse over (or a field focused in) the warframe box of the advanced settings → warframe upgrade screen
+    const fb = $("#frameocr") && $("#frameocr").closest(".box");
+    if (fb && (fb.contains(lastOver) || fb.matches(":hover") || fb.contains(document.activeElement))) { e.preventDefault(); frameOcrFill(files); return; }
     const open = $$("#sets .cset").filter((x) => x.open);
     const d = open[open.length - 1];
     if (!d || !d._ocr) return;
@@ -661,6 +668,14 @@ self.onmessage = function (ev) {
       const reads = await window.WF_OCR.read(files, (p, label) => { bar.firstElementChild.style.width = Math.round(p * 100) + "%"; msg.textContent = `${label}… ${Math.round(p * 100)}%`; });
       // the screenshot's own weapon (arsenal header): switch to it first
       const hw = window.WF_OCR.findWeapon(reads, WEAPONS);
+      // a warframe upgrade screen pasted into a weapon set: fill the warframe box instead
+      const hf = hw ? null : window.WF_OCR.findWeapon(reads, FRAMES);
+      if (hf) {
+        msg.textContent = `${hf.ko}의 워프레임 화면이라 고급 설정의 워프레임 칸에 채웁니다.`;
+        $("#adv").open = true;
+        setTimeout(() => { frameOcrFill(files); $("#frameocr").scrollIntoView({ behavior: "smooth", block: "center" }); }, 0);
+        return;
+      }
       if (hw && hw.id !== st.weapon.id) {
         selectWeapon(hw);
         const d2 = $$("#sets .cset")[0] || d;

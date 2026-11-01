@@ -516,7 +516,7 @@ header.top p{flex-basis:100%}
     <div class="box">
       <h2>워프레임 <small>선택 안 하면 모든 프레임 범용</small></h2>
       <div class="cocr" id="frameocr"><button type="button" class="cocrbtn" id="frameocrbtn">아스날 스크린샷으로 채우기</button><input type="file" id="frameocrfile" accept="image/*" hidden>
-        <small>워프레임 업그레이드 화면 — 워프레임·능력치(체력·실드·방어력·에너지·질주 속도·거리·위력·지속·효율)·오라·아케인을 읽습니다. 끌어다 놓아도 됩니다.</small>
+        <small>워프레임 업그레이드 화면 — 워프레임·능력치(체력·실드·방어력·에너지·질주 속도·거리·위력·지속·효율)·오라·아케인을 읽습니다. 끌어다 놓거나, 이 칸에 마우스를 올린 채 Ctrl+V로 붙여 넣어도 됩니다. 무기 비교 세팅 칸에 붙여 넣어도 워프레임 화면이면 여기로 채웁니다.</small>
         <div class="cocrbar" hidden><i></i></div><p class="cocrmsg" id="frameocrmsg" hidden></p></div>
       <label>워프레임<select id="frame"></select></label>
       <div id="abilities"></div>
@@ -567,6 +567,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.49", date: "2026-11-01", title: "워프레임 칸에도 Ctrl+V 붙여 넣기",
+      items: [
+        "고급 설정의 워프레임 칸에 마우스를 올리거나 그 안의 입력칸을 누른 채 Ctrl+V로 스크린샷을 붙여 넣으면 워프레임 정보를 읽어 채웁니다.",
+        "무기 비교 세팅 칸에 워프레임 업그레이드 화면을 붙여 넣으면, 워프레임 화면인 것을 알아보고 고급 설정의 워프레임 칸으로 채웁니다.",
+      ] },
     { v: "1.48", date: "2026-11-01", title: "리벤: 부정 옵션 자동 선택 · 접합 재료 수치 안내",
       items: [
         "'처음부터 리벤 전제' 세팅의 부정 옵션을 반동 고정에서, 그 세팅을 가장 빠르게 만드는 부정 옵션으로 바꿨습니다 (예: 펜모어 인카논 형태는 비치명타 피해 진화 때문에 부정 치명타 확률). 이로운 부정이 없으면 예전처럼 영향 없는 옵션을 둡니다.",
@@ -2714,6 +2719,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.49", date: "2026-11-01", title: "워프레임 칸에도 Ctrl+V 붙여 넣기",
+      items: [
+        "고급 설정의 워프레임 칸에 마우스를 올리거나 그 안의 입력칸을 누른 채 Ctrl+V로 스크린샷을 붙여 넣으면 워프레임 정보를 읽어 채웁니다.",
+        "무기 비교 세팅 칸에 워프레임 업그레이드 화면을 붙여 넣으면, 워프레임 화면인 것을 알아보고 고급 설정의 워프레임 칸으로 채웁니다.",
+      ] },
     { v: "1.48", date: "2026-11-01", title: "리벤: 부정 옵션 자동 선택 · 접합 재료 수치 안내",
       items: [
         "'처음부터 리벤 전제' 세팅의 부정 옵션을 반동 고정에서, 그 세팅을 가장 빠르게 만드는 부정 옵션으로 바꿨습니다 (예: 펜모어 인카논 형태는 비치명타 피해 진화 때문에 부정 치명타 확률). 이로운 부정이 없으면 예전처럼 영향 없는 옵션을 둡니다.",
@@ -6691,9 +6701,16 @@ self.onmessage = function (ev) {
     $("#addset").hidden = box.children.length >= 5;
   }
   // Ctrl+V anywhere: screenshots go to the open comparison set (the last one if several are open)
+  // the element under the mouse pointer (where a Ctrl+V should go)
+  let lastOver = null;
+  document.addEventListener("mouseover", (e) => { lastOver = e.target; });
+  document.addEventListener("mouseout", (e) => { if (!e.relatedTarget) lastOver = null; });
   document.addEventListener("paste", (e) => {
     const files = [...((e.clipboardData && e.clipboardData.files) || [])].filter((x) => /^image\//.test(x.type));
     if (!files.length || $("#calcview").hidden) return;
+    // mouse over (or a field focused in) the warframe box of the advanced settings → warframe upgrade screen
+    const fb = $("#frameocr") && $("#frameocr").closest(".box");
+    if (fb && (fb.contains(lastOver) || fb.matches(":hover") || fb.contains(document.activeElement))) { e.preventDefault(); frameOcrFill(files); return; }
     const open = $$("#sets .cset").filter((x) => x.open);
     const d = open[open.length - 1];
     if (!d || !d._ocr) return;
@@ -6711,6 +6728,14 @@ self.onmessage = function (ev) {
       const reads = await window.WF_OCR.read(files, (p, label) => { bar.firstElementChild.style.width = Math.round(p * 100) + "%"; msg.textContent = `${label}… ${Math.round(p * 100)}%`; });
       // the screenshot's own weapon (arsenal header): switch to it first
       const hw = window.WF_OCR.findWeapon(reads, WEAPONS);
+      // a warframe upgrade screen pasted into a weapon set: fill the warframe box instead
+      const hf = hw ? null : window.WF_OCR.findWeapon(reads, FRAMES);
+      if (hf) {
+        msg.textContent = `${hf.ko}의 워프레임 화면이라 고급 설정의 워프레임 칸에 채웁니다.`;
+        $("#adv").open = true;
+        setTimeout(() => { frameOcrFill(files); $("#frameocr").scrollIntoView({ behavior: "smooth", block: "center" }); }, 0);
+        return;
+      }
       if (hw && hw.id !== st.weapon.id) {
         selectWeapon(hw);
         const d2 = $$("#sets .cset")[0] || d;
