@@ -909,7 +909,7 @@ self.onmessage = function (ev) {
       if (st.weapon) renderTargets();
       $("#frame").dispatchEvent(new Event("input", { bubbles: true }));
       msg.innerHTML = done.length
-        ? `읽은 값: ${esc(done.join(" · "))}.${unsure.length ? ` <b>점선 칸은 확인해 주세요</b>: ${esc(unsure.join(", "))}.` : ""}${miss.length ? ` 읽지 못함: ${esc(miss.join(", "))}.` : ""} 헬민스 어빌리티·켜 둘 어빌리티는 화면에 이름이 없어 직접 골라 주세요. 아콘 샤드는 위 능력치에 이미 들어 있습니다.`
+        ? `읽은 값: ${esc(done.join(" · "))}.${unsure.length ? ` <b>점선 칸은 확인해 주세요</b>: ${esc(unsure.join(", "))}.` : ""}${miss.length ? ` 읽지 못함: ${esc(miss.join(", "))}.` : ""} 헬민스 어빌리티·켜 둘 어빌리티는 화면에 이름이 없어 직접 골라 주세요. 아콘 샤드의 위력·지속·에너지는 위 능력치에 이미 들어 있고, 보라 주무기 전기 같은 무기 피해 샤드는 아래 '아콘 샤드' 칸에서 골라 주세요.`
         : "워프레임 업그레이드 화면의 글자를 찾지 못했습니다. 왼쪽 능력치 칸이 다 보이는 화면으로 다시 올려 주세요.";
     } catch (e) {
       msg.textContent = "읽지 못했습니다: " + (e && e.message ? e.message : e);
