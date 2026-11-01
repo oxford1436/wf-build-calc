@@ -993,7 +993,7 @@
     if (m.id === "__riven") return { d: 18, p: "*", id: m.id };          // rank-8 riven; its polarity is assumed to match a slot
     return { d: m.drain != null ? m.drain : 10, p: m.pol && m.pol !== "universal" ? m.pol : "", id: m.id };
   }
-  const halfD = (d) => Math.ceil(d / 2), badD = (d) => Math.ceil(d * 1.25);
+  const halfD = (d) => Math.ceil(d / 2), badD = (d) => Math.round(d * 1.25);   // in game: 9 in a wrong slot → 11 (11.25 rounded), matched 15 → 8
   // asg: where each mod lands — slot polarity and drain there (how: match | forma | neutral | bad), for the arsenal-style cards
   function slotCost(normal, slotPols, k) {
     const free = {}; let neutral = 0;
