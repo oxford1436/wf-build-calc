@@ -81,6 +81,11 @@
   const SPLICE_ELEM = Object.fromEntries(RIV_DEF.filter((d) => /^(viral|corr|gas|rad|blast|mag)m$/.test(d.k)).map((d) => [d.k, d.need]));
   const SPLICE = RIV_DEF.filter((d) => d.grp === "splice").map((d) => ({ out: d.k, ko: d.ko, need: d.need, cls: d.cls === "all" ? ["rifle", "shotgun", "pistol", "melee"] : d.cls === "gun" ? ["rifle", "shotgun", "pistol"] : ["melee"] }));
   const RIV_HEAVY = { combochance: "ccc", hae: "hae" };
+  // Riven Splicer recipes as stat keys (wiki "Riven Splicer"): either pair makes the spliced trait
+  const SPLICE_REC = { viralm: [["cold", "tox"]], corrm: [["elec", "tox"]], gasm: [["heat", "tox"]], radm: [["heat", "elec"]], blastm: [["heat", "cold"]], magm: [["cold", "elec"]],
+    sd: [["dmg", "sc"]], wpcc: [["cc", "x_zoom"], ["cc", "ms"]], wpd: [["dmg", "x_zoom"], ["dmg", "ms"]], ammoeff: [["mag", "reload"], ["x_recoil", "x_ammo"]], holster: [["x_ammo", "reload"], ["x_ammo", "mag"]],
+    heavyd: [["x_hae", "x_combochance"]], windup: [["x_hae", "x_combodur"]], block: [["fr", "x_range"]], slam: [["dmg", "fr"]],
+    fac_o: [["fac_c", "fac_g"]], fac_t: [["fac_c", "fac_i"]], fac_s: [["fac_i", "fac_g"]] };
   const rivBaseOf = (cls, k) => { const d = RIV_D[k]; if (!d) return 0; return typeof d.base === "number" ? d.base : (d.base[cls] || 0); };
   const rivFits = (d, cls) => d.cls === "all" || (d.cls === "melee") === (cls === "melee");
   // add one riven stat (value as a fraction, metres, seconds or a count) to an engine effect object
@@ -1137,9 +1142,21 @@ self.onmessage = function (ev) {
     if (!picks.length) { $("#runbtn").disabled = false; $("#progress").hidden = true; renderResults(); return; }
     const mult = 1.2 * RIV_FORM["3+1"].pos, negBase = 1.2 * Math.abs(RIV_FORM["3+1"].neg);
     const cls = modClass(w), neg = cls === "melee" ? "x_finisher" : "x_recoil";
+    // the negative: whichever helps this build most (e.g. lower crit chance with a non-crit damage bonus), else a harmless one
+    const negCands = RIV_DEF.filter((d) => rivFits(d, cls) && d.grp !== "splice" && d.k !== "ic" && d.eff !== null && d.k !== "x_ammo" && rivBaseOf(cls, d.k) > 0).map((d) => d.k);
+    const negVal = (k) => -(RIV_D[k].negBase || rivBaseOf(cls, k)) * negBase;
     const rivs = picks.map((p) => {
       const info = p.stats.map((k) => ({ k, v: rivBaseOf(cls, k) * mult, inc: true }));
-      info.push({ k: neg, v: -rivBaseOf(cls, neg) * negBase, inc: true });
+      const slot = (plan.out.find((x) => x.form === "3+1" && x.stats.slice().sort().join() === p.key) || {}).slot;
+      const rest = top0.ids.filter((id) => id !== slot).concat(["__riven"]);
+      const posPairs = info.map((x) => [x.k, x.v]);
+      let nk = neg, best = evalBuild(rest, top0.val, top0.arcane, null, effFromStats(posPairs)).score * 1.0005;
+      for (const k of negCands) {
+        if (p.stats.includes(k)) continue;
+        const sc = evalBuild(rest, top0.val, top0.arcane, null, effFromStats(posPairs.concat([[k, negVal(k)]]))).score;
+        if (sc > best) { best = sc; nk = k; }
+      }
+      info.push({ k: nk, v: nk === neg ? -rivBaseOf(cls, neg) * negBase : negVal(nk), inc: true });
       return { eff: effFromStats(info.map((x) => [x.k, x.v])), info };
     });
     const jobs2 = [];
@@ -1635,6 +1652,26 @@ self.onmessage = function (ev) {
     return { out, table, stats, cls };
   }
   const heavyAtkOf = (atk) => atk.kind === "heavy" || atk.kind === "glaive";
+  const ncOf = (atk) => [atk].concat(atk.parts || []).some((p) => p.evoEff && p.evoEff.nc > 0);
+  // what an ingredient must roll for a spliced trait value: the spliced trait keeps the higher random value (0.9–1.1) of the
+  // two consumed traits (wiki "Riven Splicer"); a negative ingredient counts with its real random value — the bigger the
+  // negative, the higher (riven price tools flip negatives and call that end the bad one)
+  function spliceNeedHtml(sp, cls) {
+    const rec = SPLICE_REC[sp.out]; if (!rec) return "";
+    const keys = [...new Set(rec.flat())].filter((k) => RIV_D[k] && rivFits(RIV_D[k], cls) && rivBaseOf(cls, k) > 0);
+    if (!keys.length) return "";
+    const bo = rivBaseOf(cls, sp.out);
+    const rows = ["3+1", "2+1"].map((f) => {
+      const F = RIV_FORM[f];
+      const out = (r) => rivVal(sp.out, bo * 1.2 * F.pos * r);
+      const pos = (k, r) => `+${RIV_KO[k]} ${rivVal(k, rivBaseOf(cls, k) * 1.2 * F.pos * r)}`;
+      const neg = (k, r) => `−${RIV_KO[k]} ${rivVal(k, (RIV_D[k].negBase || rivBaseOf(cls, k)) * 1.2 * Math.abs(F.neg) * r)}`;
+      const need = (r, end) => `긍정이면 ${keys.map((k) => pos(k, r)).join(" 또는 ")}${end}<br>부정이면 ${keys.map((k) => neg(k, r)).join(" 또는 ")}${end}`;
+      return `<tr><td>${F.ko}</td><td class="num">${out(0.9)}~${out(1.1)}</td><td><small>${need(1.1, " (최대치)")}</small></td><td><small>${need(1.0, " 이상")}</small></td></tr>`;
+    }).join("");
+    return `<p style="margin:10px 0 4px"><b>${esc(sp.ko)}</b> = ${rec.map((pr) => pr.map((k) => RIV_D[k] ? RIV_D[k].ko : k).join(" + ")).join(" 또는 ")}${SPLICE_ELEM[sp.out] ? " · 복합 원소는 모드의 단일 원소와 합쳐지지 않고 그대로 들어갑니다" : ""}</p>
+      <table class="tbl"><thead><tr><th>구성</th><th>접합 결과 범위</th><th>최대치를 받으려면 — 재료 둘 중 하나가</th><th>중간값 이상을 받으려면 — 재료 둘 중 하나가</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
   function rivenPlan(top, ref) {
     const cls = modClass(st.weapon), atk = st.weapon.attacks[st.atk];
     const cached = st.results && st.results.rivPlan && st.results.rivPlanTop === top ? st.results.rivPlan : null;
@@ -1664,7 +1701,7 @@ self.onmessage = function (ev) {
       else if (d.k === "x_ammo") { note = "장기전 탄약 압박 (처치 속도 영향 없음)"; }
       else if (d.k === "x_combodur") note = "연속기 유지 시간만 줄어듦 (계산 미반영)";
       else note = "처치 속도 영향 없음";
-      negRows.push({ ko: d.ko, s, note });
+      negRows.push({ k: d.k, ko: d.ko, s, note });
     }
     negRows.sort((a, b) => b.s - a.s);
     const grade = (s) => s >= 0.97 ? '<span class="g ok">무해</span>' : s >= 0.85 ? '<span class="g mid">경미</span>' : '<span class="g bad">치명</span>';
@@ -1675,7 +1712,9 @@ self.onmessage = function (ev) {
       <h3>부정 옵션 고르기 (1순위 조합 기준)</h3>
       <table class="tbl"><thead><tr><th>부정 옵션</th><th>영향</th><th>판정</th><th>메모</th></tr></thead><tbody>
       ${negRows.map((x) => `<tr><td>${esc(x.ko)}</td><td class="num">${pctDelta(x.s)}</td><td>${grade(x.s)}</td><td><small>${esc(x.note)}</small></td></tr>`).join("")}</tbody></table>
-      ${splice.length ? `<h3>접합이 필요한 옵션</h3><ul class="plain">${splice.map((sp) => `<li><b>${sp.ko}</b>: ${sp.need.join(" + ")} 두 옵션을 리벤 스플라이서로 접합합니다.${SPLICE_ELEM[sp.out] ? " 복합 원소는 모드의 단일 원소와 합쳐지지 않고 그대로 들어갑니다." : ""}</li>`).join("")}</ul><p class="hint">접합(Update 44.1)은 리벤 하나에 하나만, 재료 두 옵션 중 수치가 좋은 쪽의 비율을 이어받습니다(원소는 기본값이 같아 그대로). 접합하면 그 옵션이 고정되고 긍정·부정 개수가 유지되며, 특성 잠금과 달리 재순환 쿠바가 두 배가 되지 않습니다. 리벤 스플라이서는 주간 미션 "빙하의 속박"(Update 44.0) 보상입니다.</p>` : ""}
+      ${negRows[0] && negRows[0].s > 1.0005 ? `<p class="hint">부정으로 붙으면 오히려 빨라지는 옵션: <b>${esc(negRows[0].ko)}</b> (${pctDelta(negRows[0].s)})${negRows[0].k === "cc" && ncOf(atk) ? " — 비치명타 공격에 붙는 피해 보너스(인카논 진화 등)가 있어서, 치명타가 덜 터질수록 그 보너스가 더 자주 붙습니다" : ["impact", "punct", "slash"].includes(negRows[0].k) ? " — 물리 피해가 줄어든 만큼 상태이상이 원소 쪽(이 세팅의 핵심 상태이상)에 더 자주 걸립니다 (물리 피해 희석 감소)" : ""}. '처음부터 리벤 전제' 세팅도 이 부정 옵션으로 계산합니다.</p>` : ""}
+      ${splice.length ? `<h3>접합이 필요한 옵션</h3>${splice.map((sp) => spliceNeedHtml(sp, cls)).join("")}
+        <p class="hint">접합(Update 44.1, 위키 "Riven Splicer"): 재료 두 옵션이 사라지고 접합 옵션과 무작위 옵션 하나가 생깁니다. 접합 옵션은 항상 긍정이고, 재료 중 하나가 부정이었으면 새로 생기는 무작위 옵션이 부정이 됩니다 (긍정·부정 개수 유지). <b>접합 옵션의 수치는 두 재료 중 무작위 값(범위 안에서의 위치)이 더 높은 쪽을 그대로 이어받습니다.</b> 부정 재료는 실제 값이 쓰여서 <b>절댓값이 클수록 높은 값</b>입니다 — 리벤 시세 도구들은 부정을 뒤집어 "작을수록 좋음"으로 보여 주니 주의하세요. 리벤 하나에 접합은 하나만, 접합 옵션은 잠긴 상태로 남지만 특성 잠금처럼 재순환 쿠바가 두 배가 되지 않아 다른 옵션 하나를 따로 잠글 수 있습니다. 리벤 스플라이서는 "빙하의 속박" 미션 보상(주 3개)입니다.</p>` : ""}
       <p class="hint">진행 순서: ① 3긍1부가 뜨면 1순위 옵션을 잠그고 재순환 → ② 부정 옵션은 위 "무해" 중에서 → ③ 수치는 범위 하한만 넘으면 성능 차이 10% 이내입니다.</p>
     </section>`;
   }
@@ -1713,9 +1752,9 @@ self.onmessage = function (ev) {
       ${rows.map((x) => `<tr><td class="sname"><b>${esc(x.n)}</b><br><small>${esc(x.d)}</small>${x.riv ? `<br><small>리벤: ${esc(rivenText(x.riv))}</small>` : ""}<br><small class="els">${finalElements(x.rr)} · ${capInfo(x.ids, x.riv ? (x === rows[1] ? gEff : B.riv.eff) : null).short}</small></td>
         <td class="num"><span class="big">${pct(x.rr.score / ref, 0)}</span></td><td>${tcell(x.rr)}</td><td class="modlist">${diffMods(x.ids, top.ids)}</td></tr>`).join("")}
       </tbody></table>
-      <p>${k3 > 1.005 ? `처음부터 리벤을 전제로 짜면 한 칸만 바꾸는 것보다 <b>×${k3.toFixed(2)}</b> 더 빠릅니다. 리벤이 생기면 ${dropped.filter((id) => id !== g.slot).length ? `<b>${dropped.filter((id) => id !== g.slot).map(modName).map(esc).join(", ")}</b>도 빼고 ` : ""}<b>${changed.map(modName).map(esc).join(", ") || "-"}</b>${changed.length ? "을(를) 넣는" : ""} 쪽이 좋습니다.` : `처음부터 리벤을 전제로 짜도 한 칸만 바꾼 세팅과 거의 같습니다 (×${k3.toFixed(2)}). 리벤이 생기면 ${esc(modName(g.slot))} 자리에만 넣으면 됩니다.`}</p>
+      <p>${k3 > 1.005 && !changed.length ? `처음부터 리벤을 전제로 짜도 모드는 한 칸만 바꾼 세팅과 같고, 리벤 옵션 차이(${esc(B.riv.info.filter((x) => x.v > 0).map((x) => x.k).sort().join() === g.stats.slice().sort().join() ? B.riv.info.filter((x) => x.v < 0).map((x) => "부정 " + RIV_KO[x.k]).join(", ") : "옵션 조합")}) 때문에 <b>×${k3.toFixed(2)}</b> 빠릅니다. 리벤이 생기면 ${esc(modName(g.slot))} 자리에 넣으면 됩니다.` : k3 > 1.005 ? `처음부터 리벤을 전제로 짜면 한 칸만 바꾸는 것보다 <b>×${k3.toFixed(2)}</b> 더 빠릅니다. 리벤이 생기면 ${dropped.filter((id) => id !== g.slot).length ? `<b>${dropped.filter((id) => id !== g.slot).map(modName).map(esc).join(", ")}</b>도 빼고 ` : ""}<b>${changed.map(modName).map(esc).join(", ") || "-"}</b>${changed.length ? "을(를) 넣는" : ""} 쪽이 좋습니다.` : `처음부터 리벤을 전제로 짜도 한 칸만 바꾼 세팅과 거의 같습니다 (×${k3.toFixed(2)}). 리벤이 생기면 ${esc(modName(g.slot))} 자리에만 넣으면 됩니다.`}</p>
       ${altTable}
-      <p class="hint">리벤 수치는 3긍정 1부정 리벤의 각 옵션 범위 중간값으로 가정했습니다 (부정은 피해 계산에 영향 없는 옵션). ③은 한 칸 교체 기준 상위 리벤 옵션 조합 네 가지로 각각 다시 짜 본 뒤 가장 빠른 쪽입니다. 베일런스·아케인은 ①과 같게 두었습니다. 실제로 뽑은 리벤이 생기면 리벤 모드를 "보유 리벤 고정"으로 바꿔 그 수치로 계산하세요.</p></section>`;
+      <p class="hint">리벤 수치는 3긍정 1부정 리벤의 각 옵션 범위 중간값으로 가정했습니다 (부정은 이 세팅을 가장 빠르게 만드는 옵션 — 없으면 피해 계산에 영향 없는 옵션). ③은 한 칸 교체 기준 상위 리벤 옵션 조합 네 가지로 각각 다시 짜 본 뒤 가장 빠른 쪽입니다. 베일런스·아케인은 ①과 같게 두었습니다. 실제로 뽑은 리벤이 생기면 리벤 모드를 "보유 리벤 고정"으로 바꿔 그 수치로 계산하세요.</p></section>`;
   }
   function ownedRivenSection(owned, R, top) {
     const inc = owned.info.filter((x) => x.inc), exc = owned.info.filter((x) => !x.inc);

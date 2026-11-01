@@ -31,6 +31,7 @@
     murmur: { weak: ["elec", "rad"], label: "머머(속삭임)", hp: "murmur" },
   };
   const DOT_TYPES = ["heat", "tox", "elec", "gas", "slash"];
+  const DOT_DELAY = { heat: 1, tox: 1, slash: 1 };     // seconds before the first tick (wiki "Damage over Time")
   const PROC_WIN = { blast: 1.5, corr: 8, rad: 12, impact: 6 };
   const ARMOR_CAP = 2700;
   // crowd geometry: enemies lined up behind the one you shoot ~ Poisson(2); a humanoid body uses ~0.6 m of punch through
@@ -317,10 +318,14 @@
       // Devouring Attrition (p.nc): non-critical hits get 1 + chance x bonus on average
       const critf = 1 + ccT * (p.cd + cdb - 1) + (p.nc ? Math.max(0, 1 - ccT) * p.nc : 0);
       let shieldable = p.D * r * critf + (i === 0 ? p.D * critf / dt : 0) + (t >= 1.5 ? p.blast * r * critf : 0) + (p.F || 0) * r;
-      const nAct = r * Math.min(t, Td) + (t < Td ? 1 : 0);
       let toxRate = 0, slashRate = 0;
       for (const T in p.dot) {
-        const v = (p.dot[T] / Td) * nAct * critf;
+        // procs whose ticks are running now: applied between t − delay − span and t − delay (span = number of 1 s ticks)
+        const D = DOT_DELAY[T] || 0, n = p.dotN && p.dotN[T] != null ? p.dotN[T] : Td;
+        if (!(n > 0) || !p.dot[T]) continue;
+        const te = t - D;
+        const act = te < 0 ? 0 : r * Math.min(te, n) + (te < n ? 1 : 0);
+        const v = (p.dot[T] / n) * act * critf;
         if (T === "tox") toxRate += v; else if (T === "slash") slashRate += v; else shieldable += v;
       }
       // Magnetic (wiki): stripping the shields triggers an Electricity proc of 3% of max shields per Magnetic stack (max 30%)
@@ -454,7 +459,7 @@
         const k = (atk.primerRate || 0.25) / Math.max(0.05, main.rate);
         acc.pv += pr.pv * k; acc.ph += pr.ph * k; acc.pc += pr.pc * k; acc.pk += pr.pk * k;
       }
-      const base = { strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, nc: main.nc || 0, corrMax: 10 + (o.ext.corrMax || 0), dt: o.dt, tmax: o.tmax, Tdur: main.Tdur,
+      const base = { strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, nc: main.nc || 0, corrMax: 10 + (o.ext.corrMax || 0), dt: o.dt, tmax: o.tmax, Tdur: main.Tdur, dotN: main.dotN,
         ogM: main.ogM || 1, frozenM: main.frozenM || 0, coldVuln: main.coldVuln || 0 };
       const hitP = { D: acc.D, blast: acc.blast, F: acc.F, dot: acc.dot, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm, pp: acc.pp, aoeOnly: main && parts.every((q) => q.kind === "radial") };
       const nonP = { D: 0, blast: 0, dot: acc.dotNon, pv: acc.pvN, ph: acc.phN, pc: acc.pcN, pk: acc.pkN };
@@ -876,7 +881,11 @@
         const spreadEff = total > 0 ? Math.max(0, (total - 0.33 * modEl) / total) : 1;
         directMult *= 1 + arc.irradiate * spreadEff * n7 * upR / Math.max(1, K);
       }
-      const Tdur = 6 * dur, ticks = Math.max(1, Math.floor(6 * dur + 1e-9));
+      // DoT ticks (wiki "Damage over Time"): heat, toxin and slash tick once a second starting 1 s after the proc
+      // (⌊duration − 1⌋ + 1 ticks, none if the status lasts under 1 s); electricity and gas tick right away
+      const Tdur = 6 * dur;
+      const ticksOf = (T) => DOT_DELAY[T] ? (Tdur >= 1 - 1e-9 ? Math.floor(Tdur - 1 + 1e-9) + 1 : 0) : Math.max(1, Math.ceil(Tdur - 1e-9));
+      const dotN = Object.fromEntries(DOT_TYPES.map((T) => [T, ticksOf(T)]));
       const gasSt = Math.min(10, (procs.gas || 0) * rate * spreadHit * 6 * dur);
       const rg = Math.min(6, 3 + 0.3 * Math.max(0, gasSt - 1));
       const ng = o.scenario === "crowd" ? Math.min(N, 1 + rho * Math.PI * rg * rg) : 1;
@@ -894,7 +903,8 @@
         const dot = {}, dotNon = {};
         for (const T of DOT_TYPES) {
           const p = procs[T] || 0; if (p <= 0) continue;
-          let per = ticks * hsDot * (T === "slash" ? 0.35 : 0.5) * mbd * (1 + bonus[T]) * (1 + sd + (T === "tox" ? (ext.sdTox || 0) : 0)) * (fac_.weak.includes(T) ? 1.5 : 1) * fin * fac * fac * M;
+          if (!dotN[T]) continue;
+          let per = dotN[T] * hsDot * (T === "slash" ? 0.35 : 0.5) * mbd * (1 + bonus[T]) * (1 + sd + (T === "tox" ? (ext.sdTox || 0) : 0)) * (fac_.weak.includes(T) ? 1.5 : 1) * fin * fac * fac * M;
           if (xata) per *= 1 + xata * fac;      // every tick is a damage instance → its own Xata hit
           if (T === "elec") per *= n3;
           if (T === "gas") per *= ng;
@@ -918,7 +928,7 @@
       const cD = conceptDist(share, procs, o);
       scoreSS -= 50 * cD;      // a layout that breaks the element concept is used only when no layout keeps it
       if (!best || scoreSS > best.scoreSS) {
-        best = { conceptOk: cD === 0, conceptD: cD, nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, cc, cd, critf: 1 + cc * (cd - 1) + (a.nc ? Math.max(0, 1 - cc) * a.nc : 0), sc, ms, rate, M, tierNow, K, N, u, ntypes, gco, co, nc: a.nc || 0, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, fArc, hsFrac, hsM,
+        best = { conceptOk: cD === 0, conceptD: cD, nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, cc, cd, critf: 1 + cc * (cd - 1) + (a.nc ? Math.max(0, 1 - cc) * a.nc : 0), sc, ms, rate, M, tierNow, K, N, u, ntypes, gco, co, nc: a.nc || 0, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, dotN, fArc, hsFrac, hsM,
           fallM, ogM: (arc && arc.ogMult ? arc.ogMult : 1) * (1 + 0.5 * (share.void || 0)), frozenM: arc && arc.frozenMult && isMelee ? arc.frozenMult : 0, coldVuln: arc && arc.coldVuln ? arc.coldVuln : 0 };
       }
     }
