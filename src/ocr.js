@@ -274,19 +274,55 @@
   }
 
   // weapon name in the arsenal header ("업그레이드/코다 패소시스트 [40]"), if the screenshot shows it
+  // plain edit distance
+  function editDist(a, b) {
+    const m = a.length, n = b.length;
+    let prev = Array.from({ length: n + 1 }, (_, j) => j), cur = new Array(n + 1);
+    for (let i = 1; i <= m; i++) {
+      cur[0] = i;
+      for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      [prev, cur] = [cur, prev];
+    }
+    return prev[n];
+  }
+  // The weapon name in the title has to start at a word: "VIRTIXX RAHKK 쿠바 자..." (a Lich weapon's own name, then the
+  // weapon, cut off with "...") is Kuva Zarr — not Baza, whose name hides inside "쿠바 자". A title cut off with "..."
+  // matches the start of a longer name.
   function findWeapon(reads, weapons) {
     let best = null;
     for (const R of reads) for (const L of R.lines) {
-      const raw = String(L.text).replace(/\s+/g, "");
+      const raw0 = String(L.text), raw = raw0.replace(/\s+/g, "");
       // "업그레이드/코다 패소시스트 [40]": the header line, or a top-of-screen line ending in the rank bracket
       if (!/그레이드/.test(raw) && !(/\[\d{1,2}\]/.test(raw) && (!R.h || L.y0 < R.h * 0.15))) continue;
-      const t = norm(raw.replace(/.*그레이드\/?/, "").replace(/\[.*$/, ""));
+      const body = raw0.replace(/.*그레이드\s*\/?/, "").replace(/\[.*$/, "");
+      const cut = /(\.\.\.|…|\.\.)\s*$/.test(body.trim());
+      // word starts: spaces, and switches between Latin/digits and Hangul (OCR sometimes drops the space)
+      const toks = body.split(/\s+/).map(norm).filter(Boolean);
+      let t = "", starts = [];
+      for (const k of toks) {
+        for (let i = 0; i < k.length; i++) {
+          const h = /[가-힣]/.test(k[i]), hp = i > 0 && /[가-힣]/.test(k[i - 1]);
+          if (i === 0 || h !== hp) starts.push(t.length + i);
+        }
+        t += k;
+      }
       if (t.length < 2) continue;
       for (const w of weapons) {
         const n = w._n || (w._n = norm(w.ko));
-        if (n.length < 2 || t.length < n.length * 0.7) continue;
-        const sim = 1 - fitDist(n, t) / n.length;
-        if (sim >= 0.85 && (!best || sim * n.length > best.sim * best.n.length)) best = { w, sim, n };
+        if (n.length < 2) continue;
+        for (const p of starts) {
+          const rest = t.slice(p);
+          // the whole name from this word on (free end)
+          let d = Infinity;
+          for (let j = Math.max(1, n.length - 2); j <= Math.min(rest.length, n.length + 2); j++) d = Math.min(d, editDist(n, rest.slice(0, j)));
+          let sim = 1 - d / n.length, wgt = n.length;
+          // a title cut off with "...": what is left is the start of the name
+          if (cut && rest.length >= 2 && rest.length < n.length && p + rest.length === t.length) {
+            const s2 = 1 - editDist(n.slice(0, rest.length), rest) / rest.length;
+            if (s2 >= 0.85 && s2 * rest.length >= sim * wgt * 0.999) { sim = s2; wgt = rest.length; }
+          }
+          if (sim >= 0.85 && (!best || sim * wgt > best.sim * best.wgt || (sim * wgt === best.sim * best.wgt && n.length > best.n.length))) best = { w, sim, wgt, n };
+        }
       }
     }
     return best ? best.w : null;

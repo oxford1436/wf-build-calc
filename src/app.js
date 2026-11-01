@@ -1635,7 +1635,8 @@ self.onmessage = function (ev) {
       return { name: m.ko, why };
     }
     const xs = exilusMods(st.weapon);
-    const conv = st.weapon.exalted ? null : xs.filter((m) => m.eff.ammoConv).sort((a, b) => b.eff.ammoConv - a.eff.ammoConv)[0];   // exalted weapons use energy, not ammo
+    // exalted weapons use energy, not ammo; Resupply refills the magazine, so no ammo mod is needed
+    const conv = st.weapon.exalted || (r.ammo && r.ammo.resupply) ? null : xs.filter((m) => m.eff.ammoConv).sort((a, b) => b.eff.ammoConv - a.eff.ammoConv)[0];
     if (r.ammo && r.ammo.sustain < 60 && conv) return { name: conv.ko, id: conv.id, short: "탄약 보완", why:`탄약 보완 — 다른 종류 탄약 픽업을 이 무기 탄약으로 ${pct(conv.eff.ammoConv)} 바꿔 줍니다 (처치 속도 영향 없음, 탄약 ${Math.round(r.ammo.sustain)}초 만에 바닥)` };
     if (r.inc) return { name: "자유", why: `피해 계산에 영향 없는 칸입니다. 인카논 형태는 모드와 무관한 별도 탄(${r.inc.rounds || "충전식"}${r.inc.rounds ? "발" : ""})을 쓰고 재장전이 없어서 탄약·탄창 모드도 효과가 없습니다. 기본 형태로 돌아갔을 때를 위해 탄약 변환 모드를 끼워도 됩니다.` };
     const proj = xs.find((m) => m.eff.projSpd);
