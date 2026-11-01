@@ -648,6 +648,8 @@ for m in by_name.values():
     if m.get("baseDrain") is not None:
         e["d"] = (m.get("baseDrain") or 0) + (m.get("fusionLimit") or 0)     # capacity drain at max rank
         e["p"] = m.get("polarity") or ""
+        e["f"] = m.get("fusionLimit") or 0                                   # max rank (rank pips on the card)
+        e["r"] = {"Common": "c", "Uncommon": "u", "Rare": "r", "Legendary": "l", "Peculiar": "r", "Amalgam": "r"}.get(m.get("rarity") or "", "")
     mods_all.append(e)
 # every arcane a warframe can equip
 frame_arcs, seen_a = [], set()

@@ -106,7 +106,12 @@
   add("Prismatic Gem", { ko: "프리즈매틱 젬", note: "상태이상 확률 +100%, 지속시간 +100% (모드와 합연산)",
     fx: () => ({ scAdd: 1.0, durAdd: 1.0 }), time: (s) => 30 * s.dur });
   add("Seek", { ko: "시크", note: "약점 피해 증가 — 위키 수치 미확인, 아직 계산하지 않음", fx: null });
-  add("Resupply", { ko: "리서플라이", note: "선택 속성 피해 증가 — 위키 수치 미확인, 아직 계산하지 않음", fx: null });
+  // wiki "Resupply": 50 energy, "instantly Reload his currently equipped weapon" (firearms; not archguns / battery weapons).
+  // No cast time on the wiki → 0.5 s assumed. The elemental ammo-pack bonus (10~25% "additional instance") has no stated
+  // stacking rule, so it is not added.
+  add("Resupply", { ko: "리서플라이 (즉시 재장전)", gunOnly: true,
+    note: "시전하면 들고 있는 총기를 즉시 재장전 (위키). 탄창을 비울 때마다 시전한다고 보고 재장전 시간을 시전 0.5초로 바꿉니다 — 재장전 속도 모드의 가치가 거의 사라짐. 탄약 팩의 속성 추가 피해는 적용 방식이 위키에 없어 넣지 않았습니다",
+    fx: (s, h, w) => (w && (w.battery || w.slot === "archgun") ? {} : { reloadCast: 0.5 }) });
   add("Amp", { ko: "앰프 (장 안, 시끄러운 전투)", note: "장 안에 있으면 무기·근접 피해 +25%~200%×위력 (주변 소음에 비례). 총소리가 큰 전투 중 최대치 기준, 서레이션류와 합연산",
     fx: (s) => ({ dmgAdd: 2.0 * s.str }), time: () => 30 });
 
@@ -153,6 +158,7 @@
         else if (k === "cdMult") cdMult *= e.cdMult;
         else if (k === "armorStrip" || k === "shieldCut") ext[k] = 1 - (1 - (ext[k] || 0)) * (1 - e[k]);
         else if (k === "weakFrac" || k === "weakMult") ext[k] = Math.max(ext[k] || 0, e[k]);
+        else if (k === "reloadCast") ext[k] = ext[k] == null ? e[k] : Math.min(ext[k], e[k]);
         else ext[k] = (ext[k] || 0) + e[k];
       }
     }

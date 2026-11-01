@@ -729,7 +729,9 @@
       // short bursts, so the average rate over one 51-shot burst
       if (atk.spoolDown) { const to = atk.spoolDown[1]; fr *= (1 - to) / Math.log(1 / to); }
       const mag = Math.max(1, (atk.mag || 30) * (1 + a.mag));
-      const reload = (atk.reload || 2) * (atk.byRound ? Math.max(0.1, 1 + a.mag) : 1) / Math.max(0.1, 1 + a.reload);
+      let reload = (atk.reload || 2) * (atk.byRound ? Math.max(0.1, 1 + a.mag) : 1) / Math.max(0.1, 1 + a.reload);
+      // Cyte-09 Resupply (wiki): casting instantly reloads the held firearm → a reload costs only the cast
+      if (ext.reloadCast != null) reload = Math.min(reload, ext.reloadCast);
       // spool-up (Gorgon, Soma, Cestra …: wiki "Spool" shots, starting near 60% fire rate): ~0.28 x shots of extra time per magazine
       const spoolT = atk.spool && atk.mag ? 0.277 * atk.spool / fr : 0;
       rate = atk.mag ? mag / (mag / fr + spoolT + reload) : fr;
@@ -779,7 +781,8 @@
     // Primary Plated Round: bonus ≈ 33.5%·√magazine for 10 s after each full reload (wiki examples)
     let platedB = 0;
     if (arc && arc.plated && atk.mag) {
-      const magN = atk.mag * (1 + a.mag), cyc = magN / Math.max(0.05, (atk.fr || 1) * (1 + a.fr)) + (atk.reload || 2) / Math.max(0.1, 1 + a.reload);
+      const rl = (atk.reload || 2) / Math.max(0.1, 1 + a.reload);
+      const magN = atk.mag * (1 + a.mag), cyc = magN / Math.max(0.05, (atk.fr || 1) * (1 + a.fr)) + (ext.reloadCast != null ? Math.min(rl, ext.reloadCast) : rl);
       platedB = 0.335 * Math.sqrt(magN) * Math.min(1, 10 / cyc);
     }
 
@@ -954,36 +957,40 @@
   // A matching polarity halves a mod's drain (rounded up), a different polarity adds 25% (rounded up); one forma re-polarizes one slot.
   function modDP(m) {
     if (!m) return null;
-    if (m.id === "__riven") return { d: 18, p: "*" };          // rank-8 riven; its polarity is assumed to match a slot
-    return { d: m.drain != null ? m.drain : 10, p: m.pol && m.pol !== "universal" ? m.pol : "" };
+    if (m.id === "__riven") return { d: 18, p: "*", id: m.id };          // rank-8 riven; its polarity is assumed to match a slot
+    return { d: m.drain != null ? m.drain : 10, p: m.pol && m.pol !== "universal" ? m.pol : "", id: m.id };
   }
   const halfD = (d) => Math.ceil(d / 2), badD = (d) => Math.ceil(d * 1.25);
+  // asg: where each mod lands — slot polarity and drain there (how: match | forma | neutral | bad), for the arsenal-style cards
   function slotCost(normal, slotPols, k) {
     const free = {}; let neutral = 0;
     for (const p of slotPols) { if (p) free[p] = (free[p] || 0) + 1; else neutral++; }
-    let cost = 0; const left = [], wild = [], formaPols = [];
+    let cost = 0; const left = [], wild = [], formaPols = [], asg = [];
+    const put = (m, slot, c, how) => { cost += c; asg.push({ id: m.id, pol: m.p, slot, cost: c, how }); };
     for (const m of normal.slice().sort((x, y) => y.d - x.d)) {
       if (m.p === "*") { wild.push(m); continue; }
-      if (m.p && free[m.p] > 0) { free[m.p]--; cost += halfD(m.d); } else left.push(m);
+      if (m.p && free[m.p] > 0) { free[m.p]--; put(m, m.p, halfD(m.d), "match"); } else left.push(m);
     }
     for (const m of wild) {
       const pk = Object.keys(free).find((p) => free[p] > 0);
-      if (pk) { free[pk]--; cost += halfD(m.d); } else left.push(m);
+      if (pk) { free[pk]--; put(m, pk, halfD(m.d), "match"); } else left.push(m);
     }
     left.sort((x, y) => y.d - x.d);
-    const badSlots = Object.values(free).reduce((s, x) => s + x, 0);
+    const badList = []; for (const p in free) for (let i = 0; i < free[p]; i++) badList.push(p);
+    const badSlots = badList.length;
     // forma the slots under the biggest leftover mods: re-polarize mismatched slots first, then empty ones
     const fm = left.filter((m) => m.p), rest = left.filter((m) => !m.p);
     const kk = Math.min(k, fm.length, badSlots + neutral);
-    for (let i = 0; i < kk; i++) { cost += halfD(fm[i].d); formaPols.push(fm[i].p === "*" ? "riven" : fm[i].p); }
+    for (let i = 0; i < kk; i++) { put(fm[i], fm[i].p, halfD(fm[i].d), "forma"); formaPols.push(fm[i].p === "*" ? "riven" : fm[i].p); }
     let neutLeft = neutral - Math.max(0, kk - badSlots), badLeft = Math.max(0, badSlots - kk);
+    const badRemain = badList.slice(Math.min(kk, badSlots));
     const place = fm.slice(kk).concat(rest).sort((x, y) => y.d - x.d);
     for (const m of place) {
-      if (neutLeft > 0) { neutLeft--; cost += m.d; }
-      else if (badLeft > 0) { badLeft--; cost += badD(m.d); }
-      else return { cost: Infinity, used: kk, formaPols };
+      if (neutLeft > 0) { neutLeft--; put(m, "", m.d, "neutral"); }
+      else if (badLeft > 0) { badLeft--; put(m, badRemain.shift() || "", badD(m.d), "bad"); }
+      else return { cost: Infinity, used: kk, formaPols, asg };
     }
-    return { cost, used: kk, formaPols };
+    return { cost, used: kk, formaPols, asg };
   }
   // fewest forma that make the build fit (formaMax = limit; null = up to every slot)
   function capacityPlan(weapon, mods, formaMax) {
@@ -995,8 +1002,9 @@
     const xp = weapon.xpol || "";
     let xOpts = [{ cost: 0, f: 0 }];
     if (exi.length) {
-      const m = exi[0];
-      xOpts = m.p && (m.p === xp || m.p === "*") ? [{ cost: halfD(m.d), f: 0 }] : [{ cost: xp ? badD(m.d) : m.d, f: 0 }, { cost: halfD(m.d), f: 1, pol: m.p }];
+      const m = exi[0], a = (slot, cost, how) => ({ id: m.id, pol: m.p, slot, cost, how });
+      xOpts = m.p && (m.p === xp || m.p === "*") ? [{ cost: halfD(m.d), f: 0, asg: a(xp, halfD(m.d), "match") }]
+        : [{ cost: xp ? badD(m.d) : m.d, f: 0, asg: a(xp, xp ? badD(m.d) : m.d, xp ? "bad" : "neutral") }, { cost: halfD(m.d), f: 1, pol: m.p, asg: a(m.p, halfD(m.d), "forma") }];
     }
     const fmax = Math.min(9, formaMax == null ? 9 : formaMax);
     let best = null;
@@ -1005,12 +1013,12 @@
         if (xo.f > f) continue;
         const r = slotCost(normal, slotPols, f - xo.f);
         const tot = r.cost + xo.cost;
-        const plan = { drain: tot, cap, forma: r.used + xo.f, formaPols: r.formaPols.concat(xo.pol ? ["exilus:" + xo.pol] : []) };
+        const plan = { drain: tot, cap, forma: r.used + xo.f, formaPols: r.formaPols.concat(xo.pol ? ["exilus:" + xo.pol] : []), asg: r.asg.concat(xo.asg ? [xo.asg] : []) };
         if (tot <= cap) return Object.assign(plan, { fits: true });
         if (!best || tot < best.drain) best = plan;
       }
     }
-    return Object.assign(best || { drain: Infinity, cap, forma: 0, formaPols: [] }, { fits: false });
+    return Object.assign(best || { drain: Infinity, cap, forma: 0, formaPols: [], asg: [] }, { fits: false });
   }
 
   /* ---------- optimizer (beam + 1-swap) ---------- */

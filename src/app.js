@@ -1200,6 +1200,66 @@ self.onmessage = function (ev) {
     return E.evaluate(w, atk, mods, o);
   }
   const modName = (id) => id === "__riven" ? "리벤 모드" : (MOD_BY_ID[id] ? MOD_BY_ID[id].ko : id);
+
+  /* ---------- arsenal-style mod cards (in-game look: rarity frame, drain + polarity tab, rank pips) ---------- */
+  // polarity glyphs traced from the in-game arsenal filter icons (24×24, filled)
+  const POL_D = {
+    madurai: "M5 2.5h4.6v13.2L17.4 4l3.4 2.3L9.4 21.5H5z",
+    vazarin: "M2.5 4h17.6c1.2 0 1.8.9 1.5 2C20.2 11.7 17.7 17 14.6 21.5L2.5 4zm6 3.2 5.6 8.4c1.2-2.4 2.3-5.2 3-8.4z",
+    naramon: "M2.5 7.5h4.4v3.6h14.6v4.6H2.5z",
+    zenurik: "M3 3.5h18v3.6L10.4 16.9H21v3.6H3v-3.6L13.6 7.1H3z",
+    unairu: "M2.5 3.5h4.2l5.3 6.6 5.3-6.6h4.2L14.2 13v8h-4.4v-8z",
+    penjaga: "M12 2.5 21 6.5v5.2c0 4.8-3.8 8.4-9 9.8-5.2-1.4-9-5-9-9.8V6.5zm0 4.2-5 2.2v2.8c0 2.8 2 5 5 6.1 3-1.1 5-3.3 5-6.1V8.9z",
+    umbra: "M12 2.5 22 20H2zm0 6.4L7.6 17h8.8z",
+    any: "M12 2.5 21.5 12 12 21.5 2.5 12zm0 5L7.5 12l4.5 4.5 4.5-4.5z",
+  };
+  const polSvg = (p, cls) => `<svg class="pol${cls ? " " + cls : ""}" viewBox="0 0 24 24" aria-hidden="true"><path d="${POL_D[p === "*" || p === "riven" ? "any" : p] || POL_D.any}"/></svg>`;
+  const EXI_SVG = `<svg class="pol exi" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5 3.5 12 8 19h3l-4.5-7L11 5zm5 0 4.5 7-4.5 7h3l4.5-7L16 5zm-1 4.2 3 3.6h-2v2.4h-2v-2.4H9z"/></svg>`;
+  // rarity frame: c bronze · u silver · r gold · l primed · gal galvanized · riv riven
+  function modFrame(id) {
+    if (id === "__riven") return "riv";
+    const m = MOD_BY_ID[id];
+    if (!m) return "u";
+    if (/^Galvanized /.test(m.en || "")) return "gal";
+    if (/^(Primed |Archon |Umbral |Sacrificial )/.test(m.en || "")) return "l";
+    return m.rarity || "u";
+  }
+  const ORN = { c: "◆", u: "◆◇◆", r: "◆◆◆", l: "◇◆◇◆◇", gal: "◆", riv: "◆◆" };
+  // one card: { id, n, plan entry, exilus, suggested }
+  function modCardHtml(id, n, a, opt) {
+    const m = MOD_BY_ID[id], fr = modFrame(id);
+    const ranks = id === "__riven" ? 8 : m && m.maxRank != null ? m.maxRank : 5;
+    const dcls = !a ? "neu" : a.how === "bad" ? "bad" : a.how === "neutral" ? "neu" : "ok";
+    const dPol = a ? (a.pol === "*" ? a.slot || "any" : a.pol) : (m && m.pol) || "";
+    const polT = !a ? "" : a.how === "match" ? `${polKo(a.slot)} 칸 — 극성이 같아 용량 절반` : a.how === "forma" ? `${polKo(a.pol === "*" ? "riven" : a.pol)} 포르마 필요 — 극성을 맞춰 용량 절반`
+      : a.how === "bad" ? `${polKo(a.slot)} 칸 — 극성이 달라 용량 25% 증가` : "극성 없는 칸 — 용량 그대로";
+    return `<div class="mc f-${fr}${opt && opt.exilus ? " xc" : ""}${opt && opt.sugg ? " sugg" : ""}" title="${esc(modName(id) + (polT ? " · " + polT : ""))}">
+      ${n != null ? `<i class="mc-n">${n}</i>` : ""}
+      <span class="mc-orn">${opt && opt.exilus ? EXI_SVG : ORN[fr] || "◆"}</span>
+      ${a || (m && m.drain != null) ? `<span class="mc-dr ${dcls}">${a ? a.cost : m.drain}${dPol ? polSvg(dPol) : ""}</span>` : ""}
+      ${a && a.how === "bad" && a.slot ? `<span class="mc-flag" title="이 칸의 극성: ${polKo(a.slot)}">${polSvg(a.slot)}</span>` : ""}
+      <b class="mc-name">${esc(modName(id))}</b>
+      <span class="mc-rk">${"★".repeat(Math.min(10, ranks))}</span>
+    </div>`;
+  }
+  // the whole arsenal block for a build: capacity bar, 8 cards, arcane + exilus column. info(id) → html under each card
+  function arsenalHtml(o2) {
+    const { ids, order, xid, xSugg, arcane, plan, info, melee } = o2;
+    const asg = {}; for (const a of (plan && plan.asg) || []) asg[a.id] = a;
+    const remain = plan ? plan.cap - plan.drain : 0;
+    const cnt = {}; for (const x of (plan && plan.formaPols) || []) { const k = x.replace(/^exilus:/, ""); cnt[k] = (cnt[k] || 0) + 1; }
+    const fTxt = plan && plan.forma ? `포르마 ${plan.forma}개 — ${Object.entries(cnt).map(([k, c]) => `${polKo(k)} ${c}`).join(", ")}` : "포르마 없이 기본 극성 그대로";
+    const cell = (id, n, opt) => `<div class="acell">${modCardHtml(id, n, asg[id], opt)}<div class="ainfo">${info(id) || ""}</div></div>`;
+    const arcCell = `<div class="acell"><div class="arcc${arcane ? "" : " none"}"><span class="arc-em" aria-hidden="true"></span><b>${arcane ? esc(ARC[arcane].ko) : "아케인 없음"}</b>${arcane ? `<span class="arc-rk">◆◆◆◆◆</span>` : ""}</div><div class="ainfo">${info("__arcane") || ""}</div></div>`;
+    const exId = xid || xSugg;
+    const exCell = exId ? cell(exId, null, { exilus: true, sugg: !xid }) : `<div class="acell"><div class="mc xc empty"><span class="mc-orn">${EXI_SVG}</span><b class="mc-name">익실러스 자유</b></div><div class="ainfo">${info("__exilus") || ""}</div></div>`;
+    const stance = melee ? `<div class="acell"><div class="mc empty"><b class="mc-name">스탠스</b><span class="mc-rk">계산 제외</span></div><div class="ainfo"><small class="aalt">아무거나 · 같은 극성이면 용량 +10</small></div></div>` : "";
+    return `<div class="ars arsenal">
+      <div class="acap${plan && !plan.fits ? " over" : ""}"><span class="acap-l">수용량</span><b>${plan ? remain : "-"}/${plan ? plan.cap : "-"}</b><i class="acap-bar"><i style="width:${plan ? Math.max(0, Math.min(100, (remain / plan.cap) * 100)).toFixed(1) : 0}%"></i></i><small>${fTxt}</small></div>
+      <div class="agrid"><div class="amods">${order.map((x, i) => cell(x.id, i + 1)).join("")}</div>
+      <div class="aside">${arcCell}${exCell}${stance}</div></div>
+    </div>`;
+  }
   function finalElements(r) {
     const one = (share) => Object.entries(share).filter(([, v]) => v > 0.02).sort((a, b) => b[1] - a[1]).map(([t, v]) => `${TYPE_KO[t] || t} ${pct(v)}`).join(" · ");
     // a shot with a direct hit and a blast: each part combines elements on its own (the blast gets the weapon's innate element)
@@ -1246,6 +1306,13 @@ self.onmessage = function (ev) {
   }
   const kv = (k, v) => `<div class="kvi"><span>${k}</span><b>${v}</b></div>`;
   // mod capacity of a build: drain / capacity and the forma it needs (engine.capacityPlan)
+  // the slot plan the cards show: within the forma limit when it fits, otherwise the fewest forma that would
+  function capPlan(ids) {
+    const mods = ids.map((id) => id === "__riven" ? { id: "__riven", eff: {} } : MOD_BY_ID[id]).filter(Boolean);
+    const lim = $("#forma").value === "" ? null : +$("#forma").value;
+    const p = E.capacityPlan(st.weapon, mods, lim);
+    return p.fits || lim == null ? p : E.capacityPlan(st.weapon, mods, null);
+  }
   function capInfo(ids, rivEff) {
     const mods = ids.map((id) => id === "__riven" ? { id: "__riven", eff: rivEff || {} } : MOD_BY_ID[id]).filter(Boolean);
     const lim = $("#forma").value === "" ? null : +$("#forma").value;
@@ -1307,12 +1374,19 @@ self.onmessage = function (ev) {
       const nums = g.ids.map((id) => order.findIndex((x) => x.id === id) + 1);
       return `<span class="lg"><b>${nums.join("·")}번</b> ${g.label}</span>`;
     }).join("");
-    const slotCard = (x, n) => { const v = imp[x.id]; const el = x.g.label === "그 외 (순서 무관)" ? "" : x.g.label.replace(/^.* → /, "").replace(/ 단독$/, " 단독");
-      return `<div class="aslot${x.id === "__riven" ? " riv" : ""}"><i class="anum">${n}</i>${el ? `<span class="atag">${esc(el)}</span>` : ""}<b class="aname">${esc(modName(x.id))}</b>${v ? bar(v.d) : ""}${v && v.alt ? `<small class="aalt">대신 ${esc(modName(v.alt.id))} ${pctDelta(v.alt.s)}</small>` : ""}</div>`; };
     const melee = st.weapon.slot === "melee" && !st.weapon.pseudo;
-    const topRow = `${melee ? `<div class="aslot fixed"><i class="anum">스탠스</i><b class="aname">아무거나</b><small class="aalt">계산 제외 · 같은 극성이면 용량 +10</small></div>` : ""}
-      <div class="aslot ex${xid ? "" : " free"}"><i class="anum">익실러스</i><b class="aname">${esc(xa.name)}</b>${xid && imp[xid] ? bar(imp[xid].d) : `<small class="aalt">처치 속도 영향 없음</small>`}</div>
-      <div class="aslot arcs"><i class="anum">아케인</i><b class="aname">${top.arcane ? esc(ARC[top.arcane].ko) : "없음"}</b>${top.arcane ? bar(arcD) : ""}</div>`;
+    // suggested (no-effect) exilus mod counts toward capacity when it still fits
+    let planIds = top.ids, plan = capPlan(top.ids);
+    if (!xid && xa.id) { const p2 = capPlan(top.ids.concat([xa.id])); if (p2.fits || !plan.fits) { planIds = top.ids.concat([xa.id]); plan = p2; } }
+    const elOf = {}; for (const x of order) elOf[x.id] = x.g.label === "그 외 (순서 무관)" ? "" : x.g.label;
+    const asgOf = {}; for (const a of plan.asg || []) asgOf[a.id] = a;
+    const info = (id) => {
+      if (id === "__arcane") return top.arcane ? bar(arcD) : `<small class="aalt">무기 아케인 없음</small>`;
+      if (id === "__exilus") return `<small class="aalt">처치 속도 영향 없음</small>`;
+      if (!xid && id === xa.id) return `<small class="aalt">처치 속도 영향 없음 · ${esc(xa.short || "추천")}</small>`;
+      const v = imp[id], a = asgOf[id];
+      return `${elOf[id] ? `<span class="atag2">${esc(elOf[id])}</span>` : ""}${v ? bar(v.d) : ""}${v && v.alt ? `<small class="aalt">대신 ${esc(modName(v.alt.id))} ${pctDelta(v.alt.s)}</small>` : ""}${a && a.how === "forma" ? `<small class="aforma">${polSvg(a.pol)} ${a.pol === "*" ? "리벤 극성" : polKo(a.pol)} 포르마</small>` : ""}`;
+    };
     // one-line concept: damage style, elements, key mods, enemies per attack, one-hit level
     const keyMods = Object.entries(imp).filter(([id]) => !(MOD_BY_ID[id] && MOD_BY_ID[id].exilus)).sort((a, b) => a[1].d - b[1].d).slice(0, 2).map(([id]) => modName(id));
     const statPer = r.sc * (atk.kind === "gun" || atk.kind === "radial" ? r.ms || 1 : 1);
@@ -1328,10 +1402,10 @@ self.onmessage = function (ev) {
       <div class="cchips">${chips.map((c) => `<span>${esc(c)}</span>`).join("")}</div>
       <div class="meta">${o.concept && o.concept.length ? `속성 콘셉트 <b>${o.concept.map((t) => TYPE_KO[t]).join(" + ")}</b>${o.conceptOnly ? " (이 속성만)" : ""} · ` : ""}${top.val ? `베일런스 <b>${TYPE_KO[top.val.type]} ${pct(top.val.pct)}</b> · ` : ""}${buffNames.length ? `버프 <b>${esc(buffNames.join(", "))}</b>` : "워프레임 버프 없음 (범용)"}</div>
       ${r.conceptOk === false ? `<p class="warn">고른 속성 콘셉트(${o.concept.map((t) => TYPE_KO[t]).join(" + ")})를 만족하는 세팅을 찾지 못해, 가장 빠른 세팅을 보여 드립니다. 이 무기·공격으로는 그 속성을 충분히 넣을 수 없습니다.</p>` : ""}
-      <div class="ars"><div class="arow top">${topRow}</div><div class="arow">${order.map((x, i) => slotCard(x, i + 1)).join("")}</div></div>
+      ${arsenalHtml({ ids: top.ids, order, xid, xSugg: xid ? null : xa.id, arcane: top.arcane, plan, info, melee })}
       ${legend ? `<div class="alegend">원소 순서 ${legend}</div>` : ""}
-      <p class="capline">${capInfo(top.ids).text}<small> · 오로킨 카탈리스트·모드 최대 랭크 기준${melee ? ", 같은 극성 스탠스 +10" : ""}${top.ids.includes("__riven") ? ", 리벤 18 (극성은 맞춘다고 가정)" : ""}</small></p>
-      <p class="hint">칸 번호는 게임 모드 화면 순서(윗줄 왼쪽→오른쪽, 그다음 아랫줄)입니다. 막대는 그 칸을 비웠을 때 느려지는 정도, "대신"은 그 칸에 넣을 수 있는 차선 모드와 그때의 처치 속도입니다. ${xa.why ? esc(xa.why) + " " : ""}${o.aim ? "조준·헤드샷 조건 모드는 헤드샷 50%를 가정했습니다." : ""}</p>
+      <p class="capline">${capInfo(planIds).text}<small> · 오로킨 카탈리스트·모드 최대 랭크 기준${!xid && xa.id && planIds.includes(xa.id) ? ", 추천 익실러스 포함" : ""}${melee ? ", 같은 극성 스탠스 +10" : ""}${top.ids.includes("__riven") ? ", 리벤 18 (극성은 맞춘다고 가정)" : ""}</small></p>
+      <p class="hint">칸 번호는 게임 모드 화면 순서(윗줄 왼쪽→오른쪽, 그다음 아랫줄)입니다. 카드 오른쪽 위 숫자는 극성을 적용한 용량입니다 — <b class="dr-ok">초록</b>은 칸 극성과 같아 절반, <b class="dr-bad">빨강</b>은 극성이 달라 25% 증가(옆 깃발이 그 칸의 극성), 흰색은 극성 없는 칸. 수용량은 게임처럼 남은 용량/전체 용량입니다. 막대는 그 칸을 비웠을 때 느려지는 정도, "대신"은 그 칸에 넣을 수 있는 차선 모드와 그때의 처치 속도입니다. ${xa.why ? esc(xa.why) + " " : ""}${o.aim ? "조준·헤드샷 조건 모드는 헤드샷 50%를 가정했습니다." : ""}</p>
       ${ttkTable(r, o)}
     </section>`;
     let h3 = "", h4 = `<section class="card" id="conceptcard">${conceptCardHtml()}</section>`, h5 = "";
@@ -1422,7 +1496,8 @@ self.onmessage = function (ev) {
       <li>세팅 찾기: 장착 가능한 모든 모드를 후보로, 한 칸씩 더해 가며 단계마다 가장 빠른 조합 100개만 남기고(빔 탐색), 마지막에 상위 8개를 한 칸씩 바꿔 보며 더 빨라지지 않을 때까지 다듬습니다. 원소 칸 순서는 조합마다 가능한 배치를 모두 계산합니다. 가능한 조합 전부(수십억 가지)를 하나하나 계산하는 방식은 아니라서, 이론상 놓치는 조합이 있을 수 있습니다. 리벤은 옵션 하나씩 효과를 잰 뒤 상위 옵션들로 3개 조합을 모두 만들어 한 칸 교체로 비교하고, 상위 4개 조합은 나머지 칸을 처음부터 다시 짭니다.</li>
       <li>모드 용량: 오로킨 카탈리스트(용량 = 최대 랭크×2), 모든 모드 최대 랭크 기준입니다. 같은 극성 칸은 소모 절반(올림), 다른 극성 칸은 25% 증가(올림)이고, 포르마 한도 안에서 들어가는 조합만 추천합니다.</li>
       <li>저격총은 조준 옵션을 켜면 최대 배율 줌 보너스와 저격 콤보(20초 연속 교전 평균)를 넣습니다. 익절티드 무기는 워프레임 위력 값을 기본 피해(또는 위키에 적힌 방식)에 반영합니다.</li>
-      <li>위키에 수치가 없는 어빌리티(사이트-09 시크·리서플라이)와 킷건·자우 전용 아케인, 자우 강공(위키 데이터 없음)은 아직 반영하지 않습니다.</li>
+      <li>Cyte-09 리서플라이를 켜면 탄창을 비울 때마다 시전해 즉시 재장전한다고 보고 재장전 시간을 시전 0.5초로 바꿉니다(위키에 시전 시간이 없어 가정, 에너지는 계산하지 않음). 탄약 팩의 속성 추가 피해는 적용 방식이 위키에 없어 넣지 않았습니다.</li>
+      <li>위키에 수치가 없는 어빌리티(Cyte-09 시크)와 킷건·자우 전용 아케인, 자우 강공(위키 데이터 없음)은 아직 반영하지 않습니다.</li>
     </ul></section>`;
     const toc = [["sec1", "① 추천 세팅"], ["sec2", "② 내 세팅과 비교"], ["sec3", "③ 리벤"], ["sec4", "④ 속성·아케인"], ["sec5", "⑤ 상세"]];
     html += `<nav class="rtoc" aria-label="결과 목차">${toc.map(([id, t]) => `<button type="button" data-go="${id}">${t}</button>`).join("")}</nav>`
@@ -1559,7 +1634,7 @@ self.onmessage = function (ev) {
     }
     const xs = exilusMods(st.weapon);
     const conv = st.weapon.exalted ? null : xs.filter((m) => m.eff.ammoConv).sort((a, b) => b.eff.ammoConv - a.eff.ammoConv)[0];   // exalted weapons use energy, not ammo
-    if (r.ammo && r.ammo.sustain < 60 && conv) return { name: conv.ko, why: `탄약 보완 — 다른 종류 탄약 픽업을 이 무기 탄약으로 ${pct(conv.eff.ammoConv)} 바꿔 줍니다 (처치 속도 영향 없음, 탄약 ${Math.round(r.ammo.sustain)}초 만에 바닥)` };
+    if (r.ammo && r.ammo.sustain < 60 && conv) return { name: conv.ko, id: conv.id, short: "탄약 보완", why:`탄약 보완 — 다른 종류 탄약 픽업을 이 무기 탄약으로 ${pct(conv.eff.ammoConv)} 바꿔 줍니다 (처치 속도 영향 없음, 탄약 ${Math.round(r.ammo.sustain)}초 만에 바닥)` };
     if (r.inc) return { name: "자유", why: `피해 계산에 영향 없는 칸입니다. 인카논 형태는 모드와 무관한 별도 탄(${r.inc.rounds || "충전식"}${r.inc.rounds ? "발" : ""})을 쓰고 재장전이 없어서 탄약·탄창 모드도 효과가 없습니다. 기본 형태로 돌아갔을 때를 위해 탄약 변환 모드를 끼워도 됩니다.` };
     const proj = xs.find((m) => m.eff.projSpd);
     if (atk.kind === "melee" && xs.some((m) => m.eff.tenno)) return { name: "자유", why: "휘두르기 운용이 아니면 텐노카이가 의미 없어 피해 계산에 영향 없는 칸입니다" };
