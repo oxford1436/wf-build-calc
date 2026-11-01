@@ -860,10 +860,11 @@ self.onmessage = function (ev) {
     box.innerHTML = f.abilities.map((a) => {
       const b = BUFFS.abilities[a.en];
       const augs = ((BUFFS.augments || {})[a.en] || []).map((k) => { const x = BUFFS.abilities[k]; return `<label class="inline aug"><input type="checkbox" class="abil" value="${esc(k)}"><span><b>${esc(x.ko)}</b> <small>${esc(x.note || "")}</small><small class="abilcalc" data-ab="${esc(k)}"></small></span></label>`; }).join("");
-      if (b && b.fx) return `<label class="inline"><input type="checkbox" class="abil" value="${esc(a.en)}"><span><b>${esc(a.ko)}</b> <small>${esc(b.note || "")}</small><small class="abilcalc" data-ab="${esc(a.en)}"></small></span></label>` + augs;
+      const prm = b && b.param ? `<label class="abparam">${esc(b.param.ko)} <input type="number" class="abp" data-ab="${esc(a.en)}" value="${b.param.def}" min="${b.param.min}" max="${b.param.max}" step="${b.param.step}"> ${esc(b.param.unit || "")}</label>` : "";
+      if (b && b.fx) return `<label class="inline"><input type="checkbox" class="abil" value="${esc(a.en)}"><span><b>${esc(a.ko)}</b> <small>${esc(b.note || "")}</small><small class="abilcalc" data-ab="${esc(a.en)}"></small></span></label>` + prm + augs;
       return `<div class="abil-off"><b>${esc(a.ko)}</b> <small>${b && b.note ? esc(b.note) : "무기 피해 계산에 영향 없음"}</small></div>` + augs;
     }).join("");
-    $$("#abilities .abil").forEach((el) => el.addEventListener("change", renderFrameStats));
+    $$("#abilities .abil, #abilities .abp").forEach((el) => el.addEventListener("change", renderFrameStats));
     renderFrameStats();
   }
   // warframe upgrade screen → frame, stat panel, aura, arcanes
@@ -952,13 +953,14 @@ self.onmessage = function (ev) {
   function buffExt(scenario, faIds) {
     const s = frameStats(faIds);
     const list = [];
-    const take = (b, h) => {
-      let e = b.fx(s, h, st.weapon);
+    const take = (b, h, key) => {
+      const pin = key && b.param ? $(`#abilities .abp[data-ab="${key}"]`) : null;
+      let e = b.fx(s, h, st.weapon, pin && pin.value !== "" ? +pin.value : undefined);
       if (b.gunOnly && st.weapon.cls === "melee") return;
       if (b.area && scenario === "crowd") e = BUFFS.scale(e, Math.min(1, (b.area(s) / 20) ** 2));
       list.push(e);
     };
-    $$("#abilities .abil:checked").forEach((el) => { const b = BUFFS.abilities[el.value]; if (b && b.fx) take(b, false); });
+    $$("#abilities .abil:checked").forEach((el) => { const b = BUFFS.abilities[el.value]; if (b && b.fx) take(b, false, el.value); });
     const hk = $("#helminth").value;
     if (hk && BUFFS.abilities[hk] && BUFFS.abilities[hk].fx) take(BUFFS.abilities[hk], true);
     const picks = shardPicks();
@@ -1332,7 +1334,7 @@ self.onmessage = function (ev) {
     const L = E.levelsOf(o);
     return `<div class="tscroll"><table class="tbl ttk"><thead><tr><th>팩션 · 기준 적</th><th>${L[0]}레벨</th><th>${L[1]}레벨</th><th>${L[2]}레벨 (버티기)</th><th>한 방 유지</th></tr></thead><tbody>
       ${o.factions.map((f) => { const x = r.perF[f]; return `<tr><td>${E.FACTIONS[f].label} · ${esc(x.target.ko)}${x.targetHeavy ? " / " + esc(x.targetHeavy.ko) : ""}<br><small>${o.level}레벨 체력 ${fmt(x.target.hp)}${x.target.sh ? " · 실드 " + fmt(x.target.sh) : ""}${x.target.ar ? " · 방어구 " + x.target.ar.toFixed(0) : ""}${x.target.og ? " · 오버가드 " + fmt(x.target.og) : ""}${x.targetHeavy ? " / 체력 " + fmt(x.targetHeavy.hp) : ""}</small></td><td class="num">${cell(x)}</td><td class="num">${cell(x.hi)}</td><td class="num">${cell(x.top)}</td><td class="num">${oneLvTxt(x.oneLv)}</td></tr>`; }).join("")}
-    </tbody></table></div><p class="hint">"한 방"은 첫 공격과 그 공격의 상태이상만으로 죽는다는 뜻입니다 (도트 피해 제외). "한 방 유지"는 ${o.scenario === "boss" ? "보스" : "중장갑"}을 한 방에 잡는 가장 높은 레벨입니다. 잡몹 무리는 "잡몹 / 섞여 있는 중장갑" 순서입니다.</p>`;
+    </tbody></table></div><p class="hint">"한 방"은 첫 공격의 피해만으로 죽는다는 뜻입니다 — 그 공격이 건 바이러스·부식 같은 상태이상은 피해가 들어간 뒤에 걸려서 다음 공격부터 적용되고(위키), 도트도 넣지 않습니다. "한 방 유지"는 ${o.scenario === "boss" ? "보스" : "중장갑"}을 한 방에 잡는 가장 높은 레벨입니다. 잡몹 무리는 "잡몹 / 섞여 있는 중장갑" 순서입니다.</p>`;
   }
 
   /* ---------------- results ---------------- */
@@ -1420,7 +1422,7 @@ self.onmessage = function (ev) {
       ${kv("상태이상 피해", "+" + pct(r.sd))}${kv("상태이상 지속", pct(r.dur))}
       ${r.u ? kv("인플루언스 가동률", pct(r.u)) : ""}${kv(o.scenario === "crowd" && r.perF[o.factions[0]].Keff > r.K + 0.05 ? "한 발에 같이 잡히는 적 (폭발 포함)" : "한 번에 맞는 적", Math.max(r.K, o.scenario === "crowd" ? r.perF[o.factions[0]].Keff || 0 : 0).toFixed(1) + "명")}
       ${r.fallM && r.fallM < 0.995 ? kv("거리·폭발 가장자리 감쇠", pct(r.fallM)) : ""}${r.tenno ? kv("텐노카이 강공", `${Math.round(r.tenno.f * 100)}% 타격마다 1회`) : ""}
-      ${r.ammo ? kv("탄약 (연속 사격)", ammoSec(r.ammo.sustain)) : ""}${r.inc ? kv("인카논 탄 (모드 영향 없음)", r.inc.sec ? `${r.inc.rounds}발 · ${ammoSec(r.inc.sec)}` : "충전식") : ""}
+      ${r.ammo ? kv("탄약 (연속 사격)", r.ammo.resupply ? "무한 (리서플라이)" : ammoSec(r.ammo.sustain)) : ""}${r.inc ? kv("인카논 탄 (모드 영향 없음)", r.inc.sec ? `${r.inc.rounds}발 · ${ammoSec(r.inc.sec)}` : "충전식") : ""}
       ${r.exS && r.exS !== 1 ? kv("익절티드 기본 피해 (위력)", "×" + r.exS.toFixed(2)) : ""}${r.exChain > 1 ? kv("피스메이커 연사 보너스", "×" + r.exChain.toFixed(2)) : ""}
       ${r.sniperM > 1 ? kv("저격 콤보 (20초 평균)", "×" + r.sniperM.toFixed(2)) : ""}${r.vigil ? kv("비질란테 세트 (치명 단계 상승)", pct(r.vigil)) : ""}${r.glad && atk.kind !== "gun" ? kv("글래디에이터 세트", `연속기 배율당 +${pct(r.glad)}`) : ""}
     </div>
@@ -1487,7 +1489,7 @@ self.onmessage = function (ev) {
     h5 += `<section class="card notes"><h3>계산 가정</h3><ul>
       <li>처치 시간은 ${o.steel ? "강철의 길 " : ""}${o.level}레벨 기준 적의 체력·방어구(위키 레벨 공식)로 계산합니다. 바이러스·화염·부식·냉기 중첩은 시간에 따라 쌓입니다.</li>
       <li>잡몹 무리: 12명(중장갑 1명 포함)이 반경 약 11m 안에 모여 있다고 봅니다(반경 7.9m에 6명 밀도 — 폭발 반경에 들어오는 수를 정함). 적 하나(와 그 뒤에 줄지은 적)를 죽을 때까지 쏜 뒤 다음 적으로 조준을 옮기는 데 0.2초가 든다고 봅니다. 한 발이 맞히는 수는 폭발 반경과 관통력(쏜 적 뒤에 평균 2명이 줄지어 있고, 몸통 하나에 관통력 약 0.6m)으로 추정. 직격+폭발 무기는 주변 적이 폭발만 맞는다고 보고, 폭발만으로 죽는 속도만큼 같이 잡히는 것으로 계산합니다. 폭발 투사체는 관통이 적용되지 않습니다(위키 "Punch Through"). 갈바나이즈드 계열 피해 보너스와 세컨더리 이레디에이트 전파는 직격에만 적용합니다(위키). 처치 조건 효과(갈바나이즈드, 머시리스 등)는 잡몹·중장갑에서는 최대 중첩, 보스전에서는 0으로 계산합니다.</li>
-      <li>상태이상(위키 "Status Effect"): 바이러스 체력 피해 최대 +325%, 부식 방어구 최대 80%, 화염 방어구 50%·도트, 자성 실드 피해 최대 +325%와 실드 파괴 시 전기, 냉기 치명타 배율 +0.5(빙결 +1.0), 관통 치명타 확률 최대 +25%, 베기 출혈 도트(기본 피해 35%×6틱, 방어구·실드 무시), 전기 3m 연쇄 도트, 가스 3~6m 구름, 독·출혈의 실드 관통을 넣었습니다. 방사능의 "적끼리 공격"과 충격의 자비의 일격 문턱, 관통의 적 공격력 감소처럼 처치 속도와 직접 관계없는 효과는 넣지 않습니다.</li>
+      <li>상태이상(위키 "Status Effect"): 바이러스 체력 피해 최대 +325%, 부식 방어구 최대 80%, 화염 방어구 50%·도트, 자성 실드 피해 최대 +325%와 실드 파괴 시 전기, 냉기 치명타 배율 +0.5(빙결 +1.0), 관통 치명타 확률 최대 +25%, 베기 출혈 도트(기본 피해 35%×6틱, 방어구·실드 무시), 전기 3m 연쇄 도트, 가스 3~6m 구름, 독·출혈의 실드 관통을 넣었습니다. 상태이상은 그 공격의 피해가 들어간 뒤에 걸려서 다음 공격부터 적용되고, 같은 발의 멀티샷끼리도 서로의 바이러스를 받지 않습니다(위키 "Viral Damage"). 도트 한 틱 = 모드 적용 기본 피해(서레이션류·아케인 포함) × 0.5(베기 0.35) × (1 + 그 원소 모드 %, 화염·독·전기만) × (1 + 상태이상 피해) × 팩션 피해 두 번 × 그 공격의 치명타 배율이고, 화염·독·베기는 1초 뒤부터 1초마다 들어갑니다(위키 "Damage/Calculation"). 방사능의 "적끼리 공격"과 충격의 자비의 일격 문턱, 관통의 적 공격력 감소처럼 처치 속도와 직접 관계없는 효과는 넣지 않습니다.</li>
       <li>폭발 상태이상이 걸린 적이 죽으면 5m 안에 그 공격 기본 피해의 최대 300%로 터져(위키 "Blast Damage") 주변 적이 함께 깎이는 것으로 봅니다. 관통력은 모드와 무기 고유값(인카논 형태 등, 위키)을 더하고, 스풀 무기는 탄창마다 처음 몇 발이 느린 것, 펜모어 인카논 형태는 51발 점사 평균 연사(약 78%)로 계산합니다.</li>
       <li>코퍼스 실드는 독·출혈 도트만 관통하고 나머지는 실드를 먼저 깎습니다. 자성 중첩은 실드·오버가드 피해를 최대 4.25배로 올립니다.${o.og ? " 엑시무스 오버가드(위키 레벨 공식)는 방어구·바이러스 영향 없이 먼저 깎고, 보이드는 1.5배입니다." : ""}</li>
       <li>무기별 숨은 특성은 위키 무기 데이터에서 가져옵니다: 확정 상태이상(예: 조리스 회수 폭발의 전기·충격), 헤드샷 배율 변경, 거리별 피해 감소(잡몹은 2~20m에 고르게, 중장갑은 15m), 폭발 가장자리 피해 감소, 최대 탄약·탄약 소모.</li>
@@ -1496,7 +1498,7 @@ self.onmessage = function (ev) {
       <li>세팅 찾기: 장착 가능한 모든 모드를 후보로, 한 칸씩 더해 가며 단계마다 가장 빠른 조합 100개만 남기고(빔 탐색), 마지막에 상위 8개를 한 칸씩 바꿔 보며 더 빨라지지 않을 때까지 다듬습니다. 원소 칸 순서는 조합마다 가능한 배치를 모두 계산합니다. 가능한 조합 전부(수십억 가지)를 하나하나 계산하는 방식은 아니라서, 이론상 놓치는 조합이 있을 수 있습니다. 리벤은 옵션 하나씩 효과를 잰 뒤 상위 옵션들로 3개 조합을 모두 만들어 한 칸 교체로 비교하고, 상위 4개 조합은 나머지 칸을 처음부터 다시 짭니다.</li>
       <li>모드 용량: 오로킨 카탈리스트(용량 = 최대 랭크×2), 모든 모드 최대 랭크 기준입니다. 같은 극성 칸은 소모 절반(올림), 다른 극성 칸은 25% 증가(올림)이고, 포르마 한도 안에서 들어가는 조합만 추천합니다.</li>
       <li>저격총은 조준 옵션을 켜면 최대 배율 줌 보너스와 저격 콤보(20초 연속 교전 평균)를 넣습니다. 익절티드 무기는 워프레임 위력 값을 기본 피해(또는 위키에 적힌 방식)에 반영합니다.</li>
-      <li>Cyte-09 리서플라이를 켜면 탄창을 비울 때마다 시전해 즉시 재장전한다고 보고 재장전 시간을 시전 0.5초로 바꿉니다(위키에 시전 시간이 없어 가정, 에너지는 계산하지 않음). 탄약 팩의 속성 추가 피해는 적용 방식이 위키에 없어 넣지 않았습니다.</li>
+      <li>Cyte-09 리서플라이를 켜면 탄창을 비울 때마다 시전해 즉시 재장전한다고 보고, 재장전과 탄약 부족이 없어지는 것으로 계산합니다(탄약 무한). 시전은 조준을 옮기는 사이처럼 원래 쏘지 않는 순간에 한다고 보고 기본 0초로 두며, '시전으로 사격이 끊기는 시간'을 늘리면 그만큼 탄창마다 쉬는 시간이 생깁니다(위키에 시전 시간 없음). 에너지와 탄약 팩의 속성 추가 피해는 계산하지 않습니다.</li>
       <li>위키에 수치가 없는 어빌리티(Cyte-09 시크)와 킷건·자우 전용 아케인, 자우 강공(위키 데이터 없음)은 아직 반영하지 않습니다.</li>
     </ul></section>`;
     const toc = [["sec1", "① 추천 세팅"], ["sec2", "② 내 세팅과 비교"], ["sec3", "③ 리벤"], ["sec4", "④ 속성·아케인"], ["sec5", "⑤ 상세"]];
@@ -1594,7 +1596,7 @@ self.onmessage = function (ev) {
       ${beaten ? `<p class="warn">입력하신 <b>${esc(beaten.name)}</b>가 추천보다 빠릅니다. ${beatWhy(beaten, top)}</p>` : ""}
       ${rivNote}
       <table class="tbl cmp"><thead><tr><th>순위</th><th>세팅</th><th>처치 속도<br><small>추천 = 100%</small></th><th>${L[0]}레벨 ${what}</th><th>${L[2]}레벨 ${what}<br><small>버티기</small></th><th>한 방 유지<br><small>${o.scenario === "boss" ? "보스" : "중장갑"}</small></th><th>아케인</th></tr></thead><tbody>
-      ${rows.map((x, i) => `<tr class="main${x.rec ? " rec" : ""}"><td class="rank">${i + 1}</td><td class="sname">${esc(x.name)}<br><small class="els">${finalElements(x.r)}${x.r.ammo ? ` · 탄약 ${Math.round(x.r.ammo.sustain)}초` : ""}</small><br><small class="${capInfo(x.ids, x.rivEff).ok ? "els" : "capbad"}">${capInfo(x.ids, x.rivEff).short}</small></td><td class="num spd">${speedCell(x)}</td><td class="t1" data-label="${L[0]}레벨 ${what}">${timeCell(x.r, null)}</td><td class="t2" data-label="${L[2]}레벨 ${what}">${timeCell(x.r, "top")}</td><td class="t3" data-label="한 방 유지">${oneCell(x.r)}</td><td class="arc" data-label="아케인">${x.arcane ? esc(ARC[x.arcane].ko) : "없음"}</td></tr>
+      ${rows.map((x, i) => `<tr class="main${x.rec ? " rec" : ""}"><td class="rank">${i + 1}</td><td class="sname">${esc(x.name)}<br><small class="els">${finalElements(x.r)}${x.r.ammo ? ` · 탄약 ${ammoSec(x.r.ammo.sustain)}` : ""}</small><br><small class="${capInfo(x.ids, x.rivEff).ok ? "els" : "capbad"}">${capInfo(x.ids, x.rivEff).short}</small></td><td class="num spd">${speedCell(x)}</td><td class="t1" data-label="${L[0]}레벨 ${what}">${timeCell(x.r, null)}</td><td class="t2" data-label="${L[2]}레벨 ${what}">${timeCell(x.r, "top")}</td><td class="t3" data-label="한 방 유지">${oneCell(x.r)}</td><td class="arc" data-label="아케인">${x.arcane ? esc(ARC[x.arcane].ko) : "없음"}</td></tr>
         <tr class="sub${x.rec ? " rec" : ""}"><td></td><td colspan="6" class="modlist">${modsCell(x)}</td></tr>`).join("")}
       </tbody></table>
       ${probs.map((s) => `<p class="warn"><b>${esc(s.name)}</b>: ${s.problems.map(esc).join(" · ")} — 이 모드는 빼고 계산했습니다.</p>`).join("")}
@@ -1941,6 +1943,7 @@ self.onmessage = function (ev) {
     return {
       v: 1, evo: st.evoManual && Object.keys(st.evoManual).length ? Object.fromEntries(Object.keys(st.evoManual).map((t) => [t, st.evoSel[t]])) : null, w: w.modular ? null : w.id, mod: w.modular ? [w.modular.kind].concat(w.modular.parts) : null, a: st.atk, f,
       ab: $$("#abilities input.abil:checked").map((x) => x.value), mb: $$("#miscbuffs input.mb:checked").map((x) => x.value),
+      abp: Object.fromEntries($$("#abilities input.abp").map((x) => [x.dataset.ab, x.value])),
       c: $$("#concepts select").map((x) => x.value),
       s: $$("#sets .cset").map((d) => ({ n: d.querySelector(".cnamein").value, m: $$(".cm", d).map((x) => x.value), x: d.querySelector(".cx").value, ar: d.querySelector(".carc").value,
         rk: $$(".crk", d).map((x) => x.value), rv: $$(".crv", d).map((x) => x.value) })).filter((x) => x.m.some(Boolean) || x.x || x.ar),
@@ -1965,6 +1968,7 @@ self.onmessage = function (ev) {
     ["frame", "helminth"].forEach(setOne);
     for (const id in f) if (!["frame", "helminth"].includes(id) && !NOSAVE.has(id)) setOne(id);
     $$("#abilities input.abil").forEach((x) => { x.checked = (S.ab || []).includes(x.value); fire(x); });
+    $$("#abilities input.abp").forEach((x) => { if (S.abp && S.abp[x.dataset.ab] != null) { x.value = S.abp[x.dataset.ab]; fire(x); } });
     $$("#miscbuffs input.mb").forEach((x) => { x.checked = (S.mb || []).includes(x.value); fire(x); });
     syncEnemySeg(); renderTargets();
     if (Array.isArray(S.c)) {

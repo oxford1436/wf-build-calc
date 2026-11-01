@@ -298,8 +298,8 @@
     const sh0 = p.sh || 0;
     const dt = p.dt, r = p.r, Td = Math.max(0.5, p.Tdur);
     const stepsMax = until ? Math.ceil(until / dt) - 1 : Math.ceil(p.tmax / dt);
-    for (let i = 0; i <= stepsMax; i++) {
-      const shots = 1 + r * t;
+    // stack-based multipliers after `shots` trigger pulls have landed their status procs
+    const stacks = (shots) => {
       const nv = Math.min(10, p.pv * shots), nc = Math.min(p.corrMax, p.pc * shots), nk = Math.min(og > 0 ? 4 : 10, p.pk * shots);
       const nm = Math.min(10, (p.pm || 0) * shots);
       const magM = nm <= 0 ? 1 : nm < 1 ? 1 + nm : 2 + 0.25 * (nm - 1);      // Magnetic: shields and overguard take more
@@ -317,7 +317,36 @@
       const ccT = p.cc + ccp;
       // Devouring Attrition (p.nc): non-critical hits get 1 + chance x bonus on average
       const critf = 1 + ccT * (p.cd + cdb - 1) + (p.nc ? Math.max(0, 1 - ccT) * p.nc : 0);
-      let shieldable = p.D * r * critf + (i === 0 ? p.D * critf / dt : 0) + (t >= 1.5 ? p.blast * r * critf : 0) + (p.F || 0) * r;
+      return { nm, magM, extraM, vm, ar, critf };
+    };
+    // one chunk of damage through overguard → shields → health (tx: toxin, bypasses shields; sl: slash, bypasses shields and armor)
+    const land = (S, tx, sl, f) => {
+      if (og > 0) {
+        // overguard first: no armor, no Viral; Magnetic and Void boost it
+        const raw = (S + tx + sl) * f.magM * (p.ogM || 1);
+        if (raw < og) { og -= raw; lastRate = raw / dt; return 0; }
+        const keep = 1 - og / Math.max(1e-9, raw); og = 0; S *= keep; tx *= keep; sl *= keep;
+      }
+      if (sh > 0) {
+        const take = Math.min(sh, S * f.magM); sh -= take; S -= take / f.magM;
+        if (sh <= 0 && f.nm > 0 && magT < 0) { magT = t; magDps = Math.min(0.3, 0.03 * f.nm) * sh0 / 6; }
+      }
+      const dmgH = S * f.vm * f.ar + tx * f.vm * f.ar + sl * f.vm;
+      hp -= dmgH; dealt += dmgH;
+      lastRate = dmgH / dt;
+      return dmgH;
+    };
+    // the first trigger pull lands before its own status procs (wiki "Viral Damage": attacks deal their initial damage
+    // before they apply status, and multishot hits of the same shot don't benefit from each other's procs)
+    if (p.D > 0) {
+      const f0 = stacks(0);
+      land(p.D * f0.critf * f0.extraM, 0, 0, f0);
+      if (!until && hp <= 0) return 0;
+    }
+    for (let i = 0; i <= stepsMax; i++) {
+      const shots = 1 + r * t;
+      const f = stacks(shots);
+      let shieldable = p.D * r * f.critf + (t >= 1.5 ? p.blast * r * f.critf : 0) + (p.F || 0) * r;
       let toxRate = 0, slashRate = 0;
       for (const T in p.dot) {
         // procs whose ticks are running now: applied between t − delay − span and t − delay (span = number of 1 s ticks)
@@ -325,25 +354,12 @@
         if (!(n > 0) || !p.dot[T]) continue;
         const te = t - D;
         const act = te < 0 ? 0 : r * Math.min(te, n) + (te < n ? 1 : 0);
-        const v = (p.dot[T] / n) * act * critf;
+        const v = (p.dot[T] / n) * act * f.critf;
         if (T === "tox") toxRate += v; else if (T === "slash") slashRate += v; else shieldable += v;
       }
       // Magnetic (wiki): stripping the shields triggers an Electricity proc of 3% of max shields per Magnetic stack (max 30%)
       if (magT >= 0 && t < magT + 6) shieldable += magDps;
-      let S = shieldable * dt * extraM, tx = toxRate * dt * extraM, sl = slashRate * dt * extraM;
-      if (og > 0) {
-        // overguard first: no armor, no Viral; Magnetic and Void boost it
-        const raw = (S + tx + sl) * magM * (p.ogM || 1);
-        if (raw < og) { og -= raw; lastRate = raw / dt; t += dt; continue; }
-        const keep = 1 - og / Math.max(1e-9, raw); og = 0; S *= keep; tx *= keep; sl *= keep;
-      }
-      if (sh > 0) {
-        const take = Math.min(sh, S * magM); sh -= take; S -= take / magM;
-        if (sh <= 0 && nm > 0 && magT < 0) { magT = t; magDps = Math.min(0.3, 0.03 * nm) * sh0 / 6; }
-      }
-      const dmgH = S * vm * ar + tx * vm * ar + sl * vm;
-      hp -= dmgH; dealt += dmgH;
-      lastRate = dmgH / dt;
+      const dmgH = land(shieldable * dt * f.extraM, toxRate * dt * f.extraM, slashRate * dt * f.extraM, f);
       if (!until && hp <= 0) return t + dt * (1 - Math.min(1, -hp / Math.max(1e-9, dmgH)));
       t += dt;
     }
@@ -539,7 +555,7 @@
         return Object.assign({}, base, hitP, { hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar, og: o.og ? overguardAt(lv) : 0 });
       };
       const lo = solve(targets.lo[f]), hi = solve(targets.hi[f]), top = targets.top ? solve(targets.top[f]) : hi;
-      // highest level where the first attack alone (with its own procs) still kills that enemy
+      // highest level where the first attack alone still kills that enemy (its own procs land after its damage)
       let oneLv = 0;
       if (oneHit(hardAt(1))) {
         let a = 1, b = 9999;
@@ -598,10 +614,10 @@
     const ext = o.ext || {};
     // ability elements (Electric Shield, Toxic Lash, Xata's Whisper, Nourish) stay separate — they never combine.
     // "*mod" keys (Violet shard electricity) behave like an elemental mod: added to a mod of that element, else after the mods.
-    const tail = [];
+    const tail = [], abilEl = {};
     if (ext.elem) for (const k in ext.elem) {
       if (k.endsWith("mod")) { const p = k.slice(0, -3); if (a.elem[p] > 0) a.elem[p] += ext.elem[k]; else tail.push([p, ext.elem[k]]); }
-      else if (k in a.extra) a.extra[k] += ext.elem[k];
+      else if (k in a.extra) { a.extra[k] += ext.elem[k]; const tt = k.slice(0, -1) === "voi" ? "void" : k.slice(0, -1); abilEl[tt] = (abilEl[tt] || 0) + ext.elem[k]; }
     }
     const arc = o.arcane ? (root.WF_ARCANES || {})[o.arcane] : null;
     if (arc) {
@@ -928,7 +944,14 @@
         };
         scoreSS += Math.log(Math.max(1e-9, dispDirect + dispDot + dispBlast));
       }
-      const cD = conceptDist(share, procs, o);
+      // the element concept is about the mods: elements an ability adds on top (Nourish viral, Electric Shield …) are left out
+      let shareC = share;
+      if (o.concept && o.concept.length && Object.keys(abilEl).length) {
+        const cc2 = {}; let tc = 0;
+        for (const k in coef) { const v = Math.max(0, coef[k] - (abilEl[k] || 0)); if (v > 0) { cc2[k] = v; tc += v; } }
+        if (tc > 0) { shareC = {}; for (const k in cc2) shareC[k] = cc2[k] / tc; }
+      }
+      const cD = conceptDist(shareC, procs, o);
       scoreSS -= 50 * cD;      // a layout that breaks the element concept is used only when no layout keeps it
       if (!best || scoreSS > best.scoreSS) {
         best = { conceptOk: cD === 0, conceptD: cD, nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, cc, cd, critf: 1 + cc * (cd - 1) + (a.nc ? Math.max(0, 1 - cc) * a.nc : 0), sc, ms, rate, M, tierNow, K, N, u, ntypes, gco, co, nc: a.nc || 0, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, dotN, fArc, hsFrac, hsM,
@@ -948,6 +971,8 @@
       const use = rate * cost * (1 - Math.min(0.75, a.ammoEff));      // all sources together cap at 75% (Hotfix 44.1.3)
       best.ammo = { sustain: (magN + maxA) / Math.max(1e-6, use), use, mag: magN, max: maxA, pickup: weapon.ammoPickup || 0,
         packsPerMin: weapon.ammoPickup ? use * 60 / weapon.ammoPickup : null, conv: a.ammoConv };
+      // Cyte-09 Resupply refills the magazine on every cast, so the reserve never runs dry (players use it as infinite ammo)
+      if (ext.reloadCast != null) Object.assign(best.ammo, { sustain: Infinity, packsPerMin: null, resupply: true });
     }
     return best;
   }

@@ -106,12 +106,13 @@
   add("Prismatic Gem", { ko: "프리즈매틱 젬", note: "상태이상 확률 +100%, 지속시간 +100% (모드와 합연산)",
     fx: () => ({ scAdd: 1.0, durAdd: 1.0 }), time: (s) => 30 * s.dur });
   add("Seek", { ko: "시크", note: "약점 피해 증가 — 위키 수치 미확인, 아직 계산하지 않음", fx: null });
-  // wiki "Resupply": 50 energy, "instantly Reload his currently equipped weapon" (firearms; not archguns / battery weapons).
-  // No cast time on the wiki → 0.5 s assumed. The elemental ammo-pack bonus (10~25% "additional instance") has no stated
-  // stacking rule, so it is not added.
+  // wiki "Resupply": "instantly Reload his currently equipped weapon" (firearms; not archguns / battery weapons); 0.35 s
+  // cooldown (Hotfix 38.0.3); counts as a reload for Arcane Rise (Update 38.6). The wiki lists no cast time, so how long a
+  // cast stops the shooting is an input (param). The elemental extra damage (10~25% x strength) is not added yet.
   add("Resupply", { ko: "리서플라이 (즉시 재장전)", gunOnly: true,
-    note: "시전하면 들고 있는 총기를 즉시 재장전 (위키). 탄창을 비울 때마다 시전한다고 보고 재장전 시간을 시전 0.5초로 바꿉니다 — 재장전 속도 모드의 가치가 거의 사라짐. 탄약 팩의 속성 추가 피해는 적용 방식이 위키에 없어 넣지 않았습니다",
-    fx: (s, h, w) => (w && (w.battery || w.slot === "archgun") ? {} : { reloadCast: 0.5 }) });
+    param: { def: 0, min: 0, max: 2, step: 0.05, ko: "시전으로 사격이 끊기는 시간", unit: "초" },
+    note: "시전하면 들고 있는 총기를 즉시 재장전 (위키). 탄창을 비울 때마다 시전해 재장전과 탄약 부족을 없앤다고 봅니다 — 재장전 속도·탄창 용량 모드는 가치가 없어지고 탄약은 무한으로 표시합니다. 시전은 다음 적으로 조준을 옮기는 사이처럼 원래 쏘지 않는 순간에 하므로 기본 0초로 계산합니다. 시전 때문에 사격이 끊긴다고 느끼면 아래 시간을 늘리세요 (그만큼 탄창이 클수록 유리해짐). 탄약 팩의 속성 추가 피해는 아직 넣지 않았습니다",
+    fx: (s, h, w, prm) => (w && (w.battery || w.slot === "archgun") ? {} : { reloadCast: prm != null && isFinite(prm) ? Math.max(0, prm) : 0 }) });
   add("Amp", { ko: "앰프 (장 안, 시끄러운 전투)", note: "장 안에 있으면 무기·근접 피해 +25%~200%×위력 (주변 소음에 비례). 총소리가 큰 전투 중 최대치 기준, 서레이션류와 합연산",
     fx: (s) => ({ dmgAdd: 2.0 * s.str }), time: () => 30 });
 
