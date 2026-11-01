@@ -360,13 +360,17 @@
     // riven card: hyphenated Latin riven name ("Acri-critatox", "Plaga-vexicron"), per screenshot
     const rivBoxes = {};
     for (const R of reads) for (const L of R.lines) {
-      if (!/[A-Za-z]{3,}-/.test(L.text) || /^\s*MR\b/i.test(L.text)) continue;
+      // riven names are "Acri-armacan", "Pura-satiata": a capitalized syllable, a hyphen, lowercase (or the line breaks there).
+      // All-caps words with a hyphen are config tab names ("PROFIT-TAKER"), not rivens.
+      if (!/(^|[^A-Za-z])[A-Z][a-z]{2,}-([a-z]{2,}|\s*$)/.test(L.text) || /^\s*MR\b/i.test(L.text)) continue;
       const nearMod = normal.some((p) => p.box.img === L.img && Math.abs((p.box.y0 + p.box.y1) / 2 - (L.y0 + L.y1) / 2) < (p.box.y1 - p.box.y0) * 3);
       if (nearMod && (!rivBoxes[L.img] || L.y0 < rivBoxes[L.img].y0)) rivBoxes[L.img] = L;
     }
     const anyRiv = ctx.noRiven ? null : Object.values(rivBoxes)[0] || null;
     const rivStats = ctx.noRiven ? null : parseRiven(reads, anyRiv);
     let hasRiv = !!(anyRiv || (rivStats && rivStats.length >= 2));
+    // all 8 slots read as named mods and no riven stats on screen: there is no riven to make room for
+    if (hasRiv && normal.length >= 8 && !(rivStats && rivStats.length >= 2)) hasRiv = false;
     if (normal.length > (hasRiv ? 7 : 8)) normal = normal.sort((a, b) => b.sim - a.sim).slice(0, hasRiv ? 7 : 8);
     // positions from one screenshot (the one showing the most of these mods); same-size screenshots share the layout
     const keep = new Set(normal.map((p) => p.c.id));

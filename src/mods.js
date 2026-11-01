@@ -191,8 +191,8 @@
   add("maim", "메임", "Maim", ["pistol"], { slash: 1.2 });
   add("bore", "보어", "Bore", ["pistol"], { punct: 1.2 });
   add("pummel", "퍼멜", "Pummel", ["pistol"], { impact: 1.2 });
-  add("augur_seeker", "어거 시커", "Augur Seeker", ["pistol"], { dur: 0.9 }, { group: "p_dur" });
-  add("perpetual_agony", "퍼페추얼 애거니", "Perpetual Agony", ["pistol"], { dur: 0.9 }, { group: "p_dur" });
+  add("augur_seeker", "어거 시커", "Augur Seeker", ["pistol"], { dur: 0.9 });
+  add("perpetual_agony", "퍼페추얼 애거니", "Perpetual Agony", ["pistol"], { dur: 0.9 });
   add("merciless_gunfight", "머시리스 건파이트", "Merciless Gunfight", ["pistol"], { cd: 0.45, pt: 1.2 });
   add("stunning_speed", "스터닝 스피드", "Stunning Speed", ["pistol"], { sc: 0.3, reload: 0.4 });
   add("hemorrhage", "헤모리지", "Hemorrhage", ["pistol"], { ib: 0.35 });
@@ -217,11 +217,11 @@
 
   /* ---------------- magazine / reload (ammo-supplement candidates) ---------------- */
   add("primed_magazine_warp", "프라임드 매거진 워프", "Primed Magazine Warp", ["rifle"], { mag: 0.55 }, { group: "r_mag", ammo: true });
-  add("tainted_mag", "테인티드 매그", "Tainted Mag", ["rifle"], { mag: 0.66, reload: -0.33 }, { group: "r_mag", ammo: true });
+  add("tainted_mag", "테인티드 매그", "Tainted Mag", ["rifle"], { mag: 0.66, reload: -0.33 }, { ammo: true });     // stacks with (Primed) Magazine Warp in game
   add("primed_ammo_stock", "프라임드 애모 스톡", "Primed Ammo Stock", ["shotgun"], { mag: 1.1 }, { group: "s_mag", ammo: true });
-  add("burdened_magazine", "버든드 매거진", "Burdened Magazine", ["shotgun"], { mag: 0.6, reload: -0.18 }, { group: "s_mag", ammo: true });
+  add("burdened_magazine", "버든드 매거진", "Burdened Magazine", ["shotgun"], { mag: 0.6, reload: -0.18 }, { ammo: true });
   add("primed_slip_magazine", "프라임드 슬립 매거진", "Primed Slip Magazine", ["pistol"], { mag: 0.55 }, { group: "p_mag", ammo: true });
-  add("tainted_clip", "테인티드 클립", "Tainted Clip", ["pistol"], { mag: 0.6, reload: -0.3 }, { group: "p_mag", ammo: true });
+  add("tainted_clip", "테인티드 클립", "Tainted Clip", ["pistol"], { mag: 0.6, reload: -0.3 }, { ammo: true });
   add("primed_fast_hands", "프라임드 패스트 핸즈", "Primed Fast Hands", ["rifle"], { reload: 0.55 });
   add("primed_tactical_pump", "프라임드 택티컬 펌프", "Primed Tactical Pump", ["shotgun"], { reload: 1.0 });
   add("quickdraw", "퀵드로우", "Quickdraw", ["pistol"], { reload: 0.48 });
@@ -433,6 +433,9 @@
     m.note = (m.note ? m.note + " · " : "") + (m.set === "vigilante" ? "비질란테 세트: 1개당 치명타 단계 상승 확률 +5%" : "글래디에이터 세트: 1개당 연속기 배율마다 치명타 확률 +10%");
     if (m.auto && m.noCalc) { m.noCalc = false; m.unparsed = []; }      // worth a slot for the set bonus alone
   }
+  // Nightwatch Napalm (Ogris/Kuva Ogris augment, wiki): blaze of 150 Heat x 6 ticks per rocket — engine "napalm"
+  for (const m of M) if (m.en === "Nightwatch Napalm") Object.assign(m, { eff: { napalm: 150 }, noCalc: false, unparsed: [], auto: false,
+    note: "로켓마다 화염 장판: 고정 150 화염 × 6틱 (서레이션류·아케인·팩션·베일런스만 적용, 치명타 없음, 멀티샷마다 겹침 — 위키)" });
   // capacity drain at max rank and polarity (game data); riven: 18 at rank 8, polarity treated as matching any slot
   const DR = {}; for (const e of root.WF_MODS_ALL || []) if (e.d != null && !(e.en in DR)) DR[e.en] = [e.d, e.p, e.f, e.r];
   for (const m of M) if (DR[m.en]) { m.drain = DR[m.en][0]; m.pol = DR[m.en][1]; m.maxRank = DR[m.en][2]; m.rarity = DR[m.en][3]; }

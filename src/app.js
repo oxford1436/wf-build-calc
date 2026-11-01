@@ -813,7 +813,9 @@ self.onmessage = function (ev) {
       if (!k || !v) return;
       if (k === "x_faction") k = "fac_g";      // older links: one "faction" stat
       const u = (RIV_D[k] || {}).unit;
-      const val = (i === 3 ? -1 : 1) * (u === "n" || u === "m" || u === "s" ? Math.abs(v) : Math.abs(v) / 100);
+      // faction damage shows in game as a multiplier ("x1.56" = +56%, negative "x0.85" = −15%): small numbers are read that way
+      const fx = /^fac_/.test(k) && Math.abs(v) < 5;
+      const val = (i === 3 ? -1 : 1) * (fx ? Math.abs(Math.abs(v) - 1) : u === "n" || u === "m" || u === "s" ? Math.abs(v) : Math.abs(v) / 100);
       info.push({ k, v: val, inc });
       if (inc) addRivEff(r, k, val);
     });
@@ -1429,7 +1431,7 @@ self.onmessage = function (ev) {
     <h3>피해 구성 (바이러스 10중첩 기준, 한 발당)</h3>
     <div class="fbars">${o.factions.map((f) => { const x = r.perF[f]; const tot = x.perShot || 1; return `<div class="frow"><span class="fname">${E.FACTIONS[f].label}</span><span class="fval">${fmt(x.perShot)}</span>
       <div class="stack"><i class="c-direct" style="width:${(x.direct / tot) * 100}%"></i>${Object.entries(x.dotBy).map(([t, v]) => `<i class="c-${t}" style="width:${(v / tot) * 100}%"></i>`).join("")}<i class="c-blast" style="width:${(x.blast / tot) * 100}%"></i></div></div>`; }).join("")}</div>
-    <div class="legend"><span><i class="c-direct"></i>직격</span><span><i class="c-heat"></i>화염 도트</span><span><i class="c-tox"></i>독 도트</span><span><i class="c-elec"></i>전기 도트(3m 연쇄)</span><span><i class="c-gas"></i>가스 도트</span><span><i class="c-slash"></i>출혈</span><span><i class="c-blast"></i>폭발 상태이상</span></div>
+    <div class="legend"><span><i class="c-direct"></i>직격</span><span><i class="c-heat"></i>화염 도트</span><span><i class="c-tox"></i>독 도트</span><span><i class="c-elec"></i>전기 도트(3m 연쇄)</span><span><i class="c-gas"></i>가스 도트</span><span><i class="c-slash"></i>출혈</span><span><i class="c-blast"></i>폭발 상태이상</span>${o.factions.some((f) => r.perF[f].dotBy && r.perF[f].dotBy.napalm) ? '<span><i class="c-napalm"></i>네이팜 장판</span>' : ""}</div>
     <p class="hint">방어구 적용 전 수치입니다. 처치 시간 계산에서는 바이러스·화염·부식 중첩이 쌓이는 시간과 방어구를 반영합니다.</p>
     </section>`;
 

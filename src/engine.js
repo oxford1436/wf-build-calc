@@ -93,7 +93,7 @@
   const NUM_KEYS = ["dmg", "heavy", "ms", "cc", "ccHeavyNoDouble", "cd", "sc", "sd", "dur", "fr", "frneg", "lock", "mag", "reload", "wind",
     "ic", "hae", "ccc", "br", "ww", "co", "gco", "radius", "pt", "cdFlat", "ccFlat", "hsMult", "msLock", "hm", "ib", "welt",
     "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot", "evoPst", "wpcc",
-    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd"];
+    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd", "napalm"];
   const EXTRA = ["radm", "magm", "gasm", "blastm", "viralm", "corrm", "heatx", "coldx", "elecx", "toxx", "voidx"];
   function newAgg() {
     const a = { elem: { heat: 0, cold: 0, elec: 0, tox: 0 }, phys: { impact: 0, punct: 0, slash: 0 }, extra: {} };
@@ -905,6 +905,7 @@
       const Tdur = 6 * dur;
       const ticksOf = (T) => DOT_DELAY[T] ? (Tdur >= 1 - 1e-9 ? Math.floor(Tdur - 1 + 1e-9) + 1 : 0) : Math.max(1, Math.ceil(Tdur - 1e-9));
       const dotN = Object.fromEntries(DOT_TYPES.map((T) => [T, ticksOf(T)]));
+      if (a.napalm > 0) dotN.napalm = 6;
       const gasSt = Math.min(10, (procs.gas || 0) * rate * spreadHit * 6 * dur);
       const rg = Math.min(6, 3 + 0.3 * Math.max(0, gasSt - 1));
       const ng = o.scenario === "crowd" ? Math.min(N, 1 + rho * Math.PI * rg * rg) : 1;
@@ -930,6 +931,13 @@
           const dShare = debil && debil.comps.includes(T) && p > 0 ? (debil.n / 2) / p : 0;
           dot[T] = p * per * spreadHit * (1 + dShare * (fac - 1));
           if (T !== "slash" && spreadNon > 0) dotNon[T] = p * per * spreadNon;
+        }
+        // Nightwatch Napalm (wiki): each rocket instance (multishot included) leaves a blaze of a fixed 150 Heat per tick,
+        // 6 ticks with the first right away, raised only by base damage mods/arcanes, faction damage and the Kuva valence
+        // bonus; it can't crit (the crit factor ttk applies is taken back out). Its 3 s Heat procs are not counted.
+        if (a.napalm > 0 && kind === "radial") {
+          const per = a.napalm * 6 * (1 + dmgb + dmgArc + platedB) * (1 + vpct) * ms0 * fac * (fac_.weak.includes("heat") ? 1.5 : 1);
+          dot.napalm = per / Math.max(1, 1 + Math.min(1, cc) * (cd - 1));
         }
         const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * M * (xata ? 1 + xata * fac : 1);
         const vm0 = 4.25, dsum = Object.values(dot).reduce((s, x) => s + x, 0);

@@ -395,7 +395,7 @@ summary{cursor:pointer;font-size:12px;color:var(--muted)}
 .stack i,.legend i{display:block;height:100%}
 .legend{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-size:11px;color:var(--muted)}
 .legend span{display:flex;align-items:center;gap:4px}.legend i{width:10px;height:10px;border-radius:2px}
-.c-direct{background:var(--c-direct)}.c-heat{background:var(--c-heat)}.c-tox{background:var(--c-tox)}.c-elec{background:var(--c-elec)}.c-gas{background:var(--c-gas)}.c-slash{background:var(--c-slash)}.c-blast{background:var(--c-blast)}
+.c-direct{background:var(--c-direct)}.c-heat{background:var(--c-heat)}.c-tox{background:var(--c-tox)}.c-elec{background:var(--c-elec)}.c-gas{background:var(--c-gas)}.c-slash{background:var(--c-slash)}.c-blast{background:var(--c-blast)}.c-napalm{background:#9a3412}
 .tbl{width:100%;border-collapse:collapse;font-size:13px}
 .tbl th{text-align:left;font-weight:500;color:var(--muted);font-size:12px;border-bottom:1px solid var(--line);padding:4px 6px}
 .tbl td{border-bottom:1px dotted var(--line);padding:5px 6px;vertical-align:top}
@@ -622,6 +622,13 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.54", date: "2026-11-01", title: "프라임드 매거진 워프 + 테인티드 매그 · 나이트워치 네이팜",
+      items: [
+        "테인티드 매그를 매거진 워프·프라임드 매거진 워프와 같이 낄 수 없는 모드로 잘못 묶어 두어서, 둘 다 낀 세팅을 스크린샷으로 읽으면 프라임드 매거진 워프가 빠지고(리벤 모드로 읽힘) 선택지에서도 사라지던 문제를 고쳤습니다. 게임에서는 같이 장착됩니다. 같은 실수였던 버든드 매거진(산탄총)·테인티드 클립(보조무기)·어거 시커와 퍼페추얼 애거니도 풀었습니다. 이제 '같이 낄 수 없음'은 같은 모드의 변형과 위키의 장착 불가 목록만 따릅니다.",
+        "스크린샷에서 'PROFIT-TAKER' 같은 구성 탭 이름을 리벤 이름으로 착각해, 8칸을 다 읽고도 한 칸(가장 흐린 이름)을 리벤으로 바꾸던 문제를 고쳤습니다. 리벤 이름은 'Pura-satiata'처럼 대문자 하나 + 소문자 형태만 보고, 8칸이 모두 읽히고 리벤 수치가 없으면 리벤이 없는 것으로 봅니다.",
+        "리벤의 팩션 피해 옵션은 게임처럼 'x1.56'(= +56%) 형태로 넣으면 그대로 읽습니다.",
+        "쿠바 오그리스·오그리스 전용 나이트워치 네이팜을 계산에 넣었습니다 (위키): 로켓마다 고정 150 화염 × 6틱 장판, 서레이션류·아케인·팩션 피해·베일런스만 적용되고 치명타는 없으며 멀티샷 수만큼 겹칩니다. 지금까지는 효과 없음으로 처리했습니다.",
+      ] },
     { v: "1.53", date: "2026-11-01", title: "같이 장착할 수 없는 모드 조합 반영 (크리티컬 딜레이 ↔ 포인트 스트라이크 등)",
       items: [
         "게임에서 같이 장착할 수 없는 모드 조합을 위키 모드 데이터(\"Incompatible Mods\")에서 가져와 추천·비교·리벤 계산 모두에 반영했습니다. 지금까지는 프라임드·아말감·갈바나이즈드처럼 같은 모드의 변형만 막고 있어서, 크리티컬 딜레이와 포인트 스트라이크가 함께 추천될 수 있었습니다.",
@@ -1048,7 +1055,7 @@ header.top p{flex-basis:100%}
   const NUM_KEYS = ["dmg", "heavy", "ms", "cc", "ccHeavyNoDouble", "cd", "sc", "sd", "dur", "fr", "frneg", "lock", "mag", "reload", "wind",
     "ic", "hae", "ccc", "br", "ww", "co", "gco", "radius", "pt", "cdFlat", "ccFlat", "hsMult", "msLock", "hm", "ib", "welt",
     "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot", "evoPst", "wpcc",
-    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd"];
+    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd", "napalm"];
   const EXTRA = ["radm", "magm", "gasm", "blastm", "viralm", "corrm", "heatx", "coldx", "elecx", "toxx", "voidx"];
   function newAgg() {
     const a = { elem: { heat: 0, cold: 0, elec: 0, tox: 0 }, phys: { impact: 0, punct: 0, slash: 0 }, extra: {} };
@@ -1860,6 +1867,7 @@ header.top p{flex-basis:100%}
       const Tdur = 6 * dur;
       const ticksOf = (T) => DOT_DELAY[T] ? (Tdur >= 1 - 1e-9 ? Math.floor(Tdur - 1 + 1e-9) + 1 : 0) : Math.max(1, Math.ceil(Tdur - 1e-9));
       const dotN = Object.fromEntries(DOT_TYPES.map((T) => [T, ticksOf(T)]));
+      if (a.napalm > 0) dotN.napalm = 6;
       const gasSt = Math.min(10, (procs.gas || 0) * rate * spreadHit * 6 * dur);
       const rg = Math.min(6, 3 + 0.3 * Math.max(0, gasSt - 1));
       const ng = o.scenario === "crowd" ? Math.min(N, 1 + rho * Math.PI * rg * rg) : 1;
@@ -1885,6 +1893,13 @@ header.top p{flex-basis:100%}
           const dShare = debil && debil.comps.includes(T) && p > 0 ? (debil.n / 2) / p : 0;
           dot[T] = p * per * spreadHit * (1 + dShare * (fac - 1));
           if (T !== "slash" && spreadNon > 0) dotNon[T] = p * per * spreadNon;
+        }
+        // Nightwatch Napalm (wiki): each rocket instance (multishot included) leaves a blaze of a fixed 150 Heat per tick,
+        // 6 ticks with the first right away, raised only by base damage mods/arcanes, faction damage and the Kuva valence
+        // bonus; it can't crit (the crit factor ttk applies is taken back out). Its 3 s Heat procs are not counted.
+        if (a.napalm > 0 && kind === "radial") {
+          const per = a.napalm * 6 * (1 + dmgb + dmgArc + platedB) * (1 + vpct) * ms0 * fac * (fac_.weak.includes("heat") ? 1.5 : 1);
+          dot.napalm = per / Math.max(1, 1 + Math.min(1, cc) * (cd - 1));
         }
         const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * M * (xata ? 1 + xata * fac : 1);
         const vm0 = 4.25, dsum = Object.values(dot).reduce((s, x) => s + x, 0);
@@ -2317,8 +2332,8 @@ header.top p{flex-basis:100%}
   add("maim", "메임", "Maim", ["pistol"], { slash: 1.2 });
   add("bore", "보어", "Bore", ["pistol"], { punct: 1.2 });
   add("pummel", "퍼멜", "Pummel", ["pistol"], { impact: 1.2 });
-  add("augur_seeker", "어거 시커", "Augur Seeker", ["pistol"], { dur: 0.9 }, { group: "p_dur" });
-  add("perpetual_agony", "퍼페추얼 애거니", "Perpetual Agony", ["pistol"], { dur: 0.9 }, { group: "p_dur" });
+  add("augur_seeker", "어거 시커", "Augur Seeker", ["pistol"], { dur: 0.9 });
+  add("perpetual_agony", "퍼페추얼 애거니", "Perpetual Agony", ["pistol"], { dur: 0.9 });
   add("merciless_gunfight", "머시리스 건파이트", "Merciless Gunfight", ["pistol"], { cd: 0.45, pt: 1.2 });
   add("stunning_speed", "스터닝 스피드", "Stunning Speed", ["pistol"], { sc: 0.3, reload: 0.4 });
   add("hemorrhage", "헤모리지", "Hemorrhage", ["pistol"], { ib: 0.35 });
@@ -2343,11 +2358,11 @@ header.top p{flex-basis:100%}
 
   /* ---------------- magazine / reload (ammo-supplement candidates) ---------------- */
   add("primed_magazine_warp", "프라임드 매거진 워프", "Primed Magazine Warp", ["rifle"], { mag: 0.55 }, { group: "r_mag", ammo: true });
-  add("tainted_mag", "테인티드 매그", "Tainted Mag", ["rifle"], { mag: 0.66, reload: -0.33 }, { group: "r_mag", ammo: true });
+  add("tainted_mag", "테인티드 매그", "Tainted Mag", ["rifle"], { mag: 0.66, reload: -0.33 }, { ammo: true });     // stacks with (Primed) Magazine Warp in game
   add("primed_ammo_stock", "프라임드 애모 스톡", "Primed Ammo Stock", ["shotgun"], { mag: 1.1 }, { group: "s_mag", ammo: true });
-  add("burdened_magazine", "버든드 매거진", "Burdened Magazine", ["shotgun"], { mag: 0.6, reload: -0.18 }, { group: "s_mag", ammo: true });
+  add("burdened_magazine", "버든드 매거진", "Burdened Magazine", ["shotgun"], { mag: 0.6, reload: -0.18 }, { ammo: true });
   add("primed_slip_magazine", "프라임드 슬립 매거진", "Primed Slip Magazine", ["pistol"], { mag: 0.55 }, { group: "p_mag", ammo: true });
-  add("tainted_clip", "테인티드 클립", "Tainted Clip", ["pistol"], { mag: 0.6, reload: -0.3 }, { group: "p_mag", ammo: true });
+  add("tainted_clip", "테인티드 클립", "Tainted Clip", ["pistol"], { mag: 0.6, reload: -0.3 }, { ammo: true });
   add("primed_fast_hands", "프라임드 패스트 핸즈", "Primed Fast Hands", ["rifle"], { reload: 0.55 });
   add("primed_tactical_pump", "프라임드 택티컬 펌프", "Primed Tactical Pump", ["shotgun"], { reload: 1.0 });
   add("quickdraw", "퀵드로우", "Quickdraw", ["pistol"], { reload: 0.48 });
@@ -2559,6 +2574,9 @@ header.top p{flex-basis:100%}
     m.note = (m.note ? m.note + " · " : "") + (m.set === "vigilante" ? "비질란테 세트: 1개당 치명타 단계 상승 확률 +5%" : "글래디에이터 세트: 1개당 연속기 배율마다 치명타 확률 +10%");
     if (m.auto && m.noCalc) { m.noCalc = false; m.unparsed = []; }      // worth a slot for the set bonus alone
   }
+  // Nightwatch Napalm (Ogris/Kuva Ogris augment, wiki): blaze of 150 Heat x 6 ticks per rocket — engine "napalm"
+  for (const m of M) if (m.en === "Nightwatch Napalm") Object.assign(m, { eff: { napalm: 150 }, noCalc: false, unparsed: [], auto: false,
+    note: "로켓마다 화염 장판: 고정 150 화염 × 6틱 (서레이션류·아케인·팩션·베일런스만 적용, 치명타 없음, 멀티샷마다 겹침 — 위키)" });
   // capacity drain at max rank and polarity (game data); riven: 18 at rank 8, polarity treated as matching any slot
   const DR = {}; for (const e of root.WF_MODS_ALL || []) if (e.d != null && !(e.en in DR)) DR[e.en] = [e.d, e.p, e.f, e.r];
   for (const m of M) if (DR[m.en]) { m.drain = DR[m.en][0]; m.pol = DR[m.en][1]; m.maxRank = DR[m.en][2]; m.rarity = DR[m.en][3]; }
@@ -2848,6 +2866,13 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.54", date: "2026-11-01", title: "프라임드 매거진 워프 + 테인티드 매그 · 나이트워치 네이팜",
+      items: [
+        "테인티드 매그를 매거진 워프·프라임드 매거진 워프와 같이 낄 수 없는 모드로 잘못 묶어 두어서, 둘 다 낀 세팅을 스크린샷으로 읽으면 프라임드 매거진 워프가 빠지고(리벤 모드로 읽힘) 선택지에서도 사라지던 문제를 고쳤습니다. 게임에서는 같이 장착됩니다. 같은 실수였던 버든드 매거진(산탄총)·테인티드 클립(보조무기)·어거 시커와 퍼페추얼 애거니도 풀었습니다. 이제 '같이 낄 수 없음'은 같은 모드의 변형과 위키의 장착 불가 목록만 따릅니다.",
+        "스크린샷에서 'PROFIT-TAKER' 같은 구성 탭 이름을 리벤 이름으로 착각해, 8칸을 다 읽고도 한 칸(가장 흐린 이름)을 리벤으로 바꾸던 문제를 고쳤습니다. 리벤 이름은 'Pura-satiata'처럼 대문자 하나 + 소문자 형태만 보고, 8칸이 모두 읽히고 리벤 수치가 없으면 리벤이 없는 것으로 봅니다.",
+        "리벤의 팩션 피해 옵션은 게임처럼 'x1.56'(= +56%) 형태로 넣으면 그대로 읽습니다.",
+        "쿠바 오그리스·오그리스 전용 나이트워치 네이팜을 계산에 넣었습니다 (위키): 로켓마다 고정 150 화염 × 6틱 장판, 서레이션류·아케인·팩션 피해·베일런스만 적용되고 치명타는 없으며 멀티샷 수만큼 겹칩니다. 지금까지는 효과 없음으로 처리했습니다.",
+      ] },
     { v: "1.53", date: "2026-11-01", title: "같이 장착할 수 없는 모드 조합 반영 (크리티컬 딜레이 ↔ 포인트 스트라이크 등)",
       items: [
         "게임에서 같이 장착할 수 없는 모드 조합을 위키 모드 데이터(\"Incompatible Mods\")에서 가져와 추천·비교·리벤 계산 모두에 반영했습니다. 지금까지는 프라임드·아말감·갈바나이즈드처럼 같은 모드의 변형만 막고 있어서, 크리티컬 딜레이와 포인트 스트라이크가 함께 추천될 수 있었습니다.",
@@ -3274,7 +3299,7 @@ header.top p{flex-basis:100%}
   const NUM_KEYS = ["dmg", "heavy", "ms", "cc", "ccHeavyNoDouble", "cd", "sc", "sd", "dur", "fr", "frneg", "lock", "mag", "reload", "wind",
     "ic", "hae", "ccc", "br", "ww", "co", "gco", "radius", "pt", "cdFlat", "ccFlat", "hsMult", "msLock", "hm", "ib", "welt",
     "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot", "evoPst", "wpcc",
-    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd"];
+    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd", "napalm"];
   const EXTRA = ["radm", "magm", "gasm", "blastm", "viralm", "corrm", "heatx", "coldx", "elecx", "toxx", "voidx"];
   function newAgg() {
     const a = { elem: { heat: 0, cold: 0, elec: 0, tox: 0 }, phys: { impact: 0, punct: 0, slash: 0 }, extra: {} };
@@ -4086,6 +4111,7 @@ header.top p{flex-basis:100%}
       const Tdur = 6 * dur;
       const ticksOf = (T) => DOT_DELAY[T] ? (Tdur >= 1 - 1e-9 ? Math.floor(Tdur - 1 + 1e-9) + 1 : 0) : Math.max(1, Math.ceil(Tdur - 1e-9));
       const dotN = Object.fromEntries(DOT_TYPES.map((T) => [T, ticksOf(T)]));
+      if (a.napalm > 0) dotN.napalm = 6;
       const gasSt = Math.min(10, (procs.gas || 0) * rate * spreadHit * 6 * dur);
       const rg = Math.min(6, 3 + 0.3 * Math.max(0, gasSt - 1));
       const ng = o.scenario === "crowd" ? Math.min(N, 1 + rho * Math.PI * rg * rg) : 1;
@@ -4111,6 +4137,13 @@ header.top p{flex-basis:100%}
           const dShare = debil && debil.comps.includes(T) && p > 0 ? (debil.n / 2) / p : 0;
           dot[T] = p * per * spreadHit * (1 + dShare * (fac - 1));
           if (T !== "slash" && spreadNon > 0) dotNon[T] = p * per * spreadNon;
+        }
+        // Nightwatch Napalm (wiki): each rocket instance (multishot included) leaves a blaze of a fixed 150 Heat per tick,
+        // 6 ticks with the first right away, raised only by base damage mods/arcanes, faction damage and the Kuva valence
+        // bonus; it can't crit (the crit factor ttk applies is taken back out). Its 3 s Heat procs are not counted.
+        if (a.napalm > 0 && kind === "radial") {
+          const per = a.napalm * 6 * (1 + dmgb + dmgArc + platedB) * (1 + vpct) * ms0 * fac * (fac_.weak.includes("heat") ? 1.5 : 1);
+          dot.napalm = per / Math.max(1, 1 + Math.min(1, cc) * (cd - 1));
         }
         const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * M * (xata ? 1 + xata * fac : 1);
         const vm0 = 4.25, dsum = Object.values(dot).reduce((s, x) => s + x, 0);
@@ -4543,8 +4576,8 @@ header.top p{flex-basis:100%}
   add("maim", "메임", "Maim", ["pistol"], { slash: 1.2 });
   add("bore", "보어", "Bore", ["pistol"], { punct: 1.2 });
   add("pummel", "퍼멜", "Pummel", ["pistol"], { impact: 1.2 });
-  add("augur_seeker", "어거 시커", "Augur Seeker", ["pistol"], { dur: 0.9 }, { group: "p_dur" });
-  add("perpetual_agony", "퍼페추얼 애거니", "Perpetual Agony", ["pistol"], { dur: 0.9 }, { group: "p_dur" });
+  add("augur_seeker", "어거 시커", "Augur Seeker", ["pistol"], { dur: 0.9 });
+  add("perpetual_agony", "퍼페추얼 애거니", "Perpetual Agony", ["pistol"], { dur: 0.9 });
   add("merciless_gunfight", "머시리스 건파이트", "Merciless Gunfight", ["pistol"], { cd: 0.45, pt: 1.2 });
   add("stunning_speed", "스터닝 스피드", "Stunning Speed", ["pistol"], { sc: 0.3, reload: 0.4 });
   add("hemorrhage", "헤모리지", "Hemorrhage", ["pistol"], { ib: 0.35 });
@@ -4569,11 +4602,11 @@ header.top p{flex-basis:100%}
 
   /* ---------------- magazine / reload (ammo-supplement candidates) ---------------- */
   add("primed_magazine_warp", "프라임드 매거진 워프", "Primed Magazine Warp", ["rifle"], { mag: 0.55 }, { group: "r_mag", ammo: true });
-  add("tainted_mag", "테인티드 매그", "Tainted Mag", ["rifle"], { mag: 0.66, reload: -0.33 }, { group: "r_mag", ammo: true });
+  add("tainted_mag", "테인티드 매그", "Tainted Mag", ["rifle"], { mag: 0.66, reload: -0.33 }, { ammo: true });     // stacks with (Primed) Magazine Warp in game
   add("primed_ammo_stock", "프라임드 애모 스톡", "Primed Ammo Stock", ["shotgun"], { mag: 1.1 }, { group: "s_mag", ammo: true });
-  add("burdened_magazine", "버든드 매거진", "Burdened Magazine", ["shotgun"], { mag: 0.6, reload: -0.18 }, { group: "s_mag", ammo: true });
+  add("burdened_magazine", "버든드 매거진", "Burdened Magazine", ["shotgun"], { mag: 0.6, reload: -0.18 }, { ammo: true });
   add("primed_slip_magazine", "프라임드 슬립 매거진", "Primed Slip Magazine", ["pistol"], { mag: 0.55 }, { group: "p_mag", ammo: true });
-  add("tainted_clip", "테인티드 클립", "Tainted Clip", ["pistol"], { mag: 0.6, reload: -0.3 }, { group: "p_mag", ammo: true });
+  add("tainted_clip", "테인티드 클립", "Tainted Clip", ["pistol"], { mag: 0.6, reload: -0.3 }, { ammo: true });
   add("primed_fast_hands", "프라임드 패스트 핸즈", "Primed Fast Hands", ["rifle"], { reload: 0.55 });
   add("primed_tactical_pump", "프라임드 택티컬 펌프", "Primed Tactical Pump", ["shotgun"], { reload: 1.0 });
   add("quickdraw", "퀵드로우", "Quickdraw", ["pistol"], { reload: 0.48 });
@@ -4785,6 +4818,9 @@ header.top p{flex-basis:100%}
     m.note = (m.note ? m.note + " · " : "") + (m.set === "vigilante" ? "비질란테 세트: 1개당 치명타 단계 상승 확률 +5%" : "글래디에이터 세트: 1개당 연속기 배율마다 치명타 확률 +10%");
     if (m.auto && m.noCalc) { m.noCalc = false; m.unparsed = []; }      // worth a slot for the set bonus alone
   }
+  // Nightwatch Napalm (Ogris/Kuva Ogris augment, wiki): blaze of 150 Heat x 6 ticks per rocket — engine "napalm"
+  for (const m of M) if (m.en === "Nightwatch Napalm") Object.assign(m, { eff: { napalm: 150 }, noCalc: false, unparsed: [], auto: false,
+    note: "로켓마다 화염 장판: 고정 150 화염 × 6틱 (서레이션류·아케인·팩션·베일런스만 적용, 치명타 없음, 멀티샷마다 겹침 — 위키)" });
   // capacity drain at max rank and polarity (game data); riven: 18 at rank 8, polarity treated as matching any slot
   const DR = {}; for (const e of root.WF_MODS_ALL || []) if (e.d != null && !(e.en in DR)) DR[e.en] = [e.d, e.p, e.f, e.r];
   for (const m of M) if (DR[m.en]) { m.drain = DR[m.en][0]; m.pol = DR[m.en][1]; m.maxRank = DR[m.en][2]; m.rarity = DR[m.en][3]; }
@@ -6094,13 +6130,17 @@ window.WF_GUIDE_META = {"ash": {"s": "strength", "en": "Ash", "t": "방어 무�
     // riven card: hyphenated Latin riven name ("Acri-critatox", "Plaga-vexicron"), per screenshot
     const rivBoxes = {};
     for (const R of reads) for (const L of R.lines) {
-      if (!/[A-Za-z]{3,}-/.test(L.text) || /^\s*MR\b/i.test(L.text)) continue;
+      // riven names are "Acri-armacan", "Pura-satiata": a capitalized syllable, a hyphen, lowercase (or the line breaks there).
+      // All-caps words with a hyphen are config tab names ("PROFIT-TAKER"), not rivens.
+      if (!/(^|[^A-Za-z])[A-Z][a-z]{2,}-([a-z]{2,}|\s*$)/.test(L.text) || /^\s*MR\b/i.test(L.text)) continue;
       const nearMod = normal.some((p) => p.box.img === L.img && Math.abs((p.box.y0 + p.box.y1) / 2 - (L.y0 + L.y1) / 2) < (p.box.y1 - p.box.y0) * 3);
       if (nearMod && (!rivBoxes[L.img] || L.y0 < rivBoxes[L.img].y0)) rivBoxes[L.img] = L;
     }
     const anyRiv = ctx.noRiven ? null : Object.values(rivBoxes)[0] || null;
     const rivStats = ctx.noRiven ? null : parseRiven(reads, anyRiv);
     let hasRiv = !!(anyRiv || (rivStats && rivStats.length >= 2));
+    // all 8 slots read as named mods and no riven stats on screen: there is no riven to make room for
+    if (hasRiv && normal.length >= 8 && !(rivStats && rivStats.length >= 2)) hasRiv = false;
     if (normal.length > (hasRiv ? 7 : 8)) normal = normal.sort((a, b) => b.sim - a.sim).slice(0, hasRiv ? 7 : 8);
     // positions from one screenshot (the one showing the most of these mods); same-size screenshots share the layout
     const keep = new Set(normal.map((p) => p.c.id));
@@ -7112,7 +7152,9 @@ self.onmessage = function (ev) {
       if (!k || !v) return;
       if (k === "x_faction") k = "fac_g";      // older links: one "faction" stat
       const u = (RIV_D[k] || {}).unit;
-      const val = (i === 3 ? -1 : 1) * (u === "n" || u === "m" || u === "s" ? Math.abs(v) : Math.abs(v) / 100);
+      // faction damage shows in game as a multiplier ("x1.56" = +56%, negative "x0.85" = −15%): small numbers are read that way
+      const fx = /^fac_/.test(k) && Math.abs(v) < 5;
+      const val = (i === 3 ? -1 : 1) * (fx ? Math.abs(Math.abs(v) - 1) : u === "n" || u === "m" || u === "s" ? Math.abs(v) : Math.abs(v) / 100);
       info.push({ k, v: val, inc });
       if (inc) addRivEff(r, k, val);
     });
@@ -7728,7 +7770,7 @@ self.onmessage = function (ev) {
     <h3>피해 구성 (바이러스 10중첩 기준, 한 발당)</h3>
     <div class="fbars">${o.factions.map((f) => { const x = r.perF[f]; const tot = x.perShot || 1; return `<div class="frow"><span class="fname">${E.FACTIONS[f].label}</span><span class="fval">${fmt(x.perShot)}</span>
       <div class="stack"><i class="c-direct" style="width:${(x.direct / tot) * 100}%"></i>${Object.entries(x.dotBy).map(([t, v]) => `<i class="c-${t}" style="width:${(v / tot) * 100}%"></i>`).join("")}<i class="c-blast" style="width:${(x.blast / tot) * 100}%"></i></div></div>`; }).join("")}</div>
-    <div class="legend"><span><i class="c-direct"></i>직격</span><span><i class="c-heat"></i>화염 도트</span><span><i class="c-tox"></i>독 도트</span><span><i class="c-elec"></i>전기 도트(3m 연쇄)</span><span><i class="c-gas"></i>가스 도트</span><span><i class="c-slash"></i>출혈</span><span><i class="c-blast"></i>폭발 상태이상</span></div>
+    <div class="legend"><span><i class="c-direct"></i>직격</span><span><i class="c-heat"></i>화염 도트</span><span><i class="c-tox"></i>독 도트</span><span><i class="c-elec"></i>전기 도트(3m 연쇄)</span><span><i class="c-gas"></i>가스 도트</span><span><i class="c-slash"></i>출혈</span><span><i class="c-blast"></i>폭발 상태이상</span>${o.factions.some((f) => r.perF[f].dotBy && r.perF[f].dotBy.napalm) ? '<span><i class="c-napalm"></i>네이팜 장판</span>' : ""}</div>
     <p class="hint">방어구 적용 전 수치입니다. 처치 시간 계산에서는 바이러스·화염·부식 중첩이 쌓이는 시간과 방어구를 반영합니다.</p>
     </section>`;
 
