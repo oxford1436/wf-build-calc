@@ -1148,6 +1148,43 @@ self.onmessage = function (ev) {
   }
   function updateConceptCard() { const el = document.getElementById("conceptcard"); if (el && st.results) el.innerHTML = conceptCardHtml(); }
 
+  // Community meta for this weapon (docs/community/builds/*.json, bundled by build.py): what players run and why, each of
+  // their builds measured under the current settings next to the calculator's #1. A community build at or above 100%
+  // means the calculator may be missing something — the research runs check those first.
+  const ELK = ["viral", "corr", "heat", "rad", "mag", "gas", "blast", "elec", "tox", "cold"];
+  const comboOf = (share) => ELK.filter((k) => (share || {})[k] >= 0.1).map((k) => TYPE_KO[k]).join("+") || "물리 위주";
+  function communityCardHtml(top, ref) {
+    const C = window.WF_COMMUNITY || {}, w = st.weapon;
+    const spec = w.modular ? C["kit:" + w.modular.parts.join("/")] : C[w.id];
+    const head = `<h3>커뮤니티 메타 <small>사람들이 실제로 쓰는 세팅과 이유 · 지금 조건에서 계산기 1위 = 100%</small></h3>`;
+    if (!spec) return `<section class="card">${head}<p class="hint" style="margin:0">이 무기의 커뮤니티 세팅은 아직 조사 전입니다. 자동 조사가 메커니즘 묶음 순서로 채우고 있습니다.</p></section>`;
+    const atkIdx = spec.attack != null ? spec.attack : defaultAttack(w.modular ? w : (st.base || w));
+    if (atkIdx !== st.atk) return `<section class="card">${head}<p class="hint" style="margin:0">조사한 커뮤니티 세팅은 <b>${esc((w.attacks[atkIdx] || {}).name || "")}</b> 기준입니다. 그 공격을 고르면 비교가 나옵니다.</p></section>`;
+    const findMod = (n) => window.WF_MODS.find((m) => m.en === n || m.ko === n || m.id === n);
+    const AR = window.WF_ARCANES || {};
+    const findArc = (n) => !n ? null : AR[n] ? n : Object.keys(AR).find((k) => AR[k].ko === n || AR[k].en === n) || null;
+    const riv = spec.riven ? parseRiven(spec.riven.map(([k, v]) => ({ k, v, inc: true }))).eff : null;
+    const rows = (spec.builds || []).map((bd) => {
+      const ids = [], unknown = [];
+      for (const n of bd.mods || []) { if (/^(riven|리벤)/i.test(n)) { if (riv) ids.push("__riven"); else unknown.push("리벤"); continue; } const m = findMod(n); if (m) ids.push(m.id); else unknown.push(n); }
+      const arc = findArc(bd.arcane);
+      let res = null; try { res = evalBuild(ids, top.val, arc, null, riv); } catch (e) {}
+      return { bd, ids, unknown, arc, k: res ? res.score / ref : 0, combo: res ? comboOf(res.share) : "?" };
+    }).sort((a, b) => b.k - a.k);
+    const m = spec.meta || {};
+    const li = (label, v) => v && (!Array.isArray(v) || v.length) ? `<li><b>${label}</b> ${esc(Array.isArray(v) ? v.join(" · ") : v)}</li>` : "";
+    const metaHtml = [li("속성 조합", m.elements), li("베일런스", m.valence), li("늘 쓰는 모드", m.core), li("바꿔 끼는 모드", m.flex), li("아케인", m.arcane), li("이유", m.why)].join("");
+    const maxK = Math.max(1, ...rows.map((x) => x.k));
+    return `<section class="card">${head}${metaHtml ? `<ul class="cmeta">${metaHtml}</ul>` : ""}
+      <div class="tscroll"><table class="tbl ccmp"><thead><tr><th>세팅</th><th>처치 속도</th><th>속성</th><th>1위와 다른 모드</th></tr></thead><tbody>
+      ${rows.map((x) => `<tr><td><b>${x.bd.url ? `<a href="${esc(x.bd.url)}" target="_blank" rel="noopener">${esc(x.bd.name)}</a>` : esc(x.bd.name)}</b><br><small>${esc(x.bd.community === "session" ? "대화에서 비교한 세팅" : [x.bd.community, x.bd.author, x.bd.date].filter(Boolean).join(" · "))}</small></td>
+        <td class="num"><span class="cbar"><i style="width:${Math.min(100, (x.k / maxK) * 100).toFixed(0)}%"></i></span>${pct(x.k, 0)}${x.ids.includes("__riven") && !top.ids.includes("__riven") ? " <small>리벤 포함 (1위는 리벤 없이 계산)</small>" : x.k > 1.005 ? " <small>1위보다 강함 — 확인 중</small>" : ""}</td>
+        <td><small>${esc(x.combo)}</small></td>
+        <td class="modlist">${x.ids.filter((id) => !top.ids.includes(id)).map((id) => `<span class="diff">${esc(modName(id))}</span>`).join("") || "<small>같음</small>"}${x.unknown.length ? `<small> 인식 못 함: ${esc(x.unknown.join(", "))}</small>` : ""}</td></tr>`).join("")}
+      </tbody></table></div>
+      <p class="hint">베일런스·리벤·팩션·레벨 등 조건은 위 결과와 같고, 아케인은 각 세팅이 쓴 것입니다. 조사 기록: docs/community 폴더(저장소).</p></section>`;
+  }
+
   // "맞출 예정": after the riven-free search, give the build the best riven worth rolling (3 positives at the middle of
   // their range + a harmless negative) and search the other slots again with it locked — so the recommendation and the
   // comparison table already include the riven
@@ -1414,6 +1451,7 @@ self.onmessage = function (ev) {
     </section>`;
     let h3 = "", h4 = `<section class="card" id="conceptcard">${conceptCardHtml()}</section>`, h5 = "";
     h4 += evoCompareHtml(top, ref);
+    try { h4 += communityCardHtml(top, ref); } catch (e) { console.warn("community card", e); }
     if (rm0 === "plan" && R.rivBest) h3 += rivenPremiseSection(R, top, r);
 
     // stats + breakdown

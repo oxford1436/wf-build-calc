@@ -17,7 +17,15 @@ for f in sorted(glob.glob(os.path.join(DATA, "guides", "*.json"))):
     g = json.load(open(f, encoding="utf-8")); assert g["id"] == os.path.basename(f)[:-5], f; gids.append(g["id"])
     # what the frame list needs before a guide is opened: top stat, English name (search), one-line summary (tooltip)
     gmeta[g["id"]] = {"s": (g.get("stat_priority") or [{}])[0].get("stat"), "en": g.get("name_en"), "t": g.get("summary", "")}
-guide_js = "window.WF_GUIDE_IDS = " + json.dumps(gids) + ";\nwindow.WF_GUIDE_META = " + json.dumps(gmeta, ensure_ascii=False) + ";\n" + rd("guide_list.js") + "\n" + (rdd("frame_mods.js") if os.path.exists(os.path.join(DATA, "frame_mods.js")) else "") + "\n" + rd("framecalc.js") + "\n" + rd("guide.js") + "\n"
+# community builds (docs/community/builds/*.json, kept by the research runs): shown next to the calculator's #1
+comm = {}
+for f in sorted(glob.glob(os.path.join(d, "..", "docs", "community", "builds", "*.json"))):
+    s = json.load(open(f, encoding="utf-8"))
+    key = s.get("weapon") or ("kit:" + "/".join((s.get("kit") or [])[1:]))
+    comm[key] = {k: s[k] for k in ("weapon", "kit", "attack", "valence", "riven", "meta") if k in s}
+    comm[key]["builds"] = [{k: b[k] for k in ("name", "community", "url", "author", "date", "mods", "arcane") if k in b} for b in s.get("builds", [])]
+guide_js = "window.WF_COMMUNITY = " + json.dumps(comm, ensure_ascii=False).replace("</", "<\\/") + ";\n"
+guide_js += "window.WF_GUIDE_IDS = " + json.dumps(gids) + ";\nwindow.WF_GUIDE_META = " + json.dumps(gmeta, ensure_ascii=False) + ";\n" + rd("guide_list.js") + "\n" + (rdd("frame_mods.js") if os.path.exists(os.path.join(DATA, "frame_mods.js")) else "") + "\n" + rd("framecalc.js") + "\n" + rd("guide.js") + "\n"
 html = rd("shell.html").replace("__BUILD_DATE__", datetime.date.today().isoformat()).replace("/*__SRC__*/", src).replace("/*__SRC_EXEC__*/", src).replace("/*__APP__*/", guide_js + rd("ocr.js") + "\n" + rd("app.js"))
 open(OUTF,"w",encoding="utf-8").write(html)
 print("ok", len(html))

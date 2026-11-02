@@ -50,6 +50,9 @@ const OUT = path.join(ROOT, "docs", "community", "report.md");
       const ev = (ids, arc, patch, v) => { const vv = v === undefined ? val : v; const oo = Object.assign({}, o, { val: vv, arcane: arc }, patch || {}); if (patch) oo.targets = E.targetsFor(oo); return A.evalBuild(ids, vv, arc, oo, riv); };
       const ref = ev(topIds, top.arcane).score, refSus = ev(topIds, top.arcane, { killRamp: false }).score, refZero = ev(topIds, top.arcane, { kills: false }).score;
       const ko = (id) => id === "__riven" ? "리벤" : (A.MOD_BY_ID[id] || { ko: id }).ko;
+      const TK = { heat: "화염", cold: "냉기", elec: "전기", tox: "독", blast: "폭발", rad: "방사능", gas: "가스", mag: "자성", viral: "바이러스", corr: "부식" };
+      // fixed order (not by share) so the same combination always reads the same and can be counted/compared
+      const comboOf = (share) => Object.keys(TK).filter((k) => (share || {})[k] >= 0.1).sort((x, y) => ["viral", "corr", "heat", "rad", "mag", "gas", "blast", "elec", "tox", "cold"].indexOf(x) - ["viral", "corr", "heat", "rad", "mag", "gas", "blast", "elec", "tox", "cold"].indexOf(y)).map((k) => TK[k]).join("+") || "물리 위주";
       const rows = (spec.builds || []).map((bd) => {
         const unknown = [], ids = [];
         for (const n of bd.mods || []) {
@@ -66,20 +69,52 @@ const OUT = path.join(ROOT, "docs", "community", "report.md");
         const bv = bd.valence === undefined ? undefined : bd.valence;
         const r = ev(ids, a, undefined, bv);
         return { name: bd.name, community: bd.community || "", url: bd.url || "", rel: r.score / ref, sus: ev(ids, a, { killRamp: false }, bv).score / refSus,
-          zero: ev(ids, a, { kills: false }, bv).score / refZero, unknown, clash, mods: ids.map(ko).join(", "), arc: a };
+          zero: ev(ids, a, { kills: false }, bv).score / refZero, unknown, clash, mods: ids.map(ko).join(", "), arc: a, ids, combo: comboOf(r.share) };
       });
-      return { name: w.ko, top: { mods: topIds.map(ko).join(", "), arc: top.arcane }, rows };
+      // community meta: what players converge on (element combo, mods, arcane), and the calculator's #1 measured against it —
+      // a popular mod the #1 leaves out, or a #1 mod nobody uses, gets a number so the difference is explained (or investigated)
+      const arcKo = (k) => k ? ((window.WF_ARCANES[k] || {}).ko || k) : "없음";
+      const comm = rows.filter((r) => r.community && r.community !== "session" && !r.unknown.length);
+      const cnt = (arr) => { const m = {}; for (const x of arr) m[x] = (m[x] || 0) + 1; return Object.entries(m).sort((x, y) => y[1] - x[1]); };
+      const okSet = (t) => { const ms = t.filter((x) => x !== "__riven").map((x) => A.MOD_BY_ID[x]); for (let i = 0; i < ms.length; i++) for (let j = i + 1; j < ms.length; j++) if (E.clash(ms[i], ms[j])) return false; return true; };
+      let meta = null;
+      if (comm.length >= 2) {
+        const modCnt = cnt(comm.flatMap((r) => [...new Set(r.ids)]));
+        const popular = modCnt.filter(([, n]) => n >= Math.max(2, Math.ceil(comm.length / 2))).map(([id]) => id).filter((id) => id !== "__riven");
+        const missing = popular.filter((id) => !topIds.includes(id)).map((id) => {
+          let best = 0, out = "";
+          topIds.forEach((x, i) => { if (x === "__riven") return; const t = topIds.slice(); t[i] = id; if (!okSet(t)) return; const s = ev(t, top.arcane).score / ref; if (s > best) { best = s; out = ko(x); } });
+          return { mod: ko(id), best, out };
+        });
+        const odd = topIds.filter((id) => id !== "__riven" && !modCnt.some(([m]) => m === id)).map((id) => {
+          const i = topIds.indexOf(id); let best = ev(topIds.filter((_, k) => k !== i), top.arcane).score / ref, by = "빈 칸";
+          for (const p of popular) { if (topIds.includes(p)) continue; const t = topIds.slice(); t[i] = p; if (!okSet(t)) continue; const s = ev(t, top.arcane).score / ref; if (s > best) { best = s; by = ko(p); } }
+          return { mod: ko(id), best, by };
+        });
+        meta = { n: comm.length, combos: cnt(comm.map((r) => r.combo)), mods: modCnt.slice(0, 10).map(([id, n]) => [ko(id), n]),
+          arcs: cnt(comm.map((r) => arcKo(r.arc))), topCombo: comboOf(ev(topIds, top.arcane).share), missing, odd };
+      }
+      rows.forEach((r) => { delete r.ids; });
+      return { name: w.ko, top: { mods: topIds.map(ko).join(", "), arc: top.arcane }, rows, meta };
     }, spec);
     await ctx.close();
     if (res.err || errs.length) { sections.push(`## ${f}\n\n오류: ${res.err || errs.join(" / ")}\n`); flags++; continue; }
     const pct = (x) => (x * 100).toFixed(0) + "%";
-    let md = `## ${res.name} (${f})\n\n계산기 1위: ${res.top.mods} · ${res.top.arc || "아케인 없음"}\n\n| 세팅 | 커뮤니티 | 기본 | 중첩 유지 | 처치 없음 | 확인 |\n| --- | --- | --- | --- | --- | --- |\n`;
+    let md = `## ${res.name} (${f})\n\n계산기 1위: ${res.top.mods} · ${res.top.arc || "아케인 없음"}\n\n| 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |\n| --- | --- | --- | --- | --- | --- | --- |\n`;
     for (const r of res.rows) {
       const notes = [];
       if (r.rel > 1.005) { notes.push("**계산기 1위보다 강함 — 조사 필요**"); flags++; }
       if (r.clash.length) { notes.push("같이 못 끼는 모드: " + r.clash.join(", ")); flags++; }
       if (r.unknown.length) { notes.push("인식 못 함: " + r.unknown.join(", ")); flags++; }
-      md += `| ${r.url ? `[${r.name}](${r.url})` : r.name} | ${r.community} | ${pct(r.rel)} | ${pct(r.sus)} | ${pct(r.zero)} | ${notes.join(" · ") || "—"} |\n`;
+      md += `| ${r.url ? `[${r.name}](${r.url})` : r.name} | ${r.community} | ${r.combo} | ${pct(r.rel)} | ${pct(r.sus)} | ${pct(r.zero)} | ${notes.join(" · ") || "—"} |\n`;
+    }
+    const m = res.meta;
+    if (m) {
+      const list = (a) => a.map(([k, n]) => `${k} ${n}`).join(" · ");
+      md += `\n**커뮤니티 메타** (세팅 ${m.n}개)\n\n- 속성 조합: ${list(m.combos)} — 계산기 1위: ${m.topCombo}\n- 자주 쓰는 모드: ${list(m.mods)}\n- 아케인: ${list(m.arcs)}\n`;
+      if (m.missing.length) md += `- 커뮤니티 인기 모드인데 1위에 없음: ${m.missing.map((x) => x.best ? `${x.mod}(${x.out} 대신 넣으면 ${pct(x.best)})` : `${x.mod}(같이 못 끼는 모드 때문에 못 넣음)`).join(" · ")}\n`;
+      if (m.odd.length) md += `- 1위에만 있는 모드: ${m.odd.map((x) => `${x.mod}(빼고 ${x.by}${x.by === "빈 칸" ? "으로 두면" : "로 바꾸면"} ${pct(x.best)})`).join(" · ")}\n`;
+      if (m.n >= 3 && !m.combos.some(([c]) => c === m.topCombo)) { md += `- **계산기 1위 속성 조합이 커뮤니티 세팅에 없음 — 이유 확인 필요**\n`; flags++; }
     }
     sections.push(md);
   }
