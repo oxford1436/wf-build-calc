@@ -1,14 +1,123 @@
 {
-  "weapon": "tenet_arca_plasmor",
-  "valence": { "type": "tox", "pct": 0.6 },
-  "riven": [["fr", 95.5], ["ms", 143.6], ["ammoeff", 54.3], ["x_zoom", 37.4]],
-  "notes": "리벤·베일런스는 사용자 것(2026-11-02). 아래 세팅 중 community 가 'session'인 것은 대화에서 나온 비교용이고 커뮤니티 출처가 아님 — 조사 실행이 실제 커뮤니티 세팅을 찾아 추가한다.",
-  "builds": [
-    { "name": "사용자 현재 세팅 A (리벤 없음)", "community": "session", "arcane": "primary_merciless",
-      "mods": ["Primed Point Blank", "Critical Deceleration", "Galvanized Hell", "Toxic Barrage", "Primed Chilling Grasp", "Primed Ravage", "Shotgun Barrage", "Scattering Inferno"] },
-    { "name": "독 베일런스 + 부식 1칸 + 치명타 (커뮤니티식 재현)", "community": "session", "arcane": "primary_merciless",
-      "mods": ["Riven", "Primed Charged Shell", "Galvanized Hell", "Galvanized Savvy", "Primed Ravage", "Critical Deceleration", "Shotgun Barrage", "Primed Blunderbuss"] },
-    { "name": "계산기 v1.58 최종 (바이러스+화염+자성)", "community": "session", "arcane": "primary_merciless",
-      "mods": ["Riven", "Primed Chilling Grasp", "Galvanized Hell", "Galvanized Savvy", "Magnetic Strafe", "Toxic Barrage", "Incendiary Coat", "Shotgun Barrage"] }
+ "weapon": "tenet_arca_plasmor",
+ "valence": {
+  "type": "tox",
+  "pct": 0.6
+ },
+ "riven": [
+  [
+   "fr",
+   95.5
+  ],
+  [
+   "ms",
+   143.6
+  ],
+  [
+   "ammoeff",
+   54.3
+  ],
+  [
+   "x_zoom",
+   37.4
   ]
+ ],
+ "notes": "리벤·베일런스는 사용자 것(2026-11-02). 아래 세팅 중 community 가 'session'인 것은 대화에서 나온 비교용이고 커뮤니티 출처가 아님 — 조사 실행이 실제 커뮤니티 세팅을 찾아 추가한다. 2026-11-02 조사: 커뮤니티 원문에 모드 목록이 글로 남아 있는 것만 넣음(Overframe은 모드 목록이 이미지라 읽지 못함).",
+ "builds": [
+  {
+   "name": "사용자 현재 세팅 A (리벤 없음)",
+   "community": "session",
+   "arcane": "primary_merciless",
+   "mods": [
+    "Primed Point Blank",
+    "Critical Deceleration",
+    "Galvanized Hell",
+    "Toxic Barrage",
+    "Primed Chilling Grasp",
+    "Primed Ravage",
+    "Shotgun Barrage",
+    "Scattering Inferno"
+   ]
+  },
+  {
+   "name": "독 베일런스 + 부식 1칸 + 치명타 (커뮤니티식 재현)",
+   "community": "session",
+   "arcane": "primary_merciless",
+   "mods": [
+    "Riven",
+    "Primed Charged Shell",
+    "Galvanized Hell",
+    "Galvanized Savvy",
+    "Primed Ravage",
+    "Critical Deceleration",
+    "Shotgun Barrage",
+    "Primed Blunderbuss"
+   ]
+  },
+  {
+   "name": "계산기 v1.58 최종 (바이러스+화염+자성)",
+   "community": "session",
+   "arcane": "primary_merciless",
+   "mods": [
+    "Riven",
+    "Primed Chilling Grasp",
+    "Galvanized Hell",
+    "Galvanized Savvy",
+    "Magnetic Strafe",
+    "Toxic Barrage",
+    "Incendiary Coat",
+    "Shotgun Barrage"
+   ]
+  },
+  {
+   "name": "스포츠키다 가이드 세팅 (아말감 샷건 배러지 제외 7칸)",
+   "community": "sportskeeda",
+   "url": "https://sportskeeda.com/mmo/warframe-tenet-arca-plasmor-build-guide-best-progenitor-mod-setup",
+   "author": "Sportskeeda",
+   "date": "",
+   "mods": [
+    "Galvanized Savvy",
+    "Galvanized Hell",
+    "Primed Point Blank",
+    "Primed Ravage",
+    "Critical Deceleration",
+    "Galvanized Acceleration",
+    "Shotgun Barrage"
+   ],
+   "arcane": "primary_merciless",
+   "claims": [
+    "독 베일런스가 최고(바이러스로 바꿀 수 있어서)",
+    "치명타 감속의 연사 감소를 샷건 배러지·아말감으로 메운다"
+   ],
+   "verdict": "원문은 '아말감 샷건 배러지'(원문 표기 Amalgam Shotgun Spazz)와 샷건 배러지를 같이 넣음 → 게임에서 같이 못 낌(E.clash). 아케인은 원문에 없어 머시리스로 가정. 원소 모드가 하나도 없어 계산 13%(3팩션), 리벤 없는 사용자 세팅 A(48%)보다도 낮음."
+  },
+  {
+   "name": "자성 베일런스 + 계산기 자성 최적 (Overframe '자성 베일런스가 독보다 낫다' 재현)",
+   "community": "overframe",
+   "url": "https://overframe.gg/build/430677/tenet-arca-plasmor/magnetic-radiation-corrosive-cold-boom-stick-tenet-arca-plasmor-general-use-steel-path-no-micro/",
+   "author": "",
+   "date": "2023-11-18",
+   "valence": {
+    "type": "mag",
+    "pct": 0.6
+   },
+   "mods": [
+    "Riven",
+    "Galvanized Savvy",
+    "Galvanized Hell",
+    "Contagious Spread",
+    "Primed Charged Shell",
+    "Shotgun Barrage",
+    "Primed Blunderbuss",
+    "Chilling Reload"
+   ],
+   "arcane": "primary_frostbite",
+   "claims": [
+    "자성 베일런스가 독보다 낫다",
+    "갈바나이즈드 새비가 헌터 뮤니션보다 낫다(레벨 캡 제외)",
+    "프라이머리 머시리스 5랭크"
+   ],
+   "verdict": "자성 60%: 3팩션 101%, 중첩 유지 93%, 그리니어만 110%, 코퍼스만 99% → 거의 동률(독 60% 기준 유지는 사용자 결정). 새비→헌터 뮤니션 50~74%로 새비 우위 확인."
+  }
+ ]
 }

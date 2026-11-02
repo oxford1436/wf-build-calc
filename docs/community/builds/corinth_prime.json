@@ -1,0 +1,86 @@
+{
+ "weapon": "corinth_prime",
+ "attack": 1,
+ "valence": null,
+ "riven": null,
+ "notes": "코린트 프라임 산탄(주 사격, attack 1). 2026-11-02 조사. Overframe 원문은 모드 목록이 이미지라, 글에 적힌 주장을 계산기 1위에서 한두 칸 바꾼 세팅으로 재현함.",
+ "builds": [
+  {
+   "name": "계산기 1위 (상태이상·관통, 치명타 모드 없음)",
+   "community": "session",
+   "mods": [
+    "Galvanized Hell",
+    "Primed Chilling Grasp",
+    "Toxic Barrage",
+    "Galvanized Savvy",
+    "Magnetic Strafe",
+    "Seeking Force",
+    "Scattering Inferno",
+    "Shotgun Barrage"
+   ],
+   "arcane": "primary_merciless"
+  },
+  {
+   "name": "치명타 2칸 (Overframe '범용 치명타 코린트' 주장 재현)",
+   "community": "overframe",
+   "url": "https://overframe.gg/build/694026/corinth-prime/corinth-general-purpose-crit/",
+   "date": "2024-07-16",
+   "mods": [
+    "Galvanized Hell",
+    "Primed Chilling Grasp",
+    "Toxic Barrage",
+    "Galvanized Savvy",
+    "Primed Ravage",
+    "Critical Deceleration",
+    "Scattering Inferno",
+    "Shotgun Barrage"
+   ],
+   "arcane": "primary_merciless",
+   "claims": [
+    "치명타 없이 아말감 샷건 배러지만 쓰는 세팅보다 치명타 세팅이 범용으로 낫다",
+    "머시리스가 톡식 배러지+블라이트보다 안정적"
+   ],
+   "verdict": "무리(3팩션) 62%, 중첩 유지 55%, Lv400 72% — 무리에서는 시킹 포스(관통)·자성이 더 큼. 보스(처치 없음)에서는 172%로 치명타가 훨씬 강함 → 주장은 단일 대상에선 맞고 무리에선 틀림."
+  },
+  {
+   "name": "샷건 배러지 → 아말감 샷건 배러지",
+   "community": "overframe",
+   "url": "https://overframe.gg/build/694026/corinth-prime/corinth-general-purpose-crit/",
+   "mods": [
+    "Galvanized Hell",
+    "Primed Chilling Grasp",
+    "Toxic Barrage",
+    "Galvanized Savvy",
+    "Magnetic Strafe",
+    "Seeking Force",
+    "Scattering Inferno",
+    "Amalgam Shotgun Barrage"
+   ],
+   "arcane": "primary_merciless",
+   "claims": [
+    "아말감은 부활 속도가 필요할 때, 피해는 조금 손해"
+   ],
+   "verdict": "98.7% — '조금 손해' 확인(연사 +85% vs +90%)."
+  },
+  {
+   "name": "갈바나이즈드 새비 → 비질란테 아마먼트",
+   "community": "overframe",
+   "url": "https://overframe.gg/build/432226/corinth-prime/viral-hm/",
+   "mods": [
+    "Galvanized Hell",
+    "Primed Chilling Grasp",
+    "Toxic Barrage",
+    "Vigilante Armaments",
+    "Magnetic Strafe",
+    "Seeking Force",
+    "Scattering Inferno",
+    "Shotgun Barrage"
+   ],
+   "arcane": "primary_merciless",
+   "claims": [
+    "팩션 모드를 싫어하면 갈바나이즈드 새비로 바꾼다"
+   ],
+   "verdict": "새비를 빼면 56~73% — 새비가 핵심 칸."
+  }
+ ]
+}

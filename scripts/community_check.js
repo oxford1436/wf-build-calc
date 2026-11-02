@@ -46,7 +46,8 @@ const OUT = path.join(ROOT, "docs", "community", "report.md");
       const cands = A.candidateMods(w, atk, { aim: false, cast: false, boss: true });
       const top = E.optimize(w, atk, cands, Object.assign({}, o, { val }), { slots: 8, beam: 60, locked: riv ? [{ id: "__riven", eff: riv }] : [], valOptions: [val], arcOptions: A.arcAuto(w) })[0];
       const topIds = top.mods.map((m) => m.id);
-      const ev = (ids, arc, patch) => { const oo = Object.assign({}, o, { val, arcane: arc }, patch || {}); if (patch) oo.targets = E.targetsFor(oo); return A.evalBuild(ids, val, arc, oo, riv); };
+      // bd.valence (선택): 세팅마다 베일런스가 다를 때(예: 자성 vs 독) 그 세팅만 다른 값으로 계산
+      const ev = (ids, arc, patch, v) => { const vv = v === undefined ? val : v; const oo = Object.assign({}, o, { val: vv, arcane: arc }, patch || {}); if (patch) oo.targets = E.targetsFor(oo); return A.evalBuild(ids, vv, arc, oo, riv); };
       const ref = ev(topIds, top.arcane).score, refSus = ev(topIds, top.arcane, { killRamp: false }).score, refZero = ev(topIds, top.arcane, { kills: false }).score;
       const ko = (id) => id === "__riven" ? "리벤" : (A.MOD_BY_ID[id] || { ko: id }).ko;
       const rows = (spec.builds || []).map((bd) => {
@@ -62,9 +63,10 @@ const OUT = path.join(ROOT, "docs", "community", "report.md");
         const arc = findArc(bd.arcane);
         if (arc && arc[0] === "?") unknown.push("아케인 " + arc.slice(1));
         const a = arc && arc[0] !== "?" ? arc : null;
-        const r = ev(ids, a);
-        return { name: bd.name, community: bd.community || "", url: bd.url || "", rel: r.score / ref, sus: ev(ids, a, { killRamp: false }).score / refSus,
-          zero: ev(ids, a, { kills: false }).score / refZero, unknown, clash, mods: ids.map(ko).join(", "), arc: a };
+        const bv = bd.valence === undefined ? undefined : bd.valence;
+        const r = ev(ids, a, undefined, bv);
+        return { name: bd.name, community: bd.community || "", url: bd.url || "", rel: r.score / ref, sus: ev(ids, a, { killRamp: false }, bv).score / refSus,
+          zero: ev(ids, a, { kills: false }, bv).score / refZero, unknown, clash, mods: ids.map(ko).join(", "), arc: a };
       });
       return { name: w.ko, top: { mods: topIds.map(ko).join(", "), arc: top.arcane }, rows };
     }, spec);
