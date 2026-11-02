@@ -11,7 +11,8 @@
 - 브라우저는 읽기 전용 (로그인 금지).
 
 ## 커뮤니티 세팅 조사 (자동 실행)
-- 절차는 `docs/community/README.md`. 무료 야간 점검(GitHub Actions `community-check.yml`)이 `docs/community/builds/*.json`을 매일 다시 계산해 `docs/community/report.md`를 갱신하고, Claude 예약 작업이 그 결과와 대기열을 보고 조사·검증·수정합니다.
+- 절차는 `docs/community/README.md`. 무료 야간 점검(GitHub Actions `community-check.yml`)이 `docs/community/builds/*.json`을 매일 다시 계산해 `docs/community/report.md`를 갱신하고, 무료 주간 점검(`sweep.yml`, 월요일, 20개 분할)이 603개 무기 전체를 돌려 `docs/sweep/report.md`에 이상 표시를 남깁니다.
+- Claude 예약 작업 '워프레임 계산기 커뮤니티 세팅 조사'(하루 4회 04:17·10:17·16:17·22:17 KST, 자동 승인, 2026-11-03 시작)가 그 결과와 `queue.md`(24개 메커니즘 묶음)를 보고 한 번에 묶음 하나씩 조사·검증·수정합니다. 대기열을 다 끝내면 하루 1회로 줄입니다.
 - 사용자에게 물을 것은 `docs/community/QUESTIONS.md`에 쌓이고, 대화에서 답을 받으면 아래 결정 사항으로 옮깁니다.
 
 ## 답변 규칙 (세팅 추천)
