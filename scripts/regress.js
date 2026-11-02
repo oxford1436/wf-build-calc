@@ -1,0 +1,107 @@
+// Regression checks for bugs that were found and fixed (see CLAUDE.md "오류 기록").
+// Run after every engine/data change, before committing:  node scripts/regress.js
+// Needs Playwright (preinstalled in the work container). Loads the built index.html straight from disk.
+const path = require("path");
+const { chromium } = require("playwright");
+
+(async () => {
+  const b = await chromium.launch();
+  const ctx = await b.newContext();
+  const p = await ctx.newPage();
+  const errs = [];
+  p.on("pageerror", (e) => errs.push(e.message));
+  await p.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+  await p.waitForFunction(() => window.WFEngine && window.WF_MODS && window.WF_APP);
+
+  const results = await p.evaluate(() => {
+    const A = window.WF_APP, E = window.WFEngine, W = window.WF_WEAPONS;
+    const M = (id) => { const m = A.MOD_BY_ID[id] || window.WF_MODS.find((x) => x.en === id); if (!m) throw new Error("mod " + id); return m; };
+    const out = [];
+    const check = (name, ok, detail) => out.push({ name, ok: !!ok, detail: detail == null ? "" : String(detail) });
+    const weapon = (id) => { const w = W.find((x) => x.id === id); if (!w) throw new Error("weapon " + id); return w; };
+    const baseO = () => Object.assign(E.defaults(), { targets: null });
+    const ev = (w, ids, o, riv) => E.evaluate(w, w.attacks[0], ids.map((id) => id === "__riven" ? { id: "__riven", eff: riv || {} } : M(id)), o);
+
+    // v1.53: mods the game won't equip together
+    check("v1.53 크리티컬 딜레이 ↔ 포인트 스트라이크는 같이 못 낌", E.clash(M("critical_delay"), M("point_strike")));
+    // v1.54: wrong groups removed — these two do go together in game
+    check("v1.54 테인티드 매그 + 프라임드 매거진 워프는 같이 낄 수 있음", !E.clash(M("tainted_mag"), M("primed_magazine_warp")));
+    // v1.53: the optimizer never returns a clashing pair
+    {
+      const w = weapon("kuva_zarr"), o = baseO();
+      const cands = window.WF_MODS.filter((m) => m.compat && m.compat.includes("rifle") && !m.exilus && !m.noCalc);
+      const top = E.optimize(w, w.attacks[0], cands, o, { slots: 8, beam: 20 })[0];
+      const ms = top.mods.filter(Boolean); let bad = "";
+      for (let i = 0; i < ms.length; i++) for (let j = i + 1; j < ms.length; j++) if (E.clash(ms[i], ms[j])) bad += ms[i].ko + "+" + ms[j].ko + " ";
+      check("v1.53 추천 세팅에 동시 장착 불가 조합 없음 (쿠바 자르)", !bad, bad);
+    }
+    // v1.55: mismatched polarity drain is rounded like the game (9 -> 11; in-game Kuva Zarr arsenal = 51 for these 8 mods)
+    {
+      const w = Object.assign({}, weapon("kuva_zarr"), { pol: ["madurai", "madurai", "madurai", "madurai", "madurai", "vazarin", "naramon", "naramon"], xpol: "naramon" });
+      const ids = ["split_chamber", "semi_rifle_cannonade", "primed_cryo_rounds", "malignant_force", "primed_fast_hands", "vital_sense", "critical_delay", "thermite_rounds"];
+      const pl = E.capacityPlan(w, ids.map(M), 0);
+      check("v1.55 극성 불일치 용량 반올림 (게임 화면 51)", pl.drain === 51, "drain " + pl.drain);
+    }
+    // Galvanized with no kill stacks: base +80% loses to Split Chamber +90%
+    {
+      const w = weapon("kuva_zarr"), o = Object.assign(baseO(), { kills: false });
+      const rest = ["serration", "primed_cryo_rounds", "vital_sense", "critical_delay"];
+      const s = ev(w, rest.concat(["split_chamber"]), o).score, g = ev(w, rest.concat(["galvanized_chamber"]), o).score;
+      check("처치 중첩 없으면 스플릿 체임버 > 갈바나이즈드 체임버", s > g, (s / g).toFixed(3));
+    }
+    // v1.57: ammo efficiency stretches the magazine -> fewer reloads -> higher sustained rate
+    {
+      const w = weapon("tenet_arca_plasmor"), o = baseO();
+      const ids = ["__riven", "toxic_barrage", "primed_chilling_grasp", "galvanized_hell", "shotgun_barrage"];
+      const r0 = ev(w, ids, o, { ms: 1.3, fr: 1.0 }).rate, r1 = ev(w, ids, o, { ms: 1.3, fr: 1.0, ammoEff: 0.54 }).rate;
+      check("v1.57 탄약 효율이 재장전 간격을 늘림 (연사 평균 증가)", r1 > r0 * 1.05, (r1 / r0).toFixed(3));
+    }
+    // v1.50/1.51: Cyte-09 Resupply = instant reload, infinite ammo
+    {
+      const w = weapon("kuva_zarr"), o = Object.assign(baseO(), { ext: { reloadCast: 0 } });
+      const r = ev(w, ["serration", "split_chamber"], o);
+      const fr = w.attacks[0].fr || (w.attacks[0].parts && w.attacks[0].parts[0].fr);
+      check("v1.50 리서플라이: 재장전 시간 0, 탄약 무한", r.ammo && r.ammo.resupply && Math.abs(r.rate - fr) / fr < 0.02, "rate " + r.rate.toFixed(2) + " / fr " + fr);
+    }
+    // v1.56: proc-stack arcanes expire all at once -> with frequent heat procs Cascadia Flare is near its cap
+    {
+      const w = weapon("kuva_nukor");   // heat-heavy secondary (kitguns are assembled in app.js)
+      const ids = ["primed_heated_charge", "pistol_pestilence", "frostbite", "galvanized_diffusion", "lethal_torrent", "primed_target_cracker", "hornet_strike"];
+      const o = baseO();
+      const none = ev(w, ids, Object.assign({}, o, { arcane: null })).score;
+      const flare = ev(w, ids, Object.assign({}, o, { arcane: "cascadia_flare" })).score;
+      const merc = ev(w, ids, Object.assign({}, o, { arcane: "secondary_merciless" })).score;
+      // Flare at its cap (+480%) beats Merciless at its cap (+360%) on a weapon that procs heat constantly
+      check("v1.56 캐스케디아 플레어 중첩: 화염이 자주 걸리면 머시리스(+360%)보다 강함", flare > merc && flare > none * 1.5, "flare/merc " + (flare / merc).toFixed(2));
+    }
+    return out;
+  });
+
+  // v1.56, the case the user caught: kitgun Sporelacer/Haymaker/Splat "setting A" (viral + heat, Cascadia Flare),
+  // Corrupted, Steel Path 150, 20 enemies. Old rolling-window stacks: 7.8 s; stacks held while heat keeps landing: ~4.5 s.
+  {
+    const p2 = await ctx.newPage();
+    p2.on("pageerror", (e) => errs.push(e.message));
+    await p2.addInitScript(() => { try { localStorage.setItem("wfopt2", JSON.stringify({ mod: ["kit_secondary", "Sporelacer", "Haymaker", "Splat"] })); } catch (e) {} });
+    await p2.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p2.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p2.evaluate(() => {
+      const A = window.WF_APP;
+      if (!A.st.weapon.modular) return { err: "kitgun not loaded" };
+      const en = (n) => window.WF_MODS.find((x) => x.en === n).id;
+      const ids = ["Pathogen Rounds", "Deep Freeze", "Primed Heated Charge", "Galvanized Diffusion", "Pistol Gambit", "Lethal Torrent", "Primed Target Cracker", "Primed Fulmination"].map(en);
+      const o = Object.assign(A.readOpts(), { factions: ["corrupted"], level: 150, steel: true, crowdN: 20, levelSteps: [0, 0, 0], targets: null, val: null, arcane: "cascadia_flare" });
+      A.st.results = A.st.results || { o };
+      return { clear: A.evalBuild(ids, null, "cascadia_flare", o, null).perF.corrupted.clear };
+    });
+    results.push({ name: "v1.56 킷건 세팅 A (캐스케디아 플레어) 커럽티드 강철의 길 150 20명 < 6초", ok: !r.err && r.clear < 6, detail: r.err || r.clear.toFixed(2) + "초" });
+    await p2.close();
+  }
+
+  let fail = 0;
+  for (const r of results) { console.log((r.ok ? "PASS " : "FAIL ") + r.name + (r.detail ? "  (" + r.detail + ")" : "")); if (!r.ok) fail++; }
+  if (errs.length) { console.log("PAGE ERRORS", errs); fail++; }
+  await b.close();
+  console.log(fail ? `\n${fail} 실패` : "\n모두 통과");
+  process.exit(fail ? 1 : 0);
+})();

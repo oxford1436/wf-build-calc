@@ -15,7 +15,8 @@
 - `src/guide.js`, `src/guide_list.js`, `data/guides/*.json` '워프레임 가이드' 탭 (어빌리티 역할·능력치 우선순위·위키 공식으로 확인한 브레이크포인트·지역별 커뮤니티 추천 세팅, 프레임당 JSON 한 개)
 - `src/changelog.js` 버전·패치 내역 (페이지 맨 위 버전 표시와 '패치 내역' 탭, 주소 끝 `#patch`). 고칠 때마다 맨 앞에 항목을 추가합니다.
 - `src/convert.py`, `src/convert_frames.py`, `src/wiki_lua.py` WFCD·위키 데이터 → 계산기용 데이터
-- `scripts/fetch_data.sh` 최신 데이터 내려받기, `scripts/build.sh` 빌드
+- `scripts/fetch_data.sh` 최신 데이터 내려받기, `scripts/build.sh` 빌드, `scripts/regress.js` 고친 버그가 다시 생기지 않았는지 확인하는 회귀 검사 (`node scripts/regress.js`)
+- `CLAUDE.md` 오류 기록과 재발 방지 규칙
 
 ## 갱신
 GitHub Actions가 매주 월요일 최신 데이터를 받아 `index.html`을 다시 만듭니다 (`.github/workflows/update.yml`).
