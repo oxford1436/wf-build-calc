@@ -10,6 +10,10 @@
 - 로컬 서버: `python3 -m http.server 8765 --bind 127.0.0.1` 를 띄우고 PID 파일로 끕니다. **`pkill -f` 금지** (셸까지 죽음, exit 144).
 - 브라우저는 읽기 전용 (로그인 금지).
 
+## 커뮤니티 세팅 조사 (자동 실행)
+- 절차는 `docs/community/README.md`. 무료 야간 점검(GitHub Actions `community-check.yml`)이 `docs/community/builds/*.json`을 매일 다시 계산해 `docs/community/report.md`를 갱신하고, Claude 예약 작업이 그 결과와 대기열을 보고 조사·검증·수정합니다.
+- 사용자에게 물을 것은 `docs/community/QUESTIONS.md`에 쌓이고, 대화에서 답을 받으면 아래 결정 사항으로 옮깁니다.
+
 ## 답변 규칙 (세팅 추천)
 - 존댓말, 사용자 실명 금지, 게임 안 한국어 이름, "SP" 같은 약어 금지.
 - 컨셉(속성 조합과 이유) → 지름길(지금 세팅에서 최소 교체) → 최종 세팅 순서.

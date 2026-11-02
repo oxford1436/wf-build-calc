@@ -17,6 +17,7 @@
 - `src/convert.py`, `src/convert_frames.py`, `src/wiki_lua.py` WFCD·위키 데이터 → 계산기용 데이터
 - `scripts/fetch_data.sh` 최신 데이터 내려받기, `scripts/build.sh` 빌드, `scripts/regress.js` 고친 버그가 다시 생기지 않았는지 확인하는 회귀 검사 (`node scripts/regress.js`)
 - `CLAUDE.md` 오류 기록과 재발 방지 규칙
+- `docs/community/` 커뮤니티 세팅 조사: 절차(README), 모은 세팅(builds), 매일 다시 계산한 점검표(report.md, `scripts/community_check.js`)
 
 ## 갱신
 GitHub Actions가 매주 월요일 최신 데이터를 받아 `index.html`을 다시 만듭니다 (`.github/workflows/update.yml`).
