@@ -23,7 +23,7 @@ for f in sorted(glob.glob(os.path.join(d, "..", "docs", "community", "builds", "
     s = json.load(open(f, encoding="utf-8"))
     key = s.get("weapon") or ("kit:" + "/".join((s.get("kit") or [])[1:]))
     comm[key] = {k: s[k] for k in ("weapon", "kit", "attack", "valence", "riven", "meta") if k in s}
-    comm[key]["builds"] = [{k: b[k] for k in ("name", "community", "url", "author", "date", "mods", "arcane") if k in b} for b in s.get("builds", [])]
+    comm[key]["builds"] = [{k: b[k] for k in ("name", "community", "url", "author", "date", "mods", "arcane", "valence") if k in b} for b in s.get("builds", [])]
 guide_js = "window.WF_COMMUNITY = " + json.dumps(comm, ensure_ascii=False).replace("</", "<\\/") + ";\n"
 guide_js += "window.WF_GUIDE_IDS = " + json.dumps(gids) + ";\nwindow.WF_GUIDE_META = " + json.dumps(gmeta, ensure_ascii=False) + ";\n" + rd("guide_list.js") + "\n" + (rdd("frame_mods.js") if os.path.exists(os.path.join(DATA, "frame_mods.js")) else "") + "\n" + rd("framecalc.js") + "\n" + rd("guide.js") + "\n"
 html = rd("shell.html").replace("__BUILD_DATE__", datetime.date.today().isoformat()).replace("/*__SRC__*/", src).replace("/*__SRC_EXEC__*/", src).replace("/*__APP__*/", guide_js + rd("ocr.js") + "\n" + rd("app.js"))

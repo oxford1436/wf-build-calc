@@ -1168,7 +1168,7 @@ self.onmessage = function (ev) {
       const ids = [], unknown = [];
       for (const n of bd.mods || []) { if (/^(riven|리벤)/i.test(n)) { if (riv) ids.push("__riven"); else unknown.push("리벤"); continue; } const m = findMod(n); if (m) ids.push(m.id); else unknown.push(n); }
       const arc = findArc(bd.arcane);
-      let res = null; try { res = evalBuild(ids, top.val, arc, null, riv); } catch (e) {}
+      let res = null; try { res = evalBuild(ids, bd.valence !== undefined ? bd.valence : top.val, arc, null, riv); } catch (e) {}   // bd.valence: a build made around another valence element
       return { bd, ids, unknown, arc, k: res ? res.score / ref : 0, combo: res ? comboOf(res.share) : "?" };
     }).sort((a, b) => b.k - a.k);
     const m = spec.meta || {};
