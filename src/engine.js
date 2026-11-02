@@ -630,6 +630,9 @@
       const on = c.when === "ptHit" ? o.scenario === "crowd" && (a.pt + (atk.pt || 0)) > 0 : condActive(c.when, oo);
       if (on) applyEff(a, c.eff);
     }
+    // Devouring/Devastating Attrition (wiki Laetum/Felarx): "50% chance to deal +2000% damage on non-critical hits" —
+    // "Bosses ignore this perk."
+    if (o.scenario === "boss") a.nc = 0;
     a.pt += atk.pt || 0;                 // innate punch through of the attack (wiki), e.g. Phenmor Incarnon Form 3 m
     const sp = atk.evoSp || {};          // perks that read the weapon's own final stats (Prelude of Might, Wiseman's Regard …)
     const ext = o.ext || {};
