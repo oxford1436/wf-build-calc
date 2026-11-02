@@ -6,10 +6,11 @@
 - `builds/<무기>.json` — 모은 세팅(무료 야간 점검이 매일 다시 계산). 형식은 `builds/tenet_arca_plasmor.json` 참고: `weapon`(또는 킷건·자우는 `kit: ["kit_secondary","Sporelacer","Haymaker","Splat"]`), `valence`, `riven`, `builds[]`(name, community, url, author, date, mods[영문 이름], exilus, arcane, claims[], verdict).
 - `report.md` — `node scripts/community_check.js`가 만드는 점검표(GitHub Actions가 매일 갱신). "계산기 1위보다 강함" 표시가 먼저 조사할 대상.
 - `<무기>.md` — 무기별 조사 노트(세팅, 이유, 검증 결과, 출처).
+- `../sweep/report.md` — 전체 603개 무기 점검표(무료, 매주 월요일 GitHub Actions). 추천 세팅과 이상 표시(오류, 같이 못 끼는 모드, 수용량 초과, 효과 없는 칸)가 있다. 표시된 무기도 조사 대상.
 - `queue.md` 대기열, `LOG.md` 실행 기록, `QUESTIONS.md` 사용자에게 물을 것.
 
 ## 한 번 실행할 때
-1. `report.md`의 표시 항목을 먼저 본다. 없으면 `queue.md` 맨 위 무기(최대 2개). 대기열이 비면 최근 한 달 커뮤니티 인기 무기로 채운다(근거 기록).
+1. `report.md`와 `../sweep/report.md`의 표시 항목을 먼저 본다. 없으면 `queue.md` 맨 위 항목. 대기열은 무기 하나씩이 아니라 **메커니즘 묶음(카테고리)** 단위다 — 같은 메커니즘을 쓰는 무기는 계산 로직이 같아서, 묶음의 대표 인기 무기 2~3개를 검증하면 나머지 무기에도 반영된다. 대기열이 비면 최근 한 달 커뮤니티 인기 무기로 채운다(근거 기록).
 2. **세팅 수집** — 무기마다 3~6개, 서로 다른 커뮤니티에서: 한국 arca.live 워프레임 채널, 북미 Reddit r/Warframe·YouTube·Overframe, 중국 NGA·Bilibili, 일본 wiki·5ch. 사용자는 arca.live·Reddit·YouTube를 우선시한다. 최신 패치 이후 글 위주. 페이지는 필요한 만큼만 읽고(대량 수집 금지), 로그인이 필요한 곳은 건너뛴다.
 3. **이유 수집** — 세팅마다 작성자 설명과 댓글의 반론·보충을 "검증할 수 있는 주장"으로 정리한다. 예: "갈바나이즈드 새비가 라이플 앱티튜드보다 낫다(무리 상황)", "강철의 길에서는 화염이 부식보다 낫다(방어구)". 주장마다 출처 URL.
 4. **계산기로 검증** — `builds/<무기>.json`에 넣고 `node scripts/community_check.js <무기>`. 주장은 그 주장이 말하는 조건(콘텐츠·팩션·레벨·처치 중첩 유지/0·누가 쏘는지)으로 따로 계산한다(P2).

@@ -1,0 +1,46 @@
+name: All-weapon sweep
+# Free (no AI): best build for every weapon's main attack + anomaly flags → docs/sweep/report.md
+on:
+  schedule:
+    - cron: "10 20 * * 1"   # every Monday 20:10 UTC, after the weekly data update
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  shard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - uses: actions/setup-node@v5
+        with: { node-version: "20" }
+      - run: bash scripts/build.sh
+      - run: |
+          npm i --no-save playwright@1.63.0
+          npx playwright install --with-deps chromium
+      - run: node scripts/sweep.js --shard ${{ matrix.shard }}/20 --out sweep-out/part-${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        with: { name: "sweep-${{ matrix.shard }}", path: "sweep-out/part-${{ matrix.shard }}.json" }
+  merge:
+    needs: shard
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: "20" }
+      - uses: actions/download-artifact@v4
+        with: { pattern: "sweep-*", path: "docs/sweep", merge-multiple: true }
+      - run: node scripts/sweep.js --merge docs/sweep
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/sweep/report.md
+          if git diff --cached --quiet; then echo "no changes"; else git commit -m "chore: all-weapon sweep report" && git pull --rebase && git push; fi
