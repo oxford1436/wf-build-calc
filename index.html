@@ -437,7 +437,7 @@ header.top p{flex-basis:100%}
 </style>
 <header class="top">
   <h1>워프레임 <span>세팅 계산기</span></h1>
-  <span class="ver" id="ver" data-built="2026-11-01"></span>
+  <span class="ver" id="ver" data-built="2026-11-02"></span>
   <nav class="viewtabs" role="tablist" aria-label="화면">
     <a href="#" class="on" data-view="calc" role="tab">계산기</a>
     <a href="#frames" data-view="frames" role="tab">워프레임 계산기·가이드</a>
@@ -622,6 +622,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.56", date: "2026-11-02", title: "캐스케디아 플레어·프로스트바이트·블라이트·컨정션 볼티지 중첩",
+      items: [
+        "상태이상으로 쌓이는 아케인(캐스케디아 플레어, 프라이머리 프로스트바이트·블라이트, 컨정션 볼티지)의 중첩을 위키대로 고쳤습니다. 이 아케인들은 중첩마다 따로 사라지지 않고, 마지막 상태이상 뒤 10~12초 동안 하나도 안 걸려야 한꺼번에 사라집니다. 지금까지는 '최근 10~12초 동안 건 상태이상 수'만큼만 쌓인다고 계산해서, 계속 싸우는 상황에서도 최대(40중첩)에 한참 못 미치게 잡았습니다 — 캐스케디아 플레어를 쓰는 세팅이 크게 낮게 나왔습니다.",
+        "이제는 상태이상이 걸리는 간격으로 '중첩이 끊기기 전까지 이어지는 길이'를 계산해, 0부터 최대까지 쌓이고 유지되는 평균으로 넣습니다. 확정 상태이상도 중첩에 셉니다.",
+      ] },
     { v: "1.55", date: "2026-11-01", title: "극성이 안 맞는 칸의 수용량",
       items: [
         "극성이 안 맞는 칸에 넣은 모드의 수용량을 게임과 같게 반올림합니다. 지금까지는 올림이라 세미-라이플 캐노네이드(9)를 다른 극성 칸에 넣으면 게임은 11인데 12로 계산했습니다.",
@@ -1796,8 +1801,14 @@ header.top p{flex-basis:100%}
         if (a.ib > 0 && procs.impact) procs.slash = (procs.slash || 0) + procs.impact * Math.min(1, a.ib * (rate < 2.5 ? 2 : 1));
         if (a.welt > 0 && procs.impact) procs.mag = (procs.mag || 0) + procs.impact * Math.min(1, a.welt * (rate < 2.5 ? 2 : 1));
         if (arc && arc.procStack) {
-          const rr = (procs[arc.procStack.type] || 0) * rate * K;
-          const nf = Math.min(1, rr * arc.procStack.win / arc.procStack.max);
+          // stacks expire all at once after `win` s without a proc (wiki: Cascadia Flare, Primary Frostbite/Blight,
+          // Conjunction Voltage), so they keep growing while procs land at least every `win` s. With random gaps a run
+          // lasts e^(rr*win) - 1 procs before it resets; nf = time-average stacks over a run (ramp to the cap, then held).
+          const ps = arc.procStack;
+          const per = (procs[ps.type] || 0) + (atk.forced && atk.forced.includes(ps.type) ? 1 : 0);
+          const rr = per * rate * K, run = Math.expm1(Math.min(50, rr * ps.win));
+          const nbar = run >= ps.max ? ps.max - ps.max * ps.max / (2 * run) : run / 2;
+          const nf = Math.max(0, Math.min(1, nbar / ps.max));
           if (Math.abs(nf - fArc) < 1e-6) break;
           fArc = nf;
         } else break;
@@ -2870,6 +2881,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.56", date: "2026-11-02", title: "캐스케디아 플레어·프로스트바이트·블라이트·컨정션 볼티지 중첩",
+      items: [
+        "상태이상으로 쌓이는 아케인(캐스케디아 플레어, 프라이머리 프로스트바이트·블라이트, 컨정션 볼티지)의 중첩을 위키대로 고쳤습니다. 이 아케인들은 중첩마다 따로 사라지지 않고, 마지막 상태이상 뒤 10~12초 동안 하나도 안 걸려야 한꺼번에 사라집니다. 지금까지는 '최근 10~12초 동안 건 상태이상 수'만큼만 쌓인다고 계산해서, 계속 싸우는 상황에서도 최대(40중첩)에 한참 못 미치게 잡았습니다 — 캐스케디아 플레어를 쓰는 세팅이 크게 낮게 나왔습니다.",
+        "이제는 상태이상이 걸리는 간격으로 '중첩이 끊기기 전까지 이어지는 길이'를 계산해, 0부터 최대까지 쌓이고 유지되는 평균으로 넣습니다. 확정 상태이상도 중첩에 셉니다.",
+      ] },
     { v: "1.55", date: "2026-11-01", title: "극성이 안 맞는 칸의 수용량",
       items: [
         "극성이 안 맞는 칸에 넣은 모드의 수용량을 게임과 같게 반올림합니다. 지금까지는 올림이라 세미-라이플 캐노네이드(9)를 다른 극성 칸에 넣으면 게임은 11인데 12로 계산했습니다.",
@@ -4044,8 +4060,14 @@ header.top p{flex-basis:100%}
         if (a.ib > 0 && procs.impact) procs.slash = (procs.slash || 0) + procs.impact * Math.min(1, a.ib * (rate < 2.5 ? 2 : 1));
         if (a.welt > 0 && procs.impact) procs.mag = (procs.mag || 0) + procs.impact * Math.min(1, a.welt * (rate < 2.5 ? 2 : 1));
         if (arc && arc.procStack) {
-          const rr = (procs[arc.procStack.type] || 0) * rate * K;
-          const nf = Math.min(1, rr * arc.procStack.win / arc.procStack.max);
+          // stacks expire all at once after `win` s without a proc (wiki: Cascadia Flare, Primary Frostbite/Blight,
+          // Conjunction Voltage), so they keep growing while procs land at least every `win` s. With random gaps a run
+          // lasts e^(rr*win) - 1 procs before it resets; nf = time-average stacks over a run (ramp to the cap, then held).
+          const ps = arc.procStack;
+          const per = (procs[ps.type] || 0) + (atk.forced && atk.forced.includes(ps.type) ? 1 : 0);
+          const rr = per * rate * K, run = Math.expm1(Math.min(50, rr * ps.win));
+          const nbar = run >= ps.max ? ps.max - ps.max * ps.max / (2 * run) : run / 2;
+          const nf = Math.max(0, Math.min(1, nbar / ps.max));
           if (Math.abs(nf - fArc) < 1e-6) break;
           fArc = nf;
         } else break;

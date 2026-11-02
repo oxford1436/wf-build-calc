@@ -830,8 +830,14 @@
         if (a.ib > 0 && procs.impact) procs.slash = (procs.slash || 0) + procs.impact * Math.min(1, a.ib * (rate < 2.5 ? 2 : 1));
         if (a.welt > 0 && procs.impact) procs.mag = (procs.mag || 0) + procs.impact * Math.min(1, a.welt * (rate < 2.5 ? 2 : 1));
         if (arc && arc.procStack) {
-          const rr = (procs[arc.procStack.type] || 0) * rate * K;
-          const nf = Math.min(1, rr * arc.procStack.win / arc.procStack.max);
+          // stacks expire all at once after `win` s without a proc (wiki: Cascadia Flare, Primary Frostbite/Blight,
+          // Conjunction Voltage), so they keep growing while procs land at least every `win` s. With random gaps a run
+          // lasts e^(rr*win) - 1 procs before it resets; nf = time-average stacks over a run (ramp to the cap, then held).
+          const ps = arc.procStack;
+          const per = (procs[ps.type] || 0) + (atk.forced && atk.forced.includes(ps.type) ? 1 : 0);
+          const rr = per * rate * K, run = Math.expm1(Math.min(50, rr * ps.win));
+          const nbar = run >= ps.max ? ps.max - ps.max * ps.max / (2 * run) : run / 2;
+          const nf = Math.max(0, Math.min(1, nbar / ps.max));
           if (Math.abs(nf - fArc) < 1e-6) break;
           fArc = nf;
         } else break;
