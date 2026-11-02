@@ -1,6 +1,7 @@
 // All-weapon sweep (no AI, runs free on GitHub Actions): finds the calculator's best build for every weapon's main attack
 // and flags anything that looks wrong, so the research runs know where to look.
 //   node scripts/sweep.js --shard 0/12 --out docs/sweep/part-0.json      (one slice of the weapon list)
+//   node scripts/sweep.js --only lenz,penta --out /tmp/x.json         (spot-check)
 //   node scripts/sweep.js --merge docs/sweep                           (part-*.json → docs/sweep/report.md)
 // Flags: error, no build / score not finite, two mods the game won't equip together, build over capacity, and a mod that
 // adds (almost) nothing while sitting in a slot — the pattern earlier bugs left behind (e.g. a magazine mod on a weapon
@@ -33,7 +34,8 @@ const { chromium } = require("playwright");
   await p.goto("file://" + path.join(ROOT, "index.html"));
   await p.waitForFunction(() => window.WFEngine && window.WF_APP);
   const ids = await p.evaluate(() => window.WF_WEAPONS.map((w) => w.id));
-  const mine = ids.filter((_, i) => i % sn === si);
+  const only = arg("--only");   // e.g. --only lenz,penta  (spot-check a few weapons)
+  const mine = only ? ids.filter((id) => only.split(",").includes(id)) : ids.filter((_, i) => i % sn === si);
   const rows = [];
   for (const id of mine) {
     const t0 = Date.now();
@@ -70,6 +72,13 @@ const { chromium } = require("playwright");
           if (s >= base.score * 0.999) row.flags.push("효과 없는 칸: " + ko(ids2[i]));
         }
         if (Object.values(base.share || {}).some((v) => !isFinite(v))) row.flags.push("속성 비중 NaN");
+        // impact and explosion of the same shot left as two attacks (wiki names didn't pair up in convert.py) -> the default
+        // attack counts only the impact (found 2026-11-03: Lenz 172 s, Stug 370 s, Aegrit 233 s)
+        if (!atk.parts && atk.kind === "gun") {
+          const ex = w.attacks.filter((x) => x !== atk && x.kind === "radial" && !/^(Incarnon|Alt)|Slam|Headshot/i.test(x.en || "") && Math.abs((x.fr || 0) - (atk.fr || 0)) < 0.05);
+          if (ex.length) row.flags.push("직격만 계산 — 같은 발의 폭발이 따로 있음: " + ex.map((x) => x.name).join(", "));
+        }
+        if (pf.grineer && pf.grineer.clear > 60) row.flags.push("전멸 60초 초과 — 공격 데이터 확인");
       } catch (e) { row.flags.push("오류: " + String(e && e.message || e).slice(0, 120)); }
       return row;
     }, id);
