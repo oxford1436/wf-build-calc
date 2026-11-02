@@ -292,7 +292,7 @@
     secondary_kinship: { ko: "세컨더리 킨쉽", en: "Secondary Kinship", slot: "secondary", manual: true, eff: { cc: 0.8 }, note: "아군 워프레임 버프 1개당 치명타 +20% (4개 가정)" },
     secondary_outburst: { ko: "세컨더리 아웃버스트", en: "Secondary Outburst", slot: "secondary", manual: true, eff: { cc: 2.4, cd: 2.4 }, note: "근접 연속기 12배를 소모해 30초간 치명타 확률·피해 +240% 가정" },
     secondary_surge: { ko: "세컨더리 서지", en: "Secondary Surge", slot: "secondary", none: true, note: "시전 직후 한 발만 강화 — 지속 피해 계산에서 제외" },
-    akimbo_slip_shot: { ko: "아킴보 슬립 샷", en: "Akimbo Slip Shot", slot: "secondary", types: ["Dual Pistols"], manual: true, eff: { ammoEff: 0.65 }, note: "슬라이딩 중 탄약 효율 (탄약만 영향)" },
+    akimbo_slip_shot: { ko: "아킴보 슬립 샷", en: "Akimbo Slip Shot", slot: "secondary", types: ["Dual Pistols"], manual: true, eff: { ammoEff: 0.65 }, note: "슬라이딩 중 탄약 효율 (탄약·재장전 간격)" },
     melee_influence: { ko: "밀리 인플루언스", slot: "melee" },
     melee_duplicate: { ko: "밀리 듀플리케이트", slot: "melee" },
     melee_animosity: { ko: "밀리 애니모시티", slot: "melee" },

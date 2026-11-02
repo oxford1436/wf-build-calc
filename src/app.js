@@ -68,7 +68,7 @@
     { k: "fac_s", ko: "대 스칼드라 피해", cls: "all", grp: "splice", base: 0.45, eff: { bane: "scaldra" }, need: ["대 인페스티드 피해", "대 그리니어 피해"] },
     { k: "wpd", ko: "약점 피해", cls: "gun", grp: "splice", base: 2.25, eff: (v) => ({ hsMult: 2 * v }), need: ["피해", "확대율 또는 멀티샷"], note: "헤드샷 때만" },
     { k: "wpcc", ko: "약점 치명타 확률", cls: "gun", grp: "splice", base: 2.475, eff: "wpcc", need: ["치명타 확률", "확대율 또는 멀티샷"], note: "헤드샷 때만" },
-    { k: "ammoeff", ko: "탄약 효율", cls: "gun", grp: "splice", base: 0.45, eff: "ammoEff", need: ["탄창 용량 + 재장전 속도", "또는 반동 + 최대 탄약"], note: "탄약 계산에만 반영, 상한 75%" },
+    { k: "ammoeff", ko: "탄약 효율", cls: "gun", grp: "splice", base: 0.45, eff: "ammoEff", need: ["탄창 용량 + 재장전 속도", "또는 반동 + 최대 탄약"], note: "그만큼 탄약을 안 써서 재장전 간격도 늘어남, 상한 75%" },
     { k: "holster", ko: "보관 중 탄창 재장전", cls: "gun", grp: "splice", base: 0.9, eff: null, need: ["최대 탄약", "재장전 속도 또는 탄창 용량"] },
     { k: "heavyd", ko: "강공 피해", cls: "melee", grp: "splice", base: 1.197, eff: "heavy", need: ["강공 효율", "추가 연속기 카운트 확률"] },
     { k: "windup", ko: "강공 준비 속도", cls: "melee", grp: "splice", base: 1.197, eff: "wind", need: ["강공 효율", "연속기 지속시간"] },

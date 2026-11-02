@@ -622,6 +622,10 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.57", date: "2026-11-02", title: "탄약 효율 = 재장전 간격도 늘어남",
+      items: [
+        "탄약 효율(리벤 접합 옵션, 프라이머리 크럭스 등)을 재장전 간격에도 반영합니다. 탄약 효율만큼 쏴도 탄약이 안 줄어서(75%면 4발 중 1발만 소모, Hotfix 44.1.3) 탄창 한 번으로 그만큼 더 쏘고 재장전을 덜 합니다. 지금까지는 남은 탄약 계산에만 넣어서, 탄약 효율 리벤을 낀 무기에도 프라임드 애모 스톡 같은 탄창 모드를 실제보다 높게 쳐서 추천했습니다.",
+      ] },
     { v: "1.56", date: "2026-11-02", title: "캐스케디아 플레어·프로스트바이트·블라이트·컨정션 볼티지 중첩",
       items: [
         "상태이상으로 쌓이는 아케인(캐스케디아 플레어, 프라이머리 프로스트바이트·블라이트, 컨정션 볼티지)의 중첩을 위키대로 고쳤습니다. 이 아케인들은 중첩마다 따로 사라지지 않고, 마지막 상태이상 뒤 10~12초 동안 하나도 안 걸려야 한꺼번에 사라집니다. 지금까지는 '최근 10~12초 동안 건 상태이상 수'만큼만 쌓인다고 계산해서, 계속 싸우는 상황에서도 최대(40중첩)에 한참 못 미치게 잡았습니다 — 캐스케디아 플레어를 쓰는 세팅이 크게 낮게 나왔습니다.",
@@ -1623,9 +1627,12 @@ header.top p{flex-basis:100%}
     if (ext.phoenix) a.phoenix = ext.phoenix;
     // magazine-based mods: Clip Delegation (+X per trigger pull landed in the last magazine, capped) and
     // Repeater Clip (fire rate for 9 s after a reload while aiming: full uptime if the magazine empties within it)
+    // Ammo Efficiency: that share of shots uses no ammo (cap 75%, Hotfix 44.1.3: "only 1 in 4 shots will consume ammo"),
+    // so a magazine lasts 1/(1 - eff) times as many shots and the weapon reloads that much less often
+    const magShots = (n) => n / (1 - Math.min(0.75, Math.max(0, a.ammoEff || 0)));
     for (const m of mods) {
       if (!m || !atk.mag) continue;
-      const magN = Math.max(1, atk.mag * (1 + a.mag));
+      const magN = Math.max(1, magShots(atk.mag * (1 + a.mag)));
       if (m.clipDeleg) { const stk = Math.min(m.clipDeleg.max, Math.floor(magN)); a.sc += m.clipDeleg.per * stk; a.ms += m.clipDeleg.per * stk; }
       if (m.reloadBuff && (!m.reloadBuff.aim || o.aim)) {
         const frB = (atk.fr || 1) * Math.max(0.05, 1 + a.fr + m.reloadBuff.fr);
@@ -1677,7 +1684,7 @@ header.top p{flex-basis:100%}
         const cc0 = Math.min(1, (atk.cc || 0) * (1 + a.cc * (isHeavy ? 2 : 1)) + a.ccFlat);
         const lam = def.trig === "crit" ? hits * cc0 * def.p : def.trig === "hit" ? hits * def.p
           : def.trig === "hs" ? hits * Math.max(o.hs || 0, (ext.weakFrac || 0)) * def.p
-          : def.trig === "reload" ? (atk.mag ? fr0 / Math.max(1, atk.mag * (1 + a.mag)) : 0) * def.p : 0;
+          : def.trig === "reload" ? (atk.mag ? fr0 / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0) * def.p : 0;
         up = uptime(lam, def.t);
       }
       for (const k in def.eff || {}) a[k] = (a[k] || 0) + def.eff[k] * up;
@@ -1715,7 +1722,7 @@ header.top p{flex-basis:100%}
       // spool-down while the trigger is held (Phenmor Incarnon Form: 100% → 60% over 51 shots, reset on release):
       // short bursts, so the average rate over one 51-shot burst
       if (atk.spoolDown) { const to = atk.spoolDown[1]; fr *= (1 - to) / Math.log(1 / to); }
-      const mag = Math.max(1, (atk.mag || 30) * (1 + a.mag));
+      const mag = Math.max(1, magShots((atk.mag || 30) * (1 + a.mag)));   // shots between reloads
       let reload = (atk.reload || 2) * (atk.byRound ? Math.max(0.1, 1 + a.mag) : 1) / Math.max(0.1, 1 + a.reload);
       // Cyte-09 Resupply (wiki): casting instantly reloads the held firearm → a reload costs only the cast
       if (ext.reloadCast != null) reload = Math.min(reload, ext.reloadCast);
@@ -1723,7 +1730,7 @@ header.top p{flex-basis:100%}
       const spoolT = atk.spool && atk.mag ? 0.277 * atk.spool / fr : 0;
       rate = atk.mag ? mag / (mag / fr + spoolT + reload) : fr;
     }
-    const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, atk.mag * (1 + a.mag)) : 0);
+    const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0);
     const msLock = a.msLock > 0;
     // atk.noMs: a radial part the wiki says multishot doesn't multiply (one blast per trigger pull)
     const ms0 = atk.noMs ? 1 : (atk.pellets || 1) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)));
@@ -1769,7 +1776,7 @@ header.top p{flex-basis:100%}
     let platedB = 0;
     if (arc && arc.plated && atk.mag) {
       const rl = (atk.reload || 2) / Math.max(0.1, 1 + a.reload);
-      const magN = atk.mag * (1 + a.mag), cyc = magN / Math.max(0.05, (atk.fr || 1) * (1 + a.fr)) + (ext.reloadCast != null ? Math.min(rl, ext.reloadCast) : rl);
+      const magN = atk.mag * (1 + a.mag), cyc = magShots(magN) / Math.max(0.05, (atk.fr || 1) * (1 + a.fr)) + (ext.reloadCast != null ? Math.min(rl, ext.reloadCast) : rl);
       platedB = 0.335 * Math.sqrt(magN) * Math.min(1, 10 / cyc);
     }
 
@@ -2448,7 +2455,7 @@ header.top p{flex-basis:100%}
     secondary_kinship: { ko: "세컨더리 킨쉽", en: "Secondary Kinship", slot: "secondary", manual: true, eff: { cc: 0.8 }, note: "아군 워프레임 버프 1개당 치명타 +20% (4개 가정)" },
     secondary_outburst: { ko: "세컨더리 아웃버스트", en: "Secondary Outburst", slot: "secondary", manual: true, eff: { cc: 2.4, cd: 2.4 }, note: "근접 연속기 12배를 소모해 30초간 치명타 확률·피해 +240% 가정" },
     secondary_surge: { ko: "세컨더리 서지", en: "Secondary Surge", slot: "secondary", none: true, note: "시전 직후 한 발만 강화 — 지속 피해 계산에서 제외" },
-    akimbo_slip_shot: { ko: "아킴보 슬립 샷", en: "Akimbo Slip Shot", slot: "secondary", types: ["Dual Pistols"], manual: true, eff: { ammoEff: 0.65 }, note: "슬라이딩 중 탄약 효율 (탄약만 영향)" },
+    akimbo_slip_shot: { ko: "아킴보 슬립 샷", en: "Akimbo Slip Shot", slot: "secondary", types: ["Dual Pistols"], manual: true, eff: { ammoEff: 0.65 }, note: "슬라이딩 중 탄약 효율 (탄약·재장전 간격)" },
     melee_influence: { ko: "밀리 인플루언스", slot: "melee" },
     melee_duplicate: { ko: "밀리 듀플리케이트", slot: "melee" },
     melee_animosity: { ko: "밀리 애니모시티", slot: "melee" },
@@ -2881,6 +2888,10 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.57", date: "2026-11-02", title: "탄약 효율 = 재장전 간격도 늘어남",
+      items: [
+        "탄약 효율(리벤 접합 옵션, 프라이머리 크럭스 등)을 재장전 간격에도 반영합니다. 탄약 효율만큼 쏴도 탄약이 안 줄어서(75%면 4발 중 1발만 소모, Hotfix 44.1.3) 탄창 한 번으로 그만큼 더 쏘고 재장전을 덜 합니다. 지금까지는 남은 탄약 계산에만 넣어서, 탄약 효율 리벤을 낀 무기에도 프라임드 애모 스톡 같은 탄창 모드를 실제보다 높게 쳐서 추천했습니다.",
+      ] },
     { v: "1.56", date: "2026-11-02", title: "캐스케디아 플레어·프로스트바이트·블라이트·컨정션 볼티지 중첩",
       items: [
         "상태이상으로 쌓이는 아케인(캐스케디아 플레어, 프라이머리 프로스트바이트·블라이트, 컨정션 볼티지)의 중첩을 위키대로 고쳤습니다. 이 아케인들은 중첩마다 따로 사라지지 않고, 마지막 상태이상 뒤 10~12초 동안 하나도 안 걸려야 한꺼번에 사라집니다. 지금까지는 '최근 10~12초 동안 건 상태이상 수'만큼만 쌓인다고 계산해서, 계속 싸우는 상황에서도 최대(40중첩)에 한참 못 미치게 잡았습니다 — 캐스케디아 플레어를 쓰는 세팅이 크게 낮게 나왔습니다.",
@@ -3882,9 +3893,12 @@ header.top p{flex-basis:100%}
     if (ext.phoenix) a.phoenix = ext.phoenix;
     // magazine-based mods: Clip Delegation (+X per trigger pull landed in the last magazine, capped) and
     // Repeater Clip (fire rate for 9 s after a reload while aiming: full uptime if the magazine empties within it)
+    // Ammo Efficiency: that share of shots uses no ammo (cap 75%, Hotfix 44.1.3: "only 1 in 4 shots will consume ammo"),
+    // so a magazine lasts 1/(1 - eff) times as many shots and the weapon reloads that much less often
+    const magShots = (n) => n / (1 - Math.min(0.75, Math.max(0, a.ammoEff || 0)));
     for (const m of mods) {
       if (!m || !atk.mag) continue;
-      const magN = Math.max(1, atk.mag * (1 + a.mag));
+      const magN = Math.max(1, magShots(atk.mag * (1 + a.mag)));
       if (m.clipDeleg) { const stk = Math.min(m.clipDeleg.max, Math.floor(magN)); a.sc += m.clipDeleg.per * stk; a.ms += m.clipDeleg.per * stk; }
       if (m.reloadBuff && (!m.reloadBuff.aim || o.aim)) {
         const frB = (atk.fr || 1) * Math.max(0.05, 1 + a.fr + m.reloadBuff.fr);
@@ -3936,7 +3950,7 @@ header.top p{flex-basis:100%}
         const cc0 = Math.min(1, (atk.cc || 0) * (1 + a.cc * (isHeavy ? 2 : 1)) + a.ccFlat);
         const lam = def.trig === "crit" ? hits * cc0 * def.p : def.trig === "hit" ? hits * def.p
           : def.trig === "hs" ? hits * Math.max(o.hs || 0, (ext.weakFrac || 0)) * def.p
-          : def.trig === "reload" ? (atk.mag ? fr0 / Math.max(1, atk.mag * (1 + a.mag)) : 0) * def.p : 0;
+          : def.trig === "reload" ? (atk.mag ? fr0 / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0) * def.p : 0;
         up = uptime(lam, def.t);
       }
       for (const k in def.eff || {}) a[k] = (a[k] || 0) + def.eff[k] * up;
@@ -3974,7 +3988,7 @@ header.top p{flex-basis:100%}
       // spool-down while the trigger is held (Phenmor Incarnon Form: 100% → 60% over 51 shots, reset on release):
       // short bursts, so the average rate over one 51-shot burst
       if (atk.spoolDown) { const to = atk.spoolDown[1]; fr *= (1 - to) / Math.log(1 / to); }
-      const mag = Math.max(1, (atk.mag || 30) * (1 + a.mag));
+      const mag = Math.max(1, magShots((atk.mag || 30) * (1 + a.mag)));   // shots between reloads
       let reload = (atk.reload || 2) * (atk.byRound ? Math.max(0.1, 1 + a.mag) : 1) / Math.max(0.1, 1 + a.reload);
       // Cyte-09 Resupply (wiki): casting instantly reloads the held firearm → a reload costs only the cast
       if (ext.reloadCast != null) reload = Math.min(reload, ext.reloadCast);
@@ -3982,7 +3996,7 @@ header.top p{flex-basis:100%}
       const spoolT = atk.spool && atk.mag ? 0.277 * atk.spool / fr : 0;
       rate = atk.mag ? mag / (mag / fr + spoolT + reload) : fr;
     }
-    const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, atk.mag * (1 + a.mag)) : 0);
+    const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0);
     const msLock = a.msLock > 0;
     // atk.noMs: a radial part the wiki says multishot doesn't multiply (one blast per trigger pull)
     const ms0 = atk.noMs ? 1 : (atk.pellets || 1) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)));
@@ -4028,7 +4042,7 @@ header.top p{flex-basis:100%}
     let platedB = 0;
     if (arc && arc.plated && atk.mag) {
       const rl = (atk.reload || 2) / Math.max(0.1, 1 + a.reload);
-      const magN = atk.mag * (1 + a.mag), cyc = magN / Math.max(0.05, (atk.fr || 1) * (1 + a.fr)) + (ext.reloadCast != null ? Math.min(rl, ext.reloadCast) : rl);
+      const magN = atk.mag * (1 + a.mag), cyc = magShots(magN) / Math.max(0.05, (atk.fr || 1) * (1 + a.fr)) + (ext.reloadCast != null ? Math.min(rl, ext.reloadCast) : rl);
       platedB = 0.335 * Math.sqrt(magN) * Math.min(1, 10 / cyc);
     }
 
@@ -4707,7 +4721,7 @@ header.top p{flex-basis:100%}
     secondary_kinship: { ko: "세컨더리 킨쉽", en: "Secondary Kinship", slot: "secondary", manual: true, eff: { cc: 0.8 }, note: "아군 워프레임 버프 1개당 치명타 +20% (4개 가정)" },
     secondary_outburst: { ko: "세컨더리 아웃버스트", en: "Secondary Outburst", slot: "secondary", manual: true, eff: { cc: 2.4, cd: 2.4 }, note: "근접 연속기 12배를 소모해 30초간 치명타 확률·피해 +240% 가정" },
     secondary_surge: { ko: "세컨더리 서지", en: "Secondary Surge", slot: "secondary", none: true, note: "시전 직후 한 발만 강화 — 지속 피해 계산에서 제외" },
-    akimbo_slip_shot: { ko: "아킴보 슬립 샷", en: "Akimbo Slip Shot", slot: "secondary", types: ["Dual Pistols"], manual: true, eff: { ammoEff: 0.65 }, note: "슬라이딩 중 탄약 효율 (탄약만 영향)" },
+    akimbo_slip_shot: { ko: "아킴보 슬립 샷", en: "Akimbo Slip Shot", slot: "secondary", types: ["Dual Pistols"], manual: true, eff: { ammoEff: 0.65 }, note: "슬라이딩 중 탄약 효율 (탄약·재장전 간격)" },
     melee_influence: { ko: "밀리 인플루언스", slot: "melee" },
     melee_duplicate: { ko: "밀리 듀플리케이트", slot: "melee" },
     melee_animosity: { ko: "밀리 애니모시티", slot: "melee" },
@@ -6437,7 +6451,7 @@ window.WF_GUIDE_META = {"ash": {"s": "strength", "en": "Ash", "t": "방어 무�
     { k: "fac_s", ko: "대 스칼드라 피해", cls: "all", grp: "splice", base: 0.45, eff: { bane: "scaldra" }, need: ["대 인페스티드 피해", "대 그리니어 피해"] },
     { k: "wpd", ko: "약점 피해", cls: "gun", grp: "splice", base: 2.25, eff: (v) => ({ hsMult: 2 * v }), need: ["피해", "확대율 또는 멀티샷"], note: "헤드샷 때만" },
     { k: "wpcc", ko: "약점 치명타 확률", cls: "gun", grp: "splice", base: 2.475, eff: "wpcc", need: ["치명타 확률", "확대율 또는 멀티샷"], note: "헤드샷 때만" },
-    { k: "ammoeff", ko: "탄약 효율", cls: "gun", grp: "splice", base: 0.45, eff: "ammoEff", need: ["탄창 용량 + 재장전 속도", "또는 반동 + 최대 탄약"], note: "탄약 계산에만 반영, 상한 75%" },
+    { k: "ammoeff", ko: "탄약 효율", cls: "gun", grp: "splice", base: 0.45, eff: "ammoEff", need: ["탄창 용량 + 재장전 속도", "또는 반동 + 최대 탄약"], note: "그만큼 탄약을 안 써서 재장전 간격도 늘어남, 상한 75%" },
     { k: "holster", ko: "보관 중 탄창 재장전", cls: "gun", grp: "splice", base: 0.9, eff: null, need: ["최대 탄약", "재장전 속도 또는 탄창 용량"] },
     { k: "heavyd", ko: "강공 피해", cls: "melee", grp: "splice", base: 1.197, eff: "heavy", need: ["강공 효율", "추가 연속기 카운트 확률"] },
     { k: "windup", ko: "강공 준비 속도", cls: "melee", grp: "splice", base: 1.197, eff: "wind", need: ["강공 효율", "연속기 지속시간"] },

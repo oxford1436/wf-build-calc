@@ -652,9 +652,12 @@
     if (ext.phoenix) a.phoenix = ext.phoenix;
     // magazine-based mods: Clip Delegation (+X per trigger pull landed in the last magazine, capped) and
     // Repeater Clip (fire rate for 9 s after a reload while aiming: full uptime if the magazine empties within it)
+    // Ammo Efficiency: that share of shots uses no ammo (cap 75%, Hotfix 44.1.3: "only 1 in 4 shots will consume ammo"),
+    // so a magazine lasts 1/(1 - eff) times as many shots and the weapon reloads that much less often
+    const magShots = (n) => n / (1 - Math.min(0.75, Math.max(0, a.ammoEff || 0)));
     for (const m of mods) {
       if (!m || !atk.mag) continue;
-      const magN = Math.max(1, atk.mag * (1 + a.mag));
+      const magN = Math.max(1, magShots(atk.mag * (1 + a.mag)));
       if (m.clipDeleg) { const stk = Math.min(m.clipDeleg.max, Math.floor(magN)); a.sc += m.clipDeleg.per * stk; a.ms += m.clipDeleg.per * stk; }
       if (m.reloadBuff && (!m.reloadBuff.aim || o.aim)) {
         const frB = (atk.fr || 1) * Math.max(0.05, 1 + a.fr + m.reloadBuff.fr);
@@ -706,7 +709,7 @@
         const cc0 = Math.min(1, (atk.cc || 0) * (1 + a.cc * (isHeavy ? 2 : 1)) + a.ccFlat);
         const lam = def.trig === "crit" ? hits * cc0 * def.p : def.trig === "hit" ? hits * def.p
           : def.trig === "hs" ? hits * Math.max(o.hs || 0, (ext.weakFrac || 0)) * def.p
-          : def.trig === "reload" ? (atk.mag ? fr0 / Math.max(1, atk.mag * (1 + a.mag)) : 0) * def.p : 0;
+          : def.trig === "reload" ? (atk.mag ? fr0 / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0) * def.p : 0;
         up = uptime(lam, def.t);
       }
       for (const k in def.eff || {}) a[k] = (a[k] || 0) + def.eff[k] * up;
@@ -744,7 +747,7 @@
       // spool-down while the trigger is held (Phenmor Incarnon Form: 100% → 60% over 51 shots, reset on release):
       // short bursts, so the average rate over one 51-shot burst
       if (atk.spoolDown) { const to = atk.spoolDown[1]; fr *= (1 - to) / Math.log(1 / to); }
-      const mag = Math.max(1, (atk.mag || 30) * (1 + a.mag));
+      const mag = Math.max(1, magShots((atk.mag || 30) * (1 + a.mag)));   // shots between reloads
       let reload = (atk.reload || 2) * (atk.byRound ? Math.max(0.1, 1 + a.mag) : 1) / Math.max(0.1, 1 + a.reload);
       // Cyte-09 Resupply (wiki): casting instantly reloads the held firearm → a reload costs only the cast
       if (ext.reloadCast != null) reload = Math.min(reload, ext.reloadCast);
@@ -752,7 +755,7 @@
       const spoolT = atk.spool && atk.mag ? 0.277 * atk.spool / fr : 0;
       rate = atk.mag ? mag / (mag / fr + spoolT + reload) : fr;
     }
-    const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, atk.mag * (1 + a.mag)) : 0);
+    const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0);
     const msLock = a.msLock > 0;
     // atk.noMs: a radial part the wiki says multishot doesn't multiply (one blast per trigger pull)
     const ms0 = atk.noMs ? 1 : (atk.pellets || 1) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)));
@@ -798,7 +801,7 @@
     let platedB = 0;
     if (arc && arc.plated && atk.mag) {
       const rl = (atk.reload || 2) / Math.max(0.1, 1 + a.reload);
-      const magN = atk.mag * (1 + a.mag), cyc = magN / Math.max(0.05, (atk.fr || 1) * (1 + a.fr)) + (ext.reloadCast != null ? Math.min(rl, ext.reloadCast) : rl);
+      const magN = atk.mag * (1 + a.mag), cyc = magShots(magN) / Math.max(0.05, (atk.fr || 1) * (1 + a.fr)) + (ext.reloadCast != null ? Math.min(rl, ext.reloadCast) : rl);
       platedB = 0.335 * Math.sqrt(magN) * Math.min(1, 10 / cyc);
     }
 
