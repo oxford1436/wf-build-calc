@@ -622,6 +622,13 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.58", date: "2026-11-02", title: "처치 중첩은 무리마다 0부터 · 엑시무스 기본 포함 · 근소한 차이는 고른 세팅",
+      items: [
+        "갈바나이즈드 모드·머시리스처럼 처치해야 쌓이는 효과를 무리마다 0에서 시작해 쌓이는 평균으로 계산합니다 (지금까지는 처음부터 최대). 최대 중첩 수는 위키 값: 머시리스 12, 갈바나이즈드 체임버 5, 헬·디퓨전·스틸 4, 샷 3, 앱티튜드·새비 2.",
+        "프라이머리·세컨더리 머시리스의 재장전 속도 +30%는 처치와 상관없이 항상 켜지는 효과라 보스전에서도 넣습니다 (위키).",
+        "잡몹 무리에 오버가드가 있는 엑시무스 1명을 기본으로 넣었습니다. 오버가드에는 바이러스가 안 들고 자성은 실드처럼 잘 듭니다 (위키 Overguard).",
+        "점수가 2% 안으로 붙은 세팅끼리는 중첩 유지·처음부터·팩션별로 따로 계산했을 때 고르게 강한 쪽을 1위로 둡니다.",
+      ] },
     { v: "1.57", date: "2026-11-02", title: "탄약 효율 = 재장전 간격도 늘어남",
       items: [
         "탄약 효율(리벤 접합 옵션, 프라이머리 크럭스 등)을 재장전 간격에도 반영합니다. 탄약 효율만큼 쏴도 탄약이 안 줄어서(75%면 4발 중 1발만 소모, Hotfix 44.1.3) 탄창 한 번으로 그만큼 더 쏘고 재장전을 덜 합니다. 지금까지는 남은 탄약 계산에만 넣어서, 탄약 효율 리벤을 낀 무기에도 프라임드 애모 스톡 같은 탄창 모드를 실제보다 높게 쳐서 추천했습니다.",
@@ -1076,10 +1083,11 @@ header.top p{flex-basis:100%}
     for (const k of NUM_KEYS) a[k] = 0;
     return a;
   }
-  function applyEff(a, eff) {
+  function applyEff(a, eff, f) {
+    const sc = f == null ? 1 : f;
     for (const k in eff) {
-      const v = eff[k];
-      if (k === "tenno" || k === "bane") { a[k] = a[k] || {}; for (const t in v) a[k][t] = (a[k][t] || 0) + v[t]; continue; }
+      const v = typeof eff[k] === "number" ? eff[k] * sc : eff[k];
+      if (k === "tenno" || k === "bane") { a[k] = a[k] || {}; for (const t in v) a[k][t] = (a[k][t] || 0) + v[t] * sc; continue; }
       if (k in a.elem) a.elem[k] += v;
       else if (k in a.phys) a.phys[k] += v;
       else if (k in a.extra) a.extra[k] += v;
@@ -1102,6 +1110,19 @@ header.top p{flex-basis:100%}
       default: return false;
     }
   }
+  // On-kill stacks (Galvanized mods, Merciless …; wiki: each kill adds one stack up to `stk`) in a crowd fight start at 0
+  // for every pack (user's choice 2026-11-02): with N kills in the pack, the k-th kill lands with min(k, stk) stacks, so
+  // the effect runs at the average of min(k, stk)/stk over the pack. Bosses: no kill stacks. o.killRamp === false = full.
+  function rampFrac(stk, n) {
+    const N = Math.max(1, Math.round(n || 12)); let s = 0;
+    for (let k = 0; k < N; k++) s += Math.min(k, stk);
+    return s / (N * stk);
+  }
+  function condScale(c, o) {
+    if (!condActive(c.when, o)) return 0;
+    if (c.when === "kill" && c.stk > 1 && o.scenario === "crowd" && o.killRamp !== false) return rampFrac(c.stk, o.crowdN);
+    return 1;
+  }
   function aggregate(mods, o, riven) {
     const a = newAgg();
     a.frBow = 0;
@@ -1120,7 +1141,7 @@ header.top p{flex-basis:100%}
       else if (m.eff) applyEff(a, m.eff);
       if (m.bow2 && m.eff && m.eff.fr) a.frBow += m.eff.fr;   // "(x2 for Bows)" fire-rate mods
       if (m.id === "__riven" && m.eff && m.eff.fr) a.frBow += m.eff.fr;
-      if (m.cond) for (const c of m.cond) if (condActive(c.when, o)) applyEff(a, c.eff);
+      if (m.cond) for (const c of m.cond) { const f = condScale(c, o); if (f > 0) applyEff(a, c.eff, f); }
     }
     if (riven) applyEff(a, riven);
     return a;
@@ -1254,7 +1275,12 @@ header.top p{flex-basis:100%}
     const out = {};
     for (const f of o.factions) {
       if (o.scenario === "boss") out[f] = { main: enemyStats(f, "boss", level, o.steel) };
-      else if (o.scenario === "crowd") out[f] = { main: enemyStats(f, "light", level, o.steel), heavy: enemyStats(f, "heavy", level, o.steel) };
+      else if (o.scenario === "crowd") {
+        out[f] = { main: enemyStats(f, "light", level, o.steel), heavy: enemyStats(f, "heavy", level, o.steel) };
+        // one Eximus in the pack (user's choice 2026-11-02): a light unit carrying Overguard (wiki "Overguard": Magnetic boosts
+        // damage to it like shields, Viral does not; crowd control ignored, Cold up to 4 stacks)
+        if (o.eximus !== false) out[f].ex = Object.assign(enemyStats(f, "light", level, o.steel), { og: overguardAt(level) });
+      }
       else { out[f] = { main: enemyStats(f, "heavy", level, o.steel) }; if (o.og) out[f].main.og = overguardAt(level); }
     }
     return out;
@@ -1464,6 +1490,7 @@ header.top p{flex-basis:100%}
         const tHit = ttk(pMain);
         let tHeavy = tHit, pHeavy = pMain;
         if (tgs.heavy) { pHeavy = Object.assign({}, base, hitP, { hp: tgs.heavy.hp, sh: tgs.heavy.sh * shc, ar0: tgs.heavy.ar }); tHeavy = ttk(pHeavy); }
+        const tEx = tgs.ex ? ttk(Object.assign({}, base, hitP, { hp: tgs.ex.hp, sh: tgs.ex.sh * shc, ar0: tgs.ex.ar, og: tgs.ex.og })) : 0;
         let tNon = Infinity;
         if (o.scenario === "crowd" && hasNon && main.N > main.K) tNon = ttk(Object.assign({}, base, nonP, { hp: tg.hp, sh: tg.sh, ar0: tg.ar }));
         let kps, clear, Keff = main.K;
@@ -1496,9 +1523,10 @@ header.top p{flex-basis:100%}
           // (the first shot goes off as soon as the crosshair is on it, so a one-shot kill costs only the re-aim time,
           // unless the weapon's own fire interval is longer than that)
           const eng = (t) => Math.max(period, tAcq + t);
-          const nL = tgs.heavy ? main.N - 1 : main.N;
-          const sweep = (nL / Keff) * eng(tHit) + (tgs.heavy ? eng(tHeavy) : 0);
-          const spread = isFinite(tNon) && tNon < 40 ? Math.max(tHit, tNon) + (tgs.heavy ? eng(tHeavy) : 0) : Infinity;
+          const nL = main.N - (tgs.heavy ? 1 : 0) - (tgs.ex ? 1 : 0);
+          const extra = (tgs.heavy ? eng(tHeavy) : 0) + (tgs.ex ? eng(tEx) : 0);   // the heavy and the Eximus are engagements of their own
+          const sweep = (nL / Keff) * eng(tHit) + extra;
+          const spread = isFinite(tNon) && tNon < 40 ? Math.max(tHit, tNon) + extra : Infinity;
           let lights = Math.min(sweep, spread);
           clear = lights;
           if (kx) {
@@ -1507,7 +1535,7 @@ header.top p{flex-basis:100%}
             const n10 = Math.min(main.N - 1, (o.density || 0) * Math.PI * kx.r * kx.r);
             const frac = Math.min(1, kx.pct + kx.flat / Math.max(1, tg.hp));
             const k2 = Math.min(main.N, Keff * (1 + n10 * frac));
-            lights = Math.min(lights, (nL / k2) * eng(tHit) + (tgs.heavy ? eng(tHeavy) : 0));
+            lights = Math.min(lights, (nL / k2) * eng(tHit) + extra);
             // the heavy mixed in also takes the explosions of the enemies killed near it
             let tExp = Infinity;
             if (tgs.heavy) {
@@ -1515,11 +1543,11 @@ header.top p{flex-basis:100%}
               const nearRate = (k2 / period) * n10 / Math.max(1, main.N - 1);
               tExp = tHit + Math.ceil(1 / fh) / Math.max(1e-6, nearRate);
             }
-            clear = tgs.heavy ? Math.min(lights, (nL / k2) * eng(tHit) + eng(Math.min(tHeavy, tExp))) : lights;
+            clear = tgs.heavy ? Math.min(lights, (nL / k2) * eng(tHit) + eng(Math.min(tHeavy, tExp)) + (tgs.ex ? eng(tEx) : 0)) : lights;
           }
           kps = main.N / Math.max(period, clear);
         } else { clear = Math.max(period, tHit); kps = 1 / clear; }
-        return { ttk: tHit, ttkHeavy: tHeavy, ttkNon: tNon, kps, clear, target: tg, targetHeavy: tgs.heavy || null, Keff,
+        return { ttk: tHit, ttkHeavy: tHeavy, ttkEx: tgs.ex ? tEx : null, ttkNon: tNon, kps, clear, target: tg, targetHeavy: tgs.heavy || null, Keff,
           one: oneHit(pMain), oneHeavy: tgs.heavy ? oneHit(pHeavy) : oneHit(pMain) };
       };
       // the hardest enemy of the scenario at any level (crowd: the heavy mixed in; single: heavy with overguard if set; boss)
@@ -1597,7 +1625,7 @@ header.top p{flex-basis:100%}
     const arc = o.arcane ? (root.WF_ARCANES || {})[o.arcane] : null;
     if (arc) {
       if (arc.eff) applyEff(a, arc.eff);
-      if (arc.cond) for (const c of arc.cond) if (condActive(c.when, oo)) applyEff(a, c.eff);
+      if (arc.cond) for (const c of arc.cond) { const f = condScale(c, oo); if (f > 0) applyEff(a, c.eff, f); }
     }
     if (arc && arc.energyMs) a.ms += Math.min(3.5, arc.energyMs * (o.maxEnergy || 300) / 100);
     if (arc && arc.bulwark) a.dmg += Math.min(5, Math.max(0, ((o.armor || 0) - 1000) * 0.01));
@@ -2153,6 +2181,24 @@ header.top p{flex-basis:100%}
       }
     }
     out.sort((x, y) => y.score - x.score);
+    // near ties (within 2% of the best, user's choice 2026-11-02): put first the build that holds up best when the fight
+    // differs — stacks held the whole time / starting from zero, and each faction on its own
+    if (out.length > 1 && o.robustTie !== false) {
+      const band = out.filter((r) => r.score >= out[0].score * 0.98).slice(0, 8);
+      const alts = [];
+      if (o.scenario === "crowd") alts.push({ killRamp: false }, { kills: false });
+      if ((o.factions || []).length > 1) for (const f of o.factions) alts.push({ factions: [f] });
+      if (band.length > 1 && alts.length) {
+        const sc = band.map((r) => alts.map((p) => {
+          const oo = Object.assign({}, o, p, { val: r.val, arcane: r.arcane, layoutTTK: true }); oo.targets = targetsFor(oo);
+          return evaluate(weapon, atk, r.mods, oo).score;
+        }));
+        const best = alts.map((_, j) => Math.max(...sc.map((row) => row[j])));
+        band.forEach((r, i) => { r.robust = Math.exp(sc[i].reduce((t, v, j) => t + Math.log(Math.max(1e-9, v / best[j])), 0) / alts.length); });
+        band.sort((x, y) => (y.robust - x.robust) || (y.score - x.score));
+        out.splice(0, band.length, ...band);
+      }
+    }
     return out;
   }
 
@@ -2174,7 +2220,7 @@ header.top p{flex-basis:100%}
   add("heavy_caliber", "헤비 칼리버", "Heavy Caliber", ["rifle"], { dmg: 1.65 });
   add("semi_rifle_cannonade", "세미 라이플 캐노네이드", "Semi-Rifle Cannonade", ["rifle"], { dmg: 2.4, pt: 1.5, lock: 1 }, { req: "semi" });
   add("split_chamber", "스플릿 챔버", "Split Chamber", ["rifle"], { ms: 0.9 }, { group: "r_ms" });
-  add("galvanized_chamber", "갈바나이즈드 챔버", "Galvanized Chamber", ["rifle"], { ms: 0.8 }, { group: "r_ms", cond: [{ when: "kill", eff: { ms: 1.5 } }] });
+  add("galvanized_chamber", "갈바나이즈드 챔버", "Galvanized Chamber", ["rifle"], { ms: 0.8 }, { group: "r_ms", cond: [{ when: "kill", eff: { ms: 1.5 }, stk: 5 }] });
   add("vigilante_armaments", "비질란테 아마먼트", "Vigilante Armaments", ["rifle"], { ms: 0.6 });
   add("point_strike", "포인트 스트라이크", "Point Strike", ["rifle"], { cc: 1.5 });
   add("critical_delay", "크리티컬 딜레이", "Critical Delay", ["rifle"], { cc: 2.0, frneg: -0.2 });
@@ -2184,7 +2230,7 @@ header.top p{flex-basis:100%}
   add("galvanized_scope", "갈바나이즈드 스코프", "Galvanized Scope", ["rifle"], {}, { group: "r_scope", cond: [{ when: "headshot", eff: { cc: 3.2 } }], note: "조준+헤드샷 처치" });
   add("bladed_rounds", "블레이디드 라운드", "Bladed Rounds", ["rifle"], {}, { cond: [{ when: "aim", eff: { cd: 1.2 } }], note: "조준 중 처치" });
   add("rifle_aptitude", "라이플 앱티튜드", "Rifle Aptitude", ["rifle"], { sc: 0.9 }, { group: "r_sc" });
-  add("galvanized_aptitude", "갈바나이즈드 앱티튜드", "Galvanized Aptitude", ["rifle"], { sc: 0.8 }, { group: "r_sc", cond: [{ when: "kill", eff: { gco: 0.8 } }] });
+  add("galvanized_aptitude", "갈바나이즈드 앱티튜드", "Galvanized Aptitude", ["rifle"], { sc: 0.8 }, { group: "r_sc", cond: [{ when: "kill", eff: { gco: 0.8 }, stk: 2 }] });
   add("rifle_elementalist", "라이플 엘리멘탈리스트", "Rifle Elementalist", ["rifle"], { sd: 0.9, pt: 0.6 });
   add("continuous_misery", "컨티뉴어스 미저리", "Continuous Misery", ["rifle"], { dur: 1.0 });
   add("speed_trigger", "스피드 트리거", "Speed Trigger", ["rifle"], { fr: 0.6 });
@@ -2212,7 +2258,7 @@ header.top p{flex-basis:100%}
   add("shotgun_barrage", "샷건 배라지", "Shotgun Barrage", ["shotgun"], { fr: 0.9 }, { group: "s_fr" });
   add("amalgam_shotgun_barrage", "아말감 샷건 배라지", "Amalgam Shotgun Barrage", ["shotgun"], { fr: 0.85 }, { group: "s_fr" });
   add("hells_chamber", "헬스 챔버", "Hell's Chamber", ["shotgun"], { ms: 1.2 }, { group: "s_ms" });
-  add("galvanized_hell", "갈바나이즈드 헬", "Galvanized Hell", ["shotgun"], { ms: 1.1 }, { group: "s_ms", cond: [{ when: "kill", eff: { ms: 1.2 } }] });
+  add("galvanized_hell", "갈바나이즈드 헬", "Galvanized Hell", ["shotgun"], { ms: 1.1 }, { group: "s_ms", cond: [{ when: "kill", eff: { ms: 1.2 }, stk: 4 }] });
   add("critical_deceleration", "크리티컬 디셀러레이션", "Critical Deceleration", ["shotgun"], { cc: 2.0, frneg: -0.2 });
   add("blunderbuss", "블런더버스", "Blunderbuss", ["shotgun"], { cc: 0.9 }, { group: "s_cc" });
   add("primed_blunderbuss", "프라임드 블런더버스", "Primed Blunderbuss", ["shotgun"], { cc: 1.65 }, { group: "s_cc" });
@@ -2221,7 +2267,7 @@ header.top p{flex-basis:100%}
   add("primed_ravage", "프라임드 래비지", "Primed Ravage", ["shotgun"], { cd: 1.1 }, { group: "s_cd" });
   add("shrapnel_shot", "슈라프넬 샷", "Shrapnel Shot", ["shotgun"], {}, { cond: [{ when: "aim", eff: { cd: 0.99 } }], note: "조준 중 처치" });
   add("shotgun_savvy", "샷건 새비", "Shotgun Savvy", ["shotgun"], { sc: 0.9 }, { group: "s_sc" });
-  add("galvanized_savvy", "갈바나이즈드 새비", "Galvanized Savvy", ["shotgun"], { sc: 0.8 }, { group: "s_sc", cond: [{ when: "kill", eff: { gco: 0.8 } }] });
+  add("galvanized_savvy", "갈바나이즈드 새비", "Galvanized Savvy", ["shotgun"], { sc: 0.8 }, { group: "s_sc", cond: [{ when: "kill", eff: { gco: 0.8 }, stk: 2 }] });
   add("shotgun_elementalist", "샷건 엘리멘탈리스트", "Shotgun Elementalist", ["shotgun"], { sd: 0.9, mag: 0.6 });
   add("lingering_torment", "링거링 토먼트", "Lingering Torment", ["shotgun"], { dur: 0.9 });
   add("incendiary_coat", "인센디어리 코트", "Incendiary Coat", ["shotgun"], { heat: 0.9 });
@@ -2242,7 +2288,7 @@ header.top p{flex-basis:100%}
   add("augur_pact", "어거 팩트", "Augur Pact", ["pistol"], { dmg: 0.9 });
   add("semi_pistol_cannonade", "세미 피스톨 캐노네이드", "Semi-Pistol Cannonade", ["pistol"], { dmg: 3.0, pt: 1.5, lock: 1 }, { req: "semi" });
   add("barrel_diffusion", "배럴 디퓨전", "Barrel Diffusion", ["pistol"], { ms: 1.2 }, { group: "p_ms" });
-  add("galvanized_diffusion", "갈바나이즈드 디퓨전", "Galvanized Diffusion", ["pistol"], { ms: 1.1 }, { group: "p_ms", cond: [{ when: "kill", eff: { ms: 1.2 } }] });
+  add("galvanized_diffusion", "갈바나이즈드 디퓨전", "Galvanized Diffusion", ["pistol"], { ms: 1.1 }, { group: "p_ms", cond: [{ when: "kill", eff: { ms: 1.2 }, stk: 4 }] });
   add("amalgam_barrel_diffusion", "아말감 배럴 디퓨전", "Amalgam Barrel Diffusion", ["pistol"], { ms: 1.1 }, { group: "p_ms" });
   add("lethal_torrent", "리썰 토렌트", "Lethal Torrent", ["pistol"], { ms: 0.6, fr: 0.6 });
   add("pistol_gambit", "피스톨 갬빗", "Pistol Gambit", ["pistol"], { cc: 1.2 }, { group: "p_cc" });
@@ -2254,7 +2300,7 @@ header.top p{flex-basis:100%}
   add("galvanized_crosshairs", "갈바나이즈드 크로스헤어", "Galvanized Crosshairs", ["pistol"], {}, { group: "p_scope", cond: [{ when: "headshot", eff: { cc: 3.2 } }], note: "조준+헤드샷 처치" });
   add("sharpened_bullets", "샤픈드 불릿", "Sharpened Bullets", ["pistol"], {}, { cond: [{ when: "aim", eff: { cd: 0.75 } }], note: "조준 중 처치" });
   add("sure_shot", "슈어 샷", "Sure Shot", ["pistol"], { sc: 0.9 }, { group: "p_sc" });
-  add("galvanized_shot", "갈바나이즈드 샷", "Galvanized Shot", ["pistol"], { sc: 0.8 }, { group: "p_sc", cond: [{ when: "kill", eff: { gco: 1.2 } }] });
+  add("galvanized_shot", "갈바나이즈드 샷", "Galvanized Shot", ["pistol"], { sc: 0.8 }, { group: "p_sc", cond: [{ when: "kill", eff: { gco: 1.2 }, stk: 3 }] });
   add("pistol_elementalist", "피스톨 엘리멘탈리스트", "Pistol Elementalist", ["pistol"], { sd: 0.9, reload: 0.6 });
   add("gunslinger", "건슬링어", "Gunslinger", ["pistol"], { fr: 0.72 });
   add("anemic_agility", "애너믹 어질리티", "Anemic Agility", ["pistol"], { fr: 0.9, dmg: -0.15 });
@@ -2280,7 +2326,7 @@ header.top p{flex-basis:100%}
   add("sacrificial_steel", "새크리피셜 스틸", "Sacrificial Steel", ["melee"], { cc: 2.2 }, { group: "m_steel", set: "sacrificial", setMul: 1.25 });
   // variant of Pressure Point (can't be equipped together); Sacrificial set (with Steel): each x1.25 → +137.5%
   add("sacrificial_pressure", "새크리피셜 프레셔", "Sacrificial Pressure", ["melee"], { dmg: 1.1 }, { group: "m_dmg", set: "sacrificial", setMul: 1.25, note: "센티언트 상대 x1.33 (미반영)" });
-  add("galvanized_steel", "갈바나이즈드 스틸", "Galvanized Steel", ["melee"], { cc: 1.1 }, { group: "m_steel", cond: [{ when: "kill", eff: { cd: 1.2 } }] });
+  add("galvanized_steel", "갈바나이즈드 스틸", "Galvanized Steel", ["melee"], { cc: 1.1 }, { group: "m_steel", cond: [{ when: "kill", eff: { cd: 1.2 }, stk: 4 }] });
   add("organ_shatter", "오르건 섀터", "Organ Shatter", ["melee"], { cd: 0.9 }, { group: "m_cd" });
   add("amalgam_organ_shatter", "아말감 오르건 섀터", "Amalgam Organ Shatter", ["melee"], { cd: 0.85, wind: 0.6 }, { group: "m_cd" });
   add("gladiator_might", "글래디에이터 마이트", "Gladiator Might", ["melee"], { cd: 0.6 });
@@ -2290,7 +2336,7 @@ header.top p{flex-basis:100%}
   add("melee_prowess", "밀리 프로웨스", "Melee Prowess", ["melee"], { sc: 0.9 });
   add("drifting_contact", "드리프팅 컨택트", "Drifting Contact", ["melee"], { sc: 0.4 });
   add("melee_elementalist", "밀리 엘리멘탈리스트", "Melee Elementalist", ["melee"], { sd: 0.9, wind: 0.6 }, { group: "m_el" });
-  add("galvanized_elementalist", "갈바나이즈드 엘리멘탈리스트", "Galvanized Elementalist", ["melee"], { sd: 0.8 }, { group: "m_el", cond: [{ when: "kill", eff: { sc: 1.2 } }] });
+  add("galvanized_elementalist", "갈바나이즈드 엘리멘탈리스트", "Galvanized Elementalist", ["melee"], { sd: 0.8 }, { group: "m_el", cond: [{ when: "kill", eff: { sc: 1.2 }, stk: 4 }] });
   add("lasting_sting", "래스팅 스팅", "Lasting Sting", ["melee"], { dur: 1.1 });
   add("north_wind", "노스 윈드", "North Wind", ["melee"], { cold: 0.9 });
   add("molten_impact", "몰튼 임팩트", "Molten Impact", ["melee"], { heat: 0.9 });
@@ -2304,7 +2350,7 @@ header.top p{flex-basis:100%}
   add("focus_energy", "포커스 에너지", "Focus Energy", ["melee"], { elec: 0.6, hae: 0.4 });
   add("killing_blow", "킬링 블로우", "Killing Blow", ["melee"], { heavy: 1.2, wind: 0.6 }, { req: "heavy" });
   add("corrupt_charge", "커럽트 차지", "Corrupt Charge", ["melee"], { ic: 30 }, { req: "heavy" });
-  add("galvanized_reflex", "갈바나이즈드 리플렉스", "Galvanized Reflex", ["melee"], { hae: 0.5 }, { req: "heavy", group: "m_reflex", cond: [{ when: "kill", eff: { ic: 81.4 } }] });   // 20.35 × 4 stacks (wiki true value; the card rounds to 20)
+  add("galvanized_reflex", "갈바나이즈드 리플렉스", "Galvanized Reflex", ["melee"], { hae: 0.5 }, { req: "heavy", group: "m_reflex", cond: [{ when: "kill", eff: { ic: 81.4 }, stk: 4 }] });   // 20.35 × 4 stacks (wiki true value; the card rounds to 20)
   // explodes on the first contact (bounce explosion: 50% damage, no combo multiplier, no guaranteed procs) and returns at once;
   // a heavy-attack detonation still works in the same throw (wiki)
   add("volatile_quick_return", "볼래틸 퀵 리턴", "Volatile Quick Return", ["melee"], { radius: 3, volatile: 1 }, { req: "glaive", note: "벽에 튕겨 엉뚱한 방향으로 가지 않음(튕김 −4) · 폭발 범위 +3m · 닿을 때 작은 폭발(피해 50%, 연속기 배율 없음)" });
@@ -2422,7 +2468,7 @@ header.top p{flex-basis:100%}
   // weapon arcanes. manual: needs a condition the player has to set up — compared only when picked by hand.
   // none: no effect on weapon damage (listed so nothing is silently missing).
   const ARC = {
-    primary_merciless: { ko: "프라이머리 머시리스", slot: "primary", cond: [{ when: "kill", eff: { dmg: 3.6, reload: 0.3 } }] },
+    primary_merciless: { ko: "프라이머리 머시리스", slot: "primary", eff: { reload: 0.3 }, cond: [{ when: "kill", eff: { dmg: 3.6 }, stk: 12 }] },   // wiki: +30%/kill x12, 4 s; reload +30% passive
     primary_deadhead: { ko: "프라이머리 데드헤드", slot: "primary", eff: { hsMult: 0.3 }, cond: [{ when: "hs", eff: { dmg: 3.6 } }] },
     primary_dexterity: { ko: "프라이머리 덱스터리티", slot: "primary", manual: true, cond: [{ when: "kill", eff: { dmg: 3.6 } }], note: "근접 처치 6회로 최대 중첩" },
     primary_frostbite: { ko: "프라이머리 프로스트바이트", slot: "primary", procStack: { type: "cold", cd: 1.2, ms: 0.9, win: 12, max: 40 } },
@@ -2438,7 +2484,7 @@ header.top p{flex-basis:100%}
     primary_exhilarate: { ko: "프라이머리 익질러레이트", en: "Primary Exhilarate", slot: "primary", none: true, note: "에너지 회복" },
     primary_obstruct: { ko: "프라이머리 옵스트럭트", en: "Primary Obstruct", slot: "primary", none: true, note: "적 무기 고장" },
     longbow_sharpshot: { ko: "롱보우 샤프샷", en: "Longbow Sharpshot", slot: "primary", types: ["Bow"], cond: [{ when: "hs", eff: { dmg: 1.5 } }], note: "약점 명중 후 다음 발 +300% (헤드샷 50% 가정)" },
-    secondary_merciless: { ko: "세컨더리 머시리스", slot: "secondary", cond: [{ when: "kill", eff: { dmg: 3.6, reload: 0.3 } }] },
+    secondary_merciless: { ko: "세컨더리 머시리스", slot: "secondary", eff: { reload: 0.3 }, cond: [{ when: "kill", eff: { dmg: 3.6 }, stk: 12 }] },
     secondary_deadhead: { ko: "세컨더리 데드헤드", slot: "secondary", eff: { hsMult: 0.3 }, cond: [{ when: "hs", eff: { dmg: 3.6 } }] },
     secondary_dexterity: { ko: "세컨더리 덱스터리티", en: "Secondary Dexterity", slot: "secondary", manual: true, cond: [{ when: "kill", eff: { dmg: 3.6 } }], note: "근접 처치 6회로 최대 중첩" },
     secondary_shiver: { ko: "세컨더리 쉬버", en: "Secondary Shiver", slot: "secondary", coldVuln: 0.45 },
@@ -2888,6 +2934,13 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.58", date: "2026-11-02", title: "처치 중첩은 무리마다 0부터 · 엑시무스 기본 포함 · 근소한 차이는 고른 세팅",
+      items: [
+        "갈바나이즈드 모드·머시리스처럼 처치해야 쌓이는 효과를 무리마다 0에서 시작해 쌓이는 평균으로 계산합니다 (지금까지는 처음부터 최대). 최대 중첩 수는 위키 값: 머시리스 12, 갈바나이즈드 체임버 5, 헬·디퓨전·스틸 4, 샷 3, 앱티튜드·새비 2.",
+        "프라이머리·세컨더리 머시리스의 재장전 속도 +30%는 처치와 상관없이 항상 켜지는 효과라 보스전에서도 넣습니다 (위키).",
+        "잡몹 무리에 오버가드가 있는 엑시무스 1명을 기본으로 넣었습니다. 오버가드에는 바이러스가 안 들고 자성은 실드처럼 잘 듭니다 (위키 Overguard).",
+        "점수가 2% 안으로 붙은 세팅끼리는 중첩 유지·처음부터·팩션별로 따로 계산했을 때 고르게 강한 쪽을 1위로 둡니다.",
+      ] },
     { v: "1.57", date: "2026-11-02", title: "탄약 효율 = 재장전 간격도 늘어남",
       items: [
         "탄약 효율(리벤 접합 옵션, 프라이머리 크럭스 등)을 재장전 간격에도 반영합니다. 탄약 효율만큼 쏴도 탄약이 안 줄어서(75%면 4발 중 1발만 소모, Hotfix 44.1.3) 탄창 한 번으로 그만큼 더 쏘고 재장전을 덜 합니다. 지금까지는 남은 탄약 계산에만 넣어서, 탄약 효율 리벤을 낀 무기에도 프라임드 애모 스톡 같은 탄창 모드를 실제보다 높게 쳐서 추천했습니다.",
@@ -3342,10 +3395,11 @@ header.top p{flex-basis:100%}
     for (const k of NUM_KEYS) a[k] = 0;
     return a;
   }
-  function applyEff(a, eff) {
+  function applyEff(a, eff, f) {
+    const sc = f == null ? 1 : f;
     for (const k in eff) {
-      const v = eff[k];
-      if (k === "tenno" || k === "bane") { a[k] = a[k] || {}; for (const t in v) a[k][t] = (a[k][t] || 0) + v[t]; continue; }
+      const v = typeof eff[k] === "number" ? eff[k] * sc : eff[k];
+      if (k === "tenno" || k === "bane") { a[k] = a[k] || {}; for (const t in v) a[k][t] = (a[k][t] || 0) + v[t] * sc; continue; }
       if (k in a.elem) a.elem[k] += v;
       else if (k in a.phys) a.phys[k] += v;
       else if (k in a.extra) a.extra[k] += v;
@@ -3368,6 +3422,19 @@ header.top p{flex-basis:100%}
       default: return false;
     }
   }
+  // On-kill stacks (Galvanized mods, Merciless …; wiki: each kill adds one stack up to `stk`) in a crowd fight start at 0
+  // for every pack (user's choice 2026-11-02): with N kills in the pack, the k-th kill lands with min(k, stk) stacks, so
+  // the effect runs at the average of min(k, stk)/stk over the pack. Bosses: no kill stacks. o.killRamp === false = full.
+  function rampFrac(stk, n) {
+    const N = Math.max(1, Math.round(n || 12)); let s = 0;
+    for (let k = 0; k < N; k++) s += Math.min(k, stk);
+    return s / (N * stk);
+  }
+  function condScale(c, o) {
+    if (!condActive(c.when, o)) return 0;
+    if (c.when === "kill" && c.stk > 1 && o.scenario === "crowd" && o.killRamp !== false) return rampFrac(c.stk, o.crowdN);
+    return 1;
+  }
   function aggregate(mods, o, riven) {
     const a = newAgg();
     a.frBow = 0;
@@ -3386,7 +3453,7 @@ header.top p{flex-basis:100%}
       else if (m.eff) applyEff(a, m.eff);
       if (m.bow2 && m.eff && m.eff.fr) a.frBow += m.eff.fr;   // "(x2 for Bows)" fire-rate mods
       if (m.id === "__riven" && m.eff && m.eff.fr) a.frBow += m.eff.fr;
-      if (m.cond) for (const c of m.cond) if (condActive(c.when, o)) applyEff(a, c.eff);
+      if (m.cond) for (const c of m.cond) { const f = condScale(c, o); if (f > 0) applyEff(a, c.eff, f); }
     }
     if (riven) applyEff(a, riven);
     return a;
@@ -3520,7 +3587,12 @@ header.top p{flex-basis:100%}
     const out = {};
     for (const f of o.factions) {
       if (o.scenario === "boss") out[f] = { main: enemyStats(f, "boss", level, o.steel) };
-      else if (o.scenario === "crowd") out[f] = { main: enemyStats(f, "light", level, o.steel), heavy: enemyStats(f, "heavy", level, o.steel) };
+      else if (o.scenario === "crowd") {
+        out[f] = { main: enemyStats(f, "light", level, o.steel), heavy: enemyStats(f, "heavy", level, o.steel) };
+        // one Eximus in the pack (user's choice 2026-11-02): a light unit carrying Overguard (wiki "Overguard": Magnetic boosts
+        // damage to it like shields, Viral does not; crowd control ignored, Cold up to 4 stacks)
+        if (o.eximus !== false) out[f].ex = Object.assign(enemyStats(f, "light", level, o.steel), { og: overguardAt(level) });
+      }
       else { out[f] = { main: enemyStats(f, "heavy", level, o.steel) }; if (o.og) out[f].main.og = overguardAt(level); }
     }
     return out;
@@ -3730,6 +3802,7 @@ header.top p{flex-basis:100%}
         const tHit = ttk(pMain);
         let tHeavy = tHit, pHeavy = pMain;
         if (tgs.heavy) { pHeavy = Object.assign({}, base, hitP, { hp: tgs.heavy.hp, sh: tgs.heavy.sh * shc, ar0: tgs.heavy.ar }); tHeavy = ttk(pHeavy); }
+        const tEx = tgs.ex ? ttk(Object.assign({}, base, hitP, { hp: tgs.ex.hp, sh: tgs.ex.sh * shc, ar0: tgs.ex.ar, og: tgs.ex.og })) : 0;
         let tNon = Infinity;
         if (o.scenario === "crowd" && hasNon && main.N > main.K) tNon = ttk(Object.assign({}, base, nonP, { hp: tg.hp, sh: tg.sh, ar0: tg.ar }));
         let kps, clear, Keff = main.K;
@@ -3762,9 +3835,10 @@ header.top p{flex-basis:100%}
           // (the first shot goes off as soon as the crosshair is on it, so a one-shot kill costs only the re-aim time,
           // unless the weapon's own fire interval is longer than that)
           const eng = (t) => Math.max(period, tAcq + t);
-          const nL = tgs.heavy ? main.N - 1 : main.N;
-          const sweep = (nL / Keff) * eng(tHit) + (tgs.heavy ? eng(tHeavy) : 0);
-          const spread = isFinite(tNon) && tNon < 40 ? Math.max(tHit, tNon) + (tgs.heavy ? eng(tHeavy) : 0) : Infinity;
+          const nL = main.N - (tgs.heavy ? 1 : 0) - (tgs.ex ? 1 : 0);
+          const extra = (tgs.heavy ? eng(tHeavy) : 0) + (tgs.ex ? eng(tEx) : 0);   // the heavy and the Eximus are engagements of their own
+          const sweep = (nL / Keff) * eng(tHit) + extra;
+          const spread = isFinite(tNon) && tNon < 40 ? Math.max(tHit, tNon) + extra : Infinity;
           let lights = Math.min(sweep, spread);
           clear = lights;
           if (kx) {
@@ -3773,7 +3847,7 @@ header.top p{flex-basis:100%}
             const n10 = Math.min(main.N - 1, (o.density || 0) * Math.PI * kx.r * kx.r);
             const frac = Math.min(1, kx.pct + kx.flat / Math.max(1, tg.hp));
             const k2 = Math.min(main.N, Keff * (1 + n10 * frac));
-            lights = Math.min(lights, (nL / k2) * eng(tHit) + (tgs.heavy ? eng(tHeavy) : 0));
+            lights = Math.min(lights, (nL / k2) * eng(tHit) + extra);
             // the heavy mixed in also takes the explosions of the enemies killed near it
             let tExp = Infinity;
             if (tgs.heavy) {
@@ -3781,11 +3855,11 @@ header.top p{flex-basis:100%}
               const nearRate = (k2 / period) * n10 / Math.max(1, main.N - 1);
               tExp = tHit + Math.ceil(1 / fh) / Math.max(1e-6, nearRate);
             }
-            clear = tgs.heavy ? Math.min(lights, (nL / k2) * eng(tHit) + eng(Math.min(tHeavy, tExp))) : lights;
+            clear = tgs.heavy ? Math.min(lights, (nL / k2) * eng(tHit) + eng(Math.min(tHeavy, tExp)) + (tgs.ex ? eng(tEx) : 0)) : lights;
           }
           kps = main.N / Math.max(period, clear);
         } else { clear = Math.max(period, tHit); kps = 1 / clear; }
-        return { ttk: tHit, ttkHeavy: tHeavy, ttkNon: tNon, kps, clear, target: tg, targetHeavy: tgs.heavy || null, Keff,
+        return { ttk: tHit, ttkHeavy: tHeavy, ttkEx: tgs.ex ? tEx : null, ttkNon: tNon, kps, clear, target: tg, targetHeavy: tgs.heavy || null, Keff,
           one: oneHit(pMain), oneHeavy: tgs.heavy ? oneHit(pHeavy) : oneHit(pMain) };
       };
       // the hardest enemy of the scenario at any level (crowd: the heavy mixed in; single: heavy with overguard if set; boss)
@@ -3863,7 +3937,7 @@ header.top p{flex-basis:100%}
     const arc = o.arcane ? (root.WF_ARCANES || {})[o.arcane] : null;
     if (arc) {
       if (arc.eff) applyEff(a, arc.eff);
-      if (arc.cond) for (const c of arc.cond) if (condActive(c.when, oo)) applyEff(a, c.eff);
+      if (arc.cond) for (const c of arc.cond) { const f = condScale(c, oo); if (f > 0) applyEff(a, c.eff, f); }
     }
     if (arc && arc.energyMs) a.ms += Math.min(3.5, arc.energyMs * (o.maxEnergy || 300) / 100);
     if (arc && arc.bulwark) a.dmg += Math.min(5, Math.max(0, ((o.armor || 0) - 1000) * 0.01));
@@ -4419,6 +4493,24 @@ header.top p{flex-basis:100%}
       }
     }
     out.sort((x, y) => y.score - x.score);
+    // near ties (within 2% of the best, user's choice 2026-11-02): put first the build that holds up best when the fight
+    // differs — stacks held the whole time / starting from zero, and each faction on its own
+    if (out.length > 1 && o.robustTie !== false) {
+      const band = out.filter((r) => r.score >= out[0].score * 0.98).slice(0, 8);
+      const alts = [];
+      if (o.scenario === "crowd") alts.push({ killRamp: false }, { kills: false });
+      if ((o.factions || []).length > 1) for (const f of o.factions) alts.push({ factions: [f] });
+      if (band.length > 1 && alts.length) {
+        const sc = band.map((r) => alts.map((p) => {
+          const oo = Object.assign({}, o, p, { val: r.val, arcane: r.arcane, layoutTTK: true }); oo.targets = targetsFor(oo);
+          return evaluate(weapon, atk, r.mods, oo).score;
+        }));
+        const best = alts.map((_, j) => Math.max(...sc.map((row) => row[j])));
+        band.forEach((r, i) => { r.robust = Math.exp(sc[i].reduce((t, v, j) => t + Math.log(Math.max(1e-9, v / best[j])), 0) / alts.length); });
+        band.sort((x, y) => (y.robust - x.robust) || (y.score - x.score));
+        out.splice(0, band.length, ...band);
+      }
+    }
     return out;
   }
 
@@ -4440,7 +4532,7 @@ header.top p{flex-basis:100%}
   add("heavy_caliber", "헤비 칼리버", "Heavy Caliber", ["rifle"], { dmg: 1.65 });
   add("semi_rifle_cannonade", "세미 라이플 캐노네이드", "Semi-Rifle Cannonade", ["rifle"], { dmg: 2.4, pt: 1.5, lock: 1 }, { req: "semi" });
   add("split_chamber", "스플릿 챔버", "Split Chamber", ["rifle"], { ms: 0.9 }, { group: "r_ms" });
-  add("galvanized_chamber", "갈바나이즈드 챔버", "Galvanized Chamber", ["rifle"], { ms: 0.8 }, { group: "r_ms", cond: [{ when: "kill", eff: { ms: 1.5 } }] });
+  add("galvanized_chamber", "갈바나이즈드 챔버", "Galvanized Chamber", ["rifle"], { ms: 0.8 }, { group: "r_ms", cond: [{ when: "kill", eff: { ms: 1.5 }, stk: 5 }] });
   add("vigilante_armaments", "비질란테 아마먼트", "Vigilante Armaments", ["rifle"], { ms: 0.6 });
   add("point_strike", "포인트 스트라이크", "Point Strike", ["rifle"], { cc: 1.5 });
   add("critical_delay", "크리티컬 딜레이", "Critical Delay", ["rifle"], { cc: 2.0, frneg: -0.2 });
@@ -4450,7 +4542,7 @@ header.top p{flex-basis:100%}
   add("galvanized_scope", "갈바나이즈드 스코프", "Galvanized Scope", ["rifle"], {}, { group: "r_scope", cond: [{ when: "headshot", eff: { cc: 3.2 } }], note: "조준+헤드샷 처치" });
   add("bladed_rounds", "블레이디드 라운드", "Bladed Rounds", ["rifle"], {}, { cond: [{ when: "aim", eff: { cd: 1.2 } }], note: "조준 중 처치" });
   add("rifle_aptitude", "라이플 앱티튜드", "Rifle Aptitude", ["rifle"], { sc: 0.9 }, { group: "r_sc" });
-  add("galvanized_aptitude", "갈바나이즈드 앱티튜드", "Galvanized Aptitude", ["rifle"], { sc: 0.8 }, { group: "r_sc", cond: [{ when: "kill", eff: { gco: 0.8 } }] });
+  add("galvanized_aptitude", "갈바나이즈드 앱티튜드", "Galvanized Aptitude", ["rifle"], { sc: 0.8 }, { group: "r_sc", cond: [{ when: "kill", eff: { gco: 0.8 }, stk: 2 }] });
   add("rifle_elementalist", "라이플 엘리멘탈리스트", "Rifle Elementalist", ["rifle"], { sd: 0.9, pt: 0.6 });
   add("continuous_misery", "컨티뉴어스 미저리", "Continuous Misery", ["rifle"], { dur: 1.0 });
   add("speed_trigger", "스피드 트리거", "Speed Trigger", ["rifle"], { fr: 0.6 });
@@ -4478,7 +4570,7 @@ header.top p{flex-basis:100%}
   add("shotgun_barrage", "샷건 배라지", "Shotgun Barrage", ["shotgun"], { fr: 0.9 }, { group: "s_fr" });
   add("amalgam_shotgun_barrage", "아말감 샷건 배라지", "Amalgam Shotgun Barrage", ["shotgun"], { fr: 0.85 }, { group: "s_fr" });
   add("hells_chamber", "헬스 챔버", "Hell's Chamber", ["shotgun"], { ms: 1.2 }, { group: "s_ms" });
-  add("galvanized_hell", "갈바나이즈드 헬", "Galvanized Hell", ["shotgun"], { ms: 1.1 }, { group: "s_ms", cond: [{ when: "kill", eff: { ms: 1.2 } }] });
+  add("galvanized_hell", "갈바나이즈드 헬", "Galvanized Hell", ["shotgun"], { ms: 1.1 }, { group: "s_ms", cond: [{ when: "kill", eff: { ms: 1.2 }, stk: 4 }] });
   add("critical_deceleration", "크리티컬 디셀러레이션", "Critical Deceleration", ["shotgun"], { cc: 2.0, frneg: -0.2 });
   add("blunderbuss", "블런더버스", "Blunderbuss", ["shotgun"], { cc: 0.9 }, { group: "s_cc" });
   add("primed_blunderbuss", "프라임드 블런더버스", "Primed Blunderbuss", ["shotgun"], { cc: 1.65 }, { group: "s_cc" });
@@ -4487,7 +4579,7 @@ header.top p{flex-basis:100%}
   add("primed_ravage", "프라임드 래비지", "Primed Ravage", ["shotgun"], { cd: 1.1 }, { group: "s_cd" });
   add("shrapnel_shot", "슈라프넬 샷", "Shrapnel Shot", ["shotgun"], {}, { cond: [{ when: "aim", eff: { cd: 0.99 } }], note: "조준 중 처치" });
   add("shotgun_savvy", "샷건 새비", "Shotgun Savvy", ["shotgun"], { sc: 0.9 }, { group: "s_sc" });
-  add("galvanized_savvy", "갈바나이즈드 새비", "Galvanized Savvy", ["shotgun"], { sc: 0.8 }, { group: "s_sc", cond: [{ when: "kill", eff: { gco: 0.8 } }] });
+  add("galvanized_savvy", "갈바나이즈드 새비", "Galvanized Savvy", ["shotgun"], { sc: 0.8 }, { group: "s_sc", cond: [{ when: "kill", eff: { gco: 0.8 }, stk: 2 }] });
   add("shotgun_elementalist", "샷건 엘리멘탈리스트", "Shotgun Elementalist", ["shotgun"], { sd: 0.9, mag: 0.6 });
   add("lingering_torment", "링거링 토먼트", "Lingering Torment", ["shotgun"], { dur: 0.9 });
   add("incendiary_coat", "인센디어리 코트", "Incendiary Coat", ["shotgun"], { heat: 0.9 });
@@ -4508,7 +4600,7 @@ header.top p{flex-basis:100%}
   add("augur_pact", "어거 팩트", "Augur Pact", ["pistol"], { dmg: 0.9 });
   add("semi_pistol_cannonade", "세미 피스톨 캐노네이드", "Semi-Pistol Cannonade", ["pistol"], { dmg: 3.0, pt: 1.5, lock: 1 }, { req: "semi" });
   add("barrel_diffusion", "배럴 디퓨전", "Barrel Diffusion", ["pistol"], { ms: 1.2 }, { group: "p_ms" });
-  add("galvanized_diffusion", "갈바나이즈드 디퓨전", "Galvanized Diffusion", ["pistol"], { ms: 1.1 }, { group: "p_ms", cond: [{ when: "kill", eff: { ms: 1.2 } }] });
+  add("galvanized_diffusion", "갈바나이즈드 디퓨전", "Galvanized Diffusion", ["pistol"], { ms: 1.1 }, { group: "p_ms", cond: [{ when: "kill", eff: { ms: 1.2 }, stk: 4 }] });
   add("amalgam_barrel_diffusion", "아말감 배럴 디퓨전", "Amalgam Barrel Diffusion", ["pistol"], { ms: 1.1 }, { group: "p_ms" });
   add("lethal_torrent", "리썰 토렌트", "Lethal Torrent", ["pistol"], { ms: 0.6, fr: 0.6 });
   add("pistol_gambit", "피스톨 갬빗", "Pistol Gambit", ["pistol"], { cc: 1.2 }, { group: "p_cc" });
@@ -4520,7 +4612,7 @@ header.top p{flex-basis:100%}
   add("galvanized_crosshairs", "갈바나이즈드 크로스헤어", "Galvanized Crosshairs", ["pistol"], {}, { group: "p_scope", cond: [{ when: "headshot", eff: { cc: 3.2 } }], note: "조준+헤드샷 처치" });
   add("sharpened_bullets", "샤픈드 불릿", "Sharpened Bullets", ["pistol"], {}, { cond: [{ when: "aim", eff: { cd: 0.75 } }], note: "조준 중 처치" });
   add("sure_shot", "슈어 샷", "Sure Shot", ["pistol"], { sc: 0.9 }, { group: "p_sc" });
-  add("galvanized_shot", "갈바나이즈드 샷", "Galvanized Shot", ["pistol"], { sc: 0.8 }, { group: "p_sc", cond: [{ when: "kill", eff: { gco: 1.2 } }] });
+  add("galvanized_shot", "갈바나이즈드 샷", "Galvanized Shot", ["pistol"], { sc: 0.8 }, { group: "p_sc", cond: [{ when: "kill", eff: { gco: 1.2 }, stk: 3 }] });
   add("pistol_elementalist", "피스톨 엘리멘탈리스트", "Pistol Elementalist", ["pistol"], { sd: 0.9, reload: 0.6 });
   add("gunslinger", "건슬링어", "Gunslinger", ["pistol"], { fr: 0.72 });
   add("anemic_agility", "애너믹 어질리티", "Anemic Agility", ["pistol"], { fr: 0.9, dmg: -0.15 });
@@ -4546,7 +4638,7 @@ header.top p{flex-basis:100%}
   add("sacrificial_steel", "새크리피셜 스틸", "Sacrificial Steel", ["melee"], { cc: 2.2 }, { group: "m_steel", set: "sacrificial", setMul: 1.25 });
   // variant of Pressure Point (can't be equipped together); Sacrificial set (with Steel): each x1.25 → +137.5%
   add("sacrificial_pressure", "새크리피셜 프레셔", "Sacrificial Pressure", ["melee"], { dmg: 1.1 }, { group: "m_dmg", set: "sacrificial", setMul: 1.25, note: "센티언트 상대 x1.33 (미반영)" });
-  add("galvanized_steel", "갈바나이즈드 스틸", "Galvanized Steel", ["melee"], { cc: 1.1 }, { group: "m_steel", cond: [{ when: "kill", eff: { cd: 1.2 } }] });
+  add("galvanized_steel", "갈바나이즈드 스틸", "Galvanized Steel", ["melee"], { cc: 1.1 }, { group: "m_steel", cond: [{ when: "kill", eff: { cd: 1.2 }, stk: 4 }] });
   add("organ_shatter", "오르건 섀터", "Organ Shatter", ["melee"], { cd: 0.9 }, { group: "m_cd" });
   add("amalgam_organ_shatter", "아말감 오르건 섀터", "Amalgam Organ Shatter", ["melee"], { cd: 0.85, wind: 0.6 }, { group: "m_cd" });
   add("gladiator_might", "글래디에이터 마이트", "Gladiator Might", ["melee"], { cd: 0.6 });
@@ -4556,7 +4648,7 @@ header.top p{flex-basis:100%}
   add("melee_prowess", "밀리 프로웨스", "Melee Prowess", ["melee"], { sc: 0.9 });
   add("drifting_contact", "드리프팅 컨택트", "Drifting Contact", ["melee"], { sc: 0.4 });
   add("melee_elementalist", "밀리 엘리멘탈리스트", "Melee Elementalist", ["melee"], { sd: 0.9, wind: 0.6 }, { group: "m_el" });
-  add("galvanized_elementalist", "갈바나이즈드 엘리멘탈리스트", "Galvanized Elementalist", ["melee"], { sd: 0.8 }, { group: "m_el", cond: [{ when: "kill", eff: { sc: 1.2 } }] });
+  add("galvanized_elementalist", "갈바나이즈드 엘리멘탈리스트", "Galvanized Elementalist", ["melee"], { sd: 0.8 }, { group: "m_el", cond: [{ when: "kill", eff: { sc: 1.2 }, stk: 4 }] });
   add("lasting_sting", "래스팅 스팅", "Lasting Sting", ["melee"], { dur: 1.1 });
   add("north_wind", "노스 윈드", "North Wind", ["melee"], { cold: 0.9 });
   add("molten_impact", "몰튼 임팩트", "Molten Impact", ["melee"], { heat: 0.9 });
@@ -4570,7 +4662,7 @@ header.top p{flex-basis:100%}
   add("focus_energy", "포커스 에너지", "Focus Energy", ["melee"], { elec: 0.6, hae: 0.4 });
   add("killing_blow", "킬링 블로우", "Killing Blow", ["melee"], { heavy: 1.2, wind: 0.6 }, { req: "heavy" });
   add("corrupt_charge", "커럽트 차지", "Corrupt Charge", ["melee"], { ic: 30 }, { req: "heavy" });
-  add("galvanized_reflex", "갈바나이즈드 리플렉스", "Galvanized Reflex", ["melee"], { hae: 0.5 }, { req: "heavy", group: "m_reflex", cond: [{ when: "kill", eff: { ic: 81.4 } }] });   // 20.35 × 4 stacks (wiki true value; the card rounds to 20)
+  add("galvanized_reflex", "갈바나이즈드 리플렉스", "Galvanized Reflex", ["melee"], { hae: 0.5 }, { req: "heavy", group: "m_reflex", cond: [{ when: "kill", eff: { ic: 81.4 }, stk: 4 }] });   // 20.35 × 4 stacks (wiki true value; the card rounds to 20)
   // explodes on the first contact (bounce explosion: 50% damage, no combo multiplier, no guaranteed procs) and returns at once;
   // a heavy-attack detonation still works in the same throw (wiki)
   add("volatile_quick_return", "볼래틸 퀵 리턴", "Volatile Quick Return", ["melee"], { radius: 3, volatile: 1 }, { req: "glaive", note: "벽에 튕겨 엉뚱한 방향으로 가지 않음(튕김 −4) · 폭발 범위 +3m · 닿을 때 작은 폭발(피해 50%, 연속기 배율 없음)" });
@@ -4688,7 +4780,7 @@ header.top p{flex-basis:100%}
   // weapon arcanes. manual: needs a condition the player has to set up — compared only when picked by hand.
   // none: no effect on weapon damage (listed so nothing is silently missing).
   const ARC = {
-    primary_merciless: { ko: "프라이머리 머시리스", slot: "primary", cond: [{ when: "kill", eff: { dmg: 3.6, reload: 0.3 } }] },
+    primary_merciless: { ko: "프라이머리 머시리스", slot: "primary", eff: { reload: 0.3 }, cond: [{ when: "kill", eff: { dmg: 3.6 }, stk: 12 }] },   // wiki: +30%/kill x12, 4 s; reload +30% passive
     primary_deadhead: { ko: "프라이머리 데드헤드", slot: "primary", eff: { hsMult: 0.3 }, cond: [{ when: "hs", eff: { dmg: 3.6 } }] },
     primary_dexterity: { ko: "프라이머리 덱스터리티", slot: "primary", manual: true, cond: [{ when: "kill", eff: { dmg: 3.6 } }], note: "근접 처치 6회로 최대 중첩" },
     primary_frostbite: { ko: "프라이머리 프로스트바이트", slot: "primary", procStack: { type: "cold", cd: 1.2, ms: 0.9, win: 12, max: 40 } },
@@ -4704,7 +4796,7 @@ header.top p{flex-basis:100%}
     primary_exhilarate: { ko: "프라이머리 익질러레이트", en: "Primary Exhilarate", slot: "primary", none: true, note: "에너지 회복" },
     primary_obstruct: { ko: "프라이머리 옵스트럭트", en: "Primary Obstruct", slot: "primary", none: true, note: "적 무기 고장" },
     longbow_sharpshot: { ko: "롱보우 샤프샷", en: "Longbow Sharpshot", slot: "primary", types: ["Bow"], cond: [{ when: "hs", eff: { dmg: 1.5 } }], note: "약점 명중 후 다음 발 +300% (헤드샷 50% 가정)" },
-    secondary_merciless: { ko: "세컨더리 머시리스", slot: "secondary", cond: [{ when: "kill", eff: { dmg: 3.6, reload: 0.3 } }] },
+    secondary_merciless: { ko: "세컨더리 머시리스", slot: "secondary", eff: { reload: 0.3 }, cond: [{ when: "kill", eff: { dmg: 3.6 }, stk: 12 }] },
     secondary_deadhead: { ko: "세컨더리 데드헤드", slot: "secondary", eff: { hsMult: 0.3 }, cond: [{ when: "hs", eff: { dmg: 3.6 } }] },
     secondary_dexterity: { ko: "세컨더리 덱스터리티", en: "Secondary Dexterity", slot: "secondary", manual: true, cond: [{ when: "kill", eff: { dmg: 3.6 } }], note: "근접 처치 6회로 최대 중첩" },
     secondary_shiver: { ko: "세컨더리 쉬버", en: "Secondary Shiver", slot: "secondary", coldVuln: 0.45 },
@@ -7873,7 +7965,7 @@ self.onmessage = function (ev) {
 
     h5 += `<section class="card notes"><h3>계산 가정</h3><ul>
       <li>처치 시간은 ${o.steel ? "강철의 길 " : ""}${o.level}레벨 기준 적의 체력·방어구(위키 레벨 공식)로 계산합니다. 바이러스·화염·부식·냉기 중첩은 시간에 따라 쌓입니다.</li>
-      <li>잡몹 무리: 12명(중장갑 1명 포함)이 반경 약 11m 안에 모여 있다고 봅니다(반경 7.9m에 6명 밀도 — 폭발 반경에 들어오는 수를 정함). 적 하나(와 그 뒤에 줄지은 적)를 죽을 때까지 쏜 뒤 다음 적으로 조준을 옮기는 데 0.2초가 든다고 봅니다. 한 발이 맞히는 수는 폭발 반경과 관통력(쏜 적 뒤에 평균 2명이 줄지어 있고, 몸통 하나에 관통력 약 0.6m)으로 추정. 직격+폭발 무기는 주변 적이 폭발만 맞는다고 보고, 폭발만으로 죽는 속도만큼 같이 잡히는 것으로 계산합니다. 폭발 투사체는 관통이 적용되지 않습니다(위키 "Punch Through"). 갈바나이즈드 계열 피해 보너스와 세컨더리 이레디에이트 전파는 직격에만 적용합니다(위키). 처치 조건 효과(갈바나이즈드, 머시리스 등)는 잡몹·중장갑에서는 최대 중첩, 보스전에서는 0으로 계산합니다.</li>
+      <li>잡몹 무리: 12명(중장갑 1명·오버가드가 있는 엑시무스 1명 포함)이 반경 약 11m 안에 모여 있다고 봅니다(반경 7.9m에 6명 밀도 — 폭발 반경에 들어오는 수를 정함). 적 하나(와 그 뒤에 줄지은 적)를 죽을 때까지 쏜 뒤 다음 적으로 조준을 옮기는 데 0.2초가 든다고 봅니다. 한 발이 맞히는 수는 폭발 반경과 관통력(쏜 적 뒤에 평균 2명이 줄지어 있고, 몸통 하나에 관통력 약 0.6m)으로 추정. 직격+폭발 무기는 주변 적이 폭발만 맞는다고 보고, 폭발만으로 죽는 속도만큼 같이 잡히는 것으로 계산합니다. 폭발 투사체는 관통이 적용되지 않습니다(위키 "Punch Through"). 갈바나이즈드 계열 피해 보너스와 세컨더리 이레디에이트 전파는 직격에만 적용합니다(위키). 처치 조건 효과(갈바나이즈드, 머시리스 등)는 무리마다 0부터 쌓입니다 — n번째 처치 때 min(n, 최대 중첩)이라 무리 전체 평균으로 넣습니다(머시리스 12중첩이면 12명 무리에서 약 46%, 갈바나이즈드 헬 4중첩이면 약 79%). 보스전에서는 0으로 계산합니다. 점수가 2% 안으로 붙은 세팅끼리는 중첩 유지·중첩 0·팩션별 결과가 고른 쪽을 위에 둡니다.</li>
       <li>상태이상(위키 "Status Effect"): 바이러스 체력 피해 최대 +325%, 부식 방어구 최대 80%, 화염 방어구 50%·도트, 자성 실드 피해 최대 +325%와 실드 파괴 시 전기, 냉기 치명타 배율 +0.5(빙결 +1.0), 관통 치명타 확률 최대 +25%, 베기 출혈 도트(기본 피해 35%×6틱, 방어구·실드 무시), 전기 3m 연쇄 도트, 가스 3~6m 구름, 독·출혈의 실드 관통을 넣었습니다. 상태이상은 그 공격의 피해가 들어간 뒤에 걸려서 다음 공격부터 적용되고, 같은 발의 멀티샷끼리도 서로의 바이러스를 받지 않습니다(위키 "Viral Damage"). 도트 한 틱 = 모드 적용 기본 피해(서레이션류·아케인 포함) × 0.5(베기 0.35) × (1 + 그 원소 모드 %, 화염·독·전기만) × (1 + 상태이상 피해) × 팩션 피해 두 번 × 그 공격의 치명타 배율이고, 화염·독·베기는 1초 뒤부터 1초마다 들어갑니다(위키 "Damage/Calculation"). 방사능의 "적끼리 공격"과 충격의 자비의 일격 문턱, 관통의 적 공격력 감소처럼 처치 속도와 직접 관계없는 효과는 넣지 않습니다.</li>
       <li>폭발 상태이상이 걸린 적이 죽으면 5m 안에 그 공격 기본 피해의 최대 300%로 터져(위키 "Blast Damage") 주변 적이 함께 깎이는 것으로 봅니다. 관통력은 모드와 무기 고유값(인카논 형태 등, 위키)을 더하고, 스풀 무기는 탄창마다 처음 몇 발이 느린 것, 펜모어 인카논 형태는 51발 점사 평균 연사(약 78%)로 계산합니다.</li>
       <li>코퍼스 실드는 독·출혈 도트만 관통하고 나머지는 실드를 먼저 깎습니다. 자성 중첩은 실드·오버가드 피해를 최대 4.25배로 올립니다.${o.og ? " 엑시무스 오버가드(위키 레벨 공식)는 방어구·바이러스 영향 없이 먼저 깎고, 보이드는 1.5배입니다." : ""}</li>

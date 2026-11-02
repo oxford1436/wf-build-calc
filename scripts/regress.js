@@ -74,6 +74,25 @@ const { chromium } = require("playwright");
       // Flare at its cap (+480%) beats Merciless at its cap (+360%) on a weapon that procs heat constantly
       check("v1.56 캐스케디아 플레어 중첩: 화염이 자주 걸리면 머시리스(+360%)보다 강함", flare > merc && flare > none * 1.5, "flare/merc " + (flare / merc).toFixed(2));
     }
+    // v1.58: kill stacks start from zero every pack -> between "held the whole time" and "never"
+    {
+      const w = weapon("kuva_zarr"), ids = ["serration", "galvanized_chamber", "primed_cryo_rounds", "vital_sense"];
+      const sc = (patch) => ev(w, ids, Object.assign(baseO(), { arcane: "primary_merciless" }, patch)).score;
+      const full = sc({ killRamp: false }), ramp = sc({}), none = sc({ kills: false });
+      check("v1.58 처치 중첩은 무리마다 0부터 (중첩 0 < 기본 < 처음부터 최대)", none < ramp && ramp < full * 0.99, `${(none / full).toFixed(2)} < ${(ramp / full).toFixed(2)} < 1`);
+    }
+    // v1.58: Merciless reload +30% is passive (wiki) -> also on bosses
+    {
+      const w = weapon("kuva_zarr"), o = Object.assign(baseO(), { scenario: "boss" });
+      const r0 = ev(w, ["serration"], Object.assign({}, o, { arcane: null })).rate, r1 = ev(w, ["serration"], Object.assign({}, o, { arcane: "primary_merciless" })).rate;
+      check("v1.58 머시리스 재장전 +30%는 보스전에도 적용", r1 > r0 * 1.02, (r1 / r0).toFixed(3));
+    }
+    // v1.58: an Eximus with Overguard in every pack
+    {
+      const w = weapon("kuva_zarr"), ids = ["serration", "split_chamber", "primed_cryo_rounds", "vital_sense"];
+      const c1 = ev(w, ids, baseO()).perF.grineer.clear, c0 = ev(w, ids, Object.assign(baseO(), { eximus: false })).perF.grineer.clear;
+      check("v1.58 무리에 오버가드 엑시무스 포함 (전멸 시간 증가)", c1 > c0 * 1.01, `${c0.toFixed(2)} → ${c1.toFixed(2)}초`);
+    }
     return out;
   });
 

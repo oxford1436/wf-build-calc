@@ -101,10 +101,11 @@
     for (const k of NUM_KEYS) a[k] = 0;
     return a;
   }
-  function applyEff(a, eff) {
+  function applyEff(a, eff, f) {
+    const sc = f == null ? 1 : f;
     for (const k in eff) {
-      const v = eff[k];
-      if (k === "tenno" || k === "bane") { a[k] = a[k] || {}; for (const t in v) a[k][t] = (a[k][t] || 0) + v[t]; continue; }
+      const v = typeof eff[k] === "number" ? eff[k] * sc : eff[k];
+      if (k === "tenno" || k === "bane") { a[k] = a[k] || {}; for (const t in v) a[k][t] = (a[k][t] || 0) + v[t] * sc; continue; }
       if (k in a.elem) a.elem[k] += v;
       else if (k in a.phys) a.phys[k] += v;
       else if (k in a.extra) a.extra[k] += v;
@@ -127,6 +128,19 @@
       default: return false;
     }
   }
+  // On-kill stacks (Galvanized mods, Merciless …; wiki: each kill adds one stack up to `stk`) in a crowd fight start at 0
+  // for every pack (user's choice 2026-11-02): with N kills in the pack, the k-th kill lands with min(k, stk) stacks, so
+  // the effect runs at the average of min(k, stk)/stk over the pack. Bosses: no kill stacks. o.killRamp === false = full.
+  function rampFrac(stk, n) {
+    const N = Math.max(1, Math.round(n || 12)); let s = 0;
+    for (let k = 0; k < N; k++) s += Math.min(k, stk);
+    return s / (N * stk);
+  }
+  function condScale(c, o) {
+    if (!condActive(c.when, o)) return 0;
+    if (c.when === "kill" && c.stk > 1 && o.scenario === "crowd" && o.killRamp !== false) return rampFrac(c.stk, o.crowdN);
+    return 1;
+  }
   function aggregate(mods, o, riven) {
     const a = newAgg();
     a.frBow = 0;
@@ -145,7 +159,7 @@
       else if (m.eff) applyEff(a, m.eff);
       if (m.bow2 && m.eff && m.eff.fr) a.frBow += m.eff.fr;   // "(x2 for Bows)" fire-rate mods
       if (m.id === "__riven" && m.eff && m.eff.fr) a.frBow += m.eff.fr;
-      if (m.cond) for (const c of m.cond) if (condActive(c.when, o)) applyEff(a, c.eff);
+      if (m.cond) for (const c of m.cond) { const f = condScale(c, o); if (f > 0) applyEff(a, c.eff, f); }
     }
     if (riven) applyEff(a, riven);
     return a;
@@ -279,7 +293,12 @@
     const out = {};
     for (const f of o.factions) {
       if (o.scenario === "boss") out[f] = { main: enemyStats(f, "boss", level, o.steel) };
-      else if (o.scenario === "crowd") out[f] = { main: enemyStats(f, "light", level, o.steel), heavy: enemyStats(f, "heavy", level, o.steel) };
+      else if (o.scenario === "crowd") {
+        out[f] = { main: enemyStats(f, "light", level, o.steel), heavy: enemyStats(f, "heavy", level, o.steel) };
+        // one Eximus in the pack (user's choice 2026-11-02): a light unit carrying Overguard (wiki "Overguard": Magnetic boosts
+        // damage to it like shields, Viral does not; crowd control ignored, Cold up to 4 stacks)
+        if (o.eximus !== false) out[f].ex = Object.assign(enemyStats(f, "light", level, o.steel), { og: overguardAt(level) });
+      }
       else { out[f] = { main: enemyStats(f, "heavy", level, o.steel) }; if (o.og) out[f].main.og = overguardAt(level); }
     }
     return out;
@@ -489,6 +508,7 @@
         const tHit = ttk(pMain);
         let tHeavy = tHit, pHeavy = pMain;
         if (tgs.heavy) { pHeavy = Object.assign({}, base, hitP, { hp: tgs.heavy.hp, sh: tgs.heavy.sh * shc, ar0: tgs.heavy.ar }); tHeavy = ttk(pHeavy); }
+        const tEx = tgs.ex ? ttk(Object.assign({}, base, hitP, { hp: tgs.ex.hp, sh: tgs.ex.sh * shc, ar0: tgs.ex.ar, og: tgs.ex.og })) : 0;
         let tNon = Infinity;
         if (o.scenario === "crowd" && hasNon && main.N > main.K) tNon = ttk(Object.assign({}, base, nonP, { hp: tg.hp, sh: tg.sh, ar0: tg.ar }));
         let kps, clear, Keff = main.K;
@@ -521,9 +541,10 @@
           // (the first shot goes off as soon as the crosshair is on it, so a one-shot kill costs only the re-aim time,
           // unless the weapon's own fire interval is longer than that)
           const eng = (t) => Math.max(period, tAcq + t);
-          const nL = tgs.heavy ? main.N - 1 : main.N;
-          const sweep = (nL / Keff) * eng(tHit) + (tgs.heavy ? eng(tHeavy) : 0);
-          const spread = isFinite(tNon) && tNon < 40 ? Math.max(tHit, tNon) + (tgs.heavy ? eng(tHeavy) : 0) : Infinity;
+          const nL = main.N - (tgs.heavy ? 1 : 0) - (tgs.ex ? 1 : 0);
+          const extra = (tgs.heavy ? eng(tHeavy) : 0) + (tgs.ex ? eng(tEx) : 0);   // the heavy and the Eximus are engagements of their own
+          const sweep = (nL / Keff) * eng(tHit) + extra;
+          const spread = isFinite(tNon) && tNon < 40 ? Math.max(tHit, tNon) + extra : Infinity;
           let lights = Math.min(sweep, spread);
           clear = lights;
           if (kx) {
@@ -532,7 +553,7 @@
             const n10 = Math.min(main.N - 1, (o.density || 0) * Math.PI * kx.r * kx.r);
             const frac = Math.min(1, kx.pct + kx.flat / Math.max(1, tg.hp));
             const k2 = Math.min(main.N, Keff * (1 + n10 * frac));
-            lights = Math.min(lights, (nL / k2) * eng(tHit) + (tgs.heavy ? eng(tHeavy) : 0));
+            lights = Math.min(lights, (nL / k2) * eng(tHit) + extra);
             // the heavy mixed in also takes the explosions of the enemies killed near it
             let tExp = Infinity;
             if (tgs.heavy) {
@@ -540,11 +561,11 @@
               const nearRate = (k2 / period) * n10 / Math.max(1, main.N - 1);
               tExp = tHit + Math.ceil(1 / fh) / Math.max(1e-6, nearRate);
             }
-            clear = tgs.heavy ? Math.min(lights, (nL / k2) * eng(tHit) + eng(Math.min(tHeavy, tExp))) : lights;
+            clear = tgs.heavy ? Math.min(lights, (nL / k2) * eng(tHit) + eng(Math.min(tHeavy, tExp)) + (tgs.ex ? eng(tEx) : 0)) : lights;
           }
           kps = main.N / Math.max(period, clear);
         } else { clear = Math.max(period, tHit); kps = 1 / clear; }
-        return { ttk: tHit, ttkHeavy: tHeavy, ttkNon: tNon, kps, clear, target: tg, targetHeavy: tgs.heavy || null, Keff,
+        return { ttk: tHit, ttkHeavy: tHeavy, ttkEx: tgs.ex ? tEx : null, ttkNon: tNon, kps, clear, target: tg, targetHeavy: tgs.heavy || null, Keff,
           one: oneHit(pMain), oneHeavy: tgs.heavy ? oneHit(pHeavy) : oneHit(pMain) };
       };
       // the hardest enemy of the scenario at any level (crowd: the heavy mixed in; single: heavy with overguard if set; boss)
@@ -622,7 +643,7 @@
     const arc = o.arcane ? (root.WF_ARCANES || {})[o.arcane] : null;
     if (arc) {
       if (arc.eff) applyEff(a, arc.eff);
-      if (arc.cond) for (const c of arc.cond) if (condActive(c.when, oo)) applyEff(a, c.eff);
+      if (arc.cond) for (const c of arc.cond) { const f = condScale(c, oo); if (f > 0) applyEff(a, c.eff, f); }
     }
     if (arc && arc.energyMs) a.ms += Math.min(3.5, arc.energyMs * (o.maxEnergy || 300) / 100);
     if (arc && arc.bulwark) a.dmg += Math.min(5, Math.max(0, ((o.armor || 0) - 1000) * 0.01));
@@ -1178,6 +1199,24 @@
       }
     }
     out.sort((x, y) => y.score - x.score);
+    // near ties (within 2% of the best, user's choice 2026-11-02): put first the build that holds up best when the fight
+    // differs — stacks held the whole time / starting from zero, and each faction on its own
+    if (out.length > 1 && o.robustTie !== false) {
+      const band = out.filter((r) => r.score >= out[0].score * 0.98).slice(0, 8);
+      const alts = [];
+      if (o.scenario === "crowd") alts.push({ killRamp: false }, { kills: false });
+      if ((o.factions || []).length > 1) for (const f of o.factions) alts.push({ factions: [f] });
+      if (band.length > 1 && alts.length) {
+        const sc = band.map((r) => alts.map((p) => {
+          const oo = Object.assign({}, o, p, { val: r.val, arcane: r.arcane, layoutTTK: true }); oo.targets = targetsFor(oo);
+          return evaluate(weapon, atk, r.mods, oo).score;
+        }));
+        const best = alts.map((_, j) => Math.max(...sc.map((row) => row[j])));
+        band.forEach((r, i) => { r.robust = Math.exp(sc[i].reduce((t, v, j) => t + Math.log(Math.max(1e-9, v / best[j])), 0) / alts.length); });
+        band.sort((x, y) => (y.robust - x.robust) || (y.score - x.score));
+        out.splice(0, band.length, ...band);
+      }
+    }
     return out;
   }
 

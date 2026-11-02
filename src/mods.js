@@ -11,7 +11,7 @@
   add("heavy_caliber", "헤비 칼리버", "Heavy Caliber", ["rifle"], { dmg: 1.65 });
   add("semi_rifle_cannonade", "세미 라이플 캐노네이드", "Semi-Rifle Cannonade", ["rifle"], { dmg: 2.4, pt: 1.5, lock: 1 }, { req: "semi" });
   add("split_chamber", "스플릿 챔버", "Split Chamber", ["rifle"], { ms: 0.9 }, { group: "r_ms" });
-  add("galvanized_chamber", "갈바나이즈드 챔버", "Galvanized Chamber", ["rifle"], { ms: 0.8 }, { group: "r_ms", cond: [{ when: "kill", eff: { ms: 1.5 } }] });
+  add("galvanized_chamber", "갈바나이즈드 챔버", "Galvanized Chamber", ["rifle"], { ms: 0.8 }, { group: "r_ms", cond: [{ when: "kill", eff: { ms: 1.5 }, stk: 5 }] });
   add("vigilante_armaments", "비질란테 아마먼트", "Vigilante Armaments", ["rifle"], { ms: 0.6 });
   add("point_strike", "포인트 스트라이크", "Point Strike", ["rifle"], { cc: 1.5 });
   add("critical_delay", "크리티컬 딜레이", "Critical Delay", ["rifle"], { cc: 2.0, frneg: -0.2 });
@@ -21,7 +21,7 @@
   add("galvanized_scope", "갈바나이즈드 스코프", "Galvanized Scope", ["rifle"], {}, { group: "r_scope", cond: [{ when: "headshot", eff: { cc: 3.2 } }], note: "조준+헤드샷 처치" });
   add("bladed_rounds", "블레이디드 라운드", "Bladed Rounds", ["rifle"], {}, { cond: [{ when: "aim", eff: { cd: 1.2 } }], note: "조준 중 처치" });
   add("rifle_aptitude", "라이플 앱티튜드", "Rifle Aptitude", ["rifle"], { sc: 0.9 }, { group: "r_sc" });
-  add("galvanized_aptitude", "갈바나이즈드 앱티튜드", "Galvanized Aptitude", ["rifle"], { sc: 0.8 }, { group: "r_sc", cond: [{ when: "kill", eff: { gco: 0.8 } }] });
+  add("galvanized_aptitude", "갈바나이즈드 앱티튜드", "Galvanized Aptitude", ["rifle"], { sc: 0.8 }, { group: "r_sc", cond: [{ when: "kill", eff: { gco: 0.8 }, stk: 2 }] });
   add("rifle_elementalist", "라이플 엘리멘탈리스트", "Rifle Elementalist", ["rifle"], { sd: 0.9, pt: 0.6 });
   add("continuous_misery", "컨티뉴어스 미저리", "Continuous Misery", ["rifle"], { dur: 1.0 });
   add("speed_trigger", "스피드 트리거", "Speed Trigger", ["rifle"], { fr: 0.6 });
@@ -49,7 +49,7 @@
   add("shotgun_barrage", "샷건 배라지", "Shotgun Barrage", ["shotgun"], { fr: 0.9 }, { group: "s_fr" });
   add("amalgam_shotgun_barrage", "아말감 샷건 배라지", "Amalgam Shotgun Barrage", ["shotgun"], { fr: 0.85 }, { group: "s_fr" });
   add("hells_chamber", "헬스 챔버", "Hell's Chamber", ["shotgun"], { ms: 1.2 }, { group: "s_ms" });
-  add("galvanized_hell", "갈바나이즈드 헬", "Galvanized Hell", ["shotgun"], { ms: 1.1 }, { group: "s_ms", cond: [{ when: "kill", eff: { ms: 1.2 } }] });
+  add("galvanized_hell", "갈바나이즈드 헬", "Galvanized Hell", ["shotgun"], { ms: 1.1 }, { group: "s_ms", cond: [{ when: "kill", eff: { ms: 1.2 }, stk: 4 }] });
   add("critical_deceleration", "크리티컬 디셀러레이션", "Critical Deceleration", ["shotgun"], { cc: 2.0, frneg: -0.2 });
   add("blunderbuss", "블런더버스", "Blunderbuss", ["shotgun"], { cc: 0.9 }, { group: "s_cc" });
   add("primed_blunderbuss", "프라임드 블런더버스", "Primed Blunderbuss", ["shotgun"], { cc: 1.65 }, { group: "s_cc" });
@@ -58,7 +58,7 @@
   add("primed_ravage", "프라임드 래비지", "Primed Ravage", ["shotgun"], { cd: 1.1 }, { group: "s_cd" });
   add("shrapnel_shot", "슈라프넬 샷", "Shrapnel Shot", ["shotgun"], {}, { cond: [{ when: "aim", eff: { cd: 0.99 } }], note: "조준 중 처치" });
   add("shotgun_savvy", "샷건 새비", "Shotgun Savvy", ["shotgun"], { sc: 0.9 }, { group: "s_sc" });
-  add("galvanized_savvy", "갈바나이즈드 새비", "Galvanized Savvy", ["shotgun"], { sc: 0.8 }, { group: "s_sc", cond: [{ when: "kill", eff: { gco: 0.8 } }] });
+  add("galvanized_savvy", "갈바나이즈드 새비", "Galvanized Savvy", ["shotgun"], { sc: 0.8 }, { group: "s_sc", cond: [{ when: "kill", eff: { gco: 0.8 }, stk: 2 }] });
   add("shotgun_elementalist", "샷건 엘리멘탈리스트", "Shotgun Elementalist", ["shotgun"], { sd: 0.9, mag: 0.6 });
   add("lingering_torment", "링거링 토먼트", "Lingering Torment", ["shotgun"], { dur: 0.9 });
   add("incendiary_coat", "인센디어리 코트", "Incendiary Coat", ["shotgun"], { heat: 0.9 });
@@ -79,7 +79,7 @@
   add("augur_pact", "어거 팩트", "Augur Pact", ["pistol"], { dmg: 0.9 });
   add("semi_pistol_cannonade", "세미 피스톨 캐노네이드", "Semi-Pistol Cannonade", ["pistol"], { dmg: 3.0, pt: 1.5, lock: 1 }, { req: "semi" });
   add("barrel_diffusion", "배럴 디퓨전", "Barrel Diffusion", ["pistol"], { ms: 1.2 }, { group: "p_ms" });
-  add("galvanized_diffusion", "갈바나이즈드 디퓨전", "Galvanized Diffusion", ["pistol"], { ms: 1.1 }, { group: "p_ms", cond: [{ when: "kill", eff: { ms: 1.2 } }] });
+  add("galvanized_diffusion", "갈바나이즈드 디퓨전", "Galvanized Diffusion", ["pistol"], { ms: 1.1 }, { group: "p_ms", cond: [{ when: "kill", eff: { ms: 1.2 }, stk: 4 }] });
   add("amalgam_barrel_diffusion", "아말감 배럴 디퓨전", "Amalgam Barrel Diffusion", ["pistol"], { ms: 1.1 }, { group: "p_ms" });
   add("lethal_torrent", "리썰 토렌트", "Lethal Torrent", ["pistol"], { ms: 0.6, fr: 0.6 });
   add("pistol_gambit", "피스톨 갬빗", "Pistol Gambit", ["pistol"], { cc: 1.2 }, { group: "p_cc" });
@@ -91,7 +91,7 @@
   add("galvanized_crosshairs", "갈바나이즈드 크로스헤어", "Galvanized Crosshairs", ["pistol"], {}, { group: "p_scope", cond: [{ when: "headshot", eff: { cc: 3.2 } }], note: "조준+헤드샷 처치" });
   add("sharpened_bullets", "샤픈드 불릿", "Sharpened Bullets", ["pistol"], {}, { cond: [{ when: "aim", eff: { cd: 0.75 } }], note: "조준 중 처치" });
   add("sure_shot", "슈어 샷", "Sure Shot", ["pistol"], { sc: 0.9 }, { group: "p_sc" });
-  add("galvanized_shot", "갈바나이즈드 샷", "Galvanized Shot", ["pistol"], { sc: 0.8 }, { group: "p_sc", cond: [{ when: "kill", eff: { gco: 1.2 } }] });
+  add("galvanized_shot", "갈바나이즈드 샷", "Galvanized Shot", ["pistol"], { sc: 0.8 }, { group: "p_sc", cond: [{ when: "kill", eff: { gco: 1.2 }, stk: 3 }] });
   add("pistol_elementalist", "피스톨 엘리멘탈리스트", "Pistol Elementalist", ["pistol"], { sd: 0.9, reload: 0.6 });
   add("gunslinger", "건슬링어", "Gunslinger", ["pistol"], { fr: 0.72 });
   add("anemic_agility", "애너믹 어질리티", "Anemic Agility", ["pistol"], { fr: 0.9, dmg: -0.15 });
@@ -117,7 +117,7 @@
   add("sacrificial_steel", "새크리피셜 스틸", "Sacrificial Steel", ["melee"], { cc: 2.2 }, { group: "m_steel", set: "sacrificial", setMul: 1.25 });
   // variant of Pressure Point (can't be equipped together); Sacrificial set (with Steel): each x1.25 → +137.5%
   add("sacrificial_pressure", "새크리피셜 프레셔", "Sacrificial Pressure", ["melee"], { dmg: 1.1 }, { group: "m_dmg", set: "sacrificial", setMul: 1.25, note: "센티언트 상대 x1.33 (미반영)" });
-  add("galvanized_steel", "갈바나이즈드 스틸", "Galvanized Steel", ["melee"], { cc: 1.1 }, { group: "m_steel", cond: [{ when: "kill", eff: { cd: 1.2 } }] });
+  add("galvanized_steel", "갈바나이즈드 스틸", "Galvanized Steel", ["melee"], { cc: 1.1 }, { group: "m_steel", cond: [{ when: "kill", eff: { cd: 1.2 }, stk: 4 }] });
   add("organ_shatter", "오르건 섀터", "Organ Shatter", ["melee"], { cd: 0.9 }, { group: "m_cd" });
   add("amalgam_organ_shatter", "아말감 오르건 섀터", "Amalgam Organ Shatter", ["melee"], { cd: 0.85, wind: 0.6 }, { group: "m_cd" });
   add("gladiator_might", "글래디에이터 마이트", "Gladiator Might", ["melee"], { cd: 0.6 });
@@ -127,7 +127,7 @@
   add("melee_prowess", "밀리 프로웨스", "Melee Prowess", ["melee"], { sc: 0.9 });
   add("drifting_contact", "드리프팅 컨택트", "Drifting Contact", ["melee"], { sc: 0.4 });
   add("melee_elementalist", "밀리 엘리멘탈리스트", "Melee Elementalist", ["melee"], { sd: 0.9, wind: 0.6 }, { group: "m_el" });
-  add("galvanized_elementalist", "갈바나이즈드 엘리멘탈리스트", "Galvanized Elementalist", ["melee"], { sd: 0.8 }, { group: "m_el", cond: [{ when: "kill", eff: { sc: 1.2 } }] });
+  add("galvanized_elementalist", "갈바나이즈드 엘리멘탈리스트", "Galvanized Elementalist", ["melee"], { sd: 0.8 }, { group: "m_el", cond: [{ when: "kill", eff: { sc: 1.2 }, stk: 4 }] });
   add("lasting_sting", "래스팅 스팅", "Lasting Sting", ["melee"], { dur: 1.1 });
   add("north_wind", "노스 윈드", "North Wind", ["melee"], { cold: 0.9 });
   add("molten_impact", "몰튼 임팩트", "Molten Impact", ["melee"], { heat: 0.9 });
@@ -141,7 +141,7 @@
   add("focus_energy", "포커스 에너지", "Focus Energy", ["melee"], { elec: 0.6, hae: 0.4 });
   add("killing_blow", "킬링 블로우", "Killing Blow", ["melee"], { heavy: 1.2, wind: 0.6 }, { req: "heavy" });
   add("corrupt_charge", "커럽트 차지", "Corrupt Charge", ["melee"], { ic: 30 }, { req: "heavy" });
-  add("galvanized_reflex", "갈바나이즈드 리플렉스", "Galvanized Reflex", ["melee"], { hae: 0.5 }, { req: "heavy", group: "m_reflex", cond: [{ when: "kill", eff: { ic: 81.4 } }] });   // 20.35 × 4 stacks (wiki true value; the card rounds to 20)
+  add("galvanized_reflex", "갈바나이즈드 리플렉스", "Galvanized Reflex", ["melee"], { hae: 0.5 }, { req: "heavy", group: "m_reflex", cond: [{ when: "kill", eff: { ic: 81.4 }, stk: 4 }] });   // 20.35 × 4 stacks (wiki true value; the card rounds to 20)
   // explodes on the first contact (bounce explosion: 50% damage, no combo multiplier, no guaranteed procs) and returns at once;
   // a heavy-attack detonation still works in the same throw (wiki)
   add("volatile_quick_return", "볼래틸 퀵 리턴", "Volatile Quick Return", ["melee"], { radius: 3, volatile: 1 }, { req: "glaive", note: "벽에 튕겨 엉뚱한 방향으로 가지 않음(튕김 −4) · 폭발 범위 +3m · 닿을 때 작은 폭발(피해 50%, 연속기 배율 없음)" });
@@ -259,7 +259,7 @@
   // weapon arcanes. manual: needs a condition the player has to set up — compared only when picked by hand.
   // none: no effect on weapon damage (listed so nothing is silently missing).
   const ARC = {
-    primary_merciless: { ko: "프라이머리 머시리스", slot: "primary", cond: [{ when: "kill", eff: { dmg: 3.6, reload: 0.3 } }] },
+    primary_merciless: { ko: "프라이머리 머시리스", slot: "primary", eff: { reload: 0.3 }, cond: [{ when: "kill", eff: { dmg: 3.6 }, stk: 12 }] },   // wiki: +30%/kill x12, 4 s; reload +30% passive
     primary_deadhead: { ko: "프라이머리 데드헤드", slot: "primary", eff: { hsMult: 0.3 }, cond: [{ when: "hs", eff: { dmg: 3.6 } }] },
     primary_dexterity: { ko: "프라이머리 덱스터리티", slot: "primary", manual: true, cond: [{ when: "kill", eff: { dmg: 3.6 } }], note: "근접 처치 6회로 최대 중첩" },
     primary_frostbite: { ko: "프라이머리 프로스트바이트", slot: "primary", procStack: { type: "cold", cd: 1.2, ms: 0.9, win: 12, max: 40 } },
@@ -275,7 +275,7 @@
     primary_exhilarate: { ko: "프라이머리 익질러레이트", en: "Primary Exhilarate", slot: "primary", none: true, note: "에너지 회복" },
     primary_obstruct: { ko: "프라이머리 옵스트럭트", en: "Primary Obstruct", slot: "primary", none: true, note: "적 무기 고장" },
     longbow_sharpshot: { ko: "롱보우 샤프샷", en: "Longbow Sharpshot", slot: "primary", types: ["Bow"], cond: [{ when: "hs", eff: { dmg: 1.5 } }], note: "약점 명중 후 다음 발 +300% (헤드샷 50% 가정)" },
-    secondary_merciless: { ko: "세컨더리 머시리스", slot: "secondary", cond: [{ when: "kill", eff: { dmg: 3.6, reload: 0.3 } }] },
+    secondary_merciless: { ko: "세컨더리 머시리스", slot: "secondary", eff: { reload: 0.3 }, cond: [{ when: "kill", eff: { dmg: 3.6 }, stk: 12 }] },
     secondary_deadhead: { ko: "세컨더리 데드헤드", slot: "secondary", eff: { hsMult: 0.3 }, cond: [{ when: "hs", eff: { dmg: 3.6 } }] },
     secondary_dexterity: { ko: "세컨더리 덱스터리티", en: "Secondary Dexterity", slot: "secondary", manual: true, cond: [{ when: "kill", eff: { dmg: 3.6 } }], note: "근접 처치 6회로 최대 중첩" },
     secondary_shiver: { ko: "세컨더리 쉬버", en: "Secondary Shiver", slot: "secondary", coldVuln: 0.45 },
