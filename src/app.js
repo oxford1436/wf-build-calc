@@ -335,7 +335,9 @@ self.onmessage = function (ev) {
   const isIncAtk = (a) => /^Incarnon/i.test(a.en || "") || (a.parts || []).some((p) => /^Incarnon/i.test(p.en || ""));
   function evoItems(w, sel) {
     const items = [];
-    for (const t of w.evos || []) { if (t.tier === 1) continue; const p = t.perks[sel[t.tier] != null ? sel[t.tier] : 0]; if (p) for (const it of p.items) if (it.key) items.push(it); }
+    // tier I: a gun's Incarnon Form is its own attack; a melee weapon's form is a buff on every attack (calculated as on —
+    // e.g. Dual Ichor 180 s once 6x combo + heavy attack), so its stat lines ("+100% Melee Damage") apply
+    for (const t of w.evos || []) { if (t.tier === 1 && w.slot !== "melee") continue; const p = t.perks[sel[t.tier] != null ? sel[t.tier] : 0]; if (p) for (const it of p.items) if (it.key) items.push(it); }
     return items;
   }
   function applyEvos(w, sel) {
@@ -397,7 +399,9 @@ self.onmessage = function (ev) {
     const roman = ["", "I", "II", "III", "IV", "V"];
     const desc = (p) => p.items.map((it) => it.key ? it.ko + (it.form === "inc" ? " (인카논 형태만)" : it.form === "normal" ? " (기본 형태만)" : "") : it.cond ? "조건부: " + it.ko : it.ko).join(" · ");
     box.innerHTML = `<div class="clabel">인카논 진화 <small>게임에서 고른 진화를 고르세요 · 번호는 게임 진화 화면의 왼쪽부터 · 처음엔 계산으로 고른 값</small></div>
-      ${w.evos.map((t) => t.tier === 1 ? `<div class="evorow"><b>${roman[t.tier]}</b><span class="evofix">인카논 형태 해금</span></div>`
+      ${w.evos.map((t) => t.tier === 1 ? `<div class="evorow"><b>${roman[t.tier]}</b><span class="evofix">${w.slot === "melee" && t.perks[0] && t.perks[0].items.some((it) => it.key)
+          ? "인카논 형태 (켠 상태로 계산) — " + esc(t.perks[0].items.filter((it) => it.key || it.cond).map((it) => it.key ? it.ko : "조건부(계산 제외): " + it.ko).join(" · "))
+          : "인카논 형태 해금"}</span></div>`
         : `<label class="evorow"><b>${roman[t.tier] || t.tier}</b><select data-tier="${t.tier}">${t.perks.map((p, i) => `<option value="${i}"${st.evoSel[t.tier] === i ? " selected" : ""}>${i + 1}. ${esc(p.name)} — ${esc(desc(p))}${st.evoManual && st.evoManual[t.tier] ? "" : st.evoSel[t.tier] === i ? " [자동]" : ""}</option>`).join("")}</select></label>`).join("")}
       <p class="hint" style="margin:0">위키 진화 표 기준입니다. 기본 피해·치명타·상태이상·탄창·멀티샷·연사·재장전·관통력, "모드 적용 후 고정값" 보너스, 비치명타 피해 보너스, 곱연산 피해 보너스, 자기 능력치를 읽는 효과(치명타 확률 50% 미만일 때 등)는 계산에 넣습니다. 방어력 450 초과·최대 에너지 700 초과·채널링 어빌리티·처치 시·무리 상대 같은 조건은 왼쪽 설정이 그 조건을 채울 때만 넣습니다. "조건부"로 표시된 효과(오버실드일 때, 빈 탄창 재장전 시, 체력 절반 이하 적 등)와 반동·정확도는 넣지 않습니다.</p>`;
     box.querySelectorAll("select").forEach((sel) => sel.addEventListener("change", () => {
@@ -2109,7 +2113,7 @@ self.onmessage = function (ev) {
   F0 = captureFields();
   // read-only handle for checking results from the browser console / test scripts
   // test/automation handle (scripts/regress.js, scripts/community_check.js): arcAuto = the arcanes the 'auto' option compares
-  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack,
+  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos,
     arcAuto: (w) => arcanesFor(w).filter(([, x]) => !x.manual && !x.none && !x.aim).map(([k]) => k).concat([null]) };
   restoreFromHash();
 })();

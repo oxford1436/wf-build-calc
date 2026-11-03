@@ -31,6 +31,8 @@
     murmur: { weak: ["elec", "rad"], label: "머머(속삭임)", hp: "murmur" },
   };
   const DOT_TYPES = ["heat", "tox", "elec", "gas", "slash"];
+  // elements Melee Influence spreads (wiki: "melee elemental status effects"; physical procs spread nothing)
+  const SPREAD_EL = ["heat", "cold", "elec", "tox", "blast", "rad", "gas", "mag", "viral", "corr"];
   const DOT_DELAY = { heat: 1, tox: 1, slash: 1 };     // seconds before the first tick (wiki "Damage over Time")
   const PROC_WIN = { blast: 1.5, corr: 8, rad: 12, impact: 6 };
   const ARMOR_CAP = 2700;
@@ -495,10 +497,10 @@
     const perF = {};
     for (const f of o.factions) {
       // sum per-shot params across parts (same trigger)
-      const acc = { D: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
+      const acc = { D: 0, Dnon: 0, pbN: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
       res.forEach((r, ri) => {
         const x = r.perF[f], wgt = weights[ri];
-        acc.D += x.D * wgt; acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt; acc.napH += (x.napH || 0) * wgt;
+        acc.D += x.D * wgt; acc.Dnon += (x.Dnon || 0) * wgt; acc.pbN += (x.pbN || 0) * wgt; acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt; acc.napH += (x.napH || 0) * wgt;
         for (const T in x.dot) acc.dot[T] = (acc.dot[T] || 0) + x.dot[T] * wgt;
         for (const T in x.dotNon) acc.dotNon[T] = (acc.dotNon[T] || 0) + x.dotNon[T] * wgt;
         acc.pv += x.pv * wgt; acc.ph += x.ph * wgt; acc.pc += x.pc * wgt; acc.pk += x.pk * wgt; acc.pm += (x.pm || 0) * wgt; acc.pp += (x.pp || 0) * wgt;
@@ -523,8 +525,8 @@
       const base = { field: !!o.napField, strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, nc: main.nc || 0, corrMax: 10 + (o.ext.corrMax || 0), dt: o.dt, tmax: o.tmax, Tdur: main.Tdur, dotN: main.dotN,
         ogM: main.ogM || 1, frozenM: main.frozenM || 0, coldVuln: main.coldVuln || 0 };
       const hitP = { D: acc.D, blast: acc.blast, F: acc.F, dot: acc.dot, napH: acc.napH, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm, pp: acc.pp, aoeOnly: main && parts.every((q) => q.kind === "radial") };
-      const nonP = { D: 0, blast: 0, dot: acc.dotNon, pv: acc.pvN, ph: acc.phN, pc: acc.pcN, pk: acc.pkN };
-      const hasNon = Object.keys(acc.dotNon).some((T) => acc.dotNon[T] > 0);
+      const nonP = { D: acc.Dnon, blast: 0, dot: acc.dotNon, pv: acc.pvN, ph: acc.phN, pc: acc.pcN, pk: acc.pkN };
+      const hasNon = acc.Dnon > 0 || acc.pbN > 0 || Object.keys(acc.dotNon).some((T) => acc.dotNon[T] > 0);
       const period = 1 / Math.max(0.05, main.rate);
       const tAcq = isMeleeKind(atk.kind) ? 0 : T_ACQ;
       const solve = (tgs) => {
@@ -535,8 +537,21 @@
         let tHeavy = tHit, pHeavy = pMain;
         if (tgs.heavy) { pHeavy = Object.assign({}, base, hitP, { hp: tgs.heavy.hp, sh: tgs.heavy.sh * shc, ar0: tgs.heavy.ar }); tHeavy = ttk(pHeavy); }
         const tEx = tgs.ex ? ttk(Object.assign({}, base, hitP, { hp: tgs.ex.hp, sh: tgs.ex.sh * shc, ar0: tgs.ex.ar, og: tgs.ex.og })) : 0;
-        let tNon = Infinity;
-        if (o.scenario === "crowd" && hasNon && main.N > main.K) tNon = ttk(Object.assign({}, base, nonP, { hp: tg.hp, sh: tg.sh, ar0: tg.ar }));
+        let tNon = Infinity, tNonH = Infinity;
+        // what the enemies the shot doesn't strike keep taking while one is being hit (Melee Influence spread, Blast 10-stack
+        // detonations); Melee Influence (wiki): "Hits that one-hit-kill enemies cannot trigger nor benefit" — of the hits a target
+        // takes, only the ones before the killing blow spread (none when it dies to the first)
+        const pblM = (main.procs && main.procs.blast) || 0, unitB = pblM > 0 && acc.blast > 0 ? acc.blast / pblM : 0;
+        const tail10 = (m) => { let pmf = Math.exp(-m), cdf = pmf; for (let k = 1; k < 10; k++) { pmf *= m / k; cdf += pmf; } return Math.max(0, 1 - cdf); };
+        const n5c = Math.min(main.N - 1, (o.density || 0) * Math.PI * 25);
+        const nonOf = (tKill, extraD) => {
+          const nl = (tKill * main.rate) / (1 + tKill * main.rate), sc_ = (x) => x * nl;
+          // Blast stacks spread by Melee Influence: fuse damage on each enemy, and the 10-stack detonations of its neighbours
+          const lamN = acc.pbN * nl * main.rate;
+          const detN = lamN > 0 ? (lamN / 10) * tail10(1.5 * lamN) : 0;
+          return { D: (hasNon ? nonP.D * nl : 0) + extraD + (detN > 0 ? detN * n5c * unitB * 100 / Math.max(0.05, main.rate) : 0), blast: unitB * acc.pbN * nl, dot: hasNon ? Object.fromEntries(Object.entries(nonP.dot).map(([T, v]) => [T, sc_(v)])) : {},
+            pv: hasNon ? sc_(nonP.pv) : 0, ph: hasNon ? sc_(nonP.ph) : 0, pc: hasNon ? sc_(nonP.pc) : 0, pk: hasNon ? sc_(nonP.pk) : 0 };
+        };
         let kps, clear, Keff = main.K, ammoK = 1;
         // combined shot with punch through: enemies behind the first one take the direct hit only — the blast goes off on
         // the first enemy (wiki, Burston Prime Incarnon radial attack)
@@ -546,15 +561,58 @@
             pv: d0.pv * w0, ph: d0.ph * w0, pc: d0.pc * w0, pk: d0.pk * w0, pm: (d0.pm || 0) * w0, hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar });
           Keff = 1 + (main.K - 1) * Math.min(1, Math.max(tHit, period) / Math.max(ttk(dirP), period));
         }
+        // chains / ricochets: from every enemy the shot hits directly, the j-th jump lands on another enemy at f^j of the damage
+        // (statuses roll as usual). A bystander counts as killed in the same engagement in the share of the time it needs at
+        // that damage (the same rule as blast bystanders below); every jump needs another enemy in the pack.
+        if (main.chain && o.scenario === "crowd") {
+          const ch = main.chain;
+          let add = 0;
+          for (let j = 1; j <= ch.n; j++) {
+            const fj = Math.pow(ch.f, j);
+            let tj = tHit;
+            if (fj < 0.999) {
+              const q = Object.assign({}, pMain, { D: pMain.D * fj, blast: (pMain.blast || 0) * fj, F: (pMain.F || 0) * fj, napH: (pMain.napH || 0) * fj,
+                dot: Object.fromEntries(Object.entries(pMain.dot || {}).map(([T, v]) => [T, v * fj])) });
+              tj = ttk(q);
+            }
+            add += (ch.p == null ? 1 : ch.p) * Math.min(1, Math.max(tHit, period) / Math.max(tj, period));
+          }
+          Keff = Math.min(main.N, Keff * (1 + add));
+        }
         // Blast status (wiki "Blast Damage"): an enemy that dies with Blast stacks — or from a killing blow that procs Blast —
         // explodes for up to 300% of the hit's base damage in 5 m. Each kill then takes a share of its neighbours with it.
+        // Wiki "Blast Damage": "Upon reaching 10 blast stacks OR when an enemy afflicted with any amount of blast stacks dies, all
+        // current stacks instantly detonate in a single 5m AoE explosion. The explosion deals 300% base damage per stack (10x of
+        // single target damage) in a single damage instance. The detonating enemy only receives the single target damage";
+        // "The 5m AoE damage has no falloff"; crit multipliers apply ("summing up the total damage from each individual blast
+        // stack"). Stacks alive at death = procs of the last 1.5 s fuse, at most 10. (Faction damage applies twice per the wiki;
+        // the second application is left out here — conservative.)
         const pbl = (main.procs && main.procs.blast) || 0;
+        let aoeBl = 0;
         if (o.scenario === "crowd" && pbl > 0 && acc.blast > 0) {
           const unit = acc.blast / pbl;
+          const shots = 1 + tHit * main.rate;
           const onDeath = 1 - Math.exp(-pbl * Math.max(1, tHit * main.rate));
-          const dealt = ttk(Object.assign({}, base, { D: unit * 10, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, r: 0, cc: 0, nc: 0, hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar }), o.dt);
+          const nSt = Math.max(1, Math.min(10, pbl * Math.min(shots, 1.5 * main.rate)));
+          const dealt = ttk(Object.assign({}, base, { D: unit * 10 * nSt, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, r: 0, cc: 0, nc: 0, hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar }), o.dt);
           const n5 = Math.min(main.N - 1, (o.density || 0) * Math.PI * 25);
           Keff = Math.min(main.N, Keff * (1 + onDeath * n5 * Math.min(1, dealt / Math.max(1, tg.hp))));
+          // 10-stack detonations: an enemy taking λ Blast procs a second reaches 10 inside one 1.5 s fuse with the Poisson
+          // chance P(X ≥ 10 | 1.5λ) and then goes off every 10 procs; each one hits the others within 5 m. Every enemy the
+          // shot strikes (direct hits and chain jumps — each rolls its own status) is such a source.
+          const lam = pbl * main.rate, m = 1.5 * lam;
+          let pmf = Math.exp(-m), cdf = pmf; for (let k = 1; k < 10; k++) { pmf *= m / k; cdf += pmf; }
+          const det = (lam / 10) * Math.max(0, 1 - cdf);
+          const chainN = main.chain ? main.chain.n * (main.chain.p == null ? 1 : main.chain.p) : 0;
+          const sources = Math.min(main.N, main.K * (1 + chainN));
+          const near = Math.min(1, n5 / Math.max(1, main.N - 1));
+          aoeBl = sources * det * near * unit * 10 * 10 / Math.max(0.05, main.rate);     // 10 stacks x 300% each, per shot, onto each enemy not struck
+        }
+        if (o.scenario === "crowd" && main.N > main.K && (hasNon || aoeBl > 0)) {
+          const q = nonOf(tHit, aoeBl);
+          if (q.D > 0 || q.blast > 0 || Object.keys(q.dot).length) tNon = ttk(Object.assign({}, base, q, { hp: tg.hp, sh: tg.sh, ar0: tg.ar }));
+          // engaging the heavy first: its many non-lethal hits keep spreading / detonating onto the pack the whole time
+          if (tgs.heavy) { const qh = nonOf(tHeavy, aoeBl); if (qh.D > 0 || qh.blast > 0 || Object.keys(qh.dot).length) tNonH = ttk(Object.assign({}, base, qh, { hp: tg.hp, sh: tg.sh, ar0: tg.ar })); }
         }
         if (o.scenario === "crowd") {
           // bystanders in the blast die together with the target when the blast alone kills them about as fast
@@ -588,6 +646,11 @@
               tExp = tHit + Math.ceil(1 / fh) / Math.max(1e-6, nearRate);
             }
             clear = tgs.heavy ? Math.min(lights, (nL / k2) * eng(tHit) + eng(Math.min(tHeavy, tExp)) + (tgs.ex ? eng(tEx) : 0)) : lights;
+          }
+          // heavy first: while it is being hit the pack takes the spread; whatever is left of the pack is swept afterwards
+          if (tgs.heavy && isFinite(tNonH) && tNonH < 40) {
+            const left = tNonH > 1e-9 ? Math.max(0, 1 - tHeavy / tNonH) : 0;
+            clear = Math.min(clear, eng(tHeavy) + (tgs.ex ? eng(tEx) : 0) + (lights - extra) * left);
           }
           kps = main.N / Math.max(period, clear);
           // ammo in a long fight (players: "탄약이 부족해서 탄창·탄약 효율을 챙긴다"): rounds a wave costs vs rounds its kills drop.
@@ -966,12 +1029,16 @@
       const hsDot = hsReal > 0 ? (1 - hsReal) + hsReal * hsBase : 1;
       // melee sneak attack on an unaware enemy: +700% (rank 30) added beside the crit term — Dmg x (1 + 7 + tier x (CD-1))
       const stealthM = ext.stealth && isMelee ? (critBody + ext.stealth) / critBody : 1;
+      // Melee Influence (wiki): a melee Electricity proc has a "20% chance to grant a timed buff" (rank 5: 18 s, 20 m) that
+      // "cannot have its duration refreshed" — so after it ends it waits for the next trigger: uptime = 18λ / (1 + 18λ)
+      // with λ = triggers per second while it is off (renewal average).
       let u = 0;
       if (influence) {
         const pe = procs.elec || 0;
         const ph = 1 - Math.pow(0.8, pe);
         const pdet = 1 - Math.pow(1 - ph, K);
-        u = 1 - Math.pow(1 - pdet, 18 * rate);
+        const lam = rate * pdet;
+        u = 18 * lam / (1 + 18 * lam);
       }
       const spreadHit = 1 + u * (K - 1);
       const spreadNon = u * K;
@@ -1015,6 +1082,29 @@
         const fac = facAll + (a.bane && a.bane[fname] ? a.bane[fname] : 0);   // Roar-type buffs + faction damage mods (additive)
         let vuln = 0; for (const k in share) vuln += share[k] * (fac_.weak.includes(k) ? 1.5 : 1);
         let D = directMult * total * ms * vuln * hsmC * fin * fac * M * dupf * stealthM;
+        // Melee Influence spread damage (wiki): while the buff is up, "affected enemies are also dealt damage equal to that
+        // element's damage from the original attack", after quantization "including effects such as Condition Overload and
+        // critical multipliers" — one instance per element the hit procs ("Proccing multiple elements at the same time will
+        // show the sum of the spread damage"; "A hit that procs Slash will do nothing"), and "Faction Damage Bonuses apply
+        // twice to Melee Influence damage and three times to the status procs it causes". Dsp = what one enemy in the 20 m
+        // takes from one struck enemy, before the crit factor ttk applies. P(element T procs) from the hit's status chance:
+        // ⌊sc⌋ sure procs plus one more at the remainder, each picking T by its share.
+        let Dsp = 0;
+        if (influence && u > 0) {
+          const n0 = Math.floor(sc + 1e-9), f0 = sc - n0;
+          for (const T of SPREAD_EL) {
+            const w = share[T] || 0; if (w <= 0) continue;
+            Dsp += (1 - Math.pow(1 - w, n0) * (1 - f0 * w)) * w * (fac_.weak.includes(T) ? 1.5 : 1);
+          }
+          Dsp *= D / Math.max(1e-9, vuln) * fac;
+        }
+        // the Blast statuses a hit procs spread too: each enemy within 20 m gets a Blast stack (same base damage) per swing
+        // with the chance that the hit procs Blast — they fuse (30% each) and go off together at 10 stacks like any other
+        let pbN = 0;
+        if (influence && u > 0 && (share.blast || 0) > 0) {
+          const n0 = Math.floor(sc + 1e-9), f0 = sc - n0, w = share.blast;
+          pbN = (1 - Math.pow(1 - w, n0) * (1 - f0 * w)) * spreadNon;
+        }
         // Xata's Whisper (wiki): extra Void hit = 26% x strength of the hit, faction and weak-point multipliers applied again;
         // Void has no faction weakness, so the element vulnerability of the hit is taken back out
         const xata = ext.xata || 0;
@@ -1023,6 +1113,7 @@
         // chosen element; "Faction elemental weaknesses do not calculate inside the extra instance's base damage" — so the hit's
         // own element vulnerability comes out and the chosen element's weakness (x1.5) goes in. Napalm ticks don't trigger it.
         if (ext.xhit > 0) D *= 1 + ext.xhit * fac * (ext.xhitElem && fac_.weak.includes(ext.xhitElem) ? 1.5 : 1) / Math.max(0.25, vuln);
+        if (Dsp > 0) D += u * (K - 1) * Dsp;      // the other enemies struck by the same swing spread to this one too
         const dot = {}, dotNon = {};
         for (const T of DOT_TYPES) {
           const p = procs[T] || 0; if (p <= 0) continue;
@@ -1035,7 +1126,7 @@
           // a forced Resupply proc takes the Extra Hit's damage as its base (wiki), not the weapon hit's
           const pEff = xhitP && T === ext.xhitElem ? p - xhitP + xhitP * ext.xhit : p;
           dot[T] = pEff * per * spreadHit * (1 + dShare * (fac - 1));
-          if (T !== "slash" && spreadNon > 0) dotNon[T] = p * per * spreadNon;
+          if (T !== "slash" && spreadNon > 0) dotNon[T] = p * per * spreadNon * fac;   // spread procs: faction damage x3 (wiki)
         }
         // Nightwatch Napalm (wiki): each rocket instance (multishot included) leaves a blaze of a fixed 150 Heat per tick,
         // 6 ticks with the first right away, raised only by base damage mods/arcanes, faction damage and the Kuva valence
@@ -1066,7 +1157,7 @@
         const dispDotBy = {}; for (const T in dot) dispDotBy[T] = dot[T] * vm0;
         if (napHdisp > 0) dispDotBy.napalmHeat = napHdisp * vm0;
         perF[fname] = {
-          D, blast, dot, dotNon, napH, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
+          D, Dnon: Dsp * spreadNon, pbN, blast, dot, dotNon, napH, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
           pv: (procs.viral || 0) * spreadHit, ph: ((procs.heat || 0) + napPh) * spreadHit, pc: (procs.corr || 0) * spreadHit, pk: (procs.cold || 0) * spreadHit, pm: (procs.mag || 0) * spreadHit,
           pp: kind === "radial" ? 0 : (procs.punct || 0) * spreadHit,
           pvN: (procs.viral || 0) * spreadNon, phN: (procs.heat || 0) * spreadNon, pcN: (procs.corr || 0) * spreadNon, pkN: (procs.cold || 0) * spreadNon,
@@ -1088,6 +1179,8 @@
           fallM, ogM: (arc && arc.ogMult ? arc.ogMult : 1) * (1 + 0.5 * (share.void || 0)), frozenM: arc && arc.frozenMult && isMelee ? arc.frozenMult : 0, coldVuln: arc && arc.coldVuln ? arc.coldVuln : 0 };
       }
     }
+    // chaining / ricocheting shots (wiki Incarnon notes via convert.py CHAIN): hits that jump on from every enemy struck
+    if (best && atk.chain && o.scenario === "crowd" && N > 1) best.chain = atk.chain;
     // ammo: seconds of continuous fire from a full load, and ammo packs needed per minute
     // Incarnon Form: its own pool (charges), untouched by mods and ammo efficiency; the form ends when it runs out
     const incOf = atk.inc || (atk.parts && atk.parts[0].inc);

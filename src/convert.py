@@ -26,6 +26,29 @@ except Exception as e:  # keep building without it
 SPOOL_DOWN = {"Phenmor": {"Incarnon Form": [51, 0.6]}}
 # radial attacks that the wiki says get no multishot bonus (one explosion per trigger pull)
 NO_MS_RADIAL = {"Burston Prime": ("Incarnon Form Radial Attack",)}
+# chaining / ricocheting shots (wiki Incarnon Genesis notes, verbatim in data/raw/incarnon_evos.json): from every enemy the
+# shot hits directly, n more hits on nearby enemies, the j-th at f^j of the hit's damage, each with chance p.
+#  Torid: "chaining to up to 5 nearby enemies within 7 meters of each other, with each chain doing 75% of the previous chain's
+#    damage", "a 2.3 meter damage radius from the point of impact" that "CAN be benefit from Firestorm", and "Punch Through
+#    mods have no effect on the behavior of the beam"
+#  Boar: "each beam chaining up to 2 nearby enemies within 10 meters … with each chain doing 80% of the previous one's damage"
+#    (the 3 auto-aimed beams are left out: how many enemies sit within 10° of the reticle isn't modelled)
+#  Dual Toxocyst: "ricochet to 1 nearby enemy per shot within 5 meters"; Lato: "ricochet to 1 nearby enemy within 10 meters
+#    (12 meters for the prime)"; Sicarus: "ricochet to 1 nearby enemy within 6 meters"; Bronco: "Individual pellets now ricochet
+#    once …", "only has a 50% chance to Ricochet"; Angstrum: "ricochet toward 1 enemy within 20 meters" ("can miss" — no number
+#    given, counted as a hit). The ricochet's own damage isn't stated: the full hit is used.
+CHAIN = {
+    "Torid": {"Incarnon Form": {"n": 5, "f": 0.75, "p": 1, "r": 7, "radius": 2.3, "ptNone": True}},
+    "Boar": {"Incarnon Form": {"n": 2, "f": 0.8, "p": 1, "r": 10}}, "Boar Prime": {"Incarnon Form": {"n": 2, "f": 0.8, "p": 1, "r": 10}},
+    "Dual Toxocyst": {"Incarnon Form": {"n": 1, "f": 1, "p": 1, "r": 5}},
+    "Lato": {"Incarnon Form": {"n": 1, "f": 1, "p": 1, "r": 10}}, "Lato Vandal": {"Incarnon Form": {"n": 1, "f": 1, "p": 1, "r": 10}},
+    "Lato Prime": {"Incarnon Form": {"n": 1, "f": 1, "p": 1, "r": 12}},
+    "Sicarus": {"Incarnon Form": {"n": 1, "f": 1, "p": 1, "r": 6}}, "Sicarus Prime": {"Incarnon Form": {"n": 1, "f": 1, "p": 1, "r": 6}},
+    "Bronco": {"Incarnon Form": {"n": 1, "f": 1, "p": 0.5, "r": 6}}, "Bronco Prime": {"Incarnon Form": {"n": 1, "f": 1, "p": 0.5, "r": 8}},
+    "Angstrum": {"Incarnon Form": {"n": 1, "f": 1, "p": 1, "r": 20}}, "Prisma Angstrum": {"Incarnon Form": {"n": 1, "f": 1, "p": 1, "r": 20}},
+}
+# wiki Incarnon notes: Kunai "Punch Through is ignored in Incarnon Form"
+PT_NONE = {"Kunai": ("Incarnon Form",), "Mk1-Kunai": ("Incarnon Form",)}
 # weapon-wide crit traits (wiki weapon pages): Gotva Prime "Status Effects have a 15% chance to set the next shot's Critical
 # Chance to 300%" (15% confirmed by DE on the official forums, wiki footnote), ignoring mods
 PROC_CRIT = {"Gotva Prime": {"p": 0.15, "cc": 3.0}}
@@ -157,6 +180,13 @@ def conv(w, typ):
                         at["mag"], at["reload"], at["inc"] = 0, 0, True
                         if ch:
                             at["incAmmo"] = ch
+                ch_ = CHAIN.get(name, {}).get(a["name"])
+                if ch_:
+                    at["chain"] = {k: ch_[k] for k in ("n", "f", "p", "r")}
+                    if ch_.get("radius"): at["radius"] = ch_["radius"]
+                    if ch_.get("ptNone"): at["ptLock"] = True
+                if a["name"] in PT_NONE.get(name, ()):
+                    at["ptLock"] = True
                 if at["kind"] == "radial" and a["name"] in NO_MS_RADIAL.get(name, ()):
                     at["noMs"] = True     # wiki weapon page: the radial attack gets no multishot bonus
                 if a.get("charge_time"):
@@ -532,6 +562,8 @@ EVO_RULES = [
     (r"^Enemies suffering from fewer than 3 Status Effects will receive: \+(\d+(?:\.\d+)?)% Critical Damage\.?$", "cdFew", 0.01, "상태이상 2종 이하인 적에게 치명타 피해 +{v}% (모드 후 고정값)"),
     (r"^On Full Burst Hit: \+(\d+(?:\.\d+)?)% Damage, resets on Reload\.?$", "dmg", 0.01, "점사 전탄 명중 시 피해 +{v}% (서레이션과 합연산)"),
     (r"^\+(\d+(?:\.\d+)?)% Damage\.?$", "dmg", 0.01, "피해 +{v}% (서레이션과 합연산)"),
+    # melee Incarnon Form (Skana Incarnon note: "+100% damage is additive with other bonus damage sources like Pressure Point")
+    (r"^\+(\d+(?:\.\d+)?)% Melee Damage\.?$", "dmg", 0.01, "근접 피해 +{v}% (프레셔 포인트와 합연산)"),
     (r"^Multishot consumes ammo directly from Capacity and increases Damage by \+(\d+(?:\.\d+)?)%\.?$", "evoMult", 0.01, "멀티샷이 탄약을 직접 소모, 피해 +{v}% (곱연산)"),
     (r"^Multishot consumes ammo directly from Capacity and increases Damage by \+(\d+(?:\.\d+)?)\.?$", "baseDmg", 1, "멀티샷이 탄약을 직접 소모, 기본 피해 +{v}"),
     (r"^Multishot consumes ammo directly from Capacity and does \+(\d+(?:\.\d+)?)% Damage\.?$", "evoMult", 0.01, "멀티샷이 탄약을 직접 소모, 피해 +{v}% (곱연산)"),
