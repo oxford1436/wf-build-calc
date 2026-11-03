@@ -26,6 +26,9 @@ except Exception as e:  # keep building without it
 SPOOL_DOWN = {"Phenmor": {"Incarnon Form": [51, 0.6]}}
 # radial attacks that the wiki says get no multishot bonus (one explosion per trigger pull)
 NO_MS_RADIAL = {"Burston Prime": ("Incarnon Form Radial Attack",)}
+# weapon-wide crit traits (wiki weapon pages): Gotva Prime "Status Effects have a 15% chance to set the next shot's Critical
+# Chance to 300%" (15% confirmed by DE on the official forums, wiki footnote), ignoring mods
+PROC_CRIT = {"Gotva Prime": {"p": 0.15, "cc": 3.0}}
 # radial parts that are NOT added to their wiki parent shot (checked 2026-11-03, queue item 0):
 # - Castanas: "Mid-Flight Detonation" and "Embedded Detonation" are alternatives — a dart detonated in flight never also
 #   detonates embedded (wiki Castanas: detonating before it sticks uses the mid-flight values)
@@ -242,6 +245,8 @@ def conv(w, typ):
             for x in base:
                 x.pop("_shot", None)
             W["attacks"] = combos + base + late
+            if name in PROC_CRIT:
+                W["procCrit"] = PROC_CRIT[name]
             wk = WIKI.get(name) or {}
             if wk.get("ReloadStyle") == "ByRound":   # shells loaded one by one: bigger magazine = longer reload
                 for at_ in base:

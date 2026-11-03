@@ -140,6 +140,27 @@ const { chromium } = require("playwright");
       if (c) bad += "castanas 비행 중 + 박힌 뒤 기폭을 합침";
       check("v1.63 직격·폭발 이름이 다른 무기의 기본 공격 = 한 발 전체 (렌즈 3부분·펜타·아에그리트·아스틸라·엔보이·스터그)", !bad, bad);
     }
+    // v1.64 (커뮤니티 이유 분석): Soma Prime builds always carry Hata-Satya — wiki "+1.2% crit chance per hit", reset on reload
+    {
+      const w = weapon("soma_prime"), a = w.attacks[0], o = baseO();
+      const ids = ["Galvanized Chamber", "Primed Cryo Rounds", "Malignant Force", "Vital Sense"];
+      const s0 = E.evaluate(w, a, ids.map(M), o).score, s1 = E.evaluate(w, a, ids.concat(["Hata-Satya"]).map(M), o).score;
+      check("v1.64 하타-사트야(맞힐 때마다 치명타 +1.2%)가 소마 프라임 처치 속도를 올림", s1 > s0 * 1.2, (s1 / s0).toFixed(2));
+    }
+    // v1.64: Gotva Prime — status effects have a 15% chance to set the next shot's crit chance to 300% (wiki)
+    {
+      const w = weapon("gotva_prime"), a = w.attacks[0], o = baseO();
+      const r = E.evaluate(w, a, [M("Primed Cryo Rounds"), M("Malignant Force"), M("Galvanized Aptitude")], o);
+      check("v1.64 고트바 프라임: 상태이상 시 다음 발 치명타 300% (기본 23%보다 평균 치명타 확률이 높음)", !!w.procCrit && r.cc > 0.23 * 1.05, "cc " + (r.cc || 0).toFixed(3));
+    }
+    // v1.64: long-fight ammo — Kuva Zarr (AmmoPickup 1, wiki) can't sustain its fire on kill drops; Soma Prime can at Lv150
+    {
+      const z = weapon("kuva_zarr"), oz = baseO();
+      const ids = ["Primed Cryo Rounds", "Galvanized Chamber", "Critical Delay", "Vital Sense", "Malignant Force", "Hellfire"];
+      const r = E.evaluate(z, z.attacks[0], ids.map(M), oz), r2 = E.evaluate(z, z.attacks[0], ids.map(M), Object.assign(baseO(), { ammoLimit: false }));
+      const k = r.perF.grineer.top.ammoK;
+      check("v1.64 긴 전투 탄약: 쿠바 자르는 처치 드롭으로 탄약을 못 메움 (Lv400 그리니어 ammoK < 1), 끄면 1", k < 0.9 && r2.perF.grineer.top.ammoK === 1, "ammoK " + (k || 0).toFixed(2));
+    }
     return out;
   });
 

@@ -93,7 +93,7 @@
   const NUM_KEYS = ["dmg", "heavy", "ms", "cc", "ccHeavyNoDouble", "cd", "sc", "sd", "dur", "fr", "frneg", "lock", "mag", "reload", "wind",
     "ic", "hae", "ccc", "br", "ww", "co", "gco", "radius", "pt", "cdFlat", "ccFlat", "hsMult", "msLock", "hm", "ib", "welt",
     "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot", "evoPst", "wpcc",
-    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd", "napalm"];
+    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd", "napalm", "hata"];
   const EXTRA = ["radm", "magm", "gasm", "blastm", "viralm", "corrm", "heatx", "coldx", "elecx", "toxx", "voidx"];
   function newAgg() {
     const a = { elem: { heat: 0, cold: 0, elec: 0, tox: 0 }, phys: { impact: 0, punct: 0, slash: 0 }, extra: {} };
@@ -511,7 +511,7 @@
         const tEx = tgs.ex ? ttk(Object.assign({}, base, hitP, { hp: tgs.ex.hp, sh: tgs.ex.sh * shc, ar0: tgs.ex.ar, og: tgs.ex.og })) : 0;
         let tNon = Infinity;
         if (o.scenario === "crowd" && hasNon && main.N > main.K) tNon = ttk(Object.assign({}, base, nonP, { hp: tg.hp, sh: tg.sh, ar0: tg.ar }));
-        let kps, clear, Keff = main.K;
+        let kps, clear, Keff = main.K, ammoK = 1;
         // combined shot with punch through: enemies behind the first one take the direct hit only — the blast goes off on
         // the first enemy (wiki, Burston Prime Incarnon radial attack)
         if (res.length > 1 && parts[0].kind === "gun" && parts.some((p) => p.kind === "radial") && main.K > 1) {
@@ -564,8 +564,24 @@
             clear = tgs.heavy ? Math.min(lights, (nL / k2) * eng(tHit) + eng(Math.min(tHeavy, tExp)) + (tgs.ex ? eng(tEx) : 0)) : lights;
           }
           kps = main.N / Math.max(period, clear);
+          // ammo in a long fight (players: "탄약이 부족해서 탄창·탄약 효율을 챙긴다"): rounds a wave costs vs rounds its kills drop.
+          // Wiki "Ammo": solo, "Chance to drop Primary or Secondary Ammo" 45% per kill (taken as 22.5% each — the page gives
+          // one chance for the pair), "Eximus are guaranteed to drop either a Primary or Secondary Ammo, each having the same
+          // chance"; a pickup gives the weapon's AmmoPickup (wiki weapon data). Steady state: when a wave costs more than it
+          // drops, the kill rate falls to what the drops can pay for (the starting reserve only delays that).
+          ammoK = 1;
+          if (o.ammoLimit !== false && main.ammo && main.ammo.pickup > 0 && !main.ammo.resupply && !main.inc) {
+            const perShotR = main.ammo.use / Math.max(1e-6, main.rate);
+            const shotsAt = (t) => 1 + Math.max(0, t) * main.rate;
+            const lightShots = Math.min((nL / Keff) * shotsAt(tHit), Math.max(1, lights - extra) * main.rate);
+            const shots = lightShots + (tgs.heavy ? shotsAt(tHeavy) : 0) + (tgs.ex ? shotsAt(tEx) : 0);
+            const nEx = tgs.ex ? 1 : 0;
+            const income = main.ammo.pickup * (1 + (main.ammo.conv || 0)) * ((main.N - nEx) * 0.225 + nEx * 0.5);
+            const cost = shots * perShotR;
+            if (cost > income) { ammoK = income / cost; kps *= ammoK; }
+          }
         } else { clear = Math.max(period, tHit); kps = 1 / clear; }
-        return { ttk: tHit, ttkHeavy: tHeavy, ttkEx: tgs.ex ? tEx : null, ttkNon: tNon, kps, clear, target: tg, targetHeavy: tgs.heavy || null, Keff,
+        return { ttk: tHit, ttkHeavy: tHeavy, ttkEx: tgs.ex ? tEx : null, ttkNon: tNon, kps, clear, ammoK, target: tg, targetHeavy: tgs.heavy || null, Keff,
           one: oneHit(pMain), oneHeavy: tgs.heavy ? oneHit(pHeavy) : oneHit(pMain) };
       };
       // the hardest enemy of the scenario at any level (crowd: the heavy mixed in; single: heavy with overguard if set; boss)
@@ -784,7 +800,16 @@
     // atk.noMs: a radial part the wiki says multishot doesn't multiply (one blast per trigger pull)
     const ms0 = atk.noMs ? 1 : (atk.pellets || 1) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)));
     const tierNow = isHeavy ? M : (isMelee ? swingTier(atk.fr) : 1);
-    const ccMod = (isHeavy ? 2 * a.cc : a.cc) + a.ccHeavyNoDouble + (ext.ccAdd || 0);
+    // Hata-Satya (wiki): "Each hit increases Critical Chance by 1.2%", "additive with similar mods", capped at +500%,
+    // multishot and punch-through hits count, "Bonus ends as soon as the reload animation begins" (switching to the Incarnon
+    // Form counts as a reload). Average over one magazine of hits (linear ramp 0 → min(cap, 1.2% × hits)).
+    let hataAdd = 0;
+    if (a.hata > 0 && !isMelee) {
+      const shots = atk.inc ? (atk.incAmmo || 0) : magShots((atk.mag || 0) * (1 + a.mag));
+      const H = Math.max(0, shots) * ms0, Hc = 5 / a.hata;
+      hataAdd = H <= 0 ? 0 : H <= Hc ? a.hata * H / 2 : 5 - 5 * Hc / (2 * H);
+    }
+    const ccMod = (isHeavy ? 2 * a.cc : a.cc) + a.ccHeavyNoDouble + (ext.ccAdd || 0) + hataAdd;
     const scMul = 1 + a.sc + a.ww * Math.max(0, tierNow - 1) + (ext.scAdd || 0) + (tenno ? tenno.sc || 0 : 0) + (isHeavy ? ext.heavySc || 0 : 0);
     // High Ground / Decisive Stature: base crit chance + a share of the current status chance
     const hgAdd = sp.highground ? Math.min(sp.highground.cap, sp.highground.v * Math.max(0, (atk.sc || 0) * scMul + a.scFlat)) : 0;
@@ -807,6 +832,14 @@
     const hsm = hsFrac > 0 ? (1 - hsFrac) + hsFrac * hsM : 1;
     // riven "weak point critical chance" (Update 44.1 splice): extra crit chance on weak point hits only
     if (a.wpcc > 0 && hsFrac > 0) ccBase += (atk.cc || 0) * a.wpcc * Math.min(1, hsFrac);
+    // Gotva Prime (wiki): "Status Effects have a 15% chance to set the next shot's Critical Chance to 300%", rolled "separately
+    // for each bullet", and the set value "ignores all other modifiers". The wiki doesn't say whether one roll boosts every
+    // pellet of the next shot, so the lower bound is used: the boosted share of bullets = 15% × status chance (≤ 100%).
+    // Average crit damage is linear in crit chance (1 + cc × (cd − 1)), so blending the chance is exact for the average.
+    if (weapon.procCrit && !isMelee) {
+      const f = Math.min(1, weapon.procCrit.p * Math.min(1, sc));
+      ccBase = (1 - f) * ccBase + f * weapon.procCrit.cc;
+    }
     const facAll = 1 + (ext.faction || 0);
     // sniper combo (scoped): x1.5 at SniperComboMin hits, +0.5 each time the count triples; hits = shots x multishot.
     // Averaged over 20 s of continuous fighting (the counter carries over between targets while you keep hitting).

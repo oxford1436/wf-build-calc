@@ -1374,7 +1374,7 @@ self.onmessage = function (ev) {
     const atk = st.weapon.attacks[st.atk];
     const buffNames = buffSummary();
     const rm0 = $("#rivmode").value;
-    const xa = exilusAdvice(xid, r, atk);
+    const xa = exilusAdvice(xid, r, atk, top);
     let html = shareBarHtml();
     try { if (/github\.io$/.test(location.hostname)) history.replaceState(null, "", "#s=" + b64e(JSON.stringify(captureState()))); } catch (e) {}
 
@@ -1524,6 +1524,7 @@ self.onmessage = function (ev) {
       <li>모드 용량: 오로킨 카탈리스트(용량 = 최대 랭크×2), 모든 모드 최대 랭크 기준입니다. 같은 극성 칸은 소모 절반(올림), 다른 극성 칸은 25% 증가(올림)이고, 포르마 한도 안에서 들어가는 조합만 추천합니다.</li>
       <li>저격총은 조준 옵션을 켜면 최대 배율 줌 보너스와 저격 콤보(20초 연속 교전 평균)를 넣습니다. 익절티드 무기는 워프레임 위력 값을 기본 피해(또는 위키에 적힌 방식)에 반영합니다.</li>
       <li>Cyte-09 리서플라이를 켜면 탄창을 비울 때마다 시전해 즉시 재장전한다고 보고, 재장전과 탄약 부족이 없어지는 것으로 계산합니다(탄약 무한). 시전은 조준을 옮기는 사이처럼 원래 쏘지 않는 순간에 한다고 보고 기본 0초로 두며, '시전으로 사격이 끊기는 시간'을 늘리면 그만큼 탄창마다 쉬는 시간이 생깁니다(위키에 시전 시간 없음). 에너지와 탄약 팩의 속성 추가 피해는 계산하지 않습니다.</li>
+      <li>탄약은 긴 전투 기준입니다: 무리 하나를 잡는 데 쓴 탄약이 그 처치들이 떨어뜨리는 탄약(위키 Ammo: 솔로 처치당 45% 확률로 주무기 또는 보조무기 탄약 — 종류별 22.5%로 계산, 엑시무스는 확정)보다 많으면 처치 속도를 드롭이 감당하는 만큼으로 낮춥니다. 탄약 효율·탄약 변환 모드가 여기서 힘을 냅니다.</li>
       <li>위키에 수치가 없는 어빌리티(Cyte-09 시크)와 킷건·자우 전용 아케인, 자우 강공(위키 데이터 없음)은 아직 반영하지 않습니다.</li>
     </ul></section>`;
     const toc = [["sec1", "① 추천 세팅"], ["sec2", "② 내 세팅과 비교"], ["sec3", "③ 리벤"], ["sec4", "④ 속성·아케인"], ["sec5", "⑤ 상세"]];
@@ -1652,7 +1653,7 @@ self.onmessage = function (ev) {
   document.addEventListener("click", (e) => { const b = e.target.closest(".rivrerun"); if (b) rerunWithRiven(b.dataset.set); });
 
   /* ---------------- exilus / warframe arcanes / ammo ---------------- */
-  function exilusAdvice(xid, r, atk) {
+  function exilusAdvice(xid, r, atk, top) {
     if (xid) {
       const m = MOD_BY_ID[xid];
       const why = m.eff.throwSpd ? "투척 속도가 빨라져 던지고 돌아오는 주기가 짧아집니다 (처치 속도에 직접 기여)"
@@ -1662,6 +1663,12 @@ self.onmessage = function (ev) {
     const xs = exilusMods(st.weapon);
     // exalted weapons use energy, not ammo; Resupply refills the magazine, so no ammo mod is needed
     const conv = st.weapon.exalted || (r.ammo && r.ammo.resupply) ? null : xs.filter((m) => m.eff.ammoConv).sort((a, b) => b.eff.ammoConv - a.eff.ammoConv)[0];
+    // long-fight ammo (engine ammoK): kill drops can't pay for the rounds a wave costs → the conversion mod is real kill speed
+    const ammoLow = Object.values(r.perF || {}).some((x) => [x.ammoK, x.hi && x.hi.ammoK, x.top && x.top.ammoK].some((k) => k != null && k < 0.999));
+    if (ammoLow && conv && top) {
+      const k = evalBuild(top.ids.concat([conv.id]), top.val, top.arcane).score / r.score;
+      return { name: conv.ko, id: conv.id, short: "탄약 보완", why: `탄약 보완 — 긴 전투에서 처치로 떨어지는 탄약보다 쓰는 탄약이 많아 처치 속도가 탄약에 묶입니다. 다른 종류 탄약 픽업을 이 무기 탄약으로 ${pct(conv.eff.ammoConv)} 바꿔 주면 처치 속도 ×${k.toFixed(2)} (탄약 드롭: 위키 Ammo, 솔로 기준)` };
+    }
     if (r.ammo && r.ammo.sustain < 60 && conv) return { name: conv.ko, id: conv.id, short: "탄약 보완", why:`탄약 보완 — 다른 종류 탄약 픽업을 이 무기 탄약으로 ${pct(conv.eff.ammoConv)} 바꿔 줍니다 (처치 속도 영향 없음, 탄약 ${Math.round(r.ammo.sustain)}초 만에 바닥)` };
     if (r.inc) return { name: "자유", why: `피해 계산에 영향 없는 칸입니다. 인카논 형태는 모드와 무관한 별도 탄(${r.inc.rounds || "충전식"}${r.inc.rounds ? "발" : ""})을 쓰고 재장전이 없어서 탄약·탄창 모드도 효과가 없습니다. 기본 형태로 돌아갔을 때를 위해 탄약 변환 모드를 끼워도 됩니다.` };
     const proj = xs.find((m) => m.eff.projSpd);

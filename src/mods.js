@@ -433,6 +433,9 @@
     m.note = (m.note ? m.note + " · " : "") + (m.set === "vigilante" ? "비질란테 세트: 1개당 치명타 단계 상승 확률 +5%" : "글래디에이터 세트: 1개당 연속기 배율마다 치명타 확률 +10%");
     if (m.auto && m.noCalc) { m.noCalc = false; m.unparsed = []; }      // worth a slot for the set bonus alone
   }
+  // Hata-Satya (Soma Prime only, wiki): +1.2% crit chance per hit, resets on reload, cap +500% — engine "hata"
+  for (const m of M) if (m.en === "Hata-Satya") Object.assign(m, { eff: { hata: 0.012 }, noCalc: false, unparsed: [], auto: false,
+    note: "맞힐 때마다 치명타 확률 +1.2% (멀티샷·관통 타격 포함, 최대 +500%), 재장전하면 초기화 — 탄창 한 번 동안의 평균으로 계산 (위키)" });
   // Nightwatch Napalm (Ogris/Kuva Ogris augment, wiki): blaze of 150 Heat x 6 ticks per rocket — engine "napalm"
   for (const m of M) if (m.en === "Nightwatch Napalm") Object.assign(m, { eff: { napalm: 150 }, noCalc: false, unparsed: [], auto: false,
     note: "로켓마다 화염 장판: 고정 150 화염 × 6틱 (서레이션류·아케인·팩션·베일런스만 적용, 치명타 없음, 멀티샷마다 겹침 — 위키)" });
