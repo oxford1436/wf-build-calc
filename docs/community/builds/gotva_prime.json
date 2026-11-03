@@ -1,0 +1,129 @@
+{
+  "weapon": "gotva_prime",
+  "attack": 0,
+  "valence": null,
+  "riven": null,
+  "notes": "고트바 프라임 기본 사격. 2026-11-04 04시 묶음 2 조사. kind: read = 출처 글 본문에서 모드 8칸을 직접 읽은 세팅. 아카라이브 176642290(템플릿)은 대화 세션 요약의 주장만 씀. Overframe 645045·공식 포럼 1371183의 세팅은 본문 글자로 없음(스포일러·이미지) → 세팅 미기록, 주장만.",
+  "builds": [
+    {
+      "name": "Shacknews 바이러스+화염 하이브리드 (해머 샷)",
+      "community": "shacknews",
+      "kind": "read",
+      "url": "https://www.shacknews.com/article/141682/best-gotva-prime-build-warframe",
+      "date": "2024-10-04",
+      "mods": [
+        "Vital Sense",
+        "Galvanized Chamber",
+        "Malignant Force",
+        "Galvanized Aptitude",
+        "Vigilante Armaments",
+        "Rime Rounds",
+        "Hammer Shot",
+        "Thermite Rounds"
+      ],
+      "arcane": "primary_merciless",
+      "claims": [
+        "상태이상 100%를 크게 넘길 필요 없음 — 고유 효과는 상태이상이 걸리면 발동하고 한 번에 여러 개가 걸려도 더해지는 게 없음",
+        "바이탈 센스는 고유 효과의 빨간 치명타를 키움",
+        "화염은 체력·장갑에 도움"
+      ],
+      "note": "아케인은 글이 데드헤드/머시리스 둘 다 제시 → 머시리스로 계산(헤드샷 기본 제외).",
+      "verdict": "기본 조건 37%(머시리스). 차이 분해(머시리스 기준, 각각 한 칸만): 해머 샷 → 마그네틱 캐퍼시티 ×1.48, 비질란테 아마먼트 → 프라임드 슈레드 ×1.36, 라임 → 프라임드 크라이오 ×1.26, 아케인 머시리스 → 플레이티드 라운드 ×1.20."
+    },
+    {
+      "name": "Destructoid 바이러스+방사능 치명타 (크리티컬 딜레이·헌터 뮤니션즈)",
+      "community": "destructoid",
+      "kind": "read",
+      "url": "https://www.destructoid.com/best-gotva-prime-build-in-warframe/",
+      "date": "2024-04-05",
+      "mods": [
+        "Galvanized Aptitude",
+        "Galvanized Chamber",
+        "Vital Sense",
+        "Malignant Force",
+        "Primed Cryo Rounds",
+        "Radiated Reload",
+        "Hunter Munitions",
+        "Critical Delay",
+        "Vigilante Supplies"
+      ],
+      "arcane": "primary_merciless",
+      "claims": [
+        "치명타 모드가 고유 효과(빨간 치명타)를 크게 키움",
+        "머시리스가 가장 무난 — 서레이션·헤비 칼리버 같은 피해 모드 자리를 대신"
+      ],
+      "verdict": "기본 조건 32%. 헌터 뮤니션즈 → 프라임드 슈레드 ×1.26, 크리티컬 딜레이 → 프라임드 슈레드 ×1.14, 라디에이티드 리로드 → 써마이트 ×1.07."
+    }
+  ],
+  "read_2026_11_04": [
+    {
+      "src": "https://overframe.gg/build/645045/gotva-prime/gotva-buildcraft-notes/",
+      "date": "2024-04-05 작성, 2026-01-01 수정 (Warframe 41.0)",
+      "what": "Baked_Valkyrie 세팅 해설(모드 칸 글자 없음)",
+      "claims": [
+        "고유 효과는 탄마다 굴림이라 다탄 사격에서 강화 탄은 대개 하나",
+        "이 총에서 상태이상 확률이 곧 치명타 확률",
+        "치명타 확률 모드는 이 총에서 약 5~15% 덜 효율적(그래도 쓸 만함)",
+        "프라이머리 프로스트바이트를 쓰면 바이러스를 못 씀"
+      ]
+    },
+    {
+      "src": "https://forums.warframe.com/topic/1371183-gotva-prime-hammer-shot-or-3rd-elemental-mod",
+      "date": "2023-11-04",
+      "what": "공식 포럼: 해머 샷 vs 세 번째 원소",
+      "claims": [
+        "고유 효과는 치명타 확률보다 상태이상·치명타 피해를 보상 (JadeKaiser)",
+        "엑시무스 6명 시험: 바이탈 센스가 해머 샷보다 나음(남은 탄 554 vs 407) (Tiltskillet)",
+        "고트바엔 세 번째 원소 + 해머 샷 조합이 무난, 비질란테 아마먼트보다 크리티컬 딜레이 (SneakyErvin)"
+      ]
+    },
+    {
+      "src": "https://www.sportskeeda.com/mmo/warframe-gotva-prime-build-guide-drop-location-unique-mechanics-best-mods",
+      "date": "날짜 표기 없음",
+      "what": "모드 일부만 글자(세팅 미기록)",
+      "claims": [
+        "크리티컬 딜레이로 기본 치명타 69%",
+        "갈바나이즈드 헬 언급(라이플에 못 낌 — 글 오류)"
+      ]
+    },
+    {
+      "src": "https://wikiwiki.jp/warframe/GOTVA%20PRIME",
+      "date": "읽은 날 2026-11-04",
+      "what": "일본 위키 고유 효과",
+      "claims": [
+        "状態異常付与時、次弾のクリティカル率を15%の確率で300%に固定",
+        "マルチショットや貫通で複数ヒットさせた場合はそれぞれが15%で赤クリティカル"
+      ]
+    }
+  ],
+  "claims_check_2026_11_04": [
+    "✅ 치명타 확률 모드는 고트바에서 덜 효율적(Baked_Valkyrie '약 5~15%', arca 176642290 '치확 모드를 빼는 경우가 많다'): 고유 효과로 정해진 탄(15%×상태이상 확률)은 모드와 무관하게 300%라 치명타 확률 모드는 나머지 탄에만 붙음 — 1위 상태이상 81%면 12% 덜 효율. 1위에 치명타 확률 모드 없음",
+    "✅ 바이탈 센스 > 해머 샷(포럼 1371183 Tiltskillet 엑시무스 6명 시험): 1위에서 바이탈 센스 → 해머 샷 90%",
+    "✅ 갈바나이즈드 앱티튜드 > 라이플 엘리멘탈리스트(arca 176642290): 1위에서 바꾸면 68%",
+    "△ '상태이상 100%를 크게 넘길 필요 없음'(Shacknews): 고유 효과 몫은 계산기에서 상태이상 100%에서 멈춤(min(1, 상태이상)) — 고유 효과에 한해 맞음. 상태이상 자체(바이러스·화염 중첩)는 100% 넘어도 늘어남",
+    "❓ 고유 효과 굴림 방식: 위키 'Status Effects have a 15% chance to set the next shot's Critical Chance to 300%'·'rolled separately for each bullet', 일본 위키 '상태이상 부여 시 다음 탄 … 멀티샷·관통 타격마다 각각 15%'. 일본 위키대로면 상태이상이 한 번이라도 걸린 다음 발의 탄마다 15% → 1위(상태이상 81%, 멀티샷 2.9)에서 강화 탄 비율 12% → 15%, 치명타 평균 배율 약 +10%. 공식 위키 문장으로 확정이 안 돼 엔진은 낮은 쪽 그대로",
+    "△ 커뮤니티 세팅에 자성이 없음(2/2): 계산기 1위의 마그네틱 캐퍼시티(자성 60% + 탄창 40%)를 비질란테 아마먼트로 바꾸면 66%, 엑시무스를 빼면 88%(그리니어만 92%) — 자성 몫의 2/3가 무리에 섞인 엑시무스 1명의 오버가드(자성 상태이상이 오버가드 피해 증가, 사용자 결정 '엑시무스 기본 포함'). 탄창 +40%는 플레이티드 라운드(√탄창)와 탄창 동안 쏘는 시간에 들어감"
+  ],
+  "meta": {
+    "read_builds": 2,
+    "elements": "바이러스+화염 1, 바이러스+방사능 1 — 둘 다 냉기+독(멀리그난트 포스)으로 바이러스",
+    "valence": "해당 없음",
+    "core": [
+      "갈바나이즈드 앱티튜드",
+      "갈바나이즈드 체임버",
+      "바이탈 센스",
+      "멀리그난트 포스"
+    ],
+    "flex": [
+      "라임 / 프라임드 크라이오",
+      "해머 샷 / 크리티컬 딜레이",
+      "비질란테 아마먼트 / 헌터 뮤니션즈",
+      "써마이트 / 라디에이티드 리로드"
+    ],
+    "arcane": [
+      "머시리스 2(둘 다 데드헤드와 택일로 제시)"
+    ],
+    "why": "고유 효과(상태이상 → 다음 탄 치명타 300%)를 살리려고 상태이상 확률을 100% 가까이, 빨간 치명타를 키우는 바이탈 센스. 치명타 확률 모드는 고유 효과 탄에는 안 붙어 효율이 떨어짐(Overframe·아카라이브).",
+    "limit": "직접 읽은 세팅 2개뿐 — 메타 요약으로는 부족"
+  }
+}
