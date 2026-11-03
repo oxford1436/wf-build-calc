@@ -4,6 +4,7 @@
 
 ## 구성
 - `META.md` — 커뮤니티 메타 기본서: 속성 조합·팩션별 선택, 베일런스 속성을 고르는 방식, 무기 종류별 모드·아케인 뼈대와 그 이유, 커뮤니티가 함정이라고 부르는 선택. 실행마다 먼저 읽고, 새로 확인한 패턴은 여기에 보탠다(출처·날짜).
+- `arca_<날짜>.md` — 대화 세션에서 데스크톱 앱 브라우저로 직접 읽은 아카라이브 글 요약(글 번호·날짜). 예약 실행은 아카라이브 글이 열리지 않으므로 아카라이브 근거는 이 파일에 있는 것만 쓴다. 여기 적힌 템플릿·주장은 ❓ 미확인 — 실행이 위키·계산기로 판정한다.
 - `builds/<무기>.json` — 모은 세팅(무료 야간 점검이 매일 다시 계산). 형식은 `builds/tenet_arca_plasmor.json` 참고: `weapon`(또는 킷건·자우는 `kit: ["kit_secondary","Sporelacer","Haymaker","Splat"]`), `valence`, `riven`, `builds[]`(name, community, url, author, date, mods[영문 이름], exilus, arcane, claims[], verdict).
 - `report.md` — `node scripts/community_check.js`가 만드는 점검표(GitHub Actions가 매일 갱신). "계산기 1위보다 강함" 표시가 먼저 조사할 대상.
 - `<무기>.md` — 무기별 조사 노트(세팅, 이유, 검증 결과, 출처).
