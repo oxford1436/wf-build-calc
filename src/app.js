@@ -178,7 +178,7 @@ self.onmessage = function (ev) {
   function defaultAttack(w) {
     const a = w.attacks;
     let i = a.findIndex((x) => x.kind === "glaive" && /Recall/.test(x.en));
-    if (i < 0) i = a.findIndex((x) => x.parts && !x.primer);
+    if (i < 0) i = a.findIndex((x) => x.parts && !x.primer && !x.alt);
     if (i < 0) i = a.findIndex((x) => x.kind === "gun" && x.en === "Normal Attack");
     if (i < 0) i = a.findIndex((x) => x.kind === "melee");
     return Math.max(0, i);

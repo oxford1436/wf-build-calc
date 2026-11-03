@@ -125,6 +125,21 @@ const { chromium } = require("playwright");
       const ids = top.mods.map((m) => m.id);
       check("v1.62 더 강한 커뮤니티 세팅이 1위가 되고, 같이 못 끼는 세팅은 제외", top.community === "seed" && !ids.includes("point_strike"), ids.join(","));
     }
+    // v1.63 (대기열 0): impact + explosion of one shot under different wiki names must be one default attack
+    // (wiki AttackParentIndex). Lenz = Charged Shot + Initial Blast + Bubble Collapse; Penta = Grenade Impact + Grenade Detonation.
+    {
+      const want = { lenz: ["Charged Shot", "Initial Blast", "Bubble Collapse"], penta: ["Grenade Impact", "Grenade Detonation"], aegrit: ["Direct Hit", "Detonation"],
+        astilla: ["Slug Impact", "Glass Explosion"], tenet_envoy: ["Grenade Impact", "Rocket Explosion"], stug: ["Blob Embed", "Blob Explosion"] };
+      let bad = "";
+      for (const id in want) {
+        const a = weapon(id).attacks[0], got = (a.parts || [a]).map((x) => x.en);
+        if (want[id].some((n) => !got.includes(n))) bad += `${id}: ${got.join("+")} · `;
+      }
+      // Castanas: mid-flight and embedded detonation are either/or (wiki) — never summed
+      const c = weapon("castanas").attacks.find((x) => x.parts && x.parts.some((p) => /Mid-Flight/.test(p.en)) && x.parts.some((p) => /Embedded/.test(p.en)));
+      if (c) bad += "castanas 비행 중 + 박힌 뒤 기폭을 합침";
+      check("v1.63 직격·폭발 이름이 다른 무기의 기본 공격 = 한 발 전체 (렌즈 3부분·펜타·아에그리트·아스틸라·엔보이·스터그)", !bad, bad);
+    }
     return out;
   });
 

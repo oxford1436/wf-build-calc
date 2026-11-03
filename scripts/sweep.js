@@ -75,7 +75,14 @@ const { chromium } = require("playwright");
         // impact and explosion of the same shot left as two attacks (wiki names didn't pair up in convert.py) -> the default
         // attack counts only the impact (found 2026-11-03: Lenz 172 s, Stug 370 s, Aegrit 233 s)
         if (!atk.parts && atk.kind === "gun") {
-          const ex = w.attacks.filter((x) => x !== atk && x.kind === "radial" && !/^(Incarnon|Alt)|Slam|Headshot/i.test(x.en || "") && Math.abs((x.fr || 0) - (atk.fr || 0)) < 0.05);
+          const near = w.attacks.filter((x) => x !== atk && x.kind === "radial" && !/^(Incarnon|Alt)|Slam|Headshot/i.test(x.en || "") && Math.abs((x.fr || 0) - (atk.fr || 0)) < 0.05);
+          // v1.63: noPair = checked on the wiki and deliberately kept apart ("either" = Castanas mid-flight/embedded are
+          // alternatives; "cloud" = lingering cloud whose tick rate isn't in the wiki data yet)
+          // a radial that already sits in another shot's combo (wiki parent = alt fire, e.g. Mutalist Quanta orb) isn't this shot's blast
+          const inCombo = (x) => w.attacks.some((z) => z.parts && z.parts.some((q) => q.en === x.en));
+          const ex = near.filter((x) => !x.noPair && !inCombo(x));
+          const cl = near.filter((x) => x.noPair === "cloud");
+          if (cl.length) row.flags.push("장판 피해 미반영 (틱 간격 확인 필요): " + cl.map((x) => x.name).join(", "));
           if (ex.length) row.flags.push("직격만 계산 — 같은 발의 폭발이 따로 있음: " + ex.map((x) => x.name).join(", "));
         }
         if (pf.grineer && pf.grineer.clear > 60) row.flags.push("전멸 60초 초과 — 공격 데이터 확인");

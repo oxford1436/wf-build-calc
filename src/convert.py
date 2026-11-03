@@ -26,6 +26,21 @@ except Exception as e:  # keep building without it
 SPOOL_DOWN = {"Phenmor": {"Incarnon Form": [51, 0.6]}}
 # radial attacks that the wiki says get no multishot bonus (one explosion per trigger pull)
 NO_MS_RADIAL = {"Burston Prime": ("Incarnon Form Radial Attack",)}
+# radial parts that are NOT added to their wiki parent shot (checked 2026-11-03, queue item 0):
+# - Castanas: "Mid-Flight Detonation" and "Embedded Detonation" are alternatives — a dart detonated in flight never also
+#   detonates embedded (wiki Castanas: detonating before it sticks uses the mid-flight values)
+# - lingering clouds (Pox Poison Cloud EffectDuration 5, Zakti Gas Cloud, Mutalist Cernos Toxin Cloud Duration 10) tick for
+#   several seconds; the tick rate is not in the wiki data, so they stay separate until verified (P1: no assumed numbers)
+NO_PAIR = {"Castanas": {"Embedded Detonation": "either"}, "Sancti Castanas": {"Embedded Detonation": "either"},
+           "Pox": {"Poison Cloud": "cloud"}, "Zakti": {"Gas Cloud": "cloud"}, "Zakti Prime": {"Gas Cloud": "cloud"}, "Mutalist Cernos": {"Toxin Cloud": "cloud"}}
+# pairs the wiki data leaves without AttackParentIndex (wiki attack tables, 2026-11-03):
+# - Stug: each blob deals "Blob Embed" on sticking and "Blob Explosion" (ExplosionDelay 1.5 s) — both are AoE
+# - Evensong: "Charged Radial Attack" is the burst of the charged arrow (same charge time 1.2 s)
+# parts that hit more than once per shot (wiki weapon pages, 2026-11-03):
+# - Proboscis Cernos: appendages "tick damage twice on all affected enemies before exploding" (9 m), explosion 1.7 s later
+# - Stug: "Blobs then deal two ticks of damage in a 2 meter radius before exploding" (embed damage ×2, then Blob Explosion)
+PART_REPEAT = {"Proboscis Cernos": {"Appendages": 2}, "Stug": {"Blob Embed": 2}}
+PAIR_EXTRA = {"Stug": {"Blob Explosion": "Blob Embed"}, "Evensong": {"Charged Radial Attack": "Charged Shot"}}
 
 FORCED = {"Impact": "impact", "Puncture": "punct", "Slash": "slash", "Heat": "heat", "Cold": "cold", "Electricity": "elec",
           "Toxin": "tox", "Blast": "blast", "Radiation": "rad", "Gas": "gas", "Magnetic": "mag", "Viral": "viral", "Corrosive": "corr", "Void": "void"}
@@ -164,28 +179,69 @@ def conv(w, typ):
                                "parts": [y], "primer": z, "primerRate": 0.25, "dmg": y["dmg"], "cc": y["cc"], "cd": y["cd"], "sc": y["sc"], "fr": y["fr"],
                                "pellets": pellets, "mag": y["mag"], "reload": y["reload"], "semi": y.get("semi", False),
                                "desc": "보조 사격을 4초마다 한 번 섞어 상태이상을 묻힌 뒤 기본 사격으로 마무리하는 운용 (세도류)"})
+            # which radial part belongs to which shot: wiki AttackParentIndex first (Lenz: Initial Blast and Bubble Collapse
+            # are both children of Charged Shot; Penta: Grenade Detonation of Grenade Impact), then explicit pairs, then the
+            # old name rule (core() equal after stripping Impact/Explosion words)
+            wk_atks = (WIKI.get(name) or {}).get("Attacks") or []
+            idx_name = {x.get("AttackIndex"): x.get("AttackName") for x in wk_atks}
+            parent_of = {x.get("AttackName"): idx_name.get(x.get("AttackParentIndex")) for x in wk_atks if x.get("AttackParentIndex")}
+            parent_of.update(PAIR_EXTRA.get(name, {}))
+            groups, order, extra, keep = {}, [], set(), set()
             for x in base:
-                if x["kind"] != "radial":
+                if x["en"] in NO_PAIR.get(name, {}):
+                    x["noPair"] = NO_PAIR[name][x["en"]]
+                if x["kind"] != "radial" or re.search(r"Headshot|Slam", x["en"]) or x.get("noPair"):
                     continue
                 partners = [y for y in base if y["kind"] == "gun" and core(y["en"]) == core(x["en"]) and abs(y["fr"] - x["fr"]) < 0.05]
                 if not partners and core(x["en"]) == "":
                     partners = [y for y in base if y["kind"] == "gun" and abs(y["fr"] - x["fr"]) < 0.05]
-                if partners:
-                    y = partners[0]
-                    # wiki "Punch Through": projectiles with an AoE part explode on first contact — punch through can't apply
-                    if y.get("_shot") == "Projectile":
-                        y["ptLock"] = True
-                    cname = "기본 사격 전체 피해 (직격 + 폭발)" if y["en"] == "Normal Attack" else (y["name"].replace(" 직격", "").replace("직격", "").strip() or y["name"]) + " 한 발 전체 피해 (직격 + 폭발)"
-                    combos.append({"name": cname, "en": y["en"] + "+" + x["en"], "kind": "gun", "desc": "한 발의 직격과 폭발 피해를 합쳐서 계산",
-                                   "parts": [y, x], "dmg": y["dmg"], "cc": y["cc"], "cd": y["cd"], "sc": y["sc"], "fr": y["fr"],
-                                   "pellets": pellets, "mag": y["mag"], "reload": y["reload"], "semi": y.get("semi", False), "ptLock": bool(y.get("ptLock"))})
-                    if y.get("inc"):
-                        combos[-1]["inc"] = True
-                    if y.get("incAmmo"):
-                        combos[-1]["incAmmo"] = y["incAmmo"]
+                oldp = partners[0] if partners else None
+                pn = parent_of.get(x["en"])
+                py = next((y for y in base if y["en"] == pn and y is not x and abs(y["fr"] - x["fr"]) < 0.05), None) if pn else None
+                if py is not None and (py["kind"] == "gun" or name in PAIR_EXTRA):
+                    if py["en"] not in groups:
+                        groups[py["en"]] = [py]
+                        order.append(groups[py["en"]])
+                    groups[py["en"]].append(x)
+                    if x["en"] in PAIR_EXTRA.get(name, {}):
+                        extra.add(py["en"])
+                    if oldp is py:
+                        keep.add(py["en"])     # the name rule already paired these before v1.63: default unchanged
+                    continue
+                if pn and pn in NO_PAIR.get(name, {}):
+                    continue
+                if oldp is not None:
+                    order.append([oldp, x])
+            late = []
+            first_gun = next((y["en"] for y in base if y["kind"] == "gun"), None)
+            for grp in order:
+                y, from_wiki = grp[0], any(grp is g for g in groups.values())
+                rep = PART_REPEAT.get(name, {})
+                if rep:
+                    grp = [q for q in grp for _ in range(rep.get(q["en"], 1))]
+                # wiki "Punch Through": projectiles with an AoE part explode on first contact — punch through can't apply
+                if y.get("_shot") == "Projectile":
+                    y["ptLock"] = True
+                cname = "기본 사격 전체 피해 (직격 + 폭발)" if y["en"] == "Normal Attack" else (y["name"].replace(" 직격", "").replace("직격", "").strip() or y["name"]) + " 한 발 전체 피해 (직격 + 폭발)"
+                cb = {"name": cname, "en": "+".join(dict.fromkeys(q["en"] for q in grp)), "kind": "gun", "desc": "한 발의 직격과 폭발 피해를 합쳐서 계산",
+                      "parts": list(grp), "dmg": y["dmg"], "cc": y["cc"], "cd": y["cd"], "sc": y["sc"], "fr": y["fr"],
+                      "pellets": pellets, "mag": y["mag"], "reload": y["reload"], "semi": y.get("semi", False), "ptLock": bool(y.get("ptLock"))}
+                if len(grp) > 2:
+                    cb["desc"] = "한 발의 직격과 폭발 피해 " + str(len(grp)) + "번을 합쳐서 계산 (위키 공격 구성)"
+                if y.get("inc"):
+                    cb["inc"] = True
+                if y.get("incAmmo"):
+                    cb["incAmmo"] = y["incAmmo"]
+                # pairs found through the wiki parent index on a shot that isn't the weapon's main trigger (Quanta cube, Cedo glaive,
+                # Kulstar cluster bombs, Incarnon forms…) are offered but never become the default attack
+                if from_wiki and y["en"] != first_gun and y["en"] not in extra and y["en"] not in keep:
+                    cb["alt"] = True
+                    late.append(cb)
+                else:
+                    combos.append(cb)
             for x in base:
                 x.pop("_shot", None)
-            W["attacks"] = combos + base
+            W["attacks"] = combos + base + late
             wk = WIKI.get(name) or {}
             if wk.get("ReloadStyle") == "ByRound":   # shells loaded one by one: bigger magazine = longer reload
                 for at_ in base:
