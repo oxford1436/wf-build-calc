@@ -114,6 +114,17 @@ const { chromium } = require("playwright");
       const c0 = E.evaluate(w, a0, ids.map(M), oc).score, c1 = E.evaluate(w, a1, ids.map(M), oc).score;
       check("v1.61 어트리션 진화: 보스에겐 미적용, 무리에선 적용", Math.abs(b1 / b0 - 1) < 0.005 && c1 > c0 * 1.5, `boss ${(b1 / b0).toFixed(3)} · crowd ${(c1 / c0).toFixed(2)}`);
     }
+    // v1.62: community builds read from their source compete with the search (cfg.seeds) — a stronger one becomes #1,
+    // one with mods the game won't equip together is never returned
+    {
+      const w = weapon("kuva_zarr"), o = baseO();
+      const cands = ["serration", "split_chamber"].map(M);
+      const strong = { name: "seed", mods: ["serration", "split_chamber", "primed_cryo_rounds", "vital_sense"].map(M) };
+      const clashing = { name: "clash", mods: ["serration", "split_chamber", "critical_delay", "point_strike", "primed_cryo_rounds", "vital_sense"].map(M) };
+      const top = E.optimize(w, w.attacks[0], cands, o, { slots: 8, beam: 5, seeds: [strong, clashing] })[0];
+      const ids = top.mods.map((m) => m.id);
+      check("v1.62 더 강한 커뮤니티 세팅이 1위가 되고, 같이 못 끼는 세팅은 제외", top.community === "seed" && !ids.includes("point_strike"), ids.join(","));
+    }
     return out;
   });
 

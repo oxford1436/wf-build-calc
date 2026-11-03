@@ -2,7 +2,7 @@
 
 계산기 기본 조건(강철의 길 150·250·400, 3팩션 평균, 12명 무리, 처치 중첩은 무리마다 0부터)에서 계산기 1위 = 100%. '중첩 유지'·'처치 없음'은 같은 조건에서 처치 중첩만 바꾼 비교입니다. 이 파일은 scripts/community_check.js가 만듭니다.
 
-표시 1건
+표시 0건
 
 ## 코린트 프라임 (corinth_prime.json)
 
@@ -11,15 +11,9 @@
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
 | 계산기 1위 (상태이상·관통, 치명타 모드 없음) | session | 바이러스+화염+자성 | 100% | 100% | 100% | — |
-| [치명타 2칸 (Overframe '범용 치명타 코린트' 주장 재현)](https://overframe.gg/build/694026/corinth-prime/corinth-general-purpose-crit/) | overframe | 바이러스+화염 | 62% | 55% | 93% | — |
-| [샷건 배러지 → 아말감 샷건 배러지](https://overframe.gg/build/694026/corinth-prime/corinth-general-purpose-crit/) | overframe | 바이러스+화염+자성 | 99% | 99% | 99% | — |
-| [갈바나이즈드 새비 → 비질란테 아마먼트](https://overframe.gg/build/432226/corinth-prime/viral-hm/) | overframe | 바이러스+화염+자성 | 59% | 73% | 120% | — |
-
-**커뮤니티 메타** (세팅 3개)
-
-- 속성 조합: 바이러스+화염+자성 2 · 바이러스+화염 1 — 계산기 1위: 바이러스+화염+자성
-- 자주 쓰는 모드: 갈바나이즈드 헬 3 · 프라임드 칠링 그래스프 3 · 톡식 배러지 3 · 스캐터링 인페르노 3 · 갈바나이즈드 새비 2 · 샷건 배러지 2 · 마그네틱 스트레이프 2 · 시킹 포스 2 · 프라임드 래비지 1 · 크리티컬 디셀러레이션 1
-- 아케인: 프라이머리 머시리스 3
+| [치명타 2칸 (Overframe '범용 치명타 코린트' 주장 재현)](https://overframe.gg/build/694026/corinth-prime/corinth-general-purpose-crit/) | overframe (주장 시험) | 바이러스+화염 | 62% | 55% | 93% | — |
+| [샷건 배러지 → 아말감 샷건 배러지](https://overframe.gg/build/694026/corinth-prime/corinth-general-purpose-crit/) | overframe (주장 시험) | 바이러스+화염+자성 | 99% | 99% | 99% | — |
+| [갈바나이즈드 새비 → 비질란테 아마먼트](https://overframe.gg/build/432226/corinth-prime/viral-hm/) | overframe (주장 시험) | 바이러스+화염+자성 | 59% | 73% | 120% | — |
 
 ## 테넷 아르카 플라즈모어 (tenet_arca_plasmor.json)
 
@@ -31,11 +25,4 @@
 | 독 베일런스 + 부식 1칸 + 치명타 (커뮤니티식 재현) | session | 부식+방사능 | 85% | 89% | 76% | — |
 | 계산기 v1.58 최종 (바이러스+화염+자성) | session | 바이러스+화염+방사능+자성 | 100% | 100% | 100% | — |
 | [스포츠키다 가이드 세팅 (아말감 샷건 배러지 제외 7칸)](https://sportskeeda.com/mmo/warframe-tenet-arca-plasmor-build-guide-best-progenitor-mod-setup) | sportskeeda | 방사능+독 | 13% | 16% | 16% | — |
-| [자성 베일런스 + 계산기 자성 최적 (Overframe '자성 베일런스가 독보다 낫다' 재현)](https://overframe.gg/build/430677/tenet-arca-plasmor/magnetic-radiation-corrosive-cold-boom-stick-tenet-arca-plasmor-general-use-steel-path-no-micro/) | overframe | 부식+방사능+냉기 | 101% | 93% | 124% | **계산기 1위보다 강함 — 조사 필요** |
-
-**커뮤니티 메타** (세팅 2개)
-
-- 속성 조합: 방사능+독 1 · 부식+방사능+냉기 1 — 계산기 1위: 바이러스+화염+방사능+자성
-- 자주 쓰는 모드: 갈바나이즈드 새비 2 · 갈바나이즈드 헬 2 · 샷건 배러지 2 · 프라임드 포인트 블랭크 1 · 프라임드 래비지 1 · 크리티컬 디셀러레이션 1 · 갈바나이즈드 액셀러레이션 1 · 리벤 1 · 컨테이저스 스프레드 1 · 프라임드 차지드 쉘 1
-- 아케인: 프라이머리 머시리스 1 · 프라이머리 프로스트바이트 1
-- 1위에만 있는 모드: 프라임드 칠링 그래스프(빼고 빈 칸으로 두면 42%) · 마그네틱 스트레이프(빼고 빈 칸으로 두면 76%) · 톡식 배러지(빼고 빈 칸으로 두면 49%) · 인센디어리 코트(빼고 빈 칸으로 두면 73%)
+| [자성 베일런스 + 계산기 자성 최적 (Overframe '자성 베일런스가 독보다 낫다' 재현)](https://overframe.gg/build/430677/tenet-arca-plasmor/magnetic-radiation-corrosive-cold-boom-stick-tenet-arca-plasmor-general-use-steel-path-no-micro/) | overframe (주장 시험) | 부식+방사능+냉기 | 101% | 93% | 124% | 베일런스가 달라서(mag) — 같은 베일런스 비교 아님 |

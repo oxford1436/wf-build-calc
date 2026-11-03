@@ -69,12 +69,13 @@ const OUT = path.join(ROOT, "docs", "community", "report.md");
         const bv = bd.valence === undefined ? undefined : bd.valence;
         const r = ev(ids, a, undefined, bv);
         return { name: bd.name, community: bd.community || "", url: bd.url || "", rel: r.score / ref, sus: ev(ids, a, { killRamp: false }, bv).score / refSus,
-          zero: ev(ids, a, { kills: false }, bv).score / refZero, unknown, clash, mods: ids.map(ko).join(", "), arc: a, ids, combo: comboOf(r.share) };
+          zero: ev(ids, a, { kills: false }, bv).score / refZero, unknown, clash, mods: ids.map(ko).join(", "), arc: a, ids, combo: comboOf(r.share), kind: bd.kind || (bd.community === "session" ? "session" : "claim"), vdiff: bd.valence !== undefined ? (bd.valence ? bd.valence.type : "없음") : null };
       });
       // community meta: what players converge on (element combo, mods, arcane), and the calculator's #1 measured against it —
       // a popular mod the #1 leaves out, or a #1 mod nobody uses, gets a number so the difference is explained (or investigated)
       const arcKo = (k) => k ? ((window.WF_ARCANES[k] || {}).ko || k) : "없음";
-      const comm = rows.filter((r) => r.community && r.community !== "session" && !r.unknown.length);
+      // only builds read in full from their source count as community meta (claim tests and session builds do not)
+      const comm = rows.filter((r) => r.kind === "read" && !r.unknown.length);
       const cnt = (arr) => { const m = {}; for (const x of arr) m[x] = (m[x] || 0) + 1; return Object.entries(m).sort((x, y) => y[1] - x[1]); };
       const okSet = (t) => { const ms = t.filter((x) => x !== "__riven").map((x) => A.MOD_BY_ID[x]); for (let i = 0; i < ms.length; i++) for (let j = i + 1; j < ms.length; j++) if (E.clash(ms[i], ms[j])) return false; return true; };
       let meta = null;
@@ -103,10 +104,11 @@ const OUT = path.join(ROOT, "docs", "community", "report.md");
     let md = `## ${res.name} (${f})\n\n계산기 1위: ${res.top.mods} · ${res.top.arc || "아케인 없음"}\n\n| 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |\n| --- | --- | --- | --- | --- | --- | --- |\n`;
     for (const r of res.rows) {
       const notes = [];
-      if (r.rel > 1.005) { notes.push("**계산기 1위보다 강함 — 조사 필요**"); flags++; }
+      if (r.rel > 1.005 && r.vdiff) notes.push(`베일런스가 달라서(${r.vdiff}) — 같은 베일런스 비교 아님`);
+      else if (r.rel > 1.005 && r.kind !== "session") { notes.push("**계산기 1위보다 강함 — 조사 필요**"); flags++; }
       if (r.clash.length) { notes.push("같이 못 끼는 모드: " + r.clash.join(", ")); flags++; }
       if (r.unknown.length) { notes.push("인식 못 함: " + r.unknown.join(", ")); flags++; }
-      md += `| ${r.url ? `[${r.name}](${r.url})` : r.name} | ${r.community} | ${r.combo} | ${pct(r.rel)} | ${pct(r.sus)} | ${pct(r.zero)} | ${notes.join(" · ") || "—"} |\n`;
+      md += `| ${r.url ? `[${r.name}](${r.url})` : r.name} | ${r.community}${r.kind === "claim" ? " (주장 시험)" : r.kind === "read" ? "" : ""} | ${r.combo} | ${pct(r.rel)} | ${pct(r.sus)} | ${pct(r.zero)} | ${notes.join(" · ") || "—"} |\n`;
     }
     const m = res.meta;
     if (m) {

@@ -1184,10 +1184,32 @@
         i++; if (progress) progress(0.6 + 0.4 * (i / chosen.length));
       }
     }
+    // community builds read in full from their source (docs/community/builds, kind "read"): scored under the same
+    // conditions and allowed to win, so the one recommendation is the best of the search and of what players run.
+    // Only the valences/arcanes the search itself may use (the user's settings); riven only when the user's riven is in.
+    if (cfg.seeds && cfg.seeds.length) {
+      const hasRiv = locked.some((m) => m && m.id === "__riven");
+      const lead = results.slice().sort((x, y) => y.score - x.score).slice(0, 5);
+      const vals = [], arcs = [];
+      for (const r of lead) { if (!vals.some((v) => JSON.stringify(v) === JSON.stringify(r.val))) vals.push(r.val); if (!arcs.includes(r.arcane)) arcs.push(r.arcane); }
+      for (const s of cfg.seeds) {
+        const mods = (s.mods || []).filter(Boolean);
+        if (mods.some((m) => m.id === "__riven") !== hasRiv) continue;
+        if (mods.filter((m) => !m.exilus).length > slots || mods.filter((m) => m.exilus).length > 1) continue;
+        let bad = false; for (let i = 0; i < mods.length && !bad; i++) for (let j = i + 1; j < mods.length; j++) if (clash(mods[i], mods[j])) { bad = true; break; }
+        if (bad) continue;
+        const sArcs = arcs.slice(); if (s.arcane !== undefined && arcOpts.includes(s.arcane) && !sArcs.includes(s.arcane)) sArcs.push(s.arcane);
+        for (const val of vals) for (const arcane of sArcs) {
+          results.push({ mods, score: evaluate(weapon, atk, mods, mkX(val, arcane)).score, val, arcane, community: s.name || true });
+        }
+      }
+    }
     const uniq = new Map();
     for (const r of results) {
       const key = r.mods.map((m) => m.id).sort().join(",") + "|" + (r.val ? r.val.type + r.val.pct : "") + "|" + r.arcane;
-      if (!uniq.has(key) || uniq.get(key).score < r.score) uniq.set(key, r);
+      const prev = uniq.get(key);
+      if (!prev || prev.score < r.score) uniq.set(key, prev && prev.community && !r.community ? Object.assign({}, r, { community: prev.community }) : r);
+      else if (r.community && !prev.community) prev.community = r.community;   // same build found by the search and run by players
     }
     const out = Array.from(uniq.values()).sort((x, y) => y.score - x.score);
     // screening results were scored with the fast arrangement pick: re-score the leaders exactly;
@@ -1216,7 +1238,8 @@
         }));
         const best = alts.map((_, j) => Math.max(...sc.map((row) => row[j])));
         band.forEach((r, i) => { r.robust = Math.exp(sc[i].reduce((t, v, j) => t + Math.log(Math.max(1e-9, v / best[j])), 0) / alts.length); });
-        band.sort((x, y) => (y.robust - x.robust) || (y.score - x.score));
+        // a build players actually run wins a near tie (robustness within 1%) over one only the search found (2026-11-03)
+        band.sort((x, y) => (!!x.community !== !!y.community && Math.abs(y.robust - x.robust) < 0.01 ? (y.community ? 1 : -1) : 0) || (y.robust - x.robust) || (y.score - x.score));
         out.splice(0, band.length, ...band);
       }
     }
