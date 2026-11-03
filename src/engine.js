@@ -1207,24 +1207,26 @@
       next.sort((x, y) => y.score - x.score);
       beam = next.slice(0, beamW);
     }
-    const out = [];
-    for (const b of beam.slice(0, nLocal)) {
-      let improved = true, guard = 0;
-      while (improved && guard++ < 12) {
-        improved = false;
-        for (let i = 0; i < b.mods.length; i++) {
-          if (locked.includes(b.mods[i])) continue;
-          const rest = b.mods.slice(0, i).concat(b.mods.slice(i + 1));
-          for (const c of cands) {
-            if (!fits(c, rest, slots) || !capOk(rest.concat([c]))) continue;
-            const s = ev(rest.concat([c]));
-            if (s > b.score * 1.0000001) { b.mods = rest.concat([c]); b.score = s; improved = true; }
-          }
+    return beam.slice(0, nLocal).map((b) => localImprove(weapon, atk, cands, oo, slots, locked, b));
+  }
+  // one-swap hill climb: replace any unlocked mod with any candidate while the score improves
+  function localImprove(weapon, atk, cands, oo, slots, locked, b) {
+    const ev = (mods) => evaluate(weapon, atk, mods, oo).score;
+    const capOk = (mods) => oo.noCapacity || capacityPlan(weapon, mods, oo.formaMax).fits;
+    let improved = true, guard = 0;
+    while (improved && guard++ < 12) {
+      improved = false;
+      for (let i = 0; i < b.mods.length; i++) {
+        if (locked.includes(b.mods[i])) continue;
+        const rest = b.mods.slice(0, i).concat(b.mods.slice(i + 1));
+        for (const c of cands) {
+          if (!fits(c, rest, slots) || !capOk(rest.concat([c]))) continue;
+          const s = ev(rest.concat([c]));
+          if (s > b.score * 1.0000001) { b.mods = rest.concat([c]); b.score = s; improved = true; }
         }
       }
-      out.push(b);
     }
-    return out;
+    return b;
   }
 
   function optimize(weapon, atk, cands, o, cfg, progress) {
@@ -1261,6 +1263,43 @@
       for (const sc of chosen) {
         push(beamSearch(weapon, atk, cands, mkX(sc.val, sc.arcane), slots, beamW, locked, 8), sc.val, sc.arcane);
         i++; if (progress) progress(0.6 + 0.4 * (i / chosen.length));
+      }
+    }
+    // v1.67 dominant-mod restart: one mod that is huge on its own (Semi-Shotgun Cannonade +240%) pulls every partial
+    // build of the beam toward itself, and the beam never sees the sets without it. Search once more without the best
+    // set's most important mod (the one whose removal costs the most) under the same valence/arcane.
+    if (results.length && !cfg.noRestart) {
+      const top = results.slice().sort((x, y) => y.score - x.score)[0], oo = mkX(top.val, top.arcane);
+      let key = null, drop = 0;
+      top.mods.forEach((m, i) => {
+        if (!m || locked.includes(m)) return;
+        const d = top.score - evaluate(weapon, atk, top.mods.filter((_, j) => j !== i), oo).score;
+        if (d > drop) { drop = d; key = m; }
+      });
+      if (key) push(beamSearch(weapon, atk, cands.filter((c) => c.id !== key.id), oo, slots, beamW, locked, 4), top.val, top.arcane);
+    }
+    // v1.67 cross-arcane check: each arcane is searched on its own, and a mod set can be the best one under arcane A
+    // while A's own beam never reaches it (Corinth Prime: the Blaze/Seeking Force set found under Plated Round scored
+    // 2.42 with Merciless, but the Merciless beam stopped at 2.14 — a 7% worse recommendation). Re-score the leading
+    // mod sets with every arcane option, then hill-climb the best few under the arcane they now carry.
+    if (arcOpts.length > 1 && results.length) {
+      const seenK = new Set(), lead = [];
+      for (const r of results.slice().sort((x, y) => y.score - x.score)) {
+        const k = r.mods.map((m) => m.id).sort().join(",") + "|" + JSON.stringify(r.val);
+        if (seenK.has(k)) continue; seenK.add(k); lead.push(r); if (lead.length >= 6) break;
+      }
+      const xs = [];
+      for (const r of lead) for (const arcane of arcOpts) {
+        if (arcane === r.arcane) continue;
+        xs.push({ mods: r.mods.slice(), score: evaluate(weapon, atk, r.mods, mkX(r.val, arcane)).score, val: r.val, arcane });
+      }
+      const best0 = Math.max(...results.map((r) => r.score));
+      xs.sort((x, y) => y.score - x.score);
+      for (const x of xs.slice(0, 3)) {
+        if (x.score < best0 * 0.97) break;
+        results.push(x);
+        const b = localImprove(weapon, atk, cands, mkX(x.val, x.arcane), slots, locked, { mods: x.mods.slice(), score: x.score });
+        results.push({ mods: b.mods, score: b.score, val: x.val, arcane: x.arcane });
       }
     }
     // community builds read in full from their source (docs/community/builds, kind "read"): scored under the same

@@ -622,6 +622,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.67", date: "2026-11-03", title: "추천 검색이 한 모드에 갇히던 문제",
+      items: [
+        "혼자서도 큰 모드(세미-샷건 캐노네이드 +240% 등)가 있으면 검색이 그 모드를 낀 세팅만 살펴서, 그 모드 없이 더 센 세팅을 놓치고 있었습니다. 코린트 프라임(산탄)은 추천이 대화에서 비교했던 세팅보다 12% 약했습니다. 이제 1위 세팅에서 가장 중요한 모드를 뺀 채로 한 번 더 찾고, 상위 세팅을 다른 아케인으로도 다시 계산합니다.",
+        "코린트 프라임 추천이 바뀝니다(캐노네이드·치명타 세팅 → 갈바나이즈드 헬·바이러스·마그네틱 스트레이프·시킹 포스·샷건 배러지, 머시리스, +14%). 다른 무기도 추천이 바뀔 수 있습니다.",
+      ] },
     { v: "1.66", date: "2026-11-03", title: "샤드 원소 순서 · 반자동 연사 상한 제거 · 화염 중첩 갱신",
       items: [
         "보라 샤드(주무기 전기)의 원소가 베일런스보다 먼저 조합되고 있었습니다. 게임 아스날 화면(멀리그난트 포스 독 + 화염 베일런스 + 보라 샤드 = 가스 + 전기)에 맞춰 샤드 원소를 베일런스 다음으로 옮겼습니다. 사이트-09 무기의 속성 조합이 바뀝니다(쿠바 오그리스는 부식이 아니라 가스 + 전기).",
@@ -2237,24 +2242,26 @@ header.top p{flex-basis:100%}
       next.sort((x, y) => y.score - x.score);
       beam = next.slice(0, beamW);
     }
-    const out = [];
-    for (const b of beam.slice(0, nLocal)) {
-      let improved = true, guard = 0;
-      while (improved && guard++ < 12) {
-        improved = false;
-        for (let i = 0; i < b.mods.length; i++) {
-          if (locked.includes(b.mods[i])) continue;
-          const rest = b.mods.slice(0, i).concat(b.mods.slice(i + 1));
-          for (const c of cands) {
-            if (!fits(c, rest, slots) || !capOk(rest.concat([c]))) continue;
-            const s = ev(rest.concat([c]));
-            if (s > b.score * 1.0000001) { b.mods = rest.concat([c]); b.score = s; improved = true; }
-          }
+    return beam.slice(0, nLocal).map((b) => localImprove(weapon, atk, cands, oo, slots, locked, b));
+  }
+  // one-swap hill climb: replace any unlocked mod with any candidate while the score improves
+  function localImprove(weapon, atk, cands, oo, slots, locked, b) {
+    const ev = (mods) => evaluate(weapon, atk, mods, oo).score;
+    const capOk = (mods) => oo.noCapacity || capacityPlan(weapon, mods, oo.formaMax).fits;
+    let improved = true, guard = 0;
+    while (improved && guard++ < 12) {
+      improved = false;
+      for (let i = 0; i < b.mods.length; i++) {
+        if (locked.includes(b.mods[i])) continue;
+        const rest = b.mods.slice(0, i).concat(b.mods.slice(i + 1));
+        for (const c of cands) {
+          if (!fits(c, rest, slots) || !capOk(rest.concat([c]))) continue;
+          const s = ev(rest.concat([c]));
+          if (s > b.score * 1.0000001) { b.mods = rest.concat([c]); b.score = s; improved = true; }
         }
       }
-      out.push(b);
     }
-    return out;
+    return b;
   }
 
   function optimize(weapon, atk, cands, o, cfg, progress) {
@@ -2291,6 +2298,43 @@ header.top p{flex-basis:100%}
       for (const sc of chosen) {
         push(beamSearch(weapon, atk, cands, mkX(sc.val, sc.arcane), slots, beamW, locked, 8), sc.val, sc.arcane);
         i++; if (progress) progress(0.6 + 0.4 * (i / chosen.length));
+      }
+    }
+    // v1.67 dominant-mod restart: one mod that is huge on its own (Semi-Shotgun Cannonade +240%) pulls every partial
+    // build of the beam toward itself, and the beam never sees the sets without it. Search once more without the best
+    // set's most important mod (the one whose removal costs the most) under the same valence/arcane.
+    if (results.length && !cfg.noRestart) {
+      const top = results.slice().sort((x, y) => y.score - x.score)[0], oo = mkX(top.val, top.arcane);
+      let key = null, drop = 0;
+      top.mods.forEach((m, i) => {
+        if (!m || locked.includes(m)) return;
+        const d = top.score - evaluate(weapon, atk, top.mods.filter((_, j) => j !== i), oo).score;
+        if (d > drop) { drop = d; key = m; }
+      });
+      if (key) push(beamSearch(weapon, atk, cands.filter((c) => c.id !== key.id), oo, slots, beamW, locked, 4), top.val, top.arcane);
+    }
+    // v1.67 cross-arcane check: each arcane is searched on its own, and a mod set can be the best one under arcane A
+    // while A's own beam never reaches it (Corinth Prime: the Blaze/Seeking Force set found under Plated Round scored
+    // 2.42 with Merciless, but the Merciless beam stopped at 2.14 — a 7% worse recommendation). Re-score the leading
+    // mod sets with every arcane option, then hill-climb the best few under the arcane they now carry.
+    if (arcOpts.length > 1 && results.length) {
+      const seenK = new Set(), lead = [];
+      for (const r of results.slice().sort((x, y) => y.score - x.score)) {
+        const k = r.mods.map((m) => m.id).sort().join(",") + "|" + JSON.stringify(r.val);
+        if (seenK.has(k)) continue; seenK.add(k); lead.push(r); if (lead.length >= 6) break;
+      }
+      const xs = [];
+      for (const r of lead) for (const arcane of arcOpts) {
+        if (arcane === r.arcane) continue;
+        xs.push({ mods: r.mods.slice(), score: evaluate(weapon, atk, r.mods, mkX(r.val, arcane)).score, val: r.val, arcane });
+      }
+      const best0 = Math.max(...results.map((r) => r.score));
+      xs.sort((x, y) => y.score - x.score);
+      for (const x of xs.slice(0, 3)) {
+        if (x.score < best0 * 0.97) break;
+        results.push(x);
+        const b = localImprove(weapon, atk, cands, mkX(x.val, x.arcane), slots, locked, { mods: x.mods.slice(), score: x.score });
+        results.push({ mods: b.mods, score: b.score, val: x.val, arcane: x.arcane });
       }
     }
     // community builds read in full from their source (docs/community/builds, kind "read"): scored under the same
@@ -3098,6 +3142,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.67", date: "2026-11-03", title: "추천 검색이 한 모드에 갇히던 문제",
+      items: [
+        "혼자서도 큰 모드(세미-샷건 캐노네이드 +240% 등)가 있으면 검색이 그 모드를 낀 세팅만 살펴서, 그 모드 없이 더 센 세팅을 놓치고 있었습니다. 코린트 프라임(산탄)은 추천이 대화에서 비교했던 세팅보다 12% 약했습니다. 이제 1위 세팅에서 가장 중요한 모드를 뺀 채로 한 번 더 찾고, 상위 세팅을 다른 아케인으로도 다시 계산합니다.",
+        "코린트 프라임 추천이 바뀝니다(캐노네이드·치명타 세팅 → 갈바나이즈드 헬·바이러스·마그네틱 스트레이프·시킹 포스·샷건 배러지, 머시리스, +14%). 다른 무기도 추천이 바뀔 수 있습니다.",
+      ] },
     { v: "1.66", date: "2026-11-03", title: "샤드 원소 순서 · 반자동 연사 상한 제거 · 화염 중첩 갱신",
       items: [
         "보라 샤드(주무기 전기)의 원소가 베일런스보다 먼저 조합되고 있었습니다. 게임 아스날 화면(멀리그난트 포스 독 + 화염 베일런스 + 보라 샤드 = 가스 + 전기)에 맞춰 샤드 원소를 베일런스 다음으로 옮겼습니다. 사이트-09 무기의 속성 조합이 바뀝니다(쿠바 오그리스는 부식이 아니라 가스 + 전기).",
@@ -4713,24 +4762,26 @@ header.top p{flex-basis:100%}
       next.sort((x, y) => y.score - x.score);
       beam = next.slice(0, beamW);
     }
-    const out = [];
-    for (const b of beam.slice(0, nLocal)) {
-      let improved = true, guard = 0;
-      while (improved && guard++ < 12) {
-        improved = false;
-        for (let i = 0; i < b.mods.length; i++) {
-          if (locked.includes(b.mods[i])) continue;
-          const rest = b.mods.slice(0, i).concat(b.mods.slice(i + 1));
-          for (const c of cands) {
-            if (!fits(c, rest, slots) || !capOk(rest.concat([c]))) continue;
-            const s = ev(rest.concat([c]));
-            if (s > b.score * 1.0000001) { b.mods = rest.concat([c]); b.score = s; improved = true; }
-          }
+    return beam.slice(0, nLocal).map((b) => localImprove(weapon, atk, cands, oo, slots, locked, b));
+  }
+  // one-swap hill climb: replace any unlocked mod with any candidate while the score improves
+  function localImprove(weapon, atk, cands, oo, slots, locked, b) {
+    const ev = (mods) => evaluate(weapon, atk, mods, oo).score;
+    const capOk = (mods) => oo.noCapacity || capacityPlan(weapon, mods, oo.formaMax).fits;
+    let improved = true, guard = 0;
+    while (improved && guard++ < 12) {
+      improved = false;
+      for (let i = 0; i < b.mods.length; i++) {
+        if (locked.includes(b.mods[i])) continue;
+        const rest = b.mods.slice(0, i).concat(b.mods.slice(i + 1));
+        for (const c of cands) {
+          if (!fits(c, rest, slots) || !capOk(rest.concat([c]))) continue;
+          const s = ev(rest.concat([c]));
+          if (s > b.score * 1.0000001) { b.mods = rest.concat([c]); b.score = s; improved = true; }
         }
       }
-      out.push(b);
     }
-    return out;
+    return b;
   }
 
   function optimize(weapon, atk, cands, o, cfg, progress) {
@@ -4767,6 +4818,43 @@ header.top p{flex-basis:100%}
       for (const sc of chosen) {
         push(beamSearch(weapon, atk, cands, mkX(sc.val, sc.arcane), slots, beamW, locked, 8), sc.val, sc.arcane);
         i++; if (progress) progress(0.6 + 0.4 * (i / chosen.length));
+      }
+    }
+    // v1.67 dominant-mod restart: one mod that is huge on its own (Semi-Shotgun Cannonade +240%) pulls every partial
+    // build of the beam toward itself, and the beam never sees the sets without it. Search once more without the best
+    // set's most important mod (the one whose removal costs the most) under the same valence/arcane.
+    if (results.length && !cfg.noRestart) {
+      const top = results.slice().sort((x, y) => y.score - x.score)[0], oo = mkX(top.val, top.arcane);
+      let key = null, drop = 0;
+      top.mods.forEach((m, i) => {
+        if (!m || locked.includes(m)) return;
+        const d = top.score - evaluate(weapon, atk, top.mods.filter((_, j) => j !== i), oo).score;
+        if (d > drop) { drop = d; key = m; }
+      });
+      if (key) push(beamSearch(weapon, atk, cands.filter((c) => c.id !== key.id), oo, slots, beamW, locked, 4), top.val, top.arcane);
+    }
+    // v1.67 cross-arcane check: each arcane is searched on its own, and a mod set can be the best one under arcane A
+    // while A's own beam never reaches it (Corinth Prime: the Blaze/Seeking Force set found under Plated Round scored
+    // 2.42 with Merciless, but the Merciless beam stopped at 2.14 — a 7% worse recommendation). Re-score the leading
+    // mod sets with every arcane option, then hill-climb the best few under the arcane they now carry.
+    if (arcOpts.length > 1 && results.length) {
+      const seenK = new Set(), lead = [];
+      for (const r of results.slice().sort((x, y) => y.score - x.score)) {
+        const k = r.mods.map((m) => m.id).sort().join(",") + "|" + JSON.stringify(r.val);
+        if (seenK.has(k)) continue; seenK.add(k); lead.push(r); if (lead.length >= 6) break;
+      }
+      const xs = [];
+      for (const r of lead) for (const arcane of arcOpts) {
+        if (arcane === r.arcane) continue;
+        xs.push({ mods: r.mods.slice(), score: evaluate(weapon, atk, r.mods, mkX(r.val, arcane)).score, val: r.val, arcane });
+      }
+      const best0 = Math.max(...results.map((r) => r.score));
+      xs.sort((x, y) => y.score - x.score);
+      for (const x of xs.slice(0, 3)) {
+        if (x.score < best0 * 0.97) break;
+        results.push(x);
+        const b = localImprove(weapon, atk, cands, mkX(x.val, x.arcane), slots, locked, { mods: x.mods.slice(), score: x.score });
+        results.push({ mods: b.mods, score: b.score, val: x.val, arcane: x.arcane });
       }
     }
     // community builds read in full from their source (docs/community/builds, kind "read"): scored under the same

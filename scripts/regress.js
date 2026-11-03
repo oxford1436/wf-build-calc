@@ -209,6 +209,18 @@ const { chromium } = require("playwright");
       const k = r.perF.grineer.top.ammoK;
       check("v1.64 긴 전투 탄약: 쿠바 자르는 처치 드롭으로 탄약을 못 메움 (Lv400 그리니어 ammoK < 1), 끄면 1", k < 0.9 && r2.perF.grineer.top.ammoK === 1, "ammoK " + (k || 0).toFixed(2));
     }
+    // v1.67: each arcane got its own beam, and a mod set the Plated Round beam found (Corinth Prime pellets: Blaze +
+    // Seeking Force + Magnetic Strafe ...) was 7% stronger with Merciless than anything the Merciless beam reached.
+    // The optimizer now re-scores its leading sets with every arcane option.
+    {
+      const w = weapon("corinth_prime"), atk = w.attacks[1], o = baseO();
+      A.st.weapon = w; A.st.atk = 1;
+      const cands = A.candidateMods(w, atk, { aim: false, cast: false, boss: true });
+      const T = ["galvanized_hell", "primed_chilling_grasp", "toxic_barrage", "galvanized_savvy", "magnetic_strafe", "seeking_force", "blaze", "shotgun_barrage"].map(M);
+      const ref = E.evaluate(w, atk, T, Object.assign({}, o, { arcane: "primary_merciless", layoutTTK: true })).score;
+      const top = E.optimize(w, atk, cands, o, { slots: 8, beam: 20, arcOptions: ["primary_merciless", "primary_plated_round"] })[0];
+      check("v1.67 검색이 캐노네이드 세팅에 갇히지 않음: 코린트 프라임 추천이 '플레이티드 라운드 1위 세팅 + 머시리스'보다 약하지 않음", top.score >= ref * 0.995, (top.score / ref * 100).toFixed(1) + "% (" + top.arcane + ")");
+    }
     return out;
   });
 
