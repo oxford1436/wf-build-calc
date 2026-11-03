@@ -1,199 +1,222 @@
 {
-  "weapon": "tenet_arca_plasmor",
-  "valence": {
-    "type": "tox",
-    "pct": 0.6
-  },
-  "riven": [
-    [
-      "fr",
-      95.5
-    ],
-    [
-      "ms",
-      143.6
-    ],
-    [
-      "ammoeff",
-      54.3
-    ],
-    [
-      "x_zoom",
-      37.4
-    ]
+ "weapon": "tenet_arca_plasmor",
+ "valence": {
+  "type": "tox",
+  "pct": 0.6
+ },
+ "riven": [
+  [
+   "fr",
+   95.5
   ],
-  "notes": "리벤·베일런스는 사용자 것(2026-11-02). 아래 세팅 중 community 가 'session'인 것은 대화에서 나온 비교용이고 커뮤니티 출처가 아님 — 조사 실행이 실제 커뮤니티 세팅을 찾아 추가한다. 2026-11-02 조사: 커뮤니티 원문에 모드 목록이 글로 남아 있는 것만 넣음(Overframe은 모드 목록이 이미지라 읽지 못함). | kind: read = 출처 글에서 모드 전체를 직접 읽은 세팅(계산기 검색 후보로 들어감), claim = 커뮤니티 주장 하나를 확인하려고 계산기 1위에서 한두 칸을 바꾼 시험(커뮤니티 세팅 아님), session = 대화에서 비교한 세팅. | 2026-11-03 아카라이브 세팅 3개 추가(대화 세션에서 직접 읽음).",
-  "builds": [
-    {
-      "name": "사용자 현재 세팅 A (리벤 없음)",
-      "community": "session",
-      "arcane": "primary_merciless",
-      "mods": [
-        "Primed Point Blank",
-        "Critical Deceleration",
-        "Galvanized Hell",
-        "Toxic Barrage",
-        "Primed Chilling Grasp",
-        "Primed Ravage",
-        "Shotgun Barrage",
-        "Scattering Inferno"
-      ],
-      "kind": "session"
-    },
-    {
-      "name": "독 베일런스 + 부식 1칸 + 치명타 (커뮤니티식 재현)",
-      "community": "session",
-      "arcane": "primary_merciless",
-      "mods": [
-        "Riven",
-        "Primed Charged Shell",
-        "Galvanized Hell",
-        "Galvanized Savvy",
-        "Primed Ravage",
-        "Critical Deceleration",
-        "Shotgun Barrage",
-        "Primed Blunderbuss"
-      ],
-      "kind": "session"
-    },
-    {
-      "name": "계산기 v1.58 최종 (바이러스+화염+자성)",
-      "community": "session",
-      "arcane": "primary_merciless",
-      "mods": [
-        "Riven",
-        "Primed Chilling Grasp",
-        "Galvanized Hell",
-        "Galvanized Savvy",
-        "Magnetic Strafe",
-        "Toxic Barrage",
-        "Incendiary Coat",
-        "Shotgun Barrage"
-      ],
-      "kind": "session"
-    },
-    {
-      "name": "스포츠키다 가이드 세팅 (아말감 샷건 배러지 제외 7칸)",
-      "community": "sportskeeda",
-      "url": "https://sportskeeda.com/mmo/warframe-tenet-arca-plasmor-build-guide-best-progenitor-mod-setup",
-      "author": "Sportskeeda",
-      "date": "",
-      "mods": [
-        "Galvanized Savvy",
-        "Galvanized Hell",
-        "Primed Point Blank",
-        "Primed Ravage",
-        "Critical Deceleration",
-        "Galvanized Acceleration",
-        "Shotgun Barrage"
-      ],
-      "arcane": "primary_merciless",
-      "claims": [
-        "독 베일런스가 최고(바이러스로 바꿀 수 있어서)",
-        "치명타 감속의 연사 감소를 샷건 배러지·아말감으로 메운다"
-      ],
-      "verdict": "원문은 '아말감 샷건 배러지'(원문 표기 Amalgam Shotgun Spazz)와 샷건 배러지를 같이 넣음 → 게임에서 같이 못 낌(E.clash). 아케인은 원문에 없어 머시리스로 가정. 원소 모드가 하나도 없어 계산 13%(3팩션), 리벤 없는 사용자 세팅 A(48%)보다도 낮음.",
-      "kind": "read"
-    },
-    {
-      "name": "자성 베일런스 + 계산기 자성 최적 (Overframe '자성 베일런스가 독보다 낫다' 재현)",
-      "community": "overframe",
-      "url": "https://overframe.gg/build/430677/tenet-arca-plasmor/magnetic-radiation-corrosive-cold-boom-stick-tenet-arca-plasmor-general-use-steel-path-no-micro/",
-      "author": "",
-      "date": "2023-11-18",
-      "valence": {
-        "type": "mag",
-        "pct": 0.6
-      },
-      "mods": [
-        "Riven",
-        "Galvanized Savvy",
-        "Galvanized Hell",
-        "Contagious Spread",
-        "Primed Charged Shell",
-        "Shotgun Barrage",
-        "Primed Blunderbuss",
-        "Chilling Reload"
-      ],
-      "arcane": "primary_frostbite",
-      "claims": [
-        "자성 베일런스가 독보다 낫다",
-        "갈바나이즈드 새비가 헌터 뮤니션보다 낫다(레벨 캡 제외)",
-        "프라이머리 머시리스 5랭크"
-      ],
-      "verdict": "자성 60%: 3팩션 101%, 중첩 유지 93%, 그리니어만 110%, 코퍼스만 99% → 거의 동률(독 60% 기준 유지는 사용자 결정). 새비→헌터 뮤니션 50~74%로 새비 우위 확인.",
-      "kind": "claim"
-    },
-    {
-      "name": "아카라이브: 독 베일런스 바니션 (댓글 '베일런스 독이면 이대로 가면 됨')",
-      "community": "arca.live",
-      "kind": "read",
-      "url": "https://arca.live/b/warframe/154491220",
-      "date": "2025-11-21",
-      "source": "arca.live (대화 세션에서 데스크톱 앱 브라우저로 글과 모드 화면 그림을 직접 읽음, 2026-11-03)",
-      "mods": [
-        "갈바나이즈드 헬",
-        "프라임드 포인트 블랭크",
-        "헌터 뮤니션즈",
-        "갈바나이즈드 새비",
-        "프라임드 래비지",
-        "크리티컬 디셀러레이션",
-        "샷건 배러지",
-        "프라임드 칠링 그래스프",
-        "갈바나이즈드 액셀러레이션"
-      ],
-      "arcane": "primary_merciless",
-      "claims": [
-        "독 베일런스면 이 구성(바니션: 독 베일런스+냉기 1칸=바이러스, 헌터 뮤니션즈 베기) 그대로 써도 된다 — 댓글"
-      ]
-    },
-    {
-      "name": "아카라이브: 독 베일런스 바니션 + 샷건 엘리멘탈리스트 (프라이머리 크럭스)",
-      "community": "arca.live",
-      "kind": "read",
-      "url": "https://arca.live/b/warframe/152633282",
-      "date": "2025-11-03",
-      "source": "arca.live (대화 세션에서 데스크톱 앱 브라우저로 글과 모드 화면 그림을 직접 읽음, 2026-11-03)",
-      "mods": [
-        "갈바나이즈드 새비",
-        "갈바나이즈드 헬",
-        "프라임드 래비지",
-        "크리티컬 디셀러레이션",
-        "샷건 배러지",
-        "헌터 뮤니션즈",
-        "샷건 엘리멘탈리스트",
-        "프라임드 칠링 그래스프",
-        "갈바나이즈드 액셀러레이션"
-      ],
-      "arcane": "primary_crux",
-      "claims": [
-        "피해 모드가 없으니 프라임드 포인트 블랭크나 머시리스를 넣어야 한다 — 댓글",
-        "크럭스만 머시리스로 바꾸면 된다 — 댓글",
-        "단일 폭발이면 세미-샷건 캐노네이드를 쓰지만 연사가 고정돼 답답하다 — 댓글"
-      ]
-    },
-    {
-      "name": "아카라이브: 독 베일런스 부폭 (스캐터링 인페르노+칠링 그래스프=폭발, 차지드 쉘+독=부식, 프라이머리 크럭스)",
-      "community": "arca.live",
-      "kind": "read",
-      "url": "https://arca.live/b/warframe/187501082",
-      "date": "2026-10-30",
-      "source": "arca.live (대화 세션에서 데스크톱 앱 브라우저로 글과 모드 화면 그림을 직접 읽음, 2026-11-03)",
-      "mods": [
-        "프라임드 포인트 블랭크",
-        "프라임드 래비지",
-        "갈바나이즈드 헬",
-        "갈바나이즈드 새비",
-        "스캐터링 인페르노",
-        "프라임드 칠링 그래스프",
-        "프라임드 차지드 쉘",
-        "크리티컬 디셀러레이션",
-        "갈바나이즈드 액셀러레이션"
-      ],
-      "arcane": "primary_crux",
-      "claims": [
-        "갈바나이즈드 새비와 기본 피해(프라임드 포인트 블랭크)는 곱으로 붙으니 연사 모드보다 기본 피해를 남기는 게 낫다 — 댓글(일부 투사체 무기는 갈바나이즈드 컨디션 오버로드 계산이 다르다는 말도 있음)"
-      ]
-    }
+  [
+   "ms",
+   143.6
+  ],
+  [
+   "ammoeff",
+   54.3
+  ],
+  [
+   "x_zoom",
+   37.4
   ]
+ ],
+ "notes": "리벤·베일런스는 사용자 것(2026-11-02). 아래 세팅 중 community 가 'session'인 것은 대화에서 나온 비교용이고 커뮤니티 출처가 아님 — 조사 실행이 실제 커뮤니티 세팅을 찾아 추가한다. 2026-11-02 조사: 커뮤니티 원문에 모드 목록이 글로 남아 있는 것만 넣음(Overframe은 모드 목록이 이미지라 읽지 못함). | kind: read = 출처 글에서 모드 전체를 직접 읽은 세팅(계산기 검색 후보로 들어감), claim = 커뮤니티 주장 하나를 확인하려고 계산기 1위에서 한두 칸을 바꾼 시험(커뮤니티 세팅 아님), session = 대화에서 비교한 세팅. | 2026-11-03 아카라이브 세팅 3개 추가(대화 세션에서 직접 읽음).",
+ "builds": [
+  {
+   "name": "사용자 현재 세팅 A (리벤 없음)",
+   "community": "session",
+   "arcane": "primary_merciless",
+   "mods": [
+    "Primed Point Blank",
+    "Critical Deceleration",
+    "Galvanized Hell",
+    "Toxic Barrage",
+    "Primed Chilling Grasp",
+    "Primed Ravage",
+    "Shotgun Barrage",
+    "Scattering Inferno"
+   ],
+   "kind": "session"
+  },
+  {
+   "name": "독 베일런스 + 부식 1칸 + 치명타 (커뮤니티식 재현)",
+   "community": "session",
+   "arcane": "primary_merciless",
+   "mods": [
+    "Riven",
+    "Primed Charged Shell",
+    "Galvanized Hell",
+    "Galvanized Savvy",
+    "Primed Ravage",
+    "Critical Deceleration",
+    "Shotgun Barrage",
+    "Primed Blunderbuss"
+   ],
+   "kind": "session"
+  },
+  {
+   "name": "계산기 v1.58 최종 (바이러스+화염+자성)",
+   "community": "session",
+   "arcane": "primary_merciless",
+   "mods": [
+    "Riven",
+    "Primed Chilling Grasp",
+    "Galvanized Hell",
+    "Galvanized Savvy",
+    "Magnetic Strafe",
+    "Toxic Barrage",
+    "Incendiary Coat",
+    "Shotgun Barrage"
+   ],
+   "kind": "session"
+  },
+  {
+   "name": "스포츠키다 가이드 세팅 (아말감 샷건 배러지 제외 7칸)",
+   "community": "sportskeeda",
+   "url": "https://sportskeeda.com/mmo/warframe-tenet-arca-plasmor-build-guide-best-progenitor-mod-setup",
+   "author": "Sportskeeda",
+   "date": "",
+   "mods": [
+    "Galvanized Savvy",
+    "Galvanized Hell",
+    "Primed Point Blank",
+    "Primed Ravage",
+    "Critical Deceleration",
+    "Galvanized Acceleration",
+    "Shotgun Barrage"
+   ],
+   "arcane": "primary_merciless",
+   "claims": [
+    "독 베일런스가 최고(바이러스로 바꿀 수 있어서)",
+    "치명타 감속의 연사 감소를 샷건 배러지·아말감으로 메운다"
+   ],
+   "verdict": "원문은 '아말감 샷건 배러지'(원문 표기 Amalgam Shotgun Spazz)와 샷건 배러지를 같이 넣음 → 게임에서 같이 못 낌(E.clash). 아케인은 원문에 없어 머시리스로 가정. 원소 모드가 하나도 없어 계산 13%(3팩션), 리벤 없는 사용자 세팅 A(48%)보다도 낮음.",
+   "kind": "read"
+  },
+  {
+   "name": "자성 베일런스 + 계산기 자성 최적 (Overframe '자성 베일런스가 독보다 낫다' 재현)",
+   "community": "overframe",
+   "url": "https://overframe.gg/build/430677/tenet-arca-plasmor/magnetic-radiation-corrosive-cold-boom-stick-tenet-arca-plasmor-general-use-steel-path-no-micro/",
+   "author": "",
+   "date": "2023-11-18",
+   "valence": {
+    "type": "mag",
+    "pct": 0.6
+   },
+   "mods": [
+    "Riven",
+    "Galvanized Savvy",
+    "Galvanized Hell",
+    "Contagious Spread",
+    "Primed Charged Shell",
+    "Shotgun Barrage",
+    "Primed Blunderbuss",
+    "Chilling Reload"
+   ],
+   "arcane": "primary_frostbite",
+   "claims": [
+    "자성 베일런스가 독보다 낫다",
+    "갈바나이즈드 새비가 헌터 뮤니션보다 낫다(레벨 캡 제외)",
+    "프라이머리 머시리스 5랭크"
+   ],
+   "verdict": "자성 60%: 3팩션 101%, 중첩 유지 93%, 그리니어만 110%, 코퍼스만 99% → 거의 동률(독 60% 기준 유지는 사용자 결정). 새비→헌터 뮤니션 50~74%로 새비 우위 확인.",
+   "kind": "claim"
+  },
+  {
+   "name": "아카라이브: 독 베일런스 바니션 (댓글 '베일런스 독이면 이대로 가면 됨')",
+   "community": "arca.live",
+   "kind": "read",
+   "url": "https://arca.live/b/warframe/154491220",
+   "date": "2025-11-21",
+   "source": "arca.live (대화 세션에서 데스크톱 앱 브라우저로 글과 모드 화면 그림을 직접 읽음, 2026-11-03)",
+   "mods": [
+    "갈바나이즈드 헬",
+    "프라임드 포인트 블랭크",
+    "헌터 뮤니션즈",
+    "갈바나이즈드 새비",
+    "프라임드 래비지",
+    "크리티컬 디셀러레이션",
+    "샷건 배러지",
+    "프라임드 칠링 그래스프",
+    "갈바나이즈드 액셀러레이션"
+   ],
+   "arcane": "primary_merciless",
+   "claims": [
+    "독 베일런스면 이 구성(바니션: 독 베일런스+냉기 1칸=바이러스, 헌터 뮤니션즈 베기) 그대로 써도 된다 — 댓글"
+   ]
+  },
+  {
+   "name": "아카라이브: 독 베일런스 바니션 + 샷건 엘리멘탈리스트 (프라이머리 크럭스)",
+   "community": "arca.live",
+   "kind": "read",
+   "url": "https://arca.live/b/warframe/152633282",
+   "date": "2025-11-03",
+   "source": "arca.live (대화 세션에서 데스크톱 앱 브라우저로 글과 모드 화면 그림을 직접 읽음, 2026-11-03)",
+   "mods": [
+    "갈바나이즈드 새비",
+    "갈바나이즈드 헬",
+    "프라임드 래비지",
+    "크리티컬 디셀러레이션",
+    "샷건 배러지",
+    "헌터 뮤니션즈",
+    "샷건 엘리멘탈리스트",
+    "프라임드 칠링 그래스프",
+    "갈바나이즈드 액셀러레이션"
+   ],
+   "arcane": "primary_crux",
+   "claims": [
+    "피해 모드가 없으니 프라임드 포인트 블랭크나 머시리스를 넣어야 한다 — 댓글",
+    "크럭스만 머시리스로 바꾸면 된다 — 댓글",
+    "단일 폭발이면 세미-샷건 캐노네이드를 쓰지만 연사가 고정돼 답답하다 — 댓글"
+   ]
+  },
+  {
+   "name": "아카라이브: 독 베일런스 부폭 (스캐터링 인페르노+칠링 그래스프=폭발, 차지드 쉘+독=부식, 프라이머리 크럭스)",
+   "community": "arca.live",
+   "kind": "read",
+   "url": "https://arca.live/b/warframe/187501082",
+   "date": "2026-10-30",
+   "source": "arca.live (대화 세션에서 데스크톱 앱 브라우저로 글과 모드 화면 그림을 직접 읽음, 2026-11-03)",
+   "mods": [
+    "프라임드 포인트 블랭크",
+    "프라임드 래비지",
+    "갈바나이즈드 헬",
+    "갈바나이즈드 새비",
+    "스캐터링 인페르노",
+    "프라임드 칠링 그래스프",
+    "프라임드 차지드 쉘",
+    "크리티컬 디셀러레이션",
+    "갈바나이즈드 액셀러레이션"
+   ],
+   "arcane": "primary_crux",
+   "claims": [
+    "갈바나이즈드 새비와 기본 피해(프라임드 포인트 블랭크)는 곱으로 붙으니 연사 모드보다 기본 피해를 남기는 게 낫다 — 댓글(일부 투사체 무기는 갈바나이즈드 컨디션 오버로드 계산이 다르다는 말도 있음)"
+   ]
+  }
+ ],
+ "meta": {
+  "elements": "직접 읽은 4개: 바이러스+방사능 2(아카라이브 154491220·152633282 — 독 베일런스 + 프라임드 칠링 그래스프 = 바이러스, 방사능은 고유), 부식+방사능+폭발 1(187501082), 방사능+독 1(스포츠키다, 원소 모드 없음). 자성을 넣은 세팅은 0",
+  "valence": "독 4/4. 독 베일런스를 냉기 모드 1칸과 묶어 바이러스를 만드는 칸 압축(arca 180031603: 바불을 원하면 화염 베일런스)",
+  "core": [
+   "갈바나이즈드 새비 4/4",
+   "갈바나이즈드 헬 4/4",
+   "프라임드 래비지 4/4",
+   "크리티컬 디셀러레이션 4/4",
+   "갈바나이즈드 액셀러레이션(익실러스) 4/4"
+  ],
+  "flex": [
+   "프라임드 포인트 블랭크 3",
+   "샷건 배러지 3",
+   "프라임드 칠링 그래스프 3",
+   "헌터 뮤니션즈 2",
+   "샷건 엘리멘탈리스트 1",
+   "스캐터링 인페르노 1",
+   "프라임드 차지드 쉘 1"
+  ],
+  "arcane": "프라이머리 머시리스 2 · 프라이머리 크럭스 2",
+  "why": "새비(상태이상 종류당 피해)와 기본 피해 모드는 곱이라 포인트 블랭크를 남긴다(187501082), 피해 모드가 없으면 머시리스(152633282), 치명타 확률은 크리티컬 디셀러레이션. 계산기 1위와의 차이는 docs/community/0c_plasmor_meta.md: 마그네틱 스트레이프(자성 60% + 연사 40%) 한 칸이 19% — 자성 상태이상의 오버가드 피해(엑시무스)와 연사. 커뮤니티 세팅 4개 모두 이 모드가 없음",
+  "checked": "2026-11-03"
+ }
 }
