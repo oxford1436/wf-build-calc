@@ -141,6 +141,27 @@ const { chromium } = require("playwright");
       const g0 = cl(["Serration"], 0) / cl(["Serration", "Nightwatch Napalm"], 0), g1 = cl(["Serration"], 0.999) / cl(["Serration", "Nightwatch Napalm"], 0.999);
       check("v1.65 네이팜 화염 상태이상이 방어구를 깎음 (방어구가 남은 그리니어에서 네이팜 효과가 더 큼)", g0 > g1 * 1.1, `방어구 있음 ×${g0.toFixed(2)} · 없음 ×${g1.toFixed(2)}`);
     }
+    // v1.66 (user's arsenal 2026-11-03, Kuva Ogris on Cyte-09): Malignant Force toxin + Heat valence = Gas, the Violet shard's
+    // Electricity stays Electricity — shard elements come after the valence, not before it
+    {
+      const w = weapon("kuva_ogris"), atk = w.attacks[A.defaultAttack(w)];
+      const o = Object.assign(baseO(), { val: { type: "heat", pct: 0.287 }, ext: { elem: { elecmod: 1 } } });
+      const sh = E.evaluate(w, atk, [M("Malignant Force")], o).share;
+      check("v1.66 멀리그난트 포스(독) + 화염 베일런스 + 보라 샤드(전기) = 가스 + 전기 (부식 아님, 아스날)", sh.gas > 0 && sh.elec > 0 && !sh.corr, JSON.stringify(Object.keys(sh)));
+    }
+    // v1.66: semi-auto weapons fire at their modded rate (Accessibility "Fire Manual Trigger Weapons Continuously") — no 3.5 cap
+    {
+      const w = weapon("kuva_ogris"), atk = w.attacks[A.defaultAttack(w)];
+      const r = E.evaluate(w, atk, ["Vile Acceleration", "Speed Trigger"].map(M), Object.assign(baseO(), { ext: { reloadCast: 0 } })).rate;   // Resupply: no reload pause
+      check("v1.66 반자동 연사 상한 없음 (쿠바 오그리스 + 바일 액셀러레이션 + 스피드 트리거 = 3.75발)", Math.abs(r - 3.75) < 0.05, r.toFixed(2));
+    }
+    // v1.66: napalm Heat stacks refresh each other and keep ramping (wiki "Heat") — Heat damage grows faster than linearly
+    {
+      const p = { hp: 1e12, sh: 0, og: 0, ar0: 0, strip: 0, r: 2, D: 0, blast: 0, F: 0, dot: {}, napH: 1, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0,
+        cc: 0, cd: 1, nc: 0, corrMax: 10, dt: 0.05, tmax: 60, Tdur: 6, dotN: {} };
+      const d5 = E.ttk(p, 5), d10 = E.ttk(p, 10);
+      check("v1.66 네이팜 화염 중첩은 서로 갱신되어 계속 쌓임 (10초 피해 > 5초 피해 × 3)", d5 > 0 && d10 > d5 * 3, `5초 ${d5.toFixed(0)} · 10초 ${d10.toFixed(0)}`);
+    }
     // v1.64: Cyte-09 Resupply = an Extra Hit of 25% x strength per hit in the chosen element with its forced status
     // (wiki Resupply/Extra Hit); napalm ticks don't trigger it ("Extra Hit mechanics which function by buffing your
     // weapon's magazine (e.g. Resupply) do not")

@@ -182,7 +182,7 @@
   // (Violet Archon shard electricity — "combines with mods"), then innate elements; when a Kuva/Tenet/Coda
   // valence adds a second innate element, the two go in Heat → Cold → Electricity → Toxin order.
   // order: fixed first-appearance order of the mod elements (comparison sets, as typed); null = try every arrangement.
-  // tail: [[type, value]] shard elements that join a mod of the same element, otherwise come after all mods.
+  // tail: [[type, value]] shard elements that join a mod of the same element, otherwise come after the mods and the valence.
   function elementLayouts(atk, a, val, Btot, base0, order, tail) {
     const present = PRIM.filter((p) => a.elem[p] > 0);
     let structs;
@@ -209,8 +209,10 @@
         coef[t] = (coef[t] || 0) + a.elem[pair[0]] + a.elem[pair[1]];
       }
       for (const s of pr.singles) { mp[s] = s; coef[s] = (coef[s] || 0) + a.elem[s]; }
+      // innate + Valence elements first, Archon shard elements last (in-game arsenal 2026-11-03, Kuva Ogris on Cyte-09: Malignant
+      // Force toxin + Heat valence = Gas, the Violet shard's Electricity stays Electricity; with no elemental mod the shard joins the
+      // valence: Heat valence + shard Electricity = Radiation, arsenal 2026-10)
       const appended = [];
-      for (const [p, x] of tail || []) if (x > 0) appended.push([p, x, "shard"]);
       const inn = [];
       for (const p of PRIM) if (atk.dmg[p]) inn.push([p, atk.dmg[p] / Btot, "innate"]);
       if (val && val.type && val.pct > 0) {
@@ -219,6 +221,7 @@
       }
       inn.sort((x, y) => (PRIM.includes(x[0]) ? PRIM.indexOf(x[0]) : 9) - (PRIM.includes(y[0]) ? PRIM.indexOf(y[0]) : 9));
       appended.push(...inn);
+      for (const [p, x] of tail || []) if (x > 0) appended.push([p, x, "shard"]);
       for (const [p, x, src] of appended) {
         if (!PRIM.includes(p)) { coef[p] = (coef[p] || 0) + x; continue; }
         if (mp[p]) { coef[mp[p]] = (coef[mp[p]] || 0) + x; continue; }
@@ -325,8 +328,11 @@
       const extraM = (1 + (p.coldVuln || 0) * nk) * (p.frozenM && nk >= 10 ? p.frozenM : 1);
       const vm = nv <= 0 ? 1 : nv < 1 ? 1 + nv : 2 + 0.25 * (nv - 1);
       const hf = 1 - Math.exp(-p.ph * shots);
+      // wiki "Heat": "Every 0.5 seconds after the initial proc, the enemy will have 15%, 30%, 40%, 50% of its armor stripped"
+      const tH = r > 0 ? Math.max(0, (shots - 1) / r) : 0;
+      const heatStrip = tH < 0.5 ? 0 : tH < 1 ? 0.15 : tH < 1.5 ? 0.3 : tH < 2 ? 0.4 : 0.5;
       const cs = nc <= 0 ? 0 : nc >= 1 ? 0.2 + 0.06 * nc : 0.26 * nc;
-      let A = p.ar0 * (1 - 0.5 * hf) * (1 - cs) * (1 - p.strip);
+      let A = p.ar0 * (1 - heatStrip * hf) * (1 - cs) * (1 - p.strip);
       A = Math.min(A, ARMOR_CAP);
       const ar = A > 0 ? 1 - 0.9 * Math.sqrt(A / ARMOR_CAP) : 1;
       // Cold (wiki): +0.1 crit multiplier on the first stack, +0.05 per stack to +0.5 at 9, +1.0 while frozen at 10.
@@ -372,9 +378,19 @@
         const D = DOT_DELAY[T] || 0, n = p.dotN && p.dotN[T] != null ? p.dotN[T] : Td;
         if (!(n > 0) || !p.dot[T]) continue;
         const te = t - D;
-        const act = te < 0 ? 0 : r * Math.min(te, n) + (te < n ? 1 : 0);
+        let act = te < 0 ? 0 : r * Math.min(te, n) + (te < n ? 1 : 0);
+        if (p.field && T === "napalm") act = 6 * r;
         const v = (p.dot[T] / n) * act * f.critf;
         if (T === "tox") toxRate += v; else if (T === "slash") slashRate += v; else shieldable += v;
+      }
+      // Nightwatch Napalm Heat stacks (see perShot): each rocket's blazes tick right away and then every second for 6 s; every
+      // tick adds stacks that never run out while new ones keep coming, and each stack ticks from 1 s after its proc.
+      // U = blaze ticks landed by t − 1 (first rocket at 0, then r rockets per second). o.napField (defense/interception): the
+      // rockets keep landing on the same ground, so an enemy walking in meets the blazes of the last 6 s at once — 6r ticks a second.
+      if (p.napH > 0 && t >= 1) {
+        const te = t - 1;
+        const U = p.field ? 6 * r * te : Math.min(6, Math.floor(te) + 1) + r * (te <= 5 ? te + te * te / 2 : 6 * (te - 5) + 17.5);
+        shieldable += p.napH * U * f.critf;
       }
       // Magnetic (wiki): stripping the shields triggers an Electricity proc of 3% of max shields per Magnetic stack (max 30%)
       if (magT >= 0 && t < magT + 6) shieldable += magDps;
@@ -416,7 +432,7 @@
   }
 
   // does the first attack alone (its hit and its own status procs, no damage over time) kill the enemy?
-  function oneHit(p) { return ttk(Object.assign({}, p, { r: 0, dot: {}, blast: 0, F: 0 }), p.dt) >= p.hp - 1e-6; }
+  function oneHit(p) { return ttk(Object.assign({}, p, { r: 0, dot: {}, napH: 0, blast: 0, F: 0 }), p.dt) >= p.hp - 1e-6; }
 
   /* ---------- evaluation ---------- */
   // Element arrangement: o.elemOrder fixes it (slot order as typed). Otherwise every possible arrangement is a
@@ -469,23 +485,23 @@
     const perF = {};
     for (const f of o.factions) {
       // sum per-shot params across parts (same trigger)
-      const acc = { D: 0, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
+      const acc = { D: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
       res.forEach((r, ri) => {
         const x = r.perF[f], wgt = weights[ri];
-        acc.D += x.D * wgt; acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt;
+        acc.D += x.D * wgt; acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt; acc.napH += (x.napH || 0) * wgt;
         for (const T in x.dot) acc.dot[T] = (acc.dot[T] || 0) + x.dot[T] * wgt;
         for (const T in x.dotNon) acc.dotNon[T] = (acc.dotNon[T] || 0) + x.dotNon[T] * wgt;
         acc.pv += x.pv * wgt; acc.ph += x.ph * wgt; acc.pc += x.pc * wgt; acc.pk += x.pk * wgt; acc.pm += (x.pm || 0) * wgt; acc.pp += (x.pp || 0) * wgt;
         acc.pvN += x.pvN * wgt; acc.phN += x.phN * wgt; acc.pcN += x.pcN * wgt; acc.pkN += x.pkN * wgt;
       });
       // explosion parts of a combined shot (direct hit + blast): the enemies around the target only take the blast
-      const aoe = { D: 0, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0 };
+      const aoe = { D: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0 };
       let Kaoe = 0;
       if (res.length > 1) res.forEach((r, ri) => {
         if (parts[ri].kind !== "radial" || r.K <= 1) return;
         const x = r.perF[f], wgt = weights[ri];
         Kaoe = Math.max(Kaoe, r.K);
-        aoe.D += x.D * wgt; aoe.blast += x.blast * wgt; aoe.F += (x.F || 0) * wgt;
+        aoe.D += x.D * wgt; aoe.blast += x.blast * wgt; aoe.F += (x.F || 0) * wgt; aoe.napH += (x.napH || 0) * wgt;
         for (const T in x.dot) aoe.dot[T] = (aoe.dot[T] || 0) + x.dot[T] * wgt;
         aoe.pv += x.pv * wgt; aoe.ph += x.ph * wgt; aoe.pc += x.pc * wgt; aoe.pk += x.pk * wgt; aoe.pm += (x.pm || 0) * wgt;
       });
@@ -494,9 +510,9 @@
         const k = (atk.primerRate || 0.25) / Math.max(0.05, main.rate);
         acc.pv += pr.pv * k; acc.ph += pr.ph * k; acc.pc += pr.pc * k; acc.pk += pr.pk * k;
       }
-      const base = { strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, nc: main.nc || 0, corrMax: 10 + (o.ext.corrMax || 0), dt: o.dt, tmax: o.tmax, Tdur: main.Tdur, dotN: main.dotN,
+      const base = { field: !!o.napField, strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, nc: main.nc || 0, corrMax: 10 + (o.ext.corrMax || 0), dt: o.dt, tmax: o.tmax, Tdur: main.Tdur, dotN: main.dotN,
         ogM: main.ogM || 1, frozenM: main.frozenM || 0, coldVuln: main.coldVuln || 0 };
-      const hitP = { D: acc.D, blast: acc.blast, F: acc.F, dot: acc.dot, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm, pp: acc.pp, aoeOnly: main && parts.every((q) => q.kind === "radial") };
+      const hitP = { D: acc.D, blast: acc.blast, F: acc.F, dot: acc.dot, napH: acc.napH, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm, pp: acc.pp, aoeOnly: main && parts.every((q) => q.kind === "radial") };
       const nonP = { D: 0, blast: 0, dot: acc.dotNon, pv: acc.pvN, ph: acc.phN, pc: acc.pcN, pk: acc.pkN };
       const hasNon = Object.keys(acc.dotNon).some((T) => acc.dotNon[T] > 0);
       const period = 1 / Math.max(0.05, main.rate);
@@ -656,7 +672,7 @@
     // "*mod" keys (Violet shard electricity) behave like an elemental mod: added to a mod of that element, else after the mods.
     const tail = [], abilEl = {};
     if (ext.elem) for (const k in ext.elem) {
-      if (k.endsWith("mod")) { const p = k.slice(0, -3); if (a.elem[p] > 0) a.elem[p] += ext.elem[k]; else tail.push([p, ext.elem[k]]); }
+      if (k.endsWith("mod")) { const p = k.slice(0, -3); if (a.elem[p] > 0 && !ext.shardLast) a.elem[p] += ext.elem[k]; else tail.push([p, ext.elem[k]]); }
       else if (k in a.extra) { a.extra[k] += ext.elem[k]; const tt = k.slice(0, -1) === "voi" ? "void" : k.slice(0, -1); abilEl[tt] = (abilEl[tt] || 0) + ext.elem[k]; }
     }
     const arc = o.arcane ? (root.WF_ARCANES || {})[o.arcane] : null;
@@ -783,7 +799,10 @@
       rate = (atk.fr || 1) * Math.max(0.2, 1 + a.fr + (ext.asAdd || 0)) * 1.5;
     } else {
       let fr = a.lock > 0 && atk.semi ? atk.fr : atk.fr * Math.max(0.05, 1 + a.fr + a.frneg + (ext.frAdd || 0));
-      if (atk.semi) fr = Math.min(fr, 3.5);   // realistic semi-auto click rate
+      // Semi-auto: the game's Accessibility option "Fire Manual Trigger Weapons Continuously" fires semi-automatic weapons for as
+      // long as the trigger is held (overframe news 11, wiki Trigger_Type), so the modded fire rate counts in full. o.semiCap (shots
+      // per second) caps it for someone clicking by hand.
+      if (atk.semi && o.semiCap > 0) fr = Math.min(fr, o.semiCap);
       // spool-down while the trigger is held (Phenmor Incarnon Form: 100% → 60% over 51 shots, reset on release):
       // short bursts, so the average rate over one 51-shot burst
       if (atk.spoolDown) { const to = atk.spoolDown[1]; fr *= (1 - to) / Math.log(1 / to); }
@@ -1011,7 +1030,7 @@
         // Nightwatch Napalm (wiki): each rocket instance (multishot included) leaves a blaze of a fixed 150 Heat per tick,
         // 6 ticks with the first right away, raised only by base damage mods/arcanes, faction damage and the Kuva valence
         // bonus; it can't crit (the crit factor ttk applies is taken back out).
-        let napPh = 0;
+        let napPh = 0, napH = 0, napHdisp = 0;
         if (a.napalm > 0 && kind === "radial") {
           const tick = a.napalm * (1 + dmgb + dmgArc + platedB) * (1 + vpct), hw = fac_.weak.includes("heat") ? 1.5 : 1;
           const critF = Math.max(1, 1 + Math.min(1, cc) * (cd - 1));
@@ -1020,18 +1039,24 @@
           // lasts for only 3 seconds" and "Heat status damage is affected by Heat mods" — the Heat mods count even when heat is
           // combined away (not the Valence bonus); status damage mods and faction damage (twice, as a DoT) apply too. A 3 s Heat
           // ticks at 1, 2 and 3 s (wiki "Damage over Time"); stacks refreshing each other is left out (conservative).
-          const hProcs = 0.68 * 6 * ms0;
-          dot.napalmHeat = hProcs * 3 * 0.5 * tick * (1 + Math.max(0, a.elem.heat || 0)) * (1 + sd) * hw * fac * fac / critF;
+          // Wiki "Heat": a proc "adds a stack and refreshes the duration of all currently active heat stacks" and Heat ramps
+          // "indefinitely (scaling up linearly)" while it keeps being refreshed — the blazes keep proccing every second while the
+          // rockets keep landing, so every stack since the first stays active (ttk adds them up: napH = one stack's tick x the
+          // procs of one tick of a rocket's blazes). The display value keeps the old 3-tick count per proc.
+          const hTick = 0.5 * tick * (1 + Math.max(0, a.elem.heat || 0)) * (1 + sd) * hw * fac * fac / critF;
+          napH = hTick * 0.68 * ms0;
+          napHdisp = 0.68 * 6 * ms0 * 3 * hTick;
           // the same Heat procs strip armor (wiki "Heat": "reduces their armor by up to 50%", 15/30/40/50% over 2 s, regained over 6 s
           // after the proc ends). Only the tick that lands right away is counted per rocket (conservative): 68% per multishot instance.
           napPh = 0.68 * ms0;
         }
         const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * M * (xata ? 1 + xata * fac : 1);
-        const vm0 = 4.25, dsum = Object.values(dot).reduce((s, x) => s + x, 0);
+        const vm0 = 4.25, dsum = Object.values(dot).reduce((s, x) => s + x, 0) + napHdisp;
         const dispDirect = D * vm0, dispDot = dsum * vm0, dispBlast = blast * vm0;
         const dispDotBy = {}; for (const T in dot) dispDotBy[T] = dot[T] * vm0;
+        if (napHdisp > 0) dispDotBy.napalmHeat = napHdisp * vm0;
         perF[fname] = {
-          D, blast, dot, dotNon, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
+          D, blast, dot, dotNon, napH, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
           pv: (procs.viral || 0) * spreadHit, ph: ((procs.heat || 0) + napPh) * spreadHit, pc: (procs.corr || 0) * spreadHit, pk: (procs.cold || 0) * spreadHit, pm: (procs.mag || 0) * spreadHit,
           pp: kind === "radial" ? 0 : (procs.punct || 0) * spreadHit,
           pvN: (procs.viral || 0) * spreadNon, phN: (procs.heat || 0) * spreadNon, pcN: (procs.corr || 0) * spreadNon, pkN: (procs.cold || 0) * spreadNon,
