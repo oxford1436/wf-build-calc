@@ -8,6 +8,9 @@
 (function (root) {
   const A = {};
   const add = (key, o) => { A[key] = o; };
+  // Resupply's element choice (changeable: WF_BUFFS.resupplyElem.v). Magnetic: fastest of the 10 in all three factions for
+  // Kuva Ogris on Cyte-09 (Lv100/150/200 packs with an Overguard Eximus; Corpus x1.7 over Electricity, Grineer -2% for Corrosive)
+  const RESUPPLY_ELEM = { v: "mag" };
 
   add("Roar", { ko: "로어", helminth: true, note: "팩션 피해형 (도트에는 두 번 적용). 위력 비례. 본체 50%, 헬민스 30%",
     fx: (s, h) => ({ faction: (h ? 0.3 : 0.5) * s.str }), time: (s) => 30 * s.dur });
@@ -108,11 +111,15 @@
   add("Seek", { ko: "시크", note: "약점 피해 증가 — 위키 수치 미확인, 아직 계산하지 않음", fx: null });
   // wiki "Resupply": "instantly Reload his currently equipped weapon" (firearms; not archguns / battery weapons); 0.35 s
   // cooldown (Hotfix 38.0.3); counts as a reload for Arcane Rise (Update 38.6). The wiki lists no cast time, so how long a
-  // cast stops the shooting is an input (param). The elemental extra damage (10~25% x strength) is not added yet.
-  add("Resupply", { ko: "리서플라이 (즉시 재장전)", gunOnly: true,
+  // cast stops the shooting is an input (param). Energy per cast is not counted (a 3-round magazine needs ~1.7x the casts of 5).
+  add("Resupply", { ko: "리서플라이 (즉시 재장전 + 원소 추가 타격)", gunOnly: true,
     param: { def: 0, min: 0, max: 2, step: 0.05, ko: "시전으로 사격이 끊기는 시간", unit: "초" },
-    note: "시전하면 들고 있는 총기를 즉시 재장전 (위키). 탄창을 비울 때마다 시전해 재장전과 탄약 부족을 없앤다고 봅니다 — 재장전 속도·탄창 용량 모드는 가치가 없어지고 탄약은 무한으로 표시합니다. 시전은 다음 적으로 조준을 옮기는 사이처럼 원래 쏘지 않는 순간에 하므로 기본 0초로 계산합니다. 시전 때문에 사격이 끊긴다고 느끼면 아래 시간을 늘리세요 (그만큼 탄창이 클수록 유리해짐). 탄약 팩의 속성 추가 피해는 아직 넣지 않았습니다",
-    fx: (s, h, w, prm) => (w && (w.battery || w.slot === "archgun") ? {} : { reloadCast: prm != null && isFinite(prm) ? Math.max(0, prm) : 0 }) });
+    note: "시전하면 들고 있는 총기를 즉시 재장전 (위키). 탄창을 비울 때마다 시전해 재장전과 탄약 부족을 없앤다고 봅니다 — 재장전 속도·탄창 용량 모드는 가치가 없어지고 탄약은 무한으로 표시합니다. 시전은 다음 적으로 조준을 옮기는 사이처럼 원래 쏘지 않는 순간에 하므로 기본 0초로 계산합니다. 시전 때문에 사격이 끊긴다고 느끼면 아래 시간을 늘리세요 (그만큼 탄창이 클수록 유리해짐). 탄약 팩의 원소 추가 타격(한 발·멀티샷마다 무기 피해의 25%×위력, 고른 원소 상태이상 확정, 나이트워치 네이팜 틱에는 안 붙음)도 넣고, 원소는 계산상 가장 빠른 자성으로 봅니다(그리니어는 부식과 2% 차이). 시전마다 드는 에너지는 따지지 않으므로, 탄창이 작은 무기는 실제로 탄창 모드가 에너지를 아껴 줍니다",
+    // wiki "Resupply": the packs also give "an additional instance of the selected Elemental Damage and Status Effect" — an Extra
+    // Hit of 25% x strength of each hit (Sniper Rifles 50%), forced status of that element; cleared by a manual reload. The
+    // element is picked in game (hold the ability); default here: RESUPPLY_ELEM above.
+    fx: (s, h, w, prm) => (w && (w.battery || w.slot === "archgun") ? {} : { reloadCast: prm != null && isFinite(prm) ? Math.max(0, prm) : 0,
+      xhit: (w && w.type === "Sniper" ? 0.5 : 0.25) * s.str, xhitElem: RESUPPLY_ELEM.v }) });
   add("Amp", { ko: "앰프 (장 안, 시끄러운 전투)", note: "장 안에 있으면 무기·근접 피해 +25%~200%×위력 (주변 소음에 비례). 총소리가 큰 전투 중 최대치 기준, 서레이션류와 합연산",
     fx: (s) => ({ dmgAdd: 2.0 * s.str }), time: () => 30 });
 
@@ -160,6 +167,7 @@
         else if (k === "armorStrip" || k === "shieldCut") ext[k] = 1 - (1 - (ext[k] || 0)) * (1 - e[k]);
         else if (k === "weakFrac" || k === "weakMult") ext[k] = Math.max(ext[k] || 0, e[k]);
         else if (k === "reloadCast") ext[k] = ext[k] == null ? e[k] : Math.min(ext[k], e[k]);
+        else if (typeof e[k] === "string") ext[k] = e[k];      // a choice (e.g. Resupply's element), not a number to add
         else ext[k] = (ext[k] || 0) + e[k];
       }
     }
@@ -213,5 +221,5 @@
       ["shepherd", "Shepherd", "셰퍼드", "동반자 체력·방어력"], ["summoner_s_wrath", "Summoner's Wrath", "서머너스 래스", "동반자·소환체 피해 (무기 아님)"],
       ["toxin_resistance", "Toxin Resistance", "톡신 레지스턴스", "독성 저항"]].map(([id, en, ko, note]) => ({ id, en, ko, none: true, note })),
   ];
-  root.WF_BUFFS = { abilities: A, augments: AUG, misc: MISC, shards: SHARDS, auras: AURAS, merge, scale };
+  root.WF_BUFFS = { abilities: A, augments: AUG, misc: MISC, shards: SHARDS, auras: AURAS, merge, scale, resupplyElem: RESUPPLY_ELEM };
 })(typeof self !== "undefined" ? self : globalThis);

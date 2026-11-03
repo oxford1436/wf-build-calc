@@ -125,6 +125,33 @@ const { chromium } = require("playwright");
       const ids = top.mods.map((m) => m.id);
       check("v1.62 더 강한 커뮤니티 세팅이 1위가 되고, 같이 못 끼는 세팅은 제외", top.community === "seed" && !ids.includes("point_strike"), ids.join(","));
     }
+    // v1.64: Nightwatch Napalm ticks "each have a fixed 68% chance to proc Heat status ... only 3 seconds" and
+    // "Heat status damage is affected by Heat mods" (wiki Nightwatch Napalm) — even when the heat mod is combined away
+    {
+      const w = weapon("kuva_ogris"), atk = w.attacks[A.defaultAttack(w)], o = baseO();
+      const nh = (names) => (E.evaluate(w, atk, names.map(M), o).perF.grineer.dotBy || {}).napalmHeat || 0;
+      const base = nh(["Nightwatch Napalm", "Infected Clip"]), hot = nh(["Nightwatch Napalm", "Infected Clip", "Hellfire"]);
+      check("v1.65 나이트워치 네이팜 틱의 화염 상태이상 피해 반영, 화염 모드로 증가 (가스로 섞여도)", base > 0 && hot > base * 1.5, `${Math.round(base)} → ${Math.round(hot)}`);
+    }
+    // v1.64: those napalm Heat procs also strip armor (wiki "Heat": "reduces their armor by up to 50%") — napalm speeds up
+    // Grineer kills more while they still have armor than once the armor is already gone
+    {
+      const w = weapon("kuva_ogris"), atk = w.attacks[A.defaultAttack(w)];
+      const cl = (names, strip) => E.evaluate(w, atk, names.map(M), Object.assign(baseO(), { factions: ["grineer"], level: 150, ext: { armorStrip: strip } })).perF.grineer.clear;
+      const g0 = cl(["Serration"], 0) / cl(["Serration", "Nightwatch Napalm"], 0), g1 = cl(["Serration"], 0.999) / cl(["Serration", "Nightwatch Napalm"], 0.999);
+      check("v1.65 네이팜 화염 상태이상이 방어구를 깎음 (방어구가 남은 그리니어에서 네이팜 효과가 더 큼)", g0 > g1 * 1.1, `방어구 있음 ×${g0.toFixed(2)} · 없음 ×${g1.toFixed(2)}`);
+    }
+    // v1.64: Cyte-09 Resupply = an Extra Hit of 25% x strength per hit in the chosen element with its forced status
+    // (wiki Resupply/Extra Hit); napalm ticks don't trigger it ("Extra Hit mechanics which function by buffing your
+    // weapon's magazine (e.g. Resupply) do not")
+    {
+      const w = weapon("kuva_ogris"), atk = w.attacks[A.defaultAttack(w)], ids = ["Serration", "Nightwatch Napalm"].map(M);
+      const r0 = E.evaluate(w, atk, ids, Object.assign(baseO(), { ext: { reloadCast: 0 } }));
+      const r1 = E.evaluate(w, atk, ids, Object.assign(baseO(), { ext: { reloadCast: 0, xhit: 0.25 * 2.98, xhitElem: "corr" } }));
+      const g0 = r0.perF.grineer, g1 = r1.perF.grineer;
+      check("v1.65 리서플라이 추가 타격(위력 298% → 74.5%)이 직격·폭발 피해를 올리고 네이팜은 그대로", g1.direct > g0.direct * 1.4 && Math.abs((g1.dotBy.napalm || 0) / (g0.dotBy.napalm || 1) - 1) < 0.01,
+        `hit ×${(g1.direct / g0.direct).toFixed(2)} · napalm ×${((g1.dotBy.napalm || 0) / (g0.dotBy.napalm || 1)).toFixed(3)}`);
+    }
     // v1.63 (대기열 0): impact + explosion of one shot under different wiki names must be one default attack
     // (wiki AttackParentIndex). Lenz = Charged Shot + Initial Blast + Bubble Collapse; Penta = Grenade Impact + Grenade Detonation.
     {

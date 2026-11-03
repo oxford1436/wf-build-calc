@@ -907,6 +907,10 @@
       const dupf = 1 + dupD * (cc < 1 ? cc : cc < 2 ? 2 - cc : 0);
       if (dupf !== 1) for (const k in procs) procs[k] *= dupf;
       if (atk.forced) for (const f of atk.forced) procs[f] = (procs[f] || 0) + dupf;
+      // Cyte-09 Resupply (wiki "Resupply", "Extra Hit"): every hit — each multishot instance — also lands an Extra Hit of the
+      // chosen element that forces that element's status ("Main and extra hit have their own independent status procs")
+      const xhitP = ext.xhit > 0 && ext.xhitElem ? ms : 0;
+      if (xhitP) procs[ext.xhitElem] = (procs[ext.xhitElem] || 0) + xhitP;
       if (arc && arc.encumber) {
         const tot = Object.values(procs).reduce((x, y) => x + y, 0), types = ["impact", "punct", "slash", "heat", "cold", "elec", "tox", "blast", "rad", "gas", "mag", "viral", "corr"];
         for (const t of types) procs[t] = (procs[t] || 0) + arc.encumber * tot / types.length;
@@ -986,6 +990,10 @@
         // Void has no faction weakness, so the element vulnerability of the hit is taken back out
         const xata = ext.xata || 0;
         if (xata) D *= 1 + xata * fac * hsmC / Math.max(0.25, vuln);
+        // Resupply Extra Hit (wiki "Extra Hit"): "Weapon Hit Damage × Extra Hit Percentage × (1 + Faction Damage Bonuses)" as the
+        // chosen element; "Faction elemental weaknesses do not calculate inside the extra instance's base damage" — so the hit's
+        // own element vulnerability comes out and the chosen element's weakness (x1.5) goes in. Napalm ticks don't trigger it.
+        if (ext.xhit > 0) D *= 1 + ext.xhit * fac * (ext.xhitElem && fac_.weak.includes(ext.xhitElem) ? 1.5 : 1) / Math.max(0.25, vuln);
         const dot = {}, dotNon = {};
         for (const T of DOT_TYPES) {
           const p = procs[T] || 0; if (p <= 0) continue;
@@ -995,15 +1003,28 @@
           if (T === "elec") per *= n3;
           if (T === "gas") per *= ng;
           const dShare = debil && debil.comps.includes(T) && p > 0 ? (debil.n / 2) / p : 0;
-          dot[T] = p * per * spreadHit * (1 + dShare * (fac - 1));
+          // a forced Resupply proc takes the Extra Hit's damage as its base (wiki), not the weapon hit's
+          const pEff = xhitP && T === ext.xhitElem ? p - xhitP + xhitP * ext.xhit : p;
+          dot[T] = pEff * per * spreadHit * (1 + dShare * (fac - 1));
           if (T !== "slash" && spreadNon > 0) dotNon[T] = p * per * spreadNon;
         }
         // Nightwatch Napalm (wiki): each rocket instance (multishot included) leaves a blaze of a fixed 150 Heat per tick,
         // 6 ticks with the first right away, raised only by base damage mods/arcanes, faction damage and the Kuva valence
-        // bonus; it can't crit (the crit factor ttk applies is taken back out). Its 3 s Heat procs are not counted.
+        // bonus; it can't crit (the crit factor ttk applies is taken back out).
+        let napPh = 0;
         if (a.napalm > 0 && kind === "radial") {
-          const per = a.napalm * 6 * (1 + dmgb + dmgArc + platedB) * (1 + vpct) * ms0 * fac * (fac_.weak.includes("heat") ? 1.5 : 1);
-          dot.napalm = per / Math.max(1, 1 + Math.min(1, cc) * (cd - 1));
+          const tick = a.napalm * (1 + dmgb + dmgArc + platedB) * (1 + vpct), hw = fac_.weak.includes("heat") ? 1.5 : 1;
+          const critF = Math.max(1, 1 + Math.min(1, cc) * (cd - 1));
+          dot.napalm = tick * 6 * ms0 * fac * hw / critF;
+          // wiki "Nightwatch Napalm": "Napalm ticks each have a fixed 68% chance to proc Heat status, though this Heat status uniquely
+          // lasts for only 3 seconds" and "Heat status damage is affected by Heat mods" — the Heat mods count even when heat is
+          // combined away (not the Valence bonus); status damage mods and faction damage (twice, as a DoT) apply too. A 3 s Heat
+          // ticks at 1, 2 and 3 s (wiki "Damage over Time"); stacks refreshing each other is left out (conservative).
+          const hProcs = 0.68 * 6 * ms0;
+          dot.napalmHeat = hProcs * 3 * 0.5 * tick * (1 + Math.max(0, a.elem.heat || 0)) * (1 + sd) * hw * fac * fac / critF;
+          // the same Heat procs strip armor (wiki "Heat": "reduces their armor by up to 50%", 15/30/40/50% over 2 s, regained over 6 s
+          // after the proc ends). Only the tick that lands right away is counted per rocket (conservative): 68% per multishot instance.
+          napPh = 0.68 * ms0;
         }
         const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * M * (xata ? 1 + xata * fac : 1);
         const vm0 = 4.25, dsum = Object.values(dot).reduce((s, x) => s + x, 0);
@@ -1011,7 +1032,7 @@
         const dispDotBy = {}; for (const T in dot) dispDotBy[T] = dot[T] * vm0;
         perF[fname] = {
           D, blast, dot, dotNon, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
-          pv: (procs.viral || 0) * spreadHit, ph: (procs.heat || 0) * spreadHit, pc: (procs.corr || 0) * spreadHit, pk: (procs.cold || 0) * spreadHit, pm: (procs.mag || 0) * spreadHit,
+          pv: (procs.viral || 0) * spreadHit, ph: ((procs.heat || 0) + napPh) * spreadHit, pc: (procs.corr || 0) * spreadHit, pk: (procs.cold || 0) * spreadHit, pm: (procs.mag || 0) * spreadHit,
           pp: kind === "radial" ? 0 : (procs.punct || 0) * spreadHit,
           pvN: (procs.viral || 0) * spreadNon, phN: (procs.heat || 0) * spreadNon, pcN: (procs.corr || 0) * spreadNon, pkN: (procs.cold || 0) * spreadNon,
           dispDirect, dispDot, dispBlast, dispDotBy,
