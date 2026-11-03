@@ -305,6 +305,55 @@ const { chromium } = require("playwright");
     await p2.close();
   }
 
+  // v1.71: the cases the user caught in game (2026-11-04).
+  //  - Torid Incarnon Form, setting A (blast + corrosive) vs the old pick (viral + magnetic, Primed Shred): Simulacrum, Grineer Nox
+  //    x20, Lv150, from zero stacks. In game A clears all 20 in < 3 s, the old pick takes 6 s for 5. Old engine: old pick faster.
+  //    Needs the beam's 5 chains (wiki) and Blast's 10-stack AoE "300% base damage per stack" (wiki Blast Damage).
+  //  - Dual Ichor setting A (viral + electricity, Melee Influence): Influence spreads the elemental damage, not just the status
+  //    (wiki Melee Influence) — old engine had Influence = no arcane +15%.
+  //  - melee Incarnon Form "+100% Melee Damage" (wiki, additive with Pressure Point) must reach the attack.
+  {
+    const p3 = await ctx.newPage();
+    p3.on("pageerror", (e) => errs.push(e.message));
+    await p3.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p3.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p3.evaluate(() => {
+      const A = window.WF_APP, E = window.WFEngine, st = A.st, out = {};
+      if (!A.applyEvos) return { err: "applyEvos not exported" };
+      const use = (id, en, evo) => { const w0 = window.WF_WEAPONS.find((x) => x.id === id); st.base = w0; st.weapon = A.applyEvos(w0, evo); st.atk = Math.max(0, st.weapon.attacks.findIndex((a) => a.en === en)); };
+      // Torid vs Nox (wiki Module:Enemies/data/grineer: Nox Health 350, Armor 500, Overguard 5, BaseLevel 1)
+      use("torid", "Incarnon Form", { 2: 0, 3: 0, 4: 1 });
+      const keep = E.UNITS.grineer.heavy;
+      E.UNITS.grineer.heavy = { ko: "녹스", lv: 1, hp: 350, ar: 500, sh: 0 };
+      const t = E.enemyStats("grineer", "heavy", 150, false);
+      E.UNITS.grineer.heavy = keep;
+      t.og = 5 * (1 + 260 * Math.pow(149, 0.9));
+      const T = { main: t, heavy: null, ex: null };
+      const o = Object.assign(A.readOpts(), { factions: ["grineer"], crowdN: 20, killRamp: true, targets: { lo: { grineer: T }, hi: { grineer: T }, top: { grineer: T } } });
+      st.results = { o };
+      const SA = ["thermite_rounds", "vital_sense", "vile_acceleration", "primed_cryo_rounds", "galvanized_chamber", "rifle_elementalist", "high_voltage", "critical_delay", "vigilante_supplies"];
+      const OLD = ["primed_cryo_rounds", "galvanized_chamber", "primed_shred", "vital_sense", "critical_delay", "magnetic_capacity", "galvanized_aptitude", "vile_acceleration"];
+      out.tA = A.evalBuild(SA, null, "primary_merciless", o).perF.grineer.clear;
+      out.tOld = A.evalBuild(OLD, null, "primary_merciless", o).perF.grineer.clear;
+      // Torid chains in the default crowd
+      const o2 = Object.assign(A.readOpts(), { targets: null }); st.results = { o: o2 };
+      out.keff = A.evalBuild(SA, null, "primary_merciless", o2).perF.grineer.Keff;
+      // Dual Ichor
+      use("dual_ichor", "Normal Attack", { 2: 1, 3: 1, 4: 0 });
+      out.form = (st.weapon.attacks[0].evoEff || {}).dmg || 0;
+      const o3 = Object.assign(A.readOpts(), { targets: null }); st.results = { o: o3 };
+      const DA = ["galvanized_steel", "virulent_scourge", "vicious_frost", "galvanized_elementalist", "primed_fury", "condition_overload", "blood_rush", "shocking_touch", "disciplines_merit"];
+      out.infl = A.evalBuild(DA, null, "melee_influence", o3).score / A.evalBuild(DA, null, null, o3).score;
+      return out;
+    });
+    const f2 = (x) => (x == null || isNaN(x) ? "-" : (+x).toFixed(2));
+    results.push({ name: "v1.71 토리드 인카논 녹스 20명(Lv150 그리니어): 세팅 A(부식+폭발)가 바이러스+자성보다 빠름 — 게임 테스트", ok: !r.err && r.tA < r.tOld, detail: r.err || "A " + f2(r.tA) + "초 / 바이러스+자성 " + f2(r.tOld) + "초" });
+    results.push({ name: "v1.71 토리드 인카논 빔 연쇄: 무리에서 한 번에 3명 넘게 처리", ok: !r.err && r.keff > 3, detail: r.err || "한 번에 " + f2(r.keff) + "명" });
+    results.push({ name: "v1.71 근접 인카논 형태 근접 피해 +100% 적용 (듀얼 이코르)", ok: !r.err && r.form >= 1, detail: r.err || "+" + Math.round(r.form * 100) + "%" });
+    results.push({ name: "v1.71 밀리 인플루언스 전염 피해: 듀얼 이코르 세팅 A 인플루언스가 아케인 없음의 1.5배 넘음", ok: !r.err && r.infl > 1.5, detail: r.err || "×" + f2(r.infl) });
+    await p3.close();
+  }
+
   let fail = 0;
   for (const r of results) { console.log((r.ok ? "PASS " : "FAIL ") + r.name + (r.detail ? "  (" + r.detail + ")" : "")); if (!r.ok) fail++; }
   if (errs.length) { console.log("PAGE ERRORS", errs); fail++; }
