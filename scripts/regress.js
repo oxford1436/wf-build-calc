@@ -221,6 +221,15 @@ const { chromium } = require("playwright");
       const top = E.optimize(w, atk, cands, o, { slots: 8, beam: 20, arcOptions: ["primary_merciless", "primary_plated_round"] })[0];
       check("v1.67 검색이 캐노네이드 세팅에 갇히지 않음: 코린트 프라임 추천이 '플레이티드 라운드 1위 세팅 + 머시리스'보다 약하지 않음", top.score >= ref * 0.995, (top.score / ref * 100).toFixed(1) + "% (" + top.arcane + ")");
     }
+    // v1.67: weapon Heat status — a new proc refreshes every active Heat stack (wiki "Heat"), so with steady procs the
+    // tick damage keeps ramping instead of levelling off at 6 s worth of stacks
+    {
+      const hp = { hp: 1e12, sh: 0, og: 0, ar0: 0, strip: 0, r: 2, D: 0, blast: 0, F: 0, dot: { heat: 600 }, dotN: { heat: 6 }, Tdur: 6,
+        pv: 0, ph: 1, pc: 0, pk: 0, pm: 0, pp: 0, cc: 0, cd: 1, corrMax: 10, dt: 0.05, tmax: 60 };
+      const d = (t) => E.ttk(hp, t);
+      const early = d(10) - d(5), late = d(20) - d(15);
+      check("v1.67 무기 화염 중첩 갱신: 화염이 계속 걸리면 15~20초 화염 피해가 5~10초의 1.5배 넘음", late > 1.5 * early, (late / early).toFixed(2) + "배");
+    }
     return out;
   });
 

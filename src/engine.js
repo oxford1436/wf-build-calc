@@ -380,6 +380,16 @@
         const te = t - D;
         let act = te < 0 ? 0 : r * Math.min(te, n) + (te < n ? 1 : 0);
         if (p.field && T === "napalm") act = 6 * r;
+        // v1.67 wiki "Heat": a new proc "refreshes the duration of all currently active heat stacks on the target", ramping
+        // "indefinitely (scaling up linearly)" while it stays refreshed. Heat procs land at λ = r x ph per second (napalm
+        // procs included — they are heat stacks too); the chain holds through one gap with probability 1 − e^(−λ·n)
+        // (Poisson gaps), so every proc since the start stays active with probability (1 − e^(−λn))^(λ·te). A broken chain
+        // is counted as the old per-stack expiry (conservative: no restart of the ramp).
+        if (T === "heat" && te > n && p.ph > 0) {
+          const lam = r * p.ph, all = r * te + 1;
+          const hold = Math.pow(1 - Math.exp(-lam * n), lam * te);
+          act += (all - act) * hold;
+        }
         const v = (p.dot[T] / n) * act * f.critf;
         if (T === "tox") toxRate += v; else if (T === "slash") slashRate += v; else shieldable += v;
       }
