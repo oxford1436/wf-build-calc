@@ -200,6 +200,15 @@ const { chromium } = require("playwright");
       }
       check("v1.68 쿠바 자르·자르·쿠바 브람마 기본 공격에 집속탄(위키 개수)이 들어감", !bad, bad);
     }
+    // v1.68 (묶음 3 런처): Torid Incarnon beam — wiki "Punch Through mods have no effect on the behavior of the beam" —
+    // Primed Shred must not change its score (same for Kunai / Latron / Vectis Incarnon forms per their wiki notes)
+    {
+      const w = weapon("torid"), a = w.attacks.find((x) => x.inc), o = baseO();
+      const ids = ["Galvanized Chamber", "Vital Sense", "Critical Delay", "Primed Cryo Rounds"];
+      const k1 = E.evaluate(w, a, ids.concat(["Primed Shred"]).map(M), o).K;
+      const lt = weapon("latron_prime").attacks.find((x) => x.inc || (x.parts && x.parts[0].inc));
+      check("v1.68 토리드 인카논 빔은 관통 모드로 맞히는 적이 늘지 않음 (프라임드 슈레드 → 한 번에 1명) · 레이트론 인카논도 관통 잠금", k1 === 1 && !!(lt && lt.ptLock), "K " + (+k1).toFixed(2) + " · latron " + (lt ? !!lt.ptLock : "없음"));
+    }
     // v1.64 (커뮤니티 이유 분석): Soma Prime builds always carry Hata-Satya — wiki "+1.2% crit chance per hit", reset on reload
     {
       const w = weapon("soma_prime"), a = w.attacks[0], o = baseO();

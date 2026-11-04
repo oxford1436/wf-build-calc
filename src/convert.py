@@ -676,6 +676,14 @@ for W in weapons:
             perks.append({"name": pk["name"], "items": items})
         tiers.append({"tier": t["tier"], "perks": perks})
     W["evos"] = tiers
+    # Incarnon forms whose wiki notes say Punch Through does nothing (Torid "Punch Through mods have no effect on the behavior
+    # of the beam", Kunai "Punch Through is ignored in Incarnon Form", Latron "does not affect the incarnon projectile",
+    # Vectis "Punch Through is locked to 0 in Incarnon Form") — punch-through mods must not add targets there (v1.68)
+    PT_NONE = r"Punch Through mods have no effect|Punch Through is ignored in Incarnon Form|Punch Through does not affect the incarnon|Punch Through is locked to 0 in Incarnon Form|can no longer Punch Through"
+    if any(re.search(PT_NONE, n_) for t in E["tiers"] for pk in t["perks"] for n_ in (pk.get("notes") or [])):
+        for at_ in W["attacks"]:
+            if at_.get("inc") or (at_.get("parts") and at_["parts"][0].get("inc")):
+                at_["ptLock"] = True
 with open(os.path.join(OUT, "weapons_full.js"), "w", encoding="utf-8") as f:
     f.write("(function(root){root.WF_WEAPONS=" + json.dumps(weapons, ensure_ascii=False, separators=(",", ":"))
             + ";root.WF_MODULAR=" + json.dumps(MODULAR, ensure_ascii=False, separators=(",", ":")) + ";})(typeof self!=='undefined'?self:globalThis);\n")
