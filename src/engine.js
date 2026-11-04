@@ -912,7 +912,9 @@
       // Cyte-09 Resupply (wiki): casting instantly reloads the held firearm → a reload costs only the cast
       if (ext.reloadCast != null) reload = Math.min(reload, ext.reloadCast);
       // spool-up (Gorgon, Soma, Cestra …: wiki "Spool" shots, starting near 60% fire rate): ~0.28 x shots of extra time per magazine
-      const spoolT = atk.spool && atk.mag ? 0.277 * atk.spool / fr : 0;
+      // beam damage ramp (wiki, e.g. Amprex 30% → 100% over 0.6 s, decays after 0.8 s without firing): moving between targets
+      // keeps the trigger held, so it ramps once per magazine — the linear ramp costs (1 − start) × T / 2 of full-damage time
+      const spoolT = (atk.spool && atk.mag ? 0.277 * atk.spool / fr : 0) + (atk.beamRamp && atk.mag ? (1 - atk.beamRamp[0]) * atk.beamRamp[1] / 2 : 0);
       rate = atk.mag ? mag / (mag / fr + spoolT + reload) : fr;
     }
     const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0);

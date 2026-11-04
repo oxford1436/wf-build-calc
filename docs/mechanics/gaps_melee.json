@@ -1,0 +1,2326 @@
+[
+ {
+  "weapon": "Ack & Brunt",
+  "attack": "Block (passive)",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "bonus_per_stack_pct": 17.5,
+   "max_stacks": 4,
+   "max_bonus_pct": 70
+  },
+  "quote": "Blocking elemental damage attacks creates a stack that increases the damage of the next attack by 17.5% stacks. The effect can stack up to 4 times before being consumed, increasing the damage up to 70%. | Blocking elemental damage attacks stores a charge that grants +17.5% of the absorbed elemental damage to the next attack.",
+  "url": "https://wiki.warframe.com/w/Ack_%26_Brunt",
+  "handled": null
+ },
+ {
+  "weapon": "Ack & Brunt",
+  "attack": "Incarnon Form: Spectral Axe (aerial/slide attacks)",
+  "cat": "cond",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "contact_damage": 149,
+   "explosion_heat": 303,
+   "explosion_radius_m": 5,
+   "aerial_multiplier": 2,
+   "forced_proc": "Impact"
+  },
+  "quote": "Spectral axes deal 149 damage on contact, then explode dealing 303 Heat damage with a forced Impact status effect in a 5m radius. Axes launched by aerial attacks have 2x damage. | Direct hits of spectral axes and explosions are not affected by the stance mod, combo multiplier, damage increase on Evolution II perks or melee damage bonuses like Incarnon form's innate +100% melee damage, Pressure Point, and Arcane Fury. | Direct hits of spectral axes are affected by Condition Overload, while the explosions are not.",
+  "url": "https://wiki.warframe.com/w/Ack_%26_Brunt_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Amanata",
+  "attack": "All attacks (Amanata's Rolls)",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "reroll_every_hits": 30,
+   "roll1_final_crit_chance_pct": 40,
+   "roll2_final_status_chance_pct": 30,
+   "roll3_final_status_damage_pct": 30,
+   "roll4_range_m": 1,
+   "roll5_attack_speed_pct": 20,
+   "roll6": "all"
+  },
+  "quote": "Grants Amanata's Rolls at the start of a mission, rolling a six-sided dice to apply a randomly selected buff. Buffs last indefinitely and are rerolled every 30 hits. Only one buff can be active at a time, each new application replacing the last. | 1: 40% Final Critical Chance | 2: 30% Final Status Chance | 3: 30% Final Status Damage | 4: 1m Range | 5: 20% Attack Speed | 6: All blessings at once.",
+  "url": "https://wiki.warframe.com/w/Amanata",
+  "handled": null
+ },
+ {
+  "weapon": "Arca Titron",
+  "attack": "Slam Attack (Slam Capacitor)",
+  "cat": "slam",
+  "type": "on-kill",
+  "stated": true,
+  "numbers": {
+   "slam_damage_per_charge_pct": 250,
+   "slam_range_per_charge_m": 2,
+   "max_charges": 5,
+   "max_damage_pct": 1250,
+   "max_range_m": 10,
+   "duration": "infinite"
+  },
+  "quote": "Kills with the weapon (including DoTs) grant the Slam Capacitor buff, increasing the damage of the next Slam Attack by 250% and its range by 2 meter per charge (max 5 charges). | Damage increase is multiplicative to Seismic Wave and the Nira's Set bonus, and additive to base damage (e.g. Pressure Point, Arcane Fury). | Kills made with slam attacks do not grant Slam Capacitor charges, even on slams with no charges. However, kills from slam attack DoTs do grant charges. | Damage and range bonuses stack additively with each charge, for a maximum slam damage increase of +1250% and a slam range increase of +10m with 5 charges.",
+  "url": "https://wiki.warframe.com/w/Arca_Titron",
+  "handled": null
+ },
+ {
+  "weapon": "Arca Titron",
+  "attack": "Slam Attack",
+  "cat": "slam",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "forced_proc": "Electricity"
+  },
+  "quote": "All Slam Attacks and stance combo slams inflict a forced Electricity proc, 1 in the area and multiple with a direct hit.",
+  "url": "https://wiki.warframe.com/w/Arca_Titron",
+  "handled": null
+ },
+ {
+  "weapon": "Argo & Vel",
+  "attack": "Heavy Attack (glaive throw)",
+  "cat": "heavy",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "damage_multiplier": 3,
+   "ricochet_targets": 1,
+   "aoe_radius_m": 3
+  },
+  "quote": "Unique Heavy Attack throws a glaive projectile that bounces off surfaces once before flying back to the user. | The glaive and its AoE have a 3x damage multiplier. | Glaive is considered a heavy attack and benefits from heavy attack related mods. | If the glaive hits an enemy, it will ricochet towards 1 other nearby enemy.",
+  "url": "https://wiki.warframe.com/w/Argo_%26_Vel",
+  "handled": null
+ },
+ {
+  "weapon": "Arum Spinosa",
+  "attack": "Heavy Attack (toxic spines)",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "spine_base_damage": 70,
+   "first_heavy_spines": 18,
+   "first_heavy_multiplier": 2.5,
+   "second_heavy_spines": 9,
+   "second_heavy_multiplier": 5,
+   "range_m": 35
+  },
+  "quote": "Heavy Attacks throw toxic spines, with each spine doing 70 base damage. | The first heavy attack throws 18 spines, each with a 2.5x damage multiplier; the second heavy attack in sequence throws 9 spines, each with a 5x damage multiplier, | Spines are considered a heavy attack. Their damage will scale from the combo counter and mods such as Killing Blow. | Spines have innate Punch Through. | Spine damage does not diminish with distance. | Has a limited range of ~35 meters.",
+  "url": "https://wiki.warframe.com/w/Arum_Spinosa",
+  "handled": null
+ },
+ {
+  "weapon": "Arum Spinosa",
+  "attack": "Slam Attack",
+  "cat": "slam",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "hits_per_slam": 2
+  },
+  "quote": "Warfan slams hit twice.",
+  "url": "https://wiki.warframe.com/w/Arum_Spinosa",
+  "handled": null
+ },
+ {
+  "weapon": "Azothane",
+  "attack": "Blocking Combo",
+  "cat": "cond",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "radius_m": 10,
+   "heat_damage": 85,
+   "forced_proc": "Impact"
+  },
+  "quote": "Unique Blocking Combo releases a 10 meter shockwave centered around the impact point, dealing 85 Heat damage with a guaranteed Impact proc.",
+  "url": "https://wiki.warframe.com/w/Azothane",
+  "handled": null
+ },
+ {
+  "weapon": "Azothane",
+  "attack": "Heavy Attack (bug)",
+  "cat": "heavy",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "second_heavy_hits": 1,
+   "damage_fraction": 0.5
+  },
+  "quote": "The second Heavy Attack only hits one time instead of two with half of the expected damage.",
+  "url": "https://wiki.warframe.com/w/Azothane",
+  "handled": null
+ },
+ {
+  "weapon": "Caustacyst",
+  "attack": "Heavy Attack: Corrosive Wave",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "base_corrosive": 225,
+   "crit_chance": 0.09,
+   "crit_mult": 2,
+   "status_chance": 0.37,
+   "speed_mps": 15,
+   "lifetime_s": 2.5,
+   "max_range_m": 37.5,
+   "loss_per_second_pct": 40,
+   "loss_per_enemy_hit_pct": 20,
+   "punch_through": "infinite"
+  },
+  "quote": "Wave flies at a constant speed of 15 m/s until it dissipates after 2.5s, which corresponds to a maximum distance of 37.5m | Wave has base damage of 225 Corrosive, with 9% Critical Chance, 2x Critical Damage, and 37% Status Chance. | Wave loses 40% of its damage per second; Wave damage falls off linearly with distance from 100% to 0% between 0 and 37.5m. | Wave loses 20% of its damage each time it hit an enemy; this decreases the projectile lifetime by 0.5s (range by 7.5m) for every enemy hit from the max lifetime of 2.5s (max range of 37.5m). | Wave damage is not affected by melee damage increases such as Pressure Point. | Wave has infinite Punch Through.",
+  "url": "https://wiki.warframe.com/w/Caustacyst",
+  "handled": null
+ },
+ {
+  "weapon": "Caustacyst",
+  "attack": "Heavy Attack: Corrosive Pools",
+  "cat": "heavy",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "trail_m": "20x2",
+   "duration_s": 8,
+   "damage_per_second": 98,
+   "tick_interval_s": 1,
+   "crit_chance": 0,
+   "status_chance": 0.5
+  },
+  "quote": "The wave will leave behind a 20x2m trail of Corrosive pools on the ground that last 8 seconds. | Pools deal 98 Corrosive damage every second to enemies that stand on it, with 0% Critical Chance, 1x Critical Damage, and 50% Status Chance. | Pool damage is affected by melee damage increases such as Pressure Point, but not Condition Overload. | Corrosive pools will deal damage the moment it contacts the enemy.",
+  "url": "https://wiki.warframe.com/w/Caustacyst",
+  "handled": null
+ },
+ {
+  "weapon": "Ceramic Dagger",
+  "attack": "Stanceless 4th hit",
+  "cat": "normal",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "forced_slash_chance_pct": 100
+  },
+  "quote": "When equipped without a Stance mod, the Ceramic Dagger adds a 4th lunging stab to its normal attack combo, which propels the Warframe a good distance forward, which is useful in catching up to moving enemies. It also has a 100% chance of inflicting Slash bleed proc.",
+  "url": "https://wiki.warframe.com/w/Ceramic_Dagger",
+  "handled": null
+ },
+ {
+  "weapon": "Ceramic Dagger",
+  "attack": "Incarnon Form: Heavy Attack spectral daggers",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "daggers_per_heavy": 2,
+   "forced_proc": "Impact"
+  },
+  "quote": "Heavy Attack in Incarnon Form will fire a flurry of 2 spectral daggers towards the crosshair that explode on impact, dealing Heat damage with a forced Impact status effect. | Direct hit damage is affected by Condition Overload, but not the explosions. | Damage is not affected by the melee damage increase on Evolution 2, Incarnon form's innate +100% melee damage, or melee damage bonuses like Pressure Point.",
+  "url": "https://wiki.warframe.com/w/Ceramic_Dagger_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Ceramic Dagger",
+  "attack": "Evo II Breacher's Opportunity",
+  "cat": "all",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "base_damage_add": 80,
+   "duration_s": 8
+  },
+  "quote": "On Shield Break: Increase Base Damage by +80 for 8s.",
+  "url": "https://wiki.warframe.com/w/Ceramic_Dagger_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Ceramic Dagger",
+  "attack": "Evo IV Red Right Hand",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": false,
+  "numbers": {
+   "base_crit_mult_add": 2
+  },
+  "quote": "On First Attack With Primary Equipped: Increase Base Critical Damage Multiplier by +2x.",
+  "url": "https://wiki.warframe.com/w/Ceramic_Dagger_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Cerata",
+  "attack": "Thrown glaive",
+  "cat": "throw",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "bounces": 3,
+   "range_uncharged_m": 26,
+   "range_charged_m": 33
+  },
+  "quote": "Holding the melee button throws the glaive, which can bounce up to three times, travel up to 26 meters uncharged, and 33 meters fully charged before returning to the user, damaging anyone in its path.",
+  "url": "https://wiki.warframe.com/w/Cerata",
+  "handled": null
+ },
+ {
+  "weapon": "Cobra & Crane",
+  "attack": "Block charges",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "crit_and_status_per_charge_pct": 15,
+   "max_charges": 4
+  },
+  "quote": "Blocking attacks stores a charge that increases critical chance and status chance by 15% to the next attack. Up to 4 charges can be stacked before being consumed. | Critical Chance bonus is additive to True Steel, Blood Rush, and other similar buffs.",
+  "url": "https://wiki.warframe.com/w/Cobra_%26_Crane",
+  "handled": null
+ },
+ {
+  "weapon": "Cobra & Crane Prime",
+  "attack": "Block charges",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "crit_and_status_per_charge_pct": 15,
+   "max_charges": 4
+  },
+  "quote": "Blocking attacks stores a charge that increases critical chance and status chance by 15% to the next attack. Up to 4 charges can be stacked before being consumed.",
+  "url": "https://wiki.warframe.com/w/Cobra_%26_Crane_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Coda Caustacyst",
+  "attack": "Heavy Attack: Corrosive Wave",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "base_corrosive": 225,
+   "crit_chance": 0.09,
+   "status_chance": 0.37,
+   "lifetime_s": 2.5,
+   "max_range_m": 37.5,
+   "loss_per_second_pct": 40,
+   "loss_per_enemy_hit_pct": 20,
+   "punch_through": "infinite"
+  },
+  "quote": "Wave has base damage of 225 Corrosive, with 9% Critical Chance, 2x Critical Damage, and 37% Status Chance. | Wave loses 20% of its damage each time it hit an enemy; this decreases the projectile lifetime by 0.5s (range by 7.5m) for every enemy hit from the max lifetime of 2.5s (max range of 37.5m). | Wave has infinite Punch Through.",
+  "url": "https://wiki.warframe.com/w/Coda_Caustacyst",
+  "handled": null
+ },
+ {
+  "weapon": "Coda Caustacyst",
+  "attack": "Heavy Attack: Corrosive Pools",
+  "cat": "heavy",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "trail_m": "20x2",
+   "duration_s": 8,
+   "damage_per_second": 145,
+   "tick_interval_s": 1,
+   "crit_chance": 0,
+   "status_chance": 1.0
+  },
+  "quote": "Pools deal 145 Corrosive damage every second to enemies that stand on it, with 0% Critical Chance, 1x Critical Damage, and 100% Status Chance. | Pool damage is affected by the weapon's valence bonus. | Pool damage is affected by melee damage increases such as Pressure Point, but not Condition Overload.",
+  "url": "https://wiki.warframe.com/w/Coda_Caustacyst",
+  "handled": null
+ },
+ {
+  "weapon": "Coda Motovore",
+  "attack": "All attacks",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": false,
+  "numbers": {
+   "physical_mod_potency_x": 6,
+   "impact_top_attack_speed_pct": 40,
+   "puncture_top_range_m": 1.5,
+   "slash_top_status_chance_pct": 100
+  },
+  "quote": "Impact, Puncture, and Slash mods have their potency increased by 6 times, which is reflected in the mod card while modding the weapon. For example, Buzz Kill's 120% Slash damage at max rank is increased to 720%. | Impact: +40% Attack Speed, wheel forms rugged rocky edges. | Puncture: +1.5m Range, wheel forms straight pointed spikes along the center. | Slash: +100% Status Chance, wheel forms a quill buzzsaw along the edges.",
+  "url": "https://wiki.warframe.com/w/Coda_Motovore",
+  "handled": null
+ },
+ {
+  "weapon": "Coda Pathocyst",
+  "attack": "Thrown glaive: Maggots",
+  "cat": "throw",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "maggot_lifetime_s": 7
+  },
+  "quote": "During flight or when striking an enemy, the glaive drops Infested pods which quickly hatch into Maggots that last for 7 seconds and will fight alongside the player before exploding in a ? radius. | Maggots may also appear on any normal attack done to enemies.",
+  "url": "https://wiki.warframe.com/w/Coda_Pathocyst",
+  "handled": null
+ },
+ {
+  "weapon": "Coda Pathocyst",
+  "attack": "Thrown glaive",
+  "cat": "throw",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "bounces": 3,
+   "range_m": 30
+  },
+  "quote": "Holding the melee button throws the glaive, which can bounce up to three times or travels up to 30 meters before returning to the user, damaging anyone in its path.",
+  "url": "https://wiki.warframe.com/w/Coda_Pathocyst",
+  "handled": null
+ },
+ {
+  "weapon": "Corufell",
+  "attack": "Heavy Attack (gunblade shots)",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "shots_per_heavy": 2,
+   "punch_through": "infinite body",
+   "falloff": "100%->50% from 15m to 30m"
+  },
+  "quote": "Heavy Attack transforms the weapon into a Gunblade to fire up to two consecutive energy projectiles. | Shots have a wide radius. | Shots have Infinite Body Punch Through. | Has linear damage falloff from 100% to 50% from 15m to 30m target distance (distances are affected by Projectile Speed, for melee weapons only via Jet Stream).",
+  "url": "https://wiki.warframe.com/w/Corufell",
+  "handled": null
+ },
+ {
+  "weapon": "Corufell",
+  "attack": "Heavy Attack (bug)",
+  "cat": "heavy",
+  "type": "special-multiplier",
+  "stated": false,
+  "numbers": {},
+  "quote": "Condition Overload is multiplicative to base damage sources on direct hits from heavy attack.",
+  "url": "https://wiki.warframe.com/w/Corufell",
+  "handled": null
+ },
+ {
+  "weapon": "Corufell Prime",
+  "attack": "Heavy Attack (gunblade shots)",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "shots_per_heavy": 2,
+   "punch_through": "infinite body",
+   "falloff": "100%->50% from 15m to 30m"
+  },
+  "quote": "Heavy Attack transforms the weapon into a Gunblade to fire up to two consecutive energy projectiles. | Shots have a wide radius. | Shots have Infinite Body Punch Through. | Has linear damage falloff from 100% to 50% from 15m to 30m target distance (distances are affected by Projectile Speed, for melee weapons only via Jet Stream).",
+  "url": "https://wiki.warframe.com/w/Corufell_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Dark Dagger",
+  "attack": "Stanceless 4th hit",
+  "cat": "normal",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "forced_slash_chance_pct": 100
+  },
+  "quote": "When equipped without a Stance mod, the Dark Dagger adds a 4th lunging stab on its normal attack combo that propels the Warframe a good distance forward, which is useful for catching up to moving enemies. It also has a 100% chance of inflicting Slash bleed proc, despite the fact that the Dark Dagger has no physical damage element.",
+  "url": "https://wiki.warframe.com/w/Dark_Dagger",
+  "handled": null
+ },
+ {
+  "weapon": "Desert Wind",
+  "attack": "All attacks (waves)",
+  "cat": "all",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "wave_range_m": 20,
+   "punch_through": "unlimited"
+  },
+  "quote": "Attacks release waves that travel 20 meters with unlimited punch through. | Enemies must be within Line of Sight for the wave to deal damage. | Melee and wave damage can be increased by the combo counter. | Reach does not extend the wave range.",
+  "url": "https://wiki.warframe.com/w/Desert_Wind",
+  "handled": null
+ },
+ {
+  "weapon": "Desert Wind Prime",
+  "attack": "All attacks (waves)",
+  "cat": "all",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "wave_range_m": 20,
+   "punch_through": "unlimited"
+  },
+  "quote": "Attacks release waves that travel 20 meters with unlimited punch through.",
+  "url": "https://wiki.warframe.com/w/Desert_Wind_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Dex Nikana",
+  "attack": "Combo counter",
+  "cat": "all",
+  "type": "combo",
+  "stated": true,
+  "numbers": {
+   "hits_per_combo_tier": 11,
+   "max_combo_multiplier": 11
+  },
+  "quote": "Gains 1x Melee Combo every 11 hits (down from 20), but max multiplier is reduced to 11x (down from 12x).",
+  "url": "https://wiki.warframe.com/w/Dex_Nikana",
+  "handled": null
+ },
+ {
+  "weapon": "Dorrclave",
+  "attack": "All attacks (Rising Vendetta)",
+  "cat": "all",
+  "type": "on-kill",
+  "stated": true,
+  "numbers": {
+   "kills_needed": 10,
+   "flat_status_chance_after_mods_pct": 100,
+   "follow_through_add": 0.5,
+   "attacks_buffed": 10
+  },
+  "quote": "10 kills or assists from Dorrclave grants the Rising Vendetta buff, granting +0.5 Follow Through and a flat +100% Status Chance after mods for the next 10 attacks. | Charges are only consumed when they strike an enemy.",
+  "url": "https://wiki.warframe.com/w/Dorrclave",
+  "handled": null
+ },
+ {
+  "weapon": "Edun",
+  "attack": "Heavy Attack (polearm throw)",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "contact_damage": 480,
+   "split": "30% Impact/40% Puncture/30% Slash",
+   "explosion_blast": 400,
+   "explosion_radius_m": 5,
+   "explosion_delay_s": 1,
+   "co_per_status_on_contact_pct": 20
+  },
+  "quote": "Thrown polearms deal 480 damage, split between 30% Impact, 40% Puncture, and 30% Slash, with a guaranteed Impact proc. | 1 second after collision, the polearm will explode in a 5 meter radius, dealing 400 Blast damage with a guaranteed Impact proc. The explosion has damage fall-off. | The initial hit and delayed explosion of thrown polearms only gain the benefits of heavy attack effects (such as Killing Blow, Dispatch Overdrive, Life Strike, and the doubled crit bonus from True Steel) if the warframe is in a heavy attack animation when they deal damage to an enemy. | Condition Overload only adds 20% damage per status type to the initial hit instead of the listed 80%, and does not apply its increase to the explosion damage.",
+  "url": "https://wiki.warframe.com/w/Edun",
+  "handled": null
+ },
+ {
+  "weapon": "Ether Daggers",
+  "attack": "Stealth attacks",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "stealth_bonus_pct": 900
+  },
+  "quote": "Stealth attacks do +900% damage instead of the normal bonus of +700% damage.",
+  "url": "https://wiki.warframe.com/w/Ether_Daggers",
+  "handled": null
+ },
+ {
+  "weapon": "Exalted Blade",
+  "attack": "Normal/slide/aerial attacks: energy waves",
+  "cat": "normal",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "wave_width_m": 3,
+   "wave_damage": "same base damage as the attack",
+   "speed_mps": 30,
+   "lifetime_s": 2.5,
+   "max_range_m": 75,
+   "loss_per_second_pct": 40,
+   "falloff": "linear 100%->0% over 0-70m",
+   "loss_per_enemy_hit_pct": 20,
+   "punch_through": "unlimited to max range"
+  },
+  "quote": "Normal, slide, and aerial attacks will emit a 3 meter-wide energy wave in the direction of aim. Energy waves have the same base damage as the attacks that release them, inflict Stagger, and fly at a constant speed of 30 m/s until they dissipate after 2.5s, which corresponds to a maximum distance of 75 meters. | The energy waves and Exalted Blade itself are considered separate entities and will both deal damage separately. | Energy waves will punch through and hit enemies and terrain regardless of thickness up to their maximum range. | Energy waves lose 40% of their damage per second; Wave damage falls off linearly with distance from 100% to 0% between 0 and 70m. | Energy waves lose 20% of their damage each time they hit an enemy; this decreases the projectile lifetime by 0.5s (range by 15m) for every enemy hit from the max lifetime of 2.5s (max range of 70m).",
+  "url": "https://wiki.warframe.com/w/Exalted_Blade",
+  "handled": null
+ },
+ {
+  "weapon": "Exalted Blade",
+  "attack": "Heavy Attack: cross waves",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "waves": 2,
+   "wave_width_m": 10,
+   "speed_mps": 30,
+   "lifetime_s": 2.5,
+   "loss_per_second_pct": 40,
+   "loss_per_enemy_hit_pct": 0,
+   "combo_scaling": false
+  },
+  "quote": "Heavy attacks will emit 2 energy waves in a cross pattern in the direction of aim. | Waves are 10 meters wide, have the same base damage as the attacks that release them, inflict Lifted, and fly at a constant speed of 30 m/s until they dissipate after 2.5s, which corresponds to a maximum distance of 75 meters. | Energy waves from the heavy attack do not lose 20% of their damage each time they hit an enemy, unlike normal waves. | Energy wave's damage does not scale off combo counter.",
+  "url": "https://wiki.warframe.com/w/Exalted_Blade",
+  "handled": null
+ },
+ {
+  "weapon": "Exalted Blade",
+  "attack": "Excalibur passive",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": false,
+  "numbers": {
+   "damage_bonus_pct": 10,
+   "attack_speed_bonus_pct": 10
+  },
+  "quote": "Being a Sword, Exalted Blade will always gain the 10% damage and attack speed bonuses of Excalibur's Passive.",
+  "url": "https://wiki.warframe.com/w/Exalted_Blade",
+  "handled": null
+ },
+ {
+  "weapon": "Exalted Blade",
+  "attack": "Finishers",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "ground_finisher_pct": 400,
+   "prompted_finisher_pct": 3200
+  },
+  "quote": "Ground finishers inflict 400% of the total modified damage from normal attacks. Prompted Finishers inflict 3200% of the total modified damage from normal attacks as Finisher damage.",
+  "url": "https://wiki.warframe.com/w/Exalted_Blade",
+  "handled": null
+ },
+ {
+  "weapon": "Exalted Prime Blade",
+  "attack": "All attacks: waves",
+  "cat": "all",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "wave_range_m": 40,
+   "punch_through": "unlimited",
+   "heavy_waves": 4
+  },
+  "quote": "Attacks release waves with unlimited punch through up to 40 meters. | Exalted Blade will perform a + pattern wave on its heavy attacks. This wave is made out of 4 individual waves, being able to trigger 4 instances of Melee Afflictions for a total of 28 status proc.",
+  "url": "https://wiki.warframe.com/w/Exalted_Prime_Blade",
+  "handled": null
+ },
+ {
+  "weapon": "Exalted Umbra Blade",
+  "attack": "All attacks: waves",
+  "cat": "all",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "wave_range_m": 40,
+   "punch_through": "unlimited",
+   "heavy_waves": 4
+  },
+  "quote": "Attacks release waves with unlimited punch through up to 40 meters. | Exalted Blade will perform a + pattern wave on its heavy attacks. This wave is made out of 4 individual waves, being able to trigger 4 instances of Melee Afflictions for a total of 28 status proc.",
+  "url": "https://wiki.warframe.com/w/Exalted_Umbra_Blade",
+  "handled": null
+ },
+ {
+  "weapon": "Falcor",
+  "attack": "Thrown glaive",
+  "cat": "throw",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "bounces": 3,
+   "range_uncharged_m": 30,
+   "range_charged_m": 40,
+   "homing_cone_deg": 30,
+   "homing_range_m": 24,
+   "explosion_radius_m": 6
+  },
+  "quote": "Holding the melee button throws the glaive, which can bounce up to three times, travel up to 30 meters uncharged, and 40 meters fully charged before returning to the user, damaging anyone in its path. | Has a 30° cone for homing into enemies within 24m in mid-flight, higher than most glaives. | Potentially a bug, its innate punch through is not disabled by Volatile Rebound or Volatile Quick Return, (though it is disabled in the arsenal UI) allowing either mod to proc multiple bounce explosions with a single throw.",
+  "url": "https://wiki.warframe.com/w/Falcor",
+  "handled": null
+ },
+ {
+  "weapon": "Galariak Prime",
+  "attack": "All attacks",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": false,
+  "numbers": {
+   "flat_crit_chance_per_status_type_pct": 10,
+   "max_types": 14
+  },
+  "quote": "Gains a flat +10% Critical Chance bonus per unique Status Effect type on the target hit. | Valid status effects are Impact, Puncture, Slash, Heat, Cold, Electricity, Toxin, Radiation, Gas, Magnetic, Viral, Corrosive, Void, and Tau.",
+  "url": "https://wiki.warframe.com/w/Galariak_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Galatine",
+  "attack": "Overhead chops",
+  "cat": "all",
+  "type": "other",
+  "stated": false,
+  "numbers": {},
+  "quote": "As with other heavies, the overhead chops cause small AoE damage.",
+  "url": "https://wiki.warframe.com/w/Galatine",
+  "handled": null
+ },
+ {
+  "weapon": "Galatine Prime",
+  "attack": "Overhead chops",
+  "cat": "all",
+  "type": "other",
+  "stated": false,
+  "numbers": {},
+  "quote": "As with other heavies, the overhead chops cause small AoE damage.",
+  "url": "https://wiki.warframe.com/w/Galatine_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Gazal Machete",
+  "attack": "All attacks (Djinn synergy)",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "corrosive_bonus_pct": 25,
+   "duration_s": 30
+  },
+  "quote": "Upon Fatal Attraction activating, the Gazal Machete will receive 25% additional bonus damage as Corrosive for 30 seconds (Reportedly bugged, bonus is not always applied correctly).",
+  "url": "https://wiki.warframe.com/w/Gazal_Machete",
+  "handled": null
+ },
+ {
+  "weapon": "Ghoulsaw",
+  "attack": "All attacks",
+  "cat": "info",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "follow_through": "perfect"
+  },
+  "quote": "Perfect Follow Through; does not lose damage when hitting multiple targets.",
+  "url": "https://wiki.warframe.com/w/Ghoulsaw",
+  "handled": "계산기는 관통 감소(Follow Through)를 넣지 않아 이미 감소 없음과 같음"
+ },
+ {
+  "weapon": "Glaive",
+  "attack": "Thrown glaive",
+  "cat": "throw",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "bounces": 3,
+   "range_uncharged_m": 30,
+   "range_charged_m": 40
+  },
+  "quote": "Holding the melee button throws the glaive, which can bounce up to three times, travel up to 30 meters uncharged, and 40 meters fully charged before returning to the user, damaging anyone in its path. | Glaive will always return in a straight path toward the player. It will ignore all obstacles and punch through anything in its path on return.",
+  "url": "https://wiki.warframe.com/w/Glaive",
+  "handled": null
+ },
+ {
+  "weapon": "Glaive Prime",
+  "attack": "Thrown glaive",
+  "cat": "throw",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "bounces": 3,
+   "range_uncharged_m": 30,
+   "range_charged_m": 50
+  },
+  "quote": "Holding the melee button throws the glaive, which can bounce up to three times, travel up to 30 meters uncharged, and 50 meters fully charged before returning to the user, damaging anyone in its path. | Thrown attack bounces off of enemy targets and can hit a theoretical infinite amount of targets on the way back to the user. | Throws have an innate punch through against enemies. It will only bounce off terrain (and Frost's globe etc).",
+  "url": "https://wiki.warframe.com/w/Glaive_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Gram Prime",
+  "attack": "Stance mini-slams",
+  "cat": "slam",
+  "type": "other",
+  "stated": false,
+  "numbers": {},
+  "quote": "Melee Stance slams without the full slam visual, such as those from Cleaving Whirlwind's Sundered Tusk combo, have their damage multiplied by Melee Combo and have the ability to crit.",
+  "url": "https://wiki.warframe.com/w/Gram_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Gunsen",
+  "attack": "Slam Attack",
+  "cat": "slam",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "hits_per_slam": 2
+  },
+  "quote": "Warfan slams hit twice.",
+  "url": "https://wiki.warframe.com/w/Gunsen",
+  "handled": null
+ },
+ {
+  "weapon": "Gunsen Prime",
+  "attack": "Slam / Heavy Slam",
+  "cat": "slam",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "hits_per_slam": 2
+  },
+  "quote": "Warfan slams hit twice. | The second hit of a heavy slam will use the stats of a normal slam.",
+  "url": "https://wiki.warframe.com/w/Gunsen_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Halikar",
+  "attack": "Thrown glaive",
+  "cat": "throw",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "bounces": 3,
+   "range_uncharged_m": 23,
+   "range_charged_m": 30,
+   "explosion_radius_m": 4.9
+  },
+  "quote": "Holding the melee button throws the glaive, which can bounce up to three times, travels up to 23 meters uncharged, and 30 meters fully charged before returning to the user, damaging anyone in its path.",
+  "url": "https://wiki.warframe.com/w/Halikar",
+  "handled": null
+ },
+ {
+  "weapon": "Halikar Wraith",
+  "attack": "Thrown glaive",
+  "cat": "throw",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "bounces": 3,
+   "range_m": 30,
+   "explosion_radius_m": 5.1
+  },
+  "quote": "Holding the melee button throws the glaive, which can bounce up to three times or travels up to 30 meters before returning to the user, damaging anyone in its path.",
+  "url": "https://wiki.warframe.com/w/Halikar_Wraith",
+  "handled": null
+ },
+ {
+  "weapon": "Harmony",
+  "attack": "Heavy Attack",
+  "cat": "heavy",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "detonated_statuses": [
+    "Slash",
+    "Heat",
+    "Toxin",
+    "Electricity",
+    "Gas"
+   ]
+  },
+  "quote": "Enemies hit by Heavy Attacks while debuffed with active Slash, Heat, Toxin, Electricity, and Gas Status Effects will instantly receive the full damage from all damage ticks of the procs; status effects are removed after inflicting damage. | Effect also applies to procs generated by the Heavy Attack itself.",
+  "url": "https://wiki.warframe.com/w/Harmony",
+  "handled": null
+ },
+ {
+  "weapon": "Harmony",
+  "attack": "Heavy Attack kills",
+  "cat": "heavy",
+  "type": "on-kill",
+  "stated": true,
+  "numbers": {
+   "status_duration_pct": 30,
+   "duration_s": 30,
+   "ensemble_status_duration_pct": 60,
+   "ensemble_duration_s": 60
+  },
+  "quote": "Heavy Attack kills grant Harmonic Resonance, increasing Status Duration by 30% for 30 seconds to all allies within Affinity Range. | When combined with the effects of Evensong, and Cantare, all three buffs merge into Jade's Ensemble, which lasts 60 seconds and increases the Status Duration bonus to 60%.",
+  "url": "https://wiki.warframe.com/w/Harmony",
+  "handled": null
+ },
+ {
+  "weapon": "Hate",
+  "attack": "Incarnon Form: Forward/Neutral combo spectral blades",
+  "cat": "normal",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "blades_per_combo": 1,
+   "explosion_delay_s": 0.4,
+   "explosion_radius_m": 3
+  },
+  "quote": "Forward and Neutral Combos in Incarnon Form will launch 1 spectral blade towards the crosshair that explode 0.4 seconds after impact, dealing Heat damage in a 3 meter radius. | All hits are affected by the stance multiplier of the attack that launched the blade. | Direct hit damage is affected by Condition Overload, but not the explosions. | Damage is not affected by the damage increase on Evolution 2, Incarnon form's innate +100% melee damage, or melee damage bonuses like Pressure Point.",
+  "url": "https://wiki.warframe.com/w/Hate_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Heat Dagger",
+  "attack": "Stanceless 4th hit",
+  "cat": "normal",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "forced_slash_chance_pct": 100
+  },
+  "quote": "When equipped without a Stance mod, the Heat Dagger adds a 4th lunging stab on its normal attack combo, which propels the Warframe a good distance forward, which is useful for catching up to moving enemies. It also has a 100% chance of inflicting a Slash proc on contact.",
+  "url": "https://wiki.warframe.com/w/Heat_Dagger",
+  "handled": null
+ },
+ {
+  "weapon": "Hespar",
+  "attack": "Heavy Attack (bug)",
+  "cat": "heavy",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "listed_total": 5040,
+   "actual_per_hit": 560,
+   "hits": 3
+  },
+  "quote": "Heavy Attack bug: 1680 × 3 = 5040, is actually 1680 ÷ 3 = 560 per hit.",
+  "url": "https://wiki.warframe.com/w/Hespar",
+  "handled": "v1.74: 강공 피해 1680(560×3, 위키)"
+ },
+ {
+  "weapon": "Innodem",
+  "attack": "Incarnon Form: aim-glide aerial projectile",
+  "cat": "cond",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "radiation_damage": 360,
+   "range_m": 21,
+   "punch_through": "infinite",
+   "form_duration_s": 90
+  },
+  "quote": "Aim glide melee attacks launch projectiles which deal 360 Radiation damage. | Projectile has infinite Punch Through. | Projectile has a range of 21 meters. | Projectiles do not contribute to but benefit from Melee Combo Counter. | Damage for Innodem's projectiles seems to fluctuate semi-randomly based on a struck enemy's location, revealing a unique damage formula: ((Condition Overload bonus + Location multiplier * Stance multiplier * (1 + Pressure Point bonus)) * (1 + Elemental damage bonus)) * Base damage * Other multipliers",
+  "url": "https://wiki.warframe.com/w/Innodem",
+  "handled": null
+ },
+ {
+  "weapon": "Innodem",
+  "attack": "Evo IV Swooping Lunge",
+  "cat": "cond",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {
+   "melee_damage_per_stack_pct": 50,
+   "duration_s": 10,
+   "max_stacks": 3
+  },
+  "quote": "On Airborne Melee Kill: +50% Melee Damage for 10s. Stacks up to 3x. | Stacks additively with Pressure Point and similar bonuses. | Incarnon Form projectile and Slash, Heat, and Toxin Status Effect kills while airborne count towards generating stacks.",
+  "url": "https://wiki.warframe.com/w/Innodem",
+  "handled": null
+ },
+ {
+  "weapon": "Iron Staff",
+  "attack": "All attacks",
+  "cat": "info",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "range_per_combo_tier_m": 0.5,
+   "max_range_bonus_m": 5.5
+  },
+  "quote": "Each combo tier grants +0.5m range, up to +5.5m at 12x combo.",
+  "url": "https://wiki.warframe.com/w/Iron_Staff",
+  "handled": "사거리만 늘어남 — 계산기는 사거리를 쓰지 않음(한 번에 2명)"
+ },
+ {
+  "weapon": "Iron Staff Prime",
+  "attack": "All attacks",
+  "cat": "info",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "range_per_combo_tier_m": 0.5,
+   "max_range_bonus_m": 5.5
+  },
+  "quote": "Each combo tier grants +0.5m range, up to +5.5m at 12x combo.",
+  "url": "https://wiki.warframe.com/w/Iron_Staff_Prime",
+  "handled": "사거리만 늘어남 — 계산기는 사거리를 쓰지 않음(한 번에 2명)"
+ },
+ {
+  "weapon": "Jat Kusar",
+  "attack": "Heavy Attack explosion",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "blast_damage": 218
+  },
+  "quote": "Heavy Attacks cause an explosion dealing 218 Blast damage. | This explosion is treated as Slam Radial Damage and its damage can only be increased with Seismic Wave. | The explosion caused by Heavy Attacks is not centered on the visual explosion. It is instead centered on the player, like a Slam Attack.",
+  "url": "https://wiki.warframe.com/w/Jat_Kusar",
+  "handled": null
+ },
+ {
+  "weapon": "Karyst",
+  "attack": "Jump attacks / stanceless 4th hit",
+  "cat": "cond",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "forced_slash_chance_pct": 100
+  },
+  "quote": "Jump attacks will always inflict the Toxin proc, regardless of the weapon's current elemental mods. | When equipped without a Stance mod, the Karyst adds a 4th lunging stab on its normal attack combo that propels the Warframe a good distance forward, which is useful for catching up to moving enemies. The attack also has a 100% chance of inflicting Slash bleed proc.",
+  "url": "https://wiki.warframe.com/w/Karyst",
+  "handled": null
+ },
+ {
+  "weapon": "Keratinos",
+  "attack": "Heavy Attack",
+  "cat": "heavy",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "first_heavy_hits": 6,
+   "first_heavy_pct_each": 100,
+   "forced_slash_hits": 3,
+   "second_heavy_pct": 500,
+   "second_heavy_forced": "Slash",
+   "range_bonus_m": 2.8,
+   "range_duration_s": 180,
+   "needs_combo": "12x"
+  },
+  "quote": "The first attack consists of a spin with 6 hits. The first 3 hits do 100% damage, the next 3 do 100% damage and have forced Slash procs. | The second attack is a lunge with one hit that does 500% damage and has a forced Slash proc. | Heavy Attacking with 12x combo grants +2.8m range to all melee attacks for 180 seconds.",
+  "url": "https://wiki.warframe.com/w/Keratinos",
+  "handled": null
+ },
+ {
+  "weapon": "Kestrel",
+  "attack": "Thrown glaive",
+  "cat": "throw",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "bounces": 3,
+   "range_uncharged_m": 23,
+   "range_charged_m": 30,
+   "explosion_radius_m": 3.6,
+   "explosion_falloff": "100%->60%"
+  },
+  "quote": "Holding the melee button throws the glaive, which can bounce up to three times, travel up to 23 meters uncharged, and 30 meters fully charged before returning to the user, damaging anyone in its path. | Can hit theoretically infinite targets on return.",
+  "url": "https://wiki.warframe.com/w/Kestrel",
+  "handled": null
+ },
+ {
+  "weapon": "Kestrel Prime",
+  "attack": "Thrown glaive",
+  "cat": "throw",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "bounces": 8,
+   "range_uncharged_m": 23,
+   "range_charged_m": 30,
+   "explosion_radius_m": 3.6
+  },
+  "quote": "Holding the melee button throws the glaive, which can bounce up to eight times, travel up to 23 meters uncharged, and 30 meters fully charged before returning to the user, damaging anyone in its path. | Direct hits to enemies while in flight cause Ragdoll. | This triggers Melee Afflictions for both the initial direct hit and any enemies hit by bounces.",
+  "url": "https://wiki.warframe.com/w/Kestrel_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Korumm",
+  "attack": "Tactical (Block) Combo shockwave",
+  "cat": "cond",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "radius_m": 10,
+   "falloff": "none",
+   "status_chance": 0.5,
+   "forced": "Impact"
+  },
+  "quote": "Unique Block Combo thrusts the weapon into the ground, then pulls it out to release a 10 meter shockwave that deals Electricity damage. | Shockwave slam has a forced Impact status effect and 50% status chance. | The Slam hit on the special combo has a 10m radius and no radial falloff. However, it is only affected by the following:",
+  "url": "https://wiki.warframe.com/w/Korumm",
+  "handled": null
+ },
+ {
+  "weapon": "Kuva Ghoulsaw",
+  "attack": "All attacks",
+  "cat": "info",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "follow_through": "perfect"
+  },
+  "quote": "Perfect Follow Through; does not lose damage when hitting multiple targets.",
+  "url": "https://wiki.warframe.com/w/Kuva_Ghoulsaw",
+  "handled": "계산기는 관통 감소(Follow Through)를 넣지 않아 이미 감소 없음과 같음"
+ },
+ {
+  "weapon": "Kuva Shildeg",
+  "attack": "Slam Attack",
+  "cat": "slam",
+  "type": "other",
+  "stated": false,
+  "numbers": {},
+  "quote": "Unlike all other melee weapons, the Kuva Shildeg's Slam Radial Damage is not comprised of a single damage type, instead dealing the Base Damage as Impact with the Kuva bonus dealing its appropriate damage type. | Despite the UI stating that Slam Radial Damage is unaffected by the Kuva damage bonus, it is in fact increased by it. | Unlike most other melee weapons, the Kuva Shildeg's Slam Radial Damage does not proc Impact, despite dealing Impact damage.",
+  "url": "https://wiki.warframe.com/w/Kuva_Shildeg",
+  "handled": null
+ },
+ {
+  "weapon": "Landslide Fists",
+  "attack": "Landslide (pseudo-exalted)",
+  "cat": "all",
+  "type": "combo",
+  "stated": false,
+  "numbers": {
+   "combo_mult_per_counter": 1.0,
+   "max_mult": 12,
+   "hits_per_cast": 20,
+   "max_counter": 220,
+   "combo_duration_s": 5,
+   "attack_speed": "not applicable"
+  },
+  "quote": "Utilizes the pseudo-exalted/Ability version of the Melee Combo system, receiving a damage multiplier of 1.0x per Combo Counter up to the cap of 12.0x. | Hitting at least one enemy on ability cast will increase combo count by 20 hits (+1.0x) up to a maximum counter of 220 (12.0x). | Does not benefit from Attack Speed and as such cannot equip Fury.",
+  "url": "https://wiki.warframe.com/w/Landslide_Fists",
+  "handled": null
+ },
+ {
+  "weapon": "Landslide Fists Prime",
+  "attack": "Landslide (pseudo-exalted)",
+  "cat": "all",
+  "type": "combo",
+  "stated": false,
+  "numbers": {
+   "combo_mult_per_counter": 1.0,
+   "max_mult": 12,
+   "hits_per_cast": 20
+  },
+  "quote": "Hitting at least one enemy on ability cast will increase combo count by 20 hits (+1.0x) up to a maximum counter of 220 (12.0x). | Does not benefit from Attack Speed and as such cannot equip Fury.",
+  "url": "https://wiki.warframe.com/w/Landslide_Fists_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Lesion",
+  "attack": "All attacks (Frenzy)",
+  "cat": "all",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "attack_speed_pct": 15,
+   "attack_speed_stacking": "multiplicative",
+   "toxin_pct": 100,
+   "flat_status_chance_after_mods_pct": 25,
+   "duration_s": 6,
+   "refresh": false
+  },
+  "quote": "Applying a status effect grants the Frenzy buff. | Frenzy buff lasts for 6 seconds, and can not be refreshed while active. | Bonus is multiplicative to other sources of attack speed. | Bonus is a flat amount applied after mods. | The Toxin damage is additive to other elemental mods on the weapon, and will combine with any primary elements (or secondary elements with Toxin) on the weapon.",
+  "url": "https://wiki.warframe.com/w/Lesion",
+  "handled": null
+ },
+ {
+  "weapon": "Destreza",
+  "attack": "Incarnon Form: Heavy Attack spectral rapiers",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "rapiers_per_heavy": 5,
+   "lifetime_s": 2,
+   "heavy_multiplier": 4.5,
+   "punch_through": "infinite",
+   "falloff": "none",
+   "forced": [
+    "Slash",
+    "Impact"
+   ]
+  },
+  "quote": "Heavy Attacks summon 5 spectral rapiers with that fly forward for 2 seconds. | Rapiers seems to use Heavy Attack damage calculation, dealing damage equal to weapon damage times the standard 4.5x heavy attack multiplier for Rapier-type weapons. | Damage calculations that only activate on Heavy Attacks, like the Combo Multiplier, applying True Steel at 2x, and Melee Damage on Heavy Attack stat from mods like Killing Blow, will not activate, except when Destreza's user is in a Heavy Attack Wind Up animation. | Each spectral rapier has Infinite Punch Through and no falloff.",
+  "url": "https://wiki.warframe.com/w/Destreza_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Destreza",
+  "attack": "Incarnon Form: Puncture bonus per heavy kill",
+  "cat": "heavy",
+  "type": "on-kill",
+  "stated": true,
+  "numbers": {
+   "puncture_per_heavy_kill_pct": 10,
+   "max_pct": 300
+  },
+  "quote": "+10% Puncture Damage per Heavy Attack kill, up to 300% while transformed | Spectral rapier kills count for the conditions of the Puncture bonus and Weighted Impetus. | However, kills made by status effects are not counted, even if inflicted by a Heavy Attack. | Bonus Puncture damage is reset when Incarnon Form expires.",
+  "url": "https://wiki.warframe.com/w/Destreza_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Destreza",
+  "attack": "Evo II Piercing Stature",
+  "cat": "all",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "status_chance_per_stack_pct": 20,
+   "duration_s": 6,
+   "max_stacks": 5,
+   "timers": "independent"
+  },
+  "quote": "On Puncture Status Effect: Gain +20% Status Chance for 6 seconds. Stacks 5x | Status Chance bonus is additive to other sources of Status Chance such as Melee Prowess and Weeping Wounds. | Stacks have independent timers, and the oldest one is replaced when a Puncture proc occurs while at 5 stacks.",
+  "url": "https://wiki.warframe.com/w/Destreza_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Destreza",
+  "attack": "Evo II base damage (both perks)",
+  "cat": "all",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "applied_base_damage": 0
+  },
+  "quote": "Bonus base damage is not applied to the melee or the spectral rapiers.",
+  "url": "https://wiki.warframe.com/w/Destreza_Incarnon_Genesis",
+  "handled": "v1.74: 진화 II 기본 피해 미적용(위키)"
+ },
+ {
+  "weapon": "Obex",
+  "attack": "Incarnon Form: Finishers",
+  "cat": "cond",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "finisher_radius_m": 12,
+   "falloff": "none"
+  },
+  "quote": "Finishers in Incarnon form will deal their damage in a 12 meter radius, with no falloff.",
+  "url": "https://wiki.warframe.com/w/Obex_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Obex",
+  "attack": "Evo II base damage (both perks)",
+  "cat": "all",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "applied_base_damage": 0
+  },
+  "quote": "Bonus base damage does not function.",
+  "url": "https://wiki.warframe.com/w/Obex_Incarnon_Genesis",
+  "handled": "v1.74: 진화 II 기본 피해 미적용(위키)"
+ },
+ {
+  "weapon": "Okina",
+  "attack": "Incarnon Form: on-kill spectral daggers",
+  "cat": "all",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {
+   "seek_range_m": 15,
+   "forced_cold_stacks_on_target": 10,
+   "explosion_radius_m": 4,
+   "forced_cold_stacks_aoe": 1,
+   "max_active_daggers": 6
+  },
+  "quote": "Kills create a spectral dagger that orbits the player, then seeks an enemy within 15 meters. Daggers deal damage and apply 10 forced Cold stacks to the target, then explode in a 4m radius, dealing AoE damage and applying 1 forced Cold stack to enemies hit. | Up to 6 daggers can be active at once. | Kills from the daggers will not generate new daggers, but kills from status procs created by daggers will. | Dagger direct hits and explosions are not affected by melee damage bonuses, such as Incarnon form's innate +100% melee damage, Pressure Point, or Arcane Fury. | Direct hits of daggers are affected by Condition Overload, while the explosions are not.",
+  "url": "https://wiki.warframe.com/w/Okina_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Okina",
+  "attack": "Evo II Synergist Surety",
+  "cat": "all",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "status_damage_per_stack": "Y (page) / 8% (incarnon_evos.json)",
+   "duration_s": 10,
+   "max_stacks": 5
+  },
+  "quote": "On Critical Hit: +Y% Status Damage for 10s. Stacks up to 5x.",
+  "url": "https://wiki.warframe.com/w/Okina_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Masseter",
+  "attack": "Stance mini-slams",
+  "cat": "slam",
+  "type": "other",
+  "stated": false,
+  "numbers": {},
+  "quote": "Melee Stance slams without the full slam visual, such as those from Cleaving Whirlwind's Sundered Tusk combo, have their damage multiplied by Melee Combo and have the ability to crit.",
+  "url": "https://wiki.warframe.com/w/Masseter",
+  "handled": null
+ },
+ {
+  "weapon": "Masseter Prime",
+  "attack": "Stance mini-slams",
+  "cat": "slam",
+  "type": "other",
+  "stated": false,
+  "numbers": {},
+  "quote": "Melee Stance slams without the full slam visual, such as those from Cleaving Whirlwind's Sundered Tusk combo, have their damage multiplied by Melee Combo and have the ability to crit.",
+  "url": "https://wiki.warframe.com/w/Masseter_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Nepheri",
+  "attack": "Neutral combo fireballs",
+  "cat": "normal",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "fireballs_per_combo": 4,
+   "damage_pct_of_base": 50,
+   "crit_chance": 0.21,
+   "crit_mult": 2.3,
+   "status_chance": 0.33,
+   "range_m": 19,
+   "punch_through": "infinite body",
+   "forced_impact_within_m": 10
+  },
+  "quote": "Unique neutral combo that slashes forward twice with both daggers and then hurls four consecutive fireballs. | Each fireball deal 50% of the weapon's base damage. | Has a 21% Critical Chance, 2.3x Critical Multiplier, and 33% Status Chance. | Fireballs have a range of 19 meters (0.2s lifetime). | Fireballs have Infinite Body Punch Through. | Fireballs have a guaranteed Impact proc against enemies within 10 meters and has a chance to proc Heat and other modded elements. | Fireballs do not build or sustain combo count. | Condition Overload is multiplicative to base damage sources on direct hits from fireballs.",
+  "url": "https://wiki.warframe.com/w/Nepheri",
+  "handled": null
+ },
+ {
+  "weapon": "Orvius",
+  "attack": "Uncharged throw (suspend)",
+  "cat": "throw",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "suspend_s": 3,
+   "ticks": 3,
+   "slash_per_second": 10,
+   "explosion_radius_m": 4,
+   "falloff": "none",
+   "forced": "Cold"
+  },
+  "quote": "Holding the melee button briefly will perform a normal throw, which will make the weapon fly above the first enemy in its path and suspend them in midair for 3 seconds. The disc then inflicts 3 ticks of damage to the suspended target before exploding in a 4 meter radius and damaging all enemies around it and then return to the user. Orvius can travel up to 30 meters before returning to the user. | When suspending an enemy, it deals 10 Slash damage per second with ??% status chance.",
+  "url": "https://wiki.warframe.com/w/Orvius",
+  "handled": null
+ },
+ {
+  "weapon": "Orvius",
+  "attack": "Charged throw",
+  "cat": "throw",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "bounces": 3,
+   "range_m": 30
+  },
+  "quote": "Holding the melee button performs a charged throw, which can bounce up to three times or travels up to 30 meters before returning to the user, damaging anyone in its path.",
+  "url": "https://wiki.warframe.com/w/Orvius",
+  "handled": null
+ },
+ {
+  "weapon": "Pathocyst",
+  "attack": "Thrown glaive / normal attacks: Maggots",
+  "cat": "throw",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "maggot_lifetime_s": 7,
+   "explosion_crit": 0,
+   "explosion_status": 0,
+   "element": "Viral"
+  },
+  "quote": "During flight or when striking an enemy, the glaive drops Infested pods which quickly hatch into Maggots that last for 7 seconds and will fight alongside the player before exploding in a ? radius. | Explosions have 0% crit chance and status chance. Deal pure viral damage. | Maggot damage is not enhanced by combo multiplier, faction damage modifiers, elemental modifiers, or physical damage modifiers.",
+  "url": "https://wiki.warframe.com/w/Pathocyst",
+  "handled": null
+ },
+ {
+  "weapon": "Pathocyst",
+  "attack": "Thrown glaive",
+  "cat": "throw",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "bounces": 3,
+   "range_m": 30
+  },
+  "quote": "Holding the melee button throws the glaive, which can bounce up to three times or travels up to 30 meters before returning to the user, damaging anyone in its path.",
+  "url": "https://wiki.warframe.com/w/Pathocyst",
+  "handled": null
+ },
+ {
+  "weapon": "Pennant",
+  "attack": "Heavy Attack kills",
+  "cat": "heavy",
+  "type": "on-kill",
+  "stated": true,
+  "numbers": {
+   "attack_speed_per_stack_pct": 50,
+   "duration_s": "4*(combo multi-1)+2, max 46",
+   "stacking": "additive, independent timers"
+  },
+  "quote": "Heavy Attack kills increases the weapon's attack speed by 50% for 2 to 46 seconds, scaling with Combo Multiplier. | Each stack has its own duration and will wear off separately. | Multiple buffs stack additively with each other. | Heavy Attacks with this weapon deal guaranteed Slash status.",
+  "url": "https://wiki.warframe.com/w/Pennant",
+  "handled": null
+ },
+ {
+  "weapon": "Pride",
+  "attack": "Slam Attack (Coronal Ejection)",
+  "cat": "slam",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "status_chance_per_enemy_hit_pct": 15,
+   "max_stacks": 10,
+   "max_pct": 150,
+   "duration_s": 10,
+   "refresh": true
+  },
+  "quote": "Slam attacks grant the Coronal Ejection buff, increasing Status Chance by 15% (additive to mods such as Melee Prowess) per enemy enemy hit, stacking up to 10 times for 150% additional Status Chance. Lasts 10 seconds and can be refreshed.",
+  "url": "https://wiki.warframe.com/w/Pride",
+  "handled": null
+ },
+ {
+  "weapon": "Prisma Obex",
+  "attack": "Quick attacks",
+  "cat": "normal",
+  "type": "special-multiplier",
+  "stated": false,
+  "numbers": {},
+  "quote": "Most quick attacks with this weapon will count as headshots, even while not aiming for the head. This substantially increases damage over what would be expected from just the stats of the weapon.",
+  "url": "https://wiki.warframe.com/w/Prisma_Obex",
+  "handled": null
+ },
+ {
+  "weapon": "Quassus",
+  "attack": "Heavy Attack: ethereal daggers",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "dagger_base_damage": 76,
+   "first_heavy_daggers": 12,
+   "first_heavy_multiplier": 2.5,
+   "second_heavy_daggers": 6,
+   "second_heavy_multiplier": 5,
+   "punch_through_m": 2,
+   "forced": "Slash"
+  },
+  "quote": "Heavy Attacks throws a horizontal spread of ethereal daggers, with each dagger doing 76 base damage. | The first heavy attack throws 12 daggers, each with a 2.5x damage multiplier; the second heavy attack in sequence throws 6 daggers, each with a 5x damage multiplier, | Daggers are considered a heavy attack. Their damage will scale from the combo counter and mods such as Killing Blow. | Daggers have innate 2 meter Punch Through. | Multiple projectile hits from one attack against a single enemy may occasionally get merged into a single \"instance\" of the attack and Bleed proc, reducing the effectiveness of per-hit mods like Relentless Combination.",
+  "url": "https://wiki.warframe.com/w/Quassus",
+  "handled": null
+ },
+ {
+  "weapon": "Quassus",
+  "attack": "Slam Attack",
+  "cat": "slam",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "hits_per_slam": 2
+  },
+  "quote": "Warfan slams hit twice.",
+  "url": "https://wiki.warframe.com/w/Quassus",
+  "handled": null
+ },
+ {
+  "weapon": "Quassus Prime",
+  "attack": "Heavy Attack: ethereal daggers",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "dagger_base_damage": 76,
+   "first_heavy_daggers": 18,
+   "first_heavy_multiplier": 2.5,
+   "second_heavy_daggers": 9,
+   "second_heavy_multiplier": 5,
+   "punch_through_m": 2,
+   "forced": "Slash"
+  },
+  "quote": "The first heavy attack throws 18 daggers, each with a 2.5x damage multiplier; the second heavy attack in sequence throws 9 daggers, each with a 5x damage multiplier, | Daggers have innate 2 meter Punch Through. | Like most other projectiles launched by heavy attacks, Etherial Daggers may behave as a regular(not heavy) attack, if the attack speed is too high or if the second part of the heavy attack animation was cancelled before they hit the enemy.",
+  "url": "https://wiki.warframe.com/w/Quassus_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Redeemer",
+  "attack": "Heavy Attack (gunblade shot)",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "pellets": 10,
+   "falloff": "100%->16.67% from 10m to 20m",
+   "punch_through": "innate"
+  },
+  "quote": "Gunblade shots functions similarly to a shotgun, firing out 10 pellets at once. | Has linear damage falloff from 100% to 16.67% from 10m to 20m target distance (distances are affected by Projectile Speed, for melee weapons only via Jet Stream). | Each target hit provides 1 hit to the counter. Multiple pellets striking a single target will only count as 1 hit. | If players stand too close to their target, only 1 pellet will hit. Staying more than 2 meters away when firing will help players avoid this.",
+  "url": "https://wiki.warframe.com/w/Redeemer",
+  "handled": null
+ },
+ {
+  "weapon": "Redeemer Prime",
+  "attack": "Heavy Attack (gunblade shot)",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "pellets": 10,
+   "punch_through_m": 1,
+   "falloff": "100%->6.25% from 10m to 30m",
+   "actual_heavy_damage": 3200,
+   "displayed_heavy_damage": 1060,
+   "combo_per_enemy_hit": 5
+  },
+  "quote": "Innate multishot of 10 pellets. | Has linear damage falloff from 100% to 6.25% from 10m to 30m target distance (distances are affected by Projectile Speed, for melee weapons only via Jet Stream). | The Melee combo counter will increase by 5 for each enemy hit by the shotgun blast, regardless of how many pellets actually connect with each target. Hitting multiple targets via shotgun spread or punch through will increase the counter by five times the number of enemies hit. | Heavy attack shots performed outside of the \"point blank\" range of 4m have a guaranteed impact proc for each pellet. | Ingame, the Heavy Attack damage displayed is 1,060, the actual value is 3,200 however. | The displayed Heavy Attack damage is a 5x multiplier of the Redeemer Prime's 212 base damage, the actual value is only a 4x multiplier from the Redeemer Prime's shot damage of 800.",
+  "url": "https://wiki.warframe.com/w/Redeemer_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Sampotes",
+  "attack": "Slam / Heavy Slam shockwave lines",
+  "cat": "slam",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "slam_explosions": 8,
+   "slam_spacing_m": 5,
+   "slam_radius_m": 5,
+   "heavy_slam_lines": 3,
+   "heavy_slam_explosions_per_line": 4,
+   "heavy_slam_radius_m": 7
+  },
+  "quote": "Unique Slam Attack unleashes a line of 8 explosions every 5 meters, each dealing ? damage in a 5 meter radius. | Unique Heavy Slam Attack unleashes 3 lines of 4 explosions in a fan, each dealing ? damage in a 7 meter radius.",
+  "url": "https://wiki.warframe.com/w/Sampotes",
+  "handled": null
+ },
+ {
+  "weapon": "Sarofang",
+  "attack": "Heavy Slam (vortex)",
+  "cat": "info",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "combo_needed": "8x (5x with Voruna)",
+   "pull_radius_m": 9
+  },
+  "quote": "Performing a Heavy Attack Slam with an 8x Combo Multiplier (5x with Voruna (Prime)) briefly pulls enemies within 9m toward the center of the slam.",
+  "url": "https://wiki.warframe.com/w/Sarofang",
+  "handled": "적을 끌어당기는 군중 제어 — 처치 속도 계산 밖"
+ },
+ {
+  "weapon": "Sarofang Prime",
+  "attack": "Heavy Slam (vortex)",
+  "cat": "info",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "combo_needed": "8x (5x with Voruna)",
+   "pull_radius_m": 9
+  },
+  "quote": "Performing a Heavy Attack Slam with an 8x Combo Multiplier (5x with Voruna (Prime)) briefly pulls enemies within 9m toward the center of the slam.",
+  "url": "https://wiki.warframe.com/w/Sarofang_Prime",
+  "handled": "적을 끌어당기는 군중 제어 — 처치 속도 계산 밖"
+ },
+ {
+  "weapon": "Sarpa",
+  "attack": "Heavy Attack (gunblade burst)",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "bullets_per_burst": 5,
+   "physical_bonus_pct": 25,
+   "falloff": "100%->14.29% from 20m to 40m",
+   "actual_heavy_damage": 700,
+   "displayed_heavy_damage": 600,
+   "stanceless_moving_heavy_multiplier": 3
+  },
+  "quote": "Gunblade shots functions similarly to a burst-fire rifle, firing out 5 bullets in quick succession. | Shots receive a 25% bonus to physical damage types. This includes Heavy Attacks. | Has linear damage falloff from 100% to 14.29% from 20m to 40m target distance (distances are affected by Projectile Speed, for melee weapons only via Jet Stream). | Ingame, the Heavy Attack damage displayed is 600, the actual value before the 25% physical damage bonus is 700 however, a 4x multiplier from the 175 Shot damage. | Without a stance equipped, the Sarpa is capable of doing Heavy Attacks while moving. These Heavy Attacks only have a 3x multiplier.",
+  "url": "https://wiki.warframe.com/w/Sarpa",
+  "handled": null
+ },
+ {
+  "weapon": "Shadow Claws",
+  "attack": "All attacks",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": false,
+  "numbers": {},
+  "quote": "Base damage is directly affected by the Ability Strength of Sevagoth himself when the ability is cast and is not affected in any way by the ability strength of his shadow",
+  "url": "https://wiki.warframe.com/w/Shadow_Claws",
+  "handled": null
+ },
+ {
+  "weapon": "Shattered Lash",
+  "attack": "Ability strikes",
+  "cat": "all",
+  "type": "combo",
+  "stated": false,
+  "numbers": {
+   "recast_window_s": 5,
+   "combo_points_per_cast": 20,
+   "damage_per_combo_multiplier": "1x",
+   "max": "12x",
+   "punch_through": "innate",
+   "crit_chance": 0.2,
+   "crit_mult": 2,
+   "status_chance": 0.3
+  },
+  "quote": "Shattered Lash can be recast within a 5 second window to perform a repeating combo chain, granting 20 Ability Combo Counter points. Shattered Lash gains 1x additional damage per combo multiplier, up to 12x damage at 12x combo. | Shattered Lash has innate punch through, bypassing entities, walls, and obstacles in the environment. | Ability Strength is additive and multiplicative to base damage (e.g., Pressure Point, Arcane Fury).",
+  "url": "https://wiki.warframe.com/w/Shattered_Lash",
+  "handled": null
+ },
+ {
+  "weapon": "Sheev",
+  "attack": "Stanceless 4th hit",
+  "cat": "normal",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "forced_slash_chance_pct": 100
+  },
+  "quote": "When equipped without a Stance mod, the Sheev adds a 4th lunging stab on its normal attack combo that propels the Warframe a good distance forward, which is useful for catching up to moving enemies. It also has a 100% chance of inflicting Slash bleed proc.",
+  "url": "https://wiki.warframe.com/w/Sheev",
+  "handled": null
+ },
+ {
+  "weapon": "Sibear",
+  "attack": "Heavy Attack buff",
+  "cat": "heavy",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "flat_status_chance_after_mods_pct": 50,
+   "duration_s": 4
+  },
+  "quote": "Heavy Attacks grant +50% status chance to all attacks with the Sibear for 4 seconds. | Bonus is a flat amount applied after other status chance bonuses. | Only triggered by Heavy Attacks; Heavy Slams will not trigger the status chance bonus.",
+  "url": "https://wiki.warframe.com/w/Sibear",
+  "handled": null
+ },
+ {
+  "weapon": "Sibear",
+  "attack": "Evo IV Red Right Hand",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": false,
+  "numbers": {
+   "base_crit_mult_add": 2
+  },
+  "quote": "On First Attack With Primary Equipped: Increase Base Critical Damage Multiplier by +2x.",
+  "url": "https://wiki.warframe.com/w/Sibear_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Sigma & Octantis",
+  "attack": "Block charges / aerial shield throw",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "crit_and_status_per_charge_pct": 15,
+   "max_charges": 4,
+   "throw_range_m": 25,
+   "throw_explosion_blast": 50,
+   "throw_explosion_radius_m": 4
+  },
+  "quote": "Blocking attacks stores a charge that increases critical and status chance by 15% to the next attack. Up to 4 charges can be stacked before being consumed. | Pressing the Heavy Attack button will create an explosion and cause the Shield to return to the user. This explosion has a base damage of 50 Blast and a 4m radius. | The throw attack statistics aren't affected by combo multiplier or combo multiplier mods.",
+  "url": "https://wiki.warframe.com/w/Sigma_%26_Octantis",
+  "handled": null
+ },
+ {
+  "weapon": "Silva & Aegis",
+  "attack": "Block charges",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "crit_and_status_per_charge_pct": 15,
+   "max_charges": 4
+  },
+  "quote": "Blocking attacks stores a charge that increases critical and status chance by 15% to the next attack. Up to 4 charges can be stacked before being consumed.",
+  "url": "https://wiki.warframe.com/w/Silva_%26_Aegis",
+  "handled": null
+ },
+ {
+  "weapon": "Silva & Aegis Prime",
+  "attack": "Block charges",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "crit_and_status_per_charge_pct": 15,
+   "max_charges": 4
+  },
+  "quote": "Blocking attacks stores a charge that increases critical and status chance by 15% to the next attack. Up to 4 charges can be stacked before being consumed.",
+  "url": "https://wiki.warframe.com/w/Silva_%26_Aegis_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Slaytra",
+  "attack": "All attacks",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "slash_proc_duration_pct": 100
+  },
+  "quote": "Innate +100% Slash proc duration. | Bonus is additive other status duration buffs, such as Lasting Sting.",
+  "url": "https://wiki.warframe.com/w/Slaytra",
+  "handled": null
+ },
+ {
+  "weapon": "Spinnerex",
+  "attack": "On-death explosion",
+  "cat": "all",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {
+   "chance_per_toxin_stack_pct": 10,
+   "tag_window_s": 5,
+   "toxin_damage": 480,
+   "radius_m": 10,
+   "forced": "Toxin"
+  },
+  "quote": "Enemies hit by the Spinnerex within the past 5 seconds have a 10% chance to explode per Toxin status effect on them when killed, dealing 480 Toxin damage in a 10 meter radius, with a forced Toxin status effect. | Damage is affected by Melee damage buffs, Elemental buffs, and Faction damage buffs, but not by Condition Overload. | Damage falls off with distance. | Explosions cannot perform critical hits, or apply modded status effects.",
+  "url": "https://wiki.warframe.com/w/Spinnerex",
+  "handled": null
+ },
+ {
+  "weapon": "Stropha",
+  "attack": "Heavy Attack (gunblade shockwave)",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "punch_through": "infinite body",
+   "falloff": "100%->50% after 11m, 50%->10 dmg 15-17m",
+   "range_m": 17,
+   "actual_heavy_damage": 2800,
+   "displayed_heavy_damage": 1100,
+   "headshot_bonus": "none"
+  },
+  "quote": "Shots have a wide radius. | Shots have innate Infinite Body Punch Through. | Immediate damage falloff from 100% to 50% after 11m target distance and from 50% to 10 base damage from 15m to 17m target distance (distances are affected by Projectile Speed, for melee weapons only via Jet Stream). | In-game, the Heavy Attack damage displayed is 1,100, the actual value is 2,800 however. | The displayed Heavy Attack damage is a 5x multiplier of the Stropha's 220 base damage, the actual value is only a 4x multiplier from the Stropha's shot damage of 700.",
+  "url": "https://wiki.warframe.com/w/Stropha",
+  "handled": null
+ },
+ {
+  "weapon": "Sun & Moon",
+  "attack": "Stanceless combo 4th hit",
+  "cat": "normal",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "forced": [
+    "Impact",
+    "Slash"
+   ]
+  },
+  "quote": "The final hit in the combo applies a forced Impact and Slash status.",
+  "url": "https://wiki.warframe.com/w/Sun_%26_Moon",
+  "handled": null
+ },
+ {
+  "weapon": "Syam",
+  "attack": "Heavy Attack shockwaves",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "range_m": 230,
+   "first_width_m": 8,
+   "first_heat": 500,
+   "first_forced": "Impact",
+   "second_heat": 1500,
+   "pierce": true
+  },
+  "quote": "Unique Heavy Attacks releases shockwaves that travel up to 230 meters and pierces targets. | The first Heavy Attack releases a roughly 8 meter wide horizontal shockwave that deals 500 Heat damage with a forced Impact proc. | The second Heavy Attack releases a narrow vertical shockwave that deals 1500 Heat damage. | Shockwave damage is affected by melee damage mods, Condition Overload, elemental mods, and Melee Combo. | Condition Overload is multiplicative to base damage sources like Pressure Point on the heavy attack wave.",
+  "url": "https://wiki.warframe.com/w/Syam",
+  "handled": null
+ },
+ {
+  "weapon": "Tak & Lug",
+  "attack": "Heavy Attack (shield throw)",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "travel_m": 7,
+   "explosions": 3,
+   "explosion_radius_m": 3,
+   "forced": "Blast",
+   "actual_damage": "591 x4 (2364)",
+   "displayed": "1773 x4"
+  },
+  "quote": "Heavy Attack throws the shield, which travels 7m and explodes 3 times dealing damage in a 3m radius around the shield as well as to enemies between the user and the shield, before returning. This is not considered a projectile, but a melee attack with a far-reaching hitbox. The shield aims where the warframe aims (which is not always where player camera is looking). | All three explosions inflict a forced Blast proc. | In-game, the Heavy Attack damage is displayed as 1,773 x4, the actual value is 591 x4 for a total of 2,364 damage.",
+  "url": "https://wiki.warframe.com/w/Tak_%26_Lug",
+  "handled": null
+ },
+ {
+  "weapon": "Tatsu",
+  "attack": "Slide Attack: Soul Swarm",
+  "cat": "cond",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {
+   "charges_per_kill": 1,
+   "max_charges": 5,
+   "max_charges_revenant": 9,
+   "homing_range_m": 30,
+   "radiation_damage": 96,
+   "storage_s": 120
+  },
+  "quote": "Killing an enemy with the Tatsu will add a Soul Swarm charge. Up to 5 charges can be stored. Performing a slide attack will consume all charges and release seeking projectiles that home in on enemies within 30 meters, dealing 96 Radiation damage. Hit enemies are stunned upon impact. | The number of projectiles launched is equivalent to the number of charges stored. | Soul Swarm damage is not affected by melee damage bonuses like Pressure Point or Arcane Fury.",
+  "url": "https://wiki.warframe.com/w/Tatsu",
+  "handled": null
+ },
+ {
+  "weapon": "Tatsu Prime",
+  "attack": "Slide Attack: Soul Swarm",
+  "cat": "cond",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {
+   "max_charges": 5,
+   "max_charges_revenant": 9,
+   "homing_range_m": 30,
+   "radiation_damage": 96
+  },
+  "quote": "Killing an enemy with the Tatsu Prime will add a Soul Swarm charge. Up to 5 charges can be stored. Performing a slide attack will consume all charges and release seeking projectiles that home in on enemies within 30 meters, dealing 96 Radiation damage. Hit enemies are stunned upon impact. | Souls' damage is affected by universal base damage sources like Arcane Arachne, Vigorous Swap, Holster Amp, Vex Armor, Toxin Elemental Ward, and Amp. | Condition Overload affects the souls' damage multiplicatively. | Heavy attacks with this weapon have a guaranteed Slash proc.",
+  "url": "https://wiki.warframe.com/w/Tatsu_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Tekko",
+  "attack": "All attacks (Atlas signature)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "base_status_chance_add_pct": 6
+  },
+  "quote": "As a Signature Weapon, Tekko gains a bonus effect with Atlas or Atlas Prime, gaining an additional 6% base Status Chance, for a total of 16%.",
+  "url": "https://wiki.warframe.com/w/Tekko",
+  "handled": null
+ },
+ {
+  "weapon": "Tekko Prime",
+  "attack": "All attacks (Atlas signature)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "base_status_chance_add_pct": 6
+  },
+  "quote": "As a Signature Weapon, Tekko Prime gains a bonus effect with Atlas or Atlas Prime, gaining an additional 6% base status chance, for a total of 32%.",
+  "url": "https://wiki.warframe.com/w/Tekko_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Telos Boltace",
+  "attack": "Slide Attack: Stormpath",
+  "cat": "cond",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "vortex_radius_m": 14,
+   "second_slide_window_s": 8,
+   "cooldown_s": 6
+  },
+  "quote": "Slide attacks trigger Stormpath, creating a 14 meter vortex that pulls in and staggers enemies. | Performing another slide attack within 8 seconds of triggering Stormpath will launch and suspend nearby enemies in a Lifted status. This triggers a cooldown of 6 seconds, during which slide attacks will behave as normal.",
+  "url": "https://wiki.warframe.com/w/Telos_Boltace",
+  "handled": null
+ },
+ {
+  "weapon": "Tenet Agendus",
+  "attack": "Heavy Attack: energy disk",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "speed_mps": 80,
+   "range_m": 40,
+   "electricity_damage": 2880,
+   "forced_impact_within_m": 20,
+   "punch_through": "infinite body",
+   "width_m": 2.7,
+   "falloff": "100%->5% from 10m to 20m",
+   "windup_s": 1.0
+  },
+  "quote": "Initial Sword & Shield heavy attack is replaced with a new animation that launches a projectile that travels 80m/s up to 40 meters. | Has a guaranteed Impact proc on targets up to 20m away. | Projectile has Infinite Body Punch Through. | Projectile has a width of ~2.7m. | Heavy attack projectile has linear damage falloff from 100% to 5% from 10m to 20m target distance. | Ranged Heavy Attack Wind-up is 1.0s instead of 0.7s.",
+  "url": "https://wiki.warframe.com/w/Tenet_Agendus",
+  "handled": null
+ },
+ {
+  "weapon": "Tenet Exec",
+  "attack": "Slam / Heavy Slam shockwaves",
+  "cat": "slam",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "slam_explosions": 3,
+   "spacing_m": 5,
+   "heavy_slam_lines": 3,
+   "falloff_slam_pct": 70,
+   "falloff_heavy_slam_pct": 50,
+   "damage_type": "100% Impact + innate bonus element"
+  },
+  "quote": "Slam attacks send out a series of 3 shockwaves in a straight line. Heavy slam attacks send out 3 sets of 3 shockwaves in a spread. | Shockwaves travel in a line and trigger every 5 meters. | Shockwave damage type distribution is 100% Impact, but innate bonus elemental damage applies to it. | Heavy slam attack shockwave damage is affected by the Melee Combo multiplier and mods that affect heavy attacks. | Shockwaves have the same radial damage fall-off as the slam that triggered them; 70% falloff for normal slam attack shockwaves, and 50% for heavy slam attack shockwaves.",
+  "url": "https://wiki.warframe.com/w/Tenet_Exec",
+  "handled": null
+ },
+ {
+  "weapon": "Tenet Grigori",
+  "attack": "Heavy slide / 2nd heavy: energy disk",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "range_m": "up to 10, scales with combo",
+   "punch_through": "infinite body",
+   "ricochet": "off surfaces"
+  },
+  "quote": "Heavy slide attack and the second attack in a heavy attack combo release a spinning energy disk that travels up to 10 meters based on combo multiplier, has infinite punch through against bodies, and ricochets off surfaces. | The projectile is unaffected by melee damage mods or arcanes (e.g., Pressure Point, Arcane Fury). However, it is affected by universal base damage sources like Arcane Arachne, Vigorous Swap, Holster Amp, Vex Armor, Toxin Elemental Ward, and Amp. | Condition Overload is multiplicative to base damage on the disk.",
+  "url": "https://wiki.warframe.com/w/Tenet_Grigori",
+  "handled": null
+ },
+ {
+  "weapon": "Thalys",
+  "attack": "Incarnon Form: embedded shards",
+  "cat": "normal",
+  "type": "chain",
+  "stated": true,
+  "numbers": {
+   "shard_duration_s": 15,
+   "trigger_damage_pct_of_base": 75,
+   "trigger_damage": "157.5 Slash + 67.5 Puncture",
+   "crit_chance": 0,
+   "crit_mult": 1.0,
+   "status_chance": 0
+  },
+  "quote": "Light attacks (not slam attacks or heavy attacks) embed a shard in enemies which lasts for 15 seconds. Each enemy can only be embedded with one shard at a time. | Embedding a shard deals no damage to the main target, but triggers all shards embedded in other enemies, dealing damage to their host. | Shard trigger damage is 75% of Thalys's base damage, for a total of 157.5 Slash Damage and 67.5 Puncture Damage. | If the triggering attack has a damage multiplier from a melee stance combo, it will also multiply the shard damage. | Is affected by base damage bonuses such as Pressure Point and Vex Armor, but not Condition Overload. | Is not affected by IPS, elemental, or faction damage bonuses. Does not trigger forced procs from Valence Formation or Toxic Lash.",
+  "url": "https://wiki.warframe.com/w/Thalys",
+  "handled": null
+ },
+ {
+  "weapon": "Thalys",
+  "attack": "Evo V Explosive Growth",
+  "cat": "all",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "growth_stages": 3,
+   "impale_damage_multiplier": 2,
+   "impale_stun_s": 5
+  },
+  "quote": "Shards grow when a new shard is created, up to 3 times. Fully grown shards erupt out of the embedded enemy, dealing x2 damage and impaling them on the spot. | Shard growth is limited to 1 stage per melee swing, regardless of how many new enemies are embedded with a shard. However, a shard can be embedded and grow by 1 stage in the same melee swing. | Impale damage is 2x the normal shard trigger damage, but otherwise has the same stats and is affected by the same mods.",
+  "url": "https://wiki.warframe.com/w/Thalys",
+  "handled": null
+ },
+ {
+  "weapon": "Thalys",
+  "attack": "Evo V Chain Shatter (heavy attack detonation)",
+  "cat": "heavy",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "detonation_pct_of_base": 200,
+   "detonation_damage": "420 Slash + 180 Puncture",
+   "radius_m": "~1",
+   "chain_radius_m": "~5",
+   "status_chance": 0.24,
+   "crit_chance": 0
+  },
+  "quote": "Detonated shards deal 200% of Thalys's base damage (420 Slash and 180 Puncture) to their host. | Has a damaging radius of only about ~1m with ?% falloff. | The detonation will also trigger other shards within ~5m to detonate, which can cause a chain reaction. | Combo multiplier will only multiply the detonation damage to the shard's host and enemies in the 1m damaging radius. Other shards detonated by the explosion will not benefit from the combo multiplier. | Is affected by base damage bonuses (including Condition Overload), as well as IPS and elemental bonuses (unlike the shard trigger damage). | Has 24% status chance, 0% crit chance, and a 1x critical multiplier.",
+  "url": "https://wiki.warframe.com/w/Thalys",
+  "handled": null
+ },
+ {
+  "weapon": "Thalys",
+  "attack": "Evo V Void Splinters",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "shard_duration_s": 30,
+   "weak_spot_crit_chance_pct": 100,
+   "shard_damage_pct": -50
+  },
+  "quote": "Shard duration is increased to 30s. Shards become weak spots that have +100% Critical Chance when damaged. Shard damage is reduced by -50%. | Critical Chance bonus is additive to mods such as Point Strike, Pistol Gambit and True Steel.",
+  "url": "https://wiki.warframe.com/w/Thalys",
+  "handled": null
+ },
+ {
+  "weapon": "Tonkkatt",
+  "attack": "All attacks",
+  "cat": "all",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "heat_per_stack_pct": 4,
+   "duration_s": 15,
+   "max_stacks": 30,
+   "max_pct": 120,
+   "combines": false
+  },
+  "quote": "Increasing Combo Multiplier grants +4% Heat damage for 15s. Stacks up to 30x. | Heat damage does not combine with other elements. | Buff duration refreshes when gaining another stack. | All stacks are lost when the buff ends.",
+  "url": "https://wiki.warframe.com/w/Tonkkatt",
+  "handled": null
+ },
+ {
+  "weapon": "Vastilok",
+  "attack": "Gunblade shots / Heavy Attack",
+  "cat": "heavy",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "pellets": 9,
+   "punch_through_m": 1.3,
+   "physical_bonus_pct": 25,
+   "falloff": "100%->4.35% from 23m to 49m",
+   "actual_heavy_damage": 2484,
+   "displayed_heavy_damage": 1395
+  },
+  "quote": "Innate multishot of 9 pellets. | Innate 1.3 meter punch through. | Shots receive a 25% bonus to physical damage types. This includes Heavy Attacks. | Have linear damage falloff from 100% to 4.35% from 23m to 49m target distance (distances are affected by Projectile Speed, for melee weapons only via Jet Stream). | Ingame, the Heavy Attack damage displayed is 1,395, the actual value is 2,484 however.",
+  "url": "https://wiki.warframe.com/w/Vastilok",
+  "handled": null
+ },
+ {
+  "weapon": "Venato Prime",
+  "attack": "All attacks",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "tau_on_status_chance_pct": 100,
+   "caliban_extra_combo_chance_pct": 50
+  },
+  "quote": "Applying a Status Effect has a 100% chance to proc a Tau status. | When wielded by Caliban/Caliban Prime, attacks have a 50% chance to generate an additional Melee Combo point.",
+  "url": "https://wiki.warframe.com/w/Venato_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Venka Prime",
+  "attack": "Combo counter",
+  "cat": "all",
+  "type": "combo",
+  "stated": true,
+  "numbers": {
+   "max_combo_multiplier": 13,
+   "hits_for_max": 240
+  },
+  "quote": "The Venka Prime has a modified melee combo multiplier that can reach 13.0x combo at 240 consecutive hits instead of the usual 12.0x combo at 220 hits. | Although the Venka Prime can reach 13.0x combo multiplier, mods that scale with combo multiplier, such as Blood Rush, Gladiator mods or Weeping Wounds, will stop scaling at the usual 12.0x combo multiplier.",
+  "url": "https://wiki.warframe.com/w/Venka_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Verdilac",
+  "attack": "Tactical (Block) Combo: energy waves",
+  "cat": "cond",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "strike_multipliers_pct": [
+    400,
+    200,
+    500
+   ],
+   "wave_width_m": 2,
+   "crit_chance": 0.3,
+   "crit_mult": 2.5,
+   "range_m": 35,
+   "punch_through": "infinite body",
+   "end_explosion_electricity": 2
+  },
+  "quote": "Unique Block Combo performs up to three strikes, each hurling 2-meter wide energy projectiles that inflict Toxin damage with 30% Critical Chance and 2.5 Critical Multiplier. | The combo consists of a 400% strike, a 200% damage strike, and a 500% damage strike. | Projectiles have a maximum range of 35 meters (1.3s lifetime). Range reduces with each impact against enemy or terrain. | Projectiles have Infinite Body Punch Through. | Condition Overload is multiplicative to base damage sources on direct hits from waves.",
+  "url": "https://wiki.warframe.com/w/Verdilac",
+  "handled": null
+ },
+ {
+  "weapon": "Vericres",
+  "attack": "Slam / Heavy Slam",
+  "cat": "slam",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "hits_per_slam": 2
+  },
+  "quote": "Warfan slam attacks hit twice. | The second hit of a heavy slam will use the stats of a normal slam.",
+  "url": "https://wiki.warframe.com/w/Vericres",
+  "handled": null
+ },
+ {
+  "weapon": "Vitrica",
+  "attack": "Aim-glide glass + slam shatter",
+  "cat": "slam",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "glass_radius_m": 5,
+   "glass_duration_s": 7,
+   "shatter_damage": 999,
+   "slam_wave_impact": 10,
+   "slam_wave_speed_mps": 40,
+   "slam_wave_range_m": 40,
+   "heavy_slam_wave_range_m": 80
+  },
+  "quote": "Using an Aerial Attack during Aim Glide launches glass projectiles that glasses and freezes enemies in-place for 7 seconds over 5 meters. Slam Attacking these glassed enemies will shatter them, inflicting reasonable damage. | When a ground slam is executed on a glassed enemy, the enemy will shatter and explode, dealing 999 damage. | Slam Attacks, Heavy Attack Slams, and Stance Slams will trigger a small \"wave\" of the sword's energy color that will travel in the direction of your Warframe on the ground at 40m/s, dealing 10 Impact damage and shattering glassed enemies. | Glass explosion has 100% status chance on the glassed enemy it originated from, which cannot be increase by normal status chance mods.",
+  "url": "https://wiki.warframe.com/w/Vitrica",
+  "handled": null
+ },
+ {
+  "weapon": "Volnus",
+  "attack": "Slam radial (Gara signature)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "radial_slam_bonus_pct": 100
+  },
+  "quote": "As a Signature Weapon, Volnus gains a bonus effect with Gara or Gara Prime, gaining 100% additional radial slam attack damage.",
+  "url": "https://wiki.warframe.com/w/Volnus",
+  "handled": null
+ },
+ {
+  "weapon": "Volnus Prime",
+  "attack": "Slam radial (Gara signature)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "radial_slam_bonus_pct": 100
+  },
+  "quote": "As a Signature Weapon, Volnus Prime gains a bonus effect with Gara or Gara Prime, gaining 100% additional radial slam attack damage.",
+  "url": "https://wiki.warframe.com/w/Volnus_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "War",
+  "attack": "All hits",
+  "cat": "all",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "forced": "Impact on non-ragdolled enemies"
+  },
+  "quote": "Every hit on enemies that are not ragdolled procs an Impact status effect.",
+  "url": "https://wiki.warframe.com/w/War",
+  "handled": null
+ },
+ {
+  "weapon": "War Prime",
+  "attack": "All hits",
+  "cat": "all",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "forced": "Impact on non-ragdolled enemies"
+  },
+  "quote": "Every hit on enemies that are not ragdolled procs an Impact status effect.",
+  "url": "https://wiki.warframe.com/w/War_Prime",
+  "handled": null
+ },
+ {
+  "weapon": "Whipclaw",
+  "attack": "Ability strike",
+  "cat": "all",
+  "type": "combo",
+  "stated": false,
+  "numbers": {
+   "radius_m": "3/4/4/5 (cap 10)",
+   "base_damage": "100/112/125/150",
+   "crit_chance": 0.25,
+   "crit_mult": 2,
+   "status_chance": 0.25,
+   "recast_window_s": 5,
+   "combo_points_per_cast": 20,
+   "damage_per_combo_multiplier": "1x",
+   "max": "12x"
+  },
+  "quote": "Whipclaw can be recast within a 5 second window to perform a repeating combo chain, granting 20 Ability Combo Counter points. Whipclaw gains 1x additional damage per combo multiplier, up to 12x damage at 12x combo. | Ability Strength and Accumulating Whipclaw are additive with each other and multiplicative to base damage (e.g., Pressure Point, Arcane Fury). | Damage also affects Objects, bypasses obstacles in the environment, and does not diminish with distance.",
+  "url": "https://wiki.warframe.com/w/Whipclaw",
+  "handled": null
+ },
+ {
+  "weapon": "Wolf Sledge",
+  "attack": "Thrown hammer",
+  "cat": "throw",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "range_m": 40,
+   "bounce_targets": 1,
+   "bounce_range_m": 20,
+   "explosion_per_outward_strike_radius_m": 5
+  },
+  "quote": "Holding the melee button while on the ground throws the hammer in a similar manner to a Glaive, which travels up to 40 meters, bounces off one enemy to hit up to a second, and damages anyone in its return path. Meleeing while the hammer is in mid-flight commands it to return immediately. | While traveling outward, the projectile produces a 5 meter explosion on each strike. | Recall Explosion is a Heavy Attack and benefits from all heavy bonuses such as True Steel's 2x bonus, Killing Blow's damage, the combo multiplier and even Life Strike. It will consume the combo counter and reset its timer. | Activating heavy explosion causes the hammer to return if not already returning. Returning this way causes all return strikes to be heavy hits, benefiting from heavy bonuses just like the heavy explosion.",
+  "url": "https://wiki.warframe.com/w/Wolf_Sledge",
+  "handled": null
+ },
+ {
+  "weapon": "Wrath",
+  "attack": "Slam Attack (Gravitic Slash)",
+  "cat": "slam",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "crit_chance_per_enemy_hit_pct": 15,
+   "max_stacks": 10,
+   "max_pct": 150,
+   "duration_s": 10,
+   "refresh": true
+  },
+  "quote": "Slam attacks grant the Gravitic Slash buff, increasing Critical Chance by 15% (additive to mods such as True Steel) per enemy enemy hit, stacking up to 10 times for 150% additional Critical Chance. Lasts 10 seconds and can be refreshed.",
+  "url": "https://wiki.warframe.com/w/Wrath",
+  "handled": null
+ },
+ {
+  "weapon": "Xoris",
+  "attack": "Thrown glaive / combo",
+  "cat": "throw",
+  "type": "chain",
+  "stated": false,
+  "numbers": {
+   "bounces": 3,
+   "range_m": 21,
+   "explosion_radius_m": 8,
+   "combo_duration": "infinite"
+  },
+  "quote": "Holding the melee button throws the glaive, which can bounce up to three times or travels up to 21 meters before returning to the user, damaging anyone in its path. | Infinite combo duration. | With an infinite Combo duration the timer does not tick down, but combo stacks are still consumed by heavy attacks.",
+  "url": "https://wiki.warframe.com/w/Xoris",
+  "handled": null
+ },
+ {
+  "weapon": "Zenistar",
+  "attack": "Heavy Attack: disc + Heat aura",
+  "cat": "heavy",
+  "type": "field",
+  "stated": false,
+  "numbers": {
+   "launch_m": 9,
+   "contact_impact": 75,
+   "explosion_heat": 350,
+   "aura_radius_m": 4,
+   "aura_heat_per_tick": 50,
+   "aura_tick_interval_s": 0.8,
+   "aura_status_chance": 0.5,
+   "base_duration_s": 10
+  },
+  "quote": "Performing a heavy attack with the Zenistar equipped launches the disc a distance of 9 meters in the direction of the reticle. While the disc is a projectile, it will deal 75 Impact damage on contact and 350 Heat damage when it explodes. Once it lands, it projects an aura with a 4 meter radius, dealing 50 Heat damage with 50% status chance every 0.8 seconds. For clarity's sake, the Zenistar itself will be referred to as the \"blade\". | The disc has a base duration of 10 seconds, which scales with the player's Combo Multiplier. | The attack speed of the disc's aura is affected by bonuses such as (Primed) Fury, Arcane Strike, Warcry , Speed and Berserker Fury. | Condition Overload does not affect the disc's damage output. | The disc will not count hits towards the combo meter and the disc's damage does not benefit from combo damage multiplier.",
+  "url": "https://wiki.warframe.com/w/Zenistar",
+  "handled": null
+ },
+ {
+  "weapon": "Dual Ichor",
+  "attack": "Incarnon Form: on-kill Toxin field",
+  "cat": "all",
+  "type": "field",
+  "stated": false,
+  "numbers": {
+   "field_damage": 350,
+   "field_damage_evo2": 440,
+   "duration_s": 7,
+   "radius_m": 4,
+   "crit_chance": 0,
+   "crit_mult": 1,
+   "status_chance": 0.5,
+   "tick_interval": "not stated"
+  },
+  "quote": "Fields do 350 Toxin damage (increased to 440 by EVO2) and last for 7 seconds. | Fields will be created by any kills made Dual Ichor's attacks or status damage, both from the weapon itself and from other fields that have been created. This allows for fields to create other fields in a loop so long as they continue getting kills before disappearing. | Fields have 0% Critical Chance, 1x Critical Damage, 4m range and 50% Status Chance. | Damage is affected by melee damage buffs such as Pressure Point and Incarnon form's innate +100% Melee Damage. | Fields are not affected by Condition Overload. | Damage is affected by faction damage bonuses such as Smite Grineer, and will correctly double dip on status procs made by the fields. | Enemies killed by clouds can spawn another cloud, and repeat the process of chaining clouds.",
+  "url": "https://wiki.warframe.com/w/Dual_Ichor_Incarnon_Genesis",
+  "handled": "v1.73: 양끝 계산(한 번/1초마다), 1위가 바뀌면 추천 보류. 장판 연쇄·장판 상태이상은 미반영(낮게 잡음)"
+ },
+ {
+  "weapon": "Furax",
+  "attack": "Incarnon Form: Heavy Slam Heat field",
+  "cat": "slam",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "heat_per_second": 50,
+   "tick_interval_s": 1,
+   "duration_s": 7,
+   "radius_m": 5,
+   "crit_chance": 0,
+   "status_chance": 0.5,
+   "heavy_slam_efficiency_pct": 90
+  },
+  "quote": "Incarnon Form gains 90% Heavy Slam Efficiency and leaves behind Heat Damage fields after Heavy Slams. | Field does 50 Heat damage every second for 7 seconds. | Field has 0% Critical Chance, 1x Critical Damage, 5m range and 50% Status Chance. | Field damage is increased by melee damage mods and and faction mods, but not Heavy Attack damage mods. | Field damage is not affected by combo multiplier. | Field's radius is not affected by range mods such as Reach or the Moonrise Velocity evolution.",
+  "url": "https://wiki.warframe.com/w/Furax_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Furax",
+  "attack": "Evo IV Kinetic Killer",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": false,
+  "numbers": {
+   "base_crit_mult_set": 4
+  },
+  "quote": "Increase Base Critical Damage Multiplier to 4x on Slide Attacks. | Can apply to any attack, including Heavy attacks and Heavy Slams, if user is sliding at the time of strike.",
+  "url": "https://wiki.warframe.com/w/Furax_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Anku",
+  "attack": "Incarnon Form: after slide attack",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "range_add_m": 3,
+   "forced": "Slash on all attacks",
+   "duration_s": 6
+  },
+  "quote": "Incarnon form temporarily increases Range and inflicts guaranteed Slash Status for all attacks after a successful slide attack. | Successful slide attacks grant +3 Range and forced Slash Status for all attacks for 6s.",
+  "url": "https://wiki.warframe.com/w/Anku_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Anku",
+  "attack": "Evo II Edge of Justice",
+  "cat": "all",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "attack_speed_pct": 40
+  },
+  "quote": "With Melee Weapon Equipped: +40% Attack Speed. | Attack Speed bonus does not affect quickswap melee attacks.",
+  "url": "https://wiki.warframe.com/w/Anku_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Bo",
+  "attack": "Evo IV Flashing Bleed",
+  "cat": "all",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "slash_on_impact_chance_pct": 40
+  },
+  "quote": "+40% chance of Slash Status on Impact Status Effect.",
+  "url": "https://wiki.warframe.com/w/Bo_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Magistar",
+  "attack": "Evo IV Flashing Bleed / bugs",
+  "cat": "all",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "bleed_on_impact_chance_pct": 50,
+   "effective_pct": "20-30"
+  },
+  "quote": "+50% Chance of Bleed on Impact Status Effect. | Evolution IV: Flashing Bleed can proc once for every hit, and only if there is no other Slash proc on the hit. This makes it only 30% to 20% effective instead of the perceived 50%. | Condition Overload ignores damage bonuses of Crushing Verdict and Edge Of Justice as well as Stance multipliers.",
+  "url": "https://wiki.warframe.com/w/Magistar_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Nami Solo",
+  "attack": "Evo II Brigand's Frenzy",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "attack_speed_pct": 30,
+   "duration_s": 4
+  },
+  "quote": "On Equip: +30% Attack Speed for 4s.",
+  "url": "https://wiki.warframe.com/w/Nami_Solo_Incarnon_Genesis",
+  "handled": null
+ },
+ {
+  "weapon": "Thalys",
+  "attack": "Evo II Raging Drift",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": false,
+  "numbers": {
+   "attack_speed_while_sliding_pct": 80
+  },
+  "quote": "+80% Attack Speed while sliding",
+  "url": "https://wiki.warframe.com/w/Thalys",
+  "handled": null
+ }
+]

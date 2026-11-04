@@ -1380,9 +1380,31 @@ self.onmessage = function (ev) {
     return { bi, gain: hi[bi] / Math.max(1e-12, hi[0]), alt: R.res[bi], kf: atk.killField };
   }
 
+  // Documented mechanics the engine doesn't have yet (wiki audit 2026-11-05, docs/mechanics/gaps_*.json, attached by convert.py):
+  // if one touches the chosen attack, the recommendation is withheld instead of shown with a hole in it (user rule 2026-11-04).
+  const GAP_TYPE = { chain: "연쇄·튕김", ricochet: "도탄", field: "장판·구름", "on-kill": "처치 시 효과", "stacking-buff": "중첩 버프", "special-multiplier": "특수 배율",
+    "secondary-projectile": "추가 투사체", "punch-through-rule": "관통 규칙", "beam-radius": "빔 피해 반경", combo: "연속기 규칙", other: "기타" };
+  function openGaps(R) {
+    const w = st.weapon, atk = w.attacks[st.atk], g = w.gaps || (st.base && st.base.gaps) || [];
+    if (!g.length || !atk) return [];
+    const melee = w.slot === "melee";
+    const cat = melee ? (atk.kind === "glaive" ? "throw" : /Slam/.test(atk.en || "") ? "slam" : atk.kind === "heavy" ? "heavy" : "normal")
+      : (/Incarnon/.test(atk.en || "") ? "incarnon" : /Alt|Held|Secondary/.test(atk.en || "") ? "alt" : /Charged/.test(atk.en || "") ? "charged" : "normal");
+    const top = R.res && R.res[0], tenno = melee && top && top.ids.some((id) => MOD_BY_ID[id] && MOD_BY_ID[id].eff && MOD_BY_ID[id].eff.tenno);
+    return g.filter((x) => x.cat === "all" || x.cat === cat || (cat === "normal" && tenno && x.cat === "heavy"));
+  }
+
   function renderResults() {
     const R = st.results, res = R.res, o = R.o;
     if (!res || !res.length) { $("#results").innerHTML = `<div class="placeholder"><h3>결과 없음</h3></div>`; return; }
+    const gaps = openGaps(R);
+    if (gaps.length) {
+      $("#results").innerHTML = shareBarHtml() + `<section class="card"><h3>추천 보류 — 계산에 아직 없는 메커니즘 ${gaps.length}개</h3>
+        <p>${esc(st.weapon.ko)}의 이 공격에는 위키에 적힌 고유 메커니즘 중 계산기에 아직 들어가지 않은 것이 있습니다. 이대로 계산한 세팅은 틀릴 수 있어서(포르마·랭크업 손해) 추천을 보여 주지 않습니다. 계산에 넣는 대로 보류가 풀립니다.</p>
+        <ul>${gaps.map((x) => `<li><b>${esc(GAP_TYPE[x.type] || x.type)}</b> · ${esc(x.atk || "")}${x.stated ? "" : " (위키에 수치 일부 없음)"}<br><span class="muted">${esc(x.q)}</span></li>`).join("")}</ul>
+        <p class="muted">출처: 무기 위키 문서 (2026-11-05 전수 조사). 다른 공격 방식을 고르면 그 공격에 해당하는 것만 확인합니다.</p></section>`;
+      return;
+    }
     const bc = boundCheck(R);
     if (bc && bc.bi !== 0 && bc.gain > 1.02) {
       const lst = (x) => x.ids.map((id) => esc(id === "__riven" ? "리벤" : (MOD_BY_ID[id] || { ko: id }).ko)).join(" · ") + (x.arcane ? " · 아케인 " + esc(((window.WF_ARCANES || {})[x.arcane] || { ko: x.arcane }).ko) : "");

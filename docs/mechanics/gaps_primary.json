@@ -1,0 +1,5004 @@
+[
+ {
+  "weapon": "Acceltra",
+  "attack": "Normal Attack (rocket)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "min_arming_distance_m": 7
+  },
+  "quote": "Rockets have a minimum arming distance of 7 meters and explode in a 4 meter radius after impacting a surface or enemy. | The Acceltra's rockets have a minimum arming distance of 7 meters, meaning that they will not explode if they make contact with objects or enemies within that range",
+  "url": "https://wiki.warframe.com/w/Acceltra",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Acceltra Prime",
+  "attack": "Normal Attack (rocket)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "min_arming_distance_m": 7
+  },
+  "quote": "Rockets have a minimum arming distance of 7 meters and explode in a 5 meter radius after impacting a surface or enemy. | The Acceltra Prime's rockets have a minimum arming distance of 7 meters, meaning that they will not explode if they make contact with objects or enemies within that range",
+  "url": "https://wiki.warframe.com/w/Acceltra_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Aeolak",
+  "attack": "Alt-Fire (charged grenade)",
+  "cat": "alt",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {},
+  "quote": "Projectile is unaffected by Punch Through.",
+  "url": "https://wiki.warframe.com/w/Aeolak",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Afentis",
+  "attack": "Normal Attack (bolt) + Radial Attack",
+  "cat": "normal",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "explosion_delay_s": 0.8,
+   "radius_m": 3
+  },
+  "quote": "Primary Fire shoots ballistic projectiles, causing a small 3 meter explosion after 0.8 seconds on impact with a surface or enemy. | Explosion delay reduces likelihood of inflicting self-stagger, but may allow enemies to move out of the explosion range if not directly hit by the projectile.",
+  "url": "https://wiki.warframe.com/w/Afentis",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Afentis",
+  "attack": "Alt-Fire (Spear Throw, missing an enemy)",
+  "cat": "alt",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "radius_m": 5,
+   "field_duration_s": 10,
+   "buff_kept_after_kill_s": 40,
+   "reload_speed": "+50%",
+   "fire_rate_attack_speed": "+20%",
+   "reserve_ammo": "+100%",
+   "recoil": "-50%"
+  },
+  "quote": "If it does not hit an enemy, the spear produces a Ballistarii Might field in a 5 meter radius around the spear. | The field lasts for 10 seconds. | Killing an enemy while player is within the Ballistari Might field will maintain the buff for 40 seconds which counts down upon leaving the field. | Ballistarii Might grants the following buffs: +50% reload speed, +20% fire rate and attack speed, +100% reserve ammo, -50% recoil. | The buff affects both primary, secondary, melee, and atmospheric Archguns.",
+  "url": "https://wiki.warframe.com/w/Afentis",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Afentis Prime",
+  "attack": "Normal Attack (bolt) + Radial Attack",
+  "cat": "normal",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "explosion_delay_s": 0.4,
+   "radius_m": 5.5
+  },
+  "quote": "Primary Fire shoots ballistic projectiles, causing a 5.5 meter explosion after 0.4 seconds on impact with a surface or enemy.",
+  "url": "https://wiki.warframe.com/w/Afentis_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Afentis Prime",
+  "attack": "Alt-Fire (Spear Throw, missing an enemy)",
+  "cat": "alt",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "radius_m": 10,
+   "field_duration_s": 10,
+   "buff_kept_after_kill_s": 40,
+   "reload_speed": "+50%",
+   "fire_rate_attack_speed": "+20%",
+   "reserve_ammo": "+100%",
+   "recoil": "-50%"
+  },
+  "quote": "If it does not hit an enemy, the spear produces a Ballistarii Might field in a 10 meter radius around the spear. | The field lasts for 10 seconds. | Killing an enemy while player is within the Ballistari Might field will maintain the buff for 40 seconds which counts down upon leaving the field. | Ballistarii Might grants the following buffs: +50% reload speed, +20% fire rate and attack speed, +100% reserve ammo, -50% recoil.",
+  "url": "https://wiki.warframe.com/w/Afentis_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Alternox",
+  "attack": "Alt-Fire (sphere pulses + explosion)",
+  "cat": "alt",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "pulse_interval_s": 1,
+   "duration_s": 10,
+   "pulse_range_m": 6,
+   "max_deployed": 1,
+   "falloff": "100%->40%",
+   "ammo_cost": 4
+  },
+  "quote": "Alternate Fire shoots a sphere that sticks to surfaces and enemies, then pulses once per second over 10 seconds before exploding. Each pulse has a range of 6 meters. | Can only have one deployed sphere at a time. Pressing Alternate Fire again will immediately detonate the sphere. | Pulses and explosion have linear Damage Falloff from 100% to 40% from central impact.",
+  "url": "https://wiki.warframe.com/w/Alternox",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Alternox",
+  "attack": "Normal Attack",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": false,
+  "numbers": {},
+  "quote": "Primary fire shoots slow but fairly wide projectiles, larger than visually displayed. | Innate Infinite Body Punch Through. | Projectiles have a thickness of ? meters.",
+  "url": "https://wiki.warframe.com/w/Alternox",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Alternox",
+  "attack": "all",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "multishot_with_Gyre": "+20% (additive with multishot mods)"
+  },
+  "quote": "When wielded by Gyre, this weapon gains a 20% multishot increase, additive with other multishot mods.",
+  "url": "https://wiki.warframe.com/w/Alternox",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Alternox Prime",
+  "attack": "Alt-Fire (sphere pulses + explosion)",
+  "cat": "alt",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "pulse_interval_s": 1,
+   "duration_s": 10,
+   "pulse_range_m": 6,
+   "max_deployed": 1,
+   "falloff": "100%->40%",
+   "ammo_cost": 4
+  },
+  "quote": "Alternate Fire shoots a sphere that sticks to surfaces and enemies, then pulses once per second over 10 seconds before exploding. Each pulse has a range of 6 meters. | Can only have one deployed sphere at a time. Pressing Alternate Fire again will immediately detonate the sphere. | Pulses and explosion have linear Damage Falloff from 100% to 40% from central impact.",
+  "url": "https://wiki.warframe.com/w/Alternox_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Alternox Prime",
+  "attack": "Normal Attack",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": false,
+  "numbers": {},
+  "quote": "Innate Infinite Body Punch Through. | Projectiles have a thickness of ? meters.",
+  "url": "https://wiki.warframe.com/w/Alternox_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Alternox Prime",
+  "attack": "all",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "multishot_with_Gyre": "+20% (additive with multishot mods)"
+  },
+  "quote": "When wielded by Gyre, this weapon gains a 20% multishot increase, additive with other multishot mods.",
+  "url": "https://wiki.warframe.com/w/Alternox_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ambassador",
+  "attack": "Charge mode",
+  "cat": "charged",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "ammo_per_shot": 16,
+   "min_magazine_to_fire": 48
+  },
+  "quote": "Consumes 16 ammo per shot, effectively resulting in a 6-round magazine. | While this makes it so the weapon will always fire six shots when on charge mode, the weapon will not fire if the magazine has less than 48 rounds, and will reload automatically instead.",
+  "url": "https://wiki.warframe.com/w/Ambassador",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Amprex",
+  "attack": "Normal Attack (beam)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "30%->100% over 0.6 s",
+   "decay": "after 0.8 s idle, back to 30% over 2 s",
+   "main_beam_range_m": 18,
+   "chain_range_m": 10
+  },
+  "quote": "Damage ramps up from 30% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 30% over 2 seconds. | Main beam has a limited range of 18 meters.",
+  "url": "https://wiki.warframe.com/w/Amprex",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Arca Plasmor",
+  "attack": "Normal Attack",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "projectile_thickness_m": 3
+  },
+  "quote": "Projectiles have a thickness of 3 meters. | Innate Infinite Body Punch Through. | Innate punch through does not apply to surfaces if hitting with the central portion of the projectile, requiring punch through mods.",
+  "url": "https://wiki.warframe.com/w/Arca_Plasmor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Artemis Bow",
+  "attack": "Normal Attack (arrows)",
+  "cat": "normal",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "On kill, bodies will follow the arrow that killed them, damaging anyone in their path and pinning the corpse to walls.",
+  "url": "https://wiki.warframe.com/w/Artemis_Bow_%28Weapon%29",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Artemis Bow Prime",
+  "attack": "Normal Attack (arrows)",
+  "cat": "normal",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "On kill, bodies will follow the arrow that killed them, damaging anyone in their path and pinning the corpse to walls. | On Ivara Prime, the bow is named Artemis Bow Prime. Its stats are, however, identical to Artemis Bow.",
+  "url": "https://wiki.warframe.com/w/Artemis_Bow_%28Weapon%29",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Astilla",
+  "attack": "Normal Attack (slug explosion)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "radius_m": 2.4
+  },
+  "quote": "Shatter area of effect cannot hit enemies behind the location of impact.",
+  "url": "https://wiki.warframe.com/w/Astilla",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Astilla Prime",
+  "attack": "Normal Attack (slug explosion)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "radius_m": 2.4
+  },
+  "quote": "Shatter area of effect cannot hit enemies behind the location of impact.",
+  "url": "https://wiki.warframe.com/w/Astilla_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Attica",
+  "attack": "Normal Attack (bolt)",
+  "cat": "normal",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "On kill, bodies will follow the bolt that killed them, damaging anyone in their path and pinning the corpse to walls.",
+  "url": "https://wiki.warframe.com/w/Attica",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Attica",
+  "attack": "all",
+  "cat": "all",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "fire_rate_mod_bonus": "x2 (counts as bow)"
+  },
+  "quote": "Counts as a bow in regards to fire rate mods, doubling the fire rate bonus.",
+  "url": "https://wiki.warframe.com/w/Attica",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ax-52",
+  "attack": "Normal Attack",
+  "cat": "normal",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "aim_headshot_crit_chance": "+400% (additive with Point Strike)",
+   "hipfire_ammo_efficiency": "+75%"
+  },
+  "quote": "When hip-firing, the weapon has +75% ammo efficiency. | When aiming, headshots have +400% critical chance. | Critical chance bonus is additive to mods like Point Strike.",
+  "url": "https://wiki.warframe.com/w/AX-52",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Basmu",
+  "attack": "Alt-Fire (twin beams)",
+  "cat": "alt",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "20%->100% over 0.5 s",
+   "decay": "after 0.8 s idle, back to 20% over 2 s",
+   "ammo_per_tick": 1
+  },
+  "quote": "Damage ramps up from 20% to 100% over 0.5 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 20% over 2 seconds. | Consumes 1 ammo per damage tick instead of 0.5, unlike most other continuous weapons.",
+  "url": "https://wiki.warframe.com/w/Basmu",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Basmu",
+  "attack": "Battery depletion pulse",
+  "cat": "info",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "pulses": 3,
+   "radius_m": 10,
+   "damage": "up to 10 True",
+   "falloff": "100%->0%",
+   "heal": "10x damage per enemy per pulse"
+  },
+  "quote": "Fully depleting the battery produces three 10 meter pulses that deals up to 10 True damage, staggers nearby enemies and heals the user's health by 10x the damage done to each enemy per pulse. | Pulse has linear damage falloff from 100% to 0% from center. | Pulse damage is affected by base damage mods (e.g. Serration, Heavy Caliber). | The pulse damage is not affected by Multishot mods, Elemental damage mods | Increasing the reload by only 15% is enough to lose the third pulse.",
+  "url": "https://wiki.warframe.com/w/Basmu",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Battacor",
+  "attack": "Alt-Fire (charged beam + explosion)",
+  "cat": "alt",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "max_charges": 3,
+   "damage_multiplier": "= charges stored (3 charges = 3x)",
+   "explosion_radius_enemy_m": 3.4,
+   "explosion_radius_surface_m": 6,
+   "beam_width_m": 0.5
+  },
+  "quote": "Kills with primary fire stacks charges up to 3 times, increasing the damage of Alternate Fire. | Primary fire accumulates up to 3 charges when killing enemies, allowing the Alternate Fire to unleash an Opticor-like beam that can pierce and hit multiple enemies. This also causes an explosion with the first surface or enemy impact, inflicting the same damage as the beam itself. All charges are used up when the beam fires. | Charges can only be gained through kills made by the primary fire, or damage from status effects caused by the primary fire. | Shots explode in a 3.4 meter radius on impact with an enemy. | Shots explode in a 6 meter radius on impact with a surface. | Damage multiplier of the charges is equal to the amount of charges stored (e.g. 3 charges does 3x damage). | Alt-fire cannot be used without any charges.",
+  "url": "https://wiki.warframe.com/w/Battacor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Boltor",
+  "attack": "Normal Attack (bolt)",
+  "cat": "normal",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "Bolts fired stick to their target, and will fling bodies on kill. | The body will damage targets in its path.",
+  "url": "https://wiki.warframe.com/w/Boltor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Boltor Prime",
+  "attack": "Normal Attack (bolt)",
+  "cat": "normal",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "Bolts fired stick to their target, and will fling bodies on kill. | The body will damage targets in its path.",
+  "url": "https://wiki.warframe.com/w/Boltor_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Bubonico",
+  "attack": "Alt-Fire (explosion)",
+  "cat": "alt",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "status_duration_bonus_s": "+9 (applied before % sources)"
+  },
+  "quote": "Explosion has an innate +9s status duration bonus. | Bonus is applied before other percentage sources of status duration.",
+  "url": "https://wiki.warframe.com/w/Bubonico",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Buzlok",
+  "attack": "Alt-Fire (tracer) -> Normal Attack",
+  "cat": "alt",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "crit_chance_bonus": "+50% absolute, after mods",
+   "duration_s": 20
+  },
+  "quote": "Successfully landing a tracer round grants a 20 second buff that adds 50% absolute critical chance. This buff is retained on target death, and is not affected by mods. | Absolute 50% critical chance occurs after mods. i.e Point Strike with the buff active is (23 + (23 * 1.5)) + 50 = 107.5% critical chance. | The alternate fire is affected by the critical chance buff.",
+  "url": "https://wiki.warframe.com/w/Buzlok",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Buzlok",
+  "attack": "Normal Attack (homing after tracer)",
+  "cat": "normal",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "tracer_duration_s": 20,
+   "straight_before_homing_m": 5,
+   "max_deflection_deg": 90
+  },
+  "quote": "Alternate Fire shoots a tracer round projectile that makes primary fire shoot homing rounds on the tracked entity, lasting 20 seconds or until target death. | Once a target is selected with tracking beacon, the weapon will fire on that target until the beacon disappears or the enemy is killed, making it difficult to use against multiple targets or change targets. | After a projectile hits the target, it loses its homing function. Therefore, punched-through projectiles will not re-home on a target.",
+  "url": "https://wiki.warframe.com/w/Buzlok",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Carmine Penta",
+  "attack": "Normal Attack (grenade)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "max_live_grenades": 5
+  },
+  "quote": "Can only have five grenades out at once. | Extra projectiles generated by Multishot will count towards the limit of five live grenades.",
+  "url": "https://wiki.warframe.com/w/Carmine_Penta",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Cedo",
+  "attack": "Normal Attack + Alt-Fire direct hit",
+  "cat": "alt",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "bonus_per_unique_status": "+60%",
+   "primary": "additive to base damage bonuses (Point Blank, Galvanized Savvy)",
+   "alt_direct": "additive with Galvanized Savvy, multiplicative with base damage mods",
+   "alt_explosion": "not applied"
+  },
+  "quote": "Deals +60% bonus damage per unique status effect on target. | On the Primary Fire, this bonus is additive to all base damage bonuses, such as Point Blank and Galvanized Savvy. | On direct hits from the Alternate Fire glaive, this bonus is additive with Galvanized Savvy, and multiplicative to normal base damage bonuses like Point Blank. See Condition Overload (Mechanic) for more info. | On explosions from the Alternate Fire glaive, this bonus does not apply.",
+  "url": "https://wiki.warframe.com/w/Cedo",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Cedo",
+  "attack": "Alt-Fire (glaive)",
+  "cat": "alt",
+  "type": "ricochet",
+  "stated": false,
+  "numbers": {
+   "bounces": 11,
+   "explosion_radius_m": 6,
+   "return_time_s": "approx. 5",
+   "max_active_sets": 1,
+   "ammo_cost": 0,
+   "explosion_forced_procs": "2 (1 by element weighting, 1 random of Heat/Cold/Electricity/Toxin)"
+  },
+  "quote": "Alternate Fire launches a glaive that explodes in a 6 meter radius on impact with a surface or enemy and bounces up to 11 times. | Explosion deals Blast damage and applies two separate guaranteed procs. The number of procs cannot be increased with status chance bonuses. | The first proc can be any element modded onto the weapon, or the innate Blast damage. The chance for each element follows normal status weighting rules. | The second proc has an even chance to be any of the following; Heat, Cold, Electricity, or Toxin. | Multishot affects the number of glaives released per use, each with their own trajectory. | Only one glaive (or set of glaives with multishot) can be active at a time, and takes approximately five seconds or 11 bounces to return.",
+  "url": "https://wiki.warframe.com/w/Cedo",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Cedo Prime",
+  "attack": "Normal Attack + Alt-Fire direct hit",
+  "cat": "alt",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "bonus_per_unique_status": "+60%"
+  },
+  "quote": "Deals +60% bonus damage per unique status effect on target. | On the Primary Fire, this bonus is additive to all base damage bonuses, such as Point Blank and Galvanized Savvy. | On direct hits from the Alternate Fire glaive, this bonus is additive with Galvanized Savvy, and multiplicative to normal base damage bonuses like Point Blank. | On explosions from the Alternate Fire glaive, this bonus does not apply.",
+  "url": "https://wiki.warframe.com/w/Cedo_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Cedo Prime",
+  "attack": "Alt-Fire (glaive)",
+  "cat": "alt",
+  "type": "ricochet",
+  "stated": false,
+  "numbers": {
+   "bounces": 11,
+   "explosion_radius_m": 6,
+   "return_time_s": "approx. 5",
+   "max_active_sets": 1,
+   "ammo_cost": 0,
+   "explosion_forced_procs": "2"
+  },
+  "quote": "Alternate Fire launches a glaive that explodes in a 6 meter radius on impact with a surface or enemy and bounces up to 11 times. | Explosion deals Blast damage and applies two separate guaranteed procs. The number of procs cannot be increased with status chance bonuses. | The second proc has an even chance to be any of the following; Heat, Cold, Electricity, or Toxin.",
+  "url": "https://wiki.warframe.com/w/Cedo_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Cernos Prime",
+  "attack": "all",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "headshot_bonus_damage": "+50% (multiplicative with Primary Deadhead/Prowl)"
+  },
+  "quote": "Deals 50% bonus damage on headshots. | The +50% bonus damage on headshots is multiplicative to other sources of +bonus damage on headshot such as Primary Deadhead and Prowl.",
+  "url": "https://wiki.warframe.com/w/Cernos_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Cernos Prime",
+  "attack": "all (arrows)",
+  "cat": "all",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "On kill, bodies will follow the arrow that killed them, damaging enemies in their path and pinning the corpse to walls.",
+  "url": "https://wiki.warframe.com/w/Cernos_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Cinta",
+  "attack": "Perfect Shot (release at 70-90% charge)",
+  "cat": "charged",
+  "type": "punch-through-rule",
+  "stated": false,
+  "numbers": {
+   "perfect_window": "70%-90% of full charge"
+  },
+  "quote": "Releasing the shot within 70% to 90% of a full charge, indicated by white brackets and the reticle turning yellow, will perform a \"Perfect Shot\", firing an energy shockwave dealing pure Heat damage, guaranteed Knockdown, and a significantly larger projectile with Infinite Body Punch Through.",
+  "url": "https://wiki.warframe.com/w/Cinta",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Coda Bassocyst",
+  "attack": "all (Mercy kill via Alt-Fire)",
+  "cat": "alt",
+  "type": "on-kill",
+  "stated": true,
+  "numbers": {
+   "damage_bonus": "+100%",
+   "multishot_bonus": "+100%",
+   "duration_s": 20,
+   "stacking": "additive with respective mods; refreshed on Mercy kills"
+  },
+  "quote": "Performing a Mercy Kill grants +100% damage and Multishot for 20 seconds. | Bonuses stack additively with respective mods. | Buff duration is refreshed on Mercy kills.",
+  "url": "https://wiki.warframe.com/w/Coda_Bassocyst",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Coda Bassocyst",
+  "attack": "Normal Attack",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": false,
+  "numbers": {},
+  "quote": "Innate Infinite Body Punch Through. | Projectiles have a thickness of ? meters.",
+  "url": "https://wiki.warframe.com/w/Coda_Bassocyst",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Coda Bassocyst",
+  "attack": "Alt-Fire (mite)",
+  "cat": "alt",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "max_targets": 6,
+   "tick": "per second",
+   "duration_s": 10,
+   "multishot": "no effect",
+   "ammo_cost": 4,
+   "range_m": 25
+  },
+  "quote": "Launches a mite that latches up to 6 enemies, highlighting their heads for 5 seconds while dealing Impact and Magnetic damage and status effects per second for 10 seconds. | Does not benefit from Multishot, neither in terms of total damage nor the number of hit enemies. | Cannot be used without a target that is within 25 meters.",
+  "url": "https://wiki.warframe.com/w/Coda_Bassocyst",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Coda Bubonico",
+  "attack": "Alt-Fire (explosion)",
+  "cat": "alt",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "status_duration_bonus_s": "+9 (applied before % sources)"
+  },
+  "quote": "Explosion has an innate +9s Status Duration bonus. | Bonus is applied before other percentage sources of status duration.",
+  "url": "https://wiki.warframe.com/w/Coda_Bubonico",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Coda Sporothrix",
+  "attack": "Normal Attack + AoE",
+  "cat": "normal",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "explosion_delay_s": 0.9,
+   "radius_m": 2
+  },
+  "quote": "Shots explode in a 2 meter AoE radius after 0.9 seconds on impacting a surface or enemy. | Explosion delay reduces likelihood of inflicting self-stagger, but may allow enemies to move out of the explosion range if not directly hit by the projectile.",
+  "url": "https://wiki.warframe.com/w/Coda_Sporothrix",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Coda Sporothrix",
+  "attack": "all (aiming)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "zoom_headshot_damage": "+50%"
+  },
+  "quote": "One zoom mode that has 2.7x zoom distance and +50% headshot damage.",
+  "url": "https://wiki.warframe.com/w/Coda_Sporothrix",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Coda Synapse",
+  "attack": "Normal Attack (beam)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "20%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 20% over 2 s",
+   "headshot_bonus": "+20%",
+   "range_m": 32
+  },
+  "quote": "Deals 20% additional damage on headshots. | Damage ramps up from 20% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 20% over 2 seconds.",
+  "url": "https://wiki.warframe.com/w/Coda_Synapse",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Convectrix",
+  "attack": "Normal Attack / Alt-Fire (twin beams)",
+  "cat": "alt",
+  "type": "beam-radius",
+  "stated": false,
+  "numbers": {
+   "beams": 2,
+   "damage_split": "each beam = half of listed damage",
+   "ramp_primary": "60%->100% over 0.6 s",
+   "ramp_alt": "80%->100% over 0.6 s",
+   "decay": "after 0.8 s idle over 2 s",
+   "range_m": 30
+  },
+  "quote": "Does not deal full damage at the crosshair until both beams are aligned. | The weapon's listed damage is split between the two beams, thus each beam deals half of the listed damage, per second. | The beams will deal damage to any enemies and objects caught within their length. | Damage ramps up from 60% (primary fire)/80% (alt-fire) to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 60%/80% over 2 seconds.",
+  "url": "https://wiki.warframe.com/w/Convectrix",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Corinth",
+  "attack": "Alt-Fire (Air Burst)",
+  "cat": "alt",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "arming_distance_m": 20,
+   "radius_m": 9.4
+  },
+  "quote": "Alternate Fire launches a grenade that creates a 9.4 meter area of effect explosion after traveling 20 meters in midair (distance is affected by Projectile Speed). | Grenade only explodes in midair; does not explode if it hits a surface or an enemy. | A grenade hitting an enemy without exploding causes much less damage compared to the explosion. | Modding the Corinth with Punch Through does not allow the grenades to pass through enemies or objects.",
+  "url": "https://wiki.warframe.com/w/Corinth",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Corinth Prime",
+  "attack": "Alt-Fire (Air Burst)",
+  "cat": "alt",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "radius_m": 9.8,
+   "self_detonation": "about 90 m / 2 s lifespan",
+   "ammo_cost": 4
+  },
+  "quote": "Alternate Fire launches a grenade that creates a 9.8 meter area of effect explosion after remotely detonated with Alternate Fire. | Grenade only explodes in midair; does not explode if it hits a surface or an enemy. | The grenade does explode on its own, but only after traveling about 90 meters in its 2 second lifespan. | Modding the Corinth Prime with Punch Through does not allow the grenades to pass through enemies or objects.",
+  "url": "https://wiki.warframe.com/w/Corinth_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Daikyu",
+  "attack": "Charged Shot",
+  "cat": "charged",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "On kill, bodies will follow the arrow that killed them, damaging anyone in their path and pinning the corpse to walls.",
+  "url": "https://wiki.warframe.com/w/Daikyu",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Daikyu",
+  "attack": "all",
+  "cat": "all",
+  "type": "other",
+  "stated": true,
+  "numbers": {},
+  "quote": "The Daikyu reportedly does not benefit from multiplicative gun CO from Galvanized Aptitude. Instead, it acts the same as damage mods like Serration, Heavy Caliber, or gun Arcanes like Primary Merciless.",
+  "url": "https://wiki.warframe.com/w/Daikyu",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Daikyu Prime",
+  "attack": "all",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "weak_point_crit_chance": "+250% (additive with Point Strike/Primary Acuity)"
+  },
+  "quote": "Weak point hits have +250% Critical Chance bonus. | Bonus stacks additively with mods like Point Strike and Primary Acuity.",
+  "url": "https://wiki.warframe.com/w/Daikyu_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Daikyu Prime",
+  "attack": "all",
+  "cat": "all",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "On kill, bodies will follow the arrow that killed them, damaging anyone in their path and pinning the corpse to walls.",
+  "url": "https://wiki.warframe.com/w/Daikyu_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Drakgoon",
+  "attack": "Uncharged / Charged Shot",
+  "cat": "normal",
+  "type": "ricochet",
+  "stated": false,
+  "numbers": {
+   "bounces_uncharged": 1,
+   "bounces_full_charge": 2,
+   "pellet_lifetime_s": 2
+  },
+  "quote": "Shots ricochet once. | The projectiles bounce once when not charged, and bounce twice when fully charged. | Shrapnel projectiles slow down by a great margin after ricocheting. | Shrapnel will vanish after 2 seconds of leaving the weapon.",
+  "url": "https://wiki.warframe.com/w/Drakgoon",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Dread",
+  "attack": "Charged Shot (normal mode)",
+  "cat": "charged",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "tier1": "x2 total damage after 2 consecutive hits",
+   "tier2": "x3 total damage after 90 consecutive hits (cap)",
+   "window_s": 5,
+   "reset": "all arrows of a shot miss, or >5 s between shots",
+   "incarnon_form": "not affected"
+  },
+  "quote": "Dread has a hidden mechanic similar to Sniper Combo which is not mentioned in game: After landing 2 consecutive hits (including from multishot and punch through) on enemies within 5 seconds, all subsequent shots will deal 2x total damage. After 90 consecutive hits, this is increased to 3x total damage, which is the cap. This effect resets upon missing every arrow (from multishot) in a single shot, or waiting more than 5 seconds between shots. | The Incarnon mode does not interact with the combo mechanic whatsoever. It does not benefit from the damage multiplier",
+  "url": "https://wiki.warframe.com/w/Dread",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Dual Viciss",
+  "attack": "melee (Gas proc)",
+  "cat": "normal",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "attack_speed_per_stack": "+7%",
+   "move_speed_per_stack": "+8%",
+   "duration_s": 10,
+   "max_stacks": 5,
+   "refresh": "duration refreshes on new stack; all stacks lost at expiry",
+   "stacks_per_hit": "1 per enemy"
+  },
+  "quote": "Inflicting Gas status effect with this weapon grants a buff that increases Movement Speed by 8% and Attack Speed by 7% for 10 seconds and stacks 5 times. | Bonus Movement Speed and Attack Speed buffs stack additively to weapon mods like Fury and Dispatch Overdrive. | Buff refreshes its duration upon gaining a new stack. | When timer runs out, all stacks are lost. | Gives only one stack per melee hit, even if the hit procced more than one gas status. Striking several enemies gives one stack per each enemy.",
+  "url": "https://wiki.warframe.com/w/Dual_Viciss",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ekhein",
+  "attack": "Heavy Attack -> all attacks",
+  "cat": "all",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "damage": "+80%",
+   "attack_speed": "+20%",
+   "duration_s": 8
+  },
+  "quote": "Landing a Heavy Attack grants the Heavy Insight buff for 8 seconds, increasing Damage by 80% and Attack Speed by 20%.",
+  "url": "https://wiki.warframe.com/w/Ekhein",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Enkaus",
+  "attack": "Primary (beam) on ink-stained enemies",
+  "cat": "normal",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "execute_threshold": "health below 35%",
+   "execute_hit": "single hit, base 600% crit chance, 1x crit multiplier, guaranteed Corrosive, damage = remaining health",
+   "bosses": "cannot be instakilled",
+   "ammo_refund": "no ammo consumed, +0.33 ammo per hit per enemy"
+  },
+  "quote": "Ink-stained enemies will be dissolved and instantly killed if Enkaus drops their health below 35%. Enemy health can be lowered by other sources before instakilling them with Enkaus. | Enemies with special states such as Thrax Centurion or Kuva Larvling will not be dissolved to avoid breaking their mechanics. Bosses cannot be instakilled. | The execution damage at 35% on ink-stained enemies is done as a single hit with a base 600% critical chance, 1x critical multiplier, and guaranteed Corrosive status equalling the value of remaining health on the enemy. | Shooting ink-stained enemies with the primary fire draws ink back into the weapon, causing the Enkaus to consume no ammo and restore 0.33 ammo per hit for each enemy hit.",
+  "url": "https://wiki.warframe.com/w/Enkaus",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Enkaus",
+  "attack": "Alt-Fire (ink projectile + puddle)",
+  "cat": "alt",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "explosion_radius_m": 8,
+   "stain_duration_s": 20,
+   "puddle_radius_m": 8,
+   "puddle_duration_s": 10,
+   "ammo_cost": 15
+  },
+  "quote": "Alternate Fire consumes 15 ammo to launch an ink projectile that explodes in an 8 meter radius on contact with enemies or a surface. Enemies hit by the blast are covered with ink for 20 seconds. The projectile will also leave a puddle with a 8 meter radius, lasting for 10 seconds and staining enemies that come into contact with it.",
+  "url": "https://wiki.warframe.com/w/Enkaus",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Evensong",
+  "attack": "Charged Shot",
+  "cat": "charged",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {},
+  "quote": "Charged shot projectiles cannot benefit from Punch Through, and will explode on the first surface or enemy hit. | A fully charged projectile will despawn on causing a radial explosion, even if it had punch-through.",
+  "url": "https://wiki.warframe.com/w/Evensong",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Evensong",
+  "attack": "Quick Shot / Charged Shot / Charged Radial Attack",
+  "cat": "charged",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "puncture_procs_per_hit": 7,
+   "crit_chance_received": "+35% (as stated)"
+  },
+  "quote": "Direct hits and explosion apply 7 Puncture status effects (bypassing the normal limit of 5), reducing enemy damage by 100% and increasing weapon Critical Chance that the victim receives by 35%. | All enemies struck by the radial attack will be inflicted with 7 stacks of Puncture.",
+  "url": "https://wiki.warframe.com/w/Evensong",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Evensong",
+  "attack": "all (on kill)",
+  "cat": "all",
+  "type": "on-kill",
+  "stated": true,
+  "numbers": {
+   "multishot": "+35%",
+   "duration_s": 30,
+   "refresh": "re-trigger refreshes duration",
+   "with_Jade_set": "+70% for 60 s (Jade's Ensemble)"
+  },
+  "quote": "Kills grant Evensong Devotion, increasing Multishot by 35% for 30 seconds to all allies within Affinity Range. | When combined with the effects of Cantare, and Harmony, all three buffs merge into Jade's Ensemble, which lasts 60 seconds and increases the multishot bonus to 70%. | Triggering Evensong Devotion while it is already active will refresh the duration. | Enemies killed with status effects inflicted by an Evensong arrow will trigger Evensong Devotion.",
+  "url": "https://wiki.warframe.com/w/Evensong",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Exergis",
+  "attack": "Normal Attack",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "surface_punch_through_m": 0.5
+  },
+  "quote": "Innate Infinite Body Punch Through, and 0.5 meter punch through for surfaces.",
+  "url": "https://wiki.warframe.com/w/Exergis",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Felarx",
+  "attack": "Normal Attack + Incarnon Form",
+  "cat": "incarnon",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {},
+  "quote": "Shotgun and Incarnon form have innate Infinite Body Punch Through.",
+  "url": "https://wiki.warframe.com/w/Felarx",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Felarx",
+  "attack": "Evolution III Mounting Momentum (both forms)",
+  "cat": "normal",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "fire_rate_per_shell_reloaded": "+10%",
+   "max_stacks": 99,
+   "reset": "on reload start / holster"
+  },
+  "quote": "Reload increases Fire Rate by +10% per shell. Resets on reload. | Increasing Magazine size increases the potential bonus, but also the reload time as shells are loaded individually. | Stacks up to 99x (+990% Fire Rate). | Affects Incarnon Form. | Holstering will reset stacks.",
+  "url": "https://wiki.warframe.com/w/Felarx",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Felarx",
+  "attack": "Evolution III Dual-Mode Chamber",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "mode_a": "+100% Projectile Speed",
+   "mode_b": "+4 m Punch Through",
+   "toggle": "per shell loaded"
+  },
+  "quote": "Reload toggles the weapon between +100% Projectile Speed and +4m Punch Through. | Toggles for every shell loaded. For example, reloading all 6 shells will toggle 6 times, leaving it on the mode it started on. | Affects Incarnon Form.",
+  "url": "https://wiki.warframe.com/w/Felarx",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Felarx",
+  "attack": "Incarnon Form charge",
+  "cat": "incarnon",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "weakpoint_hits_for_full_gauge": 30,
+   "rounds_per_charge": 2,
+   "max_rounds": 60
+  },
+  "quote": "Once Incarnon Form is unlocked, landing weakpoint hits fill the Incarnon Transmutation gauge that transforms the Felarx into dual semi-auto pistols via the Alternate Fire key. | The gauge reaches full charge after 30 weakpoint hits, and does not require a full gauge to activate.",
+  "url": "https://wiki.warframe.com/w/Felarx",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Felarx",
+  "attack": "Evolution V Ruptured Plentitude",
+  "cat": "normal",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "punch through 3 enemies",
+   "ammo_efficiency": "+70%",
+   "duration_s": 20
+  },
+  "quote": "On Punch Through 3 enemies: +70% Ammo Efficiency for 20s",
+  "url": "https://wiki.warframe.com/w/Felarx",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ferrox",
+  "attack": "Charged Shot + Radial Attack",
+  "cat": "charged",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "radius_m": 3.6,
+   "innate_punch_through_m": 1.5
+  },
+  "quote": "Shots explode in a 3.6 meter radius after reaching maximum punch through distance.",
+  "url": "https://wiki.warframe.com/w/Ferrox",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ferrox",
+  "attack": "Alt-Fire (Attraction Field)",
+  "cat": "alt",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "damage": "150 Electricity",
+   "tick_s": 2,
+   "radius_m": 10,
+   "duration_s": 30,
+   "status_chance": "flat 50%",
+   "max_deployed": 1,
+   "fire_rate_affects_tick": true,
+   "no_effect": "multishot, crit chance, crit damage, status chance"
+  },
+  "quote": "Alternate Fire throws the Ferrox, creating a field dealing Electricity damage and pulling enemies within 10 meters toward the Ferrox every 2 seconds. | The field lasts for 30 seconds. | Only one spear can be deployed at a time. Throwing the spear again will remove existing spears. | The electricity field created by throwing has a flat 50% status chance that cannot be increased using mods. | upon landing on a surface arcs of electricity will emit from the Ferrox and chain to enemies within 10 meters, dealing 150 Electricity damage every 2 seconds with a moderate chance to proc. | The damage's tick rate is affected by fire rate mods. | Multishot, critical damage, critical chance, and status chance have no effect on this mode.",
+  "url": "https://wiki.warframe.com/w/Ferrox",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Flux Rifle",
+  "attack": "Normal Attack (beam)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "25%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 25% over 2 s",
+   "range_m": 30
+  },
+  "quote": "Damage ramps up from 25% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 25% over 2 seconds.",
+  "url": "https://wiki.warframe.com/w/Flux_Rifle",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Fulmin",
+  "attack": "Semi-auto mode",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "projectile_thickness_m": 1,
+   "body_punch_through_m": 3,
+   "range_m": 20
+  },
+  "quote": "Projectiles have a thickness of 1 meter. | Innate 3 meter punch through against bodies. | Innate punch through does not apply to surfaces if hitting with the central portion of the projectile, requiring punch through mods. | Limited range of 20 meters (can be increased with Projectile Speed mods).",
+  "url": "https://wiki.warframe.com/w/Fulmin",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Fulmin Prime",
+  "attack": "Semi-auto mode",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "projectile_thickness_m": 1,
+   "body_punch_through_m": 3,
+   "range_m": 20
+  },
+  "quote": "Projectiles have a thickness of 1 meter. | Innate 3 meter punch through against bodies. | Limited range of 20 meters (can be increased with Projectile Speed mods).",
+  "url": "https://wiki.warframe.com/w/Fulmin_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Glaxion",
+  "attack": "Normal Attack (beam)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "20%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 20% over 2 s",
+   "range_m": 24
+  },
+  "quote": "Damage ramps up from 20% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 20% over 2 seconds. | Limited range of 24 meters.",
+  "url": "https://wiki.warframe.com/w/Glaxion",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Glaxion Vandal",
+  "attack": "Normal Attack (beam end AoE)",
+  "cat": "normal",
+  "type": "beam-radius",
+  "stated": true,
+  "numbers": {
+   "radius_m": 2,
+   "falloff": "none (full damage)",
+   "multishot": "not affected",
+   "placement": "final point of contact (after punch through)"
+  },
+  "quote": "The zone of impact or maximum beam range produces a damaging cold blotch in a spherical radius of 2 meters, allowing it to hit multiple enemies at once. | Not affected by multishot. | Area of effect does not inflict self-stagger and has no Damage Falloff. | The zone of impact or maximum beam range creates a spherical area of effect of 2 meters, dealing the weapon's full damage (i.e. there is no damage falloff). | Punch Through affects the location of the weapon's area of effect. The weapon's area of effect is applied at the final point of contact rather than whenever an enemy is struck.",
+  "url": "https://wiki.warframe.com/w/Glaxion_Vandal",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Glaxion Vandal",
+  "attack": "Normal Attack (beam)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "30%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 30% over 2 s",
+   "range_m": 28
+  },
+  "quote": "Damage ramps up from 30% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 30% over 2 seconds.",
+  "url": "https://wiki.warframe.com/w/Glaxion_Vandal",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Gotva Prime",
+  "attack": "Normal Attack",
+  "cat": "normal",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "trigger_chance": "15% per status effect",
+   "next_hit_crit_chance": "set to 300% (ignores all other modifiers)"
+  },
+  "quote": "Status Effects have a 15% chance to set the next hit's Critical Chance to 300%. | The effect is triggered separately for each bullet when using Multishot, as well as each enemy hit with Punch Through. | Applying multiple status effects in a single hit does not increase the chance for the effect. | Chance remains until landing another successful shot; missed shots will not reset the chance. | Set Critical Chance ignores all other modifiers, whether from mods or Warframe abilities. However, the Vigilante set mods can increase the damage to that of a Tier-4 critical hit.",
+  "url": "https://wiki.warframe.com/w/Gotva_Prime",
+  "handled": "v1.64 PROC_CRIT",
+  "variants": null
+ },
+ {
+  "weapon": "Harpak",
+  "attack": "Normal Attack (burst harpoons)",
+  "cat": "normal",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "Bolts fired stick to their target, and will fling bodies on kill. | The body will damage targets in its path.",
+  "url": "https://wiki.warframe.com/w/Harpak",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Higasa",
+  "attack": "Alt-Fire (Charged Shot laser)",
+  "cat": "alt",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "gauge_per_primary_kill": "10%",
+   "gauge_per_block": "10%/s for 2 s",
+   "requires_full_gauge": true
+  },
+  "quote": "Cannot fire without a full gauge. | Using Alternate Fire without a full gauge still drains it completely. | Killing an enemy with the primary fire will fill 10% of the gauge. Blocking an enemy attack fills 10% of the gauge per second for 2 seconds.",
+  "url": "https://wiki.warframe.com/w/Higasa",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ignis",
+  "attack": "Normal Attack (flame beam end AoE)",
+  "cat": "normal",
+  "type": "beam-radius",
+  "stated": false,
+  "numbers": {
+   "radius_m": 3,
+   "beam_thickness_m": 0.15,
+   "beam_range_m": 20,
+   "falloff": "none",
+   "placement": "zone of impact or maximum range"
+  },
+  "quote": "The zone of impact or maximum beam range has a spherical blast radius of 3 meters, allowing it to hit multiple enemies at once. | Beam has a thickness of 0.15 meters, largest beam thickness of all continuous weapons. | Area of effect does not inflict self-stagger and has no Damage Falloff. | Limited range of 20 meters (+3m blast radius resulting in a total range of 23m).",
+  "url": "https://wiki.warframe.com/w/Ignis",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ignis",
+  "attack": "Normal Attack (flame beam)",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {},
+  "quote": "Innate Infinite Body Punch Through. | Innate punch through does not apply to surfaces, requiring punch through mods.",
+  "url": "https://wiki.warframe.com/w/Ignis",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ignis",
+  "attack": "Normal Attack (flame beam)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "35%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 35% over 2 s"
+  },
+  "quote": "Damage ramps up from 35% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 35% over 2 seconds.",
+  "url": "https://wiki.warframe.com/w/Ignis",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Ignis Wraith",
+  "attack": "Normal Attack (flame beam end AoE)",
+  "cat": "normal",
+  "type": "beam-radius",
+  "stated": false,
+  "numbers": {
+   "radius_m": 3,
+   "beam_thickness_m": 0.15,
+   "beam_range_m": 27,
+   "falloff": "none",
+   "multishot": "no effect on radial damage",
+   "placement": "last enemy hit / environment / max range"
+  },
+  "quote": "The zone of impact or maximum beam range has a spherical blast radius of 3 meters, allowing it to hit multiple enemies at once. | Area of effect does not inflict self-stagger and has no Damage Falloff. | Multishot has no effect on the radial damage, like the other AoE Continuous Weapons. | if the beam hits multiple enemies, the AOE will be at the last enemy hit | Punch through affects the location of the weapon's area of affect. The weapon's area of affect is applied at the final point of contact where the beam ends rather than whenever the beam punches through an enemy or object.",
+  "url": "https://wiki.warframe.com/w/Ignis_Wraith",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ignis Wraith",
+  "attack": "Normal Attack (flame beam)",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {},
+  "quote": "Innate Infinite Body Punch Through. | Innate punch through does not apply to surfaces, requiring punch through mods.",
+  "url": "https://wiki.warframe.com/w/Ignis_Wraith",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ignis Wraith",
+  "attack": "Normal Attack (flame beam)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "35%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 35% over 2 s"
+  },
+  "quote": "Damage ramps up from 35% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 35% over 2 seconds.",
+  "url": "https://wiki.warframe.com/w/Ignis_Wraith",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Javlok",
+  "attack": "Alt-Fire (Spear Throw Explosion)",
+  "cat": "alt",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "bonus_per_round_in_magazine": "+20% of 300 AoE damage",
+   "consumes": "entire magazine",
+   "multishot": "no effect",
+   "ammo_efficiency": "no effect"
+  },
+  "quote": "Explosion deals 20% additional damage per round in the magazine. | For each round remaining in the magazine when thrown, an additional 20% damage will be added to the 300 AoE damage. | The damage bonus is independent of other modifiers like Serration, crits, and anti-faction mods. | Throwing the Javlok will consume all of the remaining ammo in the magazine. | Alt-fire is not affected by Multishot. | Alt-fire is not affected by Ammo Efficiency. It does not increase damage of the attack and the entire magazine still gets consumed.",
+  "url": "https://wiki.warframe.com/w/Javlok",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Javlok",
+  "attack": "Normal Attack (projectile)",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {},
+  "quote": "Primary fire projectiles are affected by punch through, although it only affects map geometry, similar to the Grattler.",
+  "url": "https://wiki.warframe.com/w/Javlok",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Kohm",
+  "attack": "Normal Attack (spooling pellets)",
+  "cat": "normal",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "max_pellets": 12,
+   "ammo_per_shot_full_spool": 4,
+   "shots_per_base_magazine": 66,
+   "ammo_spent_per_magazine": 244,
+   "status_chance": "listed value is for first shot; divided among pellets as spool rises"
+  },
+  "quote": "Innate multishot that increases with auto-spool, each consecutive shot adds an additional pellet, up to a maximum of 12 pellets. | At full spool it shoots 12 pellets and uses 4 ammo per shot. | With base magazine capacity, it can fire 66 shots in succession before needing to reload, spending 244 rounds of ammunition. | The listed status chance is for the first shot only, and is divided between the pellets the longer it is fired.",
+  "url": "https://wiki.warframe.com/w/Kohm",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Komorex",
+  "attack": "Normal Attack (zoom modes)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "zoom1": "-50% recoil, 2 m punch through",
+   "zoom2": "+100% Impact/Puncture/Slash (additive with physical mods), +3.5 m Viral explosion (106), -75% fire rate (additive with mods)"
+  },
+  "quote": "First zoom has 2.0x zoom distance, -50% recoil, and 2 meter punch through. | Second zoom has 3.5x zoom distance, +100% Impact, Puncture, Slash, adds a 3.5 meter explosion dealing 106 Viral damage, and -75% fire rate. | The -75% fire rate from the 3.5x zoom bonus is additive with mods | The scope bonus is therefore additive with physical and elemental mods such as Fanged Fusillade. | Punch through causes the 3.5x zoom explosion to only occur on the last target or surface it cannot penetrate.",
+  "url": "https://wiki.warframe.com/w/Komorex",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Komorex",
+  "attack": "all (sniper combo)",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "tiers": "1.5x@5, 2.0x@15, 2.5x@45, 3.0x@135, 3.5x@405, 4.0x@1215, 4.5x@3645, 5.0x@10935 consecutive hits",
+   "second_zoom_explosion": "does not affect combo counter"
+  },
+  "quote": "Tied with Vectis Prime for the largest shot combo requirement of all sniper rifles. | Second zoom explosion does not affect combo counter. | Combo Counter Bonus Tier / Total Base Damage Multiplier / Minimum Consecutive Hits Required: 1 1.5x 5; 2 2.0x 15; 3 2.5x 45; 4 3.0x 135; 5 3.5x 405; 6 4.0x 1215; 7 4.5x 3645; 8 5.0x 10935",
+  "url": "https://wiki.warframe.com/w/Komorex",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Kuva Bramma",
+  "attack": "Charged Shot (cluster bomblets)",
+  "cat": "charged",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "bomblets": 3,
+   "bomblet_radius_m": 3.5,
+   "bomblet_falloff": "100%->50%"
+  },
+  "quote": "Shots explode in an 8.3 meter radius on impact with a surface or enemy, then split into 3 smaller bomblets that rain down on the point of impact, which explode in a 3.5 meter radius. | Bomblets have linear damage falloff from 100% to 50% from central impact.",
+  "url": "https://wiki.warframe.com/w/Kuva_Bramma",
+  "handled": "v1.68 CLUSTER",
+  "variants": null
+ },
+ {
+  "weapon": "Kuva Chakkhurr",
+  "attack": "Normal Attack (direct hit)",
+  "cat": "normal",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "headshot_bonus": "+50% (additive with Primary Deadhead/Prowl)"
+  },
+  "quote": "Direct shots deals 50% more headshot damage. | The +50% bonus damage on headshots is additive to other sources of +bonus damage on headshot such as Primary Deadhead and Prowl.",
+  "url": "https://wiki.warframe.com/w/Kuva_Chakkhurr",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Kuva Drakgoon",
+  "attack": "Uncharged / Charged Shot",
+  "cat": "normal",
+  "type": "ricochet",
+  "stated": false,
+  "numbers": {
+   "bounces": 1
+  },
+  "quote": "Shots Bounce once. | Shrapnel does not slow down after bouncing.",
+  "url": "https://wiki.warframe.com/w/Kuva_Drakgoon",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Kuva Kohm",
+  "attack": "Normal Attack (spooling pellets)",
+  "cat": "normal",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "max_pellets": 12,
+   "spool_shots_fire_rate": 5,
+   "spool_shots_multishot": 12,
+   "fire_rate_start": "20% of listed, +20% per shot",
+   "ammo_per_shot_full_spool": 4
+  },
+  "quote": "Innate multishot that increases with auto-spool, each consecutive shot adds an additional pellet, up to a maximum of 12 pellets in total. | Requires a spool-up of 5 and 12 shots before optimal fire rate and multishot is achieved, exacerbated by its slow initial fire rate. | Fire rate starts at 20% of the listed value, and increase by 20% per shot. | Poor ammo efficiency; consumes 4 shells per shot at full spool. | The listed status chance is only for the first shot, and is divided between the pellets the longer it is fired.",
+  "url": "https://wiki.warframe.com/w/Kuva_Kohm",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Kuva Zarr",
+  "attack": "Cannon Mode (cluster bomblets)",
+  "cat": "normal",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "bomblets": 3,
+   "bomblet_falloff": "100%->30%"
+  },
+  "quote": "Cannon Mode launches cannonballs that explode in a 7 meter radius on impact with a surface or enemy, then splits into 3 smaller bomblets that rain down on the point of impact. | Explosion and bomblets have linear Damage Falloff from 100% to 30% from central impact.",
+  "url": "https://wiki.warframe.com/w/Kuva_Zarr",
+  "handled": "v1.68 CLUSTER",
+  "variants": null
+ },
+ {
+  "weapon": "Lanka",
+  "attack": "Charged Shot",
+  "cat": "charged",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "surface_punch_through_full_charge_m": 5
+  },
+  "quote": "Innate Infinite Body Punch Through; fully charged shots have innate 5 meter punch through for surfaces.",
+  "url": "https://wiki.warframe.com/w/Lanka",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Lanka",
+  "attack": "Charged Shot (aiming)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "zoom_crit_chance": "+20% / +30% / +50% flat after mods"
+  },
+  "quote": "First zoom has 3.0x zoom distance and +20% critical chance. | Second zoom has 5.0x zoom distance and +30% critical chance. | Third zoom has 8.0x zoom distance and +50% critical chance. | The zoom bonus adds a flat +20/30/50 critical chance, applied after mods. With Point Strike at max zoom, you have a (25 * (1 + 1.5)) + 50 = 112.5% critical chance. | The zoom bonus only applies if the weapon is scoped when the shot hits, not when the shot is fired.",
+  "url": "https://wiki.warframe.com/w/Lanka",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Lanka",
+  "attack": "all (sniper combo)",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "reset_time_s": 6,
+   "tiers": "1.5x@2, 2.0x@6, 2.5x@18, 3.0x@54, 3.5x@162, 4.0x@486, 4.5x@1468, 5.0x@4374 consecutive hits"
+  },
+  "quote": "The Lanka has the longest shot combo reset time of all sniper rifles at 6 seconds, allowing it to maintain its shot combos longer. | Requires only 2 shots to activate its Shot Combo Counter, giving it an immediate 1.5x total damage bonus on the first hit if Multishot mods like Split Chamber trigger a 2nd shot that also lands on the target. | Combo Counter Bonus Tier / Total Base Damage Multiplier / Minimum Consecutive Hits Required: 1 1.5x 2; 2 2.0x 6; 3 2.5x 18; 4 3.0x 54; 5 3.5x 162; 6 4.0x 486; 7 4.5x 1468; 8 5.0x 4374",
+  "url": "https://wiki.warframe.com/w/Lanka",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Lenz",
+  "attack": "Charged Shot (Initial Blast + Bubble Collapse)",
+  "cat": "charged",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "blast_delay_s": 1.3,
+   "radius_m": 7.2
+  },
+  "quote": "Initial explosion has a guaranteed Cold proc in a 7.2 meter radius when impacting enemies or surfaces. | 1.3 seconds after the Cold effect, another explosion occurs in a 7.2 meter radius, dealing very high Blast damage. | Explosions require Line of Sight to deal damage. | Line of Sight is affected by Punch Through; Sufficient amounts of Punch Through allows the explosion to deal damage to enemies not within line of sight.",
+  "url": "https://wiki.warframe.com/w/Lenz",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Lenz",
+  "attack": "Charged Shot (on kill)",
+  "cat": "charged",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "Enemies killed with the initial arrow's Impact damage are ragdolled and launched forward, dealing the same damage to other enemies in their path. In such cases, the explosion will not arm until the slain enemy's corpse strikes a wall, the floor, or any other piece of level geometry. | should multiple arrows strike the same target simultaneously, a second detonation field will be created at the point where the enemy was originally struck.",
+  "url": "https://wiki.warframe.com/w/Lenz",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Lizzie",
+  "attack": "Normal Attack (flame stream end AoE)",
+  "cat": "normal",
+  "type": "beam-radius",
+  "stated": false,
+  "numbers": {
+   "radius_m": 4,
+   "falloff": "none",
+   "multishot": "no effect on radial damage",
+   "range_m": 10
+  },
+  "quote": "The zone of impact or maximum beam range has a spherical blast radius of 4 meters, allowing it to hit multiple enemies at once. | Area of effect does not inflict self-stagger and has no Damage Falloff. | Multishot has no effect on the radial damage like other AoE Continuous Weapons. | Limited range of 10 meters.",
+  "url": "https://wiki.warframe.com/w/Lizzie",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Miter",
+  "attack": "Uncharged / Charged Shot",
+  "cat": "normal",
+  "type": "ricochet",
+  "stated": false,
+  "numbers": {
+   "surface_ricochets": 5,
+   "projectile_radius_m": 0.2
+  },
+  "quote": "Shots ricochet off surfaces, up to five times, allowing them to hit multiple targets or hit the same target. | Wide projectiles with 0.2m radius, allowing them to hit multiple targets standing next to each-other.",
+  "url": "https://wiki.warframe.com/w/Miter",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Mutalist Cernos",
+  "attack": "Charged/Uncharged Shot (Toxin Cloud)",
+  "cat": "normal",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "radius_m": 2.5,
+   "damage_per_s": "5 Toxin",
+   "tick_s": 1,
+   "duration_s": 10,
+   "forced_toxin_proc_per_tick": true,
+   "spawn_delay_s": 0.25,
+   "multishot": "adds clouds",
+   "fire_rate": "no effect"
+  },
+  "quote": "On contact with surfaces, arrows spawn a small Toxin cloud that deals damage over 2.5 meters and has a chance to apply a Toxin proc every second for 10 seconds. | The spore cloud deals 5 Toxin damage per second, unaffected by Fire Rate. | The number of spore clouds are affected by Multishot. | Each tick from the cloud has a forced Toxin status effect. | The cloud duration is not affected by status duration mods like Continuous Misery. | Spore clouds appear as a second projectile 0.25 second after the arrow impact, slightly delaying its presence.",
+  "url": "https://wiki.warframe.com/w/Mutalist_Cernos",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Mutalist Cernos",
+  "attack": "all (arrows)",
+  "cat": "all",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "On kill, bodies will follow the arrow that killed them, damaging enemies in their path and pinning the corpse to walls.",
+  "url": "https://wiki.warframe.com/w/Mutalist_Cernos",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Mutalist Quanta",
+  "attack": "Alt-Fire (orb) -> shots fired through it",
+  "cat": "alt",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "final_damage_mult_per_orb": 0.66,
+   "electricity_bonus_pct_by_orb_stack": [
+    100,
+    366,
+    500
+   ],
+   "flat_crit_chance_pct_per_orb": 25,
+   "crit_damage_pct_once": 25
+  },
+  "quote": "Shots fired through an orb have a 0.66x final damage multiplier applied. Firing through multiple orbs will stack this multiplier, i.e. firing through two orbs will result in a 0.66 x 0.66 = 0.4356x final damage multiplier. | An unmerged orb will grant +100% Electricity damage. | A two stack merged orb will grant +366% Electricity damage. | A three stack merged orb will grant +500% Electricity damage. | Shots fired through an orb will gain additional +25% flat critical chance, unaffected by critical chance mods. This bonus stacks with multiple orbs when firing through multiple orbs. | Shots fired through an orb will receive +25% critical damage, additive to critical damage mods. This applies only once, regardless of how many orbs were fired through.",
+  "url": "https://wiki.warframe.com/w/Mutalist_Quanta",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Mutalist Quanta",
+  "attack": "Alt-Fire (orb field + delayed explosion)",
+  "cat": "alt",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "orb_dps": "20 Radiation + modded elements",
+   "orb_diameter_m": 2,
+   "orb_status_pct": 100,
+   "orb_life_s": 9,
+   "explosion_radius_m_by_stack": [
+    4.4,
+    6.4,
+    8.4
+   ],
+   "explosion_damage_max": "3x (300 Toxin) at 3 stacks",
+   "explosion_status_pct": 39,
+   "ammo_per_orb": 5,
+   "max_stack": 3
+  },
+  "quote": "Orbs deal 20 Radiation damage every second along with modded elemental damage within their 2 meter diameter with a 100% status chance. | Cannot proc critical hits, even with flat chance bonuses. | Orbs explode after 9 seconds dealing Toxin damage in an 8 meter radius. | Despite the status chance displaying 0% for the orbs, the explosions actually do cause procs to their targets, with a 39% status chance that is affected by mods. | Explosion radius scales with orb stacks: 4.4m/6.4m/8.4m at 1/2/3 stacks respectively. | Explosion damage scales with orb stacks, up to 3x when fully stacked, resulting in 300 Toxin damage. | Orbs can be stacked up to 3 times.",
+  "url": "https://wiki.warframe.com/w/Mutalist_Quanta",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Nagantaka",
+  "attack": "Normal Attack (bolt) headshot kill",
+  "cat": "cond",
+  "type": "on-kill",
+  "stated": true,
+  "numbers": {
+   "reload_speed_bonus_pct": 50,
+   "duration_s": "approximately 3"
+  },
+  "quote": "Headshot kills from direct bolt damage boosts reload speed by 50%. | The buff lasts approximately 3 seconds.",
+  "url": "https://wiki.warframe.com/w/Nagantaka",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Nagantaka",
+  "attack": "Alt-Fire (magazine dump burst)",
+  "cat": "alt",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "fire_rate_mult_vs_listed": "approximately 2.3"
+  },
+  "quote": "Alternate Fire shoots all remaining ammunition in the magazine in a quick burst, at approximately 2.3 times its listed standard Fire Rate.",
+  "url": "https://wiki.warframe.com/w/Nagantaka",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Nagantaka",
+  "attack": "all (arrows)",
+  "cat": "all",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "On kill, bodies will follow the arrow that killed them, damaging anyone in their path and pinning the corpse to walls.",
+  "url": "https://wiki.warframe.com/w/Nagantaka",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Nagantaka",
+  "attack": "all (Garuda)",
+  "cat": "cond",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "punch_through_m": 1
+  },
+  "quote": "Innate 1 meter Punch Through if used by Garuda.",
+  "url": "https://wiki.warframe.com/w/Nagantaka",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Nagantaka Prime",
+  "attack": "Normal Attack (bolt) headshot kill",
+  "cat": "cond",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {
+   "reload_speed_bonus_pct": 50
+  },
+  "quote": "Headshot kills from direct bolt damage boosts reload speed by 50%.",
+  "url": "https://wiki.warframe.com/w/Nagantaka_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Nagantaka Prime",
+  "attack": "Alt-Fire (magazine dump burst)",
+  "cat": "alt",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "fire_rate_mult_vs_listed": "approximately 2.3"
+  },
+  "quote": "Alternate Fire shoots all remaining ammunition in the magazine in a quick burst, at approximately 2.3 times its listed standard Fire Rate.",
+  "url": "https://wiki.warframe.com/w/Nagantaka_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Nagantaka Prime",
+  "attack": "all (arrows)",
+  "cat": "all",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "On kill, bodies will follow the arrow that killed them, damaging anyone in their path and pinning the corpse to walls.",
+  "url": "https://wiki.warframe.com/w/Nagantaka_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Nagantaka Prime",
+  "attack": "all (Garuda)",
+  "cat": "cond",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "punch_through_m": 1
+  },
+  "quote": "When used by Garuda or Garuda Prime, the Nagantaka Prime gains 1 meter innate Punch Through.",
+  "url": "https://wiki.warframe.com/w/Nagantaka_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Nataruk",
+  "attack": "Charged Shot / Perfect Shot",
+  "cat": "charged",
+  "type": "punch-through-rule",
+  "stated": false,
+  "numbers": {
+   "punch_through": "infinite (body)",
+   "perfect_shot_window": "after 70% of full charge"
+  },
+  "quote": "Releasing the shot after 70% of a full charge, indicated by white brackets and the reticle turning yellow, will perform a \"Perfect Shot\", with higher critical chance and critical multiplier over a fully Charged Shot. | Both Charged and Perfect Shots feature a significantly larger projectile and Infinite Body Punch Through.",
+  "url": "https://wiki.warframe.com/w/Nataruk",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Neutralizer",
+  "attack": "Normal Attack (sniper shot, weak point hit)",
+  "cat": "cond",
+  "type": "ricochet",
+  "stated": true,
+  "numbers": {
+   "max_ricochets": 4,
+   "range_m": 10,
+   "damage_loss_per_ricochet_pct": 20
+  },
+  "quote": "Shots ricochet on weak point hits up to 4 times within 10 meters of the target, with a damage loss of 20% per ricochet.",
+  "url": "https://wiki.warframe.com/w/Neutralizer",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Neutralizer",
+  "attack": "Normal Attack (zoom)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "crit_damage_bonus_pct_by_zoom": [
+    40,
+    60,
+    80
+   ]
+  },
+  "quote": "First zoom has 2.5x zoom distance and +40% critical damage multiplier. | Second zoom has 4.0x zoom distance and +60% critical damage multiplier. | Third zoom has 8.0x zoom distance and +80% critical damage multiplier.",
+  "url": "https://wiki.warframe.com/w/Neutralizer",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Neutralizer",
+  "attack": "Alt-Fire (Cryo Grenade)",
+  "cat": "alt",
+  "type": "field",
+  "stated": false,
+  "numbers": {
+   "radius_m": 10,
+   "cold_stacks": 10,
+   "field_duration_s": 5
+  },
+  "quote": "Alternate Fire launches a grenade that explodes in a 10 meter radius, inflicting 10 Cold stacks and leaves a lingering field for 5 seconds.",
+  "url": "https://wiki.warframe.com/w/Neutralizer",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Nunchasa",
+  "attack": "Alt-Fire (charged Cold projectile + trail)",
+  "cat": "alt",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "projectile_width_m": 2,
+   "punch_through": "infinite (body)",
+   "charges_needed": 5,
+   "charge_per_body_hit": 0.5,
+   "charge_per_weak_point_hit": 1
+  },
+  "quote": "Hits on enemies build up alt-fire charges, represented by five icicles around the lower portion of the reticle, each being split in half. 5 charges are needed to fully charge the alt-fire, with direct hits generating half a charge and weak point hits one charge. | Alt-fire unleashes a 2 meter wide projectile with infinite body Punch Through and forced Freeze on enemies caught within the radius, while leaving behind a trail that inflicts 1 Cold proc per second on enemies that walk into it.",
+  "url": "https://wiki.warframe.com/w/Nunchasa",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Nunchasa",
+  "attack": "Alt-Fire trail",
+  "cat": "alt",
+  "type": "field",
+  "stated": false,
+  "numbers": {
+   "cold_procs_per_s": 1,
+   "duration_s": 10
+  },
+  "quote": "Trail lasts for 10 seconds.",
+  "url": "https://wiki.warframe.com/w/Nunchasa",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Opticor",
+  "attack": "Charged Shot (beam projectile)",
+  "cat": "charged",
+  "type": "beam-radius",
+  "stated": true,
+  "numbers": {
+   "beam_width_m": 0.5
+  },
+  "quote": "Beam has a width of 0.5 meters. | Sides of the beam can hit enemies if they are close enough.",
+  "url": "https://wiki.warframe.com/w/Opticor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Opticor Vandal",
+  "attack": "Charged Shot (beam projectile)",
+  "cat": "charged",
+  "type": "beam-radius",
+  "stated": true,
+  "numbers": {
+   "beam_width_m": 0.5
+  },
+  "quote": "Beam has a width of 0.5 meters. | Sides of the beam can hit enemies if they are close enough.",
+  "url": "https://wiki.warframe.com/w/Opticor_Vandal",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Panthera",
+  "attack": "Normal Attack (sawblades)",
+  "cat": "normal",
+  "type": "ricochet",
+  "stated": false,
+  "numbers": {
+   "max_ricochets": 3
+  },
+  "quote": "The Panthera's primary fire mode shoots fast-moving sawblades that will ricochet off walls and enemies up to 3 times.",
+  "url": "https://wiki.warframe.com/w/Panthera",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Panthera",
+  "attack": "Alt-Fire (levitating sawblade)",
+  "cat": "alt",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "range_m": 6
+  },
+  "quote": "Alternate Fire deploys a single levitating sawblade 6 meters away that deals continuous damage and staggers enemies, only consuming ammo when dealing damage.",
+  "url": "https://wiki.warframe.com/w/Panthera",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Panthera Prime",
+  "attack": "Normal Attack (sawblades)",
+  "cat": "normal",
+  "type": "ricochet",
+  "stated": false,
+  "numbers": {},
+  "quote": "The primary fire sawblades gain explosive properties, while still being able to ricochet off surfaces.",
+  "url": "https://wiki.warframe.com/w/Panthera_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Panthera Prime",
+  "attack": "Alt-Fire (levitating sawblade)",
+  "cat": "alt",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "range_m": 8
+  },
+  "quote": "Alternate Fire deploys a single levitating sawblade 8 meters away that deals continuous damage and staggers enemies, only consuming ammo when dealing damage. | When modded for Punch Through, each individual targets hit consume additional ammo.",
+  "url": "https://wiki.warframe.com/w/Panthera_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Paracesis",
+  "attack": "all (rank 31-40)",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "sentient_faction_bonus_pct_max": 60,
+   "by_rank": {
+    "31": 7,
+    "32": 13,
+    "33": 20,
+    "34": 27,
+    "35": 33,
+    "36": 40,
+    "37": 47,
+    "38": 53,
+    "39": 60,
+    "40": 60
+   }
+  },
+  "quote": "Additionally, each rank above 30 gives the Paracesis a faction damage bonus damage to Sentient enemies, up to 60%. This stacks additively with other bonuses of the same kind, notably Roar and the Sacrificial Set.",
+  "url": "https://wiki.warframe.com/w/Paracesis",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Paracyst",
+  "attack": "Alt-Fire (tether spore)",
+  "cat": "alt",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "dot_duration_s": 4,
+   "dot_ticks": 5,
+   "range_m": 50
+  },
+  "quote": "Enemies hit by the harpoon suffer from a damage over time effect that lingers for 4 seconds, dealing 5 ticks of Toxin damage. | Adding Punch Through to the weapon does NOT allow the hook to grab and pull multiple enemies; instead, it will grab the last enemy that it can't punch through, and attempt to pull them.",
+  "url": "https://wiki.warframe.com/w/Paracyst",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Penta",
+  "attack": "Normal Attack (grenades) + Alt-Fire detonation",
+  "cat": "alt",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "max_live_grenades": 5,
+   "radius_m": 4
+  },
+  "quote": "Can only have five grenades out at once. | Extra projectiles generated by Multishot will count towards the limit of five live grenades. | Increasing the Magazine size of the weapon does not increase the 5 grenade limit. | Grenades that continuously bounce into enemies will deal impact damage with each collision.",
+  "url": "https://wiki.warframe.com/w/Penta",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Perigale",
+  "attack": "all (zoom)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "crit_damage_bonus_pct_by_zoom": [
+    20,
+    40
+   ],
+   "stacking": "additive to Vital Sense"
+  },
+  "quote": "First zoom has 2x zoom distance and +20% critical damage multiplier, additive to Vital Sense. | Second zoom has 4x zoom distance and +40% critical damage multiplier, additive to Vital Sense.",
+  "url": "https://wiki.warframe.com/w/Perigale",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Perigale",
+  "attack": "all (Gale Force)",
+  "cat": "all",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "4 headshots in a burst or a headshot kill",
+   "effect": "Infinite Ammo",
+   "duration_s": 4
+  },
+  "quote": "Landing 4 headshots in a burst or a headshot kill grants the \"Gale Force\" buff, granting Infinite Ammo. The buff lasts 4 seconds and can be refreshed on subsequent chained headshots. | Multishot, Xata's Whisper, and Punch Through hitting multiple heads all count as separate headshot hits for triggering the Gale Force buff.",
+  "url": "https://wiki.warframe.com/w/Perigale",
+  "handled": "v1.70",
+  "variants": null
+ },
+ {
+  "weapon": "Perigale Prime",
+  "attack": "all (zoom)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "crit_damage_bonus_pct_by_zoom": [
+    20,
+    40
+   ],
+   "stacking": "additive to Vital Sense"
+  },
+  "quote": "First zoom has 2x zoom distance and +20% critical damage multiplier, additive to Vital Sense. | Second zoom has 4x zoom distance and +40% critical damage multiplier, additive to Vital Sense.",
+  "url": "https://wiki.warframe.com/w/Perigale_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Perigale Prime",
+  "attack": "all (Gale Force)",
+  "cat": "all",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "4 headshots in a burst or a headshot kill",
+   "effect": "Infinite Ammo",
+   "duration_s": 4
+  },
+  "quote": "Landing 4 headshots in a burst or a headshot kill grants the \"Gale Force\" buff, granting Infinite Ammo. The buff lasts 4 seconds and can be refreshed on subsequent chained headshots.",
+  "url": "https://wiki.warframe.com/w/Perigale_Prime",
+  "handled": "v1.70",
+  "variants": null
+ },
+ {
+  "weapon": "Phage",
+  "attack": "Normal Attack (7 beams)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "70%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 70% over 2 s",
+   "range_m": 25,
+   "multishot_mod_base": "6.0 instead of 7.0 (Hell's Chamber 7.0 -> 14.2)",
+   "combined_status_pct": 108.5
+  },
+  "quote": "Damage ramps up from 70% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 70% over 2 seconds. | Multiple beams hitting the target at the same time will combine into a single damage tick, similar to the Phantasma. | Like other Continuous Weapons, combined beams will also combine the chance for status procs per ammo used, resulting in 108.5% combined status chance before any mods. | Multishot mods, such as Hell's Chamber, appear to give slightly less of an effect than they should. Instead of scaling off of an innate value of 7.0, they scale off of a value of 6.0. This means that Hell's Chamber will increase the value from 7.0 to 14.2. This behavior is shared with the Phantasma.",
+  "url": "https://wiki.warframe.com/w/Phage",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Phantasma",
+  "attack": "Normal Attack (6 beams)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "15%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 15% over 2 s",
+   "range_m": 20,
+   "multishot_mod_base": "5.0 instead of 6.0 (Hell's Chamber 6.0 -> 12.0)",
+   "combined_status_pct": 133.2
+  },
+  "quote": "Damage ramps up from 15% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 15% over 2 seconds. | Like other Continuous Weapons, combined beams will also combine the chance for status procs per ammo used, resulting in 133.2% combined status chance before any mods. | Multishot mods, such as Hell's Chamber, appear to give slightly less of an effect than they should. Instead of scaling off of an innate value of 6.0, they scale off of a value of 5.0. This means that Hell's Chamber will increase the value from 6.0 to 12.0.",
+  "url": "https://wiki.warframe.com/w/Phantasma",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Phantasma",
+  "attack": "Normal Attack (6 beams)",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "punch_through": "infinite (body)"
+  },
+  "quote": "Innate Infinite Body Punch Through. | Innate punch through does not apply to surfaces, requiring punch through mods.",
+  "url": "https://wiki.warframe.com/w/Phantasma",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Phantasma",
+  "attack": "Alt-Fire (charged plasma bomb + 5 homing bomblets)",
+  "cat": "alt",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "bomb_radius_m": "4.8 (Characteristics) / 5 (Notes)",
+   "bomb_impact": "15 Impact",
+   "bomb_explosion": "73 Radiation",
+   "bomblets": 5,
+   "bomblet_impact": "3 Impact",
+   "bomblet_explosion": "18 Radiation",
+   "charge_ammo_per_s": 11,
+   "damage_scaling": "proportional to ammo consumed, up to full magazine"
+  },
+  "quote": "Alternate Fire charges the weapon to fire a large plasma bomb that explodes in a 4.8 meter radius, which then releases 5 seeking projectiles. | Plasma ball deals 15 Impact damage upon impact and 73 Radiation damage in the explosion. Both ball impact and AoE apply guaranteed Impact status procs. | Upon explosion, 5 bomblets will be scattered into the air and begin homing in on nearby targets. Each bomblet deals 3 Impact damage upon impact and 18 Radiation damage in the explosion. Bomblet impact has a guaranteed Stagger and AoE applies a guaranteed Impact proc. | Damage dealt by the plasma bomb is directly proportional to the amount of ammo consumed during the charge. | Charge rate consumes a set 11 ammo per second. Modding to increase magazine capacity will allow a longer total charge, and thus more damage.",
+  "url": "https://wiki.warframe.com/w/Phantasma",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Phantasma",
+  "attack": "all (Revenant)",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "magazine_bonus": 4
+  },
+  "quote": "When wielded by Revenant/Revenant Prime, the Phantasma's magazine size is increased by 4 rounds, for a total of 15 rounds.",
+  "url": "https://wiki.warframe.com/w/Phantasma",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Phantasma Prime",
+  "attack": "Normal Attack (6 beams)",
+  "cat": "normal",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "ramp": "15%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 15% over 2 s",
+   "range_m": 25
+  },
+  "quote": "Damage ramps up from 15% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 15% over 2 seconds.",
+  "url": "https://wiki.warframe.com/w/Phantasma_Prime",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Phantasma Prime",
+  "attack": "Normal Attack (6 beams)",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "punch_through": "infinite (body)"
+  },
+  "quote": "Innate Infinite Body Punch Through. | Innate punch through does not apply to surfaces, requiring punch through mods.",
+  "url": "https://wiki.warframe.com/w/Phantasma_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Phantasma Prime",
+  "attack": "Alt-Fire (charged plasma bomb + 5 homing bomblets)",
+  "cat": "alt",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "bomb_radius_m": 4.8,
+   "bomblets": 5
+  },
+  "quote": "Alternate Fire charges the weapon to fire a large plasma bomb that explodes in a 4.8 meter radius, which then releases 5 seeking projectiles. | The longer the charge is held down, the more damage is dealt by the explosion and its projectiles.",
+  "url": "https://wiki.warframe.com/w/Phantasma_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Phantasma Prime",
+  "attack": "all (Revenant)",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "magazine_bonus": 4
+  },
+  "quote": "When wielded by Revenant/Revenant Prime, the Phantasma Prime's magazine size is increased by 4 rounds, for a total of 15 rounds.",
+  "url": "https://wiki.warframe.com/w/Phantasma_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Phenmor",
+  "attack": "Incarnon Form",
+  "cat": "incarnon",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "fire_rate_spool_down": "100% -> 60% over 51 shots",
+   "rounds_per_charge": 34,
+   "max_rounds": 408,
+   "weakpoint_hits_full_gauge": 12
+  },
+  "quote": "Fire rate decreases from 100% to 60% over 51 shots as the trigger is held, reducing its effectiveness from prolonged periods of firing. | Instead of drawing from the Phenmor's ammo reserves, Incarnon Form gives the Phenmor a unique \"magazine\" from 34 rounds per charge to a maximum of 408, indicated by a bar underneath the reticle. | The gauge reaches full charge after 12 weakpoint hits, and does not require a full gauge to activate.",
+  "url": "https://wiki.warframe.com/w/Phenmor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Phenmor",
+  "attack": "Evolution III Ready Retaliation",
+  "cat": "normal",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "reload from empty",
+   "reload_speed_pct": 100,
+   "duration_s": 6
+  },
+  "quote": "On Reload from Empty: +100% Reload Speed for 6 seconds",
+  "url": "https://wiki.warframe.com/w/Phenmor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Phenmor",
+  "attack": "Evolution III Executioner's Fortune",
+  "cat": "normal",
+  "type": "on-kill",
+  "stated": true,
+  "numbers": {
+   "trigger": "headshot kill",
+   "instant_reload_chance_pct": 20
+  },
+  "quote": "On Headshot kill: 20% chance to instant Reload.",
+  "url": "https://wiki.warframe.com/w/Phenmor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Phenmor",
+  "attack": "Evolution V Spiteful Defilement",
+  "cat": "normal",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "condition": "target has fewer than 3 status effect types",
+   "crit_damage_pct": 100
+  },
+  "quote": "Enemies suffering from fewer than 3 Status Effects will receive: +100% Critical Damage | Bonus is added after mods as a flat value. | Multiple instances of the same status effect are not counted separately, e.g. having 5 corrosive and 5 radiation status effects on a target will not disable this buff.",
+  "url": "https://wiki.warframe.com/w/Phenmor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Phenmor",
+  "attack": "Evolution V Lingering Judgement",
+  "cat": "normal",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "2 headshots within 2 s",
+   "headshot_damage_pct": 50,
+   "duration_s": 8
+  },
+  "quote": "On 2 headshots within 2 seconds: +50% Headshot damage for 8 seconds.",
+  "url": "https://wiki.warframe.com/w/Phenmor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Prisma Lenz",
+  "attack": "Normal Attack (Cold blast + delayed Blast explosion)",
+  "cat": "normal",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "blast_delay_s": 1.3,
+   "radius_m": 7.2
+  },
+  "quote": "Initial explosion has a guaranteed Cold proc in a 7.2 meter radius when impacting enemies or surfaces. | 1.3 seconds after the Cold effect, another explosion occurs in a 7.2 meter radius, dealing very high Blast damage. | Explosions require Line of Sight to deal damage. | Line of Sight is affected by Punch Through; Sufficient amounts of Punch Through allows the explosion to deal damage to enemies not within line of sight.",
+  "url": "https://wiki.warframe.com/w/Prisma_Lenz",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Prisma Lenz",
+  "attack": "all (arrows)",
+  "cat": "all",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "On kill, bodies will follow the arrow that killed them, damaging anyone in their path and pinning the corpse to walls.",
+  "url": "https://wiki.warframe.com/w/Prisma_Lenz",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Proboscis Cernos",
+  "attack": "Normal Attack (tendril pull ticks + delayed explosion)",
+  "cat": "normal",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "pull_radius_m": 9,
+   "ticks": 2,
+   "tick_damage": 90,
+   "tick_split": "56.25% Slash / 43.75% Viral",
+   "tick_crit": "cannot crit",
+   "tick_status": "not affected by status chance mods",
+   "explosion_radius_m": 7,
+   "explosion_delay_s": 1.7
+  },
+  "quote": "Impact releases appendages that stuns and pulls all enemies within 9 meters towards the impact zone. | Appendages tick damage twice on all affected enemies before exploding. | Ticks do 90 damage, with a distribution of 56.25% Slash and 43.75% Viral. | Appendages are not affected by status chance mods, such as Rifle Aptitude. | Appendages cannot crit. | Arrows explode in a 7 meter radius after 1.7 seconds on impacting a surface or enemy. | The appendages and final blast do not benefit from Galvanized Aptitude. See Condition Overload (Mechanic) for more info.",
+  "url": "https://wiki.warframe.com/w/Proboscis_Cernos",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Proboscis Cernos",
+  "attack": "all (arrows)",
+  "cat": "all",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "On kill, bodies will follow the arrow that killed them, damaging enemies in their path and pinning the corpse to walls.",
+  "url": "https://wiki.warframe.com/w/Proboscis_Cernos",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Purgator 1",
+  "attack": "Normal Attack (direct kill -> Gas cloud)",
+  "cat": "normal",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {
+   "gas_stacks": 1,
+   "tick_damage": "half of the killing shot's damage x faction/status/Gas bonuses",
+   "bane_effective_mult": "1.69x (Primed Bane 2.40x)",
+   "weakpoint_mult": 3.0
+  },
+  "quote": "Enemies directly killed by the Purgator 1 leave behind 1 Gas status effect stack. | Kills must be directly from the projectile itself, not from any Damage over Time Status Effects. DoT kills will generate clouds that deal no damage. | The Purgator 1's gas cloud deals damage each tick equal to half of the killing shot's damage, multiplied by any faction damage, status damage, or unique Gas damage bonuses. | Gas damage is affected by critical damage and the critical tier of the shot that spawned the gas cloud. | Faction damage mods apply both to the killing blow, and to when the gas cloud applies its damage, effectively acting as a multiplier of 1.69x on Bane mods, or 2.40x for Primed Bane mods. | Multishot does not affect gas cloud damage. | Elemental mods and abilities that add elemental damage to weapons do not affect gas cloud damage, not even mods that combine into Gas. | Armor, damage resistance/vulnerability, and elemental resistance/vulnerability to the Purgator 1's modded elemental damage do not affect the value of the gas. | Gas clouds apply damage in the same tick as the kill occurs.",
+  "url": "https://wiki.warframe.com/w/Purgator_1",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Purgator 1",
+  "attack": "Normal Attack",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "punch_through_m": 1.1,
+   "body_punch_through": "infinite"
+  },
+  "quote": "Innate 1.1 meter punch through and Infinite Body Punch Through",
+  "url": "https://wiki.warframe.com/w/Purgator_1",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Quanta",
+  "attack": "Normal Attack (2 beams)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "30%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 30% over 2 s",
+   "range_m": 50
+  },
+  "quote": "Damage ramps up from 30% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 30% over 2 seconds.",
+  "url": "https://wiki.warframe.com/w/Quanta",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Quanta",
+  "attack": "Alt-Fire (cube)",
+  "cat": "alt",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "contact_radius_m": 0.5,
+   "shot_detonation_radius_m": 6,
+   "self_detonate_s": "9 (Characteristics) / 8 after stopping (Alternate Fire)",
+   "travel_m": 15,
+   "ammo_per_cube": 10
+  },
+  "quote": "Alternate Fire lobs a small cube that explodes in 0.5 meter radius on contact or after being left alone for 9 seconds. If damaged by any player in any way (e.g. explosion of a nearby cube), it explodes in 6 meter radius. | Cubes detonated this way deal bonus damage. | Punch Through mods modify the behavior of cubes. Instead of detonating on impact with an enemy, the cubes will pass through that enemy while still dealing its usual damage.",
+  "url": "https://wiki.warframe.com/w/Quanta",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Quanta Vandal",
+  "attack": "Normal Attack (2 beams)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "30%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 30% over 2 s",
+   "range_m": 50
+  },
+  "quote": "Damage ramps up from 30% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 30% over 2 seconds.",
+  "url": "https://wiki.warframe.com/w/Quanta_Vandal",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Quanta Vandal",
+  "attack": "Alt-Fire (cube)",
+  "cat": "alt",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "contact_radius_m": 0.5,
+   "shot_detonation_radius_m": 6,
+   "self_detonate_s": "9 (Characteristics) / 8 after stopping (Alternate Fire)",
+   "travel_m": 15,
+   "ammo_per_cube": 10
+  },
+  "quote": "Alternate Fire lobs a small cube that explodes in 0.5 meter radius on contact or after being left alone for 9 seconds. If shot by the player, it explodes in 6 meter radius. | Cubes detonated this way deal bonus damage. | Punch Through mods modify the behavior of cubes. Instead of detonating on impact with an enemy, the cubes will pass through that enemy while still dealing its usual damage.",
+  "url": "https://wiki.warframe.com/w/Quanta_Vandal",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Quellor",
+  "attack": "Alt-Fire (charged Cold shot)",
+  "cat": "alt",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "punch_through": "infinite (body)",
+   "range_m": 26,
+   "ammo_cost": 50
+  },
+  "quote": "Alternate Fire charges a single, powerful shot, for a cost of 50 ammo, that travels up to 26 meters, with a guaranteed Impact proc on enemies within 18m and Infinite Body Punch Through.",
+  "url": "https://wiki.warframe.com/w/Quellor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Rauta",
+  "attack": "Normal Attack (pellets)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "melee_combo_per_pellet": 2,
+   "combo_cap_per_shot": 28,
+   "kullervo_combo_duration_s": 7
+  },
+  "quote": "Each pellet adds 2 Melee Combo Count. | Total combo count gain for one shot has a cap of 28, achievable with +70% Multishot. | Landing pellets onto more enemies with Punch Through does not increase combo count. | When equipped by Kullervo, his melee weapon gains +7s Melee Combo Duration.",
+  "url": "https://wiki.warframe.com/w/Rauta",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Reconifex",
+  "attack": "Normal Attack (after perfect reload)",
+  "cat": "info",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "perfect_reload_window": "22%-38% of reload",
+   "reload_time_s": 1,
+   "extra_hit": "25% of initial hit as pure Heat, guaranteed Heat status, cannot crit",
+   "faction_bonus": "applied to initial hit, extra hit and forced status separately"
+  },
+  "quote": "Pressing the reload button while between 22% to 38% of the way through a reload will decrease the reload time to 1 second and grant the current magazine Heat rounds that inflict 25% more damage with guaranteed status. | The bonus damage is added as an Extra Hit that deals 25% of the initial hit's damage as pure Heat damage with a guaranteed status effect. | The extra hit's damage cannot crit, or have its element changed, but does take into account critical and elemental damage increases of any type to the initial hit. | This means that the forced Heat status' damage is affected both by Heat damage bonuses, and elemental damage bonuses, including Heat. | Faction Damage Bonus is applied once each to the initial hit, the extra hit, and the forced status, each application multiplicative with the previous.",
+  "url": "https://wiki.warframe.com/w/Reconifex",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Rubico",
+  "attack": "all (zoom)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "crit_damage_bonus_pct_by_zoom": [
+    35,
+    50
+   ],
+   "stacking": "additive with Vital Sense etc."
+  },
+  "quote": "First zoom has 3.5x zoom distance and +35% critical multiplier. | Second zoom has 6.0x zoom distance and +50% critical multiplier. | The crit damage bonus from zooming is treated in the damage calculation like a respective mod. Therefore, it is additive with mods like Vital Sense, Hammer Shot, and Bladed Rounds.",
+  "url": "https://wiki.warframe.com/w/Rubico",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Rubico",
+  "attack": "all (sniper Shot Combo Counter)",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "formula": "1.5 + 0.5*floor(log3(combo hits))",
+   "tiers": {
+    "1": 1.5,
+    "3": 2.0,
+    "9": 2.5,
+    "27": 3.0,
+    "81": 3.5,
+    "243": 4.0,
+    "729": 4.5,
+    "2187": 5.0
+   },
+   "decay_s": 2
+  },
+  "quote": "The Rubico requires only a single shot to activate its Shot Combo Counter, giving it an immediate 1.5x total damage multiplier on the first shot, and a 2.0x total damage multiplier after its third shot, giving it the ability to quickly ramp up its damage with a single magazine. On the other hand, it has a short combo decay counter that lasts only 2 seconds, thus reloading at 2.4 seconds will always lower its shot combo counter if there are no reload mods present | The combo multiplier starts at 1.5x on the first shot and requires triple the amount of shots to reach each consecutive tier.",
+  "url": "https://wiki.warframe.com/w/Rubico",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Rubico Prime",
+  "attack": "all (zoom)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "crit_damage_bonus_pct_by_zoom": [
+    35,
+    50
+   ]
+  },
+  "quote": "First zoom has 2.5x zoom distance and +35% critical damage multiplier. | Second zoom has 5.0x zoom distance and +50% critical damage multiplier.",
+  "url": "https://wiki.warframe.com/w/Rubico_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Rubico Prime",
+  "attack": "all (sniper Shot Combo Counter)",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "formula": "1.5 + 0.5*floor(log3(combo hits))",
+   "tiers": {
+    "1": 1.5,
+    "3": 2.0,
+    "9": 2.5,
+    "27": 3.0,
+    "81": 3.5,
+    "243": 4.0,
+    "729": 4.5,
+    "2187": 5.0
+   },
+   "decay": "1 shot every 2.0 s"
+  },
+  "quote": "The Rubico Prime requires only a single shot to activate its Shot Combo Counter, giving it an immediate 1.5x total damage multiplier after the first shot, and a 2.0x total damage multiplier after its third shot, giving it the ability to quickly ramp up its damage with a single magazine. On the other hand, it has a shot counter that decays by 1 shot every 2.0 seconds, thus reloading at 2.0 seconds will always decay the shot combo counter by 1 if there are no reload mods present. | The combo multiplier starts at 1.5x on the first shot and requires triple the amount of shots to reach each consecutive tier.",
+  "url": "https://wiki.warframe.com/w/Rubico_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ruvox",
+  "attack": "Incarnon Form Heavy Slam (Void spikes)",
+  "cat": "incarnon",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "impale_radius_m": 8,
+   "impale_duration_s": "1.5 + 1.0 x (combo multiplier - 1), max 12.5",
+   "range_bonus": 3,
+   "attack_speed_pct": -35,
+   "impact_to_puncture_pct": 100,
+   "form_duration_s": 90
+  },
+  "quote": "Heavy Slam attacks impale enemies within 8 meters on Void spikes for 1.5s + 1.0s * (combo multiplier - 1), for a maximum total duration of 12.5 seconds. | Melee Attack Speed curse is multiplicative to all other attack speed buffs.",
+  "url": "https://wiki.warframe.com/w/Ruvox",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ruvox",
+  "attack": "Evolution II Lethal Impetus",
+  "cat": "normal",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "on kill",
+   "attack_speed_pct_per_stack": 15,
+   "duration_s": 15,
+   "max_stacks": 3
+  },
+  "quote": "On Kill: +15% Attack Speed for 15s. Stacks up to 3x.",
+  "url": "https://wiki.warframe.com/w/Ruvox",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ruvox",
+  "attack": "Evolution III Shockwave Synergy",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "combo_count_per_enemy_hit_by_slam": 4
+  },
+  "quote": "For each enemy hit by Slam radius, gain 4 Combo Count.",
+  "url": "https://wiki.warframe.com/w/Ruvox",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ruvox",
+  "attack": "Evolution V Vulnerability Serum",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "flat_status_chance_vulnerability_pct": 35,
+   "condition": "impaled enemies"
+  },
+  "quote": "Impaled enemies are +35% more vulnerable to Status Chance | The status chance boost is a flat 35%, allowing damage sources with 0% status chance to inflict status procs.",
+  "url": "https://wiki.warframe.com/w/Ruvox",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Ruvox",
+  "attack": "Evolution V Permanent Perforation",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "puncture_status_stacks": 5,
+   "condition": "while impaled"
+  },
+  "quote": "Enemies suffer 5 Puncture Status while impaled",
+  "url": "https://wiki.warframe.com/w/Ruvox",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Scourge",
+  "attack": "Alt-Fire (thrown spear, Bullet Attractor field)",
+  "cat": "alt",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "head_attractor_radius_m": 2,
+   "field_range_m": 14,
+   "attractor_duration_s": 3,
+   "pulse_interval_s": 5,
+   "field_duration_s": 20,
+   "max_fields": 1
+  },
+  "quote": "Alternate Fire throws the Scourge, dealing damage and causing a 2 meter Bullet Attractor field on the heads of enemies within 14 meters of the impact point, allowing easier headshots. | The Bullet Attractor stays on enemies for 3 seconds. The field pulses immediately on impact then once every 5 seconds. | The field lasts for 20 seconds. | Only one field can be deployed at a time. Throwing the spear will remove existing fields.",
+  "url": "https://wiki.warframe.com/w/Scourge",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Scourge",
+  "attack": "Alt-Fire (thrown spear)",
+  "cat": "alt",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "holster_reload_pct_per_s": 33
+  },
+  "quote": "The Scourge's alt-fire throws the speargun towards the reticle, impaling enemies along its path with physical damage, then inflicting Corrosive damage in a large area of effect. Finally, it creates a pulse that applies a Bullet Attractor debuff on nearby enemies' heads. | Reloads 33% of the magazine per second while deployed or holstered.",
+  "url": "https://wiki.warframe.com/w/Scourge",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Scourge Prime",
+  "attack": "Alt-Fire (thrown spear, Bullet Attractor field)",
+  "cat": "alt",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "head_attractor_radius_m": 2,
+   "field_range_m": 14,
+   "attractor_duration_s": 4.7,
+   "pulse_interval_s": 5,
+   "field_duration_s": 20,
+   "max_fields": 1
+  },
+  "quote": "Alternate Fire throws the Scourge, dealing damage and causing a 2 meter Bullet Attractor field on the heads of enemies within 14 meters of the impact point, allowing easier headshots. | The Bullet Attractor stays on enemies for 4.7 seconds. The field pulses immediately on impact then once every 5 seconds. | The field lasts for 20 seconds.",
+  "url": "https://wiki.warframe.com/w/Scourge_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Secura Penta",
+  "attack": "Normal Attack (grenades) + Alt-Fire detonation",
+  "cat": "alt",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "max_live_grenades": 5,
+   "radius_m": 6
+  },
+  "quote": "Can only have five grenades out at once. | Extra projectiles generated by Multishot will count towards the limit of five live grenades. | Although the Secura Penta can hold 2 more rounds in its magazine, it can only have five grenades out like the regular Penta.",
+  "url": "https://wiki.warframe.com/w/Secura_Penta",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Shedu",
+  "attack": "Battery depletion pulse",
+  "cat": "info",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "radius_m": 20,
+   "damage": "100 Impact",
+   "status_pct": 100,
+   "crit_mult": 2,
+   "effect": "removes Sentient / Shadow Stalker damage resistances",
+   "scaling": "base damage, faction, Firestorm; not elemental or multishot"
+  },
+  "quote": "Fully depleting the battery produces a 20 meter pulse that causes 100 Impact damage with 100% status and removes Sentient and Shadow Stalker damage resistances. | This is affected by base damage, Faction Damage Bonus, and Firestorm / Primed Firestorm; but not by elemental or multishot bonuses. | Critical Chance is very low or zero, and Critical Damage is 2x.",
+  "url": "https://wiki.warframe.com/w/Shedu",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Simulor",
+  "attack": "Normal Attack (orbs merge / explode / singularity) + Alt-Fire detonation",
+  "cat": "alt",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "explosion_radius_m": 4,
+   "travel_m": 12,
+   "merged_orb_life_s": 20,
+   "max_orbs": 4,
+   "singularity_at_orbs": 4,
+   "max_vortexes": 3,
+   "direct_impact_damage": "none"
+  },
+  "quote": "Primary fire shoots bouncing orbs which travel 12 meters before exploding in a 4 meter radius. | Shooting multiple orbs will merge, lingering for 20 seconds before exploding. | Merging increases the damage of subsequent explosions. | Merging four orbs creates a singularity that deals damage over time and pulls items. | Direct impacts with the orbs with enemies do not deal any damage, and must be combined at least once to deal any damage. | Only 4 separate orbs may be deployed at one time, including singularities. | Stacking 4 orbs together will create a gravitational singularity that will deal damage-over-time to enemies that pass through it, with no status chance. | Max number of active vortexes is 3. When the maximum vortex count is reached, Simulor will default to single-shot orbs with reduced lifetime.",
+  "url": "https://wiki.warframe.com/w/Simulor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Simulor",
+  "attack": "shots fired through orbs",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "final_damage_mult_per_orb": 0.66,
+   "electricity_bonus_pct_by_orb_stack": [
+    100,
+    300,
+    400,
+    500
+   ],
+   "flat_crit_chance_pct_per_orb": 25,
+   "crit_damage_pct_once": 25
+  },
+  "quote": "Shots fired through an orb have a 0.66x final damage multiplier applied. Firing through multiple orbs will stack this multiplier, i.e. firing through two orbs will result in a 0.66 x 0.66 = 0.4356x final damage multiplier. | An unmerged orb will grant +100% Electricity damage. | A two stack merged orb will grant +300% Electricity damage. | A three stack merged orb will grant +400% Electricity damage. | A four stack merged orb will grant +500% Electricity damage. | Shots fired through an orb will gain additional +25% flat critical chance, unaffected by critical chance mods. This bonus stacks with multiple orbs when firing through multiple orbs. | Shots fired through an orb will receive +25% critical damage, additive to critical damage mods. This applies only once, regardless of how many orbs were fired through.",
+  "url": "https://wiki.warframe.com/w/Simulor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Snipetron",
+  "attack": "all (zoom)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "headshot_damage_bonus_pct_by_zoom": [
+    25,
+    50
+   ]
+  },
+  "quote": "First zoom has 2.5x zoom distance and +25% headshot damage. | Second zoom has 6.0x zoom distance and +50% headshot damage.",
+  "url": "https://wiki.warframe.com/w/Snipetron",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Snipetron Vandal",
+  "attack": "all (zoom)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "headshot_damage_bonus_pct_by_zoom": [
+    30,
+    50
+   ]
+  },
+  "quote": "First zoom has 2.5x zoom distance and +30% headshot damage. | Second zoom has 6.0x zoom distance and +50% headshot damage, making it ideal for long-range combat.",
+  "url": "https://wiki.warframe.com/w/Snipetron_Vandal",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Snipetron Vandal",
+  "attack": "all (sniper Shot Combo Counter)",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "tiers": {
+    "3": 1.5,
+    "9": 2.0,
+    "27": 2.5,
+    "81": 3.0,
+    "243": 3.5,
+    "729": 4.0,
+    "2187": 4.5,
+    "6561": 5.0
+   }
+  },
+  "quote": "The Snipetron Vandal requires 3 shots to activate its shot combo counter, giving it a 1.5x damage bonus on the third shot, a 2.0x damage bonus after 9 shots, and a 2.5x damage bonus after 27 shots.",
+  "url": "https://wiki.warframe.com/w/Snipetron_Vandal",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Sporothrix",
+  "attack": "all (zoom)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "headshot_damage_bonus_pct": 50
+  },
+  "quote": "One zoom mode that has 2.7x zoom distance and +50% headshot damage.",
+  "url": "https://wiki.warframe.com/w/Sporothrix",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Sporothrix",
+  "attack": "Normal Attack (delayed Viral explosion)",
+  "cat": "normal",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "radius_m": 1.7,
+   "delay_s": 0.9
+  },
+  "quote": "Shots explode in a 1.7 meter AoE radius after 0.9 seconds on impacting a surface or enemy. | Explosion delay reduces likelihood of inflicting self-stagger, but may allow enemies to move out of the explosion range if not directly hit by the projectile. | Explosion does not affect combo counter.",
+  "url": "https://wiki.warframe.com/w/Sporothrix",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Stahlta",
+  "attack": "Alt-Fire (charged Radiation round)",
+  "cat": "alt",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "radius_m": 7.2,
+   "delay_s": 0.36,
+   "ammo_per_shot": 20
+  },
+  "quote": "Shots explode in a 7.2 meter radius 0.36 seconds after impacting a surface or enemy. | Explosion delay reduces likelihood of inflicting self-stagger, but may allow enemies to move out of the explosion range if not directly hit by the projectile.",
+  "url": "https://wiki.warframe.com/w/Stahlta",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Steflos",
+  "attack": "Normal Attack (growing projectile)",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": false,
+  "numbers": {
+   "base_lifespan_s": 0.6,
+   "lifespan_gain_per_enemy_hit_pct": 50,
+   "max_lifespan_s": 10,
+   "thickness_m": "~2",
+   "punch_through": "infinite (body)",
+   "base_range_m": 12
+  },
+  "quote": "Projectiles have lifespan of 0.6 seconds. | Projectiles grow in size and last longer as it hits enemies. | Each enemy hit increases projectile lifespan by 50%, up to a max projectile lifespan of 10 seconds. | Projectiles have a base thickness of ~2 meters. | Innate Infinite Body Punch Through. | Innate punch through does not apply to surfaces if hitting with the central portion of the projectile, requiring punch through mods.",
+  "url": "https://wiki.warframe.com/w/Steflos",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Steflos",
+  "attack": "all (Citrine)",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "projectile_speed_pct": 40
+  },
+  "quote": "When wielded by Citrine/Citrine Prime, Steflos gains 40% Projectile Speed.",
+  "url": "https://wiki.warframe.com/w/Steflos",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Steflos Prime",
+  "attack": "Normal Attack (growing projectile)",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": false,
+  "numbers": {
+   "base_lifespan_s": 0.6,
+   "lifespan_gain_per_enemy_hit_pct": 50,
+   "max_lifespan_s": 10,
+   "thickness_m": "~2",
+   "punch_through": "infinite (body)",
+   "base_range_m": 12
+  },
+  "quote": "Projectiles have lifespan of 0.6 seconds. | Each enemy hit increases projectile lifespan by 50%, up to a max projectile lifespan of 10 seconds. | Projectiles have a base thickness of ~2 meters. | Innate Infinite Body Punch Through.",
+  "url": "https://wiki.warframe.com/w/Steflos_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Steflos Prime",
+  "attack": "all (Citrine)",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "projectile_speed_pct": 40
+  },
+  "quote": "When wielded by Citrine/Citrine Prime, Steflos Prime gains 40% Projectile Speed.",
+  "url": "https://wiki.warframe.com/w/Steflos_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Synapse",
+  "attack": "Normal Attack (beam)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "headshot_bonus_pct": 20,
+   "ramp": "20%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 20% over 2 s",
+   "range_m": 27
+  },
+  "quote": "Deals 20% additional damage on headshots. | Damage ramps up from 20% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 20% over 2 seconds.",
+  "url": "https://wiki.warframe.com/w/Synapse",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Synoid Simulor",
+  "attack": "Normal Attack (orbs: unstacked / partial / full stack) + Alt-Fire detonation",
+  "cat": "alt",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "unstacked_life_s": 1,
+   "unstacked_radius_m": "5 + 1 per multishot (uncapped)",
+   "unstacked_damage_by_multishot": [
+    240,
+    480,
+    720,
+    960
+   ],
+   "unstacked_damage_cap": 960,
+   "merge_explosion": "125 Magnetic in 4 m (150 in 5 m if two value-2 orbs)",
+   "partial_stack_life_s": 20,
+   "partial_stack_damage": [
+    480,
+    720
+   ],
+   "partial_stack_radius_m": [
+    6,
+    7
+   ],
+   "full_stack_dot": "50 Magnetic every 0.25 s within 5 m, cannot crit or status",
+   "full_stack_explosion": "960 Magnetic in 8 m",
+   "explosion_falloff": "100% (UI says 60%)",
+   "max_orbs": 4,
+   "multishot_5_plus": "cannot stack"
+  },
+  "quote": "Only 4 orbs can be deployed by one Simulor at a time. It cannot fire more until one expires or is manually detonated using Alternative Fire (Default Mouse3/R. Thumbstick). | Lifespan of 1 second. | Explosion radius of 5 meters +1 meter per multishot (uncapped). | Deals 240 / 480 / 720 / 960 Magnetic damage depending on multishot (capped at 960). | Explosion has 100% falloff despite the UI listing 60% falloff. | Orbs with a multishot value of 5 or higher are unable to stack into their higher-duration forms. | The act of stacking creates a small explosion of typically 125 Magnetic damage in a 4m radius with 0% falloff despite the UI listing 60% falloff. If two orbs with values of 2 combine, it will instead deal 150 damage in 5 meters. Despite the UI listing that \"Per Stack\" damage can go up to 175, it is not possible. | Deals 480 or 720 Magnetic damage upon exploding. | Explosion radius of 6 or 7 meters. | Enemies within 5m of the orb, not affected by Firestorm, are dealt 50 Magnetic damage every 0.25s that cannot crit or inflict status. It has 0% falloff despite the UI listing 60% falloff. | Deals 960 Magnetic Damage upon exploding. | Explosion radius of 8 meters.",
+  "url": "https://wiki.warframe.com/w/Synoid_Simulor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Synoid Simulor",
+  "attack": "shots fired through orbs",
+  "cat": "all",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "final_damage_mult_per_orb": 0.66,
+   "electricity_bonus_pct_by_orb_stack": [
+    100,
+    300,
+    400,
+    500
+   ],
+   "flat_crit_chance_pct_per_orb": 25,
+   "crit_damage_pct_once": 25
+  },
+  "quote": "Shots fired through an orb have a 0.66x final damage multiplier applied. Firing through multiple orbs will stack this multiplier, i.e. firing through two orbs will result in a 0.66 x 0.66 = 0.4356x final damage multiplier. | An unmerged orb will grant +100% Electricity damage. | A two stack merged orb will grant +300% Electricity damage. | A three stack merged orb will grant +400% Electricity damage. | A four stack merged orb will grant +500% Electricity damage. | Shots fired through an orb will gain additional +25% flat critical chance, unaffected by critical chance mods. This bonus stacks with multiple orbs when firing through multiple orbs. | Shots fired through an orb will receive +25% critical damage, additive to critical damage mods. This applies only once, regardless of how many orbs were fired through.",
+  "url": "https://wiki.warframe.com/w/Synoid_Simulor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Telos Boltor",
+  "attack": "Normal Attack (bolt)",
+  "cat": "normal",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "Bolts fired stick to their target, and will fling bodies on kill. | The body will damage targets in its path.",
+  "url": "https://wiki.warframe.com/w/Telos_Boltor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Tenet Arca Plasmor",
+  "attack": "Normal Attack",
+  "cat": "normal",
+  "type": "ricochet",
+  "stated": false,
+  "numbers": {
+   "max_surface_bounces": 4,
+   "thickness_m": 4.4
+  },
+  "quote": "Shots bounce on surfaces instead of disappearing, up to a maximum of 4 bounces. | Projectiles have a thickness of 4.4 meters.",
+  "url": "https://wiki.warframe.com/w/Tenet_Arca_Plasmor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Tenet Arca Plasmor",
+  "attack": "Normal Attack",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "punch_through": "infinite (body)"
+  },
+  "quote": "Innate Infinite Body Punch Through. | Innate punch through does not apply to surfaces if hitting with the central portion of the projectile.",
+  "url": "https://wiki.warframe.com/w/Tenet_Arca_Plasmor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Tenet Ferrox",
+  "attack": "Normal Attack (charged beam + explosion)",
+  "cat": "charged",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "radius_m": 4,
+   "placement": "at maximum punch through distance"
+  },
+  "quote": "Shots explode in a 4 meter radius after reaching maximum punch through distance.",
+  "url": "https://wiki.warframe.com/w/Tenet_Ferrox",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Tenet Ferrox",
+  "attack": "Alt-Fire (thrown spear field)",
+  "cat": "alt",
+  "type": "field",
+  "stated": false,
+  "numbers": {
+   "tick_interval_s": 2,
+   "pull_radius_m": 10,
+   "field_duration_s": 30,
+   "status_pct": "flat 50, unmoddable",
+   "crit": "cannot crit or headshot",
+   "multishot": "no effect",
+   "fire_rate": "affects damage frequency"
+  },
+  "quote": "Alternate Fire throws the Ferrox, creating a field where it lands that deals Electricity damage every 2 seconds and continuously pulls enemies within 10 meters toward itself. The field lasts for 30 seconds. | The field has a flat, unmoddable 50% status chance. It cannot deal critical hits nor headshots and is not affected by multishot. The damage frequency is affected by fire rate. It does not snapshot anything. | Fire Rate affects the damage frequency, but not the pull speed. | Reloads 33% of the magazine per second while deployed or holstered.",
+  "url": "https://wiki.warframe.com/w/Tenet_Ferrox",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Tenet Glaxion",
+  "attack": "Normal Attack (beam)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "20%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 20% over 2 s",
+   "range_m": 30
+  },
+  "quote": "Damage ramps up from 20% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 20% over 2 seconds. | Limited range of 30 meters.",
+  "url": "https://wiki.warframe.com/w/Tenet_Glaxion",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Tenet Quanta",
+  "attack": "Normal Attack (2 beams)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "ramp": "30%->100% over 0.6 s",
+   "decay": "after 0.8 s idle back to 30% over 2 s",
+   "range_m": 50
+  },
+  "quote": "Damage ramps up from 30% to 100% over 0.6 seconds when firing. After firing stops for 0.8 seconds, the damage decays back to 30% over 2 seconds.",
+  "url": "https://wiki.warframe.com/w/Tenet_Quanta",
+  "handled": "v1.74: 빔 피해 상승(시작 %·시간) 반영 — 탄창마다 한 번",
+  "variants": null
+ },
+ {
+  "weapon": "Tenet Quanta",
+  "attack": "Alt-Fire (cube)",
+  "cat": "alt",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "contact_radius_m": 0.5,
+   "shot_detonation_radius_m": 6,
+   "self_detonate_s": 9,
+   "ammo_per_cube": 10
+  },
+  "quote": "Alternate Fire lobs a small cube that explodes in 0.5 meter radius on contact or after being left alone for 9 seconds. If damaged by any player in any way (e.g. explosion of a nearby cube), it explodes in 6 meter radius.",
+  "url": "https://wiki.warframe.com/w/Tenet_Quanta",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Tenet Tetra",
+  "attack": "Alt-Fire (magazine grenade)",
+  "cat": "alt",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "radius_m": 8,
+   "damage_scaling": "linear with % of magazine remaining; consumes all remaining ammo"
+  },
+  "quote": "Alternate Fire launches a single grenade that explode in an 8 meter radius on impact with a surface or enemy, dealing Blast damage. | Consumes all remaining ammunition. | Damage of the alt-fire scales linearly with the percentage of the remaining magazine. Damage does not scale with magazine capacity modding, rather diversifies the damage scaling",
+  "url": "https://wiki.warframe.com/w/Tenet_Tetra",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Tenora",
+  "attack": "Alt-Fire (charged shot) headshot kill, Octavia",
+  "cat": "cond",
+  "type": "on-kill",
+  "stated": true,
+  "numbers": {
+   "instant_refill_chance_pct": 20,
+   "charge_damage_per_ammo": 24,
+   "max_ammo_per_charge": 10
+  },
+  "quote": "As a Signature Weapon, Tenora gains a bonus effect with Octavia or Octavia Prime, where headshot kills with the Alternate Fire have a 20% chance to instantly refill magazine. | Tenora's charge shot deals 24 damage for every 1 ammo consumed (a total of 240 damage with max consumption of 10 ammo) per shot. This is of equal ammo efficiency to its primary fire.",
+  "url": "https://wiki.warframe.com/w/Tenora",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Tenora Prime",
+  "attack": "Alt-Fire (charged shot) headshot kill, Octavia",
+  "cat": "cond",
+  "type": "on-kill",
+  "stated": true,
+  "numbers": {
+   "instant_refill_chance_pct": 20,
+   "charge_damage_per_ammo": 28,
+   "max_ammo_per_charge": 10
+  },
+  "quote": "As a Signature Weapon, Tenora Prime gains a bonus effect with Octavia or Octavia Prime, where headshot kills with the Alternate Fire have a 20% chance to instantly refill magazine. | Tenora Prime's charge shot deals 28 damage for every 1 ammo consumed (a total of 280 damage with max consumption of 10 ammo) per shot. This is of equal ammo efficiency to its primary fire.",
+  "url": "https://wiki.warframe.com/w/Tenora_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Tonkor",
+  "attack": "Normal Attack (grenade)",
+  "cat": "normal",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "min_arming_distance_m": 7.5,
+   "radius_m": 7
+  },
+  "quote": "Grenades have travel time, heavy arcing, and needs to travel 7.5m before being explosive. | A grenade hitting an enemy without exploding causes much less damage compared to the explosion. | Grenades have a minimum arming distance of 7.5 meters, mitigating self-stagger.",
+  "url": "https://wiki.warframe.com/w/Tonkor",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Torid",
+  "attack": "Normal Attack (Toxin cloud)",
+  "cat": "normal",
+  "type": "field",
+  "stated": false,
+  "numbers": {
+   "duration_s": 10,
+   "radius_m": 3
+  },
+  "quote": "Fires grenades that disperse clouds on impact, dealing damage over time for 10 seconds over a 3 meter radius. | Clouds have innate Punch Through, allowing them to damage enemies through objects. | Clouds do not instantly do damage, so enemies that are quick may run through the cloud without taking any damage.",
+  "url": "https://wiki.warframe.com/w/Torid",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Trumna",
+  "attack": "Alt-Fire (bouncing grenade)",
+  "cat": "alt",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "radius_m": 6,
+   "max_bounces": 7,
+   "bounce_aoe_base_damage": 1000,
+   "charge_kills_required": 5,
+   "ammo_cost": 0
+  },
+  "quote": "Alternate Fire launches a grenade that explodes in a 6 meter radius upon impact with a surface or enemy and bounces up to 7 times. | Lower base damage (1,000.00 vs. 1,115.00) | Requires 5 primary fire kills to charge a gauge and cannot fire without a full gauge. | Does not use ammo.",
+  "url": "https://wiki.warframe.com/w/Trumna",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Trumna",
+  "attack": "Normal Attack (explosive rounds)",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "radius_m": 1.6,
+   "multishot": "explosion unaffected"
+  },
+  "quote": "With Punch Through modded on, the explosions from primary fire occur on the first object hit rather than where the projectile visually detonates, unlike launcher weapons. | Explosion is unaffected by multishot. | Explosion range cannot be increased with Firestorm (Primed Firestorm).",
+  "url": "https://wiki.warframe.com/w/Trumna",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Trumna Prime",
+  "attack": "Alt-Fire (bouncing grenade)",
+  "cat": "alt",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "radius_m": 6,
+   "max_bounces": 7,
+   "bounce_aoe_base_damage": 1115,
+   "charge_kills_required": 5,
+   "ammo_cost": 0
+  },
+  "quote": "Alternate Fire launches a grenade that explodes in a 6 meter radius upon impact with a surface or enemy and bounces up to 7 times. | Higher base damage (1,115.00 vs. 1,000.00) | Requires 5 primary fire kills to charge a gauge and cannot fire without a full gauge. | Does not use ammo.",
+  "url": "https://wiki.warframe.com/w/Trumna_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Trumna Prime",
+  "attack": "Normal Attack (explosive rounds)",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "radius_m": 1.6,
+   "multishot": "explosion unaffected"
+  },
+  "quote": "With Punch Through modded on, the explosions from primary fire occur on the first object hit rather than where the projectile visually detonates, unlike launcher weapons. | Explosion is unaffected by multishot.",
+  "url": "https://wiki.warframe.com/w/Trumna_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Vadarya Prime",
+  "attack": "Normal Attack (lightning strikes)",
+  "cat": "normal",
+  "type": "chain",
+  "stated": true,
+  "numbers": {
+   "strike_count_probabilities": {
+    "0": "30%",
+    "1": "35%",
+    "2": "17.5%",
+    "3": "17.5%"
+   },
+   "target_range_m": 10,
+   "pity": "guaranteed strike after 3 hits without one",
+   "strike_stats": "identical to primary fire, affected by mods",
+   "galvanized_aptitude": "not applied",
+   "notes_alt_model": "70% spawn, each strike 50% to chain, max 2 chains"
+  },
+  "quote": "Damaging an enemy has a 30% chance to spawn 0 lightning strikes, a 35% chance to spawn 1 lightning strike, a 17.5% chance to spawn 2 lightning strikes, and a 17.5% chance to spawn 3 lightning strikes that target enemies within 10 meters of the initial target. Failing to trigger a lightning strike for 3 hits will guarantee the next hit to spawn a lightning strike. | Damage, critical, and status of the lightning strikes are identical to the primary fire and are affected by mods. | Damage is not affected by Galvanized Aptitude. | Multishot and Punch Through are considered separate hits and individually have a chance to spawn the lightning strikes. | Damaging an enemy has a 70% chance to spawn a lightning strike. The first lighting strike has a 50% chance to chain a lightning strike on a different target, which then itself has a 50% chance to spawn a chain lightning strike on a different target to the second strike. | Lightning can only chain twice.",
+  "url": "https://wiki.warframe.com/w/Vadarya_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Vadarya Prime",
+  "attack": "all (second zoom)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "crit_damage_bonus_pct": 50
+  },
+  "quote": "Second zoom uses scoped zoom, with 8x zoom distance and +50% critical damage.",
+  "url": "https://wiki.warframe.com/w/Vadarya_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Vectis",
+  "attack": "all (zoom)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "headshot_damage_bonus_pct_by_zoom": [
+    30,
+    50
+   ]
+  },
+  "quote": "First zoom has 3.0x zoom distance and +30% headshot damage. | Second zoom has 4.5x zoom distance and +50% headshot damage.",
+  "url": "https://wiki.warframe.com/w/Vectis",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Vectis",
+  "attack": "all (sniper Shot Combo Counter)",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "first_tier_mult": 1.5,
+   "shots_to_activate": 1
+  },
+  "quote": "Requires only 1 scoped shot to activate its Shot Combo Counter, giving it an immediate 1.5x total damage bonus registering on the first hit.  In other words, it always does 1.5x total damage or more when scoped.",
+  "url": "https://wiki.warframe.com/w/Vectis",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Vectis Prime",
+  "attack": "all (zoom)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "headshot_damage_bonus_pct_by_zoom": [
+    40,
+    60
+   ]
+  },
+  "quote": "First zoom has 3.5x zoom distance and +40% headshot damage. | Second zoom has 6.0x zoom distance and +60% headshot damage.",
+  "url": "https://wiki.warframe.com/w/Vectis_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Vectis Prime",
+  "attack": "all (sniper Shot Combo Counter)",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "tiers": {
+    "5": 1.5,
+    "15": 2.0,
+    "45": 2.5,
+    "135": 3.0,
+    "405": 3.5,
+    "1215": 4.0,
+    "3675": 4.5,
+    "11025": 5.0
+   }
+  },
+  "quote": "The Vectis Prime has the largest shot combo requirement of the sniper rifles, needing 5 shots to initiate the 1.5x damage multiplier.",
+  "url": "https://wiki.warframe.com/w/Vectis_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Venato",
+  "attack": "all (Caliban)",
+  "cat": "all",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "extra_combo_chance_pct": 50
+  },
+  "quote": "When wielded by Caliban/Caliban Prime, attacks have a 50% chance to generate an additional Melee Combo point.",
+  "url": "https://wiki.warframe.com/w/Venato",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Vinquibus",
+  "attack": "Primary headshots -> Melee (Vinquibus Precision)",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "stacks_per_headshot": 2,
+   "max_stacks": 16,
+   "melee_damage_pct": 250,
+   "consumption": "1 stack per melee attack that connects"
+  },
+  "quote": "Headshots grant 2 stacks (max 16) of the Vinquibus Precision buff, increasing melee damage by 250%. | Multishot and Punch Through can generate more stacks. | Stacks are expended once the attack connects with an enemy. Attacks with multiple hits or connecting with multiple enemies will only consume 1 stack.",
+  "url": "https://wiki.warframe.com/w/Vinquibus",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Vinquibus",
+  "attack": "Melee kills -> Primary (Vinquibus Ferocity)",
+  "cat": "normal",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "stacks_per_kill": 4,
+   "max_stacks": 16,
+   "ammo_efficiency_pct": 100,
+   "consumption": "1 stack per shot"
+  },
+  "quote": "Kills grant 4 stacks (max 16) of the Vinquibus Ferocity buff, increasing primary Ammo Efficiency by 100%. | Stacks are expended on shot, regardless whether or not they hit an enemy.",
+  "url": "https://wiki.warframe.com/w/Vinquibus",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Vulkar",
+  "attack": "all (zoom)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "headshot_damage_bonus_pct_by_zoom": [
+    35,
+    55,
+    70
+   ]
+  },
+  "quote": "First zoom has 2.5x zoom distance and +35% headshot damage. | Second zoom has 4.0x zoom distance and +55% headshot damage. | Third zoom has 8.0x zoom distance and +70% headshot damage.",
+  "url": "https://wiki.warframe.com/w/Vulkar",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Vulkar",
+  "attack": "all (sniper Shot Combo Counter)",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "reset_s": 5,
+   "shots_to_activate": 2,
+   "first_tier_mult": 1.5
+  },
+  "quote": "The Vulkar has the second longest shot combo reset time of the sniper rifles at 5 seconds, thus it can maintain its shot combo after reloading. | It needs only 2 shots to initiate the shot combo counter's 1.5x damage bonus, allowing it to attain 2.0x bonus damage if all rounds of its magazine hit.",
+  "url": "https://wiki.warframe.com/w/Vulkar",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Vulkar Wraith",
+  "attack": "all (zoom)",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "headshot_damage_bonus_pct_by_zoom": [
+    35,
+    55,
+    70
+   ]
+  },
+  "quote": "First zoom has 2.5x zoom distance and +35% headshot damage. | Second zoom has 4.0x zoom distance and +55% headshot damage. | Third zoom has 8.0x zoom distance and +70% headshot damage.",
+  "url": "https://wiki.warframe.com/w/Vulkar_Wraith",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Vulkar Wraith",
+  "attack": "all (sniper Shot Combo Counter)",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "tiers": {
+    "2": 1.5,
+    "6": 2.0,
+    "18": 2.5,
+    "54": 3.0,
+    "162": 3.5,
+    "486": 4.0,
+    "1468": 4.5,
+    "4374": 5.0
+   }
+  },
+  "quote": "Requires only 2 shots to activate its Shot Combo Counter, giving it an immediate 1.5x total damage bonus on the first hit if Multishot mods like Split Chamber trigger a 2nd shot that also lands on the target.",
+  "url": "https://wiki.warframe.com/w/Vulkar_Wraith",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Zarr",
+  "attack": "Cannon Mode (cannonball + 6 homing bomblets)",
+  "cat": "all",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "main_explosion": "175 Blast within 4 m (Characteristics: 4.9 m)",
+   "bomblets": 6,
+   "bomblet_damage": "50 Blast each",
+   "multishot": "more cannonballs; each always 6 bomblets"
+  },
+  "quote": "Cannon Mode launches cannonballs that explode in a 4.9 meter radius on impact with a surface or enemy, then splits into 6 smaller bomblets that rain down on the point of impact. | Cannon mode fires an explosive projectile in an arc that explodes on impact, dealing 175 Blast damage within a 4 meter radius, then splitting into 6 smaller projectiles that spread from point of impact and home in on targets, each dealing 50 Blast damage within a small radius. | Multishot mods will increase the amount of bombs for Cannon shots, but each main projectile will always produce 6 cluster bombs.",
+  "url": "https://wiki.warframe.com/w/Zarr",
+  "handled": "v1.68 CLUSTER",
+  "variants": null
+ },
+ {
+  "weapon": "Zenith",
+  "attack": "Alt-Fire mode (semi-auto with disc)",
+  "cat": "alt",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "punch_through": "infinite (mostly)",
+   "head_highlight_radius_m": 20,
+   "ammo_per_shot": 3
+  },
+  "quote": "Alternate Fire deploys a disc that lasts until the Zenith is reloaded, highlighting enemy heads within 20 meters through walls and obstacles and changes the fire type to semi-auto. | Innate infinite punch through. | While the semi-auto mode has mostly infinite punch through, some level architecture, such as walls between tiles, are impenetrable.",
+  "url": "https://wiki.warframe.com/w/Zenith",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Zhuge",
+  "attack": "Normal Attack (bolt)",
+  "cat": "normal",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "On kill, bodies will follow the bolt that killed them, damaging anyone in their path and pinning the corpse to walls.",
+  "url": "https://wiki.warframe.com/w/Zhuge",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Zhuge Prime",
+  "attack": "Normal Attack (bolt + delayed explosion)",
+  "cat": "normal",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "radius_m": 2.6,
+   "delay_s": 0.6
+  },
+  "quote": "Bolts explode in a 2.6 meter radius after 0.6 seconds on impacting a surface or enemy. | Explosion delay reduces likelihood of inflicting self-stagger, but allows enemies to move out of explosion range if not directly hit by one of the bolts.",
+  "url": "https://wiki.warframe.com/w/Zhuge_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Zhuge Prime",
+  "attack": "Normal Attack (punch through)",
+  "cat": "normal",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {},
+  "quote": "Punch Through affects the location of the bolt explosions. The weapon's explosions are applied at the final point of contact where the bolt ends rather than where the bolt penetrates an enemy or object.",
+  "url": "https://wiki.warframe.com/w/Zhuge_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Zhuge Prime",
+  "attack": "Normal Attack (on kill)",
+  "cat": "normal",
+  "type": "on-kill",
+  "stated": false,
+  "numbers": {},
+  "quote": "Enemies killed with the initial bolt are ragdolled and launched forward, dealing the same damage to other enemies in their path. In such cases, the explosion will not arm until the slain enemy's corpse strikes a wall, the floor, or any other piece of level geometry. The bolt will then create its detonation field at the point where the corpse 'lands'.",
+  "url": "https://wiki.warframe.com/w/Zhuge_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Zhuge Prime",
+  "attack": "Reload",
+  "cat": "info",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "empty_reload_speed_bonus_pct": 50,
+   "empty_reload_time_s": 2
+  },
+  "quote": "Reloads 50% faster from a fully depleted magazine. | Reload time is reduced to 2 seconds when the magazine is empty.",
+  "url": "https://wiki.warframe.com/w/Zhuge_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Boar",
+  "attack": "Incarnon EVO2 Reified Bane",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "reload from empty",
+   "base_damage_bonus": 14,
+   "duration": "until a manual reload while magazine not empty"
+  },
+  "quote": "On Reload From Empty: Increase Base Damage by +14. | The damage bonus is applied after finishing a reload while the magazine is empty, and lasts indefinitely until a manual reload is initiated while the magazine is not empty. Refilling the magazine through other means (such as with Blood For Ammo) will not remove the bonus.",
+  "url": "https://wiki.warframe.com/w/Boar_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Boar",
+   "Boar Prime"
+  ]
+ },
+ {
+  "weapon": "Boar",
+  "attack": "Incarnon EVO2 Fortress Salvo",
+  "cat": "cond",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "condition": "Warframe armor over 450",
+   "punch_through_m": 4
+  },
+  "quote": "With Armor Over 450: +4 Punch Through",
+  "url": "https://wiki.warframe.com/w/Boar_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Boar",
+   "Boar Prime"
+  ]
+ },
+ {
+  "weapon": "Boar",
+  "attack": "Incarnon EVO3 Ready Retaliation",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "trigger": "reload from empty",
+   "reload_speed_pct": 100,
+   "stacking": "additive with reload mods"
+  },
+  "quote": "On Reload From Empty: +100% Reload Speed. | As the reload speed bonus is only applied at the end of the first reload from empty, the bonus will not apply to the first reload, only subsequent ones. | Bonus stacks additively with reload speed mods such as Tactical Pump.",
+  "url": "https://wiki.warframe.com/w/Boar_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Boar",
+   "Boar Prime"
+  ]
+ },
+ {
+  "weapon": "Boltor",
+  "attack": "Incarnon EVO2 Hunter's Mantra",
+  "cat": "cond",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "condition": "channeled ability active",
+   "punch_through_m": 4,
+   "accuracy_pct": 40
+  },
+  "quote": "With Channeled Ability active: Punch Through +4 and +40% Accuracy.",
+  "url": "https://wiki.warframe.com/w/Boltor_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Boltor",
+   "Telos Boltor",
+   "Boltor Prime"
+  ]
+ },
+ {
+  "weapon": "Boltor",
+  "attack": "Incarnon EVO2 Crimson Overture",
+  "cat": "cond",
+  "type": "on-kill",
+  "stated": true,
+  "numbers": {
+   "ammo_efficiency_pct_per_stack": 25,
+   "duration_s": 5,
+   "max_stacks": 3
+  },
+  "quote": "On Kill: +25% Ammo Efficiency for 5s. Stacks up to 3x.",
+  "url": "https://wiki.warframe.com/w/Boltor_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Boltor",
+   "Telos Boltor",
+   "Boltor Prime"
+  ]
+ },
+ {
+  "weapon": "Braton",
+  "attack": "Incarnon Form (3 m Heat AoE)",
+  "cat": "incarnon",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "radius_m": 3
+  },
+  "quote": "When modded for Punch Through, the Incarnon Form's radial effect occurs at the first object struck, and only the main bullet punches through.",
+  "url": "https://wiki.warframe.com/w/Braton_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Braton",
+   "Mk1-Braton",
+   "Braton Vandal",
+   "Braton Prime"
+  ]
+ },
+ {
+  "weapon": "Braton",
+  "attack": "Incarnon EVO2 Daring Reverie",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "condition": "channeled ability draining energy",
+   "extra_base_damage_by_variant": {
+    "Braton": 30,
+    "Mk1-Braton": 22,
+    "Braton Vandal": 34,
+    "Braton Prime": 38
+   },
+   "ammo_efficiency_pct": 50
+  },
+  "quote": "With Channeled Ability active: Increase Base Damage by +Y. +50% Ammo Efficiency | Channeled Abilities must be draining energy to be considered active. Abilities that do not drain energy over time such as Nekros Desecrate, Hildryn Haven, or Sevagoth Gloom (with no enemies nearby) do not count.",
+  "url": "https://wiki.warframe.com/w/Braton_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Braton",
+   "Mk1-Braton",
+   "Braton Vandal",
+   "Braton Prime"
+  ]
+ },
+ {
+  "weapon": "Braton",
+  "attack": "Incarnon EVO2 Munitions Grit",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "multishot_pct": 20,
+   "multishot_projectile_damage_bonus_pct_by_variant": {
+    "Braton": 60,
+    "Mk1-Braton": 48,
+    "Braton Vandal": 58,
+    "Braton Prime": 54
+   },
+   "ammo": "multishot projectiles consume magazine ammo"
+  },
+  "quote": "Multishot consumes ammo directly from Capacity and does +Y Damage. +20% Multishot. | Affects both modes. In the case of Incarnon Form, it pulls directly from its magazine. | Damage bonus is a unique modifier that is multiplicative to other damage buffs. | Damage bonus only applies to shots generated by multishot. | The multishot bonus stacks additively with multishot mods such as Split Chamber.",
+  "url": "https://wiki.warframe.com/w/Braton_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Braton",
+   "Mk1-Braton",
+   "Braton Vandal",
+   "Braton Prime"
+  ]
+ },
+ {
+  "weapon": "Braton",
+  "attack": "Incarnon EVO4 Prelude of Might",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "condition": "critical chance below 50%",
+   "base_crit_damage_bonus_by_variant": {
+    "Braton": 3.4,
+    "Mk1-Braton": 3.3,
+    "Braton Vandal": 3.0,
+    "Braton Prime": 3.0
+   }
+  },
+  "quote": "With Critical Chance Below 50%: Increase Base Critical Damage Multiplier by +X. | The critical damage increase is added as base critical damage and will be affected by mods. | Condition is affected by the critical chance increase effect of Puncture status,Galvanized Scope or Primary Acuity.",
+  "url": "https://wiki.warframe.com/w/Braton_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Braton",
+   "Mk1-Braton",
+   "Braton Vandal",
+   "Braton Prime"
+  ]
+ },
+ {
+  "weapon": "Braton",
+  "attack": "Incarnon EVO3 Gunsmoke Pick Up",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "trigger": "punch through hit",
+   "chance_pct": 20,
+   "ammo_restored_pct": 10
+  },
+  "quote": "On Punch Through Hit: 20% chance for 10% Ammo restored.",
+  "url": "https://wiki.warframe.com/w/Braton_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Braton",
+   "Mk1-Braton",
+   "Braton Vandal",
+   "Braton Prime"
+  ]
+ },
+ {
+  "weapon": "Burston",
+  "attack": "Incarnon Form (2 m Heat AoE)",
+  "cat": "incarnon",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "radius_m": 2,
+   "radial_multishot": "not affected"
+  },
+  "quote": "The Radial Attack does not benefit from Multishot bonuses and has a Headshot multiplier of 1x. | On Punch Through Radial Attack will hit only first enemy or be stopped if fired through an obstacle.",
+  "url": "https://wiki.warframe.com/w/Burston_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Burston",
+   "Burston Prime"
+  ]
+ },
+ {
+  "weapon": "Burston",
+  "attack": "Incarnon EVO2 Forceful Finality",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "base_multishot_bonus": 5,
+   "condition": "final magazine burst",
+   "incarnon_form": "not affected"
+  },
+  "quote": "+5 Base Multishot on final magazine burst. | Multishot bonus is added before mods, and is thus multiplied by multishot bonuses. | Multishot bonus does not affect the Incarnon form.",
+  "url": "https://wiki.warframe.com/w/Burston_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Burston",
+   "Burston Prime"
+  ]
+ },
+ {
+  "weapon": "Burston",
+  "attack": "Incarnon EVO2 Fortress Salvo",
+  "cat": "cond",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "condition": "Warframe armor over 450",
+   "punch_through_m": 2
+  },
+  "quote": "With Armor Over 450: +2 Punch Through.",
+  "url": "https://wiki.warframe.com/w/Burston_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Burston",
+   "Burston Prime"
+  ]
+ },
+ {
+  "weapon": "Burston",
+  "attack": "Incarnon EVO4 Reaver's Rapture",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "per_full_burst_hit_pct": 20,
+   "max_stacks": 5,
+   "max_bonus_pct": 100,
+   "stacking": "additive with Serration",
+   "reset": "on reload / Incarnon activation"
+  },
+  "quote": "On Full Burst Hit: +20% Damage, resets on Reload. | Caps at 5x for +100% damage, additive with base damage mods such as Serration. | Burst condition is not affected by multishot or punch through, but counts object hits such as nullifier bubbles, and activates even if the first hit of a burst kills the target. | Resets when activating incarnon, and cannot be stacked in Incarnon form.",
+  "url": "https://wiki.warframe.com/w/Burston_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Burston",
+   "Burston Prime"
+  ]
+ },
+ {
+  "weapon": "Burston",
+  "attack": "Incarnon EVO4 Fatal Affliction",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "direct_damage_pct_per_status_type": 40
+  },
+  "quote": "+40% Direct Damage per Status Type affecting the target.",
+  "url": "https://wiki.warframe.com/w/Burston_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Burston",
+   "Burston Prime"
+  ]
+ },
+ {
+  "weapon": "Burston",
+  "attack": "Incarnon EVO3 Ready Retaliation",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "trigger": "reload from empty",
+   "reload_speed_pct": 100
+  },
+  "quote": "On Reload From Empty: +100% Reload Speed.",
+  "url": "https://wiki.warframe.com/w/Burston_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Burston",
+   "Burston Prime"
+  ]
+ },
+ {
+  "weapon": "Dera",
+  "attack": "Incarnon EVO2 Paragon Essence",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "on status effect",
+   "fire_rate_pct_per_stack": 5,
+   "duration_s": 5,
+   "max_stacks": 6,
+   "stacking": "additive with Speed Trigger"
+  },
+  "quote": "On Status Effect: +5% Fire Rate for 5s. Stacks up to 6x. | Fire Rate bonus stacks additively with other fire rate bonuses such as Speed Trigger.",
+  "url": "https://wiki.warframe.com/w/Dera_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Dera",
+   "Dera Vandal"
+  ]
+ },
+ {
+  "weapon": "Dera",
+  "attack": "Incarnon EVO2 Crimson Overture",
+  "cat": "cond",
+  "type": "on-kill",
+  "stated": true,
+  "numbers": {
+   "ammo_efficiency_pct_per_stack": 25,
+   "duration_s": 5,
+   "max_stacks": 3
+  },
+  "quote": "On Kill: +25% Ammo Efficiency for 5s. Stacks up to 3x.",
+  "url": "https://wiki.warframe.com/w/Dera_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Dera",
+   "Dera Vandal"
+  ]
+ },
+ {
+  "weapon": "Dera",
+  "attack": "Incarnon EVO4 High Ground",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "base_crit_chance": "+25% of current status chance, max +35%"
+  },
+  "quote": "Increase Base Critical Chance by 25% of current Status Chance, up to 35%. | For Non-Incarnon Dera Vandal, +366.7% Status Chance is needed to max out the Critical Chance bonus.",
+  "url": "https://wiki.warframe.com/w/Dera_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Dera",
+   "Dera Vandal"
+  ]
+ },
+ {
+  "weapon": "Dread",
+  "attack": "Incarnon EVO2 Hitman's Opportunity",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "condition": "enemy below half health",
+   "damage_pct": 100
+  },
+  "quote": "+100% Damage to enemies below half Health | The conditional damage bonus ignores the base damage increase from the same perk, the 2x damage from the charged shot (Primary Fire only) and Galvanized Aptitude damage bonus.",
+  "url": "https://wiki.warframe.com/w/Dread_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Dread"
+  ]
+ },
+ {
+  "weapon": "Dread",
+  "attack": "Incarnon EVO2 Stalker's Resentment",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "condition": "Hate and Despair equipped",
+   "per_hit": "+10 base damage, +10% fire rate",
+   "max_stacks": 5,
+   "reset": "on missed shot"
+  },
+  "quote": "With Hate and Despair Equipped: Hits increase Base Damage by +10 and Fire Rate by +10%, stacks up to 5x. Resets on missed shot. | Affects both regular and Incarnon forms.",
+  "url": "https://wiki.warframe.com/w/Dread_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Dread"
+  ]
+ },
+ {
+  "weapon": "Gorgon",
+  "attack": "Incarnon Form (embedding projectile, delayed Heat explosion)",
+  "cat": "incarnon",
+  "type": "secondary-projectile",
+  "stated": false,
+  "numbers": {
+   "radius_m": 5,
+   "forced_proc": "Heat",
+   "falloff": "100% -> 90%"
+  },
+  "quote": "Incarnon Form shoots a time-delayed explosive projectile, dealing a spread of Impact, Puncture, and Slash damage upon impact. After a short delay, it detonates with an explosion radius of 5 meters, dealing Heat damage with guaranteed Heat status, but has linear Damage Falloff from 100% to 90% from central impact.",
+  "url": "https://wiki.warframe.com/w/Gorgon_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Gorgon",
+   "Gorgon Wraith",
+   "Prisma Gorgon"
+  ]
+ },
+ {
+  "weapon": "Gorgon",
+  "attack": "Incarnon EVO2 Hunter's Mantra",
+  "cat": "cond",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "condition": "channeled ability active",
+   "punch_through_m": 3,
+   "accuracy_pct": 40
+  },
+  "quote": "With Channeled Ability Active: +3 Punch Through, +40% Accuracy.",
+  "url": "https://wiki.warframe.com/w/Gorgon_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Gorgon",
+   "Gorgon Wraith",
+   "Prisma Gorgon"
+  ]
+ },
+ {
+  "weapon": "Gorgon",
+  "attack": "Incarnon EVO2 Hoplite Virtue",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "own shield break",
+   "duration_s": 8,
+   "extra_base_damage_by_variant": {
+    "Gorgon": 13,
+    "Gorgon Wraith": 8,
+    "Prisma Gorgon": 8
+   }
+  },
+  "quote": "On Shield Break: Increase Base Damage by +Y for 8s. | This is on personal shield break, not breaking enemy shields.",
+  "url": "https://wiki.warframe.com/w/Gorgon_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Gorgon",
+   "Gorgon Wraith",
+   "Prisma Gorgon"
+  ]
+ },
+ {
+  "weapon": "Gorgon",
+  "attack": "Incarnon EVO3 Resonant Restore",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": false,
+  "numbers": {
+   "trigger": "reload from empty",
+   "magazine_bonus_per_stack": 15,
+   "max_stacks": 3
+  },
+  "quote": "On Reload From Empty: Increase Base Magazine Capacity by +15. Stacks up to 3x.",
+  "url": "https://wiki.warframe.com/w/Gorgon_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Gorgon",
+   "Gorgon Wraith",
+   "Prisma Gorgon"
+  ]
+ },
+ {
+  "weapon": "Latron",
+  "attack": "Incarnon Form (ricocheting energy wave)",
+  "cat": "incarnon",
+  "type": "ricochet",
+  "stated": false,
+  "numbers": {
+   "max_explosions": 6,
+   "radius_m": 4,
+   "per_bounce": "collision Impact hit (forced Impact) + Puncture/Heat explosion",
+   "falloff": "100% -> 80%",
+   "punch_through": "no effect"
+  },
+  "quote": "Incarnon Form changes the weapon's fire mode from hitscan to a traveling projectile that can ricochet off enemies and terrain, exploding up to 6 times with a 4 meter radius, dealing damage once for any collision on enemies, and again for the explosion. | Collision deals Impact damage and have a guaranteed Impact proc. | Explosion deals Puncture and Heat damage, and can benefit from Firestorm (Primed Firestorm). | Punch Through does not affect the incarnon projectile.",
+  "url": "https://wiki.warframe.com/w/Latron_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Latron",
+   "Latron Wraith",
+   "Latron Prime"
+  ]
+ },
+ {
+  "weapon": "Latron",
+  "attack": "Incarnon EVO2 Riddled Target",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "Puncture status",
+   "multishot_pct_per_stack": 25,
+   "duration_s": 8,
+   "max_stacks": 4
+  },
+  "quote": "On Puncture Status Effect: +25% Multishot for 8s. Stacks up to 4x. | The multishot bonus stacks additively with mods such as Split Chamber.",
+  "url": "https://wiki.warframe.com/w/Latron_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Latron",
+   "Latron Wraith",
+   "Latron Prime"
+  ]
+ },
+ {
+  "weapon": "Latron",
+  "attack": "Incarnon EVO2 Swift Punishment",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "condition": "sprint speed >= 1.2 (actually 1.1)",
+   "direct_damage_pct_per_status_type": 30
+  },
+  "quote": "With Sprint Speed 1.2 or Higher: +30% Direct Damage per Status Type affecting the target. | Despite the description, the effect only requires 1.1 or higher sprint speed.",
+  "url": "https://wiki.warframe.com/w/Latron_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Latron",
+   "Latron Wraith",
+   "Latron Prime"
+  ]
+ },
+ {
+  "weapon": "Latron",
+  "attack": "Incarnon EVO4 Flensing Spikes",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "armor_removed_pct_per_puncture": 20
+  },
+  "quote": "Remove 20% of enemy Armor per Puncture Status. | Has no effect on enemies immune to armor removal, such as Exploiter Orb or Archons.",
+  "url": "https://wiki.warframe.com/w/Latron_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Latron",
+   "Latron Wraith",
+   "Latron Prime"
+  ]
+ },
+ {
+  "weapon": "Latron",
+  "attack": "Incarnon EVO4 Deadhead",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "headshot_damage_pct": 100
+  },
+  "quote": "+100% Headshot Damage. | The bonus stacks additively with other headshot multiplier bonuses such as the passive from Primary Deadhead.",
+  "url": "https://wiki.warframe.com/w/Latron_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Latron",
+   "Latron Wraith",
+   "Latron Prime"
+  ]
+ },
+ {
+  "weapon": "Miter",
+  "attack": "Incarnon Form (homing rebounding explosives)",
+  "cat": "incarnon",
+  "type": "ricochet",
+  "stated": false,
+  "numbers": {
+   "explosions_per_projectile": 2,
+   "radius_m": 3
+  },
+  "quote": "Incarnon Form becomes fully automatic and its projectiles have gained slight homing properties and explode twice in a 3 meter area of effect dealing Heat damage, with significantly higher Critical Chance, Critical Multiplier, Status Chance, and Fire Rate. Projectiles that hit enemies will rebound and home into other nearby enemies, albeit with reduced flight speed.",
+  "url": "https://wiki.warframe.com/w/Miter_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Miter"
+  ]
+ },
+ {
+  "weapon": "Miter",
+  "attack": "Incarnon EVO2 Swift Sawblades",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "condition": "channeled ability active",
+   "fire_rate_pct": 70
+  },
+  "quote": "With Channeled Ability active: +70% Fire Rate.",
+  "url": "https://wiki.warframe.com/w/Miter_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Miter"
+  ]
+ },
+ {
+  "weapon": "Miter",
+  "attack": "Incarnon EVO2 Plentiful Mayhem",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "multishot_projectile_flat_damage": 20,
+   "ammo": "multishot projectiles consume magazine ammo"
+  },
+  "quote": "Multishot consumes ammo directly from Capacity and increases Damage by +20. | Damage bonus from multishot consuming ammo only applies to projectiles generated by multishot. | Damage bonus is a flat +20 to both charged and uncharged shots, not affected by base damage mods. The bonus is affected by physical mods, elemental mods, critical hits, etc.",
+  "url": "https://wiki.warframe.com/w/Miter_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Miter"
+  ]
+ },
+ {
+  "weapon": "Miter",
+  "attack": "Incarnon EVO4 Sawblade Storm (charged shot held 1 s)",
+  "cat": "cond",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "hold_s": 1,
+   "per_bounce_explosion": "1400 Blast in 5 m",
+   "falloff": "none",
+   "line_of_sight": "not required",
+   "punch_through": "explosion only on first impact"
+  },
+  "quote": "Hold charged shot for 1s to increase area of effect. | Each bounce will cause an explosion dealing 1400 Blast in a 5 meter AoE, with critical and status stats equal to the normal charged shot. | AoE has no damage falloff and does not require line of sight, damaging enemies through obstacles. | Projectiles continue to ricochet as normal after the explosion. | If the weapon is given punch-through, the explosion only occurs on the first impact.",
+  "url": "https://wiki.warframe.com/w/Miter_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Miter"
+  ]
+ },
+ {
+  "weapon": "Miter",
+  "attack": "Incarnon EVO3 Ready Retaliation",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "trigger": "reload from empty",
+   "reload_speed_pct": 100
+  },
+  "quote": "On Reload from Empty: +100% Reload Speed",
+  "url": "https://wiki.warframe.com/w/Miter_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Miter"
+  ]
+ },
+ {
+  "weapon": "Paris",
+  "attack": "Incarnon EVO2 Deadly Pace",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "condition": "sprint speed >= 1.2 (actually 1.1)",
+   "fire_rate_pct": 80,
+   "stacking": "additive with Speed Trigger, not doubled for bows"
+  },
+  "quote": "With Sprint Speed 1.2 or Higher: +80% Fire Rate. | The fire rate bonus stacks additively with fire rate mods such as Speed Trigger but does not apply twice. | Despite the description, the effect only requires 1.1 or higher sprint speed.",
+  "url": "https://wiki.warframe.com/w/Paris_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Paris",
+   "Mk1-Paris",
+   "Paris Prime"
+  ]
+ },
+ {
+  "weapon": "Paris",
+  "attack": "Incarnon EVO2 Guardian's Might",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "condition": "with overshields",
+   "extra_base_damage_by_variant": {
+    "Paris": 52,
+    "Mk1-Paris": 40,
+    "Paris Prime": 74
+   }
+  },
+  "quote": "With Overshields: Increase Base Damage by +Y.",
+  "url": "https://wiki.warframe.com/w/Paris_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Paris",
+   "Mk1-Paris",
+   "Paris Prime"
+  ]
+ },
+ {
+  "weapon": "Paris",
+  "attack": "Incarnon EVO3 Ardent Trigger",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "punch through hit",
+   "fire_rate_pct": 40,
+   "duration_s": 6
+  },
+  "quote": "On Punch Through Hit: +40% Fire Rate for 6s. | The bonus applies when hitting multiple enemies with either the normal or the Incarnon form as well as when hitting enemies through obstacles by adding punch through with mods such as  Metal Auger.",
+  "url": "https://wiki.warframe.com/w/Paris_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Paris",
+   "Mk1-Paris",
+   "Paris Prime"
+  ]
+ },
+ {
+  "weapon": "Paris",
+  "attack": "Incarnon EVO4 Vicious Promise",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "condition": "undamaged enemies (health and shield untouched)",
+   "base_crit_chance_pct": 40,
+   "base_crit_damage_bonus": 2
+  },
+  "quote": "Increase Base Critical Chance by +40% on undamaged enemies. | Increase Base Critical Damage Multiplier by +2x on undamaged enemies. | Enemies are undamaged as long as their health and shield have not been damaged.",
+  "url": "https://wiki.warframe.com/w/Paris_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Paris",
+   "Mk1-Paris",
+   "Paris Prime"
+  ]
+ },
+ {
+  "weapon": "Paris",
+  "attack": "Incarnon EVO4 Striking Succession",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "on hit",
+   "base_damage_per_stack": 15,
+   "duration_s": 3,
+   "max_stacks": 4,
+   "decay": "one stack lost per timeout"
+  },
+  "quote": "On Hit: Increase Base Damage by +15 for 3s. Stacks up to 4x. | When the buff times out, one stack is lost and the buff duration resets.",
+  "url": "https://wiki.warframe.com/w/Paris_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Paris",
+   "Mk1-Paris",
+   "Paris Prime"
+  ]
+ },
+ {
+  "weapon": "Soma",
+  "attack": "Incarnon EVO2 Fortress Salvo",
+  "cat": "cond",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "condition": "Warframe armor over 450",
+   "punch_through_m": 4
+  },
+  "quote": "With Armor Over 450: +4 Punch Through.",
+  "url": "https://wiki.warframe.com/w/Soma_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Soma",
+   "Soma Prime"
+  ]
+ },
+ {
+  "weapon": "Soma",
+  "attack": "Incarnon EVO4 Fresh Havoc",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "reload from empty (or entering Incarnon Form from empty)",
+   "base_damage_per_stack": 6,
+   "max_stacks": 2,
+   "duration": "rest of mission, lost on death",
+   "incarnon_total": "+96 (per pellet)"
+  },
+  "quote": "On Reload From Empty: Increase Base Damage by +6. Stacks up to 2x. | Buff lasts permanently throughout the mission but is lost on death. | Switching to Incarnon Form from empty will also trigger the buff. | Damage increase is applied per pellet, giving Incarnon Form a total maximum base damage increase of +96.",
+  "url": "https://wiki.warframe.com/w/Soma_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Soma",
+   "Soma Prime"
+  ]
+ },
+ {
+  "weapon": "Soma",
+  "attack": "Incarnon EVO4 Fatal Affliction",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "direct_damage_pct_per_status_type": 40
+  },
+  "quote": "+40% Direct Damage per Status Type affecting the target.",
+  "url": "https://wiki.warframe.com/w/Soma_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Soma",
+   "Soma Prime"
+  ]
+ },
+ {
+  "weapon": "Strun",
+  "attack": "Incarnon EVO2 Tenno Targeting",
+  "cat": "cond",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "condition": "channeled ability active",
+   "punch_through_m": 4
+  },
+  "quote": "With Channeled Ability Active: +4 Punch Through",
+  "url": "https://wiki.warframe.com/w/Strun_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Strun",
+   "Mk1-Strun",
+   "Strun Wraith",
+   "Strun Prime"
+  ]
+ },
+ {
+  "weapon": "Strun",
+  "attack": "Incarnon EVO2 Blazing Barrel",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "on firing",
+   "base_multishot_per_stack": 0.05,
+   "max_stacks": 5,
+   "max_bonus_pellets": 0.25,
+   "reset": "on reload (entering Incarnon counts)"
+  },
+  "quote": "On Firing: +0.05 Base Multishot. Stacks up to 5x. | The Multishot bonus adds 0.25 pellets to the base Multishot of both forms when fully stacked. | The Multishot bonus is lost upon reloading.",
+  "url": "https://wiki.warframe.com/w/Strun_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Strun",
+   "Mk1-Strun",
+   "Strun Wraith",
+   "Strun Prime"
+  ]
+ },
+ {
+  "weapon": "Strun",
+  "attack": "Incarnon EVO3 Galvanic Reload",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "condition": "target has Electricity status",
+   "chance_pct": 40,
+   "rounds_restored": 1
+  },
+  "quote": "On hitting a target affected by an Electricity status, 40% chance to restore 1 round in the magazine from ammo pool. | The bonus can only apply once per enemy hit. | The bonus does not affect the Incarnon form.",
+  "url": "https://wiki.warframe.com/w/Strun_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Strun",
+   "Mk1-Strun",
+   "Strun Wraith",
+   "Strun Prime"
+  ]
+ },
+ {
+  "weapon": "Sybaris",
+  "attack": "Incarnon EVO2 Well Rehearsed",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "consecutive weakpoint hits",
+   "base_damage_per_stack": 5,
+   "max_stacks": 3,
+   "reset": "reload, body shot, Blast proc detonation"
+  },
+  "quote": "On Consecutive Weakpoint Hits: Increase Base Damage by +5. Stacks up to 3x. | Also resets after hitting a bodyshot and after Blast status proc detonation, even if the shot that inflicted this proc was a weakpoint hit.",
+  "url": "https://wiki.warframe.com/w/Sybaris_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Sybaris",
+   "Dex Sybaris",
+   "Sybaris Prime"
+  ]
+ },
+ {
+  "weapon": "Sybaris",
+  "attack": "Incarnon EVO2 Blazing Barrel",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "trigger": "on firing (hit not required)",
+   "multishot_pct_per_stack": 5,
+   "max_stacks": 10,
+   "reset": "on reload"
+  },
+  "quote": "On Firing: +5% Multishot. Stacks up to 10x. | Does not require the shots to hit enemies to stack. | Bonus is additive to other sources of multishot such as Split Chamber.",
+  "url": "https://wiki.warframe.com/w/Sybaris_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Sybaris",
+   "Dex Sybaris",
+   "Sybaris Prime"
+  ]
+ },
+ {
+  "weapon": "Sybaris",
+  "attack": "Incarnon EVO4 Reaver's Rapture",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "per_full_burst_hit_pct": 20,
+   "max_stacks": 4,
+   "stacking": "additive with Serration",
+   "reset": "on reload"
+  },
+  "quote": "On Full Burst Hit: +20% Damage, resets on Reload | Stacks up to 4x. | Bonus is additive with other sources of base damage such as Serration.",
+  "url": "https://wiki.warframe.com/w/Sybaris_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Sybaris",
+   "Dex Sybaris",
+   "Sybaris Prime"
+  ]
+ },
+ {
+  "weapon": "Sybaris",
+  "attack": "Incarnon EVO3 Ready Retaliation",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "trigger": "reload from empty",
+   "reload_speed_pct": 60
+  },
+  "quote": "On Reload From Empty: +60% Reload Speed.",
+  "url": "https://wiki.warframe.com/w/Sybaris_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Sybaris",
+   "Dex Sybaris",
+   "Sybaris Prime"
+  ]
+ },
+ {
+  "weapon": "Torid",
+  "attack": "Incarnon Form (Toxin beam impact radius)",
+  "cat": "incarnon",
+  "type": "beam-radius",
+  "stated": true,
+  "numbers": {
+   "range_m": 37,
+   "impact_radius_m": 2.3,
+   "radius_multishot": "not affected",
+   "punch_through": "no effect"
+  },
+  "quote": "Incarnon Form becomes a continuous beam weapon with a 37 meter range, and a 2.3 meter damage radius from the point of impact against a surface. The beam is then capable of chaining to up to 5 nearby enemies within 7 meters of each other, with each chain doing 75% of the previous chain's damage. The base damage, Critical Chance, Critical Multiplier, and Status Chance are also increased. However, the Zoom is reduced. | Punch Through mods have no effect on the behavior of the beam. | As a continuous weapon, the spherical damage radius does not benefit from Multishot; only targets directly hit by the beam benefit. | The beam will chain independently to 5 additional enemies starting from each target hit by the initial damage radius. Each chain chooses targets independently, and an enemy can be struck by multiple chains. However, due to the damage radius not benefiting from multishot, beams chaining from targets that were in the damage radius but not directly struck by the initial beam itself will also not benefit from multishot.",
+  "url": "https://wiki.warframe.com/w/Torid_Incarnon_Genesis",
+  "handled": "v1.71: 2.3m 반경·5회 연쇄 75%",
+  "variants": [
+   "Torid"
+  ]
+ },
+ {
+  "weapon": "Torid",
+  "attack": "Incarnon EVO2 Final Fusillade",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "multishot_bonus": 3,
+   "condition": "last shot in magazine"
+  },
+  "quote": "+3 Multishot on last shot in magazine.",
+  "url": "https://wiki.warframe.com/w/Torid_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Torid"
+  ]
+ },
+ {
+  "weapon": "Torid",
+  "attack": "Incarnon EVO2 Plentiful Mayhem",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "multishot_projectile_damage_pct": 60,
+   "incarnon_form": "all multishot bonuses +60%"
+  },
+  "quote": "Multishot consumes ammo directly from Capacity and increases Damage by +60%. | Damage bonus from multishot consuming ammo is multiplicative to base damage bonuses like Serration. | In the Incarnon form, instead of increasing the damage of additional projectiles created by multishot, all multishot bonuses are increased by 60%.",
+  "url": "https://wiki.warframe.com/w/Torid_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Torid"
+  ]
+ },
+ {
+  "weapon": "Torid",
+  "attack": "Incarnon EVO3 Renewed Horror",
+  "cat": "cond",
+  "type": "field",
+  "stated": false,
+  "numbers": {
+   "trigger": "reload from empty",
+   "effect": "lingering damage field duration x2 on first shot"
+  },
+  "quote": "On Reload from Empty: Lingering damage field duration doubles on first shot.",
+  "url": "https://wiki.warframe.com/w/Torid_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Torid"
+  ]
+ },
+ {
+  "weapon": "Vectis",
+  "attack": "Incarnon Form (embedded Cold orb / headshot explosion)",
+  "cat": "cond",
+  "type": "secondary-projectile",
+  "stated": true,
+  "numbers": {
+   "direct": "150 Cold",
+   "orb_embed": "25 Cold AoE ~0.5 m, forced Cold",
+   "body_shot_orb": "2 more ticks of 25 over 2.5 s",
+   "headshot_explosion": "after 0.4 s, 2 hits of 150 Cold in 6.7 m, forced Cold each",
+   "headshot_aoe_falloff_pct": 70,
+   "scaling": "all affected by EVO2 base damage and mods; orb damage gets sniper combo multiplier"
+  },
+  "quote": "Fires projectiles which deal 150 Cold direct hit damage, then embed an orb which instantly deals an additional 25 Cold AoE damage in a ~0.5m radius with a guaranteed Cold proc. On body shots, the orb remains embedded for 2.5s, dealing another 2 ticks of 25 AoE damage before disappearing. On headshots, the orb instead explodes after a 0.4s delay, dealing 2 simultaneous hits of 150 Cold damage in a 6.7m AoE, each with a guaranteed Cold proc. | Orb embed and explosion damage do not increase sniper combo, but are affected by the sniper combo damage multiplier. | Headshot AoE has 70% damage falloff, dealing 30% damage at the edge of its range.",
+  "url": "https://wiki.warframe.com/w/Vectis_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Vectis",
+   "Vectis Prime"
+  ]
+ },
+ {
+  "weapon": "Vectis",
+  "attack": "Incarnon EVO2 Lone Enforcer",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "condition": "no enemies within 5 m",
+   "multishot_pct": 25
+  },
+  "quote": "+25% Multishot if no enemies are within 5m. | Multishot bonus is additive with Split Chamber and similar bonuses.",
+  "url": "https://wiki.warframe.com/w/Vectis_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Vectis",
+   "Vectis Prime"
+  ]
+ },
+ {
+  "weapon": "Vectis",
+  "attack": "Incarnon EVO2 Inciting Incident",
+  "cat": "cond",
+  "type": "punch-through-rule",
+  "stated": true,
+  "numbers": {
+   "condition": "channeled ability active",
+   "punch_through_m": 2,
+   "incarnon_form": "punch through locked to 0"
+  },
+  "quote": "With Channeled Ability Active: +2 Punch Through | Punch Through is locked to 0 in Incarnon Form, meaning the Channeled Ability bonus from this evolution applies only in the base form.",
+  "url": "https://wiki.warframe.com/w/Vectis_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Vectis",
+   "Vectis Prime"
+  ]
+ },
+ {
+  "weapon": "Vectis",
+  "attack": "Incarnon EVO4 Deadhead",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "headshot_damage_pct": 25
+  },
+  "quote": "+25% Headshot Damage. | Bonus is additive with Vectis's Scope bonus, Target Acquired, Primary Deadhead, and similar bonuses.",
+  "url": "https://wiki.warframe.com/w/Vectis_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Vectis",
+   "Vectis Prime"
+  ]
+ },
+ {
+  "weapon": "Vectis",
+  "attack": "Incarnon EVO4 Survivor's Edge",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "base_status_chance": "+30% of current crit chance, max +40%"
+  },
+  "quote": "Increase Base Status Chance by 30% of current Critical Chance, up to 40% | Maximum Base Status Chance increase is gained at 134% total Critical Chance, requiring +345% Critical Chance to reach.",
+  "url": "https://wiki.warframe.com/w/Vectis_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Vectis",
+   "Vectis Prime"
+  ]
+ },
+ {
+  "weapon": "Corinth",
+  "attack": "Reload (per shell)",
+  "cat": "info",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "per_shell_s": 0.22
+  },
+  "quote": "Reloads one shell at a time at a rate of 0.22 seconds per shell, which can be interrupted at any point, allowing for planned reloading. | Individual shell reload causes magazine increasing effects to increase total reload speed.",
+  "url": "https://wiki.warframe.com/w/Corinth",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Felarx",
+  "attack": "Reload (per shell)",
+  "cat": "info",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "per_shell_s": 0.4,
+   "start_s": 0.8,
+   "end_s": 0.5
+  },
+  "quote": "Reloads one shell at a time, which can be interrupted at any point, allowing for planned reloading. | Reload time of 0.4 seconds for each shell, plus 0.8 seconds to begin reload and 0.5 to end. | Individual shell reload causes magazine increasing effects to increase total reload time.",
+  "url": "https://wiki.warframe.com/w/Felarx",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Kuva Zarr",
+  "attack": "Reload (per cannonball)",
+  "cat": "info",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "per_round_s": 0.75,
+   "start_s": 0.5,
+   "end_s": 0.55
+  },
+  "quote": "Reloads one cannonball at a time, which can be interrupted at any point, allowing for planned reloading. | Reload time of 0.75 seconds for each cannonball, plus 0.5 seconds to begin reload and 0.55 to end.",
+  "url": "https://wiki.warframe.com/w/Kuva_Zarr",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Mk1-Strun",
+  "attack": "Reload (per shell)",
+  "cat": "info",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "per_shell_s": 0.5,
+   "start_s": 0.5,
+   "end_s": 0.25
+  },
+  "quote": "Reloads one shell at a time at a rate of 0.5 seconds per shell, which can be interrupted at any point, allowing for planned reloading. | Reloading has a 0.5 second delay to start and a 0.25 second delay to end. | Individual shell reload causes magazine increasing effects to increase total reload speed.",
+  "url": "https://wiki.warframe.com/w/Mk1-Strun",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Strun",
+  "attack": "Reload (per shell)",
+  "cat": "info",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "per_shell_s": 0.5,
+   "start_s": 0.5,
+   "end_s": 0.25,
+   "empty_total_s": 3.75
+  },
+  "quote": "Reloads one shell at a time at a rate of 0.5 seconds per shell, which can be interrupted at any point, allowing for tactical reloading while in combat. | Reloading has a 0.5 second delay to start and a 0.25 second delay to end. | Reload time is 0.75s + 0.5s per round, coming to 3.75 total seconds to reload a completely empty mag.",
+  "url": "https://wiki.warframe.com/w/Strun",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Strun Prime",
+  "attack": "Reload (per shell)",
+  "cat": "info",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "per_shell_s": 0.4,
+   "start_plus_end_s": 0.6
+  },
+  "quote": "Reloads one shell at a time at a rate of 0.4 seconds per shell, which can be interrupted at any point, allowing for planned reloading. | Reloading has a total 0.6 second delay to start and end. | Individual shell reload causes magazine increasing effects to increase total reload time.",
+  "url": "https://wiki.warframe.com/w/Strun_Prime",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Strun Wraith",
+  "attack": "Reload (per shell)",
+  "cat": "info",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "per_shell_s": 0.45,
+   "start_s": 0.25,
+   "end_s": 0.25
+  },
+  "quote": "Reloads one shell at a time at a rate of 0.45 seconds per shell, which can be interrupted at any point, allowing for tactical reloading. | Reloading has a 0.25 second delay to start and a 0.25 second delay to finish. | The reload time is increased indirectly if magazine increasing mods are equipped.",
+  "url": "https://wiki.warframe.com/w/Strun_Wraith",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Zarr",
+  "attack": "Reload (per cannonball)",
+  "cat": "info",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "per_round_s": 0.5,
+   "start_end_s": 0.75,
+   "empty_total_s": 2.25
+  },
+  "quote": "Reloads one cannonball at a time, which can be interrupted at any point, allowing for planned reloading. | Reload time of 0.5 seconds for each cannonball, plus 0.75 seconds to begin/end reload. | Reload time is 0.75s + 0.5s per round, coming to 2.25 total seconds to reload a completely empty mag.",
+  "url": "https://wiki.warframe.com/w/Zarr",
+  "handled": null,
+  "variants": null
+ },
+ {
+  "weapon": "Furax",
+  "attack": "Incarnon Form Heavy Slam (Heat field)",
+  "cat": "incarnon",
+  "type": "field",
+  "stated": true,
+  "numbers": {
+   "dps": "50 Heat per second",
+   "duration_s": 7,
+   "radius_m": 5,
+   "crit_chance_pct": 0,
+   "status_pct": 50,
+   "scaling": "melee damage, faction and elemental mods; not combo, heavy attack mods, range or status duration"
+  },
+  "quote": "Field does 50 Heat damage every second for 7 seconds. | Field has 0% Critical Chance, 1x Critical Damage, 5m range and 50% Status Chance. | Field damage is increased by melee damage mods and and faction mods, but not Heavy Attack damage mods. | Field damage is not affected by combo multiplier.",
+  "url": "https://wiki.warframe.com/w/Furax_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Mk1-Furax"
+  ]
+ },
+ {
+  "weapon": "Furax",
+  "attack": "Incarnon EVO2 Kill Joy",
+  "cat": "cond",
+  "type": "stacking-buff",
+  "stated": true,
+  "numbers": {
+   "attack_speed_pct_per_enemy": 10,
+   "range_m": 6,
+   "max_stacks": 5
+  },
+  "quote": "+10% Attack Speed per enemy within 6m, stacks up to 5x.",
+  "url": "https://wiki.warframe.com/w/Furax_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Mk1-Furax"
+  ]
+ },
+ {
+  "weapon": "Furax",
+  "attack": "Incarnon EVO4 Kinetic Killer",
+  "cat": "cond",
+  "type": "special-multiplier",
+  "stated": true,
+  "numbers": {
+   "condition": "while sliding",
+   "base_crit_damage_set_to": 4
+  },
+  "quote": "Increase Base Critical Damage Multiplier to 4x on Slide Attacks. | Can apply to any attack, including Heavy attacks and Heavy Slams, if user is sliding at the time of strike.",
+  "url": "https://wiki.warframe.com/w/Furax_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Mk1-Furax"
+  ]
+ },
+ {
+  "weapon": "Furax",
+  "attack": "Incarnon EVO4 Flashing Bleed",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "slash_proc_chance_on_impact_proc_pct": 40
+  },
+  "quote": "+40% chance of Bleed on Impact Status Effect.",
+  "url": "https://wiki.warframe.com/w/Furax_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Mk1-Furax"
+  ]
+ },
+ {
+  "weapon": "Bo",
+  "attack": "Incarnon EVO4 Flashing Bleed",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "slash_proc_chance_on_impact_proc_pct": 40
+  },
+  "quote": "+40% chance of Slash Status on Impact Status Effect. | On enemies that are knocked down, Impact effects will not apply but the bleed still will.",
+  "url": "https://wiki.warframe.com/w/Bo_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Mk1-Bo"
+  ]
+ },
+ {
+  "weapon": "Skana",
+  "attack": "Incarnon EVO2 Wartime Nerve",
+  "cat": "cond",
+  "type": "other",
+  "stated": true,
+  "numbers": {
+   "combo_count_on_undamaged_enemies": 9
+  },
+  "quote": "+9 Combo Count on undamaged enemies. | Enemies are undamaged as long as their health and shield have not been damaged.",
+  "url": "https://wiki.warframe.com/w/Skana_Incarnon_Genesis",
+  "handled": null,
+  "variants": [
+   "Prisma Skana"
+  ]
+ }
+]

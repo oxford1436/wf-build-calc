@@ -520,11 +520,47 @@ INF_BODY_PT = {"Alternox": None, "Alternox Prime": None, "Arca Plasmor": None, "
                "Purgator 1": None, "Steflos": None, "Steflos Prime": None, "Stropha": None, "Tenet Agendus": None, "Verdilac": None}
 for w in weapons:
     if w.get("en") not in INF_BODY_PT: continue
+    # melee entries (Corufell, Nepheri, Stropha, Tenet Agendus, Verdilac): the wiki gives infinite body punch through only to their
+    # gunblade shots / fireballs / disk / block-combo waves, not to the swings (melee audit 2026-11-05) — those attacks aren't built
+    if w.get("slot") == "melee": continue
     only = INF_BODY_PT[w["en"]]
     for a in w["attacks"]:
         if a.get("kind") == "radial": continue
         if only and not any(x in (a.get("en") or "") for x in only): continue
         a["punch"] = True
+
+# Hespar (wiki notes): "Heavy Attack bug: 1680 × 3 = 5040, is actually 1680 ÷ 3 = 560 per hit" — the module's 5040 is 3× the game
+for w in weapons:
+    if w.get("en") == "Hespar":
+        for a in w["attacks"]:
+            if a.get("en") == "Heavy Attack" and a.get("dmg"):
+                a["dmg"] = {k: round(v / 3, 3) for k, v in a["dmg"].items()}
+# documented mechanics still missing from the engine (wiki audit, docs/mechanics/gaps_*.json): the app withholds the
+# recommendation for an attack they touch ("cat": all / normal / heavy / slam / throw; "cond" and handled ones don't count)
+import glob as _glob
+_gaps = {}
+for _f in sorted(_glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs", "mechanics", "gaps_*.json"))):
+    for _g in json.load(open(_f, encoding="utf-8")):
+        if _g.get("handled") or _g.get("cat") in ("cond", "info"): continue
+        _gaps.setdefault(_g["weapon"], []).append({"cat": _g["cat"], "type": _g["type"], "atk": _g["attack"], "q": _g["quote"][:180], "stated": _g["stated"]})
+for w in weapons:
+    if w.get("en") in _gaps: w["gaps"] = _gaps[w["en"]]
+# beam damage ramp (wiki weapon notes, e.g. Amprex "Damage ramps up from 30% to 100% over 0.6 seconds when firing. After firing
+# stops for 0.8 seconds, the damage decays back to 30% over 2 seconds"): read from the audited quotes in docs/mechanics
+_ramp = {}
+for _f in sorted(_glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs", "mechanics", "gaps_*.json"))):
+    for _g in json.load(open(_f, encoding="utf-8")):
+        _m = re.search(r"[Dd]amage ramps up from (\d+(?:\.\d+)?)% to 100% over (\d+(?:\.\d+)?) seconds", _g.get("quote") or "")
+        if _m:
+            for _n in [_g["weapon"]] + [v for v in (_g.get("variants") or []) if isinstance(v, str)]:
+                _ramp[_n] = ([float(_m.group(1)) / 100, float(_m.group(2))], (_g.get("attack") or "").lower().startswith("alt"))
+for w in weapons:
+    if w.get("en") not in _ramp: continue
+    rv, alt = _ramp[w["en"]]
+    for a in w["attacks"]:
+        if a.get("kind") != "gun": continue
+        if (alt and a.get("en") == "Held") or (not alt and (a.get("en") or "").startswith("Normal Attack")):
+            a["beamRamp"] = rv
 
 # dedupe ids
 seen = {}
@@ -754,6 +790,14 @@ for W in weapons:
                 if not it.get("key"): it.pop("key", None)
             perks.append({"name": pk["name"], "items": items})
         tiers.append({"tier": t["tier"], "perks": perks})
+    # wiki Incarnon notes: Destreza "Bonus base damage is not applied to the melee or the spectral rapiers", Obex "Bonus base
+    # damage does not function" — the Evo II base-damage line does nothing on these two
+    if W.get("en") in ("Destreza", "Obex"):
+        for t in tiers:
+            if t["tier"] != 2: continue
+            for pk in t["perks"]:
+                for it in pk["items"]:
+                    if it.get("key") == "baseDmg": it.pop("key"); it["ko"] = it["ko"] + " — 게임에서 적용 안 됨(위키)"; it["cond"] = True
     W["evos"] = tiers
     # Incarnon forms whose wiki notes say Punch Through does nothing (Torid "Punch Through mods have no effect on the behavior
     # of the beam", Kunai "Punch Through is ignored in Incarnon Form", Latron "does not affect the incarnon projectile",

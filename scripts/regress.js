@@ -22,6 +22,19 @@ const { chromium } = require("playwright");
     const baseO = () => Object.assign(E.defaults(), { targets: null });
     const ev = (w, ids, o, riv) => E.evaluate(w, w.attacks[0], ids.map((id) => id === "__riven" ? { id: "__riven", eff: riv || {} } : M(id)), o);
 
+    // v1.74 (wiki melee audit 2026-11-05): swings don't get the infinite body punch through of Corufell's gunblade shots etc.;
+    // Destreza/Obex Evo II base damage does nothing; Hespar heavy = 3 x 560; open documented gaps are attached for the app to withhold
+    {
+      const cor = weapon("corufell"), des = weapon("destreza"), hes = weapon("hespar"), fur = weapon("furax");
+      check("v1.74 코루펠 근접 휘두르기에 무한 관통 없음 (위키: 건블레이드 사격만)", !cor.attacks.some((a) => a.kind !== "radial" && a.punch), cor.attacks.map((a) => a.en + ":" + !!a.punch).join(" "));
+      const dII = des.evos.find((t) => t.tier === 2);
+      check("v1.74 데스트레자 진화 II 기본 피해 미적용 (위키)", !dII.perks.some((p) => p.items.some((it) => it.key === "baseDmg")));
+      const hH = hes.attacks.find((a) => a.en === "Heavy Attack"), tot = Object.values(hH.dmg).reduce((q, v) => q + v, 0);
+      check("v1.74 헤스파 강공 1680 (560×3, 위키)", Math.abs(tot - 1680) < 1, tot);
+      check("v1.74 퓨락스: 계산에 없는 위키 메커니즘이 붙어 있음 (앱이 추천 보류)", (fur.gaps || []).length > 0, (fur.gaps || []).length + "개");
+      const amp = weapon("amprex").attacks.find((a) => a.en === "Normal Attack");
+      check("v1.74 빔 피해 상승 (앰프렉스 30% → 100%, 0.6초, 위키)", amp.beamRamp && amp.beamRamp[0] === 0.3 && amp.beamRamp[1] === 0.6, JSON.stringify(amp.beamRamp));
+    }
     // v1.53: mods the game won't equip together
     check("v1.53 크리티컬 딜레이 ↔ 포인트 스트라이크는 같이 못 낌", E.clash(M("critical_delay"), M("point_strike")));
     // v1.54: wrong groups removed — these two do go together in game
