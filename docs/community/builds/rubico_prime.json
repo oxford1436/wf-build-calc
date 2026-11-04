@@ -10,20 +10,42 @@
    "community": "arca.live",
    "kind": "claim",
    "url": "https://arca.live/b/warframe/173011037",
-   "mods": ["Primed Cryo Rounds", "Semi-Rifle Cannonade", "Point Strike", "Galvanized Chamber", "Galvanized Aptitude", "Magnetic Capacity", "Vital Sense", "Radiated Reload"],
+   "mods": [
+    "Primed Cryo Rounds",
+    "Semi-Rifle Cannonade",
+    "Point Strike",
+    "Galvanized Chamber",
+    "Galvanized Aptitude",
+    "Magnetic Capacity",
+    "Vital Sense",
+    "Radiated Reload"
+   ],
    "arcane": "primary_frostbite",
-   "claims": ["세미-라이플 캐노네이드가 연사를 고정하므로 크리티컬 딜레이의 연사 −20%가 사라져 포인트 스트라이크보다 낫다"],
-   "verdict": "✅ 기본 조건 크리티컬 딜레이 세팅 대비 89%(×1.12 차이), 조준 조건 95%. 위키 Semi-Rifle Cannonade 'Fire Rate cannot be modified' — 플라즈모어(묶음 1)와 같은 메커니즘."
+   "claims": [
+    "세미-라이플 캐노네이드가 연사를 고정하므로 크리티컬 딜레이의 연사 −20%가 사라져 포인트 스트라이크보다 낫다"
+   ],
+   "verdict": "✅ 점검표 기본 조건 86%(계산기 1위 = 크리티컬 딜레이 세팅 100), 조준 조건 95%(분석 스크립트). 위키 Semi-Rifle Cannonade 'Fire Rate cannot be modified' — 플라즈모어(묶음 1)와 같은 메커니즘."
   },
   {
    "name": "세미-라이플 캐노네이드 → 해머 샷 (아카라이브 '마지막 칸은 캐노네이드' 주장 시험)",
    "community": "arca.live",
    "kind": "claim",
    "url": "https://arca.live/b/warframe/173011037",
-   "mods": ["Primed Cryo Rounds", "Hammer Shot", "Critical Delay", "Galvanized Chamber", "Galvanized Aptitude", "Magnetic Capacity", "Vital Sense", "Radiated Reload"],
+   "mods": [
+    "Primed Cryo Rounds",
+    "Hammer Shot",
+    "Critical Delay",
+    "Galvanized Chamber",
+    "Galvanized Aptitude",
+    "Magnetic Capacity",
+    "Vital Sense",
+    "Radiated Reload"
+   ],
    "arcane": "primary_frostbite",
-   "claims": ["마지막 칸은 프라임드 크라이오 라운즈 같은 원소보다 세미-라이플 캐노네이드"],
-   "verdict": "✅ 기본 조건(조준 없음): 캐노네이드를 빼면 69~73%. △ 조준(줌·저격 콤보) 조건에서는 계산기 1위가 캐노네이드 없이 바일 액셀러레이션·프라임드 슈레드로 연사·명중 수를 늘려 저격 콤보를 빨리 쌓음 — 캐노네이드 세팅은 93%."
+   "claims": [
+    "마지막 칸은 프라임드 크라이오 라운즈 같은 원소보다 세미-라이플 캐노네이드"
+   ],
+   "verdict": "✅ 점검표 기본 조건(조준 없음) 61%(서레이션으로 바꾸면 70%, 분석 스크립트). △ 조준(줌·저격 콤보) 조건에서는 계산기 1위가 캐노네이드 없이 바일 액셀러레이션·프라임드 슈레드로 연사·명중 수를 늘려 저격 콤보를 빨리 쌓음 — 캐노네이드 세팅은 93%."
   }
  ],
  "meta": {
