@@ -188,6 +188,18 @@ const { chromium } = require("playwright");
       if (c) bad += "castanas 비행 중 + 박힌 뒤 기폭을 합침";
       check("v1.63 직격·폭발 이름이 다른 무기의 기본 공격 = 한 발 전체 (렌즈 3부분·펜타·아에그리트·아스틸라·엔보이·스터그)", !bad, bad);
     }
+    // v1.68 (묶음 3 런처): cluster bombs come out of every cannonball / charged arrow — wiki Zarr "splitting into 6 smaller
+    // projectiles … each main projectile will always produce 6 cluster bombs", Kuva Bramma "explodes … then splits into 3 small
+    // bombs" (wiki attack data Multishot 3 for Kuva Zarr / Kuva Bramma). The default attack must carry them.
+    {
+      const want = { kuva_zarr: ["Cannon Mode Cluster Bomb Explosion", 3], zarr: ["Cannon Mode Cluster Bomb Explosion", 6], kuva_bramma: ["Cluster Bomb Explosion", 3] };
+      let bad = "";
+      for (const id in want) {
+        const a = weapon(id).attacks[0], n = (a.parts || [a]).filter((x) => x.en === want[id][0]).length;
+        if (n !== want[id][1]) bad += `${id}: ${want[id][0]} ×${n} (위키 ${want[id][1]}) · `;
+      }
+      check("v1.68 쿠바 자르·자르·쿠바 브람마 기본 공격에 집속탄(위키 개수)이 들어감", !bad, bad);
+    }
     // v1.64 (커뮤니티 이유 분석): Soma Prime builds always carry Hata-Satya — wiki "+1.2% crit chance per hit", reset on reload
     {
       const w = weapon("soma_prime"), a = w.attacks[0], o = baseO();

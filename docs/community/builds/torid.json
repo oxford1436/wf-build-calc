@@ -1,0 +1,58 @@
+{
+ "weapon": "torid",
+ "attack": 2,
+ "valence": null,
+ "riven": null,
+ "notes": "토리드 인카논 형태(독 빔, 사거리 37m). 2026-11-04 10시 묶음 3 런처 조사. 진화는 점검 스크립트가 자동 선택(글의 진화와 다를 수 있음). 계산기는 인카논 빔의 연쇄(위키: 7m 안 5명까지, 연쇄마다 75%)와 착탄 지점 2.3m 피해 반경을 아직 계산하지 않음 → 무리 섬멸이 과소평가(대기열 9 연쇄 빔과 같이 처리). kind: read = 출처 글 본문에서 모드 8칸을 직접 읽은 세팅.",
+ "builds": [
+  {
+   "name": "Destructoid 치명타+헌터 뮤니션즈 (라임 라운즈, 독 고유 → 바이러스)",
+   "community": "destructoid",
+   "kind": "read",
+   "url": "https://www.destructoid.com/best-torid-incarnon-build-in-warframe/",
+   "date": "2024-04-29",
+   "mods": [
+    "Galvanized Chamber",
+    "Vital Sense",
+    "Critical Delay",
+    "Amalgam Serration",
+    "Hunter Munitions",
+    "Primed Firestorm",
+    "Rime Rounds",
+    "Vile Acceleration"
+   ],
+   "exilus": "Vigilante Supplies",
+   "arcane": "primary_merciless",
+   "claims": [
+    "치명타로 짧은 시간에 큰 피해",
+    "프라임드 파이어스톰 대신 팩션 베인",
+    "비질란테 서플라이: 탄약을 많이 먹는다",
+    "진화 II 파이널 퓨질레이드가 가장 큼"
+   ]
+  },
+  {
+   "name": "Shacknews 폭발+부식 치명타 (헌터 뮤니션즈, 해머 샷)",
+   "community": "shacknews",
+   "kind": "read",
+   "url": "https://www.shacknews.com/article/145543/best-torid-incarnon-build-warframe",
+   "date": "2025-08 (본문 표기 2026-08-14와 그림 경로 2025-08-18이 다름)",
+   "mods": [
+    "Galvanized Chamber",
+    "Vital Sense",
+    "Critical Delay",
+    "Hammer Shot",
+    "Thermite Rounds",
+    "Primed Cryo Rounds",
+    "Hunter Munitions",
+    "High Voltage"
+   ],
+   "arcane": "primary_merciless",
+   "claims": [
+    "폭발: 중첩이 차면 단단한 적에게 큰 추가 피해",
+    "부식: 방어구 깎기",
+    "헌터 뮤니션즈 베기 + 동반자(판저 불파필라) 바이러스로 상태이상 4종",
+    "중첩(머시리스·갈바나이즈드 체임버)을 유지하면 녹인다"
+   ]
+  }
+ ]
+}

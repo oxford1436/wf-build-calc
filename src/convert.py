@@ -44,6 +44,17 @@ NO_PAIR = {"Castanas": {"Embedded Detonation": "either"}, "Sancti Castanas": {"E
 # - Stug: "Blobs then deal two ticks of damage in a 2 meter radius before exploding" (embed damage ×2, then Blob Explosion)
 PART_REPEAT = {"Proboscis Cernos": {"Appendages": 2}, "Stug": {"Blob Embed": 2}}
 PAIR_EXTRA = {"Stug": {"Blob Explosion": "Blob Embed"}, "Evensong": {"Charged Radial Attack": "Charged Shot"}}
+# cluster bombs released by every main shot (queue bundle 3, 2026-11-04) — separate root attacks in the wiki data, so the
+# parent index doesn't tie them to the shot that makes them:
+# - Zarr (wiki page): "splitting into 6 smaller projectiles that spread from point of impact and home in on targets",
+#   "Multishot mods will increase the amount of bombs for Cannon shots … each main projectile will always produce 6 cluster bombs"
+# - Kuva Zarr: three bomblets per cannonball (wiki attack data Multishot 3; Ackbar review U30.6 "an additional three bomblets")
+# - Kuva Bramma: "explodes in an 8.3 m radius, then splits into 3 small bombs that rain on the impact surface and explode in
+#   3.5 m" (wiki; Update 28 "Fewer cluster bombs are produced on impact (from 7 to 3)"), wiki attack data Multishot 3
+# The count is the wiki attack's Multishot; each bomb = contact hit + its explosion, and weapon multishot scales them with the shell.
+CLUSTER = {"Zarr": ("Cannon Mode Projectile", ["Cannon Mode Cluster Bomb Contact", "Cannon Mode Cluster Bomb Explosion"]),
+           "Kuva Zarr": ("Cannon Mode Projectile", ["Cannon Mode Cluster Bomb Contact", "Cannon Mode Cluster Bomb Explosion"]),
+           "Kuva Bramma": ("Charged Shot", ["Cluster Bomb Contact", "Cluster Bomb Explosion"])}
 
 FORCED = {"Impact": "impact", "Puncture": "punct", "Slash": "slash", "Heat": "heat", "Cold": "cold", "Electricity": "elec",
           "Toxin": "tox", "Blast": "blast", "Radiation": "rad", "Gas": "gas", "Magnetic": "mag", "Viral": "viral", "Corrosive": "corr", "Void": "void"}
@@ -215,6 +226,12 @@ def conv(w, typ):
                     continue
                 if oldp is not None:
                     order.append([oldp, x])
+            if name in CLUSTER and CLUSTER[name][0] in groups:
+                ms_of = {x.get("AttackName"): int(x.get("Multishot") or 1) for x in wk_atks}
+                for cn in CLUSTER[name][1]:
+                    cx = next((y for y in base if y["en"] == cn), None)
+                    if cx is not None:
+                        groups[CLUSTER[name][0]].extend([dict(cx, cluster=True)] * ms_of.get(cn, 1))
             late = []
             first_gun = next((y["en"] for y in base if y["kind"] == "gun"), None)
             for grp in order:
@@ -231,6 +248,10 @@ def conv(w, typ):
                       "pellets": pellets, "mag": y["mag"], "reload": y["reload"], "semi": y.get("semi", False), "ptLock": bool(y.get("ptLock"))}
                 if len(grp) > 2:
                     cb["desc"] = "한 발의 직격과 폭발 피해 " + str(len(grp)) + "번을 합쳐서 계산 (위키 공격 구성)"
+                nc_ = sum(1 for q in grp if q.get("cluster") and q["kind"] == "radial")
+                if nc_:
+                    cb["name"] = cname.replace("(직격 + 폭발)", "(직격 + 폭발 + 집속탄 " + str(nc_) + "개)")
+                    cb["desc"] = "한 발의 직격·폭발과 그 폭발에서 나오는 집속탄 " + str(nc_) + "개(접촉 + 폭발)를 합쳐서 계산 (위키)"
                 if y.get("inc"):
                     cb["inc"] = True
                 if y.get("incAmmo"):

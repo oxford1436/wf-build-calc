@@ -1,0 +1,38 @@
+{
+ "weapon": "kuva_zarr",
+ "attack": 0,
+ "valence": {
+  "type": "tox",
+  "pct": 0.6
+ },
+ "riven": null,
+ "notes": "쿠바 자르 캐논 모드(투사체+폭발, v1.68부터 집속탄 3개 포함). 2026-11-04 10시 묶음 3 런처 조사. 베일런스는 독 60%로 통일(warframe.today 세팅이 '프라임드 크라이오 라운즈 + 고유 독 = 바이러스'라고 적었고, 아카라이브 171669129도 독 베일런스). kind: read = 출처 글 본문에서 모드 8칸을 직접 읽은 세팅. Overframe은 모드 칸이 글자로 없어 세팅으로 기록하지 않음. Ackbar 리뷰(2021)는 모드 화면이 그림이라 주장만.",
+ "builds": [
+  {
+   "name": "warframe.today 강철의 길 섬멸 (바이러스+베기, 비질란테 2세트)",
+   "community": "warframe.today",
+   "kind": "read",
+   "url": "https://warframe.today/weapons/kuva-zarr/",
+   "date": "2026-09-08 (업데이트 44 기준이라고 표기)",
+   "mods": [
+    "Galvanized Chamber",
+    "Critical Delay",
+    "Vital Sense",
+    "Hunter Munitions",
+    "Primed Cryo Rounds",
+    "Primed Firestorm",
+    "Vigilante Supplies",
+    "Vigilante Armaments"
+   ],
+   "arcane": "primary_merciless",
+   "claims": [
+    "멀티샷이 늘면 집속탄도 늘어 섬멸 범위가 커진다",
+    "크리티컬 딜레이의 연사 −20%는 느린 폭발 무기라 거의 상관없다",
+    "비질란테 서플라이로 탄약(최대 5발) 보완",
+    "헌터 뮤니션즈 베기가 바이러스와 잘 맞는다",
+    "서레이션을 비질란테 아마먼트 대신 쓰는 사람도 있다"
+   ],
+   "note": "익실러스는 글에 없음(비질란테 서플라이를 8칸 안에 적음). 글의 머시리스 설명('헤드샷 처치')은 위키와 다름 — 머시리스는 처치 조건."
+  }
+ ]
+}
