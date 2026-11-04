@@ -1,0 +1,39 @@
+{
+ "weapon": "rubico_prime",
+ "attack": 0,
+ "valence": null,
+ "riven": null,
+ "notes": "루비코 프라임 기본 사격(반자동). 2026-11-04 16시 묶음 4 저격총 조사. 직접 읽은 커뮤니티 세팅 없음: ProGameTalk(2026-03 갱신)은 모드 칸이 그림이고 글에 6칸만, Overframe 637685·723186·47061은 모드 칸이 글자로 없음, Overframe 4814는 8칸을 글로 적었지만 2019년(업데이트 25.7) 세팅이라 기록하지 않음. 아래는 아카라이브 173011037(arca_2026-11-03.md, 대화 세션에서 직접 읽음)의 주장 둘을 계산기 1위에서 한 칸씩 바꿔 확인한 시험(kind: claim).",
+ "builds": [
+  {
+   "name": "크리티컬 딜레이 → 포인트 스트라이크 (아카라이브 '포인트 스트라이크 대신 크리티컬 딜레이' 주장 시험)",
+   "community": "arca.live",
+   "kind": "claim",
+   "url": "https://arca.live/b/warframe/173011037",
+   "mods": ["Primed Cryo Rounds", "Semi-Rifle Cannonade", "Point Strike", "Galvanized Chamber", "Galvanized Aptitude", "Magnetic Capacity", "Vital Sense", "Radiated Reload"],
+   "arcane": "primary_frostbite",
+   "claims": ["세미-라이플 캐노네이드가 연사를 고정하므로 크리티컬 딜레이의 연사 −20%가 사라져 포인트 스트라이크보다 낫다"],
+   "verdict": "✅ 기본 조건 크리티컬 딜레이 세팅 대비 89%(×1.12 차이), 조준 조건 95%. 위키 Semi-Rifle Cannonade 'Fire Rate cannot be modified' — 플라즈모어(묶음 1)와 같은 메커니즘."
+  },
+  {
+   "name": "세미-라이플 캐노네이드 → 해머 샷 (아카라이브 '마지막 칸은 캐노네이드' 주장 시험)",
+   "community": "arca.live",
+   "kind": "claim",
+   "url": "https://arca.live/b/warframe/173011037",
+   "mods": ["Primed Cryo Rounds", "Hammer Shot", "Critical Delay", "Galvanized Chamber", "Galvanized Aptitude", "Magnetic Capacity", "Vital Sense", "Radiated Reload"],
+   "arcane": "primary_frostbite",
+   "claims": ["마지막 칸은 프라임드 크라이오 라운즈 같은 원소보다 세미-라이플 캐노네이드"],
+   "verdict": "✅ 기본 조건(조준 없음): 캐노네이드를 빼면 69~73%. △ 조준(줌·저격 콤보) 조건에서는 계산기 1위가 캐노네이드 없이 바일 액셀러레이션·프라임드 슈레드로 연사·명중 수를 늘려 저격 콤보를 빨리 쌓음 — 캐노네이드 세팅은 93%."
+  }
+ ],
+ "meta": {
+  "read_builds": 0,
+  "elements": "직접 읽은 세팅 없음 (아카라이브 주장: 마지막 칸 캐노네이드)",
+  "valence": "해당 없음",
+  "core": [],
+  "flex": [],
+  "arcane": [],
+  "why": "아카라이브 173011037: 캐노네이드가 연사를 고정하니 크리티컬 딜레이로 치명타 확률을 채운다.",
+  "limit": "모드 8칸을 글자로 적은 최신 세팅을 못 찾음(ProGameTalk·Overframe 그림, 아카라이브·레딧 예약 실행에서 못 읽음). 루비코 프라임 커뮤니티 세팅은 대부분 에이돌론 사냥용(계산기 범위 밖)."
+ }
+}

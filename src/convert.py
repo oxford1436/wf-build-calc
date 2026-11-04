@@ -69,6 +69,16 @@ def wiki_traits(at, wa):
         at["hsMult"] = max(1, 2 + float(wa["ExtraHeadshotDmg"]))
     if wa.get("PunchThrough"):
         at["pt"] = float(wa["PunchThrough"])          # innate punch through (Incarnon forms, Ignis Wraith, Boltor …)
+    # Burst fire (wiki Fire Rate): "Fire Rate: Number of bursts per second if Burst Delay is 0 seconds … This is the 'Fire Rate'
+    # value listed in the arsenal"; "Burst Count: Number of shots per burst", "Burst Delay: Delay between shots fired in a single
+    # burst". The engine wants shots per second: BurstCount / (1/FireRate + BurstCount × BurstDelay) — this matches DE's export
+    # fireRate for every burst weapon (Perigale 6.06, Hind 6.25, Burston 7.83, Sicarus 7.39; the wiki's own formula text uses
+    # BurstCount − 1 delays, which the game numbers don't). Charged bursts (Ballistica, Balefire alt) keep their charge timing.
+    bc, bd = wa.get("BurstCount") or 0, float(wa.get("BurstDelay") or 0)
+    if bc > 1 and not wa.get("ChargeTime") and at.get("fr"):
+        fr0 = float(at["fr"])
+        at["burst"] = [int(bc), bd, fr0]
+        at["fr"] = round(bc / (1 / fr0 + bc * bd), 4)
     trig = str(wa.get("Trigger") or "")
     if re.search(r"auto|held", trig, re.I) and "semi" not in trig.lower() and at.get("semi"):
         at.pop("semi")                                # e.g. Phenmor: semi-auto rifle, full-auto Incarnon Form
@@ -356,7 +366,12 @@ def conv(w, typ):
 weapons = []
 for src in (P, S, ME):
     for w in src:
-        W = conv(w, w.get("type"))
+        # wiki Class wins for sniper rifles: DE's export lists Perigale Prime as "Rifle", the wiki as "Sniper Rifle"
+        # (CompatibilityTags SNIPER_AMMO) — it takes sniper-only mods (Primed Chamber, Sharpshooter …), not assault-rifle ones
+        typ = w.get("type")
+        if (WIKI.get(w["name"]) or {}).get("Class") == "Sniper Rifle" and typ == "Rifle":
+            typ = "Sniper"
+        W = conv(w, typ)
         if W:
             weapons.append(W)
 

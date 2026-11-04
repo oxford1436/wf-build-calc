@@ -200,6 +200,24 @@ const { chromium } = require("playwright");
       }
       check("v1.68 쿠바 자르·자르·쿠바 브람마 기본 공격에 집속탄(위키 개수)이 들어감", !bad, bad);
     }
+    // v1.69 (묶음 4 저격총): burst weapons — wiki Fire Rate: "Fire Rate: Number of bursts per second if Burst Delay is 0
+    // seconds … This is the 'Fire Rate' value listed in the arsenal", Burst Count shots per burst. Shots per second must be
+    // BurstCount / (1/FireRate + BurstCount × BurstDelay) (= DE export fireRate: Perigale 6.06, Hind 6.25, Quartakk 6.33,
+    // Sicarus 7.39), not the arsenal value (bursts per second: Perigale 2).
+    {
+      const want = { perigale_prime: 6.06, perigale: 6.06, hind: 6.25, quartakk: 6.33, sicarus: 7.39, burston: 7.83 };
+      let bad = "";
+      for (const id in want) {
+        const a = weapon(id).attacks.find((x) => x.burst) || weapon(id).attacks[0];
+        if (!(Math.abs(a.fr - want[id]) < 0.05)) bad += `${id}: 초당 ${(+a.fr).toFixed(2)}발 (게임 ${want[id]}) · `;
+      }
+      // negative fire rate does not stretch the burst delay (wiki "Burst Delay is not affected by net negative Fire Rate bonuses")
+      const w = weapon("perigale_prime"), a = w.attacks[0], o = baseO();
+      const r0 = E.evaluate(w, a, ["Galvanized Chamber"].map(M), o).rate, r1 = E.evaluate(w, a, ["Galvanized Chamber", "Critical Delay"].map(M), o).rate;
+      check("v1.69 점사 무기 연사 = 점사 발 수 ÷ (1/연사 + 발 수 × 점사 간격) (페리게일·힌드·쿼타크·시카루스·버스턴) · 음수 연사는 점사 간격을 늘리지 않음", !bad && r1 / r0 > 0.905, bad + "크리티컬 딜레이 연사 비 " + (r1 / r0).toFixed(3));
+    }
+    // v1.69 (묶음 4 저격총): wiki Perigale Prime "Class = Sniper Rifle" (DE export says Rifle) → sniper-only mods, not assault-rifle ones
+    check("v1.69 페리게일 프라임 = 저격총 (위키 분류)", weapon("perigale_prime").type === "Sniper", weapon("perigale_prime").type);
     // v1.68 (묶음 3 런처): Torid Incarnon beam — wiki "Punch Through mods have no effect on the behavior of the beam" —
     // Primed Shred must not change its score (same for Kunai / Latron / Vectis Incarnon forms per their wiki notes)
     {

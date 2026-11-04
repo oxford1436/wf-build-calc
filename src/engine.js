@@ -809,6 +809,13 @@
       rate = (atk.fr || 1) * Math.max(0.2, 1 + a.fr + (ext.asAdd || 0)) * 1.5;
     } else {
       let fr = a.lock > 0 && atk.semi ? atk.fr : atk.fr * Math.max(0.05, 1 + a.fr + a.frneg + (ext.frAdd || 0));
+      // burst weapons (atk.burst = [shots, delay, arsenal bursts/s]; atk.fr is already shots/s): positive fire rate scales
+      // "both the speed of the burst as well as the time between bursts", but "Burst Delay is not affected by net negative
+      // Fire Rate bonuses" (wiki Fire Rate)
+      if (atk.burst && !(a.lock > 0 && atk.semi)) {
+        const f = Math.max(0.05, 1 + a.fr + a.frneg + (ext.frAdd || 0));
+        if (f < 1) { const [bn, bd, b0] = atk.burst; fr = bn / (1 / (b0 * f) + bn * bd); }
+      }
       // Semi-auto: the game's Accessibility option "Fire Manual Trigger Weapons Continuously" fires semi-automatic weapons for as
       // long as the trigger is held (overframe news 11, wiki Trigger_Type), so the modded fire rate counts in full. o.semiCap (shots
       // per second) caps it for someone clicking by hand.
