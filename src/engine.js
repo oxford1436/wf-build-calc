@@ -568,7 +568,7 @@
           const ch = main.chain;
           let add = 0;
           for (let j = 1; j <= ch.n; j++) {
-            const fj = Math.pow(ch.f, j);
+            const fj = ch.flat ? ch.f : Math.pow(ch.f, j);   // "flat": every jump at f of the main beam (Kuva Nukor, Tenet Cycron)
             let tj = tHit;
             if (fj < 0.999) {
               const q = Object.assign({}, pMain, { D: pMain.D * fj, blast: (pMain.blast || 0) * fj, F: (pMain.F || 0) * fj, napH: (pMain.napH || 0) * fj,
@@ -585,8 +585,7 @@
         // current stacks instantly detonate in a single 5m AoE explosion. The explosion deals 300% base damage per stack (10x of
         // single target damage) in a single damage instance. The detonating enemy only receives the single target damage";
         // "The 5m AoE damage has no falloff"; crit multipliers apply ("summing up the total damage from each individual blast
-        // stack"). Stacks alive at death = procs of the last 1.5 s fuse, at most 10. (Faction damage applies twice per the wiki;
-        // the second application is left out here — conservative.)
+        // stack"). Stacks alive at death = procs of the last 1.5 s fuse, at most 10. Faction damage twice: in the per-proc unit.
         const pbl = (main.procs && main.procs.blast) || 0;
         let aoeBl = 0;
         if (o.scenario === "crowd" && pbl > 0 && acc.blast > 0) {
@@ -1173,7 +1172,9 @@
           // after the proc ends). Only the tick that lands right away is counted per rocket (conservative): 68% per multishot instance.
           napPh = 0.68 * ms0;
         }
-        const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * M * (xata ? 1 + xata * fac : 1);
+        // wiki Blast Damage: "Blast Proc Damage = 0.3 × Modded Base Damage × (1 + Faction Damage Bonuses) × (1 + Status Damage
+        // Bonuses)", Modded Base Damage itself × (1 + Faction) — "Faction Damage Bonuses apply twice to Blast procs" (like DoTs)
+        const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * fac * M * (xata ? 1 + xata * fac : 1);
         const vm0 = 4.25, dsum = Object.values(dot).reduce((s, x) => s + x, 0) + napHdisp;
         const dispDirect = D * vm0, dispDot = dsum * vm0, dispBlast = blast * vm0;
         const dispDotBy = {}; for (const T in dot) dispDotBy[T] = dot[T] * vm0;

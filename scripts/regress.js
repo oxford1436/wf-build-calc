@@ -344,6 +344,14 @@ const { chromium } = require("playwright");
       const o3 = Object.assign(A.readOpts(), { targets: null }); st.results = { o: o3 };
       const DA = ["galvanized_steel", "virulent_scourge", "vicious_frost", "galvanized_elementalist", "primed_fury", "condition_overload", "blood_rush", "shocking_touch", "disciplines_merit"];
       out.infl = A.evalBuild(DA, null, "melee_influence", o3).score / A.evalBuild(DA, null, null, o3).score;
+      // Ronin's Rush (evo II-2) in quick melee: +30% attack speed on the normal attack
+      out.rateRonin = A.evalBuild(DA, null, "melee_influence", o3).rate;
+      use("dual_ichor", "Normal Attack", { 2: 0, 3: 1, 4: 0 }); st.results = { o: o3 };
+      out.rateAlch = A.evalBuild(DA, null, "melee_influence", o3).rate;
+      // non-Incarnon chain beam (Amprex, wiki: 3 chains at 50/25/12.5%)
+      use("amprex", "Normal Attack", {}); const o4 = Object.assign(A.readOpts(), { targets: null }); st.results = { o: o4 };
+      out.amprexK = A.evalBuild(["serration", "split_chamber", "vital_sense", "point_strike"], null, null, o4).perF.grineer.Keff;
+      out.exposureManual = !!(window.WF_ARCANES.melee_exposure || {}).manual;
       return out;
     });
     const f2 = (x) => (x == null || isNaN(x) ? "-" : (+x).toFixed(2));
@@ -351,6 +359,9 @@ const { chromium } = require("playwright");
     results.push({ name: "v1.71 토리드 인카논 빔 연쇄: 무리에서 한 번에 3명 넘게 처리", ok: !r.err && r.keff > 3, detail: r.err || "한 번에 " + f2(r.keff) + "명" });
     results.push({ name: "v1.71 근접 인카논 형태 근접 피해 +100% 적용 (듀얼 이코르)", ok: !r.err && r.form >= 1, detail: r.err || "+" + Math.round(r.form * 100) + "%" });
     results.push({ name: "v1.71 밀리 인플루언스 전염 피해: 듀얼 이코르 세팅 A 인플루언스가 아케인 없음의 1.5배 넘음", ok: !r.err && r.infl > 1.5, detail: r.err || "×" + f2(r.infl) });
+    results.push({ name: "v1.72 퀵밀 Ronin's Rush: 듀얼 이코르 진화 II-2가 II-1보다 초당 타격 1.15배 넘음 (프라임드 퓨리 +55%와 합연산: 1.85/1.55)", ok: !r.err && r.rateRonin > 1.15 * r.rateAlch, detail: r.err || f2(r.rateRonin) + " / " + f2(r.rateAlch) });
+    results.push({ name: "v1.72 일반 연쇄 빔: 앰프렉스가 무리에서 한 번에 1.5명 넘게 처리", ok: !r.err && r.amprexK > 1.5, detail: r.err || "한 번에 " + f2(r.amprexK) + "명" });
+    results.push({ name: "v1.72 밀리 익스포저는 어빌리티 사용 조건부 (자동 추천 제외)", ok: !r.err && r.exposureManual, detail: r.err || String(r.exposureManual) });
     await p3.close();
   }
 

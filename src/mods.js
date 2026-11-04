@@ -296,7 +296,9 @@
     melee_influence: { ko: "밀리 인플루언스", slot: "melee" },
     melee_duplicate: { ko: "밀리 듀플리케이트", slot: "melee" },
     melee_animosity: { ko: "밀리 애니모시티", slot: "melee" },
-    melee_exposure: { ko: "밀리 익스포저", slot: "melee", eff: { corrm: 2.4 } },
+    // wiki Melee Exposure: "On Ability Cast: +60% Corrosive Damage Buff" for 25 s, up to 240%, stacks share one duration that
+    // refreshes on each cast — max needs 4 casts and then one every 25 s, which the calculator can't know: conditional
+    melee_exposure: { ko: "밀리 익스포저", en: "Melee Exposure", slot: "melee", manual: true, eff: { corrm: 2.4 }, note: "어빌리티를 쓸 때마다 부식 피해 +60% (25초, 최대 +240%) — 4번 쓰고 25초 안에 계속 다시 쓴다고 가정" },
     melee_retaliation: { ko: "밀리 리탈리에이션", en: "Melee Retaliation", slot: "melee", manual: true, retaliation: true, note: "현재 실드 200당 근접 피해 +30% (실드 2,800에서 최대 +420%) — 최대 실드 입력값 사용, 비워 두면 2,800 가정" },
     melee_doughty: { ko: "밀리 다우티", en: "Melee Doughty", slot: "melee", doughty: true, note: "관통 상태이상 확률 10%마다 치명타 피해 +1.0배" },
     melee_careen: { ko: "밀리 커린", en: "Melee Careen", slot: "melee", frozenMult: 2.5, note: "빙결(냉기 10중첩) 적에게 근접 피해 2.5배" },

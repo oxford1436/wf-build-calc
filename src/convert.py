@@ -46,6 +46,19 @@ CHAIN = {
     "Sicarus": {"Incarnon Form": {"n": 1, "f": 1, "p": 1, "r": 6}}, "Sicarus Prime": {"Incarnon Form": {"n": 1, "f": 1, "p": 1, "r": 6}},
     "Bronco": {"Incarnon Form": {"n": 1, "f": 1, "p": 0.5, "r": 6}}, "Bronco Prime": {"Incarnon Form": {"n": 1, "f": 1, "p": 0.5, "r": 8}},
     "Angstrum": {"Incarnon Form": {"n": 1, "f": 1, "p": 1, "r": 20}}, "Prisma Angstrum": {"Incarnon Form": {"n": 1, "f": 1, "p": 1, "r": 20}},
+    # non-Incarnon chain beams (wiki weapon pages, docs/community/chain_beams.md). "flat": every jump at f of the main beam.
+    #  Amprex "100% for the main target, 50% for the first in the chain, 25% for the 2nd, and 12.5% for the 3rd"
+    "Amprex": {"Normal Attack": {"n": 3, "f": 0.5, "p": 1, "r": 10}},
+    #  Atomos "100% … 75% … 56.25% … 42.1875%", "within 7 meters of the initial target"
+    "Atomos": {"Normal Attack": {"n": 3, "f": 0.75, "p": 1, "r": 7}},
+    #  Kuva Nukor: 2 chains "within 9 meters", "Each chain beam does 50% of the main beam's damage"
+    "Kuva Nukor": {"Normal Attack": {"n": 2, "f": 0.5, "p": 1, "r": 9, "flat": True}},
+    #  Tenet Cycron: 2 chains within 7 m, "Each chain beam does 60% of the main beam's damage"
+    "Tenet Cycron": {"Normal Attack": {"n": 3 - 1, "f": 0.6, "p": 1, "r": 7, "flat": True}},
+    #  Tenet Glaxion: 3 chains "within 8 meters from each other", "50% of the previous chain's damage"
+    "Tenet Glaxion": {"Normal Attack": {"n": 3, "f": 0.5, "p": 1, "r": 8}},
+    #  Basmu alt fire: "Each beam can chain up to 5 nearby enemies within 7 meters", "0.5^n times the main beam's damage"
+    "Basmu": {"Held": {"n": 5, "f": 0.5, "p": 1, "r": 7}},
 }
 # wiki Incarnon notes: Kunai "Punch Through is ignored in Incarnon Form"
 PT_NONE_ATK = {"Kunai": ("Incarnon Form",), "Mk1-Kunai": ("Incarnon Form",)}
@@ -207,7 +220,7 @@ def conv(w, typ):
                             at["incAmmo"] = ch
                 ch_ = CHAIN.get(name, {}).get(a["name"])
                 if ch_:
-                    at["chain"] = {k: ch_[k] for k in ("n", "f", "p", "r")}
+                    at["chain"] = {k: ch_[k] for k in ("n", "f", "p", "r", "flat") if k in ch_}
                     if ch_.get("radius"): at["radius"] = ch_["radius"]
                     if ch_.get("ptNone"): at["ptLock"] = True
                 if a["name"] in PT_NONE_ATK.get(name, ()):
@@ -604,6 +617,9 @@ EVO_RULES = [
     (r"^Enemies suffering from fewer than 3 Status Effects will receive: \+(\d+(?:\.\d+)?)% Critical Damage\.?$", "cdFew", 0.01, "상태이상 2종 이하인 적에게 치명타 피해 +{v}% (모드 후 고정값)"),
     (r"^On Full Burst Hit: \+(\d+(?:\.\d+)?)% Damage, resets on Reload\.?$", "dmg", 0.01, "점사 전탄 명중 시 피해 +{v}% (서레이션과 합연산)"),
     (r"^\+(\d+(?:\.\d+)?)% Damage\.?$", "dmg", 0.01, "피해 +{v}% (서레이션과 합연산)"),
+    # Dual Ichor evo II Ronin's Rush "On striking target with final move of Neutral Combo: +30% Attack Speed for 33s." — quick
+    # melee (melee key alone) plays the Neutral Combo over and over, so on the normal-attack build the buff stays up
+    (r"^On striking target with final move of Neutral Combo: \+(\d+)% Attack Speed for (\d+)s\.?$", "fr", 0.01, "공격 속도 +{v}% (퀵밀 = 기본 콤보 반복이라 상시, 일반 공격만)", "Normal Attack"),
     # melee Incarnon Form (Skana Incarnon note: "+100% damage is additive with other bonus damage sources like Pressure Point")
     (r"^\+(\d+(?:\.\d+)?)% Melee Damage\.?$", "dmg", 0.01, "근접 피해 +{v}% (프레셔 포인트와 합연산)"),
     (r"^Multishot consumes ammo directly from Capacity and increases Damage by \+(\d+(?:\.\d+)?)%\.?$", "evoMult", 0.01, "멀티샷이 탄약을 직접 소모, 피해 +{v}% (곱연산)"),
@@ -649,12 +665,15 @@ def evo_line(line):
         r = evo_line(line[:dbl.start()] + ".")
         if r.get("key"):
             return dict(r, incX2=True, ko=r["ko"] + " (인카논 형태에서 2배)")
-    for rx, key, mul, ko in EVO_RULES:
+    for rule in EVO_RULES:
+        rx, key, mul, ko = rule[:4]
         m = re.match(rx, line.strip())
         if m:
             g = m.group(1); v = float(g); sv = g if g[0] in "+-" else "+" + g
             gs = m.groups()
             fmt = dict(v=m.group(1).lstrip("+"), s=sv, g1=gs[0], g2=gs[1] if len(gs) > 1 else "")
+            if len(rule) > 4:                       # effect limited to one attack (e.g. Ronin's Rush: normal attacks)
+                return {"key": key, "v": round(v * mul, 4), "ko": ko.format(**fmt), "atk": rule[4]}
             if key == "nc":
                 p_, b_ = float(gs[0]) / 100, float(gs[1]) / 100
                 return {"key": "nc", "v": round(p_ * b_, 4), "ko": ko.format(avg=f"{1 + p_ * b_:g}", **fmt)}

@@ -347,6 +347,7 @@ self.onmessage = function (ev) {
       const x = JSON.parse(JSON.stringify(a)), eff = {};
       for (const it of items) {
         if ((it.form === "inc" && !inc) || (it.form === "normal" && inc)) continue;   // no form = both forms
+        if (it.atk && a.en !== it.atk) continue;                                       // e.g. Ronin's Rush: normal attacks only
         if (it.key === "baseDmg") { const f = dmgF != null ? dmgF : (() => { const tot = Object.values(x.dmg || {}).reduce((q, v) => q + v, 0); return tot > 0 ? (tot + it.v) / tot : 1; })(); for (const k in x.dmg) x.dmg[k] *= f; }
         else if (it.key === "baseCC") x.cc = (x.cc || 0) + it.v;
         else if (it.key === "baseCD") x.cd = (x.cd || 0) + it.v;
