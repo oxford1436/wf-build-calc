@@ -60,6 +60,9 @@ CHAIN = {
     #  Basmu alt fire: "Each beam can chain up to 5 nearby enemies within 7 meters", "0.5^n times the main beam's damage"
     "Basmu": {"Held": {"n": 5, "f": 0.5, "p": 1, "r": 7}},
 }
+# on-kill damage fields (wiki Incarnon notes): Dual Ichor "Kills create a Toxin Damage field", "Fields do 350 Toxin damage
+# (increased to 440 by EVO2 — both EVO II perks add +90) and last for 7 seconds", "4m range". Tick interval not stated -> every: None
+KILL_FIELD = {"Dual Ichor": {"dmg": 440, "dur": 7, "r": 4, "every": None}}
 # wiki Incarnon notes: Kunai "Punch Through is ignored in Incarnon Form"
 PT_NONE_ATK = {"Kunai": ("Incarnon Form",), "Mk1-Kunai": ("Incarnon Form",)}
 # weapon-wide crit traits (wiki weapon pages): Gotva Prime "Status Effects have a 15% chance to set the next shot's Critical
@@ -422,6 +425,8 @@ for src in (P, S, ME):
             typ = "Sniper"
         W = conv(w, typ)
         if W:
+            if W.get("en") in KILL_FIELD:
+                for at_ in W.get("attacks", []): at_["killField"] = KILL_FIELD[W["en"]]
             weapons.append(W)
 
 # exalted weapons (wiki Module:Weapons/data, Class "Exalted Weapon"; Garuda Talons are a passive exalted-like weapon).
@@ -482,6 +487,8 @@ for n in ex_names:
     W["noRiven"] = True
     if n in EX_PSEUDO:
         W["pseudo"] = True
+    if W.get("en") in KILL_FIELD:
+        for at_ in W.get("attacks", []): at_["killField"] = KILL_FIELD[W["en"]]
     weapons.append(W)
     n_ex += 1
 print("exalted", n_ex)

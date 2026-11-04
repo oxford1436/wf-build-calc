@@ -352,6 +352,13 @@ const { chromium } = require("playwright");
       use("amprex", "Normal Attack", {}); const o4 = Object.assign(A.readOpts(), { targets: null }); st.results = { o: o4 };
       out.amprexK = A.evalBuild(["serration", "split_chamber", "vital_sense", "point_strike"], null, null, o4).perF.grineer.Keff;
       out.exposureManual = !!(window.WF_ARCANES.melee_exposure || {}).manual;
+      // Dual Ichor on-kill toxin field (tick interval not on the wiki): Lv150 without Steel Path, Influence build — ticking every
+      // second must clear faster than one hit of 440
+      use("dual_ichor", "Normal Attack", { 2: 1, 3: 1, 4: 0 });
+      const o5 = Object.assign(A.readOpts(), { targets: null, level: 150, steel: false, levelSteps: [0, 0, 0] }); st.results = { o: o5 };
+      const INF = ["truths_flame", "galvanized_steel", "primed_fever_strike", "vicious_frost", "shocking_touch", "weeping_wounds", "condition_overload", "berserker_fury", "gladiator_vice"];
+      out.fieldLo = A.evalBuild(INF, null, "melee_influence", o5).score;
+      out.fieldHi = A.evalBuild(INF, null, "melee_influence", Object.assign({}, o5, { fieldHigh: true })).score;
       return out;
     });
     const f2 = (x) => (x == null || isNaN(x) ? "-" : (+x).toFixed(2));
@@ -362,6 +369,7 @@ const { chromium } = require("playwright");
     results.push({ name: "v1.72 퀵밀 Ronin's Rush: 듀얼 이코르 진화 II-2가 II-1보다 초당 타격 1.15배 넘음 (프라임드 퓨리 +55%와 합연산: 1.85/1.55)", ok: !r.err && r.rateRonin > 1.15 * r.rateAlch, detail: r.err || f2(r.rateRonin) + " / " + f2(r.rateAlch) });
     results.push({ name: "v1.72 일반 연쇄 빔: 앰프렉스가 무리에서 한 번에 1.5명 넘게 처리", ok: !r.err && r.amprexK > 1.5, detail: r.err || "한 번에 " + f2(r.amprexK) + "명" });
     results.push({ name: "v1.72 밀리 익스포저는 어빌리티 사용 조건부 (자동 추천 제외)", ok: !r.err && r.exposureManual, detail: r.err || String(r.exposureManual) });
+    results.push({ name: "v1.73 듀얼 이코르 처치 시 독 장판 계산됨 (1초마다 가정 > 한 번 가정, Lv150 강철의 길 아님)", ok: !r.err && r.fieldHi > r.fieldLo * 1.05, detail: r.err || "×" + f2(r.fieldHi / r.fieldLo) });
     await p3.close();
   }
 

@@ -497,10 +497,10 @@
     const perF = {};
     for (const f of o.factions) {
       // sum per-shot params across parts (same trigger)
-      const acc = { D: 0, Dnon: 0, pbN: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
+      const acc = { kf: 0, D: 0, Dnon: 0, pbN: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
       res.forEach((r, ri) => {
         const x = r.perF[f], wgt = weights[ri];
-        acc.D += x.D * wgt; acc.Dnon += (x.Dnon || 0) * wgt; acc.pbN += (x.pbN || 0) * wgt; acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt; acc.napH += (x.napH || 0) * wgt;
+        acc.D += x.D * wgt; acc.Dnon += (x.Dnon || 0) * wgt; acc.pbN += (x.pbN || 0) * wgt; acc.kf = Math.max(acc.kf, x.kf || 0); acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt; acc.napH += (x.napH || 0) * wgt;
         for (const T in x.dot) acc.dot[T] = (acc.dot[T] || 0) + x.dot[T] * wgt;
         for (const T in x.dotNon) acc.dotNon[T] = (acc.dotNon[T] || 0) + x.dotNon[T] * wgt;
         acc.pv += x.pv * wgt; acc.ph += x.ph * wgt; acc.pc += x.pc * wgt; acc.pk += x.pk * wgt; acc.pm += (x.pm || 0) * wgt; acc.pp += (x.pp || 0) * wgt;
@@ -645,6 +645,13 @@
               tExp = tHit + Math.ceil(1 / fh) / Math.max(1e-6, nearRate);
             }
             clear = tgs.heavy ? Math.min(lights, (nL / k2) * eng(tHit) + eng(Math.min(tHeavy, tExp)) + (tgs.ex ? eng(tEx) : 0)) : lights;
+          }
+          if (acc.kf > 0 && main.kfR) {
+            const nF = Math.min(main.N - 1, (o.density || 0) * Math.PI * main.kfR * main.kfR);
+            const dealtF = ttk(Object.assign({}, base, { D: acc.kf, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, r: 0, cc: 0, nc: 0, hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar }), o.dt);
+            const fracF = Math.min(1, dealtF / Math.max(1, tg.hp));
+            const k3 = Math.min(main.N, Keff * (1 + nF * fracF));
+            clear = Math.min(clear, (nL / k3) * eng(tHit) + extra);
           }
           // heavy first: while it is being hit the pack takes the spread; whatever is left of the pack is swept afterwards
           if (tgs.heavy && isFinite(tNonH) && tNonH < 40) {
@@ -1078,6 +1085,17 @@
       const gco = kind === "radial" ? 0 : (kills ? a.gco * ntypes : 0) + (a.evoPst || 0) * ntypes;
       const co = isMelee && !atk.noCO ? a.co * ntypes : 0;
       const mbd = Btot * exS * (1 + dmgb + dmgArc + platedB) * fallM;
+      // on-kill damage fields of the weapon itself (wiki Incarnon notes; convert.py KILL_FIELD): Dual Ichor "Fields do 350 Toxin
+      // damage (increased to 440 by EVO2) and last for 7 seconds", "4m range", "affected by faction damage bonuses", melee damage
+      // buffs (Pressure Point, the Incarnon Form's +100%) and "all elemental damage buffs"; "0% Critical Chance", "not affected by
+      // Condition Overload". How often it ticks isn't on the wiki: o.fieldHigh = every second for the whole 7 s (as Furax's
+      // "50 Heat damage every second for 7 seconds"), otherwise the 440 once — the app checks the pick holds at both ends.
+      let kfTot = 0;
+      if (atk.killField && o.scenario === "crowd" && isMelee) {
+        const kf = atk.killField, elemSum = Object.values(a.elem || {}).reduce((q, v) => q + Math.max(0, v), 0);
+        const ticks = kf.every ? kf.dur / kf.every : (o.fieldHigh ? kf.dur : 1);
+        kfTot = kf.dmg * (1 + dmgb + dmgArc) * (1 + elemSum) * ticks;
+      }
       let directMult = Btot * exS * (1 + dmgb + dmgArc + platedB + gco + co) * fallM;
       // Secondary Irradiate (wiki): only direct hits spread, and elemental mods are 33% less effective on the spread hits
       if (arc && arc.irradiate && o.scenario === "crowd" && kind !== "radial") {
@@ -1180,7 +1198,7 @@
         const dispDotBy = {}; for (const T in dot) dispDotBy[T] = dot[T] * vm0;
         if (napHdisp > 0) dispDotBy.napalmHeat = napHdisp * vm0;
         perF[fname] = {
-          D, Dnon: Dsp * spreadNon, pbN, blast, dot, dotNon, napH, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
+          D, Dnon: Dsp * spreadNon, pbN, kf: kfTot * fac, blast, dot, dotNon, napH, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
           pv: (procs.viral || 0) * spreadHit, ph: ((procs.heat || 0) + napPh) * spreadHit, pc: (procs.corr || 0) * spreadHit, pk: (procs.cold || 0) * spreadHit, pm: (procs.mag || 0) * spreadHit,
           pp: kind === "radial" ? 0 : (procs.punct || 0) * spreadHit,
           pvN: (procs.viral || 0) * spreadNon, phN: (procs.heat || 0) * spreadNon, pcN: (procs.corr || 0) * spreadNon, pkN: (procs.cold || 0) * spreadNon,
@@ -1204,6 +1222,7 @@
     }
     // chaining / ricocheting shots (wiki Incarnon notes via convert.py CHAIN): hits that jump on from every enemy struck
     if (best && atk.chain && o.scenario === "crowd" && N > 1) best.chain = atk.chain;
+    if (best && atk.killField) best.kfR = atk.killField.r;
     // ammo: seconds of continuous fire from a full load, and ammo packs needed per minute
     // Incarnon Form: its own pool (charges), untouched by mods and ammo efficiency; the form ends when it runs out
     const incOf = atk.inc || (atk.parts && atk.parts[0].inc);
