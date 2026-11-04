@@ -29,6 +29,10 @@ NO_MS_RADIAL = {"Burston Prime": ("Incarnon Form Radial Attack",)}
 # weapon-wide crit traits (wiki weapon pages): Gotva Prime "Status Effects have a 15% chance to set the next shot's Critical
 # Chance to 300%" (15% confirmed by DE on the official forums, wiki footnote), ignoring mods
 PROC_CRIT = {"Gotva Prime": {"p": 0.15, "cc": 3.0}}
+# Perigale / Perigale Prime "Gale Force" (wiki Perigale, 2026-11-04): "Landing 4 headshots in a burst or a headshot kill grants
+# the "Gale Force" buff, granting Infinite Ammo. The buff lasts 4 seconds and can be refreshed on subsequent chained headshots."
+# Notes: "Multishot, Xata's Whisper, and Punch Through hitting multiple heads all count as separate headshot hits".
+GALE_FORCE = {"Perigale": {"hits": 4, "dur": 4}, "Perigale Prime": {"hits": 4, "dur": 4}}
 # radial parts that are NOT added to their wiki parent shot (checked 2026-11-03, queue item 0):
 # - Castanas: "Mid-Flight Detonation" and "Embedded Detonation" are alternatives — a dart detonated in flight never also
 #   detonates embedded (wiki Castanas: detonating before it sticks uses the mid-flight values)
@@ -278,6 +282,8 @@ def conv(w, typ):
             W["attacks"] = combos + base + late
             if name in PROC_CRIT:
                 W["procCrit"] = PROC_CRIT[name]
+            if name in GALE_FORCE:
+                W["galeForce"] = GALE_FORCE[name]
             wk = WIKI.get(name) or {}
             if wk.get("ReloadStyle") == "ByRound":   # shells loaded one by one: bigger magazine = longer reload
                 for at_ in base:

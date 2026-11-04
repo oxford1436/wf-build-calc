@@ -216,6 +216,18 @@ const { chromium } = require("playwright");
       const r0 = E.evaluate(w, a, ["Galvanized Chamber"].map(M), o).rate, r1 = E.evaluate(w, a, ["Galvanized Chamber", "Critical Delay"].map(M), o).rate;
       check("v1.69 점사 무기 연사 = 점사 발 수 ÷ (1/연사 + 발 수 × 점사 간격) (페리게일·힌드·쿼타크·시카루스·버스턴) · 음수 연사는 점사 간격을 늘리지 않음", !bad && r1 / r0 > 0.905, bad + "크리티컬 딜레이 연사 비 " + (r1 / r0).toFixed(3));
     }
+    // v1.70 (대기열 4b): Perigale "Gale Force" — wiki: "Landing 4 headshots in a burst or a headshot kill grants the "Gale Force"
+    // buff, granting Infinite Ammo. The buff lasts 4 seconds". With headshots (o.hs 0.5, aimed) the magazine lasts longer →
+    // fewer reloads → higher average rate and less ammo used; without headshots nothing changes.
+    {
+      const w = weapon("perigale_prime"), a = w.attacks[0], ids = ["Galvanized Chamber", "Vile Acceleration"].map(M);
+      const oH = Object.assign(baseO(), { hs: 0.5, aim: true }), o0 = baseO();
+      const wNo = Object.assign({}, w, { galeForce: undefined });
+      const rH = E.evaluate(w, a, ids, oH), rHn = E.evaluate(wNo, a, ids, oH), r0 = E.evaluate(w, a, ids, o0), r0n = E.evaluate(wNo, a, ids, o0);
+      const ok = !!w.galeForce && rH.rate / rHn.rate > 1.2 && rH.ammo.use < rHn.ammo.use * 0.5 && Math.abs(r0.rate / r0n.rate - 1) < 1e-9;
+      check("v1.70 페리게일 갈 포스: 헤드샷 조건에서 탄약 무소모(재장전 줄고 탄약 사용 감소), 헤드샷 없으면 그대로", ok,
+        `연사 ${(rHn.rate).toFixed(2)} → ${(rH.rate).toFixed(2)}, 탄약 ${(rHn.ammo.use).toFixed(2)} → ${(rH.ammo.use).toFixed(2)}/초`);
+    }
     // v1.69 (묶음 4 저격총): wiki Perigale Prime "Class = Sniper Rifle" (DE export says Rifle) → sniper-only mods, not assault-rifle ones
     check("v1.69 페리게일 프라임 = 저격총 (위키 분류)", weapon("perigale_prime").type === "Sniper", weapon("perigale_prime").type);
     // v1.68 (묶음 3 런처): Torid Incarnon beam — wiki "Punch Through mods have no effect on the behavior of the beam" —

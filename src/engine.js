@@ -720,7 +720,22 @@
     // Repeater Clip (fire rate for 9 s after a reload while aiming: full uptime if the magazine empties within it)
     // Ammo Efficiency: that share of shots uses no ammo (cap 75%, Hotfix 44.1.3: "only 1 in 4 shots will consume ammo"),
     // so a magazine lasts 1/(1 - eff) times as many shots and the weapon reloads that much less often
-    const magShots = (n) => n / (1 - Math.min(0.75, Math.max(0, a.ammoEff || 0)));
+    // Perigale "Gale Force" (wiki Perigale): "Landing 4 headshots in a burst or a headshot kill grants the "Gale Force" buff,
+    // granting Infinite Ammo. The buff lasts 4 seconds and can be refreshed on subsequent chained headshots"; "Multishot …
+    // and Punch Through hitting multiple heads all count as separate headshot hits". Only with real headshots (o.hs, not
+    // Sonar weak points). Triggers = bursts with ≥4 headshot hits (binomial, hits = burst shots × multishot, each a headshot
+    // with chance o.hs); headshot kills are left out (lower bound). Share of shots fired under the buff ≈ 1 − e^(−rate × 4 s);
+    // those shots use no ammo (no magazine, no reserve), so reloads come 1/(1 − g) times less often.
+    let galeG = 0;
+    if (weapon.galeForce && !isMeleeKind(atk.kind) && (o.hs || 0) > 0) {
+      const gf = weapon.galeForce, p = Math.min(1, o.hs), bn = atk.burst ? atk.burst[0] : 1;
+      const hitsB = bn * (atk.pellets || 1) * Math.max(0, 1 + a.ms + (ext.msAdd || 0));
+      const atLeast = (n) => { let q = 0, c = 1; for (let k = 0; k <= n; k++) { if (k >= gf.hits) q += c * Math.pow(p, k) * Math.pow(1 - p, n - k); c = c * (n - k) / (k + 1); } return q; };
+      const nf = Math.floor(hitsB), w = hitsB - nf, pB = (1 - w) * atLeast(nf) + w * atLeast(nf + 1);
+      const bursts = (atk.fr || 1) * Math.max(0.05, 1 + a.fr + a.frneg + (ext.frAdd || 0)) / bn;
+      galeG = Math.min(0.99, 1 - Math.exp(-bursts * pB * gf.dur));
+    }
+    const magShots = (n) => n / (1 - Math.min(0.75, Math.max(0, a.ammoEff || 0))) / (1 - galeG);
     for (const m of mods) {
       if (!m || !atk.mag) continue;
       const magN = Math.max(1, magShots(atk.mag * (1 + a.mag)));
@@ -1105,7 +1120,7 @@
     } else if (best && weapon.ammoMax && !isMelee) {
       const magN = (atk.mag || 0) * (1 + a.mag), maxA = weapon.ammoMax * (1 + a.ammoMax);
       const cost = atk.ammoCost != null ? atk.ammoCost : atk.parts && atk.parts[0].ammoCost != null ? atk.parts[0].ammoCost : 1;
-      const use = rate * cost * (1 - Math.min(0.75, a.ammoEff));      // all sources together cap at 75% (Hotfix 44.1.3)
+      const use = rate * cost * (1 - Math.min(0.75, a.ammoEff)) * (1 - galeG);      // all sources together cap at 75% (Hotfix 44.1.3); Gale Force shots are free
       best.ammo = { sustain: (magN + maxA) / Math.max(1e-6, use), use, mag: magN, max: maxA, pickup: weapon.ammoPickup || 0,
         packsPerMin: weapon.ammoPickup ? use * 60 / weapon.ammoPickup : null, conv: a.ammoConv };
       // Cyte-09 Resupply refills the magazine on every cast, so the reserve never runs dry (players use it as infinite ammo)
