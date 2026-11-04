@@ -1159,7 +1159,7 @@
         for (const T of DOT_TYPES) {
           const p = procs[T] || 0; if (p <= 0) continue;
           if (!dotN[T]) continue;
-          let per = dotN[T] * hsDot * (T === "slash" ? 0.35 : 0.5) * mbd * (1 + bonus[T]) * (1 + sd + (T === "tox" ? (ext.sdTox || 0) : 0)) * (fac_.weak.includes(T) ? 1.5 : 1) * fin * fac * fac * M;
+          let per = dotN[T] * hsDot * (T === "slash" ? 0.35 : 0.5) * mbd * (1 + bonus[T]) * (1 + sd + (T === "tox" ? (ext.sdTox || 0) : 0)) * (fac_.weak.includes(T) ? 1.5 : 1) * fin * fac * fac * (o.noComboStatus ? 1 : M);   // o.noComboStatus: app checks the pick without the combo multiplier on status (not on the wiki)
           if (xata) per *= 1 + xata * fac;      // every tick is a damage instance → its own Xata hit
           if (T === "elec") per *= n3;
           if (T === "gas") per *= ng;
@@ -1194,7 +1194,7 @@
         }
         // wiki Blast Damage: "Blast Proc Damage = 0.3 × Modded Base Damage × (1 + Faction Damage Bonuses) × (1 + Status Damage
         // Bonuses)", Modded Base Damage itself × (1 + Faction) — "Faction Damage Bonuses apply twice to Blast procs" (like DoTs)
-        const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * fac * M * (xata ? 1 + xata * fac : 1);
+        const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * fac * (o.noComboStatus ? 1 : M) * (xata ? 1 + xata * fac : 1);
         const vm0 = 4.25, dsum = Object.values(dot).reduce((s, x) => s + x, 0) + napHdisp;
         const dispDirect = D * vm0, dispDot = dsum * vm0, dispBlast = blast * vm0;
         const dispDotBy = {}; for (const T in dot) dispDotBy[T] = dot[T] * vm0;

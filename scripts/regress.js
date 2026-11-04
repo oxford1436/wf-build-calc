@@ -372,6 +372,10 @@ const { chromium } = require("playwright");
       const INF = ["truths_flame", "galvanized_steel", "primed_fever_strike", "vicious_frost", "shocking_touch", "weeping_wounds", "condition_overload", "berserker_fury", "gladiator_vice"];
       out.fieldLo = A.evalBuild(INF, null, "melee_influence", o5).score;
       out.fieldHi = A.evalBuild(INF, null, "melee_influence", Object.assign({}, o5, { fieldHigh: true })).score;
+      // v1.75: the combo-on-status assumption is checked at both ends — without it the Duplicate/Blast pick must lose to Influence
+      const o6 = Object.assign(A.readOpts(), { targets: null, noComboStatus: true }); st.results = { o: o6 };
+      const REC = ["truths_flame", "galvanized_steel", "north_wind", "gladiator_vice", "condition_overload", "berserker_fury", "weeping_wounds", "gladiator_might", "molten_impact"];
+      out.ncsRatio = A.evalBuild(INF, null, "melee_influence", o6).score / A.evalBuild(REC, null, "melee_duplicate", o6).score;
       return out;
     });
     const f2 = (x) => (x == null || isNaN(x) ? "-" : (+x).toFixed(2));
@@ -383,6 +387,7 @@ const { chromium } = require("playwright");
     results.push({ name: "v1.72 일반 연쇄 빔: 앰프렉스가 무리에서 한 번에 1.5명 넘게 처리", ok: !r.err && r.amprexK > 1.5, detail: r.err || "한 번에 " + f2(r.amprexK) + "명" });
     results.push({ name: "v1.72 밀리 익스포저는 어빌리티 사용 조건부 (자동 추천 제외)", ok: !r.err && r.exposureManual, detail: r.err || String(r.exposureManual) });
     results.push({ name: "v1.73 듀얼 이코르 처치 시 독 장판 계산됨 (1초마다 가정 > 한 번 가정, Lv150 강철의 길 아님)", ok: !r.err && r.fieldHi > r.fieldLo * 1.05, detail: r.err || "×" + f2(r.fieldHi / r.fieldLo) });
+    results.push({ name: "v1.75 강공 연속기 배율을 상태이상에서 빼면(위키 미확인 가정의 반대쪽) 듀얼 이코르 인플루언스 세팅이 듀플리케이트·폭발 세팅보다 빠름 → 앱이 추천 보류", ok: !r.err && r.ncsRatio > 1.2, detail: r.err || "×" + f2(r.ncsRatio) });
     await p3.close();
   }
 

@@ -1371,13 +1371,26 @@ self.onmessage = function (ev) {
   // A mechanic the wiki documents but leaves a number out of (Dual Ichor's on-kill field: no tick interval) is computed at both
   // ends of its range. The pick is shown only if it stays first at both; otherwise the recommendation is withheld (user rule
   // 2026-11-04: "결함이 있는 세팅을 추천한다고 보이지 말라").
+  // Unverified assumptions, each computed at its other end too:
+  //  - fieldHigh: on-kill field ticks every second (wiki gives no interval)
+  //  - noComboStatus: the heavy-attack / Tennokai combo multiplier does NOT reach status damage (Blast, DoTs) — the wiki
+  //    (Melee Combo, Damage/Calculation) doesn't say either way; the engine's default applies it
   function boundCheck(R) {
-    const atk = st.weapon.attacks[st.atk];
-    if (!atk || !atk.killField || atk.killField.every || R.o.scenario !== "crowd") return null;
-    const K = Math.min(30, R.res.length), oH = Object.assign({}, R.o, { fieldHigh: true });
-    const hi = R.res.slice(0, K).map((x) => evalBuild(x.ids, x.val, x.arcane, oH).score);
-    let bi = 0; for (let i = 1; i < K; i++) if (hi[i] > hi[bi]) bi = i;
-    return { bi, gain: hi[bi] / Math.max(1e-12, hi[0]), alt: R.res[bi], kf: atk.killField };
+    const w = st.weapon, atk = w.attacks[st.atk];
+    if (!atk) return null;
+    const alts = [];
+    if (atk.killField && !atk.killField.every && R.o.scenario === "crowd") alts.push({ o: { fieldHigh: true }, why: `처치 시 장판(${atk.killField.dmg} 피해, ${atk.killField.dur}초)이 몇 초마다 들어가는지 위키에 없음 — 한 번 / 1초마다` });
+    if (w.slot === "melee") alts.push({ o: { noComboStatus: true }, why: "강공·텐노카이의 연속기 배율(최대 12배)이 상태이상(폭발·도트) 피해에도 곱해지는지 위키에 없음 — 곱해짐 / 안 곱해짐" });
+    if (!alts.length) return null;
+    const K = Math.min(30, R.res.length), outs = [];
+    for (const a of alts) {
+      const oX = Object.assign({}, R.o, a.o);
+      const sc = R.res.slice(0, K).map((x) => evalBuild(x.ids, x.val, x.arcane, oX).score);
+      let bi = 0; for (let i = 1; i < K; i++) if (sc[i] > sc[bi]) bi = i;
+      outs.push({ bi, gain: sc[bi] / Math.max(1e-12, sc[0]), alt: R.res[bi], why: a.why });
+    }
+    const bad = outs.filter((x) => x.bi !== 0 && x.gain > 1.02);
+    return { bad, all: outs };
   }
 
   // Documented mechanics the engine doesn't have yet (wiki audit 2026-11-05, docs/mechanics/gaps_*.json, attached by convert.py):
@@ -1406,13 +1419,12 @@ self.onmessage = function (ev) {
       return;
     }
     const bc = boundCheck(R);
-    if (bc && bc.bi !== 0 && bc.gain > 1.02) {
+    if (bc && bc.bad.length) {
       const lst = (x) => x.ids.map((id) => esc(id === "__riven" ? "리벤" : (MOD_BY_ID[id] || { ko: id }).ko)).join(" · ") + (x.arcane ? " · 아케인 " + esc(((window.WF_ARCANES || {})[x.arcane] || { ko: x.arcane }).ko) : "");
-      $("#results").innerHTML = shareBarHtml() + `<section class="card"><h3>추천 보류</h3>
-        <p>${esc(st.weapon.ko)}의 처치 시 장판(${bc.kf.dmg} 피해, ${bc.kf.dur}초, ${bc.kf.r}m — 위키)은 <b>몇 초마다 피해가 들어가는지 위키에 없습니다.</b>
-        한 번만 들어간다고 볼 때와 1초마다 들어간다고 볼 때 1위가 달라서, 틀릴 수 있는 세팅을 추천하지 않습니다.</p>
-        <ul><li>한 번만 들어갈 때 1위: ${lst(res[0])}</li><li>1초마다 들어갈 때 1위(${((bc.gain - 1) * 100).toFixed(0)}% 빠름): ${lst(bc.alt)}</li></ul>
-        <p>게임에서 장판 위에 피해 숫자가 몇 번 뜨는지(7초 동안) 알려 주시면 그 값으로 고정해 다시 계산합니다.</p></section>`;
+      $("#results").innerHTML = shareBarHtml() + `<section class="card"><h3>추천 보류 — 위키로 확인 안 된 가정에 따라 1위가 바뀜</h3>
+        <p>아래 가정은 위키에 답이 없어 양쪽으로 계산했습니다. 어느 쪽이냐에 따라 1위가 달라서, 틀릴 수 있는 세팅(포르마·랭크업 손해)을 추천하지 않습니다.</p>
+        <ul><li>계산기 기본 가정의 1위: ${lst(res[0])}</li>${bc.bad.map((x) => `<li><b>${esc(x.why)}</b><br>반대쪽 가정의 1위(${((x.gain - 1) * 100).toFixed(0)}% 빠름): ${lst(x.alt)}</li>`).join("")}</ul>
+        <p>게임에서 확인되면 그 값으로 고정해 다시 계산합니다.</p></section>`;
       return;
     }
     const top = res[0];
@@ -1578,7 +1590,7 @@ self.onmessage = function (ev) {
     </ul></section>`;
     const toc = [["sec1", "① 추천 세팅"], ["sec2", "② 내 세팅과 비교"], ["sec3", "③ 리벤"], ["sec4", "④ 속성·아케인"], ["sec5", "⑤ 상세"]];
     html += `<nav class="rtoc" aria-label="결과 목차">${toc.map(([id, t]) => `<button type="button" data-go="${id}">${t}</button>`).join("")}</nav>`
-      + sec("①", "추천 세팅", "리벤 없이 · 모든 모드 보유 전제" + (bc ? " · 처치 시 장판(피해 간격 위키 미기재)은 한 번·1초마다 양쪽 모두에서 이 세팅이 1위" : ""), h1, "sec1")
+      + sec("①", "추천 세팅", "리벤 없이 · 모든 모드 보유 전제" + (bc && bc.all.length ? " · 위키에 없는 가정(" + bc.all.map((x) => x.why.split(" — ")[0]).join(", ") + ")은 양쪽 모두에서 이 세팅이 1위" : ""), h1, "sec1")
       + sec("②", "내 세팅과 비교", "왼쪽 '비교할 세팅'에 넣은 세팅", `<section class="card" id="cmpout"></section>`, "sec2")
       + sec("③", "리벤", "어떤 리벤을 노릴까", h3, "sec3")
       + sec("④", "속성·아케인", "추천 모드 그대로 바꿨을 때", h4, "sec4")
