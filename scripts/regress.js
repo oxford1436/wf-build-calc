@@ -32,6 +32,9 @@ const { chromium } = require("playwright");
       const hH = hes.attacks.find((a) => a.en === "Heavy Attack"), tot = Object.values(hH.dmg).reduce((q, v) => q + v, 0);
       check("v1.74 헤스파 강공 1680 (560×3, 위키)", Math.abs(tot - 1680) < 1, tot);
       check("v1.74 퓨락스: 계산에 없는 위키 메커니즘이 붙어 있음 (앱이 추천 보류)", (fur.gaps || []).length > 0, (fur.gaps || []).length + "개");
+      // v1.76: Dual Ichor heavy = 610 in the in-game arsenal (wiki 488)
+      const ich = weapon("dual_ichor"), iH = ich.attacks.find((a) => a.en === "Heavy Attack"), iT = Object.values(iH.dmg).reduce((q, v) => q + v, 0);
+      check("v1.76 듀얼 이코르 강공 610 (게임 아스날, 위키 488)", Math.abs(iT - 610) < 1, iT);
       const amp = weapon("amprex").attacks.find((a) => a.en === "Normal Attack");
       check("v1.74 빔 피해 상승 (앰프렉스 30% → 100%, 0.6초, 위키)", amp.beamRamp && amp.beamRamp[0] === 0.3 && amp.beamRamp[1] === 0.6, JSON.stringify(amp.beamRamp));
     }

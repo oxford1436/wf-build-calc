@@ -535,6 +535,16 @@ for w in weapons:
         for a in w["attacks"]:
             if a.get("en") == "Heavy Attack" and a.get("dmg"):
                 a["dmg"] = {k: round(v / 3, 3) for k, v in a["dmg"].items()}
+# Dual Ichor heavy: wiki module and WFCD say HeavyAttack = 488 (4 x 122), the in-game arsenal (user screenshot 2026-11-06,
+# no mods) shows 610 (5 x 122, two blade hits). Slam/slide 244 match the wiki, only the heavy differs. Arsenal wins (P5).
+# Simulacrum video the same day: Tennokai heavy hits 782/391 at 2x and 4.7K/2.3K at 12x — x6, the full combo multiplier.
+ARSENAL_HEAVY = {"Dual Ichor": 610}
+for w in weapons:
+    if w.get("en") in ARSENAL_HEAVY:
+        for a in w["attacks"]:
+            if a.get("en") == "Heavy Attack" and a.get("dmg"):
+                tot = sum(a["dmg"].values())
+                a["dmg"] = {k: round(v * ARSENAL_HEAVY[w["en"]] / tot, 3) for k, v in a["dmg"].items()}
 # documented mechanics still missing from the engine (wiki audit, docs/mechanics/gaps_*.json): the app withholds the
 # recommendation for an attack they touch ("cat": all / normal / heavy / slam / throw; "cond" and handled ones don't count)
 import glob as _glob
