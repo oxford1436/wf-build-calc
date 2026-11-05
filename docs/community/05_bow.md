@@ -39,3 +39,8 @@
 - 위키 Fire_Rate 1쪽만 시도 → "permission request … not answered in time"(PROVENANCE_REQUIRED). 같은 사이트 다른 쪽은 보내지 않음, 우회 안 함 → 직접 읽은 세팅 0, 판정 0, 엔진 수정 0.
 - 점검표(report.md)는 11-05 00시 이후 갱신 없음 — 표시 2건(쿠바 오그리스·아르카 플라즈모어)은 0c_plasmor_meta.md에서 설명 끝남.
 - 다음 실행: 웹 읽기 권한이 승인되면 위 '다음 실행 할 일' 1·2 그대로.
+
+## 2026-11-06 04시 실행 (다섯 번째 시도)
+- 위키 Fire_Rate 1쪽만 시도 → 또 "permission request … not answered in time"(PROVENANCE_REQUIRED). 다른 쪽은 보내지 않음, 우회 안 함 → 직접 읽은 세팅 0, 판정 0, 엔진 수정 0.
+- 저장소 gaps 데이터 재확인: 나타루크 "Releasing the shot after 70% of a full charge … Perfect Shot"(퍼펙트 샷 = 충전 70% 이후)만 있고, 연사와 충전 시간의 관계 문장은 여전히 없음(발리스티카 "Increasing the fire rate decreases this delay"는 충전 뒤 대기 시간 얘기라 활 공식 근거가 아님) → 넣지 않음(P1).
+- 점검표: 커뮤니티 report.md 표시 2건은 설명 끝난 것 그대로, 전체 점검 표시 19건도 지난주와 같음(장판 3건은 0b, 패리스는 이 묶음).
