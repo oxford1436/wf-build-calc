@@ -524,12 +524,17 @@
       // sum per-shot params across parts (same trigger)
       const acc = { kf: 0, D: 0, D0: 0, Dnon: 0, pbN: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
       res.forEach((r, ri) => {
-        const x = r.perF[f], wgt = weights[ri];
-        acc.D += x.D * wgt; acc.D0 += (x.D0 != null ? x.D0 : x.D) * wgt; acc.Dnon += (x.Dnon || 0) * wgt; acc.pbN += (x.pbN || 0) * wgt; acc.kf = Math.max(acc.kf, x.kf || 0); acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt; acc.napH += (x.napH || 0) * wgt;
+        const x = r.perF[f];
+        // v1.84 (second review 2026-11-06): the time-to-kill applies the main part's crit (the swing's) to everything pooled; a
+        // Tennokai heavy has its own (Galvanized Steel x2 on heavies, Dreamer's Wrath …) — its share is rescaled to its own
+        // average crit multiplier (Dual Ichor: Tennokai damage was 14.6% low)
+        const cr = parts[ri].kind === "tennokai" && r.critf > 0 && main.critf > 0 ? r.critf / main.critf : 1;
+        const wgt = weights[ri] * cr, wN = weights[ri];
+        acc.D += x.D * wgt; acc.D0 += (x.D0 != null ? x.D0 : x.D) * wgt; acc.Dnon += (x.Dnon || 0) * wgt; acc.pbN += (x.pbN || 0) * wN; acc.kf = Math.max(acc.kf, x.kf || 0); acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wN; acc.napH += (x.napH || 0) * wgt;
         for (const T in x.dot) acc.dot[T] = (acc.dot[T] || 0) + x.dot[T] * wgt;
         for (const T in x.dotNon) acc.dotNon[T] = (acc.dotNon[T] || 0) + x.dotNon[T] * wgt;
-        acc.pv += x.pv * wgt; acc.ph += x.ph * wgt; acc.pc += x.pc * wgt; acc.pk += x.pk * wgt; acc.pm += (x.pm || 0) * wgt; acc.pp += (x.pp || 0) * wgt;
-        acc.pvN += x.pvN * wgt; acc.phN += x.phN * wgt; acc.pcN += x.pcN * wgt; acc.pkN += x.pkN * wgt;
+        acc.pv += x.pv * wN; acc.ph += x.ph * wN; acc.pc += x.pc * wN; acc.pk += x.pk * wN; acc.pm += (x.pm || 0) * wN; acc.pp += (x.pp || 0) * wN;
+        acc.pvN += x.pvN * wN; acc.phN += x.phN * wN; acc.pcN += x.pcN * wN; acc.pkN += x.pkN * wN;
       });
       // explosion parts of a combined shot (direct hit + blast): the enemies around the target only take the blast
       const aoe = { D: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0 };
@@ -575,7 +580,9 @@
         // ② swings pooled with Tennokai heavies: the pooled average hit carries the 12x Tennokai damage (about 10x a swing), so it
         //    one-shot everything and Melee Influence never spread — while the swings themselves (most of the hits) don't kill and
         //    do spread. Each part (swing, Tennokai) now gets its own lethality, weighted by its share of the spread it carries.
-        const nlOf = (t) => (t * main.rate) / (1 + t * main.rate);
+        // ③ (second review) a target's hits come whole: a kill after 1.1 hit periods took 2 more hits, 2 of 3 spread — the
+        //    continuous t·r/(1 + t·r) gave 0.52 and made a stronger hit look worse (scaling all damage x2 lowered the score)
+        const nlOf = (t) => { const n = Math.min(1e6, Math.ceil(Math.max(0, t * main.rate) - 1e-9)); return n / (1 + n); };
         const nlTier = (pT, tAvg) => {
           const cc = pT ? pT.cc || 0 : 0, lo = Math.floor(cc), fr = cc - lo;
           if (!pT || fr < 1e-6 || !(pT.cd > 1)) return nlOf(tAvg);
@@ -586,7 +593,7 @@
           let num = 0, den = 0, numW = 0, denW = 0;
           res.forEach((r, ri) => {
             const x = r.perF[f], wgt = weights[ri];
-            const pI = Object.assign({}, base, { D: x.D, D0: x.D0 != null ? x.D0 : x.D, blast: x.blast, F: x.F || 0, dot: x.dot, napH: x.napH || 0, pv: x.pv, ph: x.ph, pc: x.pc, pk: x.pk, pm: x.pm || 0, pp: x.pp || 0,
+            const pI = Object.assign({}, base, { cc: r.cc != null ? r.cc : base.cc, cd: r.cd != null ? r.cd : base.cd, nc: r.nc != null ? r.nc : base.nc, D: x.D, D0: x.D0 != null ? x.D0 : x.D, blast: x.blast, F: x.F || 0, dot: x.dot, napH: x.napH || 0, pv: x.pv, ph: x.ph, pc: x.pc, pk: x.pk, pm: x.pm || 0, pp: x.pp || 0,
               hp: tgx.hp, sh: tgx.sh * shcx, ar0: tgx.ar, og: tgx.og || 0 });
             const nlI = nlTier(pI, ttk(pI)), carry = wgt * ((x.Dnon || 0) + (x.pbN || 0) * 1e3);
             num += carry * nlI; den += carry; numW += wgt * nlI; denW += wgt;

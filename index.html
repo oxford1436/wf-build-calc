@@ -626,6 +626,7 @@ header.top p{flex-basis:100%}
       items: [
         "텐노카이 모드를 낀 근접 무기는 휘두르기와 텐노카이 강공을 한 방 평균으로 계산합니다. 그 평균 타격(텐노카이 12배 피해가 섞여 휘두르기의 약 10배)이 적을 한 방에 죽인다고 판정돼, 실제로는 대부분의 휘두르기가 적을 못 죽이고 전염을 일으키는데도 밀리 인플루언스가 거의 안 퍼졌습니다(위키: 한 방 처치 타격은 전염 없음). 이제 휘두르기와 텐노카이를 따로 판정하고, 치명타 단계(예: 치명타 확률 176%면 1단계 24%·2단계 76%)도 나눠 봅니다.",
         "추천 보류 검사(위키로 확인 안 된 가정을 양쪽으로 계산)가 추천 검색 목록만 다시 계산해서, 목록에 없는 '한 칸만 바꾼 세팅'이 반대쪽 가정에서 더 빠른 경우를 놓쳤습니다(듀얼 이코르: 마스터즈 엣지 대신 디시플린즈 메리트가 12% 빠름). 이제 가정마다(그리고 모두 뒤집었을 때) 1위에서 모드·아케인을 한 칸씩 바꿔 두 번 올라가 보고 비교합니다.",
+        "2차 검토: 적을 죽이기 전 타격 수를 연속값(1.1번 같은)으로 세서 피해가 2배인 세팅이 오히려 느리게 나오던 것을 정수 타격으로 고쳤고, 휘두르기와 섞은 텐노카이 강공에 휘두르기의 치명타를 쓰던 것을 텐노카이 자신의 치명타로 고쳤습니다(듀얼 이코르 텐노카이 피해 14.6% 과소).",
       ] },
     { v: "1.83", date: "2026-11-06", title: "바이러스·부식 등 상태이상 중첩이 지속 시간 뒤 사라지게",
       items: [
@@ -1658,12 +1659,17 @@ header.top p{flex-basis:100%}
       // sum per-shot params across parts (same trigger)
       const acc = { kf: 0, D: 0, D0: 0, Dnon: 0, pbN: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
       res.forEach((r, ri) => {
-        const x = r.perF[f], wgt = weights[ri];
-        acc.D += x.D * wgt; acc.D0 += (x.D0 != null ? x.D0 : x.D) * wgt; acc.Dnon += (x.Dnon || 0) * wgt; acc.pbN += (x.pbN || 0) * wgt; acc.kf = Math.max(acc.kf, x.kf || 0); acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt; acc.napH += (x.napH || 0) * wgt;
+        const x = r.perF[f];
+        // v1.84 (second review 2026-11-06): the time-to-kill applies the main part's crit (the swing's) to everything pooled; a
+        // Tennokai heavy has its own (Galvanized Steel x2 on heavies, Dreamer's Wrath …) — its share is rescaled to its own
+        // average crit multiplier (Dual Ichor: Tennokai damage was 14.6% low)
+        const cr = parts[ri].kind === "tennokai" && r.critf > 0 && main.critf > 0 ? r.critf / main.critf : 1;
+        const wgt = weights[ri] * cr, wN = weights[ri];
+        acc.D += x.D * wgt; acc.D0 += (x.D0 != null ? x.D0 : x.D) * wgt; acc.Dnon += (x.Dnon || 0) * wgt; acc.pbN += (x.pbN || 0) * wN; acc.kf = Math.max(acc.kf, x.kf || 0); acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wN; acc.napH += (x.napH || 0) * wgt;
         for (const T in x.dot) acc.dot[T] = (acc.dot[T] || 0) + x.dot[T] * wgt;
         for (const T in x.dotNon) acc.dotNon[T] = (acc.dotNon[T] || 0) + x.dotNon[T] * wgt;
-        acc.pv += x.pv * wgt; acc.ph += x.ph * wgt; acc.pc += x.pc * wgt; acc.pk += x.pk * wgt; acc.pm += (x.pm || 0) * wgt; acc.pp += (x.pp || 0) * wgt;
-        acc.pvN += x.pvN * wgt; acc.phN += x.phN * wgt; acc.pcN += x.pcN * wgt; acc.pkN += x.pkN * wgt;
+        acc.pv += x.pv * wN; acc.ph += x.ph * wN; acc.pc += x.pc * wN; acc.pk += x.pk * wN; acc.pm += (x.pm || 0) * wN; acc.pp += (x.pp || 0) * wN;
+        acc.pvN += x.pvN * wN; acc.phN += x.phN * wN; acc.pcN += x.pcN * wN; acc.pkN += x.pkN * wN;
       });
       // explosion parts of a combined shot (direct hit + blast): the enemies around the target only take the blast
       const aoe = { D: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0 };
@@ -1709,7 +1715,9 @@ header.top p{flex-basis:100%}
         // ② swings pooled with Tennokai heavies: the pooled average hit carries the 12x Tennokai damage (about 10x a swing), so it
         //    one-shot everything and Melee Influence never spread — while the swings themselves (most of the hits) don't kill and
         //    do spread. Each part (swing, Tennokai) now gets its own lethality, weighted by its share of the spread it carries.
-        const nlOf = (t) => (t * main.rate) / (1 + t * main.rate);
+        // ③ (second review) a target's hits come whole: a kill after 1.1 hit periods took 2 more hits, 2 of 3 spread — the
+        //    continuous t·r/(1 + t·r) gave 0.52 and made a stronger hit look worse (scaling all damage x2 lowered the score)
+        const nlOf = (t) => { const n = Math.min(1e6, Math.ceil(Math.max(0, t * main.rate) - 1e-9)); return n / (1 + n); };
         const nlTier = (pT, tAvg) => {
           const cc = pT ? pT.cc || 0 : 0, lo = Math.floor(cc), fr = cc - lo;
           if (!pT || fr < 1e-6 || !(pT.cd > 1)) return nlOf(tAvg);
@@ -1720,7 +1728,7 @@ header.top p{flex-basis:100%}
           let num = 0, den = 0, numW = 0, denW = 0;
           res.forEach((r, ri) => {
             const x = r.perF[f], wgt = weights[ri];
-            const pI = Object.assign({}, base, { D: x.D, D0: x.D0 != null ? x.D0 : x.D, blast: x.blast, F: x.F || 0, dot: x.dot, napH: x.napH || 0, pv: x.pv, ph: x.ph, pc: x.pc, pk: x.pk, pm: x.pm || 0, pp: x.pp || 0,
+            const pI = Object.assign({}, base, { cc: r.cc != null ? r.cc : base.cc, cd: r.cd != null ? r.cd : base.cd, nc: r.nc != null ? r.nc : base.nc, D: x.D, D0: x.D0 != null ? x.D0 : x.D, blast: x.blast, F: x.F || 0, dot: x.dot, napH: x.napH || 0, pv: x.pv, ph: x.ph, pc: x.pc, pk: x.pk, pm: x.pm || 0, pp: x.pp || 0,
               hp: tgx.hp, sh: tgx.sh * shcx, ar0: tgx.ar, og: tgx.og || 0 });
             const nlI = nlTier(pI, ttk(pI)), carry = wgt * ((x.Dnon || 0) + (x.pbN || 0) * 1e3);
             num += carry * nlI; den += carry; numW += wgt * nlI; denW += wgt;
@@ -3462,6 +3470,7 @@ header.top p{flex-basis:100%}
       items: [
         "텐노카이 모드를 낀 근접 무기는 휘두르기와 텐노카이 강공을 한 방 평균으로 계산합니다. 그 평균 타격(텐노카이 12배 피해가 섞여 휘두르기의 약 10배)이 적을 한 방에 죽인다고 판정돼, 실제로는 대부분의 휘두르기가 적을 못 죽이고 전염을 일으키는데도 밀리 인플루언스가 거의 안 퍼졌습니다(위키: 한 방 처치 타격은 전염 없음). 이제 휘두르기와 텐노카이를 따로 판정하고, 치명타 단계(예: 치명타 확률 176%면 1단계 24%·2단계 76%)도 나눠 봅니다.",
         "추천 보류 검사(위키로 확인 안 된 가정을 양쪽으로 계산)가 추천 검색 목록만 다시 계산해서, 목록에 없는 '한 칸만 바꾼 세팅'이 반대쪽 가정에서 더 빠른 경우를 놓쳤습니다(듀얼 이코르: 마스터즈 엣지 대신 디시플린즈 메리트가 12% 빠름). 이제 가정마다(그리고 모두 뒤집었을 때) 1위에서 모드·아케인을 한 칸씩 바꿔 두 번 올라가 보고 비교합니다.",
+        "2차 검토: 적을 죽이기 전 타격 수를 연속값(1.1번 같은)으로 세서 피해가 2배인 세팅이 오히려 느리게 나오던 것을 정수 타격으로 고쳤고, 휘두르기와 섞은 텐노카이 강공에 휘두르기의 치명타를 쓰던 것을 텐노카이 자신의 치명타로 고쳤습니다(듀얼 이코르 텐노카이 피해 14.6% 과소).",
       ] },
     { v: "1.83", date: "2026-11-06", title: "바이러스·부식 등 상태이상 중첩이 지속 시간 뒤 사라지게",
       items: [
@@ -4494,12 +4503,17 @@ header.top p{flex-basis:100%}
       // sum per-shot params across parts (same trigger)
       const acc = { kf: 0, D: 0, D0: 0, Dnon: 0, pbN: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
       res.forEach((r, ri) => {
-        const x = r.perF[f], wgt = weights[ri];
-        acc.D += x.D * wgt; acc.D0 += (x.D0 != null ? x.D0 : x.D) * wgt; acc.Dnon += (x.Dnon || 0) * wgt; acc.pbN += (x.pbN || 0) * wgt; acc.kf = Math.max(acc.kf, x.kf || 0); acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt; acc.napH += (x.napH || 0) * wgt;
+        const x = r.perF[f];
+        // v1.84 (second review 2026-11-06): the time-to-kill applies the main part's crit (the swing's) to everything pooled; a
+        // Tennokai heavy has its own (Galvanized Steel x2 on heavies, Dreamer's Wrath …) — its share is rescaled to its own
+        // average crit multiplier (Dual Ichor: Tennokai damage was 14.6% low)
+        const cr = parts[ri].kind === "tennokai" && r.critf > 0 && main.critf > 0 ? r.critf / main.critf : 1;
+        const wgt = weights[ri] * cr, wN = weights[ri];
+        acc.D += x.D * wgt; acc.D0 += (x.D0 != null ? x.D0 : x.D) * wgt; acc.Dnon += (x.Dnon || 0) * wgt; acc.pbN += (x.pbN || 0) * wN; acc.kf = Math.max(acc.kf, x.kf || 0); acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wN; acc.napH += (x.napH || 0) * wgt;
         for (const T in x.dot) acc.dot[T] = (acc.dot[T] || 0) + x.dot[T] * wgt;
         for (const T in x.dotNon) acc.dotNon[T] = (acc.dotNon[T] || 0) + x.dotNon[T] * wgt;
-        acc.pv += x.pv * wgt; acc.ph += x.ph * wgt; acc.pc += x.pc * wgt; acc.pk += x.pk * wgt; acc.pm += (x.pm || 0) * wgt; acc.pp += (x.pp || 0) * wgt;
-        acc.pvN += x.pvN * wgt; acc.phN += x.phN * wgt; acc.pcN += x.pcN * wgt; acc.pkN += x.pkN * wgt;
+        acc.pv += x.pv * wN; acc.ph += x.ph * wN; acc.pc += x.pc * wN; acc.pk += x.pk * wN; acc.pm += (x.pm || 0) * wN; acc.pp += (x.pp || 0) * wN;
+        acc.pvN += x.pvN * wN; acc.phN += x.phN * wN; acc.pcN += x.pcN * wN; acc.pkN += x.pkN * wN;
       });
       // explosion parts of a combined shot (direct hit + blast): the enemies around the target only take the blast
       const aoe = { D: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0 };
@@ -4545,7 +4559,9 @@ header.top p{flex-basis:100%}
         // ② swings pooled with Tennokai heavies: the pooled average hit carries the 12x Tennokai damage (about 10x a swing), so it
         //    one-shot everything and Melee Influence never spread — while the swings themselves (most of the hits) don't kill and
         //    do spread. Each part (swing, Tennokai) now gets its own lethality, weighted by its share of the spread it carries.
-        const nlOf = (t) => (t * main.rate) / (1 + t * main.rate);
+        // ③ (second review) a target's hits come whole: a kill after 1.1 hit periods took 2 more hits, 2 of 3 spread — the
+        //    continuous t·r/(1 + t·r) gave 0.52 and made a stronger hit look worse (scaling all damage x2 lowered the score)
+        const nlOf = (t) => { const n = Math.min(1e6, Math.ceil(Math.max(0, t * main.rate) - 1e-9)); return n / (1 + n); };
         const nlTier = (pT, tAvg) => {
           const cc = pT ? pT.cc || 0 : 0, lo = Math.floor(cc), fr = cc - lo;
           if (!pT || fr < 1e-6 || !(pT.cd > 1)) return nlOf(tAvg);
@@ -4556,7 +4572,7 @@ header.top p{flex-basis:100%}
           let num = 0, den = 0, numW = 0, denW = 0;
           res.forEach((r, ri) => {
             const x = r.perF[f], wgt = weights[ri];
-            const pI = Object.assign({}, base, { D: x.D, D0: x.D0 != null ? x.D0 : x.D, blast: x.blast, F: x.F || 0, dot: x.dot, napH: x.napH || 0, pv: x.pv, ph: x.ph, pc: x.pc, pk: x.pk, pm: x.pm || 0, pp: x.pp || 0,
+            const pI = Object.assign({}, base, { cc: r.cc != null ? r.cc : base.cc, cd: r.cd != null ? r.cd : base.cd, nc: r.nc != null ? r.nc : base.nc, D: x.D, D0: x.D0 != null ? x.D0 : x.D, blast: x.blast, F: x.F || 0, dot: x.dot, napH: x.napH || 0, pv: x.pv, ph: x.ph, pc: x.pc, pk: x.pk, pm: x.pm || 0, pp: x.pp || 0,
               hp: tgx.hp, sh: tgx.sh * shcx, ar0: tgx.ar, og: tgx.og || 0 });
             const nlI = nlTier(pI, ttk(pI)), carry = wgt * ((x.Dnon || 0) + (x.pbN || 0) * 1e3);
             num += carry * nlI; den += carry; numW += wgt * nlI; denW += wgt;

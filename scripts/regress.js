@@ -63,6 +63,16 @@ const { chromium } = require("playwright");
         let bad = -1;
         try { const bc = typeof A.boundCheck === "function" ? A.boundCheck({ res: [{ ids: TOPI, val: null, arcane: "melee_influence", score: 1 }], o, flags: {} }) : null; bad = bc ? bc.bad.length : -1; } catch (e) { bad = -2; }
         check("v1.84 보류 검사가 1위에서 한 칸 바꾼 세팅도 찾음 (목록이 1개뿐이어도 다른 가정에서 2% 넘게 빠른 이웃이 있으면 보류)", bad > 0, bad);
+        // second review: hits before the kill are whole hits (continuous t·r/(1+t·r) made x2 damage score lower), and a pooled
+        // Tennokai keeps its own crit (it was scored with the swing's)
+        const BRI = ["disciplines_merit", "galvanized_steel", "primed_fever_strike", "vicious_frost", "shocking_touch", "weeping_wounds", "condition_overload", "berserker_fury", "blood_rush"].map(M);
+        const oI = Object.assign({}, o, { arcane: "melee_influence", layoutTTK: true });
+        const evI = (extra) => E.evaluate(st.weapon, st.weapon.attacks[0], BRI.concat(extra), oI).score;
+        const x2 = evI([{ id: "t_dmg", ko: "t", en: "t", slots: ["melee"], eff: { dmg: 1 } }]) / evI([]);
+        check("v1.84 피해가 2배면 3팩션 점수가 줄지 않음 (적을 죽이기 전 타격 수는 정수, 이전 ×0.955)", x2 >= 1, x2.toFixed(3));
+        const t0 = BRI.slice(1), tA = E.evaluate(st.weapon, st.weapon.attacks[0], t0.concat([{ id: "t_a", ko: "a", en: "a", slots: ["melee"], exilus: true, eff: { tenno: { on: 1, freq: 1.5 } } }]), oI).score;
+        const tB = E.evaluate(st.weapon, st.weapon.attacks[0], t0.concat([{ id: "t_b", ko: "b", en: "b", slots: ["melee"], exilus: true, eff: { tenno: { on: 1, freq: 1.5, cd: 0.32 } } }]), oI).score;
+        check("v1.84 휘두르기와 섞은 텐노카이도 자기 치명타로 계산 (텐노카이 치명타 피해 +32%가 점수를 올림, 이전 ×1.000)", tB / tA > 1.03, (tB / tA).toFixed(3));
         [st.base, st.weapon, st.atk, st.results] = sv;
       }
       // v1.80 (independent review): Berserker Fury stacks ramp; melee swing+Tennokai model choices are checked at both ends;
@@ -453,8 +463,9 @@ const { chromium } = require("playwright");
       use("dual_ichor", "Normal Attack", { 2: 1, 3: 1, 4: 0 });
       const o5 = Object.assign(A.readOpts(), { targets: null, level: 150, steel: false, levelSteps: [0, 0, 0] }); st.results = { o: o5 };
       const INF = ["truths_flame", "galvanized_steel", "primed_fever_strike", "vicious_frost", "shocking_touch", "weeping_wounds", "condition_overload", "berserker_fury", "gladiator_vice"];
-      out.fieldLo = A.evalBuild(INF, null, "melee_influence", o5).score;
-      out.fieldHi = A.evalBuild(INF, null, "melee_influence", Object.assign({}, o5, { fieldHigh: true })).score;
+      // (v1.84: with Melee Influence the swings' spread now clears this pack before the field matters — checked with Duplicate)
+      out.fieldLo = A.evalBuild(INF, null, "melee_duplicate", o5).score;
+      out.fieldHi = A.evalBuild(INF, null, "melee_duplicate", Object.assign({}, o5, { fieldHigh: true })).score;
       // v1.75: the combo-on-status assumption is checked at both ends — without it the Duplicate/Blast pick must lose to Influence
       const o6 = Object.assign(A.readOpts(), { targets: null, noComboStatus: true }); st.results = { o: o6 };
       const REC = ["truths_flame", "galvanized_steel", "north_wind", "gladiator_vice", "condition_overload", "berserker_fury", "weeping_wounds", "gladiator_might", "molten_impact"];
@@ -472,7 +483,7 @@ const { chromium } = require("playwright");
     results.push({ name: "v1.72 퀵밀 Ronin's Rush: 듀얼 이코르 진화 II-2가 II-1보다 초당 타격 1.15배 넘음 (프라임드 퓨리 +55%와 합연산: 1.85/1.55)", ok: !r.err && r.rateRonin > 1.15 * r.rateAlch, detail: r.err || f2(r.rateRonin) + " / " + f2(r.rateAlch) });
     results.push({ name: "v1.72 일반 연쇄 빔: 앰프렉스가 무리에서 한 번에 1.5명 넘게 처리", ok: !r.err && r.amprexK > 1.5, detail: r.err || "한 번에 " + f2(r.amprexK) + "명" });
     results.push({ name: "v1.72 밀리 익스포저는 어빌리티 사용 조건부 (자동 추천 제외)", ok: !r.err && r.exposureManual, detail: r.err || String(r.exposureManual) });
-    results.push({ name: "v1.73 듀얼 이코르 처치 시 독 장판 계산됨 (1초마다 가정 > 한 번 가정, Lv150 강철의 길 아님)", ok: !r.err && r.fieldHi > r.fieldLo * 1.05, detail: r.err || "×" + f2(r.fieldHi / r.fieldLo) });
+    results.push({ name: "v1.73 듀얼 이코르 처치 시 독 장판 계산됨 (1초마다 가정 > 한 번 가정, Lv150 강철의 길 아님, 밀리 듀플리케이트)", ok: !r.err && r.fieldHi > r.fieldLo * 1.05, detail: r.err || "×" + f2(r.fieldHi / r.fieldLo) });
     results.push({ name: "v1.75 (민감도) 강공 연속기 배율을 상태이상에서 빼면 듀얼 이코르 인플루언스 세팅이 듀플리케이트·폭발 세팅보다 빠름 — 그래서 게임 확인이 필요했음", ok: !r.err && r.ncsRatio > 1.2, detail: r.err || "×" + f2(r.ncsRatio) });
     results.push({ name: "v1.78 연속기 배율은 상태이상에도 곱해짐(게임 확인: 12배 강공 출혈 1.3K, 인카논 3배 641) — 앱이 이 가정으로 추천을 보류하지 않음", ok: !r.err && r.comboAlt === false, detail: r.err || String(r.comboAlt) });
     await p3.close();
