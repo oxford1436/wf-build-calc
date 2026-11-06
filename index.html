@@ -622,6 +622,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.83", date: "2026-11-06", title: "바이러스·부식 등 상태이상 중첩이 지속 시간 뒤 사라지게",
+      items: [
+        "처치 시간 계산에서 바이러스·부식·냉기·자성·관통 중첩이 한 번 걸리면 사라지지 않았습니다. 위키 각 상태이상 문서대로 중첩마다 따로 사라지게 했습니다: 바이러스·냉기·자성 6초, 부식 8초, 관통 10초 × 상태이상 지속. 초당 r발이면 적에게 남는 중첩은 대략 r × 지속 시간입니다.",
+        "그래서 상태이상 지속이 크게 줄어든 리벤(예: −84.5%면 바이러스 0.93초, 부식 1.24초)이나 오래 걸리는 적(보스·고레벨 중장갑)에서 중첩이 덜 쌓이는 만큼 느리게 나옵니다. 한 방이나 1초 안에 잡는 적은 거의 그대로입니다.",
+      ] },
     { v: "1.82", date: "2026-11-06", title: "게임 확인: 텐노카이 기회는 휘두른 횟수로 셈 — 이 가정으로 근접 추천을 보류하지 않음",
       items: [
         "시뮬라크럼 영상 두 개(듀얼 이코르, 디시플린즈 메리트): 적 1명일 때 텐노카이를 쓰고 다음 기회(칼 표시)까지 0.8~1.0초(연속기 수 +2), 적 20명일 때 1.0~1.6초(연속기 수 +6~7)였습니다. 맞힌 적 수로 센다면 무리에서는 휘두르기 한두 번 만에 다시 열려야 하는데, 두 경우 모두 휘두르기 서너 번이 걸렸습니다. 쓰지 않은 기회는 2초 뒤에 사라졌습니다.",
@@ -1446,9 +1451,15 @@ header.top p{flex-basis:100%}
     const dt = p.dt, r = p.r, Td = Math.max(0.5, p.Tdur);
     const stepsMax = until ? Math.ceil(until / dt) - 1 : Math.ceil(p.tmax / dt);
     // stack-based multipliers after `shots` trigger pulls have landed their status procs
+    // v1.83 stacks run out (wiki, each status page): Viral "for 6 seconds", Corrosive "for 8 seconds", Magnetic 6 s, Cold
+    // "lasts 6 seconds", Puncture "lasts 10 seconds" — "with each stack having its own duration". So only the shots of the
+    // last T x status duration still count: about r x T shots (at least the latest one). Before v1.83 the stacks never ran
+    // out, so negative status duration (riven) and long fights kept full stacks. p.Tdur = 6 s x status duration.
+    const dS = (p.Tdur != null ? p.Tdur : 6) / 6;
+    const live = (shots, T) => Math.min(shots, Math.max(1, r * T * dS));
     const stacks = (shots) => {
-      const nv = Math.min(10, p.pv * shots), nc = Math.min(p.corrMax, p.pc * shots), nk = Math.min(og > 0 ? 4 : 10, p.pk * shots);
-      const nm = Math.min(10, (p.pm || 0) * shots);
+      const nv = Math.min(10, p.pv * live(shots, 6)), nc = Math.min(p.corrMax, p.pc * live(shots, 8)), nk = Math.min(og > 0 ? 4 : 10, p.pk * live(shots, 6));
+      const nm = Math.min(10, (p.pm || 0) * live(shots, 6));
       const magM = nm <= 0 ? 1 : nm < 1 ? 1 + nm : 2 + 0.25 * (nm - 1);      // Magnetic: shields and overguard take more
       const extraM = (1 + (p.coldVuln || 0) * nk) * (p.frozenM && nk >= 10 ? p.frozenM : 1);
       const vm = nv <= 0 ? 1 : nv < 1 ? 1 + nv : 2 + 0.25 * (nv - 1);
@@ -1463,7 +1474,7 @@ header.top p{flex-basis:100%}
       // Cold (wiki): +0.1 crit multiplier on the first stack, +0.05 per stack to +0.5 at 9, +1.0 while frozen at 10.
       // Puncture (wiki): +5% weapon crit chance per stack, +25% at 5, added after mods. Neither applies to area damage.
       const cdb = p.aoeOnly || nk <= 0 ? 0 : nk < 1 ? 0.1 * nk : nk >= 10 ? 1.0 : Math.min(0.5, 0.1 + 0.05 * (nk - 1));
-      const ccp = p.aoeOnly ? 0 : Math.min(0.25, 0.05 * Math.min(5, (p.pp || 0) * shots));
+      const ccp = p.aoeOnly ? 0 : Math.min(0.25, 0.05 * Math.min(5, (p.pp || 0) * live(shots, 10)));
       const ccT = p.cc + ccp;
       // Devouring Attrition (p.nc): non-critical hits get 1 + chance x bonus on average
       const critf = 1 + ccT * (p.cd + cdb - 1) + (p.nc ? Math.max(0, 1 - ccT) * p.nc : 0);
@@ -3417,6 +3428,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.83", date: "2026-11-06", title: "바이러스·부식 등 상태이상 중첩이 지속 시간 뒤 사라지게",
+      items: [
+        "처치 시간 계산에서 바이러스·부식·냉기·자성·관통 중첩이 한 번 걸리면 사라지지 않았습니다. 위키 각 상태이상 문서대로 중첩마다 따로 사라지게 했습니다: 바이러스·냉기·자성 6초, 부식 8초, 관통 10초 × 상태이상 지속. 초당 r발이면 적에게 남는 중첩은 대략 r × 지속 시간입니다.",
+        "그래서 상태이상 지속이 크게 줄어든 리벤(예: −84.5%면 바이러스 0.93초, 부식 1.24초)이나 오래 걸리는 적(보스·고레벨 중장갑)에서 중첩이 덜 쌓이는 만큼 느리게 나옵니다. 한 방이나 1초 안에 잡는 적은 거의 그대로입니다.",
+      ] },
     { v: "1.82", date: "2026-11-06", title: "게임 확인: 텐노카이 기회는 휘두른 횟수로 셈 — 이 가정으로 근접 추천을 보류하지 않음",
       items: [
         "시뮬라크럼 영상 두 개(듀얼 이코르, 디시플린즈 메리트): 적 1명일 때 텐노카이를 쓰고 다음 기회(칼 표시)까지 0.8~1.0초(연속기 수 +2), 적 20명일 때 1.0~1.6초(연속기 수 +6~7)였습니다. 맞힌 적 수로 센다면 무리에서는 휘두르기 한두 번 만에 다시 열려야 하는데, 두 경우 모두 휘두르기 서너 번이 걸렸습니다. 쓰지 않은 기회는 2초 뒤에 사라졌습니다.",
@@ -4241,9 +4257,15 @@ header.top p{flex-basis:100%}
     const dt = p.dt, r = p.r, Td = Math.max(0.5, p.Tdur);
     const stepsMax = until ? Math.ceil(until / dt) - 1 : Math.ceil(p.tmax / dt);
     // stack-based multipliers after `shots` trigger pulls have landed their status procs
+    // v1.83 stacks run out (wiki, each status page): Viral "for 6 seconds", Corrosive "for 8 seconds", Magnetic 6 s, Cold
+    // "lasts 6 seconds", Puncture "lasts 10 seconds" — "with each stack having its own duration". So only the shots of the
+    // last T x status duration still count: about r x T shots (at least the latest one). Before v1.83 the stacks never ran
+    // out, so negative status duration (riven) and long fights kept full stacks. p.Tdur = 6 s x status duration.
+    const dS = (p.Tdur != null ? p.Tdur : 6) / 6;
+    const live = (shots, T) => Math.min(shots, Math.max(1, r * T * dS));
     const stacks = (shots) => {
-      const nv = Math.min(10, p.pv * shots), nc = Math.min(p.corrMax, p.pc * shots), nk = Math.min(og > 0 ? 4 : 10, p.pk * shots);
-      const nm = Math.min(10, (p.pm || 0) * shots);
+      const nv = Math.min(10, p.pv * live(shots, 6)), nc = Math.min(p.corrMax, p.pc * live(shots, 8)), nk = Math.min(og > 0 ? 4 : 10, p.pk * live(shots, 6));
+      const nm = Math.min(10, (p.pm || 0) * live(shots, 6));
       const magM = nm <= 0 ? 1 : nm < 1 ? 1 + nm : 2 + 0.25 * (nm - 1);      // Magnetic: shields and overguard take more
       const extraM = (1 + (p.coldVuln || 0) * nk) * (p.frozenM && nk >= 10 ? p.frozenM : 1);
       const vm = nv <= 0 ? 1 : nv < 1 ? 1 + nv : 2 + 0.25 * (nv - 1);
@@ -4258,7 +4280,7 @@ header.top p{flex-basis:100%}
       // Cold (wiki): +0.1 crit multiplier on the first stack, +0.05 per stack to +0.5 at 9, +1.0 while frozen at 10.
       // Puncture (wiki): +5% weapon crit chance per stack, +25% at 5, added after mods. Neither applies to area damage.
       const cdb = p.aoeOnly || nk <= 0 ? 0 : nk < 1 ? 0.1 * nk : nk >= 10 ? 1.0 : Math.min(0.5, 0.1 + 0.05 * (nk - 1));
-      const ccp = p.aoeOnly ? 0 : Math.min(0.25, 0.05 * Math.min(5, (p.pp || 0) * shots));
+      const ccp = p.aoeOnly ? 0 : Math.min(0.25, 0.05 * Math.min(5, (p.pp || 0) * live(shots, 10)));
       const ccT = p.cc + ccp;
       // Devouring Attrition (p.nc): non-critical hits get 1 + chance x bonus on average
       const critf = 1 + ccT * (p.cd + cdb - 1) + (p.nc ? Math.max(0, 1 - ccT) * p.nc : 0);

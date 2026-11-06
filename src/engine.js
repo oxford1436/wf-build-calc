@@ -323,9 +323,15 @@
     const dt = p.dt, r = p.r, Td = Math.max(0.5, p.Tdur);
     const stepsMax = until ? Math.ceil(until / dt) - 1 : Math.ceil(p.tmax / dt);
     // stack-based multipliers after `shots` trigger pulls have landed their status procs
+    // v1.83 stacks run out (wiki, each status page): Viral "for 6 seconds", Corrosive "for 8 seconds", Magnetic 6 s, Cold
+    // "lasts 6 seconds", Puncture "lasts 10 seconds" — "with each stack having its own duration". So only the shots of the
+    // last T x status duration still count: about r x T shots (at least the latest one). Before v1.83 the stacks never ran
+    // out, so negative status duration (riven) and long fights kept full stacks. p.Tdur = 6 s x status duration.
+    const dS = (p.Tdur != null ? p.Tdur : 6) / 6;
+    const live = (shots, T) => Math.min(shots, Math.max(1, r * T * dS));
     const stacks = (shots) => {
-      const nv = Math.min(10, p.pv * shots), nc = Math.min(p.corrMax, p.pc * shots), nk = Math.min(og > 0 ? 4 : 10, p.pk * shots);
-      const nm = Math.min(10, (p.pm || 0) * shots);
+      const nv = Math.min(10, p.pv * live(shots, 6)), nc = Math.min(p.corrMax, p.pc * live(shots, 8)), nk = Math.min(og > 0 ? 4 : 10, p.pk * live(shots, 6));
+      const nm = Math.min(10, (p.pm || 0) * live(shots, 6));
       const magM = nm <= 0 ? 1 : nm < 1 ? 1 + nm : 2 + 0.25 * (nm - 1);      // Magnetic: shields and overguard take more
       const extraM = (1 + (p.coldVuln || 0) * nk) * (p.frozenM && nk >= 10 ? p.frozenM : 1);
       const vm = nv <= 0 ? 1 : nv < 1 ? 1 + nv : 2 + 0.25 * (nv - 1);
@@ -340,7 +346,7 @@
       // Cold (wiki): +0.1 crit multiplier on the first stack, +0.05 per stack to +0.5 at 9, +1.0 while frozen at 10.
       // Puncture (wiki): +5% weapon crit chance per stack, +25% at 5, added after mods. Neither applies to area damage.
       const cdb = p.aoeOnly || nk <= 0 ? 0 : nk < 1 ? 0.1 * nk : nk >= 10 ? 1.0 : Math.min(0.5, 0.1 + 0.05 * (nk - 1));
-      const ccp = p.aoeOnly ? 0 : Math.min(0.25, 0.05 * Math.min(5, (p.pp || 0) * shots));
+      const ccp = p.aoeOnly ? 0 : Math.min(0.25, 0.05 * Math.min(5, (p.pp || 0) * live(shots, 10)));
       const ccT = p.cc + ccp;
       // Devouring Attrition (p.nc): non-critical hits get 1 + chance x bonus on average
       const critf = 1 + ccT * (p.cd + cdb - 1) + (p.nc ? Math.max(0, 1 - ccT) * p.nc : 0);

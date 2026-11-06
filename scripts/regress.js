@@ -38,6 +38,17 @@ const { chromium } = require("playwright");
         const cands = A.candidateMods(di, di.attacks[0], {});
         check("v1.79 트루스 플레임은 자동 추천 후보가 아님 (처치 시 추가 텐노카이 기회 미반영·저주)", !cands.some((m) => m.id === "truths_flame") && cands.some((m) => m.id === "disciplines_merit"), cands.filter((m) => m.exilus).map((m) => m.id).join(","));
       }
+      // v1.83 (wiki status pages): Viral/Corrosive/Cold/Magnetic/Puncture stacks run out after their duration (each stack its
+      // own timer; Corrosive 8 s, the rest 6 s, Puncture 10 s) x status duration — a −84.5% status duration riven keeps few stacks
+      {
+        const P = (Tdur, pv, pc) => ({ hp: 1e12, sh: 0, ar0: 1000, strip: 0, r: 2, D: 100, blast: 0, F: 0, dot: {}, Tdur, pv, ph: 0, pc, pk: 0, pm: 0, pp: 0, cc: 0, cd: 1, corrMax: 10, dt: 0.01, tmax: 30 });
+        const steady = (q) => (E.ttk(q, 10) - E.ttk(q, 5)) / (5 * q.D * q.r);
+        // corrosive only, status duration 25% (Tdur 1.5): 2 shots/s x 8 s x 0.25 = 4 stacks → armor 1000 x (1 − 0.44) → 1 − 0.9√(560/2700)
+        const c4 = 1 - 0.9 * Math.sqrt(560 / 2700), got = steady(P(1.5, 0, 1));
+        check("v1.83 부식 중첩은 8초 × 상태이상 지속 뒤 사라짐 (위키: 중첩마다 따로) — 지속 25%면 초당 2발에 4중첩", Math.abs(got - c4) < 0.01, got.toFixed(3) + " / 기대 " + c4.toFixed(3));
+        const vFull = steady(P(6, 1, 0)), vShort = steady(P(0.93, 1, 0));
+        check("v1.83 바이러스 중첩은 6초 × 상태이상 지속 뒤 사라짐 — 지속 −84.5%(0.93초)면 2발/초에 약 1.9중첩", vShort < vFull * 0.6 && Math.abs(vShort - (2 + 0.25 * 0.86) * (1 - 0.9 * Math.sqrt(1000 / 2700))) < 0.03, vShort.toFixed(3) + " / 지속 100% " + vFull.toFixed(3));
+      }
       // v1.80 (independent review): Berserker Fury stacks ramp; melee swing+Tennokai model choices are checked at both ends;
       // the first hit on a fresh enemy gets no Condition Overload; 10-stack Blast detonations need a struck enemy that lives
       {
