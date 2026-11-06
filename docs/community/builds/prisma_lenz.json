@@ -1,0 +1,36 @@
+{
+  "weapon": "prisma_lenz",
+  "attack": 0,
+  "valence": null,
+  "riven": null,
+  "notes": "프리즈마 렌즈 충전 사격 한 발 전체(직격 + 냉기 폭발 + 1.3초 뒤 폭발). 2026-11-07 04시 묶음 5 조사. kind: read = 출처 글 본문에서 모드 8칸을 글자로 직접 읽은 세팅. Overframe 476424(Knarz_, 33.0)·517965(k069, 33.6)는 모드 칸이 인코딩 문자열 → 세팅 미기록(설명만). Ackbar 리뷰(U33.0.10)는 세팅이 그림 → 세팅 미기록(설명만). 위키 렌즈 문서는 이번에 열지 않음(저장소 gaps 감사의 위키 문장 사용). 렌즈·프리즈마 렌즈는 위키 메커니즘 미반영 항목(1.3초 지연·처치 시 시체 날림)으로 추천 보류 상태.",
+  "read_2026_11_07": [
+    {"src": "https://overframe.gg/build/476424/prisma-lenz/frostbite-aoe-massive-crit-damage-and-blast-radius/", "date": "2023-05-22 (33.0)", "what": "모드 칸 글자 없음 — 세팅 미기록", "claims": ["렌즈의 확정 냉기 상태이상으로 프라이머리 프로스트바이트 최대 중첩이 매우 빠름", "프로스트바이트 + 갈바나이즈드 체임버로 치명타 9.5배·멀티샷 4.2", "프라이머리 프로스트바이트 중첩은 12초 동안 상태이상이 없으면 한꺼번에 사라짐", "프라임드 파이어스톰이 화살마다 폭발 반경을 키움"]},
+    {"src": "https://overframe.gg/build/517965/prisma-lenz/finally-arcane-variety/", "date": "2023-08-23 (33.6)", "what": "모드 칸 글자 없음 — 세팅 미기록", "claims": ["크리티컬 딜레이는 꼭 필요하지 않고 포르마 절약용", "스피드 트리거는 필수, 아니면 해머 샷"]},
+    {"src": "https://ackbarwarframe.blogspot.com/2023/05/review-prisma-lenz-u33010.html", "date": "2023-05-23 (U33.0.10)", "what": "세팅 그림 — 세팅 미기록", "claims": ["충전 0.8초", "완전 충전해야만 발사", "갈바나이즈드 앱티튜드 피해는 폭발에 적용 안 됨", "머시리스가 데드헤드보다 나음(출혈 처치도 발동)", "프로스트바이트는 일반 피해 아케인보다 전체 피해 증가가 작음", "연사 모드 강력 추천(충전 시간 단축)", "기본 냉기로 독 모드 하나만 넣어도 바이러스"]}
+  ],
+  "builds": [
+    {
+      "name": "Sportskeeda 강철의 길 (냉기 확산·멀리그난트 포스, 프로스트바이트)",
+      "community": "sportskeeda",
+      "kind": "read",
+      "url": "https://www.sportskeeda.com/mmo/warframe-prisma-lenz-build-best-mod-setup-synergies",
+      "date": "날짜 표기 없음 (Jade Shadows 이후)",
+      "mods": ["Vile Acceleration", "Critical Delay", "Vital Sense", "Primed Firestorm", "Malignant Force", "Shivering Contagion", "Serration", "Galvanized Chamber"],
+      "exilus": "Vigilante Supplies",
+      "arcane": "primary_frostbite",
+      "claims": ["확정 냉기 상태이상으로 프로스트바이트 최대 중첩이 2~3발", "방어구 제거가 없으면 쉬버링 컨테이젼 대신 헌터 뮤니션즈", "폭발 위에 독 피해가 더해져 코퍼스에 좋음"]
+    },
+    {
+      "name": "Sportskeeda 강철의 길 — 작성자 대안 (쉬버링 컨테이젼 → 헌터 뮤니션즈)",
+      "community": "sportskeeda",
+      "kind": "read",
+      "url": "https://www.sportskeeda.com/mmo/warframe-prisma-lenz-build-best-mod-setup-synergies",
+      "date": "날짜 표기 없음 (Jade Shadows 이후)",
+      "mods": ["Vile Acceleration", "Critical Delay", "Vital Sense", "Primed Firestorm", "Malignant Force", "Hunter Munitions", "Serration", "Galvanized Chamber"],
+      "exilus": "Vigilante Supplies",
+      "arcane": "primary_frostbite",
+      "claims": ["방어구 제거·부식 프라이머가 없을 때의 작성자 대안"]
+    }
+  ]
+}
