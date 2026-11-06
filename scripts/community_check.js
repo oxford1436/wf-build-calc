@@ -32,7 +32,9 @@ const OUT = path.join(ROOT, "docs", "community", "report.md");
       if (!spec.kit) {
         const w0 = window.WF_WEAPONS.find((x) => x.id === spec.weapon);
         if (!w0) return { err: "무기 없음: " + spec.weapon };
-        A.st.weapon = w0;
+        // spec.evo: incarnon evolutions (final form, e.g. Dual Ichor {2:1,3:1,4:0}) — the app applies them the same way
+        A.st.base = w0;
+        A.st.weapon = spec.evo && A.applyEvos ? A.applyEvos(w0, spec.evo) : w0;
       }
       A.st.atk = spec.attack || 0;
       const w = A.st.weapon, atk = w.attacks[A.st.atk];
