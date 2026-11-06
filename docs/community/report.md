@@ -15,6 +15,16 @@
 | [샷건 배러지 → 아말감 샷건 배러지](https://overframe.gg/build/694026/corinth-prime/corinth-general-purpose-crit/) | overframe (주장 시험) | 바이러스+화염+자성 | 99% | 119% | 19% | — |
 | [갈바나이즈드 새비 → 비질란테 아마먼트](https://overframe.gg/build/432226/corinth-prime/viral-hm/) | overframe (주장 시험) | 바이러스+화염+자성 | 64% | 94% | 26% | — |
 
+## 듀얼 이코르 (dual_ichor.json)
+
+계산기 1위: 마스터즈 엣지, 갈바나이즈드 스틸, 프라임드 피버 스트라이크, 쇼킹 터치, 위핑 운즈, 컨디션 오버로드, 버서커 퓨리, 블러드 러쉬, 노스 윈드 · melee_influence
+
+| 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
+| --- | --- | --- | --- | --- | --- | --- |
+| [warframe.today 부식 하이브리드 (인플루언스)](https://warframe.today/weapons/dual-ichor/) | warframe.today | 부식 | 8% | 8% | 12% | — |
+| 가스+전기 (META.md 인플루언스 표준) — 1위 노스 윈드 → 몰튼 임팩트 | meta (주장 시험) | 가스+전기 | 88% | 91% | 84% | — |
+| 사용자 세팅 A (바이러스+전기, 디시플린즈 메리트) | session | 바이러스+전기 | 72% | 75% | 91% | — |
+
 ## 고트바 프라임 (gotva_prime.json)
 
 계산기 1위: 프라임드 크라이오 라운즈, 갈바나이즈드 체임버, 멀리그난트 포스, 마그네틱 캐퍼시티, 써마이트 라운즈, 프라임드 슈레드, 바이탈 센스, 갈바나이즈드 앱티튜드 · primary_plated_round
