@@ -622,6 +622,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.81", date: "2026-11-06", title: "활 기본 공격을 충전 사격으로",
+      items: [
+        "패리스·나타루크·다이큐 프라임·서노스 프라임·드레드 등 활은 무기를 고르면 비충전(퀵) 사격이 기본 공격이었습니다. 위키 Fire Rate 문서가 활의 발 간격 공식을 충전 사격에만 주고(충전 시간 + 재장전), 활 세팅은 충전 사격으로 쓰기 때문에 기본 공격을 충전 사격으로 바꿨습니다. 공격 칸에서 다른 사격을 고르면 지금처럼 계산합니다.",
+        "전체 무기 점검: 패리스 12명 전멸(그리니어 Lv150) 63.7초 → 30.7초, '전멸 60초 초과' 표시가 풀립니다. 나타루크 11.3 → 3.9초, 드레드 18.5초.",
+      ] },
     { v: "1.80", date: "2026-11-06", title: "독립 검토로 찾은 근접·폭발 계산 결함 수정 — 듀얼 이코르 1위가 커뮤니티 메타 쪽으로",
       items: [
         "폭발 10중첩 폭발: 맞은 적이 살아 있는 동안 쌓인 중첩만 셉니다. 한 방에 죽은 적은 10중첩 폭발을 만들지 못합니다(이전에는 만든다고 계산).",
@@ -3407,6 +3412,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.81", date: "2026-11-06", title: "활 기본 공격을 충전 사격으로",
+      items: [
+        "패리스·나타루크·다이큐 프라임·서노스 프라임·드레드 등 활은 무기를 고르면 비충전(퀵) 사격이 기본 공격이었습니다. 위키 Fire Rate 문서가 활의 발 간격 공식을 충전 사격에만 주고(충전 시간 + 재장전), 활 세팅은 충전 사격으로 쓰기 때문에 기본 공격을 충전 사격으로 바꿨습니다. 공격 칸에서 다른 사격을 고르면 지금처럼 계산합니다.",
+        "전체 무기 점검: 패리스 12명 전멸(그리니어 Lv150) 63.7초 → 30.7초, '전멸 60초 초과' 표시가 풀립니다. 나타루크 11.3 → 3.9초, 드레드 18.5초.",
+      ] },
     { v: "1.80", date: "2026-11-06", title: "독립 검토로 찾은 근접·폭발 계산 결함 수정 — 듀얼 이코르 1위가 커뮤니티 메타 쪽으로",
       items: [
         "폭발 10중첩 폭발: 맞은 적이 살아 있는 동안 쌓인 중첩만 셉니다. 한 방에 죽은 적은 10중첩 폭발을 만들지 못합니다(이전에는 만든다고 계산).",
@@ -7602,6 +7612,9 @@ self.onmessage = function (ev) {
     const a = w.attacks;
     let i = a.findIndex((x) => x.kind === "glaive" && /Recall/.test(x.en));
     if (i < 0) i = a.findIndex((x) => x.parts && !x.primer && !x.alt);
+    // Bows: the charged shot (wiki Fire Rate gives bow cadence only for it: "1 / (Modded Charge Time + Modded Reload Time)";
+    // uncharged/quick shots have no wiki cadence). Not the Incarnon Form shot — that is chosen through the Incarnon toggle.
+    if (i < 0 && w.type === "Bow") i = a.findIndex((x) => x.kind === "gun" && /Charged/.test(x.en || "") && !/^Incarnon/.test(x.en || "") && !/Uncharged/.test(x.en || ""));
     if (i < 0) i = a.findIndex((x) => x.kind === "gun" && x.en === "Normal Attack");
     if (i < 0) i = a.findIndex((x) => x.kind === "melee");
     return Math.max(0, i);

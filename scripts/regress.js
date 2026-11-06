@@ -274,6 +274,16 @@ const { chromium } = require("playwright");
       for (const k in want) if (!near(got[k], want[k])) bad += `${k}: 초당 ${got[k].toFixed(3)}발 (위키 공식 ${want[k].toFixed(3)}) · `;
       check("v1.77 충전 무기 발 간격 = 충전 시간 ÷ (1 + 연사 보너스) (+ 활은 재장전, 랑카는 충전만, 나머지는 + 1/연사) — 다이큐·렌즈 기본 공격·나타루크 퍼펙트 샷·랑카·옵티코", !bad, bad);
     }
+    // v1.81 (묶음 5 활): bows default to the charged shot. Wiki Fire Rate gives the bow cadence only for charged shots
+    // ("Effective Fire Rate = 1 / (Modded Charge Time + Modded Reload Time)"); uncharged/quick shots have no wiki cadence and are
+    // not what bow builds are made for. Combined attacks (Lenz, Kuva Bramma, Evensong) already start with the charged shot.
+    {
+      const A = window.WF_APP;
+      const ids = ["paris", "paris_prime", "nataruk", "daikyu_prime", "cernos_prime", "dread", "mk1_paris", "lenz", "evensong", "kuva_bramma"];
+      let bad = "";
+      for (const id of ids) { const w = W.find((x) => x.id === id); if (!w) { bad += id + " 없음 · "; continue; } const en = w.attacks[A.defaultAttack(w)].en; if (!/Charged/.test(en) || /^Incarnon/.test(en)) bad += `${id}: ${en} · `; }
+      check("v1.81 활 기본 공격 = 충전 사격 (패리스·나타루크·다이큐 프라임·서노스 프라임·드레드 — 비충전·퀵 사격 아님, 인카논 형태 아님)", !bad, bad);
+    }
     // v1.70 (대기열 4b): Perigale "Gale Force" — wiki: "Landing 4 headshots in a burst or a headshot kill grants the "Gale Force"
     // buff, granting Infinite Ammo. The buff lasts 4 seconds". With headshots (o.hs 0.5, aimed) the magazine lasts longer →
     // fewer reloads → higher average rate and less ammo used; without headshots nothing changes.

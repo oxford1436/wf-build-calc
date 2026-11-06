@@ -180,6 +180,9 @@ self.onmessage = function (ev) {
     const a = w.attacks;
     let i = a.findIndex((x) => x.kind === "glaive" && /Recall/.test(x.en));
     if (i < 0) i = a.findIndex((x) => x.parts && !x.primer && !x.alt);
+    // Bows: the charged shot (wiki Fire Rate gives bow cadence only for it: "1 / (Modded Charge Time + Modded Reload Time)";
+    // uncharged/quick shots have no wiki cadence). Not the Incarnon Form shot — that is chosen through the Incarnon toggle.
+    if (i < 0 && w.type === "Bow") i = a.findIndex((x) => x.kind === "gun" && /Charged/.test(x.en || "") && !/^Incarnon/.test(x.en || "") && !/Uncharged/.test(x.en || ""));
     if (i < 0) i = a.findIndex((x) => x.kind === "gun" && x.en === "Normal Attack");
     if (i < 0) i = a.findIndex((x) => x.kind === "melee");
     return Math.max(0, i);
