@@ -1406,12 +1406,42 @@ self.onmessage = function (ev) {
     if (!atk) return null;
     const alts = boundAlts(w, atk, R.o);
     if (!alts.length) return null;
+    // v1.84 (independent review 2026-11-06): re-scoring only the search's own list missed builds one swap away — Dual Ichor with
+    // Discipline's Merit instead of Master's Edge was 12% ahead when swings and Tennokai are counted apart, and it wasn't in the
+    // list. Under each assumption (and all of them flipped together) the check now also climbs from the #1 by single swaps of a
+    // mod (same slot kind, no clashes) or of the arcane, two rounds, and compares the best it finds.
+    if (alts.length > 1) alts.push({ o: Object.assign({}, ...alts.map((a) => a.o)), why: "위 가정을 모두 반대쪽으로 놓았을 때" });
     const K = Math.min(30, R.res.length), outs = [];
+    const cands = candidateMods(w, atk, R.flags || {}).filter((m) => !m.manual);
+    const arcs = [...new Set(R.res.slice(0, K).map((x) => x.arcane))];
+    const okIds = (ids) => { const ms = ids.filter((x) => x !== "__riven").map((x) => MOD_BY_ID[x]); for (let i = 0; i < ms.length; i++) for (let j = i + 1; j < ms.length; j++) if (E.clash(ms[i], ms[j])) return false; return true; };
+    const same = (x, y) => x.arcane === y.arcane && x.ids.length === y.ids.length && x.ids.every((id) => y.ids.includes(id));
     for (const a of alts) {
       const oX = Object.assign({}, R.o, a.o);
-      const sc = R.res.slice(0, K).map((x) => evalBuild(x.ids, x.val, x.arcane, oX).score);
+      const S = (x) => evalBuild(x.ids, x.val, x.arcane, oX).score;
+      const sc = R.res.slice(0, K).map(S);
       let bi = 0; for (let i = 1; i < K; i++) if (sc[i] > sc[bi]) bi = i;
-      outs.push({ bi, gain: sc[bi] / Math.max(1e-12, sc[0]), alt: R.res[bi], why: a.why });
+      let best = { ids: R.res[bi].ids, val: R.res[bi].val, arcane: R.res[bi].arcane, s: sc[bi] };
+      let cur = { ids: R.res[0].ids, val: R.res[0].val, arcane: R.res[0].arcane, s: sc[0] };
+      for (let round = 0; round < 2; round++) {
+        let nb = null;
+        cur.ids.forEach((id, i) => {
+          if (id === "__riven" || !MOD_BY_ID[id]) return;
+          const ex = !!MOD_BY_ID[id].exilus;
+          for (const c of cands) {
+            if (!!c.exilus !== ex || cur.ids.includes(c.id)) continue;
+            const t = cur.ids.slice(); t[i] = c.id;
+            if (!okIds(t)) continue;
+            const s = S({ ids: t, val: cur.val, arcane: cur.arcane });
+            if (!nb || s > nb.s) nb = { ids: t, val: cur.val, arcane: cur.arcane, s };
+          }
+        });
+        for (const ar of arcs) if (ar !== cur.arcane) { const s = S({ ids: cur.ids, val: cur.val, arcane: ar }); if (!nb || s > nb.s) nb = { ids: cur.ids, val: cur.val, arcane: ar, s }; }
+        if (!nb || nb.s <= cur.s * 1.001) break;
+        cur = nb;
+      }
+      if (cur.s > best.s) best = cur;
+      outs.push({ bi: same(best, R.res[0]) ? 0 : 1, gain: best.s / Math.max(1e-12, sc[0]), alt: best, why: a.why });
     }
     const bad = outs.filter((x) => x.bi !== 0 && x.gain > 1.02);
     return { bad, all: outs };
@@ -2194,7 +2224,7 @@ self.onmessage = function (ev) {
   F0 = captureFields();
   // read-only handle for checking results from the browser console / test scripts
   // test/automation handle (scripts/regress.js, scripts/community_check.js): arcAuto = the arcanes the 'auto' option compares
-  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts,
+  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts, boundCheck,
     arcAuto: (w) => arcanesFor(w).filter(([, x]) => !x.manual && !x.none && !x.aim).map(([k]) => k).concat([null]) };
   restoreFromHash();
 })();

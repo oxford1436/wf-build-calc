@@ -622,6 +622,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.84", date: "2026-11-06", title: "밀리 인플루언스 전염을 타격마다 판정, 보류 검사가 한 칸 바꾼 세팅까지 확인",
+      items: [
+        "텐노카이 모드를 낀 근접 무기는 휘두르기와 텐노카이 강공을 한 방 평균으로 계산합니다. 그 평균 타격(텐노카이 12배 피해가 섞여 휘두르기의 약 10배)이 적을 한 방에 죽인다고 판정돼, 실제로는 대부분의 휘두르기가 적을 못 죽이고 전염을 일으키는데도 밀리 인플루언스가 거의 안 퍼졌습니다(위키: 한 방 처치 타격은 전염 없음). 이제 휘두르기와 텐노카이를 따로 판정하고, 치명타 단계(예: 치명타 확률 176%면 1단계 24%·2단계 76%)도 나눠 봅니다.",
+        "추천 보류 검사(위키로 확인 안 된 가정을 양쪽으로 계산)가 추천 검색 목록만 다시 계산해서, 목록에 없는 '한 칸만 바꾼 세팅'이 반대쪽 가정에서 더 빠른 경우를 놓쳤습니다(듀얼 이코르: 마스터즈 엣지 대신 디시플린즈 메리트가 12% 빠름). 이제 가정마다(그리고 모두 뒤집었을 때) 1위에서 모드·아케인을 한 칸씩 바꿔 두 번 올라가 보고 비교합니다.",
+      ] },
     { v: "1.83", date: "2026-11-06", title: "바이러스·부식 등 상태이상 중첩이 지속 시간 뒤 사라지게",
       items: [
         "처치 시간 계산에서 바이러스·부식·냉기·자성·관통 중첩이 한 번 걸리면 사라지지 않았습니다. 위키 각 상태이상 문서대로 중첩마다 따로 사라지게 했습니다: 바이러스·냉기·자성 6초, 부식 8초, 관통 10초 × 상태이상 지속. 초당 r발이면 적에게 남는 중첩은 대략 r × 지속 시간입니다.",
@@ -1698,8 +1703,32 @@ header.top p{flex-basis:100%}
         const pblM = (main.procs && main.procs.blast) || 0, unitB = pblM > 0 && acc.blast > 0 ? acc.blast / pblM : 0;
         const tail10 = (m) => { let pmf = Math.exp(-m), cdf = pmf; for (let k = 1; k < 10; k++) { pmf *= m / k; cdf += pmf; } return Math.max(0, 1 - cdf); };
         const n5c = Math.min(main.N - 1, (o.density || 0) * Math.PI * 25);
-        const nonOf = (tKill, extraD) => {
-          const nl = (tKill * main.rate) / (1 + tKill * main.rate), sc_ = (x) => x * nl;
+        // v1.84 (independent review 2026-11-06): which hits kill outright is decided hit by hit, not by the average hit.
+        // ① crit tier: at 176% crit chance 24% of hits are tier 1 and 76% tier 2 — the average (1 + cc(cd − 1)) can one-shot
+        //    while the tier-1 hits don't, and those keep spreading. The share of hits before the kill is averaged over the two tiers.
+        // ② swings pooled with Tennokai heavies: the pooled average hit carries the 12x Tennokai damage (about 10x a swing), so it
+        //    one-shot everything and Melee Influence never spread — while the swings themselves (most of the hits) don't kill and
+        //    do spread. Each part (swing, Tennokai) now gets its own lethality, weighted by its share of the spread it carries.
+        const nlOf = (t) => (t * main.rate) / (1 + t * main.rate);
+        const nlTier = (pT, tAvg) => {
+          const cc = pT ? pT.cc || 0 : 0, lo = Math.floor(cc), fr = cc - lo;
+          if (!pT || fr < 1e-6 || !(pT.cd > 1)) return nlOf(tAvg);
+          return (1 - fr) * nlOf(ttk(Object.assign({}, pT, { cc: lo }))) + fr * nlOf(ttk(Object.assign({}, pT, { cc: lo + 1 })));
+        };
+        const pooledT = res.length > 1 && parts.some((q) => q.kind === "tennokai");
+        const nlParts = (tgx, shcx) => {
+          let num = 0, den = 0, numW = 0, denW = 0;
+          res.forEach((r, ri) => {
+            const x = r.perF[f], wgt = weights[ri];
+            const pI = Object.assign({}, base, { D: x.D, D0: x.D0 != null ? x.D0 : x.D, blast: x.blast, F: x.F || 0, dot: x.dot, napH: x.napH || 0, pv: x.pv, ph: x.ph, pc: x.pc, pk: x.pk, pm: x.pm || 0, pp: x.pp || 0,
+              hp: tgx.hp, sh: tgx.sh * shcx, ar0: tgx.ar, og: tgx.og || 0 });
+            const nlI = nlTier(pI, ttk(pI)), carry = wgt * ((x.Dnon || 0) + (x.pbN || 0) * 1e3);
+            num += carry * nlI; den += carry; numW += wgt * nlI; denW += wgt;
+          });
+          return den > 0 ? num / den : numW / Math.max(1e-12, denW);
+        };
+        const nonOf = (tKill, extraD, pT, tgx) => {
+          const nl = pooledT && tgx ? nlParts(tgx, shc) : nlTier(pT, tKill), sc_ = (x) => x * nl;
           // Blast stacks spread by Melee Influence: fuse damage on each enemy, and the 10-stack detonations of its neighbours
           const lamN = acc.pbN * nl * main.rate;
           const detN = lamN > 0 ? (lamN / 10) * tail10(1.5 * lamN) : 0;
@@ -1762,10 +1791,10 @@ header.top p{flex-basis:100%}
           aoeBl = sources * det * near * unit * 10 * 10 / Math.max(0.05, main.rate);     // 10 stacks x 300% each, per shot, onto each enemy not struck
         }
         if (o.scenario === "crowd" && main.N > main.K && (hasNon || aoeBl > 0)) {
-          const q = nonOf(tHit, aoeBl);
+          const q = nonOf(tHit, aoeBl, pMain, tg);
           if (q.D > 0 || q.blast > 0 || Object.keys(q.dot).length) tNon = ttk(Object.assign({}, base, q, { hp: tg.hp, sh: tg.sh, ar0: tg.ar }));
           // engaging the heavy first: its many non-lethal hits keep spreading / detonating onto the pack the whole time
-          if (tgs.heavy) { const qh = nonOf(tHeavy, aoeBl); if (qh.D > 0 || qh.blast > 0 || Object.keys(qh.dot).length) tNonH = ttk(Object.assign({}, base, qh, { hp: tg.hp, sh: tg.sh, ar0: tg.ar })); }
+          if (tgs.heavy) { const qh = nonOf(tHeavy, aoeBl, pHeavy, tgs.heavy); if (qh.D > 0 || qh.blast > 0 || Object.keys(qh.dot).length) tNonH = ttk(Object.assign({}, base, qh, { hp: tg.hp, sh: tg.sh, ar0: tg.ar })); }
         }
         if (o.scenario === "crowd") {
           // bystanders in the blast die together with the target when the blast alone kills them about as fast
@@ -3429,6 +3458,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.84", date: "2026-11-06", title: "밀리 인플루언스 전염을 타격마다 판정, 보류 검사가 한 칸 바꾼 세팅까지 확인",
+      items: [
+        "텐노카이 모드를 낀 근접 무기는 휘두르기와 텐노카이 강공을 한 방 평균으로 계산합니다. 그 평균 타격(텐노카이 12배 피해가 섞여 휘두르기의 약 10배)이 적을 한 방에 죽인다고 판정돼, 실제로는 대부분의 휘두르기가 적을 못 죽이고 전염을 일으키는데도 밀리 인플루언스가 거의 안 퍼졌습니다(위키: 한 방 처치 타격은 전염 없음). 이제 휘두르기와 텐노카이를 따로 판정하고, 치명타 단계(예: 치명타 확률 176%면 1단계 24%·2단계 76%)도 나눠 봅니다.",
+        "추천 보류 검사(위키로 확인 안 된 가정을 양쪽으로 계산)가 추천 검색 목록만 다시 계산해서, 목록에 없는 '한 칸만 바꾼 세팅'이 반대쪽 가정에서 더 빠른 경우를 놓쳤습니다(듀얼 이코르: 마스터즈 엣지 대신 디시플린즈 메리트가 12% 빠름). 이제 가정마다(그리고 모두 뒤집었을 때) 1위에서 모드·아케인을 한 칸씩 바꿔 두 번 올라가 보고 비교합니다.",
+      ] },
     { v: "1.83", date: "2026-11-06", title: "바이러스·부식 등 상태이상 중첩이 지속 시간 뒤 사라지게",
       items: [
         "처치 시간 계산에서 바이러스·부식·냉기·자성·관통 중첩이 한 번 걸리면 사라지지 않았습니다. 위키 각 상태이상 문서대로 중첩마다 따로 사라지게 했습니다: 바이러스·냉기·자성 6초, 부식 8초, 관통 10초 × 상태이상 지속. 초당 r발이면 적에게 남는 중첩은 대략 r × 지속 시간입니다.",
@@ -4505,8 +4539,32 @@ header.top p{flex-basis:100%}
         const pblM = (main.procs && main.procs.blast) || 0, unitB = pblM > 0 && acc.blast > 0 ? acc.blast / pblM : 0;
         const tail10 = (m) => { let pmf = Math.exp(-m), cdf = pmf; for (let k = 1; k < 10; k++) { pmf *= m / k; cdf += pmf; } return Math.max(0, 1 - cdf); };
         const n5c = Math.min(main.N - 1, (o.density || 0) * Math.PI * 25);
-        const nonOf = (tKill, extraD) => {
-          const nl = (tKill * main.rate) / (1 + tKill * main.rate), sc_ = (x) => x * nl;
+        // v1.84 (independent review 2026-11-06): which hits kill outright is decided hit by hit, not by the average hit.
+        // ① crit tier: at 176% crit chance 24% of hits are tier 1 and 76% tier 2 — the average (1 + cc(cd − 1)) can one-shot
+        //    while the tier-1 hits don't, and those keep spreading. The share of hits before the kill is averaged over the two tiers.
+        // ② swings pooled with Tennokai heavies: the pooled average hit carries the 12x Tennokai damage (about 10x a swing), so it
+        //    one-shot everything and Melee Influence never spread — while the swings themselves (most of the hits) don't kill and
+        //    do spread. Each part (swing, Tennokai) now gets its own lethality, weighted by its share of the spread it carries.
+        const nlOf = (t) => (t * main.rate) / (1 + t * main.rate);
+        const nlTier = (pT, tAvg) => {
+          const cc = pT ? pT.cc || 0 : 0, lo = Math.floor(cc), fr = cc - lo;
+          if (!pT || fr < 1e-6 || !(pT.cd > 1)) return nlOf(tAvg);
+          return (1 - fr) * nlOf(ttk(Object.assign({}, pT, { cc: lo }))) + fr * nlOf(ttk(Object.assign({}, pT, { cc: lo + 1 })));
+        };
+        const pooledT = res.length > 1 && parts.some((q) => q.kind === "tennokai");
+        const nlParts = (tgx, shcx) => {
+          let num = 0, den = 0, numW = 0, denW = 0;
+          res.forEach((r, ri) => {
+            const x = r.perF[f], wgt = weights[ri];
+            const pI = Object.assign({}, base, { D: x.D, D0: x.D0 != null ? x.D0 : x.D, blast: x.blast, F: x.F || 0, dot: x.dot, napH: x.napH || 0, pv: x.pv, ph: x.ph, pc: x.pc, pk: x.pk, pm: x.pm || 0, pp: x.pp || 0,
+              hp: tgx.hp, sh: tgx.sh * shcx, ar0: tgx.ar, og: tgx.og || 0 });
+            const nlI = nlTier(pI, ttk(pI)), carry = wgt * ((x.Dnon || 0) + (x.pbN || 0) * 1e3);
+            num += carry * nlI; den += carry; numW += wgt * nlI; denW += wgt;
+          });
+          return den > 0 ? num / den : numW / Math.max(1e-12, denW);
+        };
+        const nonOf = (tKill, extraD, pT, tgx) => {
+          const nl = pooledT && tgx ? nlParts(tgx, shc) : nlTier(pT, tKill), sc_ = (x) => x * nl;
           // Blast stacks spread by Melee Influence: fuse damage on each enemy, and the 10-stack detonations of its neighbours
           const lamN = acc.pbN * nl * main.rate;
           const detN = lamN > 0 ? (lamN / 10) * tail10(1.5 * lamN) : 0;
@@ -4569,10 +4627,10 @@ header.top p{flex-basis:100%}
           aoeBl = sources * det * near * unit * 10 * 10 / Math.max(0.05, main.rate);     // 10 stacks x 300% each, per shot, onto each enemy not struck
         }
         if (o.scenario === "crowd" && main.N > main.K && (hasNon || aoeBl > 0)) {
-          const q = nonOf(tHit, aoeBl);
+          const q = nonOf(tHit, aoeBl, pMain, tg);
           if (q.D > 0 || q.blast > 0 || Object.keys(q.dot).length) tNon = ttk(Object.assign({}, base, q, { hp: tg.hp, sh: tg.sh, ar0: tg.ar }));
           // engaging the heavy first: its many non-lethal hits keep spreading / detonating onto the pack the whole time
-          if (tgs.heavy) { const qh = nonOf(tHeavy, aoeBl); if (qh.D > 0 || qh.blast > 0 || Object.keys(qh.dot).length) tNonH = ttk(Object.assign({}, base, qh, { hp: tg.hp, sh: tg.sh, ar0: tg.ar })); }
+          if (tgs.heavy) { const qh = nonOf(tHeavy, aoeBl, pHeavy, tgs.heavy); if (qh.D > 0 || qh.blast > 0 || Object.keys(qh.dot).length) tNonH = ttk(Object.assign({}, base, qh, { hp: tg.hp, sh: tg.sh, ar0: tg.ar })); }
         }
         if (o.scenario === "crowd") {
           // bystanders in the blast die together with the target when the blast alone kills them about as fast
@@ -8872,12 +8930,42 @@ self.onmessage = function (ev) {
     if (!atk) return null;
     const alts = boundAlts(w, atk, R.o);
     if (!alts.length) return null;
+    // v1.84 (independent review 2026-11-06): re-scoring only the search's own list missed builds one swap away — Dual Ichor with
+    // Discipline's Merit instead of Master's Edge was 12% ahead when swings and Tennokai are counted apart, and it wasn't in the
+    // list. Under each assumption (and all of them flipped together) the check now also climbs from the #1 by single swaps of a
+    // mod (same slot kind, no clashes) or of the arcane, two rounds, and compares the best it finds.
+    if (alts.length > 1) alts.push({ o: Object.assign({}, ...alts.map((a) => a.o)), why: "위 가정을 모두 반대쪽으로 놓았을 때" });
     const K = Math.min(30, R.res.length), outs = [];
+    const cands = candidateMods(w, atk, R.flags || {}).filter((m) => !m.manual);
+    const arcs = [...new Set(R.res.slice(0, K).map((x) => x.arcane))];
+    const okIds = (ids) => { const ms = ids.filter((x) => x !== "__riven").map((x) => MOD_BY_ID[x]); for (let i = 0; i < ms.length; i++) for (let j = i + 1; j < ms.length; j++) if (E.clash(ms[i], ms[j])) return false; return true; };
+    const same = (x, y) => x.arcane === y.arcane && x.ids.length === y.ids.length && x.ids.every((id) => y.ids.includes(id));
     for (const a of alts) {
       const oX = Object.assign({}, R.o, a.o);
-      const sc = R.res.slice(0, K).map((x) => evalBuild(x.ids, x.val, x.arcane, oX).score);
+      const S = (x) => evalBuild(x.ids, x.val, x.arcane, oX).score;
+      const sc = R.res.slice(0, K).map(S);
       let bi = 0; for (let i = 1; i < K; i++) if (sc[i] > sc[bi]) bi = i;
-      outs.push({ bi, gain: sc[bi] / Math.max(1e-12, sc[0]), alt: R.res[bi], why: a.why });
+      let best = { ids: R.res[bi].ids, val: R.res[bi].val, arcane: R.res[bi].arcane, s: sc[bi] };
+      let cur = { ids: R.res[0].ids, val: R.res[0].val, arcane: R.res[0].arcane, s: sc[0] };
+      for (let round = 0; round < 2; round++) {
+        let nb = null;
+        cur.ids.forEach((id, i) => {
+          if (id === "__riven" || !MOD_BY_ID[id]) return;
+          const ex = !!MOD_BY_ID[id].exilus;
+          for (const c of cands) {
+            if (!!c.exilus !== ex || cur.ids.includes(c.id)) continue;
+            const t = cur.ids.slice(); t[i] = c.id;
+            if (!okIds(t)) continue;
+            const s = S({ ids: t, val: cur.val, arcane: cur.arcane });
+            if (!nb || s > nb.s) nb = { ids: t, val: cur.val, arcane: cur.arcane, s };
+          }
+        });
+        for (const ar of arcs) if (ar !== cur.arcane) { const s = S({ ids: cur.ids, val: cur.val, arcane: ar }); if (!nb || s > nb.s) nb = { ids: cur.ids, val: cur.val, arcane: ar, s }; }
+        if (!nb || nb.s <= cur.s * 1.001) break;
+        cur = nb;
+      }
+      if (cur.s > best.s) best = cur;
+      outs.push({ bi: same(best, R.res[0]) ? 0 : 1, gain: best.s / Math.max(1e-12, sc[0]), alt: best, why: a.why });
     }
     const bad = outs.filter((x) => x.bi !== 0 && x.gain > 1.02);
     return { bad, all: outs };
@@ -9660,7 +9748,7 @@ self.onmessage = function (ev) {
   F0 = captureFields();
   // read-only handle for checking results from the browser console / test scripts
   // test/automation handle (scripts/regress.js, scripts/community_check.js): arcAuto = the arcanes the 'auto' option compares
-  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts,
+  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts, boundCheck,
     arcAuto: (w) => arcanesFor(w).filter(([, x]) => !x.manual && !x.none && !x.aim).map(([k]) => k).concat([null]) };
   restoreFromHash();
 })();

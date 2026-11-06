@@ -569,8 +569,32 @@
         const pblM = (main.procs && main.procs.blast) || 0, unitB = pblM > 0 && acc.blast > 0 ? acc.blast / pblM : 0;
         const tail10 = (m) => { let pmf = Math.exp(-m), cdf = pmf; for (let k = 1; k < 10; k++) { pmf *= m / k; cdf += pmf; } return Math.max(0, 1 - cdf); };
         const n5c = Math.min(main.N - 1, (o.density || 0) * Math.PI * 25);
-        const nonOf = (tKill, extraD) => {
-          const nl = (tKill * main.rate) / (1 + tKill * main.rate), sc_ = (x) => x * nl;
+        // v1.84 (independent review 2026-11-06): which hits kill outright is decided hit by hit, not by the average hit.
+        // ① crit tier: at 176% crit chance 24% of hits are tier 1 and 76% tier 2 — the average (1 + cc(cd − 1)) can one-shot
+        //    while the tier-1 hits don't, and those keep spreading. The share of hits before the kill is averaged over the two tiers.
+        // ② swings pooled with Tennokai heavies: the pooled average hit carries the 12x Tennokai damage (about 10x a swing), so it
+        //    one-shot everything and Melee Influence never spread — while the swings themselves (most of the hits) don't kill and
+        //    do spread. Each part (swing, Tennokai) now gets its own lethality, weighted by its share of the spread it carries.
+        const nlOf = (t) => (t * main.rate) / (1 + t * main.rate);
+        const nlTier = (pT, tAvg) => {
+          const cc = pT ? pT.cc || 0 : 0, lo = Math.floor(cc), fr = cc - lo;
+          if (!pT || fr < 1e-6 || !(pT.cd > 1)) return nlOf(tAvg);
+          return (1 - fr) * nlOf(ttk(Object.assign({}, pT, { cc: lo }))) + fr * nlOf(ttk(Object.assign({}, pT, { cc: lo + 1 })));
+        };
+        const pooledT = res.length > 1 && parts.some((q) => q.kind === "tennokai");
+        const nlParts = (tgx, shcx) => {
+          let num = 0, den = 0, numW = 0, denW = 0;
+          res.forEach((r, ri) => {
+            const x = r.perF[f], wgt = weights[ri];
+            const pI = Object.assign({}, base, { D: x.D, D0: x.D0 != null ? x.D0 : x.D, blast: x.blast, F: x.F || 0, dot: x.dot, napH: x.napH || 0, pv: x.pv, ph: x.ph, pc: x.pc, pk: x.pk, pm: x.pm || 0, pp: x.pp || 0,
+              hp: tgx.hp, sh: tgx.sh * shcx, ar0: tgx.ar, og: tgx.og || 0 });
+            const nlI = nlTier(pI, ttk(pI)), carry = wgt * ((x.Dnon || 0) + (x.pbN || 0) * 1e3);
+            num += carry * nlI; den += carry; numW += wgt * nlI; denW += wgt;
+          });
+          return den > 0 ? num / den : numW / Math.max(1e-12, denW);
+        };
+        const nonOf = (tKill, extraD, pT, tgx) => {
+          const nl = pooledT && tgx ? nlParts(tgx, shc) : nlTier(pT, tKill), sc_ = (x) => x * nl;
           // Blast stacks spread by Melee Influence: fuse damage on each enemy, and the 10-stack detonations of its neighbours
           const lamN = acc.pbN * nl * main.rate;
           const detN = lamN > 0 ? (lamN / 10) * tail10(1.5 * lamN) : 0;
@@ -633,10 +657,10 @@
           aoeBl = sources * det * near * unit * 10 * 10 / Math.max(0.05, main.rate);     // 10 stacks x 300% each, per shot, onto each enemy not struck
         }
         if (o.scenario === "crowd" && main.N > main.K && (hasNon || aoeBl > 0)) {
-          const q = nonOf(tHit, aoeBl);
+          const q = nonOf(tHit, aoeBl, pMain, tg);
           if (q.D > 0 || q.blast > 0 || Object.keys(q.dot).length) tNon = ttk(Object.assign({}, base, q, { hp: tg.hp, sh: tg.sh, ar0: tg.ar }));
           // engaging the heavy first: its many non-lethal hits keep spreading / detonating onto the pack the whole time
-          if (tgs.heavy) { const qh = nonOf(tHeavy, aoeBl); if (qh.D > 0 || qh.blast > 0 || Object.keys(qh.dot).length) tNonH = ttk(Object.assign({}, base, qh, { hp: tg.hp, sh: tg.sh, ar0: tg.ar })); }
+          if (tgs.heavy) { const qh = nonOf(tHeavy, aoeBl, pHeavy, tgs.heavy); if (qh.D > 0 || qh.blast > 0 || Object.keys(qh.dot).length) tNonH = ttk(Object.assign({}, base, qh, { hp: tg.hp, sh: tg.sh, ar0: tg.ar })); }
         }
         if (o.scenario === "crowd") {
           // bystanders in the blast die together with the target when the blast alone kills them about as fast

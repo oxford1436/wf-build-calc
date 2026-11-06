@@ -49,6 +49,22 @@ const { chromium } = require("playwright");
         const vFull = steady(P(6, 1, 0)), vShort = steady(P(0.93, 1, 0));
         check("v1.83 바이러스 중첩은 6초 × 상태이상 지속 뒤 사라짐 — 지속 −84.5%(0.93초)면 2발/초에 약 1.9중첩", vShort < vFull * 0.6 && Math.abs(vShort - (2 + 0.25 * 0.86) * (1 - 0.9 * Math.sqrt(1000 / 2700))) < 0.03, vShort.toFixed(3) + " / 지속 100% " + vFull.toFixed(3));
       }
+      // v1.84 (independent review 2026-11-06): ① swings pooled with Tennokai heavies decide Melee Influence's "no spread on a
+      // one-hit kill" hit by hit — the pooled average (≈10x a swing) one-shot Corpus and Influence did almost nothing there;
+      // ② the withhold check climbs single swaps from the #1 under each unverified assumption instead of only re-scoring its list
+      {
+        const A = window.WF_APP, st = A.st, sv = [st.base, st.weapon, st.atk, st.results];
+        const di0 = weapon("dual_ichor"); st.base = di0; st.weapon = A.applyEvos(di0, { 2: 1, 3: 1, 4: 0 }); st.atk = 0;
+        const o = Object.assign(A.readOpts(), { targets: null }); st.results = { o };
+        const TOPI = ["masters_edge", "galvanized_steel", "blood_rush", "primed_fever_strike", "north_wind", "shocking_touch", "weeping_wounds", "berserker_fury", "condition_overload"];
+        const oc = Object.assign({}, o, { factions: ["corpus"] });
+        const inf = A.evalBuild(TOPI, null, "melee_influence", oc).score / A.evalBuild(TOPI, null, null, oc).score;
+        check("v1.84 텐노카이 섞인 휘두르기: 밀리 인플루언스 전염을 타격마다 판정(코퍼스에서 인플루언스 효과 ×1.25 이상, 이전 ×1.10)", inf > 1.25, inf.toFixed(3));
+        let bad = -1;
+        try { const bc = typeof A.boundCheck === "function" ? A.boundCheck({ res: [{ ids: TOPI, val: null, arcane: "melee_influence", score: 1 }], o, flags: {} }) : null; bad = bc ? bc.bad.length : -1; } catch (e) { bad = -2; }
+        check("v1.84 보류 검사가 1위에서 한 칸 바꾼 세팅도 찾음 (목록이 1개뿐이어도 다른 가정에서 2% 넘게 빠른 이웃이 있으면 보류)", bad > 0, bad);
+        [st.base, st.weapon, st.atk, st.results] = sv;
+      }
       // v1.80 (independent review): Berserker Fury stacks ramp; melee swing+Tennokai model choices are checked at both ends;
       // the first hit on a fresh enemy gets no Condition Overload; 10-stack Blast detonations need a struck enemy that lives
       {
