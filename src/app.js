@@ -1393,7 +1393,9 @@ self.onmessage = function (ev) {
     if (atk && atk.kind === "melee") {
       alts.push({ o: { noPool: true }, why: "휘두르기와 텐노카이 강공을 한 방 평균으로 계산(기본) / 따로 계산 — 평균을 내면 12배 텐노카이 피해가 휘두르기마다 들어가 한 방 처치가 늘어남" });
       alts.push({ o: { tennoAdd: true }, why: "텐노카이 피해 보너스(마스터즈 엣지 등)가 별도 배율(기본) / 근접 피해(프레셔 포인트)와 합연산 — 위키 확인 안 됨" });
-      alts.push({ o: { tennoPerHit: true }, why: "텐노카이 기회를 휘두를 때마다 셈(기본) / 맞힌 적마다 셈(디시플린즈 메리트 '근접 공격 4회', 기본 확률 15%) — 확인 안 됨" });
+      // settled in game (v1.82, Simulacrum 2026-11-06): Tennokai opportunities count swings, not enemies hit — with 1 enemy the next
+      // opportunity came 0.8-1.0 s (counter +2) after a Tennokai, with 20 enemies 1.0-1.6 s (counter +6/+7); per enemy hit it
+      // would have come after one or two swings in the crowd (o.tennoPerHit stays in the engine for regress only)
       if (w.attacks.some((q) => q.evoScaleAlt)) alts.push({ o: { evoHeavyScale: true }, why: "진화 '기본 피해 +X'가 강공에 그대로 X만 더해짐(기본) / 휘두르기와 같은 비율로 커짐(강공 = 기본 피해 × 5) — 위키 확인 안 됨" });
     }
     if (atk && atk.killField && !atk.killField.every && o.scenario === "crowd") alts.push({ o: { fieldHigh: true }, why: `처치 시 장판(${atk.killField.dmg} 피해, ${atk.killField.dur}초)이 몇 초마다 들어가는지 위키에 없음 — 한 번 / 1초마다` });
