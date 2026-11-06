@@ -123,7 +123,7 @@
   add("gladiator_might", "글래디에이터 마이트", "Gladiator Might", ["melee"], { cd: 0.6 });
   add("fury", "퓨리", "Fury", ["melee"], { fr: 0.3 }, { group: "m_as" });
   add("primed_fury", "프라임드 퓨리", "Primed Fury", ["melee"], { fr: 0.55 }, { group: "m_as" });
-  add("berserker_fury", "버서커 퓨리", "Berserker Fury", ["melee"], {}, { cond: [{ when: "kill", eff: { fr: 0.7 } }], note: "치명타 시 중첩" });
+  add("berserker_fury", "버서커 퓨리", "Berserker Fury", ["melee"], {}, { cond: [{ when: "kill", eff: { fr: 0.7 }, stk: 2 }], note: "근접 처치 시 공격 속도 +35% 10초, 최대 2중첩 (게임 데이터)" });   // v1.80: stacks ramp from 0 like the other kill stacks
   add("melee_prowess", "밀리 프로웨스", "Melee Prowess", ["melee"], { sc: 0.9 });
   add("drifting_contact", "드리프팅 컨택트", "Drifting Contact", ["melee"], { sc: 0.4 });
   add("melee_elementalist", "밀리 엘리멘탈리스트", "Melee Elementalist", ["melee"], { sd: 0.9, wind: 0.6 }, { group: "m_el" });

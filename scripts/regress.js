@@ -38,6 +38,25 @@ const { chromium } = require("playwright");
         const cands = A.candidateMods(di, di.attacks[0], {});
         check("v1.79 트루스 플레임은 자동 추천 후보가 아님 (처치 시 추가 텐노카이 기회 미반영·저주)", !cands.some((m) => m.id === "truths_flame") && cands.some((m) => m.id === "disciplines_merit"), cands.filter((m) => m.exilus).map((m) => m.id).join(","));
       }
+      // v1.80 (independent review): Berserker Fury stacks ramp; melee swing+Tennokai model choices are checked at both ends;
+      // the first hit on a fresh enemy gets no Condition Overload; 10-stack Blast detonations need a struck enemy that lives
+      {
+        const A = window.WF_APP, di = A.applyEvos(weapon("dual_ichor"), { 2: 1, 3: 1, 4: 0 });
+        check("v1.80 버서커 퓨리 처치 중첩 최대 2 (0부터 쌓임)", (M("berserker_fury").cond || [])[0] && M("berserker_fury").cond[0].stk === 2);
+        const alts = typeof A.boundAlts === "function" ? A.boundAlts(di, di.attacks[0], Object.assign(A.readOpts(), { scenario: "crowd" })).map((x) => Object.keys(x.o)[0]) : [];
+        check("v1.80 근접 휘두르기 추천은 평균/분리·텐노카이 합연산·기회 세는 법을 양끝 계산", ["noPool", "tennoAdd", "tennoPerHit"].every((k) => alts.includes(k)), alts.join(","));
+        const o = Object.assign(baseO(), { factions: ["grineer"] });
+        const X = ["galvanized_steel", "north_wind", "molten_impact", "weeping_wounds", "berserker_fury", "gladiator_vice", "gladiator_might", "masters_edge"];
+        const lvNo = E.evaluate(di, di.attacks[0], X.map(M), o).perF.grineer.oneLv, lvCO = E.evaluate(di, di.attacks[0], X.concat(["condition_overload"]).map(M), o).perF.grineer.oneLv;
+        check("v1.80 첫 타(상태이상 없는 적)에는 컨디션 오버로드 없음 — 한 방 처치 레벨이 컨디션 오버로드로 안 오름", lvCO === lvNo, lvNo + " / " + lvCO);
+        const T = ["masters_edge", "galvanized_steel", "condition_overload", "gladiator_vice", "berserker_fury", "weeping_wounds", "molten_impact", "gladiator_might", "north_wind"];
+        const st = A.st, sv = [st.base, st.weapon, st.atk, st.results];
+        st.base = weapon("dual_ichor"); st.weapon = di; st.atk = 0;
+        const oc = Object.assign(A.readOpts(), { targets: null, factions: ["corpus"] }); st.results = { o: oc };
+        const rT = A.evalBuild(T, null, "melee_duplicate", oc);
+        [st.base, st.weapon, st.atk, st.results] = sv;
+        check("v1.80 폭발 10중첩 폭발은 살아서 10중첩이 쌓인 적만 — 듀얼 이코르 폭발 세팅 코퍼스 무리가 '휘두르기 2번'(0.54초)에 끝나지 않음", rT.perF.corpus.clear > 0.6, rT.perF.corpus.clear.toFixed(2));
+      }
       // v1.76: Dual Ichor heavy = 610 in the in-game arsenal (wiki 488)
       const ich = weapon("dual_ichor"), iH = ich.attacks.find((a) => a.en === "Heavy Attack"), iT = Object.values(iH.dmg).reduce((q, v) => q + v, 0);
       check("v1.76 듀얼 이코르 강공 610 (게임 아스날, 위키 488)", Math.abs(iT - 610) < 1, iT);

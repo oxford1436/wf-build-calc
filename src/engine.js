@@ -367,7 +367,7 @@
     // before they apply status, and multishot hits of the same shot don't benefit from each other's procs)
     if (p.D > 0) {
       const f0 = stacks(0);
-      land(p.D * f0.critf * f0.extraM, 0, 0, f0);
+      land((p.D0 != null ? p.D0 : p.D) * f0.critf * f0.extraM, 0, 0, f0);
       if (!until && hp <= 0) return 0;
     }
     for (let i = 0; i <= stepsMax; i++) {
@@ -471,17 +471,36 @@
       if (m.cond) for (const c of m.cond) if (c.eff.tenno && condActive(c.when, o)) add(c.eff.tenno);
     }
     if (!t || !t.on) return null;
-    t.f = t.every ? 1 / t.every : 0.15 * (t.freq || 1);
+    const kH = o.tennoPerHit && o.scenario === "crowd" ? 2 : 1;   // melee swing hits K = 2 in a crowd
+    t.f = t.every ? kH / t.every : 1 - Math.pow(1 - Math.min(1, 0.15 * (t.freq || 1)), kH);   // 15%/hit: destructoid.com Tennokai guide
     return t;
   }
   function evaluate1(weapon, atk, mods, o, riven) {
     let parts = atk.parts ? atk.parts : [atk];
     let weights = parts.map(() => 1);
-    const tn = atk.kind === "melee" ? tennoOf(mods, Object.assign({}, o, { kills: o.scenario === "boss" ? false : o.kills })) : null;
+    const tn = atk.kind === "melee" && !o._noTenno ? tennoOf(mods, Object.assign({}, o, { kills: o.scenario === "boss" ? false : o.kills })) : null;
+    // v1.80 o.noPool: swings and Tennokai heavies as two separate kill streams sharing the time (kill rate = time-weighted mix),
+    // instead of one averaged hit — averaging lets a 12x Tennokai's damage "one-shot" enemies on every swing. The truth lies
+    // between the two; the app withholds the pick when they disagree.
+    if (tn && o.noPool && !o._tennoOnly) {
+      const rS = evaluate1(weapon, atk, mods, Object.assign({}, o, { _noTenno: true }));
+      const rT = evaluate1(weapon, atk, mods, Object.assign({}, o, { _tennoOnly: true }));
+      const q = tn.f / (1 + tn.f), mix = (x, y) => (1 - q) * x + q * y, perF = {};
+      for (const f of o.factions) {
+        const S = rS.perF[f], T = rT.perF[f];
+        const lo = mix(S.kpsLo, T.kpsLo), hi = mix(S.hi.kps, T.hi.kps), top = mix(S.top.kps, T.top.kps);
+        perF[f] = Object.assign({}, S, { kps: Math.cbrt(lo * hi * top), kpsLo: lo, hi: Object.assign({}, S.hi, { kps: hi }), top: Object.assign({}, S.top, { kps: top }) });
+      }
+      const vals = o.factions.map((f) => perF[f].kps);
+      let score = o.metric === "min" ? Math.min(...vals) : Math.exp(vals.reduce((s, x) => s + Math.log(Math.max(x, 1e-9)), 0) / vals.length);
+      if (rS.conceptD > 0 && o.conceptPenalty !== false) score *= Math.pow(0.01, rS.conceptD);
+      return Object.assign({}, rS, { score, perF, tenno: tn });
+    }
     if (tn) {
       const heavyAtk = (weapon.attacks || []).find((x) => x.en === "Heavy Attack") || atk;
-      parts = [atk, Object.assign({}, heavyAtk, { kind: "tennokai", name: atk.name, tenno: tn, swingFr: atk.fr })];
-      weights = [1 / (1 + tn.f), tn.f / (1 + tn.f)];
+      const tp = Object.assign({}, heavyAtk, { kind: "tennokai", name: atk.name, tenno: tn, swingFr: atk.fr });
+      if (o._tennoOnly) { parts = [tp]; weights = [1]; }
+      else { parts = [atk, tp]; weights = [1 / (1 + tn.f), tn.f / (1 + tn.f)]; }
     }
     // Volatile Quick Return with a detonation build: the first contact also sets off a bounce explosion
     // (50% damage, no combo multiplier, no guaranteed procs) before the heavy-attack detonation in the same throw
@@ -497,10 +516,10 @@
     const perF = {};
     for (const f of o.factions) {
       // sum per-shot params across parts (same trigger)
-      const acc = { kf: 0, D: 0, Dnon: 0, pbN: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
+      const acc = { kf: 0, D: 0, D0: 0, Dnon: 0, pbN: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
       res.forEach((r, ri) => {
         const x = r.perF[f], wgt = weights[ri];
-        acc.D += x.D * wgt; acc.Dnon += (x.Dnon || 0) * wgt; acc.pbN += (x.pbN || 0) * wgt; acc.kf = Math.max(acc.kf, x.kf || 0); acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt; acc.napH += (x.napH || 0) * wgt;
+        acc.D += x.D * wgt; acc.D0 += (x.D0 != null ? x.D0 : x.D) * wgt; acc.Dnon += (x.Dnon || 0) * wgt; acc.pbN += (x.pbN || 0) * wgt; acc.kf = Math.max(acc.kf, x.kf || 0); acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wgt; acc.napH += (x.napH || 0) * wgt;
         for (const T in x.dot) acc.dot[T] = (acc.dot[T] || 0) + x.dot[T] * wgt;
         for (const T in x.dotNon) acc.dotNon[T] = (acc.dotNon[T] || 0) + x.dotNon[T] * wgt;
         acc.pv += x.pv * wgt; acc.ph += x.ph * wgt; acc.pc += x.pc * wgt; acc.pk += x.pk * wgt; acc.pm += (x.pm || 0) * wgt; acc.pp += (x.pp || 0) * wgt;
@@ -524,7 +543,7 @@
       }
       const base = { field: !!o.napField, strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, nc: main.nc || 0, corrMax: 10 + (o.ext.corrMax || 0), dt: o.dt, tmax: o.tmax, Tdur: main.Tdur, dotN: main.dotN,
         ogM: main.ogM || 1, frozenM: main.frozenM || 0, coldVuln: main.coldVuln || 0 };
-      const hitP = { D: acc.D, blast: acc.blast, F: acc.F, dot: acc.dot, napH: acc.napH, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm, pp: acc.pp, aoeOnly: main && parts.every((q) => q.kind === "radial") };
+      const hitP = { D: acc.D, D0: acc.D0, blast: acc.blast, F: acc.F, dot: acc.dot, napH: acc.napH, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm, pp: acc.pp, aoeOnly: main && parts.every((q) => q.kind === "radial") };
       const nonP = { D: acc.Dnon, blast: 0, dot: acc.dotNon, pv: acc.pvN, ph: acc.phN, pc: acc.pcN, pk: acc.pkN };
       const hasNon = acc.Dnon > 0 || acc.pbN > 0 || Object.keys(acc.dotNon).some((T) => acc.dotNon[T] > 0);
       const period = 1 / Math.max(0.05, main.rate);
@@ -593,13 +612,13 @@
           const shots = 1 + tHit * main.rate;
           const onDeath = 1 - Math.exp(-pbl * Math.max(1, tHit * main.rate));
           const nSt = Math.max(1, Math.min(10, pbl * Math.min(shots, 1.5 * main.rate)));
-          const dealt = ttk(Object.assign({}, base, { D: unit * 10 * nSt, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, r: 0, cc: 0, nc: 0, hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar }), o.dt);
+          const dealt = ttk(Object.assign({}, base, { D: unit * 10 * nSt, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, r: 0, hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar }), o.dt);
           const n5 = Math.min(main.N - 1, (o.density || 0) * Math.PI * 25);
           Keff = Math.min(main.N, Keff * (1 + onDeath * n5 * Math.min(1, dealt / Math.max(1, tg.hp))));
           // 10-stack detonations: an enemy taking λ Blast procs a second reaches 10 inside one 1.5 s fuse with the Poisson
           // chance P(X ≥ 10 | 1.5λ) and then goes off every 10 procs; each one hits the others within 5 m. Every enemy the
           // shot strikes (direct hits and chain jumps — each rolls its own status) is such a source.
-          const lam = pbl * main.rate, m = 1.5 * lam;
+          const lam = pbl * main.rate, m = lam * Math.min(1.5, Math.max(0, tHit));   // v1.80: a struck enemy only builds stacks while it lives (one-shot = none)
           let pmf = Math.exp(-m), cdf = pmf; for (let k = 1; k < 10; k++) { pmf *= m / k; cdf += pmf; }
           const det = (lam / 10) * Math.max(0, 1 - cdf);
           const chainN = main.chain ? main.chain.n * (main.chain.p == null ? 1 : main.chain.p) : 0;
@@ -821,7 +840,7 @@
     // Primary Compression (aiming): blast radius x0.2, +100% damage per metre lost
     let radiusMul = 1;
     if (arc && arc.compression && atk.radius && o.aim) { const lost = atk.radius * 0.8; a.dmg += lost; a.ammoEff += 0.055 * lost; radiusMul = 0.2; }
-    const base0 = Object.values(atk.dmg).reduce((s, x) => s + x, 0);
+    const base0 = Object.values(atk.dmg).reduce((s, x) => s + x, 0) * (o.evoHeavyScale && atk.evoScaleAlt ? atk.evoScaleAlt : 1);
     const vpct = o.val && o.val.type ? o.val.pct : 0;
     const Btot = (base0 + (a.baseAdd || 0)) * (1 + vpct);
 
@@ -885,6 +904,8 @@
         over = atk.throwSpeed ? 0.15 + (2 * d) / (atk.throwSpeed * (1 + a.throwSpd)) : o.throwOverhead;
       }
       rate = 1 / (tw + over);
+      // o._tennoOnly (no-pooling bound): a Tennokai takes one swing period, as in the pooled model
+      if (kind === "tennokai" && o._tennoOnly) rate = (atk.swingFr || 1) * Math.max(0.2, 1 + a.fr + (ext.asAdd || 0)) * 1.5;
       // glaive: the thrown glaive's own hits build combo (explosion-only hits don't — wiki), a heavy-attack
       // detonation spends it; Volatile bounce explosions get no combo multiplier and spend nothing
       const gain = kind === "glaive" ? (o.scenario === "crowd" ? Math.min(3, K) : 1) : K;
@@ -927,7 +948,7 @@
         else rate = atk.mag ? mag / (mag * (ct + 1 / fr) + reload) : 1 / (ct + 1 / fr);
       }
     }
-    const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0);
+    const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (tenno && o.tennoAdd ? tenno.dmg || 0 : 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0);
     const msLock = a.msLock > 0;
     // atk.noMs: a radial part the wiki says multishot doesn't multiply (one blast per trigger pull)
     const ms0 = atk.noMs ? 1 : (atk.pellets || 1) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)));
@@ -982,7 +1003,7 @@
       for (let i = 0; i < n; i++) { const c = hps * 20 * (i + 0.5) / n; s += c < mn ? 1 : 1.5 + 0.5 * Math.floor(Math.log(c / mn) / Math.log(3) + 1e-9); }
       sniperM = s / n;
     }
-    const fin = (ext.final || 1) * (tenno ? 1 + (tenno.dmg || 0) : 1) * exChain * sniperM * (1 + (a.evoMult || 0));   // evoMult: Incarnon "unique multiplier" perks
+    const fin = (ext.final || 1) * (tenno && !o.tennoAdd ? 1 + (tenno.dmg || 0) : 1) * exChain * sniperM * (1 + (a.evoMult || 0));   // evoMult: Incarnon "unique multiplier" perks
     // falloff: distance (bullets/pellets) and blast edge (enemies around the centre of an explosion)
     let fallM = distFall(atk.fo, o);
     if (atk.rfo && o.scenario === "crowd" && K > 1) fallM *= (1 + (K - 1) * (1 - atk.rfo * 2 / 3)) / K;
@@ -1096,6 +1117,9 @@
       // Incarnon "+X% Direct Damage per Status Type" (no kill needed) counts the same way
       const gco = kind === "radial" ? 0 : (kills ? a.gco * ntypes : 0) + (a.evoPst || 0) * ntypes;
       const co = isMelee && !atk.noCO ? a.co * ntypes : 0;
+      // v1.80: the first hit on a fresh enemy finds no statuses of its own yet (only ones other sources keep: ext.statusExtra)
+      const nt0 = Math.min(14, ext.statusExtra || 0), gco0 = kind === "radial" ? 0 : (kills ? a.gco * nt0 : 0) + (a.evoPst || 0) * nt0, co0 = isMelee && !atk.noCO ? a.co * nt0 : 0;
+      const first0 = (1 + dmgb + dmgArc + platedB + gco0 + co0) / Math.max(1e-9, 1 + dmgb + dmgArc + platedB + gco + co);
       const mbd = Btot * exS * (1 + dmgb + dmgArc + platedB) * fallM;
       // on-kill damage fields of the weapon itself (wiki Incarnon notes; convert.py KILL_FIELD): Dual Ichor "Fields do 350 Toxin
       // damage (increased to 440 by EVO2) and last for 7 seconds", "4m range", "affected by faction damage bonuses", melee damage
@@ -1210,7 +1234,7 @@
         const dispDotBy = {}; for (const T in dot) dispDotBy[T] = dot[T] * vm0;
         if (napHdisp > 0) dispDotBy.napalmHeat = napHdisp * vm0;
         perF[fname] = {
-          D, Dnon: Dsp * spreadNon, pbN, kf: kfTot * fac, blast, dot, dotNon, napH, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
+          D, D0: D * first0, Dnon: Dsp * spreadNon, pbN, kf: kfTot * fac, blast, dot, dotNon, napH, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
           pv: (procs.viral || 0) * spreadHit, ph: ((procs.heat || 0) + napPh) * spreadHit, pc: (procs.corr || 0) * spreadHit, pk: (procs.cold || 0) * spreadHit, pm: (procs.mag || 0) * spreadHit,
           pp: kind === "radial" ? 0 : (procs.punct || 0) * spreadHit,
           pvN: (procs.viral || 0) * spreadNon, phN: (procs.heat || 0) * spreadNon, pcN: (procs.corr || 0) * spreadNon, pkN: (procs.cold || 0) * spreadNon,

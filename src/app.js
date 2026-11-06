@@ -344,12 +344,18 @@ self.onmessage = function (ev) {
   function applyEvos(w, sel) {
     if (!w.evos) return w;
     const items = evoItems(w, sel);
+    const nA = w.slot === "melee" ? w.attacks.find((q) => q.en === "Normal Attack") : null, totN = nA ? Object.values(nA.dmg || {}).reduce((q, v) => q + v, 0) : 0;
     const mod = (a, inc, dmgF) => {
       const x = JSON.parse(JSON.stringify(a)), eff = {};
       for (const it of items) {
         if ((it.form === "inc" && !inc) || (it.form === "normal" && inc)) continue;   // no form = both forms
         if (it.atk && a.en !== it.atk) continue;                                       // e.g. Ronin's Rush: normal attacks only
-        if (it.key === "baseDmg") { const f = dmgF != null ? dmgF : (() => { const tot = Object.values(x.dmg || {}).reduce((q, v) => q + v, 0); return tot > 0 ? (tot + it.v) / tot : 1; })(); for (const k in x.dmg) x.dmg[k] *= f; }
+        if (it.key === "baseDmg") {
+          const f = dmgF != null ? dmgF : (() => { const tot = Object.values(x.dmg || {}).reduce((q, v) => q + v, 0); return tot > 0 ? (tot + it.v) / tot : 1; })(); for (const k in x.dmg) x.dmg[k] *= f;
+          // v1.80: whether "+X Base Damage" raises a melee heavy/slam by the same X or by the swing's ratio (heavy = 5 x base in the
+          // arsenal) isn't on the wiki — the engine's o.evoHeavyScale switches to the swing's ratio, the app checks both
+          if (nA && a !== nA && totN > 0 && f > 0) x.evoScaleAlt = (x.evoScaleAlt || 1) * ((totN + it.v) / totN) / f;
+        }
         else if (it.key === "baseCC") x.cc = (x.cc || 0) + it.v;
         else if (it.key === "baseCD") x.cd = (x.cd || 0) + it.v;
         else if (it.key === "baseSC") x.sc = (x.sc || 0) + it.v;
@@ -1380,6 +1386,13 @@ self.onmessage = function (ev) {
   //   Without the combo multiplier those ticks would be 107 and 214. (o.noComboStatus stays in the engine for regress only.)
   function boundAlts(w, atk, o) {
     const alts = [];
+    // v1.80 (independent review 2026-11-06): melee swing + Tennokai model choices nobody has measured yet
+    if (atk && atk.kind === "melee") {
+      alts.push({ o: { noPool: true }, why: "휘두르기와 텐노카이 강공을 한 방 평균으로 계산(기본) / 따로 계산 — 평균을 내면 12배 텐노카이 피해가 휘두르기마다 들어가 한 방 처치가 늘어남" });
+      alts.push({ o: { tennoAdd: true }, why: "텐노카이 피해 보너스(마스터즈 엣지 등)가 별도 배율(기본) / 근접 피해(프레셔 포인트)와 합연산 — 위키 확인 안 됨" });
+      alts.push({ o: { tennoPerHit: true }, why: "텐노카이 기회를 휘두를 때마다 셈(기본) / 맞힌 적마다 셈(디시플린즈 메리트 '근접 공격 4회', 기본 확률 15%) — 확인 안 됨" });
+      if (w.attacks.some((q) => q.evoScaleAlt)) alts.push({ o: { evoHeavyScale: true }, why: "진화 '기본 피해 +X'가 강공에 그대로 X만 더해짐(기본) / 휘두르기와 같은 비율로 커짐(강공 = 기본 피해 × 5) — 위키 확인 안 됨" });
+    }
     if (atk && atk.killField && !atk.killField.every && o.scenario === "crowd") alts.push({ o: { fieldHigh: true }, why: `처치 시 장판(${atk.killField.dmg} 피해, ${atk.killField.dur}초)이 몇 초마다 들어가는지 위키에 없음 — 한 번 / 1초마다` });
     return alts;
   }
