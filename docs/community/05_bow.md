@@ -49,3 +49,11 @@
 - 위키 Fire_Rate 1쪽만 시도 → 또 "permission request … not answered in time"(PROVENANCE_REQUIRED). 다른 쪽은 보내지 않음, 우회 안 함 → 직접 읽은 세팅 0, 판정 0, 엔진 수정 0.
 - 점검표: 야간 점검(11-06 00시 UTC 실행, 성공)이 report.md를 바꾸지 않음 = 결과 변화 없음. 표시 2건(코린트 프라임·고트바 프라임 등)은 이전 실행에서 설명 끝남, 전체 점검 표시 19건 그대로.
 - 다음 실행: 웹 읽기 권한이 승인되면 '다음 실행 할 일' 1·2 그대로.
+
+## 2026-11-06 대화 — 위키 Fire Rate 본문(사용자가 붙여 줌) → v1.77
+- 예약 실행의 웹 읽기가 계속 막혀서 사용자가 위키 [Fire Rate](https://wiki.warframe.com/w/Fire_Rate) 본문을 대화에 붙여 줌 → 직접 읽은 위키 근거.
+- 근거 문장: "Charge Time = Base Charge Time / (1 + Mod Bonus)", "charge time cannot go above 10 times the base charge time (achieved by having at least -90% fire rate bonus)", 활: "Effective Fire Rate = 1 / (Modded Charge Time + Modded Reload Time)", 랑카: "1 / Modded Charge Time", 그 밖의 충전 무기: "1 / (Modded Charge Time + 1 / Modded Fire Rate)". 충전 시간 목록(나타루크 1.00, 렌즈 1.20, 다이큐 1.00, 패리스 0.50, 쿠바 브람마 0.40, 이븐송 1.20 …)은 계산기 데이터와 같음. 댓글 측정: 다이큐 + 스피드 트리거 0.45초(공식 1/2.2 = 0.4545와 맞음).
+- 의심 결함 확인 ✅ → v1.77 엔진 수정: 충전 공격은 1/연사 대신 위 공식. 합친 공격(직격 + 폭발)도 충전 시간을 이어받도록 convert.py 수정(렌즈·쿠바 브람마·옵티코·이븐송 기본 공격은 그동안 충전 시간이 비어 있었음).
+- 회귀 검사 추가(고치기 전 빌드에서 렌즈·옵티코 실패 확인): 다이큐·다이큐 + 스피드 트리거·렌즈 기본 공격·나타루크 퍼펙트 샷·랑카·옵티코.
+- 반영 안 한 것: "Semi-Auto weapons are capped at 10 rounds per second" — 같은 문서 댓글이 일부 반자동 무기만 상한이 있다고 해서(스트런 15발 이상) 무기별 근거 없이 넣지 않음. 활 기본 공격이 비충전 사격인 문제(패리스 '전멸 60초 초과')는 다음 실행.
+- 커뮤니티 세팅은 아직 0개(웹 읽기 막힘) — 묶음 5는 세팅 수집이 남음.

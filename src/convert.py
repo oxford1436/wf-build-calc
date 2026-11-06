@@ -312,6 +312,8 @@ def conv(w, typ):
                 if nc_:
                     cb["name"] = cname.replace("(직격 + 폭발)", "(직격 + 폭발 + 집속탄 " + str(nc_) + "개)")
                     cb["desc"] = "한 발의 직격·폭발과 그 폭발에서 나오는 집속탄 " + str(nc_) + "개(접촉 + 폭발)를 합쳐서 계산 (위키)"
+                if y.get("charge"):
+                    cb["charge"] = y["charge"]     # the combined shot keeps its trigger part's charge time (wiki Fire Rate)
                 if y.get("inc"):
                     cb["inc"] = True
                 if y.get("incAmmo"):

@@ -916,6 +916,16 @@
       // keeps the trigger held, so it ramps once per magazine — the linear ramp costs (1 − start) × T / 2 of full-damage time
       const spoolT = (atk.spool && atk.mag ? 0.277 * atk.spool / fr : 0) + (atk.beamRamp && atk.mag ? (1 - atk.beamRamp[0]) * atk.beamRamp[1] / 2 : 0);
       rate = atk.mag ? mag / (mag / fr + spoolT + reload) : fr;
+      // Charged shots — wiki Fire Rate "Fire Rate and Charge Time": "Charge Time = Base Charge Time / (1 + Mod Bonus)" (bows get the
+      // "x2 for Bows" bonus already in a.fr), "charge time cannot go above 10 times the base charge time"; time per shot:
+      // bows and Epitaph "1 / (Modded Charge Time + Modded Reload Time)", Lanka "1 / Modded Charge Time" (plus its magazine reload),
+      // other charge weapons "1 / (Modded Charge Time + 1 / Modded Fire Rate)" (plus the magazine reload).
+      if (atk.charge > 0 && !(a.lock > 0 && atk.semi)) {
+        const ct = atk.charge / Math.max(0.1, 1 + a.fr + a.frneg + (ext.frAdd || 0));
+        if (weapon.type === "Bow" || weapon.en === "Epitaph") rate = 1 / (ct + reload);
+        else if (/^Lanka$/.test(weapon.en)) rate = mag / (mag * ct + reload);
+        else rate = atk.mag ? mag / (mag * (ct + 1 / fr) + reload) : 1 / (ct + 1 / fr);
+      }
     }
     const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0);
     const msLock = a.msLock > 0;

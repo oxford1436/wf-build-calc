@@ -232,6 +232,23 @@ const { chromium } = require("playwright");
       const r0 = E.evaluate(w, a, ["Galvanized Chamber"].map(M), o).rate, r1 = E.evaluate(w, a, ["Galvanized Chamber", "Critical Delay"].map(M), o).rate;
       check("v1.69 점사 무기 연사 = 점사 발 수 ÷ (1/연사 + 발 수 × 점사 간격) (페리게일·힌드·쿼타크·시카루스·버스턴) · 음수 연사는 점사 간격을 늘리지 않음", !bad && r1 / r0 > 0.905, bad + "크리티컬 딜레이 연사 비 " + (r1 / r0).toFixed(3));
     }
+    // v1.77 (묶음 5 활): wiki Fire Rate "Fire Rate and Charge Time": "Charge Time = Base Charge Time / (1 + Mod Bonus)", "charge time
+    // cannot go above 10 times the base charge time"; bows: "Effective Fire Rate = 1 / (Modded Charge Time + Modded Reload Time)";
+    // Lanka: "1 / Modded Charge Time"; other charge weapons: "1 / (Modded Charge Time + 1 / Modded Fire Rate)". Wiki comment check:
+    // Daikyu + Speed Trigger charge time 0.45 s in game.
+    {
+      const near = (x, y) => Math.abs(x - y) < 0.01 * y;
+      const rt = (id, en, mods) => { const w = weapon(id), a = w.attacks.find((x) => x.en === en) || w.attacks[0]; return E.evaluate(w, a, mods.map(M), baseO()).rate; };
+      const got = {
+        daikyu: rt("daikyu", "Charged Shot", []), daikyuST: rt("daikyu", "Charged Shot", ["Speed Trigger"]),
+        lenz: rt("lenz", weapon("lenz").attacks[0].en, []), lanka: rt("lanka", "Charged Shot", []), opticor: rt("opticor", "Charged Shot", []),
+        nataruk: rt("nataruk", "Perfect Shot", []),
+      };
+      const want = { daikyu: 1 / (1 + 0.6), daikyuST: 1 / (1 / 2.2 + 0.6), lenz: 1 / (1.2 + 0.6), lanka: 10 / (10 * 1 + 2), opticor: 5 / (5 * (2 + 1) + 2), nataruk: 1 / (0.7 + 0.05) };
+      let bad = "";
+      for (const k in want) if (!near(got[k], want[k])) bad += `${k}: 초당 ${got[k].toFixed(3)}발 (위키 공식 ${want[k].toFixed(3)}) · `;
+      check("v1.77 충전 무기 발 간격 = 충전 시간 ÷ (1 + 연사 보너스) (+ 활은 재장전, 랑카는 충전만, 나머지는 + 1/연사) — 다이큐·렌즈 기본 공격·나타루크 퍼펙트 샷·랑카·옵티코", !bad, bad);
+    }
     // v1.70 (대기열 4b): Perigale "Gale Force" — wiki: "Landing 4 headshots in a burst or a headshot kill grants the "Gale Force"
     // buff, granting Infinite Ammo. The buff lasts 4 seconds". With headshots (o.hs 0.5, aimed) the magazine lasts longer →
     // fewer reloads → higher average rate and less ammo used; without headshots nothing changes.
