@@ -1373,14 +1373,19 @@ self.onmessage = function (ev) {
   // 2026-11-04: "결함이 있는 세팅을 추천한다고 보이지 말라").
   // Unverified assumptions, each computed at its other end too:
   //  - fieldHigh: on-kill field ticks every second (wiki gives no interval)
-  //  - noComboStatus: the heavy-attack / Tennokai combo multiplier does NOT reach status damage (Blast, DoTs) — the wiki
-  //    (Melee Combo, Damage/Calculation) doesn't say either way; the engine's default applies it
+  // Settled by an in-game test, no longer checked here (v1.78): the heavy / Tennokai combo multiplier DOES reach status damage.
+  //   Simulacrum 2026-11-06, Dual Ichor without damage mods: a 12x heavy's main hit (4.7K = 305 x 12 x 1.282) left Slash ticks of
+  //   1.3K = 0.35 x 305 x 12; a 3x heavy in Incarnon Form (7.0K crit = 305 x 3 x 2 x 1.282 x 3) left 641 = 0.35 x 305 x 3 x 2.
+  //   Without the combo multiplier those ticks would be 107 and 214. (o.noComboStatus stays in the engine for regress only.)
+  function boundAlts(w, atk, o) {
+    const alts = [];
+    if (atk && atk.killField && !atk.killField.every && o.scenario === "crowd") alts.push({ o: { fieldHigh: true }, why: `처치 시 장판(${atk.killField.dmg} 피해, ${atk.killField.dur}초)이 몇 초마다 들어가는지 위키에 없음 — 한 번 / 1초마다` });
+    return alts;
+  }
   function boundCheck(R) {
     const w = st.weapon, atk = w.attacks[st.atk];
     if (!atk) return null;
-    const alts = [];
-    if (atk.killField && !atk.killField.every && R.o.scenario === "crowd") alts.push({ o: { fieldHigh: true }, why: `처치 시 장판(${atk.killField.dmg} 피해, ${atk.killField.dur}초)이 몇 초마다 들어가는지 위키에 없음 — 한 번 / 1초마다` });
-    if (w.slot === "melee") alts.push({ o: { noComboStatus: true }, why: "강공·텐노카이의 연속기 배율(최대 12배)이 상태이상(폭발·도트) 피해에도 곱해지는지 위키에 없음 — 곱해짐 / 안 곱해짐" });
+    const alts = boundAlts(w, atk, R.o);
     if (!alts.length) return null;
     const K = Math.min(30, R.res.length), outs = [];
     for (const a of alts) {
@@ -2170,7 +2175,7 @@ self.onmessage = function (ev) {
   F0 = captureFields();
   // read-only handle for checking results from the browser console / test scripts
   // test/automation handle (scripts/regress.js, scripts/community_check.js): arcAuto = the arcanes the 'auto' option compares
-  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos,
+  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts,
     arcAuto: (w) => arcanesFor(w).filter(([, x]) => !x.manual && !x.none && !x.aim).map(([k]) => k).concat([null]) };
   restoreFromHash();
 })();

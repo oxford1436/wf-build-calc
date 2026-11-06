@@ -622,6 +622,10 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.78", date: "2026-11-06", title: "게임 확인: 강공·텐노카이의 연속기 배율은 상태이상 피해에도 곱해짐 — 듀얼 이코르 추천 보류 해제",
+      items: [
+        "시뮬라크럼 영상(듀얼 이코르, 피해 모드 없음): 연속기 12배 강공의 직격 4.7K(= 305 × 12)를 맞은 적에게 1초마다 출혈 1.3K(= 0.35 × 305 × 12)가 6초 동안 떴습니다. 인카논 형태에서 3배 강공(치명타 7.0K)을 맞은 적에게는 641(= 0.35 × 305 × 3 × 인카논 2배)이 떴습니다. 연속기 배율이 상태이상에 안 붙는다면 각각 107과 214였어야 합니다.",
+        "계산기는 원래 곱해지는 쪽으로 계산하고 있었고, v1.75부터 위키에 없다는 이유로 반대쪽도 계산해 1위가 바뀌면 추천을 보류했습니다. 게임에서 확인됐으니 반대쪽 계산을 뺐습니다. 듀얼 이코르는 다시 추천 세팅을 보여 줍니다.",
     { v: "1.77", date: "2026-11-06", title: "활·충전 무기 발 간격에 충전 시간을 넣음 (위키 Fire Rate)",
       items: [
         "위키 Fire Rate 문서의 'Fire Rate and Charge Time' 공식대로 계산합니다: 충전 시간 = 기본 충전 시간 ÷ (1 + 연사 보너스)(활은 연사 모드 2배가 이미 들어감, 충전 시간은 기본의 10배까지), 활·에피타프는 한 발 = 충전 시간 + 재장전, 랑카는 충전 시간만(+ 탄창 재장전), 나머지 충전 무기는 충전 시간 + 1/연사(+ 탄창 재장전).",
@@ -3362,6 +3366,10 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.78", date: "2026-11-06", title: "게임 확인: 강공·텐노카이의 연속기 배율은 상태이상 피해에도 곱해짐 — 듀얼 이코르 추천 보류 해제",
+      items: [
+        "시뮬라크럼 영상(듀얼 이코르, 피해 모드 없음): 연속기 12배 강공의 직격 4.7K(= 305 × 12)를 맞은 적에게 1초마다 출혈 1.3K(= 0.35 × 305 × 12)가 6초 동안 떴습니다. 인카논 형태에서 3배 강공(치명타 7.0K)을 맞은 적에게는 641(= 0.35 × 305 × 3 × 인카논 2배)이 떴습니다. 연속기 배율이 상태이상에 안 붙는다면 각각 107과 214였어야 합니다.",
+        "계산기는 원래 곱해지는 쪽으로 계산하고 있었고, v1.75부터 위키에 없다는 이유로 반대쪽도 계산해 1위가 바뀌면 추천을 보류했습니다. 게임에서 확인됐으니 반대쪽 계산을 뺐습니다. 듀얼 이코르는 다시 추천 세팅을 보여 줍니다.",
     { v: "1.77", date: "2026-11-06", title: "활·충전 무기 발 간격에 충전 시간을 넣음 (위키 Fire Rate)",
       items: [
         "위키 Fire Rate 문서의 'Fire Rate and Charge Time' 공식대로 계산합니다: 충전 시간 = 기본 충전 시간 ÷ (1 + 연사 보너스)(활은 연사 모드 2배가 이미 들어감, 충전 시간은 기본의 10배까지), 활·에피타프는 한 발 = 충전 시간 + 재장전, 랑카는 충전 시간만(+ 탄창 재장전), 나머지 충전 무기는 충전 시간 + 1/연사(+ 탄창 재장전).",
@@ -8705,14 +8713,19 @@ self.onmessage = function (ev) {
   // 2026-11-04: "결함이 있는 세팅을 추천한다고 보이지 말라").
   // Unverified assumptions, each computed at its other end too:
   //  - fieldHigh: on-kill field ticks every second (wiki gives no interval)
-  //  - noComboStatus: the heavy-attack / Tennokai combo multiplier does NOT reach status damage (Blast, DoTs) — the wiki
-  //    (Melee Combo, Damage/Calculation) doesn't say either way; the engine's default applies it
+  // Settled by an in-game test, no longer checked here (v1.78): the heavy / Tennokai combo multiplier DOES reach status damage.
+  //   Simulacrum 2026-11-06, Dual Ichor without damage mods: a 12x heavy's main hit (4.7K = 305 x 12 x 1.282) left Slash ticks of
+  //   1.3K = 0.35 x 305 x 12; a 3x heavy in Incarnon Form (7.0K crit = 305 x 3 x 2 x 1.282 x 3) left 641 = 0.35 x 305 x 3 x 2.
+  //   Without the combo multiplier those ticks would be 107 and 214. (o.noComboStatus stays in the engine for regress only.)
+  function boundAlts(w, atk, o) {
+    const alts = [];
+    if (atk && atk.killField && !atk.killField.every && o.scenario === "crowd") alts.push({ o: { fieldHigh: true }, why: `처치 시 장판(${atk.killField.dmg} 피해, ${atk.killField.dur}초)이 몇 초마다 들어가는지 위키에 없음 — 한 번 / 1초마다` });
+    return alts;
+  }
   function boundCheck(R) {
     const w = st.weapon, atk = w.attacks[st.atk];
     if (!atk) return null;
-    const alts = [];
-    if (atk.killField && !atk.killField.every && R.o.scenario === "crowd") alts.push({ o: { fieldHigh: true }, why: `처치 시 장판(${atk.killField.dmg} 피해, ${atk.killField.dur}초)이 몇 초마다 들어가는지 위키에 없음 — 한 번 / 1초마다` });
-    if (w.slot === "melee") alts.push({ o: { noComboStatus: true }, why: "강공·텐노카이의 연속기 배율(최대 12배)이 상태이상(폭발·도트) 피해에도 곱해지는지 위키에 없음 — 곱해짐 / 안 곱해짐" });
+    const alts = boundAlts(w, atk, R.o);
     if (!alts.length) return null;
     const K = Math.min(30, R.res.length), outs = [];
     for (const a of alts) {
@@ -9502,7 +9515,7 @@ self.onmessage = function (ev) {
   F0 = captureFields();
   // read-only handle for checking results from the browser console / test scripts
   // test/automation handle (scripts/regress.js, scripts/community_check.js): arcAuto = the arcanes the 'auto' option compares
-  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos,
+  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts,
     arcAuto: (w) => arcanesFor(w).filter(([, x]) => !x.manual && !x.none && !x.aim).map(([k]) => k).concat([null]) };
   restoreFromHash();
 })();
