@@ -1752,7 +1752,7 @@
   },
   "quote": "Releasing the shot after 70% of a full charge, indicated by white brackets and the reticle turning yellow, will perform a \"Perfect Shot\", with higher critical chance and critical multiplier over a fully Charged Shot. | Both Charged and Perfect Shots feature a significantly larger projectile and Infinite Body Punch Through.",
   "url": "https://wiki.warframe.com/w/Nataruk",
-  "handled": null,
+  "handled": "v1.4x INF_BODY_PT (convert.py: Charged·Perfect 몸 무한 관통) — 2026-11-06 22시 확인",
   "variants": null
  },
  {
@@ -5000,5 +5000,21 @@
   "variants": [
    "Prisma Skana"
   ]
+ },
+ {
+  "weapon": "Nataruk",
+  "attack": "All shots (reload between shots)",
+  "cat": "all",
+  "type": "other",
+  "stated": false,
+  "numbers": {
+   "wiki_reload_s": 0.6,
+   "game_data_reload_s": 0.05,
+   "wiki_magazine": 1
+  },
+  "quote": "Reload: wiki Module:Weapons/data Nataruk Reload = 0.6, Magazine = 1 — game data (warframestat) reloadTime 0.05, no magazine. Bow cadence (wiki Fire Rate) = 1 / (Modded Charge Time + Modded Reload Time), so the two values change the #1 build (2026-11-06 22h both-ends run: Infected Clip + Speed Trigger at 0.05 s vs Hellfire + Hammer Shot at 0.6 s). Check the in-game Arsenal reload value.",
+  "url": "https://wiki.warframe.com/w/Nataruk",
+  "handled": null,
+  "variants": null
  }
 ]

@@ -322,6 +322,13 @@ const { chromium } = require("playwright");
       for (const id of ids) { const w = W.find((x) => x.id === id); if (!w) { bad += id + " 없음 · "; continue; } const en = w.attacks[A.defaultAttack(w)].en; if (!/Charged/.test(en) || /^Incarnon/.test(en)) bad += `${id}: ${en} · `; }
       check("v1.81 활 기본 공격 = 충전 사격 (패리스·나타루크·다이큐 프라임·서노스 프라임·드레드 — 비충전·퀵 사격 아님, 인카논 형태 아님)", !bad, bad);
     }
+    // v1.85 (묶음 5, 2026-11-06 22시): Nataruk reload — wiki data Reload 0.6 vs game data 0.05; bow cadence 1/(charge + reload)
+    // flips the #1 (both-ends run) → every Nataruk attack (Perfect Shot too) is withheld until the Arsenal value is known. The old
+    // punch-through gap is handled (INF_BODY_PT), so it no longer withholds by itself.
+    {
+      const g = weapon("nataruk").gaps || [];
+      check("v1.85 나타루크 재장전 0.6/0.05 미확정 → 모든 공격 추천 보류 (관통 항목은 처리됨)", g.some((x) => x.cat === "all") && !g.some((x) => x.type === "punch-through-rule"), JSON.stringify(g.map((x) => x.cat + ":" + x.type)));
+    }
     // v1.70 (대기열 4b): Perigale "Gale Force" — wiki: "Landing 4 headshots in a burst or a headshot kill grants the "Gale Force"
     // buff, granting Infinite Ammo. The buff lasts 4 seconds". With headshots (o.hs 0.5, aimed) the magazine lasts longer →
     // fewer reloads → higher average rate and less ammo used; without headshots nothing changes.

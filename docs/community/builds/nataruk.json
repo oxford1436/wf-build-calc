@@ -1,0 +1,49 @@
+{
+  "weapon": "nataruk",
+  "attack": 1,
+  "valence": null,
+  "riven": null,
+  "notes": "나타루크 충전 사격(앱 기본 공격, v1.81). 2026-11-06 22시 묶음 5 조사. kind: read = 출처 글 본문에서 모드 8칸을 글자로 직접 읽은 세팅. Overframe 857065·ProGameTalk는 모드 칸이 글자로 없음(인코딩 문자열·그림) → 세팅 미기록. 위키 Nataruk은 열리지 않음(PROVENANCE_REQUIRED).",
+  "read_2026_11_06": [
+    {"src": "https://overframe.gg/build/857065/nataruk/one-shot-nataruk/", "date": "2025-06-21 (38.6)", "what": "모드 칸 글자 없음 — 세팅 미기록", "claims": ["완전 충전 직전에 놓으면 효과 최대(퍼펙트 샷)"]},
+    {"src": "https://progametalk.com/warframe/nataruk/", "date": "2026-03-14 수정", "what": "모드 칸 그림 — 세팅 미기록", "claims": ["치명타·상태이상 100%를 같이 맞추는 하이브리드가 최고", "퍼펙트 샷 기준 치명타 150%·상태이상 110% 목표"]}
+  ],
+  "builds": [
+    {
+      "name": "Overframe 레벨 캡 원샷 출혈 (바이러스, 포인트 스트라이크·헌터 뮤니션·프라임드 베인)",
+      "community": "overframe",
+      "kind": "read",
+      "url": "https://overframe.gg/build/1022989/nataruk/one-shot-level-cap-137m-slash-procs-0-forma/",
+      "date": "2026-06-12 (42.0)",
+      "mods": ["Galvanized Chamber", "Point Strike", "Vital Sense", "Hunter Munitions", "Primed Bane Of Grineer", "Malignant Force", "Rime Rounds", "Serration"],
+      "arcane": "primary_merciless",
+      "claims": [
+        "바이러스 10중첩 +325% = ×4.25 (출혈에도 적용)",
+        "팩션 모드는 출혈에 두 번 곱해짐 1.55 × 1.55 = ×2.40",
+        "갈바나이즈드 앱티튜드는 직격 피해만 올려서 뺌",
+        "슈레드(관통) 칸은 바이러스·팩션 배율에 쓰는 게 낫다",
+        "팩션 무관하게 쓰려면 프라임드 베인 → 블레이디드 라운드"
+      ]
+    },
+    {
+      "name": "Sportskeeda 포르마 없는 입문 (바이러스, 스플릿 챔버·크리티컬 딜레이·비질란테 퍼버)",
+      "community": "sportskeeda",
+      "kind": "read",
+      "url": "https://sportskeeda.com/mmo/warframe-nataruk-build-guide",
+      "date": "날짜 표기 없음",
+      "mods": ["Split Chamber", "Vital Sense", "Critical Delay", "Vigilante Fervor", "Serration", "Malignant Force", "Rime Rounds", "Hunter Munitions"],
+      "arcane": null,
+      "claims": ["무기에 투자 없이 퍼펙트 샷을 꾸준히 쓰면 소티까지 충분", "비질란테 퍼버 대신 스피드 트리거·슈레드도 좋음"]
+    },
+    {
+      "name": "Sportskeeda 엔드게임 순수 출혈 (원소 없음, 갈바나이즈드 2종·프라임드 베인·프라임드 슈레드)",
+      "community": "sportskeeda",
+      "kind": "read",
+      "url": "https://sportskeeda.com/mmo/warframe-nataruk-build-guide",
+      "date": "날짜 표기 없음",
+      "mods": ["Galvanized Chamber", "Galvanized Aptitude", "Critical Delay", "Vital Sense", "Primed Bane Of Grineer", "Amalgam Serration", "Hunter Munitions", "Primed Shred"],
+      "arcane": null,
+      "claims": ["상태이상을 미리 거는 프레임·무기와 헤드샷이 필요"]
+    }
+  ]
+}
