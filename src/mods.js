@@ -249,7 +249,11 @@
   // Tennokai (melee swing style): a heavy attack that does not consume combo, opened every few hits
   X("mentors_legacy", "멘토즈 레거시", "Mentor's Legacy", ["melee"], { tenno: { on: 1 } }, { req: "swing", group: "x_tenno" });
   X("masters_edge", "마스터즈 엣지", "Master's Edge", ["melee"], { tenno: { on: 1, dmg: 0.6 } }, { req: "swing", group: "x_tenno" });
-  X("truths_flame", "트루스 플레임", "Truth's Flame", ["melee"], { tenno: { on: 1 } }, { req: "swing", group: "x_tenno", cond: [{ when: "kill", eff: { tenno: { dmg: 1.2 } } }], note: "저주: 6초간 초당 화염 피해 100" });
+  X("truths_flame", "트루스 플레임", "Truth's Flame", ["melee"], { tenno: { on: 1 } }, { req: "swing", group: "x_tenno", cond: [{ when: "kill", eff: { tenno: { dmg: 1.2 } } }], note: "저주: 6초간 초당 화염 피해 100",
+    // game data (Mods.json, max rank): "Tennokai kills grant an additional 4s Tennokai opportunity and increase Tennokai damage
+    // by 120%. CURSE: Suffer 100 Heat Damage/s for 6s." The extra opportunity (Tennokai chaining on kills) is not modeled and the
+    // curse hurts the player, which kill speed can't weigh — opt-in only, never picked by the optimizer (v1.79)
+    manual: "처치 시 추가 텐노카이 기회(연쇄)는 계산에 없고, 저주(6초간 초당 화염 피해 100)는 처치 속도로 따질 수 없어 자동 추천에서 뺌" });
   X("dreamers_wrath", "드리머즈 라스", "Dreamer's Wrath", ["melee"], { tenno: { on: 1, cd: 0.32, freq: 1.5 } }, { req: "swing", group: "x_tenno" });
   X("conditions_perfection", "컨디션즈 퍼펙션", "Condition's Perfection", ["melee"], { tenno: { on: 1, sc: 1.0 } }, { req: "swing", group: "x_tenno" });
   X("disciplines_merit", "디시플린즈 메리트", "Discipline's Merit", ["melee"], { tenno: { on: 1, every: 4 } }, { req: "swing", group: "x_tenno" });

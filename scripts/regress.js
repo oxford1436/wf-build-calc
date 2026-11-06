@@ -32,6 +32,12 @@ const { chromium } = require("playwright");
       const hH = hes.attacks.find((a) => a.en === "Heavy Attack"), tot = Object.values(hH.dmg).reduce((q, v) => q + v, 0);
       check("v1.74 헤스파 강공 1680 (560×3, 위키)", Math.abs(tot - 1680) < 1, tot);
       check("v1.74 퓨락스: 계산에 없는 위키 메커니즘이 붙어 있음 (앱이 추천 보류)", (fur.gaps || []).length > 0, (fur.gaps || []).length + "개");
+      // v1.79: Truth's Flame is opt-in (Tennokai chaining on kills not modeled, self-damage curse) — never an optimizer candidate
+      {
+        const A = window.WF_APP, di = weapon("dual_ichor");
+        const cands = A.candidateMods(di, di.attacks[0], {});
+        check("v1.79 트루스 플레임은 자동 추천 후보가 아님 (처치 시 추가 텐노카이 기회 미반영·저주)", !cands.some((m) => m.id === "truths_flame") && cands.some((m) => m.id === "disciplines_merit"), cands.filter((m) => m.exilus).map((m) => m.id).join(","));
+      }
       // v1.76: Dual Ichor heavy = 610 in the in-game arsenal (wiki 488)
       const ich = weapon("dual_ichor"), iH = ich.attacks.find((a) => a.en === "Heavy Attack"), iT = Object.values(iH.dmg).reduce((q, v) => q + v, 0);
       check("v1.76 듀얼 이코르 강공 610 (게임 아스날, 위키 488)", Math.abs(iT - 610) < 1, iT);

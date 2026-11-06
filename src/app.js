@@ -149,6 +149,7 @@ self.onmessage = function (ev) {
       if (m.eff) { const ph = ["impact", "punct", "slash"].filter((t) => m.eff[t] > 0); if (ph.length && !ph.some((t) => dmgTypes.includes(t))) return false; }
       if (m.exilus && !((m.eff && m.eff.throwSpd && atk.kind === "glaive") || (m.eff && m.eff.tenno && atk.kind === "melee"))) return false;
       if (m.noCalc || (m.auto && m.unparsed && m.unparsed.length)) return false;
+      if (m.manual) return false;   // opt-in only (a documented effect the engine can't weigh), see the mod's note
       if (m.auto && Object.keys(m.eff).every((k) => k === "projSpd" || (typeof m.eff[k] === "number" && m.eff[k] < 0))) return false;
       if (m.eff && m.eff.bane && (o_factions().length > 1 || !o_factions().some((f) => m.eff.bane[f]))) return false;   // faction mods only for a single-faction target
       if (m.req === "swing" && atk.kind !== "melee") return false;
