@@ -558,7 +558,8 @@
       const nonP = { D: acc.Dnon, blast: 0, dot: acc.dotNon, pv: acc.pvN, ph: acc.phN, pc: acc.pcN, pk: acc.pkN };
       const hasNon = acc.Dnon > 0 || acc.pbN > 0 || Object.keys(acc.dotNon).some((T) => acc.dotNon[T] > 0);
       const period = 1 / Math.max(0.05, main.rate);
-      const tAcq = isMeleeKind(atk.kind) ? 0 : T_ACQ;
+      // o.tAcq (v1.86): the re-aim time has no source (T_ACQ = 0.2 s is a guess) — the app checks the pick at both ends
+      const tAcq = isMeleeKind(atk.kind) ? 0 : (o.tAcq != null ? o.tAcq : T_ACQ);
       const solve = (tgs) => {
         const tg = tgs.main;
         const shc = 1 - (o.ext.shieldCut || 0);

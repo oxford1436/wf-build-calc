@@ -49,6 +49,16 @@ const { chromium } = require("playwright");
         const vFull = steady(P(6, 1, 0)), vShort = steady(P(0.93, 1, 0));
         check("v1.83 바이러스 중첩은 6초 × 상태이상 지속 뒤 사라짐 — 지속 −84.5%(0.93초)면 2발/초에 약 1.9중첩", vShort < vFull * 0.6 && Math.abs(vShort - (2 + 0.25 * 0.86) * (1 - 0.9 * Math.sqrt(1000 / 2700))) < 0.03, vShort.toFixed(3) + " / 지속 100% " + vFull.toFixed(3));
       }
+      // v1.86 (independent review 2026-11-06, Kuva Zarr): the re-aim time between one-shot kills (T_ACQ 0.2 s, no source) decides
+      // what fire rate is worth — guns are checked at 0.15 s and 0.3 s, and the engine takes o.tAcq
+      {
+        const A = window.WF_APP, kz = weapon("kuva_zarr");
+        const alts = typeof A.boundAlts === "function" ? A.boundAlts(kz, kz.attacks[0], Object.assign(A.readOpts(), { scenario: "crowd" })).map((x) => x.o.tAcq).filter((x) => x != null) : [];
+        check("v1.86 총기 추천은 다시 조준 시간 0.15초·0.3초 양끝에서 확인", alts.includes(0.15) && alts.includes(0.3), alts.join(","));
+        const sp = weapon("soma_prime"), oz = Object.assign(baseO(), { factions: ["corpus"], level: 30, steel: false, levelSteps: [0, 0, 0] }), K = ["serration", "split_chamber", "vital_sense", "point_strike"];
+        const a = ev(sp, K, Object.assign({}, oz, { tAcq: 0.1 })).score, c = ev(sp, K, Object.assign({}, oz, { tAcq: 0.4 })).score;
+        check("v1.86 엔진이 다시 조준 시간 옵션(o.tAcq)을 씀 — 한 방 무기에서 0.1초가 0.4초보다 빠름", a > c * 1.05, (a / c).toFixed(2));
+      }
       // v1.84 (independent review 2026-11-06): ① swings pooled with Tennokai heavies decide Melee Influence's "no spread on a
       // one-hit kill" hit by hit — the pooled average (≈10x a swing) one-shot Corpus and Influence did almost nothing there;
       // ② the withhold check climbs single swaps from the #1 under each unverified assumption instead of only re-scoring its list

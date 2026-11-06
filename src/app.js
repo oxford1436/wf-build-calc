@@ -1399,6 +1399,13 @@ self.onmessage = function (ev) {
       if (w.attacks.some((q) => q.evoScaleAlt)) alts.push({ o: { evoHeavyScale: true }, why: "진화 '기본 피해 +X'가 강공에 그대로 X만 더해짐(기본) / 휘두르기와 같은 비율로 커짐(강공 = 기본 피해 × 5) — 위키 확인 안 됨" });
     }
     if (atk && atk.killField && !atk.killField.every && o.scenario === "crowd") alts.push({ o: { fieldHigh: true }, why: `처치 시 장판(${atk.killField.dmg} 피해, ${atk.killField.dur}초)이 몇 초마다 들어가는지 위키에 없음 — 한 번 / 1초마다` });
+    // v1.86 (independent review 2026-11-06, Kuva Zarr): between one-shot kills a gunner needs time to put the crosshair on the next
+    // enemy. No source gives it (engine T_ACQ = 0.2 s); when most enemies die to one shot it decides how much fire rate is worth,
+    // so the pick has to hold from 0.15 s to 0.3 s
+    if (atk && w.slot !== "melee" && o.scenario === "crowd") {
+      alts.push({ o: { tAcq: 0.15 }, key: "tAcq", why: "한 방에 죽인 뒤 다음 적에게 조준을 옮기는 시간이 근거 없는 가정(0.2초) — 0.15초로 짧을 때" });
+      alts.push({ o: { tAcq: 0.3 }, key: "tAcq", why: "한 방에 죽인 뒤 다음 적에게 조준을 옮기는 시간이 근거 없는 가정(0.2초) — 0.3초로 길 때" });
+    }
     return alts;
   }
   function boundCheck(R) {
@@ -1410,7 +1417,8 @@ self.onmessage = function (ev) {
     // Discipline's Merit instead of Master's Edge was 12% ahead when swings and Tennokai are counted apart, and it wasn't in the
     // list. Under each assumption (and all of them flipped together) the check now also climbs from the #1 by single swaps of a
     // mod (same slot kind, no clashes) or of the arcane, two rounds, and compares the best it finds.
-    if (alts.length > 1) alts.push({ o: Object.assign({}, ...alts.map((a) => a.o)), why: "위 가정을 모두 반대쪽으로 놓았을 때" });
+    const flips = alts.filter((a) => !a.key);   // two-sided ranges (re-aim time) stay out of the all-flipped combination
+    if (flips.length > 1) alts.push({ o: Object.assign({}, ...flips.map((a) => a.o)), why: "위 가정을 모두 반대쪽으로 놓았을 때" });
     const K = Math.min(30, R.res.length), outs = [];
     const cands = candidateMods(w, atk, R.flags || {}).filter((m) => !m.manual);
     const arcs = [...new Set(R.res.slice(0, K).map((x) => x.arcane))];
