@@ -1,24 +1,52 @@
 {
   "weapon": "dual_ichor",
   "attack": 0,
-  "evo": { "2": 1, "3": 1, "4": 0 },
+  "evo": {
+    "2": 1,
+    "3": 1,
+    "4": 0
+  },
   "valence": null,
   "riven": null,
-  "notes": "듀얼 이코르 인카논(일반 공격 = 휘두르기 + 텐노카이 강공). 2026-11-06 조사. 진화는 최종 형태(II 로닌즈 러시, III 레졸루트 포스, IV 앱솔루트 밸러) — 사용자 결정 '추천은 항상 최종 형태'. 본문에서 모드 목록을 직접 읽은 세팅은 warframe.today 1개뿐(Overframe 글들은 모드 칸이 글자로 안 보임, 아카라이브 글은 가져오기 오류). kind: read = 출처 본문에서 모드 전체를 직접 읽은 세팅(계산기 검색 후보), claim = 계산기 1위에서 한두 칸을 바꿔 주장을 시험한 것(커뮤니티 세팅 아님), session = 대화에서 비교한 세팅.",
+  "notes": "듀얼 이코르 인카논(일반 공격 = 휘두르기 + 텐노카이 강공). 2026-11-06 조사, v1.84 재계산. 진화는 최종 형태(II 로닌즈 러시, III 레졸루트 포스, IV 앱솔루트 밸러) — 사용자 결정 '추천은 항상 최종 형태'. 본문에서 모드 목록을 직접 읽은 세팅은 warframe.today 1개뿐(Overframe 글들은 모드 칸이 글자로 안 보임, 아카라이브 글은 가져오기 오류). kind: read = 출처 본문에서 모드 전체를 직접 읽은 세팅(계산기 검색 후보), claim = 계산기 1위에서 한두 칸을 바꿔 주장을 시험한 것(커뮤니티 세팅 아님), session = 대화에서 비교한 세팅.",
   "meta": {
     "read_builds": 1,
     "elements": "부식(고유 독 + 볼택 스트라이크 전기) 1/1 (warframe.today). Overframe 828756 본문: 무기에 바이러스, 가스는 라보스 베일런스 포메이션으로(무기에 가스 모드 안 넣음). META.md 근접: 인플루언스 일반 공격은 폭발+전기·가스+전기가 표준, x12 텐노카이 혼합은 전기 포함.",
     "valence": "해당 없음",
-    "core": ["블러드 러쉬", "위핑 운즈", "컨디션 오버로드", "버서커 퓨리", "프라임드 피버 스트라이크"],
-    "flex": ["프라임드 프레셔 포인트 / 갈바나이즈드 스틸", "오르건 섀터", "볼택 스트라이크(전기)"],
-    "arcane": ["밀리 인플루언스 1 (warframe.today '가장 좋음', Overframe 828756 '여전히 최고'), 대안 밀리 듀플리케이트(warframe.today '구하기 쉬운 대안')"],
+    "core": [
+      "블러드 러쉬",
+      "위핑 운즈",
+      "컨디션 오버로드",
+      "버서커 퓨리",
+      "프라임드 피버 스트라이크"
+    ],
+    "flex": [
+      "프라임드 프레셔 포인트 / 갈바나이즈드 스틸",
+      "오르건 섀터",
+      "볼택 스트라이크(전기)"
+    ],
+    "arcane": [
+      "밀리 인플루언스 1 (warframe.today '가장 좋음', Overframe 828756 '여전히 최고'), 대안 밀리 듀플리케이트(warframe.today '구하기 쉬운 대안')"
+    ],
     "why": "warframe.today: 기본 피해 122가 낮아 프라임드 프레셔 포인트, 블러드 러쉬로 콤보 → 치명타, 위핑 운즈로 상태이상 확률을 올려 컨디션 오버로드를 받치고, 전기를 넣어 고유 독을 부식으로(방어구 깎기) + 전기 아케인 발동. 인플루언스는 전기 상태이상으로 광역 전염.",
     "limit": "직접 읽은 세팅 1개, 텐노카이(익실러스) 칸이 글에 없음. 텐노카이 혼합 세팅은 META.md 근접 ①(출처 아카라이브)에만 있고 이 무기 글로는 못 읽음."
   },
   "sources_read": [
-    { "url": "https://warframe.today/weapons/dual-ichor/", "date": "2026-09-09 (Update 44 확인 표기)", "what": "세팅 1개 전체 모드 + 이유" },
-    { "url": "https://overframe.gg/build/828756/dual-ichor/dual-ichor-incarnon-lavos-melee-platform-setup/", "date": "2025-04-15 작성, 2026-11-05 수정 (Update 44.0)", "what": "본문만(모드 칸은 글자 없음): 인플루언스가 여전히 최고, 무기에 바이러스, 가스는 라보스 베일런스, 프라임드 스마이트 오로킨·리벤 사용, 진화 II 알케미스트 라스·III 오로킨 리치·IV 앱솔루트 밸러 설명" },
-    { "url": "https://overframe.gg/build/684645/dual-ichor/dual-ichor-melee-influence/", "date": "2024-06-25 (Update 36.0)", "what": "진화만 읽음: II 로닌즈 러시, III 오로킨 리치, IV 앱솔루트 밸러. 모드 칸 글자 없음" }
+    {
+      "url": "https://warframe.today/weapons/dual-ichor/",
+      "date": "2026-09-09 (Update 44 확인 표기)",
+      "what": "세팅 1개 전체 모드 + 이유"
+    },
+    {
+      "url": "https://overframe.gg/build/828756/dual-ichor/dual-ichor-incarnon-lavos-melee-platform-setup/",
+      "date": "2025-04-15 작성, 2026-11-05 수정 (Update 44.0)",
+      "what": "본문만(모드 칸은 글자 없음): 인플루언스가 여전히 최고, 무기에 바이러스, 가스는 라보스 베일런스, 프라임드 스마이트 오로킨·리벤 사용, 진화 II 알케미스트 라스·III 오로킨 리치·IV 앱솔루트 밸러 설명"
+    },
+    {
+      "url": "https://overframe.gg/build/684645/dual-ichor/dual-ichor-melee-influence/",
+      "date": "2024-06-25 (Update 36.0)",
+      "what": "진화만 읽음: II 로닌즈 러시, III 오로킨 리치, IV 앱솔루트 밸러. 모드 칸 글자 없음"
+    }
   ],
   "builds": [
     {
@@ -27,7 +55,16 @@
       "kind": "read",
       "url": "https://warframe.today/weapons/dual-ichor/",
       "date": "2026-09-09",
-      "mods": ["Primed Pressure Point", "Blood Rush", "Organ Shatter", "Weeping Wounds", "Condition Overload", "Primed Fever Strike", "Voltaic Strike", "Berserker Fury"],
+      "mods": [
+        "Primed Pressure Point",
+        "Blood Rush",
+        "Organ Shatter",
+        "Weeping Wounds",
+        "Condition Overload",
+        "Primed Fever Strike",
+        "Voltaic Strike",
+        "Berserker Fury"
+      ],
       "arcane": "melee_influence",
       "claims": [
         "프라임드 프레셔 포인트: 기본 피해 122가 낮아서 필요",
@@ -35,24 +72,64 @@
         "위핑 운즈로 상태이상을 충분히 걸어 컨디션 오버로드를 받침",
         "밀리 인플루언스가 가장 좋고, 밀리 듀플리케이트는 구하기 쉬운 대안"
       ],
-      "verdict": "v1.83 기본 조건 8.1%(계산기 1위 = 100%). 이유 ① 익실러스 텐노카이 모드가 없음(1위에서 마스터즈 엣지를 빼면 39.8%, 이 세팅에 마스터즈 엣지를 더하면 43.5%) — 텐노카이 강공은 콤보를 쓰지 않아 12배 강공을 계속 넣음 ② 부식 대신 바이러스(1위 노스 윈드 → 볼택 스트라이크면 44.5%) ③ 오르건 섀터 대신 갈바나이즈드 스틸(91.8%)."
+      "verdict": "v1.84 기본 조건 9.0%(계산기 1위 = 100%). 이유 ① 볼택 스트라이크 전기가 고유 독과 합쳐져 부식이 되면서 전기 상태이상이 없음 → 밀리 인플루언스가 한 번도 안 터짐(가동률 0, 아케인 없음과 같은 9.0%, 글이 대안으로 든 밀리 듀플리케이트면 16.8%) ② 익실러스 텐노카이 모드가 없음(디시플린즈 메리트를 더하면 47.1%, 1위에서 빼면 33.7%) — 텐노카이 강공은 콤보를 쓰지 않아 12배 강공을 계속 넣음. (v1.83 기록의 '바이러스가 부식보다 세서'는 틀린 설명이었음: 아케인 없이 비교하면 차이 작음, 독립 검토 2026-11-06)"
     },
     {
-      "name": "가스+전기 (META.md 인플루언스 표준) — 1위 노스 윈드 → 몰튼 임팩트",
+      "name": "가스+전기 (META.md 인플루언스 표준) — 1위 비셔스 프로스트 → 몰튼 임팩트",
       "community": "meta",
       "kind": "claim",
-      "mods": ["Master's Edge", "Galvanized Steel", "Blood Rush", "Primed Fever Strike", "Molten Impact", "Shocking Touch", "Weeping Wounds", "Berserker Fury", "Condition Overload"],
+      "mods": [
+        "Discipline's Merit",
+        "Galvanized Steel",
+        "Primed Fever Strike",
+        "Molten Impact",
+        "Shocking Touch",
+        "Weeping Wounds",
+        "Condition Overload",
+        "Berserker Fury",
+        "Gladiator Might"
+      ],
       "arcane": "melee_influence",
-      "claims": ["인플루언스 일반 공격은 가스+전기·폭발+전기가 표준"],
-      "verdict": "88.2%(강공 비율 가정 91.9%). 바이러스는 텐노카이 강공을 포함한 체력 피해를 최대 4.25배로 곱해서 가스 구름보다 큼. 폭발+부식(프라임드 피버 스트라이크 → 몰튼 임팩트)은 56.2% — 고유 독이 전기와 합쳐져 폭발+전기는 만들 수 없음."
+      "claims": [
+        "인플루언스 일반 공격은 가스+전기·폭발+전기가 표준"
+      ],
+      "verdict": "v1.84 80.2%(인플루언스 가동률 0.92로 같음). 바이러스(체력 피해 최대 4.25배)가 텐노카이 강공·인플루언스 전염 피해까지 곱해서 가스 구름보다 큼. 냉기를 빼면(독+전기 = 부식) 인플루언스가 안 터져 36%."
     },
     {
       "name": "사용자 세팅 A (바이러스+전기, 디시플린즈 메리트)",
       "community": "session",
       "kind": "session",
-      "mods": ["Galvanized Steel", "Virulent Scourge", "Vicious Frost", "Galvanized Elementalist", "Primed Fury", "Condition Overload", "Blood Rush", "Shocking Touch", "Discipline's Merit"],
+      "mods": [
+        "Galvanized Steel",
+        "Virulent Scourge",
+        "Vicious Frost",
+        "Galvanized Elementalist",
+        "Primed Fury",
+        "Condition Overload",
+        "Blood Rush",
+        "Shocking Touch",
+        "Discipline's Merit"
+      ],
       "arcane": "melee_influence",
-      "verdict": "v1.83 72.1%(강공 비율 가정 79.9%). 갈바나이즈드 엘리멘탈리스트 → 위핑 운즈 88.4%, + 프라임드 퓨리 → 버서커 퓨리 91.3%(강공 비율 99.9%)."
+      "verdict": "v1.84 69.2%. 갈바나이즈드 엘리멘탈리스트 → 위핑 운즈 90.4%, + 프라임드 퓨리 → 버서커 퓨리 93.3%, + 비럴런트 스커지 → 프라임드 피버 스트라이크 98.7%."
+    },
+    {
+      "name": "세팅 A에서 세 칸 교체 (위핑 운즈·버서커 퓨리·프라임드 피버 스트라이크)",
+      "community": "session",
+      "kind": "session",
+      "mods": [
+        "Discipline's Merit",
+        "Galvanized Steel",
+        "Primed Fever Strike",
+        "Vicious Frost",
+        "Shocking Touch",
+        "Weeping Wounds",
+        "Condition Overload",
+        "Berserker Fury",
+        "Blood Rush"
+      ],
+      "arcane": "melee_influence",
+      "verdict": "v1.84 98.7%. 확인 안 된 가정(평균/분리, 합연산, 강공 비율, 장판 1초, 모두 반대) 어디서도 그 조건 최고의 92% 이상, 그리니어·Lv400 기준에서는 가장 빠름. 마지막 칸(블러드 러쉬 / 글래디에이터 마이트 / 마그네틱 러쉬)은 가정에 따라 순위가 바뀜(인페스티드 77%·그리니어 78%·그리니어 69%가 각자의 약점)."
     }
   ]
 }
