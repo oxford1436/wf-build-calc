@@ -44,3 +44,8 @@
 - 위키 Fire_Rate 1쪽만 시도 → 또 "permission request … not answered in time"(PROVENANCE_REQUIRED). 다른 쪽은 보내지 않음, 우회 안 함 → 직접 읽은 세팅 0, 판정 0, 엔진 수정 0.
 - 저장소 gaps 데이터 재확인: 나타루크 "Releasing the shot after 70% of a full charge … Perfect Shot"(퍼펙트 샷 = 충전 70% 이후)만 있고, 연사와 충전 시간의 관계 문장은 여전히 없음(발리스티카 "Increasing the fire rate decreases this delay"는 충전 뒤 대기 시간 얘기라 활 공식 근거가 아님) → 넣지 않음(P1).
 - 점검표: 커뮤니티 report.md 표시 2건은 설명 끝난 것 그대로, 전체 점검 표시 19건도 지난주와 같음(장판 3건은 0b, 패리스는 이 묶음).
+
+## 2026-11-06 10시 실행 (여섯 번째 시도)
+- 위키 Fire_Rate 1쪽만 시도 → 또 "permission request … not answered in time"(PROVENANCE_REQUIRED). 다른 쪽은 보내지 않음, 우회 안 함 → 직접 읽은 세팅 0, 판정 0, 엔진 수정 0.
+- 점검표: 야간 점검(11-06 00시 UTC 실행, 성공)이 report.md를 바꾸지 않음 = 결과 변화 없음. 표시 2건(코린트 프라임·고트바 프라임 등)은 이전 실행에서 설명 끝남, 전체 점검 표시 19건 그대로.
+- 다음 실행: 웹 읽기 권한이 승인되면 '다음 실행 할 일' 1·2 그대로.
