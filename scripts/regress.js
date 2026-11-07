@@ -436,6 +436,18 @@ const { chromium } = require("playwright");
       check("v1.93 동반자 본드 모드(기본 켬): 터네이셔스 본드 치명타 배율 +1.2 (버스튼 빌드 A 6.6 → 7.8 = 아스날), 리인포스드 본드 연사 +60%, 근접은 그대로", ok,
         [G.length, r0.cd.toFixed(2), r1.cd.toFixed(2), (r1.rate / r0.rate).toFixed(3), rm0.cd + "=" + rm1.cd].join(" / "));
     }
+    // v1.95 (세도 프라임 질문 2026-11-07): Cedo's own "+60% bonus damage per unique status effect on target … additive to all base
+    // damage bonuses" (wiki) was not in the engine (gaps: handled null), the alt-fire glaive used the buckshot's 7 pellets (wiki
+    // attack data Multishot 1), and its explosion's "two separate guaranteed procs" never counted as status types on the target.
+    {
+      const w = weapon("cedo_prime"), a1 = w.attacks.find((q) => q.en === "Normal Attack"), a0 = w.attacks.find((q) => q.en === "Normal Attack+primer");
+      const ms = ["Primed Chilling Grasp", "Toxic Barrage", "Critical Deceleration", "Primed Ravage"].map(M), o = Object.assign(baseO(), { kills: false });
+      const r1 = E.evaluate(w, a1, ms, o), r0 = E.evaluate(w, a0, ms, o);
+      const glaive = w.attacks.find((q) => q.en === "Alt-Fire Glaive");
+      const ok = a1.pst === 0.6 && Math.abs(r1.gco - 0.6 * r1.ntypes) < 1e-6 && r1.ntypes > 0.5 && glaive.pellets === 1 && a0 && a0.primer.pellets === 1 && a0.primerAoe && r0.ntypes > r1.ntypes + 1 && r0.score > r1.score * 1.3;
+      check("v1.95 세도: 기본 사격 상태이상 종류당 +60%(기본 피해 합연산), 글레이브 1개(멀티샷 1), 글레이브 폭발 확정 상태이상 2개가 종류 수에 들어감", ok,
+        [a1.pst, r1.gco && r1.gco.toFixed(2), r1.ntypes.toFixed(2), r0.ntypes.toFixed(2), glaive.pellets, (r0.score / r1.score).toFixed(2)].join(" / "));
+    }
     // v1.70 (대기열 4b): Perigale "Gale Force" — wiki: "Landing 4 headshots in a burst or a headshot kill grants the "Gale Force"
     // buff, granting Infinite Ammo. The buff lasts 4 seconds". With headshots (o.hs 0.5, aimed) the magazine lasts longer →
     // fewer reloads → higher average rate and less ammo used; without headshots nothing changes.

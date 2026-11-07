@@ -487,7 +487,7 @@
   },
   "quote": "Deals +60% bonus damage per unique status effect on target. | On the Primary Fire, this bonus is additive to all base damage bonuses, such as Point Blank and Galvanized Savvy. | On direct hits from the Alternate Fire glaive, this bonus is additive with Galvanized Savvy, and multiplicative to normal base damage bonuses like Point Blank. See Condition Overload (Mechanic) for more info. | On explosions from the Alternate Fire glaive, this bonus does not apply.",
   "url": "https://wiki.warframe.com/w/Cedo",
-  "handled": null,
+  "handled": "v1.95",
   "variants": null
  },
  {
@@ -520,7 +520,7 @@
   },
   "quote": "Deals +60% bonus damage per unique status effect on target. | On the Primary Fire, this bonus is additive to all base damage bonuses, such as Point Blank and Galvanized Savvy. | On direct hits from the Alternate Fire glaive, this bonus is additive with Galvanized Savvy, and multiplicative to normal base damage bonuses like Point Blank. | On explosions from the Alternate Fire glaive, this bonus does not apply.",
   "url": "https://wiki.warframe.com/w/Cedo_Prime",
-  "handled": null,
+  "handled": "v1.95",
   "variants": null
  },
  {

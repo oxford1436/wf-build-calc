@@ -1,0 +1,29 @@
+{
+ "weapon": "cedo_prime",
+ "attack": 0,
+ "valence": null,
+ "riven": null,
+ "notes": "세도 프라임. 2026-11-07 조사(사용자 질문: 보유 리벤 독 +108.2%·치명타 확률 +109.3%·멀티샷 +146.3%·부정 대 코퍼스 x0.63, 구성 A, 운용 = 기본 사격 + 가끔 글레이브로 상태이상 묻히기 — 사용자 답). attack 0 = 기본 사격 + 보조 사격 프라이밍(4초마다 글레이브). 계산기 v1.95에서 세도 고유 특성(상태이상 종류당 +60%)·글레이브 1개·폭발 확정 상태이상 2개 반영. 사용자 리벤 수치는 riven(null)과 별개(야간 점검 대상 아님).",
+ "meta": {
+  "summary": "커뮤니티 세팅은 갈바나이즈드 헬·새비 + 크리티컬 디셀러레이션·프라임드 래비지 + 바이러스(냉기 + 독)가 중심, 글레이브로 먼저 상태이상을 묻히고 기본 사격(Overframe 816108). 아케인은 프라이머리 블라이트(최대 중첩 이론상 최고)·프로스트바이트(거의 같음).",
+  "reasons": ["상태이상 종류마다 피해 +60%라 다양한 상태이상이 핵심(갈바나이즈드 새비와 같이 쌓임)", "글레이브 폭발이 화염·냉기·전기·독을 확정으로 걸어 줌", "갈바나이즈드 액셀러레이션은 글레이브가 덜 튕겨 비추천(Overframe 816108)"]
+ },
+ "sources_read": [
+  "https://overframe.gg/build/816108/cedo-prime/cedo-prime-maximum-raw-dps-viral-elec-corrosive-cold-and-priming-glaive/ (수정 2026-10-27, 업데이트 44.0)",
+  "https://www.destructoid.com/best-cedo-prime-build-in-warframe/ (2025-02-17)"
+ ],
+ "builds": [
+  { "name": "Overframe 816108 바이러스 + 글레이브 프라이밍 (U44)", "community": "overframe", "kind": "read", "url": "https://overframe.gg/build/816108/",
+    "mods": ["Galvanized Hell", "Galvanized Savvy", "Critical Deceleration", "Primed Ravage", "Primed Chilling Grasp", "Toxic Barrage", "Magnetic Strafe", "Shotgun Barrage", "Vigilante Supplies"], "arcane": "primary_blight",
+    "claims": ["바이러스가 범용", "부식은 그리니어·너리시일 때 대안", "갈바나이즈드 액셀러레이션 금지"],
+    "verdict": "v1.95 리벤 없음 조건: 계산기 리벤 없는 1위(컨테이저스 스프레드·갈바나이즈드 헬·새비·프라임드 칠링 그래스프·프라임드 차지드 쉘·프라임드 블런더버스·크리티컬 디셀러레이션·프라임드 래비지 + 프로스트바이트)의 63%. 그리니어가 크게 느림(바이러스, 방어구 제거 없음)." },
+  { "name": "Destructoid 2025 바이러스 + 방사능 + 화염", "community": "destructoid", "kind": "read", "url": "https://www.destructoid.com/best-cedo-prime-build-in-warframe/",
+    "mods": ["Galvanized Hell", "Atomic Fallout", "Critical Deceleration", "Frigid Blast", "Primed Ravage", "Hunter Munitions", "Toxic Barrage", "Blaze", "Galvanized Acceleration"], "arcane": "primary_blight",
+    "claims": ["피해 모드 대신 상태이상 종류", "글레이브로 프라이밍"],
+    "verdict": "v1.95 리벤 없음 조건: 리벤 없는 1위의 32%." },
+  { "name": "사용자 지금 세팅 (구성 A, 2026-11-07 스크린샷)", "kind": "session", "mods": ["Galvanized Hell", "Galvanized Savvy", "Critical Deceleration", "Primed Ravage", "Riven", "Primed Chilling Grasp", "Primed Charged Shell", "Magnetic Strafe", "Vigilante Supplies"], "arcane": "primary_blight",
+    "verdict": "v1.95 보유 리벤: 추천의 79.7%(바이러스 + 전기 단독). 아스날 대조 일치(연사 8.1, 멀티샷 24.9, 치명타 98.2%·6.2배, 상태이상 3.6%, 조각당 관통 32·전기 52.8·자성 19.2·바이러스 87.4)." },
+  { "name": "추천 (v1.95, 보유 리벤, 기본 사격 + 글레이브 프라이밍)", "kind": "session", "mods": ["Riven", "Primed Charged Shell", "Primed Chilling Grasp", "Galvanized Savvy", "Galvanized Hell", "Critical Deceleration", "Magnetic Strafe", "Primed Ravage", "Primed Shotgun Ammo Mutation"], "arcane": "primary_frostbite",
+    "verdict": "1위. 같은 8개 모드에서 원소 순서만 리벤(독) → 프라임드 차지드 쉘(전기) → 프라임드 칠링 그래스프(냉기) = 부식 + 냉기 단독. 바이러스 배치 대비 그리니어 1.76배, 코퍼스 1.05배, 인페스티드 1.10배. 아케인 블라이트 85%, 머시리스 89.5%. 글레이브 없이 기본 사격만이면 61%." }
+ ]
+}

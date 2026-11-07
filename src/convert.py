@@ -283,6 +283,26 @@ def conv(w, typ):
                     ba.pop("ammoCost", None)
                     base.append(ba)
                     PAIR_EXTRA.setdefault(name, {})[ba["en"]] = ben
+            # Cedo / Cedo Prime (wiki, read 2026-11-07): "Deals +60% bonus damage per unique status effect on target. On the Primary
+            # Fire, this bonus is additive to all base damage bonuses, such as Point Blank and Galvanized Savvy" (pst, like an Incarnon
+            # "Direct Damage per Status Type"); "On explosions from the Alternate Fire glaive, this bonus does not apply". Alt-fire
+            # glaive: wiki attack data Multishot = 1 ("Multishot affects the number of glaives released per use") — not the 7
+            # buckshot pellets; "Explosion deals Blast damage and applies two separate guaranteed procs. The number of procs cannot be
+            # increased with status chance bonuses. The first proc can be any element modded onto the weapon, or the innate Blast
+            # damage … normal status weighting rules. The second proc has an even chance to be any of the following; Heat, Cold,
+            # Electricity, or Toxin."
+            cedo_aoe = None
+            if name in ("Cedo", "Cedo Prime"):
+                wk_by = {x.get("AttackName"): x for x in ((WIKI.get(name) or {}).get("Attacks") or [])}
+                for y in base:
+                    if y["en"] == "Normal Attack":
+                        y["pst"] = 0.6
+                    wa_ = wk_by.get(y["en"])
+                    if (y["en"].startswith("Alt") or y["en"].startswith("Glaive")) and wa_ and wa_.get("Multishot"):
+                        y["pellets"] = int(wa_["Multishot"])
+                gx = next((y for y in base if y["en"] == "Glaive Radial Attack"), None)
+                if gx is not None:
+                    cedo_aoe = dict(gx, explProcs=2)
             # combined direct + AoE parts
             combos = []
             # primer combos: main gun attack + alt-fire statuses
@@ -294,6 +314,8 @@ def conv(w, typ):
                                "parts": [y], "primer": z, "primerRate": 0.25, "dmg": y["dmg"], "cc": y["cc"], "cd": y["cd"], "sc": y["sc"], "fr": y["fr"],
                                "pellets": pellets, "mag": y["mag"], "reload": y["reload"], "semi": y.get("semi", False),
                                "desc": "보조 사격을 4초마다 한 번 섞어 상태이상을 묻힌 뒤 기본 사격으로 마무리하는 운용 (세도류)"})
+                if cedo_aoe is not None:
+                    combos[-1]["primerAoe"] = cedo_aoe
             # which radial part belongs to which shot: wiki AttackParentIndex first (Lenz: Initial Blast and Bubble Collapse
             # are both children of Charged Shot; Penta: Grenade Detonation of Grenade Impact), then explicit pairs, then the
             # old name rule (core() equal after stripping Impact/Explosion words)
@@ -373,6 +395,10 @@ def conv(w, typ):
             for x in base:
                 x.pop("_shot", None)
             W["attacks"] = combos + base + late
+            if cedo_aoe is not None:      # the combined glaive shot (direct + explosion) is one glaive per use too
+                for at_ in W["attacks"]:
+                    if at_["en"].startswith("Alt") and at_.get("parts"):
+                        at_["pellets"] = at_["parts"][0].get("pellets", 1)
             if name in PROC_CRIT:
                 W["procCrit"] = PROC_CRIT[name]
             if name in GALE_FORCE:

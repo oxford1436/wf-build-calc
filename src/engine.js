@@ -546,7 +546,22 @@
       const bn = (weapon.attacks || []).find((x) => x.kind === "glaive" && /Bounce/.test(x.en) && /Charged/.test(x.en) === /Charged/.test(atk.en));
       if (bn) { parts = parts.concat([Object.assign({}, bn, { bounceOnly: true, name: atk.name })]); weights = weights.concat([1]); }
     }
-    const res = parts.map((p) => perShot(weapon, p, mods, o, riven, atk));
+    // v1.95 primer statuses on the target (Cedo): the alt-fire glaive thrown every 1/primerRate s puts its own status types on the
+    // enemy — the direct hit's procs (status chance) and, for each glaive, the explosion's "two separate guaranteed procs" (wiki
+    // Cedo: first by normal status weighting of the explosion's elements, second "an even chance" of Heat/Cold/Electricity/Toxin).
+    // They count toward per-status-type bonuses of the main fire (Cedo's own +60%, Galvanized Savvy). Bounce explosions (up to 11)
+    // are not counted — the wiki doesn't say each bounce explodes on the same target (lower bound).
+    let oP = o;
+    if (atk.primer && atk.primerAoe) {
+      const k0 = atk.primerRate || 0.25, add = {};
+      const pr = perShot(weapon, atk.primer, mods, o, riven, atk), px = perShot(weapon, atk.primerAoe, mods, o, riven, atk);
+      for (const t in (pr && pr.procs) || {}) add[t] = (add[t] || 0) + k0 * pr.procs[t];
+      const n = (px && px.ms) || 1, ex = atk.primerAoe.explProcs || 0;
+      if (ex >= 1 && px && px.share) for (const t in px.share) add[t] = (add[t] || 0) + k0 * n * px.share[t];
+      if (ex >= 2) for (const t of ["heat", "cold", "elec", "tox"]) add[t] = (add[t] || 0) + k0 * n * 0.25;
+      oP = Object.assign({}, o, { _procAdd: add });
+    }
+    const res = parts.map((p) => perShot(weapon, p, mods, oP, riven, atk));
     const main = res[0];
     const kx = mods.find((m) => m && m.killExplode) ? mods.find((m) => m && m.killExplode).killExplode : null;
     const targets = o.targets || targetsFor(o);
@@ -1212,10 +1227,12 @@
       const spreadHit = 1 + u * (K - 1);
       const spreadNon = u * K;
       // steady-state status-type count for CO/galvanized (uses spread-inclusive rates)
-      let ntypes = 0;
-      for (const k in procs) {
-        const r = procs[k] * rate * spreadHit; if (r <= 0) continue;
+      let ntypes = 0, ntPrimer = 0;
+      const pAdd = o._procAdd || {};
+      for (const k of new Set(Object.keys(procs).concat(Object.keys(pAdd)))) {
+        const r = (procs[k] || 0) * rate * spreadHit + (pAdd[k] || 0); if (r <= 0) continue;
         ntypes += 1 - Math.exp(-r * (PROC_WIN[k] || 6) * dur);
+        if (pAdd[k] > 0) ntPrimer += 1 - Math.exp(-pAdd[k] * (PROC_WIN[k] || 6) * dur);
       }
       // statuses other sources keep on the target (abilities, teammates) also count for Condition Overload / Galvanized
       if (ext.statusExtra) ntypes = Math.min(14, ntypes + ext.statusExtra);
@@ -1223,10 +1240,11 @@
       if (a.cdFew) cd += a.cdFew * Math.max(0, Math.min(1, 3 - ntypes));
       // Galvanized Shot/Aptitude/Diffusion stacks need kills and boost direct hits only, not explosions (wiki)
       // Incarnon "+X% Direct Damage per Status Type" (no kill needed) counts the same way
-      const gco = kind === "radial" ? 0 : (kills ? a.gco * ntypes : 0) + (a.evoPst || 0) * ntypes;
+      const pst = (a.evoPst || 0) + (atk.pst || 0);   // atk.pst: Cedo's innate +60% per status type (primary fire, additive)
+      const gco = kind === "radial" ? 0 : (kills ? a.gco * ntypes : 0) + pst * ntypes;
       const co = isMelee && !atk.noCO ? a.co * ntypes : 0;
       // v1.80: the first hit on a fresh enemy finds no statuses of its own yet (only ones other sources keep: ext.statusExtra)
-      const nt0 = Math.min(14, ext.statusExtra || 0), gco0 = kind === "radial" ? 0 : (kills ? a.gco * nt0 : 0) + (a.evoPst || 0) * nt0, co0 = isMelee && !atk.noCO ? a.co * nt0 : 0;
+      const nt0 = Math.min(14, (ext.statusExtra || 0) + ntPrimer), gco0 = kind === "radial" ? 0 : (kills ? a.gco * nt0 : 0) + pst * nt0, co0 = isMelee && !atk.noCO ? a.co * nt0 : 0;
       const first0 = (1 + dmgb + dmgArc + platedB + gco0 + co0) / Math.max(1e-9, 1 + dmgb + dmgArc + platedB + gco + co);
       const mbd = Btot * exS * (1 + dmgb + dmgArc + platedB) * fallM;
       // on-kill damage fields of the weapon itself (wiki Incarnon notes; convert.py KILL_FIELD): Dual Ichor "Fields do 350 Toxin
