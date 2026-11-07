@@ -89,6 +89,17 @@ const { chromium } = require("playwright");
         const aQ = qu.attacks[A.defaultAttack(qu)];
         check("v1.88 퀀타 빔 피해 상승 30% → 100% (위키)", aQ.beamRamp && aQ.beamRamp[0] === 0.3, aQ.en + " " + JSON.stringify(aQ.beamRamp));
       }
+      // v1.94 (queue bundle 7, wiki weapon notes): Trumna / Trumna Prime primary explosion "is unaffected by multishot" and its
+      // range "cannot be increased with Firestorm"; Acceltra / Tonkor explosions don't happen inside the minimum arming distance
+      {
+        const tp = weapon("trumna_prime"), aT = tp.attacks[0], aoeT = (aT.parts || []).find((q) => q.kind === "radial");
+        check("v1.94 트럼나 프라임 기본 사격 폭발: 멀티샷·파이어스톰 미적용 (위키)", aoeT && aoeT.noMs && aoeT.fsLock, JSON.stringify({ noMs: aoeT && aoeT.noMs, fs: aoeT && aoeT.fsLock }));
+        const KT = ["serration", "split_chamber", "vital_sense", "point_strike"];
+        const ac = weapon("acceltra_prime"), aA = ac.attacks[0], ex = (aA.parts || []).find((q) => q.kind === "radial");
+        const oN = Object.assign(baseO(), { factions: ["grineer"], scenario: "single", dist: 5 }), oF = Object.assign({}, oN, { dist: 15 });
+        const n5 = E.evaluate(ac, aA, KT.map(M), oN).score, n15 = E.evaluate(ac, aA, KT.map(M), oF).score;
+        check("v1.94 액셀트라 프라임 최소 폭발 거리 7m: 5m 단일 대상은 폭발 없음(15m보다 느림)", ex && ex.arm === 7 && n5 < n15 * 0.9, (n5 / n15).toFixed(2));
+      }
       // v1.84 (independent review 2026-11-06): ① swings pooled with Tennokai heavies decide Melee Influence's "no spread on a
       // one-hit kill" hit by hit — the pooled average (≈10x a swing) one-shot Corpus and Influence did almost nothing there;
       // ② the withhold check climbs single swaps from the #1 under each unverified assumption instead of only re-scoring its list

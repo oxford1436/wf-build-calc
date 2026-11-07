@@ -804,6 +804,16 @@
     for (let d = 2.25; d < 20; d += 0.5) { num += at(d) * d; den += d; }
     return num / den;
   }
+  // minimum arming distance (wiki Acceltra "will not explode if they make contact with objects or enemies within that range",
+  // Tonkor 7.5 m): share of shots whose target is far enough to explode — crowd = the same 2–20 m area-weighted spread as
+  // distFall, single target at o.dist (15 m). The direct hit still lands; only the explosion part is scaled.
+  function armFrac(arm, o) {
+    if (!arm) return 1;
+    if (o.scenario !== "crowd") return (o.dist || 15) >= arm ? 1 : 0;
+    let num = 0, den = 0;
+    for (let d = 2.25; d < 20; d += 0.5) { num += (d >= arm ? 1 : 0) * d; den += d; }
+    return num / den;
+  }
   // Secondary Enervate: +10% crit chance per hit, resets after 6 big crits — average crit chance over one cycle
   function enervateCC(cc0) {
     let cc = cc0, big = 0, sum = 0, n = 0;
@@ -917,7 +927,8 @@
     const Btot = (base0 + (a.baseAdd || 0)) * (1 + vpct);
 
     const rho = o.density;
-    const radius = ((atk.radius || 0) * (kind === "glaive" ? 1 : 1 + a.blastR) + (kind === "glaive" ? a.radius : 0)) * radiusMul;
+    // atk.fsLock: Firestorm doesn't reach this explosion (wiki Trumna "Explosion range cannot be increased with Firestorm")
+    const radius = ((atk.radius || 0) * (kind === "glaive" ? 1 : 1 + (atk.fsLock ? 0 : a.blastR)) + (kind === "glaive" ? a.radius : 0)) * radiusMul;
     let N, K, n3, n5;
     if (o.scenario === "crowd") {
       N = o.crowdN;
@@ -1102,7 +1113,7 @@
     }
     const fin = (ext.final || 1) * (tenno && !o.tennoAdd ? 1 + (tenno.dmg || 0) : 1) * exChain * sniperM * (1 + (a.evoMult || 0));   // evoMult: Incarnon "unique multiplier" perks
     // falloff: distance (bullets/pellets) and blast edge (enemies around the centre of an explosion)
-    let fallM = distFall(atk.fo, o);
+    let fallM = distFall(atk.fo, o) * armFrac(atk.arm, o);
     if (atk.rfo && o.scenario === "crowd" && K > 1) fallM *= (1 + (K - 1) * (1 - atk.rfo * 2 / 3)) / K;
     // Primary Plated Round: bonus ≈ 33.5%·√magazine for 10 s after each full reload (wiki examples)
     let platedB = 0;

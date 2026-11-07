@@ -1,0 +1,83 @@
+{
+  "weapon": "trumna_prime",
+  "attack": 0,
+  "valence": null,
+  "riven": null,
+  "notes": "트럼나 프라임 기본 사격(직격 + 1.6m 폭발). 2026-11-07 16시 묶음 7. 보조 사격 유탄(기본 사격 5처치로 게이지 충전, 탄약 안 씀, 6m, 최대 7번 튕김)은 기본 공격과 섞어 계산하지 않음(튕길 때마다 터지는지 위키 데이터 문장이 애매 — 열린 문제). kind: read = 출처 글 본문에서 모드 8칸을 직접 읽은 세팅.",
+  "builds": [
+    {
+      "name": "Sportskeeda 부식+폭발 (프라임드 슈레드·하이 볼티지, 고유 화염+냉기 = 폭발)",
+      "community": "sportskeeda",
+      "kind": "read",
+      "url": "https://sportskeeda.com/mmo/warframe-trumna-prime-build-guide",
+      "date": "날짜 표시 없음",
+      "mods": [
+        "Galvanized Chamber",
+        "Serration",
+        "Critical Delay",
+        "Vital Sense",
+        "Malignant Force",
+        "High Voltage",
+        "Primed Cryo Rounds",
+        "Primed Shred"
+      ],
+      "exilus": "Stabilizer",
+      "arcane": "primary_merciless",
+      "claims": [
+        "광역 무기라 부식+폭발이 가장 좋다",
+        "슈레드는 연사가 필요해서 프라임드 슈레드여야 한다",
+        "코퍼스에는 프라이머리 블라이트로 폭발+독",
+        "5처치마다 유탄"
+      ],
+      "verdict": "v1.94 기본 조건(리벤 없음·머시리스·3팩션): 계산기 1위의 54%(계산기가 고른 원소 순서 바이러스+방사능), 글대로 부식+폭발 순서면 51%. 부식+폭발은 그리니어에서만 같은 모드의 최선 순서(100%), 코퍼스 55%·인페스티드 71% → '광역 무기라 부식+폭발이 최고'는 그리니어 조건부 △. 프라임드 슈레드 → 바일 액셀러레이션 57%(+3%p, 관통은 무리에서 약 0.17명 — v1.91). 코퍼스에서 블라이트는 머시리스의 64% ❌(이 세팅·기본 무리 조건)."
+    },
+    {
+      "name": "Destructoid 바이러스+방사능 치명타 (갈바나이즈드 앱티튜드·레디에이티드 리로드)",
+      "community": "destructoid",
+      "kind": "read",
+      "url": "https://www.destructoid.com/the-best-trumna-prime-build-in-warframe/",
+      "date": "2024-11-15",
+      "mods": [
+        "Primed Cryo Rounds",
+        "Malignant Force",
+        "Galvanized Aptitude",
+        "Galvanized Chamber",
+        "Critical Delay",
+        "Vital Sense",
+        "Vile Acceleration",
+        "Radiated Reload"
+      ],
+      "exilus": "Stabilizer",
+      "arcane": "primary_merciless",
+      "claims": [
+        "반동이 커서 스태빌라이저",
+        "프라임드 파이어스톰은 보조 사격(유탄)에만 적용",
+        "자유 칸은 레디에이티드 리로드·해머 샷·프라임드 파이어스톰·리벤",
+        "원소가 여러 개라 갈바나이즈드 앱티튜드가 잘 맞음"
+      ],
+      "verdict": "v1.94 기본 조건: 계산기 1위의 83%(중첩 유지 89%). 자유 칸: 해머 샷 80%, 프라임드 파이어스톰 67% — 파이어스톰은 기본 사격 폭발에 안 들어감(위키 트럼나 노트, Destructoid '보조 사격에만') ✅. 1위와 차이: 레디에이티드 리로드·크리티컬 딜레이+바일 액셀러레이션 대신 마그네틱 캐퍼시티(엑시무스 오버가드, 빼면 64%)·프라임드 슈레드·포인트 스트라이크(크리티컬 딜레이로 바꾸면 95%)."
+    }
+  ],
+  "meta": {
+    "read_builds": 2,
+    "elements": "바이러스+방사능 1(냉기+독, 전기 없이 방사능은 고유 화염+레디에이티드 리로드) · 부식+폭발 1(독+전기, 냉기+고유 화염)",
+    "valence": "해당 없음(고유 화염 53 + 폭발 화염 50)",
+    "core": [
+      "갈바나이즈드 체임버",
+      "크리티컬 딜레이",
+      "바이탈 센스",
+      "멀리그난트 포스",
+      "프라임드 크라이오 라운즈"
+    ],
+    "flex": [
+      "서레이션 / 갈바나이즈드 앱티튜드",
+      "하이 볼티지 / 레디에이티드 리로드(해머 샷·리벤)",
+      "프라임드 슈레드 / 바일 액셀러레이션"
+    ],
+    "arcane": [
+      "프라이머리 머시리스 2"
+    ],
+    "why": "고유 화염을 냉기와 묶거나(폭발) 그대로 남기고(방사능 조합에 씀) 치명타 뼈대에 원소 2~3개. 반동이 커서 엑실러스는 스태빌라이저. 5처치마다 유탄으로 방 정리.",
+    "limit": "유탄(5처치마다, 탄약 없음)을 기본 공격에 섞지 않음 — 질문 목록. 직접 읽은 세팅 2개(Overframe 760918은 모드 목록이 그림)."
+  }
+}

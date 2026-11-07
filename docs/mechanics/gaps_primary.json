@@ -10,7 +10,7 @@
   },
   "quote": "Rockets have a minimum arming distance of 7 meters and explode in a 4 meter radius after impacting a surface or enemy. | The Acceltra's rockets have a minimum arming distance of 7 meters, meaning that they will not explode if they make contact with objects or enemies within that range",
   "url": "https://wiki.warframe.com/w/Acceltra",
-  "handled": null,
+  "handled": "1.94",
   "variants": null
  },
  {
@@ -24,7 +24,7 @@
   },
   "quote": "Rockets have a minimum arming distance of 7 meters and explode in a 5 meter radius after impacting a surface or enemy. | The Acceltra Prime's rockets have a minimum arming distance of 7 meters, meaning that they will not explode if they make contact with objects or enemies within that range",
   "url": "https://wiki.warframe.com/w/Acceltra_Prime",
-  "handled": null,
+  "handled": "1.94",
   "variants": null
  },
  {
@@ -3198,7 +3198,7 @@
   },
   "quote": "Grenades have travel time, heavy arcing, and needs to travel 7.5m before being explosive. | A grenade hitting an enemy without exploding causes much less damage compared to the explosion. | Grenades have a minimum arming distance of 7.5 meters, mitigating self-stagger.",
   "url": "https://wiki.warframe.com/w/Tonkor",
-  "handled": null,
+  "handled": "1.94",
   "variants": null
  },
  {
@@ -3246,7 +3246,7 @@
   },
   "quote": "With Punch Through modded on, the explosions from primary fire occur on the first object hit rather than where the projectile visually detonates, unlike launcher weapons. | Explosion is unaffected by multishot. | Explosion range cannot be increased with Firestorm (Primed Firestorm).",
   "url": "https://wiki.warframe.com/w/Trumna",
-  "handled": null,
+  "handled": "1.94",
   "variants": null
  },
  {
@@ -3279,7 +3279,7 @@
   },
   "quote": "With Punch Through modded on, the explosions from primary fire occur on the first object hit rather than where the projectile visually detonates, unlike launcher weapons. | Explosion is unaffected by multishot.",
   "url": "https://wiki.warframe.com/w/Trumna_Prime",
-  "handled": null,
+  "handled": "1.94",
   "variants": null
  },
  {

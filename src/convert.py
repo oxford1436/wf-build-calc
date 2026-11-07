@@ -25,7 +25,16 @@ except Exception as e:  # keep building without it
 # over 51 shots, reset when the trigger is released.
 SPOOL_DOWN = {"Phenmor": {"Incarnon Form": [51, 0.6]}}
 # radial attacks that the wiki says get no multishot bonus (one explosion per trigger pull)
-NO_MS_RADIAL = {"Burston Prime": ("Incarnon Form Radial Attack",)}
+# Trumna / Trumna Prime (wiki weapon notes, docs/mechanics/gaps_primary.json, queue bundle 7 2026-11-07): primary fire
+# "Explosion is unaffected by multishot." | Trumna: "Explosion range cannot be increased with Firestorm (Primed Firestorm)."
+NO_MS_RADIAL = {"Burston Prime": ("Incarnon Form Radial Attack",), "Trumna": ("Auto AoE",), "Trumna Prime": ("Auto AoE",)}
+# radial attacks whose radius Firestorm / Primed Firestorm can't change (wiki Trumna note above; Trumna Prime shares the
+# explosive-rounds note and the Destructoid build guide says Primed Firestorm "will only work with the Trumna's alternate fire")
+FS_LOCK = {"Trumna": ("Auto AoE",), "Trumna Prime": ("Auto AoE",)}
+# minimum arming distance (wiki weapon notes): Acceltra / Acceltra Prime "minimum arming distance of 7 meters, meaning that they
+# will not explode if they make contact with objects or enemies within that range"; Tonkor "Grenades have a minimum arming
+# distance of 7.5 meters" ("A grenade hitting an enemy without exploding causes much less damage compared to the explosion")
+ARM_DIST = {"Acceltra": ("Rocket Explosion", 7), "Acceltra Prime": ("Rocket Explosion", 7), "Tonkor": ("Grenade Explosion", 7.5)}
 # beam-end area of effect (wiki weapon notes, verbatim in docs/mechanics/gaps_*.json, queue bundle 6 2026-11-07):
 #  Glaxion Vandal "The zone of impact or maximum beam range produces a damaging cold blotch in a spherical radius of 2 meters,
 #    allowing it to hit multiple enemies at once. | Not affected by multishot. | ... dealing the weapon's full damage (i.e. there is
@@ -247,6 +256,10 @@ def conv(w, typ):
                     at["ptLock"] = True
                 if at["kind"] == "radial" and a["name"] in NO_MS_RADIAL.get(name, ()):
                     at["noMs"] = True     # wiki weapon page: the radial attack gets no multishot bonus
+                if at["kind"] == "radial" and a["name"] in FS_LOCK.get(name, ()):
+                    at["fsLock"] = True   # wiki: Firestorm doesn't change this explosion's radius
+                if at["kind"] == "radial" and ARM_DIST.get(name, (None,))[0] == a["name"]:
+                    at["arm"] = ARM_DIST[name][1]   # no explosion on targets closer than this (m)
                 if a.get("charge_time"):
                     at["charge"] = a["charge_time"]
                 wk_ = WIKI.get(name) or {}
