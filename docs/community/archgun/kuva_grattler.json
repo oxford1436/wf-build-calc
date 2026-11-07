@@ -7,9 +7,37 @@
    "name": "쿠바 그라틀러 최강 (본위도우, 프라이머리 오버차지 + 세컨더리 에너베이트, 자성 베일런스 60%)",
    "kind": "session",
    "date": "2026-11-07",
-   "mods": ["Primed Rubedo-Lined Barrel", "Primed Dual Rounds", "Magnetized Cycle", "Automatic Trigger", "Hollowed Bullets", "Primed Polar Magazine", "Primed Electrified Barrel", "Primed Combustion Rounds"],
+   "mods": [
+    "Primed Rubedo-Lined Barrel",
+    "Primed Dual Rounds",
+    "Magnetized Cycle",
+    "Automatic Trigger",
+    "Hollowed Bullets",
+    "Primed Polar Magazine",
+    "Primed Electrified Barrel",
+    "Primed Combustion Rounds"
+   ],
    "arcane": "Primary Overcharge + Secondary Enervate",
    "verdict": "머솔론 본위도우 1위와 같은 모드 8개(냉기·전기가 화염보다 앞 칸 → 자성, 화염 단독; 화염 대신 독도 같음). 머솔론 대비 80.0%: 1·2페이즈 143%(폭발이 피해의 63%), 3·4페이즈 60%(폭발 면역). 오버차지 꺼짐 78.6%, 에너베이트 없음 79.4%, 터네이셔스 본드 없음 78.4%, 탄창 재생 4초(아크윙 방식) 68.9%, 1·2페이즈 폭발 65%만 들어감 74.9%. 순위가 바뀌는 조건: 3·4페이즈에서 폭발이 평균 9.8% 이상 들어가면(머리가 반경 안) 쿠바 그라틀러가 앞섬 — 폭발 50%면 135%. 1·2페이즈만 보면 폭발이 52% 미만으로 들어갈 때 머솔론이 앞섬."
+  },
+  {
+   "name": "쿠바 그라틀러 + 최강 리벤 (본위도우, 사용자가 그라틀러 리벤을 새로 돌릴 예정 2026-11-07)",
+   "kind": "session",
+   "date": "2026-11-07",
+   "riven": "3+1 최대치(W 1.1, 위키 Riven Mods 아크건 기본값 × 1.2 × 0.9375): 피해 +123.6%, 치명타 피해 +99.1%, 대 코퍼스 x1.56, 부정 상태이상 확률(프로핏 테이커 상태이상 면역이라 무해)",
+   "mods": [
+    "Primed Rubedo-Lined Barrel",
+    "Primed Dual Rounds",
+    "Magnetized Cycle",
+    "Automatic Trigger",
+    "Hollowed Bullets",
+    "Riven",
+    "Primed Polar Magazine",
+    "Primed Electrified Barrel"
+   ],
+   "arcane": "Primary Overcharge + Secondary Enervate",
+   "valence": "Magnetic 60%",
+   "verdict": "리벤 없는 머솔론의 204.5%(1·2페이즈 3.69배, 3·4페이즈 1.53배 — 폭발 없이도 앞섬). 리벤 최저 굴림(W 0.9) 171%, 대 코퍼스 없는 피해+치명타 피해+연사 170.7%. 머솔론 추천 8개에서 프라임드 컴버스쳔 라운즈 → 리벤. 빼면: 루비도 −45.5%, 듀얼 라운즈 −27.9%, 마그네타이즈드 −21.6%(차선 프라임드 컴버스쳔 99.3%), 오토매틱 −24.3%, 할로우드 −23.8%, 리벤 −68.3%, 폴라·일렉트리파이드 −35.5%. 리벤 2위 피해+연사+코퍼스 187%, 3위 연사+치명타 피해+코퍼스 186%. 에너베이트를 안 쓰면 피해+치명타 확률+코퍼스가 1위. 같은 수준의 머솔론 리벤이면 머솔론 257%(1.25배)."
   }
  ],
  "meta": "위키 Profit-Taker Orb Tips(직접 읽음): 가장 강한 아크건은 워프레임용 머솔론, 네크라메크용 벨로시투스(충전 사격 한 방에 다리·본체 하나). 쿠바 그라틀러는 언급 없음. 벨로시투스는 계산 안 함."
