@@ -1,0 +1,40 @@
+{
+ "weapon": "Mausolon (Atmosphere) — Archgun Deployer",
+ "target": "Profit-Taker Orb legs and main body",
+ "note": "아크건은 계산기 무기 목록에 없어 이 폴더의 모델(opt.js·enervate.js·run2.js)로 계산. 근거(위키, 2026-11-07 직접 읽음): Module:Weapons/data/archwing 'Mausolon (Atmosphere)' 35/70/75 + 폭발 화염 72(1.8m, 멀티샷 미적용 — Mausolon 버그 항목), 코퍼스 관통·자성 x1.5(Damage/Magnetic), 프로핏 테이커 상태이상·방어력 감소 면역, 3·4페이즈는 두 번 피해 무기의 범위 피해 면역(머리 근처 제외), 머솔론 전용 피해 저항(세팅과 무관한 일정 비율). Primary Bulwark(방어력 1000 초과 1당 +1%, 최대 +500%, 서레이션과 합연산), Vex Armor 퓨리(275% x 위력, 기본 피해 합연산, 범용 무기 보너스), Nourish 헬민스(45% x 위력 바이러스), Secondary Enervate(위키 AFCC 공식으로 모델 검증), Tenacious Bond(+1.2 치명타 배율, 아스날 3.4 = 2.2 + 1.2).",
+ "builds": [
+  {
+   "name": "사용자 현재 (2026-11-07 스크린샷)",
+   "kind": "session",
+   "mods": [
+    "Primed Dual Rounds",
+    "Magnetized Cycle",
+    "Containment Breach",
+    "Polar Magazine",
+    "Automatic Trigger",
+    "Electrified Barrel",
+    "Parallax Scope",
+    "Primed Rubedo-Lined Barrel"
+   ],
+   "arcane": "Primary Overcharge + Secondary Enervate",
+   "verdict": "크로마 조건 최종 세팅의 37%(오버차지 꺼짐)~50%(오버차지 항상 켜짐). 아스날 조각당 수치는 모델과 일치."
+  },
+  {
+   "name": "추천 (크로마 프라임 + 아크건 배치기, 벡스 아머 최대)",
+   "kind": "session",
+   "mods": [
+    "Primed Dual Rounds",
+    "Containment Breach",
+    "Magnetized Cycle",
+    "Primed Polar Magazine",
+    "Automatic Trigger",
+    "Primed Electrified Barrel",
+    "Hollowed Bullets",
+    "Primed Combustion Rounds"
+   ],
+   "arcane": "Primary Bulwark + Secondary Enervate",
+   "verdict": "1위(허리 사격, 퓨리·스콘 최대). 칸 순서 = 실제 칸(1·5·8 마두라이, 4 바자린, 6 새 나라몬 포르마) → 용량 58/60, 포르마 4개. 원소: 4 냉기 → 6 전기 → 8 화염(냉기+전기=자성, 화염 단독). 퓨리 0이면 컨테인먼트 대신 프라임드 루비도가 9% 빠름. 조준 사격 비율이 55% 넘으면 컨테인먼트 → 크리티컬 포커스(전부 조준 +13.5%, 마두라이 포르마 1개 더). 네크라메크로 쏘면 컨테인먼트 → 프라임드 루비도, 불워크 → 오버차지. 독립 검토(2026-11-07): 모델 재구현으로 수치 재현, 원소·면역·본드·아스날 대조 확인."
+  }
+ ],
+ "meta": "아카라이브 프로핏 공략(다른 대화에서 읽음): 크로마가 직접 쓰는 머솔론은 에너지 90% 유지가 어려워 오버차지 대신 불워크, 리벤 옵션 코퍼스·멀티샷·연사·치명타 피해·전기·냉기·최대 탄약(피해·치명타 확률 없음). 디시 2024: 자성. 디시 475956: 코르바스 선호."
+}
