@@ -389,7 +389,7 @@
   },
   "quote": "The zone of impact or maximum beam range has a spherical blast radius of 0.7 meters, bringing up the total range to 19.7 meters before mods, allowing it to hit multiple enemies at once. | Radial damage is not affected by multishot. | Radius is affected by Fulmination (Primed).",
   "url": "https://wiki.warframe.com/w/Catabolyst",
-  "handled": null,
+  "handled": "v1.88: 빔 끝점 범위(반경, 멀티샷 미적용, 감쇠 없음)를 빔과 합친 공격으로 — 맞은 적도 받는지는 양끝 계산(o.noBeamAoe)",
   "variants": null
  },
  {
@@ -433,7 +433,7 @@
   },
   "quote": "The zone of impact or maximum beam range has a spherical blast radius of 0.7 meters, bringing up the total range to 19.7 meters before mods, allowing it to hit multiple enemies at once. | Radial damage is not affected by multishot.",
   "url": "https://wiki.warframe.com/w/Coda_Catabolyst",
-  "handled": null,
+  "handled": "v1.88: 빔 끝점 범위(반경, 멀티샷 미적용, 감쇠 없음)를 빔과 합친 공격으로 — 맞은 적도 받는지는 양끝 계산(o.noBeamAoe)",
   "variants": null
  },
  {
@@ -593,7 +593,7 @@
   },
   "quote": "The zone of impact or maximum beam range produces a spherical blast radius of 1 meter, allowing it to hit multiple enemies at once. | The radial damage is not affected by multishot. | The radius is affected by (Primed) Fulmination.",
   "url": "https://wiki.warframe.com/w/Embolist",
-  "handled": null,
+  "handled": "v1.88: 빔 끝점 범위(반경, 멀티샷 미적용, 감쇠 없음)를 빔과 합친 공격으로 — 맞은 적도 받는지는 양끝 계산(o.noBeamAoe)",
   "variants": null
  },
  {

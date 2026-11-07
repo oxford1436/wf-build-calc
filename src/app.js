@@ -184,6 +184,8 @@ self.onmessage = function (ev) {
     // uncharged/quick shots have no wiki cadence). Not the Incarnon Form shot — that is chosen through the Incarnon toggle.
     if (i < 0 && w.type === "Bow") i = a.findIndex((x) => x.kind === "gun" && /Charged/.test(x.en || "") && !/^Incarnon/.test(x.en || "") && !/Uncharged/.test(x.en || ""));
     if (i < 0) i = a.findIndex((x) => x.kind === "gun" && x.en === "Normal Attack");
+    // v1.88: main trigger named otherwise (Phantasma "Beam") — the first plain, uncharged gun attack, not one marked alt
+    if (i < 0) i = a.findIndex((x) => x.kind === "gun" && !x.alt && !x.parts && !x.charge && !/^Alt/.test(x.en || ""));
     if (i < 0) i = a.findIndex((x) => x.kind === "melee");
     return Math.max(0, i);
   }
@@ -1398,6 +1400,8 @@ self.onmessage = function (ev) {
       // would have come after one or two swings in the crowd (o.tennoPerHit stays in the engine for regress only)
       if (w.attacks.some((q) => q.evoScaleAlt)) alts.push({ o: { evoHeavyScale: true }, why: "진화 '기본 피해 +X'가 강공에 그대로 X만 더해짐(기본) / 휘두르기와 같은 비율로 커짐(강공 = 기본 피해 × 5) — 위키 확인 안 됨" });
     }
+    // v1.88: beam-end AoE on the struck enemy too (default) / only the AoE part removed — wiki weapon pages don't say
+    if (atk && (atk.parts || []).some((q) => q.beamAoe)) alts.push({ o: { noBeamAoe: true }, why: "빔 끝점 범위 피해를 빔에 맞은 적도 받는지 위키에 없음 — 받음(기본) / 안 받음" });
     if (atk && atk.killField && !atk.killField.every && o.scenario === "crowd") alts.push({ o: { fieldHigh: true }, why: `처치 시 장판(${atk.killField.dmg} 피해, ${atk.killField.dur}초)이 몇 초마다 들어가는지 위키에 없음 — 한 번 / 1초마다` });
     // v1.86 (independent review 2026-11-06, Kuva Zarr): between one-shot kills a gunner needs time to put the crosshair on the next
     // enemy. No source gives it (engine T_ACQ = 0.2 s); when most enemies die to one shot it decides how much fire rate is worth,

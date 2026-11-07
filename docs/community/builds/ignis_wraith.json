@@ -1,0 +1,102 @@
+{
+  "weapon": "ignis_wraith",
+  "attack": 0,
+  "valence": null,
+  "riven": null,
+  "notes": "이그니스 레이스 기본 사격 = 화염 빔(몸통 무한 관통) + 끝점 3m 범위(v1.88, 멀티샷 미적용). 2026-11-07 10시 묶음 6 조사. kind: read = 출처 본문에서 모드 8칸을 글자로 직접 읽은 세팅. Overframe 882460·634662는 모드 칸 글자 없음 → 세팅 미기록(634662는 작성자 설명만). ProGameTalk는 세팅이 그림(본문에 모드 일부 이름만, 2019 원문) → 미기록. Sportskeeda는 익실러스·아케인 표기 없음. 'Primed Bane of Corrupted'는 게임 데이터 이름 Primed Bane Of Orokin.",
+  "read_2026_11_07": [
+    {
+      "src": "https://overframe.gg/build/634662/ignis-wraith/what-a-proper-ignis-wraith-build-looks-like-remake/",
+      "date": "2024-03-22, 수정 2025-10-20 (U36 리메이크)",
+      "what": "모드 칸 글자 없음 — 세팅 미기록",
+      "claims": [
+        "바이러스 + 베기: 화염 상태이상 방어구 50% 감소, 바이러스가 체력 피해 증폭, 베기가 체력에 직접",
+        "갈바나이즈드(상태이상) 모드로 피해 +240%"
+      ]
+    },
+    {
+      "src": "https://progametalk.com/warframe/weapon-builds/ignis-wraith/",
+      "date": "원문 2019-04-12, 수정 표기 2026-03-10",
+      "what": "세팅 그림 — 세팅 미기록(본문 모드 이름은 옛 세팅: 컴버스천 빔·스플릿 체임버 등)",
+      "claims": [
+        "컴버스천 빔: 처치 시 폭발로 광역",
+        "관통이 필요 없으면 슈레드 대신 스피드 트리거"
+      ]
+    }
+  ],
+  "builds": [
+    {
+      "name": "Sportskeeda 폭발 + 부식 (Jade Shadows 폭발 상태이상)",
+      "community": "sportskeeda",
+      "kind": "read",
+      "url": "https://sportskeeda.com/mmo/warframe-ignis-wraith-build",
+      "date": "날짜 표기 없음 (Jade Shadows 이후)",
+      "mods": [
+        "High Voltage",
+        "Critical Delay",
+        "Malignant Force",
+        "Primed Cryo Rounds",
+        "Primed Bane Of Orokin",
+        "Galvanized Chamber",
+        "Hammer Shot",
+        "Rifle Elementalist"
+      ],
+      "exilus": null,
+      "arcane": null,
+      "claims": [
+        "Jade Shadows 이후 폭발 10중첩 폭발이 기본 피해의 100% 넘게",
+        "빔은 틱마다 멀티샷만큼 상태이상을 걸어 폭발 공식에 가장 좋은 무기 중 하나",
+        "라이플 엘리멘탈리스트가 갈바나이즈드 샷을 대신함(곱연산 피해)",
+        "팩션 모드는 폭발 상태이상에 두 번 곱해짐"
+      ]
+    },
+    {
+      "name": "Overframe ESO Heat Nuke (바이러스 + 화염, 머시리스)",
+      "community": "overframe",
+      "kind": "read",
+      "url": "https://overframe.gg/build/927649/ignis-wraith/eso-heat-nuke/",
+      "author": "Overframe 927649",
+      "date": "2025-11-28 (40.0)",
+      "mods": [
+        "Galvanized Chamber",
+        "Galvanized Aptitude",
+        "Critical Delay",
+        "Vital Sense",
+        "Vile Acceleration",
+        "Malignant Force",
+        "Rime Rounds",
+        "Thermite Rounds"
+      ],
+      "exilus": "Sinister Reach",
+      "arcane": "primary_merciless",
+      "claims": [
+        "갈바나이즈드 체임버 필수",
+        "갈바나이즈드 앱티튜드가 서레이션 대신 '세팅의 엔진'",
+        "크리티컬 딜레이 + 바이탈 센스 치명타·상태이상 혼합, 바일 액셀러레이션으로 연사 감소 상쇄",
+        "멀리그난트 포스 + 라임 라운즈 = 바이러스, 써마이트 라운즈로 화염 비중",
+        "시니스터 리치 +3m 빔 사거리(문간에서 방 정리)",
+        "엘리트 성역 맹공 기준"
+      ]
+    }
+  ],
+  "meta": {
+    "elements": "바이러스+화염 1(멀리그난트 포스 + 라임 라운즈 + 써마이트) · 부식+폭발 1(하이 볼티지 + 멀리그난트 포스 + 크라이오 + 고유 화염) — 직접 읽은 세팅 2개라 대표성 낮음",
+    "valence": "없음(베일런스 무기 아님). 고유 화염이 맨 끝에 조합됨 — 냉기만 넣으면 폭발",
+    "core": [
+      "Galvanized Chamber",
+      "Critical Delay",
+      "Malignant Force"
+    ],
+    "flex": [
+      "Vital Sense",
+      "Vile Acceleration",
+      "Galvanized Aptitude",
+      "Hammer Shot",
+      "Rifle Elementalist",
+      "Primed Bane Of Orokin",
+      "Thermite Rounds"
+    ],
+    "arcane": "primary_merciless 1 · 표기 없음 1",
+    "why": "갈바나이즈드 체임버 필수, 치명타+상태이상 혼합(크리티컬 딜레이·바이탈 센스), 바이러스로 체력 피해·화염으로 방어구 감소(927649) / 폭발 10중첩 공식과 빔의 틱당 상태이상(Sportskeeda, 계산기 기본 조건에서는 ❌)"
+  }
+}

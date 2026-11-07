@@ -26,6 +26,19 @@ except Exception as e:  # keep building without it
 SPOOL_DOWN = {"Phenmor": {"Incarnon Form": [51, 0.6]}}
 # radial attacks that the wiki says get no multishot bonus (one explosion per trigger pull)
 NO_MS_RADIAL = {"Burston Prime": ("Incarnon Form Radial Attack",)}
+# beam-end area of effect (wiki weapon notes, verbatim in docs/mechanics/gaps_*.json, queue bundle 6 2026-11-07):
+#  Glaxion Vandal "The zone of impact or maximum beam range produces a damaging cold blotch in a spherical radius of 2 meters,
+#    allowing it to hit multiple enemies at once. | Not affected by multishot. | ... dealing the weapon's full damage (i.e. there is
+#    no damage falloff) | ... applied at the final point of contact"
+#  Ignis / Ignis Wraith "spherical blast radius of 3 meters", "Multishot has no effect on the radial damage, like the other AoE
+#    Continuous Weapons", "no Damage Falloff", "if the beam hits multiple enemies, the AOE will be at the last enemy hit"
+#  Lizzie "spherical blast radius of 4 meters", Catabolyst 0.7 m, Embolist 1 m ("radial damage is not affected by multishot")
+# Built as a radial part of the beam (same damage, crit and status, no multishot, no falloff). Whether the enemy the beam strikes
+# also takes the blotch isn't written on those pages (wiki Continuous Weapons page not readable from the scheduled run) — the
+# engine counts it (one more instance on the target) and the app checks the pick without it (o.noBeamAoe).
+BEAM_AOE = {"Glaxion Vandal": ("Normal Attack", 2), "Ignis": ("Normal Attack", 3), "Ignis Wraith": ("Normal Attack", 3),
+            "Lizzie": ("Normal Attack", 4), "Catabolyst": ("Primary", 0.7), "Coda Catabolyst": ("Primary", 0.7),
+            "Embolist": ("Normal Attack", 1)}
 # chaining / ricocheting shots (wiki Incarnon Genesis notes, verbatim in data/raw/incarnon_evos.json): from every enemy the
 # shot hits directly, n more hits on nearby enemies, the j-th at f^j of the hit's damage, each with chance p.
 #  Torid: "chaining to up to 5 nearby enemies within 7 meters of each other, with each chain doing 75% of the previous chain's
@@ -242,6 +255,17 @@ def conv(w, typ):
                 at["desc"] = {"Normal Attack": "기본 사격만 하는 운용", "Alt-Fire": "보조 사격만 계산", "Incarnon Form": "인카논 형태 (진화 후) 사격",
                               "Charged Shot": "충전 사격"}.get(a["name"], ("폭발 부분만" if at["kind"] == "radial" else "직격 부분만"))
                 base.append(at)
+            # beam-end AoE (BEAM_AOE above): a radial copy of the beam, paired with it as one shot
+            if name in BEAM_AOE:
+                ben, br = BEAM_AOE[name]
+                bm = next((y for y in base if y["kind"] == "gun" and y["en"] == ben), None)
+                if bm is not None:
+                    ba = {k: v for k, v in bm.items() if k not in ("punch", "fo", "_shot", "chain", "ptLock")}
+                    ba.update({"name": bm["name"] + " 끝점 범위", "en": ben + " Beam AoE", "kind": "radial", "radius": br, "noMs": True,
+                               "hsMult": 1, "beamAoe": True, "desc": "빔 끝점 범위 부분만"})
+                    ba.pop("ammoCost", None)
+                    base.append(ba)
+                    PAIR_EXTRA.setdefault(name, {})[ba["en"]] = ben
             # combined direct + AoE parts
             combos = []
             # primer combos: main gun attack + alt-fire statuses
@@ -306,6 +330,10 @@ def conv(w, typ):
                 cb = {"name": cname, "en": "+".join(dict.fromkeys(q["en"] for q in grp)), "kind": "gun", "desc": "한 발의 직격과 폭발 피해를 합쳐서 계산",
                       "parts": list(grp), "dmg": y["dmg"], "cc": y["cc"], "cd": y["cd"], "sc": y["sc"], "fr": y["fr"],
                       "pellets": pellets, "mag": y["mag"], "reload": y["reload"], "semi": y.get("semi", False), "ptLock": bool(y.get("ptLock"))}
+                if any(q.get("beamAoe") for q in grp):
+                    cb["name"] = (y["name"] if y["en"] != "Normal Attack" else "기본 사격") + " 전체 피해 (빔 + 끝점 범위)"
+                    cb["desc"] = "빔 직격과 빔 끝점의 범위 피해(멀티샷 미적용, 위키)를 합쳐서 계산"
+                    if y.get("punch"): cb["punch"] = True
                 if len(grp) > 2:
                     cb["desc"] = "한 발의 직격과 폭발 피해 " + str(len(grp)) + "번을 합쳐서 계산 (위키 공격 구성)"
                 nc_ = sum(1 for q in grp if q.get("cluster") and q["kind"] == "radial")
@@ -571,8 +599,24 @@ for w in weapons:
     rv, alt = _ramp[w["en"]]
     for a in w["attacks"]:
         if a.get("kind") != "gun": continue
-        if (alt and a.get("en") == "Held") or (not alt and (a.get("en") or "").startswith("Normal Attack")):
+        if (alt and a.get("en") == "Held") or (not alt and ((a.get("en") or "").startswith("Normal Attack") or a.get("en") == "Beam")):
             a["beamRamp"] = rv
+            for q in a.get("parts") or []:
+                if q.get("beamAoe"): q["beamRamp"] = rv
+# Phantasma / Phantasma Prime (wiki data): primary fire is "Beam" (Trigger Held, 6 beams); "Plasma Bomb" is the charged
+# alt-fire (Trigger Charge). The old name rule paired the bomb's impact and explosion before v1.63 and kept that pair as the
+# default attack — the weapon's main fire is the beam (every Overframe build read 2026-11-07 shows "FIRE MODE: PRIMARY")
+for w in weapons:
+    if w.get("en") in ("Phantasma", "Phantasma Prime"):
+        for a in w["attacks"]:
+            if a.get("parts") and (a.get("en") or "").startswith(("Plasma Bomb", "Cluster Bombs")):
+                a["alt"] = True
+    # Catabolyst (wiki notes): the beam ("Primary") is the trigger; the grenade is thrown by reloading ("Reload throws a grenade at
+    # the reticle") — offered on its own, not the default
+    if w.get("en") in ("Catabolyst", "Coda Catabolyst"):
+        for a in w["attacks"]:
+            if a.get("parts") and (a.get("en") or "").startswith(("Partial Reload", "Reload From Empty")):
+                a["alt"] = True
 
 # dedupe ids
 seen = {}

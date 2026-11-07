@@ -494,6 +494,9 @@
   }
   function evaluate1(weapon, atk, mods, o, riven) {
     let parts = atk.parts ? atk.parts : [atk];
+    // v1.88 beam-end AoE (Glaxion Vandal, Ignis, Lizzie, Catabolyst, Embolist — convert.py BEAM_AOE): the wiki pages don't say whether
+    // the enemy the beam strikes also takes the blotch; default counts it, o.noBeamAoe drops it (the app checks the pick both ways)
+    if (o.noBeamAoe && parts.some((p) => p.beamAoe)) parts = parts.filter((p) => !p.beamAoe);
     let weights = parts.map(() => 1);
     const tn = atk.kind === "melee" && !o._noTenno ? tennoOf(mods, Object.assign({}, o, { kills: o.scenario === "boss" ? false : o.kills })) : null;
     // v1.80 o.noPool: swings and Tennokai heavies as two separate kill streams sharing the time (kill rate = time-weighted mix),

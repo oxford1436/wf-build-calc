@@ -72,6 +72,23 @@ const { chromium } = require("playwright");
         const a = ev(sp, K, Object.assign({}, oz, { tAcq: 0.1 })).score, c = ev(sp, K, Object.assign({}, oz, { tAcq: 0.4 })).score;
         check("v1.86 엔진이 다시 조준 시간 옵션(o.tAcq)을 씀 — 한 방 무기에서 0.1초가 0.4초보다 빠름", a > c * 1.05, (a / c).toFixed(2));
       }
+      // v1.88 (queue bundle 6, wiki weapon notes): beam-end AoE (Ignis Wraith 3 m, Glaxion Vandal 2 m, "Not affected by multishot")
+      // is part of the default attack; Phantasma's default is its beam (not the charged Plasma Bomb alt-fire) with the 15% → 100%
+      // ramp; Quanta's "Beam" gets its 30% → 100% ramp (v1.74 only matched attacks named "Normal Attack")
+      {
+        const A = window.WF_APP, iw = weapon("ignis_wraith"), gv = weapon("glaxion_vandal"), pp = weapon("phantasma_prime"), qu = weapon("quanta");
+        const aI = iw.attacks[A.defaultAttack(iw)], aoeI = (aI.parts || []).find((q) => q.beamAoe);
+        check("v1.88 이그니스 레이스 기본 공격 = 빔 + 끝점 3m 범위(멀티샷 미적용, 위키)", aoeI && aoeI.radius === 3 && aoeI.noMs && aI.punch, aI.en);
+        const aG = gv.attacks[A.defaultAttack(gv)], oG = Object.assign(baseO(), { factions: ["grineer"] }), K = ["serration", "split_chamber"];
+        const sA = E.evaluate(gv, aG, K.map(M), oG).score, sN = E.evaluate(gv, aG, K.map(M), Object.assign({}, oG, { noBeamAoe: true })).score;
+        check("v1.88 글랙시온 반달 끝점 2m 범위가 계산에 들어감 (o.noBeamAoe로 빼면 느려짐)", (aG.parts || []).some((q) => q.beamAoe && q.radius === 2) && sA > sN * 1.05, (sA / sN).toFixed(2));
+        const alts = A.boundAlts(gv, aG, Object.assign(A.readOpts(), { scenario: "crowd" })).some((x) => x.o.noBeamAoe);
+        check("v1.88 빔 끝점 범위를 맞은 적이 받는지 양끝에서 확인 (앱 보류 검사)", alts, String(alts));
+        const aP = pp.attacks[A.defaultAttack(pp)];
+        check("v1.88 판타즈마 프라임 기본 공격 = 빔(주 사격), 피해 상승 15% → 100%", aP.en === "Beam" && aP.beamRamp && aP.beamRamp[0] === 0.15, aP.en + " " + JSON.stringify(aP.beamRamp));
+        const aQ = qu.attacks[A.defaultAttack(qu)];
+        check("v1.88 퀀타 빔 피해 상승 30% → 100% (위키)", aQ.beamRamp && aQ.beamRamp[0] === 0.3, aQ.en + " " + JSON.stringify(aQ.beamRamp));
+      }
       // v1.84 (independent review 2026-11-06): ① swings pooled with Tennokai heavies decide Melee Influence's "no spread on a
       // one-hit kill" hit by hit — the pooled average (≈10x a swing) one-shot Corpus and Influence did almost nothing there;
       // ② the withhold check climbs single swaps from the #1 under each unverified assumption instead of only re-scoring its list

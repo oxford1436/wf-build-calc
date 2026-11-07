@@ -1142,7 +1142,7 @@
   },
   "quote": "The zone of impact or maximum beam range produces a damaging cold blotch in a spherical radius of 2 meters, allowing it to hit multiple enemies at once. | Not affected by multishot. | Area of effect does not inflict self-stagger and has no Damage Falloff. | The zone of impact or maximum beam range creates a spherical area of effect of 2 meters, dealing the weapon's full damage (i.e. there is no damage falloff). | Punch Through affects the location of the weapon's area of effect. The weapon's area of effect is applied at the final point of contact rather than whenever an enemy is struck.",
   "url": "https://wiki.warframe.com/w/Glaxion_Vandal",
-  "handled": null,
+  "handled": "v1.88: 빔 끝점 범위(반경, 멀티샷 미적용, 감쇠 없음)를 빔과 합친 공격으로 — 맞은 적도 받는지는 양끝 계산(o.noBeamAoe)",
   "variants": null
  },
  {
@@ -1219,7 +1219,7 @@
   },
   "quote": "The zone of impact or maximum beam range has a spherical blast radius of 3 meters, allowing it to hit multiple enemies at once. | Beam has a thickness of 0.15 meters, largest beam thickness of all continuous weapons. | Area of effect does not inflict self-stagger and has no Damage Falloff. | Limited range of 20 meters (+3m blast radius resulting in a total range of 23m).",
   "url": "https://wiki.warframe.com/w/Ignis",
-  "handled": null,
+  "handled": "v1.88: 빔 끝점 범위(반경, 멀티샷 미적용, 감쇠 없음)를 빔과 합친 공격으로 — 맞은 적도 받는지는 양끝 계산(o.noBeamAoe)",
   "variants": null
  },
  {
@@ -1231,7 +1231,7 @@
   "numbers": {},
   "quote": "Innate Infinite Body Punch Through. | Innate punch through does not apply to surfaces, requiring punch through mods.",
   "url": "https://wiki.warframe.com/w/Ignis",
-  "handled": null,
+  "handled": "v1.0 이전부터: convert.py INF_BODY_PT(몸통 무한 관통) — 2026-11-07 확인, 표시만 늦음",
   "variants": null
  },
  {
@@ -1265,7 +1265,7 @@
   },
   "quote": "The zone of impact or maximum beam range has a spherical blast radius of 3 meters, allowing it to hit multiple enemies at once. | Area of effect does not inflict self-stagger and has no Damage Falloff. | Multishot has no effect on the radial damage, like the other AoE Continuous Weapons. | if the beam hits multiple enemies, the AOE will be at the last enemy hit | Punch through affects the location of the weapon's area of affect. The weapon's area of affect is applied at the final point of contact where the beam ends rather than whenever the beam punches through an enemy or object.",
   "url": "https://wiki.warframe.com/w/Ignis_Wraith",
-  "handled": null,
+  "handled": "v1.88: 빔 끝점 범위(반경, 멀티샷 미적용, 감쇠 없음)를 빔과 합친 공격으로 — 맞은 적도 받는지는 양끝 계산(o.noBeamAoe)",
   "variants": null
  },
  {
@@ -1277,7 +1277,7 @@
   "numbers": {},
   "quote": "Innate Infinite Body Punch Through. | Innate punch through does not apply to surfaces, requiring punch through mods.",
   "url": "https://wiki.warframe.com/w/Ignis_Wraith",
-  "handled": null,
+  "handled": "v1.0 이전부터: convert.py INF_BODY_PT(몸통 무한 관통) — 2026-11-07 확인, 표시만 늦음",
   "variants": null
  },
  {
@@ -1533,7 +1533,7 @@
   },
   "quote": "The zone of impact or maximum beam range has a spherical blast radius of 4 meters, allowing it to hit multiple enemies at once. | Area of effect does not inflict self-stagger and has no Damage Falloff. | Multishot has no effect on the radial damage like other AoE Continuous Weapons. | Limited range of 10 meters.",
   "url": "https://wiki.warframe.com/w/Lizzie",
-  "handled": null,
+  "handled": "v1.88: 빔 끝점 범위(반경, 멀티샷 미적용, 감쇠 없음)를 빔과 합친 공격으로 — 맞은 적도 받는지는 양끝 계산(o.noBeamAoe)",
   "variants": null
  },
  {
@@ -2092,7 +2092,7 @@
   },
   "quote": "Innate Infinite Body Punch Through. | Innate punch through does not apply to surfaces, requiring punch through mods.",
   "url": "https://wiki.warframe.com/w/Phantasma",
-  "handled": null,
+  "handled": "v1.0 이전부터: convert.py INF_BODY_PT(몸통 무한 관통) — 2026-11-07 확인, 표시만 늦음",
   "variants": null
  },
  {
@@ -2157,7 +2157,7 @@
   },
   "quote": "Innate Infinite Body Punch Through. | Innate punch through does not apply to surfaces, requiring punch through mods.",
   "url": "https://wiki.warframe.com/w/Phantasma_Prime",
-  "handled": null,
+  "handled": "v1.0 이전부터: convert.py INF_BODY_PT(몸통 무한 관통) — 2026-11-07 확인, 표시만 늦음",
   "variants": null
  },
  {
