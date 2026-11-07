@@ -391,6 +391,13 @@ const { chromium } = require("playwright");
       Object.assign(st, keep);
       check("v1.90 자동 진화를 추천 세팅으로 다시 고름: 치명타 세팅이면 진화 IV = 앱솔루트 밸러 (모드 없이 고른 리버즈 랩처 아님)", ns && ns[4] === 1, JSON.stringify(ns));
     }
+    // v1.91 (사용자 2026-11-07 "적이 일자로 정렬되어 있을 확률이 얼마나 된다고"): punch-through extra hits came from a flat
+    // "2 enemies lined up behind the target" — now from the crowd model (density × body width × mean depth ≈ 0.17)
+    {
+      const w = weapon("burston_prime"), a = w.attacks.find((q) => q.en === "Normal Attack");
+      const rS = E.evaluate(w, a, [M("Primed Shred")], baseO()), rN = E.evaluate(w, a, [], baseO());
+      check("v1.91 관통 무리: 프라임드 슈레드(2.2m)로 한 발이 맞히는 적 1.1~1.25명 (줄 선 적 = 밀도 × 몸 폭 × 무리 깊이), 관통 없으면 1명", rS.K > 1.1 && rS.K < 1.25 && rN.K === 1, rS.K.toFixed(3) + " / " + rN.K);
+    }
     // v1.70 (대기열 4b): Perigale "Gale Force" — wiki: "Landing 4 headshots in a burst or a headshot kill grants the "Gale Force"
     // buff, granting Infinite Ammo. The buff lasts 4 seconds". With headshots (o.hs 0.5, aimed) the magazine lasts longer →
     // fewer reloads → higher average rate and less ammo used; without headshots nothing changes.

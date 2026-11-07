@@ -38,10 +38,13 @@
   const ARMOR_CAP = 2700;
   // crowd geometry: enemies lined up behind the one you shoot ~ Poisson(2); a humanoid body uses ~0.6 m of punch through
   // (wiki "Punch Through": 0.6 m passes a humanoid, 1.0 m a quadruped). Re-aiming to the next target takes ~0.2 s.
-  const LINE_MEAN = 2, BODY_PT = 0.6, T_ACQ = 0.2;
-  // LINE_MEAN (enemies lined up behind the target) is a crowd-geometry assumption, not a wiki number — o.lineMean overrides it for
-  // sensitivity checks (Kuva Zarr Nox test 2026-11-07: the real crowd was more spread out than the density model)
-  function lineHits(cap, mean) {     // expected extra enemies hit = E[min(n, cap)], n ~ Poisson(mean, default LINE_MEAN)
+  const LINE_MEAN = 2, BODY_PT = 0.6, BODY_W = 0.6, T_ACQ = 0.2;
+  // Enemies lined up behind the target (punch-through extra hits). Was a flat LINE_MEAN = 2 with no basis; v1.91 (user 2026-11-07:
+  // "how often are enemies lined up in a row in game?") derives it from the crowd model itself: a bullet past the target meets the
+  // enemies whose centre lies within half a body width of its line, so the mean is density × body width (BODY_W) × the mean depth
+  // of the crowd behind a target (8R / 3π for a uniform disc of radius R holding the crowd) — 12 enemies at 6 per 7.9 m radius
+  // → about 0.17. o.lineMean overrides it (corridor fights, sensitivity checks).
+  function lineHits(cap, mean) {     // expected extra enemies hit = E[min(n, cap)], n ~ Poisson(mean)
     const mu = mean != null ? mean : LINE_MEAN;
     let p = Math.exp(-mu), e = 0;
     for (let n = 1; n < 30; n++) { p *= mu / n; e += p * Math.min(n, cap); }
@@ -906,14 +909,15 @@
     let N, K, n3, n5;
     if (o.scenario === "crowd") {
       N = o.crowdN;
+      const lineMu = o.lineMean != null ? o.lineMean : (rho > 0 ? rho * BODY_W * 8 * Math.sqrt(N / (Math.PI * rho)) / (3 * Math.PI) : 0);
       const key = (parentAtk || atk).name;
       if (o.hits && o.hits[key]) K = o.hits[key];
       else if (radius > 0) K = Math.max(1, Math.min(N, rho * Math.PI * radius * radius));
-      else if (atk.punch) K = Math.min(N, 1 + lineHits(Infinity, o.lineMean));
+      else if (atk.punch) K = Math.min(N, 1 + lineHits(Infinity, lineMu));
       // punch-through: the enemies lined up behind the target (Poisson, mean 2) that the punch-through distance can pass
       // (0.6 m per body) — 3 m already reaches almost all of them, so more distance adds little. Explosive projectiles burst on first contact
       // and can't use it (wiki "Punch Through": the stat is locked for projectile AoE weapons)
-      else if (!isMeleeKind(kind) && a.pt > 0 && !atk.ptLock && !(parentAtk && parentAtk.ptLock)) K = Math.min(N, 1 + lineHits(a.pt / BODY_PT, o.lineMean));
+      else if (!isMeleeKind(kind) && a.pt > 0 && !atk.ptLock && !(parentAtk && parentAtk.ptLock)) K = Math.min(N, 1 + lineHits(a.pt / BODY_PT, lineMu));
       else if (kind === "melee") K = Math.min(N, 2);
       else K = 1;
       n3 = Math.min(N, 1 + rho * Math.PI * 9);
