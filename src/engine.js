@@ -924,7 +924,11 @@
       const bursts = (atk.fr || 1) * Math.max(0.05, 1 + a.fr + a.frneg + (ext.frAdd || 0)) / bn;
       galeG = Math.min(0.99, 1 - Math.exp(-bursts * pB * gf.dur));
     }
-    const magShots = (n) => n / (1 - Math.min(0.75, Math.max(0, a.ammoEff || 0))) / (1 - galeG);
+    // v1.96: a magazine of n rounds holds n / AmmoCost shots (wiki weapon data AmmoCost; Tenet Glaxion "Consumes 0.5 ammo per tick
+    // of damage" → 90 rounds = 180 ticks; Primary Plated Round: "Double the amount shown for most continuous weapons, which consume
+    // ammo differently"; Quanta cube 10, Kohm full spool 4 per shot). AmmoCost 0 (Regulators, Cedo glaive …) never empties.
+    const ammoCostM = atk.ammoCost != null ? atk.ammoCost : atk.parts && atk.parts[0] && atk.parts[0].ammoCost != null ? atk.parts[0].ammoCost : 1;
+    const magShots = (n) => (ammoCostM > 0 ? n / ammoCostM : 1e9) / (1 - Math.min(0.75, Math.max(0, a.ammoEff || 0))) / (1 - galeG);
     for (const m of mods) {
       if (!m || !atk.mag) continue;
       const magN = Math.max(1, magShots(atk.mag * (1 + a.mag)));

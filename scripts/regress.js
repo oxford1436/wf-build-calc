@@ -436,6 +436,22 @@ const { chromium } = require("playwright");
       check("v1.93 동반자 본드 모드(기본 켬): 터네이셔스 본드 치명타 배율 +1.2 (버스튼 빌드 A 6.6 → 7.8 = 아스날), 리인포스드 본드 연사 +60%, 근접은 그대로", ok,
         [G.length, r0.cd.toFixed(2), r1.cd.toFixed(2), (r1.rate / r0.rate).toFixed(3), rm0.cd + "=" + rm1.cd].join(" / "));
     }
+    // v1.96 (테넷 글랙시온 질문 2026-11-07): shots per magazine = magazine / AmmoCost — beams use 0.5 ammo per tick (wiki Tenet
+    // Glaxion "Consumes 0.5 ammo per tick of damage"), so a 90-round magazine lasts 180 ticks; Primary Plated Round's 10 s covers
+    // 10 / (180/12 + 2 s reload) of the cycle (wiki Plated Round: "Double the amount shown for most continuous weapons")
+    {
+      const tg = weapon("tenet_glaxion"), a0 = tg.attacks[0], o = baseO();
+      const r0 = E.evaluate(tg, a0, [], o), rP = E.evaluate(tg, a0, [], Object.assign({}, o, { arcane: "primary_plated_round" }));
+      const wantRate = 180 / (180 / 12 + (1 - 0.2) * 0.6 / 2 + 2), wantPl = 15 * Math.sqrt(5 * 90) / 100 * 10 / (180 / 12 + 2);
+      check("v1.96 빔 탄약 0.5/틱: 테넷 글랙시온 탄창 90 = 180틱 (발 간격·재장전 주기), 플레이티드 라운드 지속 비율 10/17초", Math.abs(r0.rate - wantRate) < 0.05 && Math.abs((rP.dmgb - r0.dmgb) - wantPl) < 0.02,
+        "rate " + r0.rate.toFixed(2) + " (기대 " + wantRate.toFixed(2) + "), plated " + (rP.dmgb - r0.dmgb).toFixed(3) + " (기대 " + wantPl.toFixed(3) + ")");
+    }
+    // v1.96 (사용자 설문 2026-11-02 "리벤 '맞출 예정' 수치는 최대값", 테넷 글랙시온 질문 2026-11-07): plan-mode riven values are the
+    // top of the roll range — wiki Riven Mods, Rifle Attribute Ranges, 3 positives + 1 negative: Critical Damage 121.5% — 148.5%
+    {
+      const v = A.rivPlanVal ? A.rivPlanVal("rifle", "cd", "3+1") : null;
+      check("v1.96 리벤 '맞출 예정' = 최대치: 소총 치명타 피해 3긍1부 148.5% (위키 범위 상한)", v != null && Math.abs(v - 1.485) < 0.002, v);
+    }
     // v1.95 (세도 프라임 질문 2026-11-07): Cedo's own "+60% bonus damage per unique status effect on target … additive to all base
     // damage bonuses" (wiki) was not in the engine (gaps: handled null), the alt-fire glaive used the buckshot's 7 pellets (wiki
     // attack data Multishot 1), and its explosion's "two separate guaranteed procs" never counted as status types on the target.
@@ -641,6 +657,12 @@ const { chromium } = require("playwright");
     await p3.close();
   }
 
+  // v1.96: every plan-mode riven multiplier in app.js goes through RIV_PLAN_W (only the displayed 0.9–1.1 range may skip it)
+  {
+    const src = require("fs").readFileSync(path.resolve(__dirname, "..", "src", "app.js"), "utf8");
+    const bare = src.split("\n").filter((l) => /1\.2 \* (Math\.abs\()?RIV_FORM/.test(l) && !/rangeTxt/.test(l));
+    results.push({ name: "v1.96 앱의 '맞출 예정' 리벤 배율이 모두 RIV_PLAN_W(최대치)를 거침", ok: bare.length === 0, detail: bare.map((l) => l.trim().slice(0, 60)).join(" | ") });
+  }
   let fail = 0;
   for (const r of results) { console.log((r.ok ? "PASS " : "FAIL ") + r.name + (r.detail ? "  (" + r.detail + ")" : "")); if (!r.ok) fail++; }
   if (errs.length) { console.log("PAGE ERRORS", errs); fail++; }

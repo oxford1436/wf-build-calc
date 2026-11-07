@@ -1,0 +1,97 @@
+{
+ "weapon": "tenet_glaxion",
+ "attack": 0,
+ "valence": null,
+ "riven": null,
+ "notes": "테넷 글랙시온. 2026-11-07 조사(사용자 질문: 아직 안 돌린 리벤이 있고 테넷 글랙시온을 장만할 예정 — 최강 세팅, 리벤은 '맞출 예정' 최대치, 베일런스 60% 최적 속성). 연쇄 빔 3번(8m, 50%씩), 틱마다 탄약 0.5(위키). 계산기 v1.96에서 발당 탄약 소모를 탄창 주기에 반영(플레이티드 라운드 과대 수정).",
+ "builds": [
+  {
+   "name": "The Nerd Stash 가이드 (2024-05, U35.6)",
+   "community": "web",
+   "kind": "read",
+   "url": "https://thenerdstash.com/the-ultimate-warframe-tenet-glaxion-build-guide",
+   "mods": [
+    "Galvanized Chamber",
+    "Galvanized Scope",
+    "Galvanized Aptitude",
+    "Vital Sense",
+    "Critical Delay",
+    "Vile Acceleration",
+    "Malignant Force",
+    "High Voltage",
+    "Vigilante Supplies"
+   ],
+   "arcane": "primary_frostbite",
+   "claims": [
+    "베일런스 화염(그리니어 방어구) 또는 방사능(범용·군중 제어)",
+    "갈바나이즈드 스코프·데드헤드 = 헤드샷 전제",
+    "바이러스는 출혈·베기 세팅이 아니라 비추천"
+   ],
+   "verdict": "v1.96: 헤드샷 0 조건에서 리벤 없는 1위의 15.7%(화염)·33.4%(방사능) — 갈바나이즈드 스코프·프로스트바이트(바이러스·부식에서 냉기 상태이상 없음)가 헤드샷·냉기 전제라서"
+  },
+  {
+   "name": "계산기 1위 + 최강 리벤 (v1.96, 2026-11-07 답변)",
+   "kind": "session",
+   "date": "2026-11-07",
+   "riven": "3+1 최대치: 치명타 피해 +148.5%, 치명타 확률 +185.6%, 부식(접합: 전기+독) +111.4%, 부정 반동",
+   "mods": [
+    "Riven",
+    "Galvanized Chamber",
+    "Primed Cryo Rounds",
+    "Malignant Force",
+    "Galvanized Aptitude",
+    "Magnetic Capacity",
+    "Vile Acceleration",
+    "Primed Shred"
+   ],
+   "arcane": "primary_plated_round",
+   "valence": "heat 60% (모든 속성 3% 이내)",
+   "verdict": "리벤 없는 1위(멀리그난트 포스·갈바나이즈드 체임버·프라임드 크라이오·마그네틱 캐퍼시티·바일 액셀러레이션·크리티컬 딜레이·바이탈 센스·프라임드 슈레드 + 플레이티드 라운드)의 171%. 리벤 차선: 치명타 피해+멀티샷+부식 98.7%, 접합 없이 치명타 피해+치명타 확률+독 92.6%. 아케인: 머시리스 91.6%(중첩 항상 최대면 103.4%), 디빌리테이트 89.1%. 베일런스 25%면 91%. 빼면: 체임버 −46.9, 크라이오 −43.9(라임 라운즈 96.5%), 멀리그난트 −32(인펙티드 클립 98.6%), 앱티튜드 −21.2, 마그네틱 캐퍼시티 −27.5(서레이션 82.8%), 바일 −18.4(크리티컬 딜레이 96.7%, 포톤 오버차지 90.6%), 슈레드 −16.3. 탄약 초당 13.8, 1분에 탄약 상자 10.4개."
+  }
+ ],
+ "meta": {
+  "summary": "최근 인기 세팅(Overframe 1~3위, U44 갱신)은 갈바나이즈드 체임버·갈바나이즈드 앱티튜드·크리티컬 딜레이·포톤 오버차지·프라임드 슈레드가 중심, 원소는 바이러스 + 전기 또는 부식 + 자성 + 냉기, 베일런스는 자성(조합을 바꾸기 쉬움)·화염. 아케인은 프라이머리 디빌리테이트·데드헤드·머시리스·프로스트바이트. 리벤은 치명타 확률·치명타 피해·연사·멀티샷·부식(접합).",
+  "elements": [
+   "바이러스 + 전기 (ninjase, U44)",
+   "부식 + 자성 + 냉기 (Thaerexys, U44)",
+   "부식 + 폭발/방사능 (Nerd Stash, 2024)",
+   "바이러스 + 베기 (Ackbar, U35.6)"
+  ],
+  "valence": [
+   "자성: 바이러스+화염·바이러스+전기·부식+폭발·부식+냉기로 바꾸기 쉬움, 오버가드 (ninjase)",
+   "화염·방사능 (Nerd Stash)",
+   "단일 원소 베일런스는 신경 쓸 필요 없음 (Ackbar)"
+  ],
+  "core": [
+   "갈바나이즈드 체임버",
+   "갈바나이즈드 앱티튜드",
+   "크리티컬 딜레이",
+   "포톤 오버차지",
+   "프라임드 슈레드"
+  ],
+  "flex": [
+   "바이탈 센스",
+   "헌터 뮤니션",
+   "바일 액셀러레이션"
+  ],
+  "arcane": [
+   "프라이머리 디빌리테이트",
+   "프라이머리 데드헤드",
+   "프라이머리 머시리스",
+   "프라이머리 프로스트바이트"
+  ],
+  "why": [
+   "프라임드 슈레드: 관통으로 맞은 적마다 연쇄 3개가 새로 생김(위키) + 연사",
+   "포톤 오버차지: 치명타 피해 + 냉기 상태이상 처치 시 에너지 오브(유틸)",
+   "디빌리테이트: 합성 원소 10중첩 적에게 구성 원소 상태이상 추가 → 냉기 상태이상으로 포톤 오버차지 에너지"
+  ]
+ },
+ "sources_read": [
+  "https://overframe.gg/items/arsenal/6552/tenet-glaxion/ (인기 세팅 목록)",
+  "https://overframe.gg/build/668226/ (ninjase, U44.0 갱신, 모드 일부만 본문에 있음)",
+  "https://overframe.gg/build/705136/ (Thaerexys, U44.0 갱신, 모드 일부만 본문에 있음)",
+  "https://overframe.gg/build/668065/ (Arthedu, U35.6, 모드 일부만)",
+  "https://ackbarwarframe.blogspot.com/2024/05/review-tenet-glaxion-u3561.html",
+  "https://thenerdstash.com/the-ultimate-warframe-tenet-glaxion-build-guide (2024-05-21)"
+ ]
+}

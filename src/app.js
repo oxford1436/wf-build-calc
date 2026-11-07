@@ -20,6 +20,9 @@
   const CLS_KO = { rifle: "소총·활·저격·런처", shotgun: "샷건", pistol: "보조무기", melee: "근접" };
   const TYPE_LABEL = { Rifle: "소총", Bow: "활", Sniper: "저격총", Launcher: "런처", Shotgun: "샷건", Pistol: "권총", "Dual Pistols": "쌍권총", Throwing: "투척", Melee: "근접" };
   const KIND_KO = { gun: "사격", radial: "폭발", melee: "휘두르기", heavy: "강공", glaive: "투척" };
+  // "맞출 예정" riven values = the top of the random roll range (0.9–1.1 of the listed value; wiki Riven Mods attribute tables),
+  // not the middle — user survey 2026-11-02 "리벤 '맞출 예정' 수치는 최대값" (CLAUDE.md 결정 사항). Ranges shown to the user stay 0.9–1.1.
+  const RIV_PLAN_W = 1.1;
   const RIV_FORM = { "3+1": { pos: 0.9375, neg: -0.75, ko: "3긍정 1부정" }, "2+1": { pos: 1.2375, neg: -0.495, ko: "2긍정 1부정" }, "3+0": { pos: 0.75, neg: 0, ko: "3긍정" }, "2+0": { pos: 0.99, neg: 0, ko: "2긍정" } };
   // Every riven stat (wikiwiki "Riven Mod" stat tables, 2026-10): base value before disposition (1.2 for every weapon since
   // Hotfix 44.1.3) and the stat-count multiplier. grp: dmg = changes kill speed, heavy = heavy attack / combo model,
@@ -1206,8 +1209,8 @@ self.onmessage = function (ev) {
   }
   function updateConceptCard() { const el = document.getElementById("conceptcard"); if (el && st.results) el.innerHTML = conceptCardHtml(); }
 
-  // "맞출 예정": after the riven-free search, give the build the best riven worth rolling (3 positives at the middle of
-  // their range + a harmless negative) and search the other slots again with it locked — so the recommendation and the
+  // "맞출 예정": after the riven-free search, give the build the best riven worth rolling (3 positives at the top of
+  // their range (RIV_PLAN_W) + a harmless negative) and search the other slots again with it locked — so the recommendation and the
   // comparison table already include the riven
   function planRivenPhase(wk, w, o, cands, hadNobuff) {
     const R = st.results, top0 = R.res[0];
@@ -1217,7 +1220,7 @@ self.onmessage = function (ev) {
     const picks = [];
     for (const x of plan.out) { if (x.form !== "3+1") continue; const key = x.stats.slice().sort().join(); if (picks.some((p) => p.key === key)) continue; picks.push({ key, stats: x.stats }); if (picks.length >= 4) break; }
     if (!picks.length) { $("#runbtn").disabled = false; $("#progress").hidden = true; renderResults(); return; }
-    const mult = 1.2 * RIV_FORM["3+1"].pos, negBase = 1.2 * Math.abs(RIV_FORM["3+1"].neg);
+    const mult = 1.2 * RIV_PLAN_W * RIV_FORM["3+1"].pos, negBase = 1.2 * RIV_PLAN_W * Math.abs(RIV_FORM["3+1"].neg);
     const cls = modClass(w), neg = cls === "melee" ? "x_finisher" : "x_recoil";
     // the negative: whichever helps this build most (e.g. lower crit chance with a non-crit damage bonus), else a harmless one
     const negCands = RIV_DEF.filter((d) => rivFits(d, cls) && d.grp !== "splice" && d.k !== "ic" && d.eff !== null && d.k !== "x_ammo" && rivBaseOf(cls, d.k) > 0).map((d) => d.k);
@@ -1899,13 +1902,13 @@ self.onmessage = function (ev) {
       .filter((d) => !["ammoeff", "x_ammo"].includes(d.k))
       .map((d) => d.k);
     // screen: each stat alone as an extra mod; the combo search keeps the 11 best plain stats and the 3 best spliced ones
-    const m31 = 1.2 * RIV_FORM["3+1"].pos;
+    const m31 = 1.2 * RIV_PLAN_W * RIV_FORM["3+1"].pos;
     const gain = Object.fromEntries(cand.map((k) => [k, evalBuild(top.ids.concat(["__riven"]), top.val, top.arcane, null, addRivEff({}, k, rivBaseOf(cls, k) * m31)).score / ref]));
     const pick = (l, n) => l.sort((a, b) => gain[b] - gain[a]).slice(0, n);
     const stats = pick(cand.filter((k) => !SPLICED.has(k)), 11).concat(pick(cand.filter((k) => SPLICED.has(k)), 3));
     const out = [];
     for (const form of ["3+1", "2+1"]) {
-      const n = form === "3+1" ? 3 : 2, mult = 1.2 * RIV_FORM[form].pos;
+      const n = form === "3+1" ? 3 : 2, mult = 1.2 * RIV_PLAN_W * RIV_FORM[form].pos;
       const combos = [];
       const rec = (start, acc) => { if (acc.length === n) { if (acc.filter((k) => SPLICED.has(k)).length <= 1) combos.push(acc.slice()); return; } for (let i = start; i < stats.length; i++) { acc.push(stats[i]); rec(i + 1, acc); acc.pop(); } };
       rec(0, []);
@@ -1953,14 +1956,14 @@ self.onmessage = function (ev) {
     // negatives: modeled via evaluation, others by rule
     const base = top.ids.slice(), bestSlot = out[0] ? out[0].slot : top.ids[top.ids.length - 1];
     const restB = base.filter((id) => id !== bestSlot);
-    const posPairs = out[0].stats.map((k) => [k, rivBaseOf(cls, k) * 1.2 * RIV_FORM["3+1"].pos]);
+    const posPairs = out[0].stats.map((k) => [k, rivBaseOf(cls, k) * 1.2 * RIV_PLAN_W * RIV_FORM["3+1"].pos]);
     const posRiv = effFromStats(posPairs);
     const withPos = evalBuild(restB.concat(["__riven"]), top.val, top.arcane, null, posRiv).score;
     const negRows = [];
     // every stat a riven can roll as a negative (splice results and Initial Combo can't be negative)
     for (const d of RIV_DEF) {
       if (!rivFits(d, cls) || d.grp === "splice" || d.k === "ic" || out[0].stats.includes(d.k) || !rivBaseOf(cls, d.k)) continue;
-      const nv = -(d.negBase || rivBaseOf(cls, d.k)) * 1.2 * Math.abs(RIV_FORM["3+1"].neg);
+      const nv = -(d.negBase || rivBaseOf(cls, d.k)) * 1.2 * RIV_PLAN_W * Math.abs(RIV_FORM["3+1"].neg);
       let s = 1, note = d.note || "";
       if (d.eff !== null && d.k !== "x_ammo") {
         s = evalBuild(restB.concat(["__riven"]), top.val, top.arcane, null, effFromStats(posPairs.concat([[d.k, nv]]))).score / withPos;
@@ -1978,7 +1981,7 @@ self.onmessage = function (ev) {
     const grade = (s) => s >= 0.97 ? '<span class="g ok">무해</span>' : s >= 0.85 ? '<span class="g mid">경미</span>' : '<span class="g bad">치명</span>';
     const splice = SPLICE.filter((sp) => sp.cls.includes(cls) && out.some((x) => x.s > 1 && x.stats.includes(sp.out) && (x.form === "3+1" ? best3 : best2).includes(x)));
     return `<section class="card"><h3>리벤 맞추기 가이드</h3>
-      <p class="hint">추천 세팅의 한 칸을 리벤으로 바꿨을 때 처치 속도 배율입니다. 수치 범위는 8랭크 기준(현재 성향은 전 무기 1.2 공통), 중간값으로 계산했습니다.</p>
+      <p class="hint">추천 세팅의 한 칸을 리벤으로 바꿨을 때 처치 속도 배율입니다. 수치 범위는 8랭크 기준(현재 성향은 전 무기 1.2 공통)이고, 배율은 각 옵션의 최대치(범위 상한)로 계산했습니다.</p>
       <table class="tbl"><thead><tr><th>구성</th><th>긍정 옵션 (수치 범위)</th><th>대신 뺄 모드</th><th>배율</th></tr></thead><tbody>${best3.map(row).join("")}${best2.map(row).join("")}</tbody></table>
       <h3>부정 옵션 고르기 (1순위 조합 기준)</h3>
       <table class="tbl"><thead><tr><th>부정 옵션</th><th>영향</th><th>판정</th><th>메모</th></tr></thead><tbody>
@@ -1993,7 +1996,7 @@ self.onmessage = function (ev) {
   // plan mode: riven-free best vs "swap one mod of it for the riven" vs "build around the riven from the start"
   function rivenPremiseSection(R, top, r0) {
     const o = R.o, ref = r0.score, plan = R.rivPlan, B = R.rivBest;
-    const mult = 1.2 * RIV_FORM["3+1"].pos;
+    const mult = 1.2 * RIV_PLAN_W * RIV_FORM["3+1"].pos;
     const g = plan.out.find((x) => x.form === "3+1");
     if (!g) return "";
     const gEff = {}; for (const k of g.stats) gEff[k] = plan.table[k] * mult;
@@ -2025,7 +2028,7 @@ self.onmessage = function (ev) {
       </tbody></table>
       <p>${k3 > 1.005 && !changed.length ? `처음부터 리벤을 전제로 짜도 모드는 한 칸만 바꾼 세팅과 같고, 리벤 옵션 차이(${esc(B.riv.info.filter((x) => x.v > 0).map((x) => x.k).sort().join() === g.stats.slice().sort().join() ? B.riv.info.filter((x) => x.v < 0).map((x) => "부정 " + RIV_KO[x.k]).join(", ") : "옵션 조합")}) 때문에 <b>×${k3.toFixed(2)}</b> 빠릅니다. 리벤이 생기면 ${esc(modName(g.slot))} 자리에 넣으면 됩니다.` : k3 > 1.005 ? `처음부터 리벤을 전제로 짜면 한 칸만 바꾸는 것보다 <b>×${k3.toFixed(2)}</b> 더 빠릅니다. 리벤이 생기면 ${dropped.filter((id) => id !== g.slot).length ? `<b>${dropped.filter((id) => id !== g.slot).map(modName).map(esc).join(", ")}</b>도 빼고 ` : ""}<b>${changed.map(modName).map(esc).join(", ") || "-"}</b>${changed.length ? "을(를) 넣는" : ""} 쪽이 좋습니다.` : `처음부터 리벤을 전제로 짜도 한 칸만 바꾼 세팅과 거의 같습니다 (×${k3.toFixed(2)}). 리벤이 생기면 ${esc(modName(g.slot))} 자리에만 넣으면 됩니다.`}</p>
       ${altTable}
-      <p class="hint">리벤 수치는 3긍정 1부정 리벤의 각 옵션 범위 중간값으로 가정했습니다 (부정은 이 세팅을 가장 빠르게 만드는 옵션 — 없으면 피해 계산에 영향 없는 옵션). ③은 한 칸 교체 기준 상위 리벤 옵션 조합 네 가지로 각각 다시 짜 본 뒤 가장 빠른 쪽입니다. 베일런스·아케인은 ①과 같게 두었습니다. 실제로 뽑은 리벤이 생기면 리벤 모드를 "보유 리벤 고정"으로 바꿔 그 수치로 계산하세요.</p></section>`;
+      <p class="hint">리벤 수치는 3긍정 1부정 리벤의 각 옵션 최대치(범위 상한)로 가정했습니다 (부정은 이 세팅을 가장 빠르게 만드는 옵션 — 없으면 피해 계산에 영향 없는 옵션). ③은 한 칸 교체 기준 상위 리벤 옵션 조합 네 가지로 각각 다시 짜 본 뒤 가장 빠른 쪽입니다. 베일런스·아케인은 ①과 같게 두었습니다. 실제로 뽑은 리벤이 생기면 리벤 모드를 "보유 리벤 고정"으로 바꿔 그 수치로 계산하세요.</p></section>`;
   }
   function ownedRivenSection(owned, R, top) {
     const inc = owned.info.filter((x) => x.inc), exc = owned.info.filter((x) => !x.inc);
@@ -2050,7 +2053,7 @@ self.onmessage = function (ev) {
       }).sort((a, b) => b.loss - a.loss);
       const ratio = best ? sOwn / best.s : null;
       const verdict = ratio == null ? "" : ratio >= 0.95 ? "종결급 — 수치만 다듬으면 됩니다" : ratio >= 0.85 ? "좋음 — 그대로 써도 충분합니다" : ratio >= 0.7 ? "쓸 만함 — 아래 잠금 옵션을 고정하고 재순환을 노려 볼 만합니다" : "약함 — 재순환을 권합니다";
-      grade = `<div class="kv">${kv("리벤 한 칸 효과", "×" + sOwn.toFixed(2))}${best ? kv("최고 리벤(3긍1부 중간값)", "×" + best.s.toFixed(2)) : ""}${ratio != null ? kv("최고 대비", pct(ratio, 0)) : ""}${full ? kv("리벤 넣고 다시 짠 세팅", "×" + full.toFixed(2)) : ""}</div>
+      grade = `<div class="kv">${kv("리벤 한 칸 효과", "×" + sOwn.toFixed(2))}${best ? kv("최고 리벤(3긍1부 최대치)", "×" + best.s.toFixed(2)) : ""}${ratio != null ? kv("최고 대비", pct(ratio, 0)) : ""}${full ? kv("리벤 넣고 다시 짠 세팅", "×" + full.toFixed(2)) : ""}</div>
         ${verdict ? `<p><b>${verdict}</b>${best ? ` · 최고 조합: ${best.stats.map((k) => RIV_KO[k]).join(" + ")}` : ""}</p>` : ""}
         ${per.length ? `<table class="tbl"><thead><tr><th>옵션</th><th>빼면</th><th>판단</th></tr></thead><tbody>${per.map((p, i) => `<tr><td>${esc(txt(p.x))}</td><td class="num">${pctDelta(1 / p.loss)}</td><td>${i === 0 && per.length > 1 ? '<span class="g ok">잠금 추천</span>' : p.loss < 1.03 ? '<span class="g bad">재순환 대상</span>' : '<span class="g mid">유지</span>'}</td></tr>`).join("")}</tbody></table>
         <p class="hint">"빼면"은 그 옵션만 없을 때 리벤 칸 효과의 변화입니다. 재순환할 때는 가장 큰 옵션을 특성 잠금(Update 44.0, 쿠바 두 배)하고 돌리세요. 접합(Update 44.1)으로 쓸모없는 옵션 두 개를 복합 원소 하나로 바꾸는 방법도 있습니다.</p>` : ""}`;
@@ -2255,7 +2258,7 @@ self.onmessage = function (ev) {
   F0 = captureFields();
   // read-only handle for checking results from the browser console / test scripts
   // test/automation handle (scripts/regress.js, scripts/community_check.js): arcAuto = the arcanes the 'auto' option compares
-  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts, boundCheck, renderResults, betterEvo, autoEvo,
+  window.WF_APP = { effFromStats, RIV_PLAN_W, rivPlanVal: (cls, k, form) => rivBaseOf(cls, k) * 1.2 * RIV_PLAN_W * RIV_FORM[form].pos, st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts, boundCheck, renderResults, betterEvo, autoEvo,
     arcAuto: (w) => arcanesFor(w).filter(([, x]) => !x.manual && !x.none && !x.aim).map(([k]) => k).concat([null]) };
   restoreFromHash();
 })();
