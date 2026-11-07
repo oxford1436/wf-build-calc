@@ -1,0 +1,120 @@
+{
+  "weapon": "burston_prime",
+  "attack": 0,
+  "evo": {
+    "2": 1,
+    "3": 2,
+    "4": 1
+  },
+  "valence": null,
+  "riven": null,
+  "notes": "버스튼 프라임 + 버스튼 인카논 제네시스. 2026-11-07 조사(사용자 질문: 보유 리벤 치명타 피해 +146.6%·치명타 확률 +170.1%·독 +95.7%·부정 탄창 −43.2%, 구성 A). attack 0 = 인카논 형태(커뮤니티 글 기준, 진화는 sportskeeda 표기 II 포트리스 샐보·III 키네틱 배틀·IV 앱솔루트 밸러), attack 1 = 기본 형태(점사 3발) — 사용자 아스날이 기본 형태이고 인카논 형태는 약점 명중으로 충전해야 함(위키: 약점 20번 = 600발, 멀티샷 탄마다 충전). 커뮤니티 글은 거의 모두 인카논 형태 기준. Overframe 빌드 글은 모드 칸이 글자로 안 보여(복사 문자열만) kind read로 못 씀.",
+  "meta": {
+    "read_builds": 2,
+    "elements": "바이러스(프라임드 크라이오 라운즈 + 말리그넌트 포스) + 베기(헌터 뮤니션) 2/2 sportskeeda Build 1, 부식/화염 표기 Build 2(모드 목록은 베기 + 전기라 글과 안 맞음). Vortex·gamer.org: 프라임드 크라이오 라운즈 + 말리그넌트 포스로 바이러스, 길디드 트루스(연사). 인카논 형태 고유 화염.",
+    "valence": "해당 없음",
+    "evo": "IV 앱솔루트 밸러 5/5 (sportskeeda·Ackbar·Vortex·gamer.org·Overframe 476486·647686). II 포트리스 샐보 4 (sportskeeda·Ackbar·Vortex·gamer.org) / 포스풀 피날리티 2 (Overframe 476486·548477). III 키네틱 배틀 3 (sportskeeda·Vortex·gamer.org) / 레디 리탈리에이션 3 (Ackbar·548477·647686).",
+    "core": [
+      "갈바나이즈드 체임버",
+      "크리티컬 딜레이",
+      "바이탈 센스",
+      "프라임드 크라이오 라운즈",
+      "말리그넌트 포스",
+      "해머 샷"
+    ],
+    "flex": [
+      "헌터 뮤니션 / 프라임드 슈레드",
+      "프라임드 베인(팩션) / 서레이션",
+      "바일 액셀러레이션 / 길디드 트루스",
+      "갈바나이즈드 스코프(조준 헤드샷)"
+    ],
+    "arcane": [
+      "프라이머리 데드헤드(Ackbar 선택, gamer.org), 프라이머리 머시리스(대안)"
+    ],
+    "why": "Ackbar(2023-06, U33.0.14): 앱솔루트 밸러가 확실한 선택(기본 18 → 40%, 인카논 28 → 50%), 리버즈 랩처는 기본 형태만·인카논 전환 시 초기화라 약함, 페이탈 어플릭션은 갈바나이즈드 앱티튜드의 약한 버전. 포트리스 샐보 = 관통 +2(방어력 450 초과). 인카논 형태가 피해·상태이상에서 더 강한 형태, 갈바나이즈드 체임버면 점사 두 번 헤드샷으로 최대 충전, 최대 충전은 약 30초 연사. 진화 II +42가 인카논 형태 직격·범위에 각각 붙음(13 → 55, 합 110). Overframe 476486: 앱솔루트 밸러로 치명타 100% 이상·헌터 뮤니션 상한, 리로드 진화는 항상 켜지는 버그(작성 당시).",
+    "limit": "직접 읽은 전체 모드 목록은 sportskeeda 2개뿐(날짜 표기 없음). Overframe 빌드는 모드 칸 글자 없음. 아카라이브·레딧 글은 이번에 못 읽음."
+  },
+  "sources_read": [
+    {
+      "url": "https://sportskeeda.com/mmo/warframe-burston-incarnon-build-guide-best-evolution-talents-mod-setup",
+      "date": "날짜 표기 없음",
+      "what": "세팅 2개 전체 모드 + 진화(II 포트리스 샐보, III 키네틱 배틀, IV 앱솔루트 밸러)"
+    },
+    {
+      "url": "https://ackbarwarframe.blogspot.com/2023/06/review-burston-incarnon-u33014.html",
+      "date": "2023-06-18 (U33.0.14)",
+      "what": "진화별 평가와 이유, 인카논 충전·수치, 쓰는 모드 이름(전체 목록은 이미지)"
+    },
+    {
+      "url": "https://vortexgaming.io/en/postdetail/544019",
+      "date": "2025-09-15",
+      "what": "진화(포트리스 샐보·키네틱 배틀·앱솔루트 밸러), 일부 모드(프라임드 크라이오 라운즈·말리그넌트 포스·길디드 트루스)"
+    },
+    {
+      "url": "https://www.gamer.org/warframe-burston-prime-incarnon-guide-farming-builds-and-evolutions/",
+      "date": "2025-09-16",
+      "what": "진화(포트리스 샐보·키네틱 배틀·앱솔루트 밸러), 일부 모드, 아케인 데드헤드"
+    },
+    {
+      "url": "https://overframe.gg/build/476486/burston-prime/burston-incarnon-viral-slash-faction-variants-and-evolution-guide/",
+      "date": "모름 (5개월 전 수정 표기)",
+      "what": "본문만: 진화(포스풀 피날리티, 리로드, 앱솔루트 밸러), 프라임드 슈레드·바일 액셀러레이션"
+    },
+    {
+      "url": "https://overframe.gg/build/647686/burston-prime/red-crit-burston-incarnon-rivenless-alt-500k-dps-250m-headshot-dps/",
+      "date": "2025-02-04 수정 (U38.0)",
+      "what": "본문만: 진화(II 관통, III 재장전, IV 치명타), 교체 후보 모드 이름"
+    },
+    {
+      "url": "https://overframe.gg/build/548477/burston-prime/incarnon-burston-prime-config-b-red-crits-for-days/",
+      "date": "2023-11-06 (U34.0)",
+      "what": "본문만: 진화(포스풀 피날리티·레디 리탈리에이션·앱솔루트 밸러), 부식 + 갈바나이즈드 스코프"
+    }
+  ],
+  "builds": [
+    {
+      "name": "sportskeeda Build 1 바이러스 + 베기 (인카논 형태)",
+      "community": "sportskeeda",
+      "kind": "read",
+      "url": "https://sportskeeda.com/mmo/warframe-burston-incarnon-build-guide-best-evolution-talents-mod-setup",
+      "mods": [
+        "Galvanized Chamber",
+        "Hunter Munitions",
+        "Critical Delay",
+        "Vital Sense",
+        "Primed Bane of Corrupted",
+        "Hammer Shot",
+        "Malignant Force",
+        "Primed Cryo Rounds"
+      ],
+      "arcane": null,
+      "claims": [
+        "바이러스 + 베기는 검증된 조합",
+        "프라임드 베인은 팩션 모드 또는 서레이션으로 바꿔도 됨"
+      ],
+      "verdict": "계산 전"
+    },
+    {
+      "name": "sportskeeda Build 2 (갈바나이즈드 스코프, 조준 헤드샷)",
+      "community": "sportskeeda",
+      "kind": "read",
+      "url": "https://sportskeeda.com/mmo/warframe-burston-incarnon-build-guide-best-evolution-talents-mod-setup",
+      "mods": [
+        "Galvanized Chamber",
+        "Galvanized Scope",
+        "Critical Delay",
+        "Vital Sense",
+        "Bladed Rounds",
+        "High Voltage",
+        "Malignant Force",
+        "Hammer Shot"
+      ],
+      "arcane": null,
+      "claims": [
+        "선피해 + 빨간 치명타, 인카논 형태 화염 도트",
+        "조준을 유지해야 함"
+      ],
+      "verdict": "계산 전 (갈바나이즈드 스코프는 조준 헤드샷 처치 조건 — 기본 계산은 헤드샷·조준 제외)"
+    }
+  ]
+}
