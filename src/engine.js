@@ -1070,7 +1070,7 @@
     // Vigilante set: a crit has a chance to go one tier higher = same average as that much more crit chance on crits
     if (a.vigil && weapon.slot === "primary") ccBase += a.vigil * Math.min(1, ccBase);
     const preludeAdd = sp.prelude && ccBase < sp.prelude.below ? sp.prelude.v : 0;   // Prelude of Might: low crit chance → higher base crit multiplier
-    const cdBase = (((atk.cd || 1.5) + a.cdBase + preludeAdd) * (1 + a.cd + (ext.cdAdd || 0) + (tenno ? tenno.cd || 0 : 0)) + a.cdFlat) * (ext.cdMult && !isMelee ? ext.cdMult : 1) * cdFinal;
+    const cdBase = (((atk.cd || 1.5) + a.cdBase + preludeAdd) * (1 + a.cd + (ext.cdAdd || 0) + (tenno ? tenno.cd || 0 : 0)) + a.cdFlat) * (ext.cdMult && !isMelee ? ext.cdMult : 1) * cdFinal + (!isMelee && ext.cdFinalAdd ? ext.cdFinalAdd : 0);   // Tenacious Bond: flat, after every multiplier
     // Wiseman's Regard: base status chance + a share of the current crit chance; "added after mods" evolution bonuses (scFlat)
     const wiseAdd = sp.wise ? Math.min(sp.wise.cap, sp.wise.v * ccBase) : 0;
     const sc = Math.max(0, ((atk.sc || 0) + wiseAdd) * scMul + a.scFlat);

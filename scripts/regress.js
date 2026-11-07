@@ -408,6 +408,23 @@ const { chromium } = require("playwright");
       const rv = E.evaluate(sg, sg.attacks[0], [M("Vicious Spread")], baseO());
       check("v1.92 헤비 칼리버 탄 퍼짐 +2.97°: 버스튼 프라임 맞는 비율 ×0.76 (평균 퍼짐 4° → 5.49°), 서레이션은 1, 비셔스 스프레드도 1 미만", r.accF > 0.70 && r.accF < 0.82 && r0.accF === 1 && rv.accF < 1, [r.accF, r0.accF, sg.id + " " + rv.accF].join(" / "));
     }
+    // v1.93 (머솔론 질문 2026-11-07): the "+60% fire rate / crit damage" seen on every Arsenal screenshot (open issue since
+    // Kuva Ogris) is the companion's Bond mods — Tenacious Bond "+1.2x" flat final crit multiplier (formula 1 + tier × (crit multi
+    // − 1 + final)) and Reinforced Bond "+60% Fire Rate". Burston Prime build A + riven: crit 6.6 → 7.8 (Arsenal 7.8); on by default.
+    {
+      const mb = (id) => document.querySelector(`#miscbuffs input.mb[value="${id}"]`);
+      const G = (window.WF_BUFFS.misc || []).filter((x) => x.gear);
+      const w = A.applyEvos(weapon("burston_prime"), { 2: 1, 3: 2, 4: 1 }), a = w.attacks.find((q) => q.en === "Normal Attack");
+      const ids = ["Amalgam Serration", "Critical Delay", "Primed Cryo Rounds", "Vile Acceleration", "Galvanized Chamber", "Gilded Truth", "Vital Sense"].map(M)
+        .concat([{ id: "__riven", eff: { cd: 1.466, cc: 1.701, tox: 0.957, mag: -0.432 } }]);
+      const ext = window.WF_BUFFS.merge(G.map((x) => x.fx(w)));
+      const r0 = E.evaluate(w, a, ids, baseO()), r1 = E.evaluate(w, a, ids, Object.assign(baseO(), { ext }));
+      const wm = weapon("dual_ichor"), rm0 = E.evaluate(wm, wm.attacks[0], [], baseO()), rm1 = E.evaluate(wm, wm.attacks[0], [], Object.assign(baseO(), { ext: window.WF_BUFFS.merge(G.map((x) => x.fx(wm))) }));
+      const ok = G.length === 2 && mb("tenacious_bond") && mb("tenacious_bond").checked && mb("reinforced_bond") && mb("reinforced_bond").checked
+        && Math.abs(r0.cd - 6.6) < 0.05 && Math.abs(r1.cd - 7.8) < 0.05 && r1.rate > r0.rate * 1.05 && rm1.cd === rm0.cd && rm1.rate === rm0.rate;
+      check("v1.93 동반자 본드 모드(기본 켬): 터네이셔스 본드 치명타 배율 +1.2 (버스튼 빌드 A 6.6 → 7.8 = 아스날), 리인포스드 본드 연사 +60%, 근접은 그대로", ok,
+        [G.length, r0.cd.toFixed(2), r1.cd.toFixed(2), (r1.rate / r0.rate).toFixed(3), rm0.cd + "=" + rm1.cd].join(" / "));
+    }
     // v1.70 (대기열 4b): Perigale "Gale Force" — wiki: "Landing 4 headshots in a burst or a headshot kill grants the "Gale Force"
     // buff, granting Infinite Ammo. The buff lasts 4 seconds". With headshots (o.hs 0.5, aimed) the magazine lasts longer →
     // fewer reloads → higher average rate and less ammo used; without headshots nothing changes.

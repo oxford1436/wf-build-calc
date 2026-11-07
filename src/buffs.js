@@ -78,6 +78,13 @@
     { id: "arb_weapon", ko: "중재 — 지정 무기", note: "중재 미션 지정 무기 피해 +300% (서레이션류와 합연산으로 가정 — 위키에 방식 미기재)", fx: () => ({ dmgAdd: 3.0 }) },
     { id: "arb_frame", ko: "중재 — 지정 워프레임", note: "지정 워프레임 위력 +300% (어빌리티·익절티드 무기에 반영)", stat: { str: 3.0 } },
     { id: "vigorous_swap", ko: "비거러스 스왑 (무기 교체 직후 3초)", note: "워프레임 모드: 무기를 바꾼 뒤 3초간 피해 +165% (서레이션류와 합연산). 근접 제외. 켜면 그 3초 기준으로 계산합니다", fx: (w) => (w.cls === "melee" ? {} : { dmgAdd: 1.65 }) },
+    // companion Bond mods (wiki Tenacious Bond / Reinforced Bond, read 2026-11-07). The user's Arsenal shows both on every gun
+    // checked (Kuva Ogris 3.2 vs 2.0, Burston Prime 7.8 vs 6.6, Mausolon 3.4 vs 2.2 = +1.2 crit multiplier; fire rate +60% on primaries,
+    // not on the Mausolon) → on by default (def). Tenacious: "Critical damage multiplier is a flat final and follows the formula
+    // 1 + (tier * (crit multi - 1 + final))" — added after every crit multiplier. Reinforced: "+60% Fire Rate" when the companion has
+    // over 1200 shields, "does not count double for Bows" (added outside the bow doubling).
+    { id: "tenacious_bond", def: true, gear: true, ko: "동반자 터네이셔스 본드 (치명타 배율 +1.2)", note: "동반자 치명타 확률 50% 이상일 때 내 총기 치명타 배율 +1.2 (모든 치명타 배율 뒤에 더함, 위키). 근접 제외", fx: (w) => (w.cls === "melee" ? {} : { cdFinalAdd: 1.2 }) },
+    { id: "reinforced_bond", def: true, gear: true, ko: "동반자 리인포스드 본드 (연사 +60%)", note: "동반자 실드 1200 초과일 때 연사 +60% (연사 모드와 합연산, 활에서 두 배 아님, 위키). 근접 제외", fx: (w) => (w.cls === "melee" ? {} : { frAdd: 0.6 }) },
     { id: "stealth", ko: "은신 기습 (근접)", note: "적이 알아채기 전 근접 공격 피해 +700%(무기 랭크 30). 모든 타격에 적용되므로 은신 운용일 때만 켜세요", fx: (w) => (w.cls === "melee" ? { stealth: 7 } : {}) },
   ];
   add("Electric Shield", { ko: "일렉트릭 실드 (통과 사격)", gunOnly: true, note: "전기 +50%, 치명타 피해 2배. 근접·글레이브 제외",

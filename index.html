@@ -622,6 +622,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.93", date: "2026-11-07", title: "동반자 본드 모드: 터네이셔스 본드(치명타 배율 +1.2)·리인포스드 본드(연사 +60%) 반영, 기본 켬",
+      items: [
+        "아스날 스크린샷마다 계산보다 치명타 피해와 연사가 높았던 원인(쿠바 오그리스 3.2배 vs 2.0배, 버스튼 프라임 7.8배 vs 6.6배, 머솔론 3.4배 vs 2.2배 — 모두 +1.2배)을 찾았습니다. 동반자 모드 터네이셔스 본드(동반자 치명타 확률 50% 이상이면 내 무기 치명타 배율 +1.2, 위키: 모든 치명타 배율 뒤에 더하는 고정값)와 리인포스드 본드(동반자 실드 1200 초과면 연사 +60%, 활에서도 두 배가 아님)입니다.",
+        "'기타 버프'에 두 모드를 추가하고 기본으로 켰습니다(총기만, 근접 제외). '버프 없이 계산한 세팅과 비교'에서도 장비처럼 그대로 둡니다. 아크건(머솔론) 아스날에는 연사 +60%가 없었습니다.",
+      ] },
     { v: "1.92", date: "2026-11-07", title: "정확도: 헤비 칼리버·매그넘 포스·비셔스 스프레드의 탄 퍼짐을 계산 (맞는 비율이 줄어듦)",
       items: [
         "탄 퍼짐을 늘리는 모드의 페널티가 계산에 없어서, 헤비 칼리버(피해 +165%)가 서레이션과 같은 공짜 피해 모드로 추천됐습니다. 위키: 헤비 칼리버는 랭크 10에서 '+2.97 퍼짐'(각도, 정확도 모드로 줄지 않음), 매그넘 포스 +5.5, 비셔스 스프레드는 퍼짐 +60%.",
@@ -2251,7 +2256,7 @@ header.top p{flex-basis:100%}
     // Vigilante set: a crit has a chance to go one tier higher = same average as that much more crit chance on crits
     if (a.vigil && weapon.slot === "primary") ccBase += a.vigil * Math.min(1, ccBase);
     const preludeAdd = sp.prelude && ccBase < sp.prelude.below ? sp.prelude.v : 0;   // Prelude of Might: low crit chance → higher base crit multiplier
-    const cdBase = (((atk.cd || 1.5) + a.cdBase + preludeAdd) * (1 + a.cd + (ext.cdAdd || 0) + (tenno ? tenno.cd || 0 : 0)) + a.cdFlat) * (ext.cdMult && !isMelee ? ext.cdMult : 1) * cdFinal;
+    const cdBase = (((atk.cd || 1.5) + a.cdBase + preludeAdd) * (1 + a.cd + (ext.cdAdd || 0) + (tenno ? tenno.cd || 0 : 0)) + a.cdFlat) * (ext.cdMult && !isMelee ? ext.cdMult : 1) * cdFinal + (!isMelee && ext.cdFinalAdd ? ext.cdFinalAdd : 0);   // Tenacious Bond: flat, after every multiplier
     // Wiseman's Regard: base status chance + a share of the current crit chance; "added after mods" evolution bonuses (scFlat)
     const wiseAdd = sp.wise ? Math.min(sp.wise.cap, sp.wise.v * ccBase) : 0;
     const sc = Math.max(0, ((atk.sc || 0) + wiseAdd) * scMul + a.scFlat);
@@ -3391,6 +3396,13 @@ header.top p{flex-basis:100%}
     { id: "arb_weapon", ko: "중재 — 지정 무기", note: "중재 미션 지정 무기 피해 +300% (서레이션류와 합연산으로 가정 — 위키에 방식 미기재)", fx: () => ({ dmgAdd: 3.0 }) },
     { id: "arb_frame", ko: "중재 — 지정 워프레임", note: "지정 워프레임 위력 +300% (어빌리티·익절티드 무기에 반영)", stat: { str: 3.0 } },
     { id: "vigorous_swap", ko: "비거러스 스왑 (무기 교체 직후 3초)", note: "워프레임 모드: 무기를 바꾼 뒤 3초간 피해 +165% (서레이션류와 합연산). 근접 제외. 켜면 그 3초 기준으로 계산합니다", fx: (w) => (w.cls === "melee" ? {} : { dmgAdd: 1.65 }) },
+    // companion Bond mods (wiki Tenacious Bond / Reinforced Bond, read 2026-11-07). The user's Arsenal shows both on every gun
+    // checked (Kuva Ogris 3.2 vs 2.0, Burston Prime 7.8 vs 6.6, Mausolon 3.4 vs 2.2 = +1.2 crit multiplier; fire rate +60% on primaries,
+    // not on the Mausolon) → on by default (def). Tenacious: "Critical damage multiplier is a flat final and follows the formula
+    // 1 + (tier * (crit multi - 1 + final))" — added after every crit multiplier. Reinforced: "+60% Fire Rate" when the companion has
+    // over 1200 shields, "does not count double for Bows" (added outside the bow doubling).
+    { id: "tenacious_bond", def: true, gear: true, ko: "동반자 터네이셔스 본드 (치명타 배율 +1.2)", note: "동반자 치명타 확률 50% 이상일 때 내 총기 치명타 배율 +1.2 (모든 치명타 배율 뒤에 더함, 위키). 근접 제외", fx: (w) => (w.cls === "melee" ? {} : { cdFinalAdd: 1.2 }) },
+    { id: "reinforced_bond", def: true, gear: true, ko: "동반자 리인포스드 본드 (연사 +60%)", note: "동반자 실드 1200 초과일 때 연사 +60% (연사 모드와 합연산, 활에서 두 배 아님, 위키). 근접 제외", fx: (w) => (w.cls === "melee" ? {} : { frAdd: 0.6 }) },
     { id: "stealth", ko: "은신 기습 (근접)", note: "적이 알아채기 전 근접 공격 피해 +700%(무기 랭크 30). 모든 타격에 적용되므로 은신 운용일 때만 켜세요", fx: (w) => (w.cls === "melee" ? { stealth: 7 } : {}) },
   ];
   add("Electric Shield", { ko: "일렉트릭 실드 (통과 사격)", gunOnly: true, note: "전기 +50%, 치명타 피해 2배. 근접·글레이브 제외",
@@ -3572,6 +3584,11 @@ header.top p{flex-basis:100%}
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "1.93", date: "2026-11-07", title: "동반자 본드 모드: 터네이셔스 본드(치명타 배율 +1.2)·리인포스드 본드(연사 +60%) 반영, 기본 켬",
+      items: [
+        "아스날 스크린샷마다 계산보다 치명타 피해와 연사가 높았던 원인(쿠바 오그리스 3.2배 vs 2.0배, 버스튼 프라임 7.8배 vs 6.6배, 머솔론 3.4배 vs 2.2배 — 모두 +1.2배)을 찾았습니다. 동반자 모드 터네이셔스 본드(동반자 치명타 확률 50% 이상이면 내 무기 치명타 배율 +1.2, 위키: 모든 치명타 배율 뒤에 더하는 고정값)와 리인포스드 본드(동반자 실드 1200 초과면 연사 +60%, 활에서도 두 배가 아님)입니다.",
+        "'기타 버프'에 두 모드를 추가하고 기본으로 켰습니다(총기만, 근접 제외). '버프 없이 계산한 세팅과 비교'에서도 장비처럼 그대로 둡니다. 아크건(머솔론) 아스날에는 연사 +60%가 없었습니다.",
+      ] },
     { v: "1.92", date: "2026-11-07", title: "정확도: 헤비 칼리버·매그넘 포스·비셔스 스프레드의 탄 퍼짐을 계산 (맞는 비율이 줄어듦)",
       items: [
         "탄 퍼짐을 늘리는 모드의 페널티가 계산에 없어서, 헤비 칼리버(피해 +165%)가 서레이션과 같은 공짜 피해 모드로 추천됐습니다. 위키: 헤비 칼리버는 랭크 10에서 '+2.97 퍼짐'(각도, 정확도 모드로 줄지 않음), 매그넘 포스 +5.5, 비셔스 스프레드는 퍼짐 +60%.",
@@ -5201,7 +5218,7 @@ header.top p{flex-basis:100%}
     // Vigilante set: a crit has a chance to go one tier higher = same average as that much more crit chance on crits
     if (a.vigil && weapon.slot === "primary") ccBase += a.vigil * Math.min(1, ccBase);
     const preludeAdd = sp.prelude && ccBase < sp.prelude.below ? sp.prelude.v : 0;   // Prelude of Might: low crit chance → higher base crit multiplier
-    const cdBase = (((atk.cd || 1.5) + a.cdBase + preludeAdd) * (1 + a.cd + (ext.cdAdd || 0) + (tenno ? tenno.cd || 0 : 0)) + a.cdFlat) * (ext.cdMult && !isMelee ? ext.cdMult : 1) * cdFinal;
+    const cdBase = (((atk.cd || 1.5) + a.cdBase + preludeAdd) * (1 + a.cd + (ext.cdAdd || 0) + (tenno ? tenno.cd || 0 : 0)) + a.cdFlat) * (ext.cdMult && !isMelee ? ext.cdMult : 1) * cdFinal + (!isMelee && ext.cdFinalAdd ? ext.cdFinalAdd : 0);   // Tenacious Bond: flat, after every multiplier
     // Wiseman's Regard: base status chance + a share of the current crit chance; "added after mods" evolution bonuses (scFlat)
     const wiseAdd = sp.wise ? Math.min(sp.wise.cap, sp.wise.v * ccBase) : 0;
     const sc = Math.max(0, ((atk.sc || 0) + wiseAdd) * scMul + a.scFlat);
@@ -6341,6 +6358,13 @@ header.top p{flex-basis:100%}
     { id: "arb_weapon", ko: "중재 — 지정 무기", note: "중재 미션 지정 무기 피해 +300% (서레이션류와 합연산으로 가정 — 위키에 방식 미기재)", fx: () => ({ dmgAdd: 3.0 }) },
     { id: "arb_frame", ko: "중재 — 지정 워프레임", note: "지정 워프레임 위력 +300% (어빌리티·익절티드 무기에 반영)", stat: { str: 3.0 } },
     { id: "vigorous_swap", ko: "비거러스 스왑 (무기 교체 직후 3초)", note: "워프레임 모드: 무기를 바꾼 뒤 3초간 피해 +165% (서레이션류와 합연산). 근접 제외. 켜면 그 3초 기준으로 계산합니다", fx: (w) => (w.cls === "melee" ? {} : { dmgAdd: 1.65 }) },
+    // companion Bond mods (wiki Tenacious Bond / Reinforced Bond, read 2026-11-07). The user's Arsenal shows both on every gun
+    // checked (Kuva Ogris 3.2 vs 2.0, Burston Prime 7.8 vs 6.6, Mausolon 3.4 vs 2.2 = +1.2 crit multiplier; fire rate +60% on primaries,
+    // not on the Mausolon) → on by default (def). Tenacious: "Critical damage multiplier is a flat final and follows the formula
+    // 1 + (tier * (crit multi - 1 + final))" — added after every crit multiplier. Reinforced: "+60% Fire Rate" when the companion has
+    // over 1200 shields, "does not count double for Bows" (added outside the bow doubling).
+    { id: "tenacious_bond", def: true, gear: true, ko: "동반자 터네이셔스 본드 (치명타 배율 +1.2)", note: "동반자 치명타 확률 50% 이상일 때 내 총기 치명타 배율 +1.2 (모든 치명타 배율 뒤에 더함, 위키). 근접 제외", fx: (w) => (w.cls === "melee" ? {} : { cdFinalAdd: 1.2 }) },
+    { id: "reinforced_bond", def: true, gear: true, ko: "동반자 리인포스드 본드 (연사 +60%)", note: "동반자 실드 1200 초과일 때 연사 +60% (연사 모드와 합연산, 활에서 두 배 아님, 위키). 근접 제외", fx: (w) => (w.cls === "melee" ? {} : { frAdd: 0.6 }) },
     { id: "stealth", ko: "은신 기습 (근접)", note: "적이 알아채기 전 근접 공격 피해 +700%(무기 랭크 30). 모든 타격에 적용되므로 은신 운용일 때만 켜세요", fx: (w) => (w.cls === "melee" ? { stealth: 7 } : {}) },
   ];
   add("Electric Shield", { ko: "일렉트릭 실드 (통과 사격)", gunOnly: true, note: "전기 +50%, 치명타 피해 2배. 근접·글레이브 제외",
@@ -8600,7 +8624,7 @@ self.onmessage = function (ev) {
   /* ---------------- frames ---------------- */
   const pickedMisc = () => $$("#miscbuffs .mb:checked").map((el) => (BUFFS.misc || []).find((x) => x.id === el.value)).filter(Boolean);
   function renderMisc() {
-    $("#miscbuffs").innerHTML = (BUFFS.misc || []).map((M) => `<label class="inline"><input type="checkbox" class="mb" value="${M.id}"><span><b>${esc(M.ko)}</b> <small>${esc(M.note)}</small></span></label>`).join("");
+    $("#miscbuffs").innerHTML = (BUFFS.misc || []).map((M) => `<label class="inline"><input type="checkbox" class="mb" value="${M.id}"${M.def ? " checked" : ""}><span><b>${esc(M.ko)}</b> <small>${esc(M.note)}</small></span></label>`).join("");
     $$("#miscbuffs .mb").forEach((el) => el.addEventListener("change", renderFrameStats));
   }
   const auraOk = (A, w) => (!A.cls || A.cls.includes(w.cls)) && typeOk(A, w);
@@ -8740,11 +8764,13 @@ self.onmessage = function (ev) {
     for (const p of picks) if (p.s.kind === "weapon" && (p.s.slot === "any" || p.s.slot === st.weapon.slot)) list.push(p.s.fx(p.t, cnt, s));
     const au = pickedAura();
     if (au && au.fx && auraOk(au, st.weapon)) list.push(au.fx);
-    for (const M of pickedMisc()) if (M.fx) { let e = M.fx(st.weapon); if (M.area && scenario === "crowd") e = BUFFS.scale(e, Math.min(1, (M.area / 20) ** 2)); list.push(e); }
+    const gear = [];   // companion Bond mods: always-on gear, kept in the "without buffs" comparison too
+    for (const M of pickedMisc()) if (M.fx) { let e = M.fx(st.weapon); if (M.area && scenario === "crowd") e = BUFFS.scale(e, Math.min(1, (M.area / 20) ** 2)); (M.gear ? gear : list).push(e); }
     const xs = Math.max(0, Math.min(10, +$("#extstatus").value || 0));
     if (xs) list.push({ statusExtra: xs });
-    const ext = BUFFS.merge(list);
+    const ext = BUFFS.merge(list.concat(gear));
     ext.active = list.length > 0;
+    ext.gearExt = gear.length ? BUFFS.merge(gear) : {};
     if (st.weapon.cls === "melee") ext.cdMult = 1;
     ext.maxEnergy = s.energy;
     return ext;
@@ -8855,7 +8881,7 @@ self.onmessage = function (ev) {
     const locked = owned ? ["__riven"] : [];
     const jobs = [{ tag: "main" }];
     if (owned) jobs.push({ tag: "free", locked: [] });      // riven-free best build, to grade the owned riven against
-    if (o.ext.active || o.frameArcs.length) jobs.push({ tag: "nobuff", optsPatch: { ext: {}, frameArcs: [], hs: $("#aimmods").checked && w.cls !== "melee" ? 0.5 : 0 } });
+    if (o.ext.active || o.frameArcs.length) jobs.push({ tag: "nobuff", optsPatch: { ext: o.ext.gearExt || {}, frameArcs: [], hs: $("#aimmods").checked && w.cls !== "melee" ? 0.5 : 0 } });
     $("#runbtn").disabled = true; $("#progress").hidden = false; $("#progress .bar").style.width = "0%";
     const wk = freshWorker();
     wk.onmessage = (ev) => {
@@ -9381,7 +9407,7 @@ self.onmessage = function (ev) {
     // buffs comparison
     if (R.nobuff && R.nobuff.length) {
       const nb = R.nobuff[0];
-      const oNo = Object.assign({}, o, { ext: {}, frameArcs: [], hs: R.flags.aim ? 0.5 : 0 });
+      const oNo = Object.assign({}, o, { ext: o.ext.gearExt || {}, frameArcs: [], hs: R.flags.aim ? 0.5 : 0 });
       const recNo = evalBuild(top.ids, top.val, top.arcane, oNo);          // recommended build, buff off
       const nbWith = evalBuild(nb.ids, nb.val, nb.arcane);                  // no-buff-best, buff on
       const nbNo = evalBuild(nb.ids, nb.val, nb.arcane, oNo);

@@ -848,7 +848,7 @@ self.onmessage = function (ev) {
   /* ---------------- frames ---------------- */
   const pickedMisc = () => $$("#miscbuffs .mb:checked").map((el) => (BUFFS.misc || []).find((x) => x.id === el.value)).filter(Boolean);
   function renderMisc() {
-    $("#miscbuffs").innerHTML = (BUFFS.misc || []).map((M) => `<label class="inline"><input type="checkbox" class="mb" value="${M.id}"><span><b>${esc(M.ko)}</b> <small>${esc(M.note)}</small></span></label>`).join("");
+    $("#miscbuffs").innerHTML = (BUFFS.misc || []).map((M) => `<label class="inline"><input type="checkbox" class="mb" value="${M.id}"${M.def ? " checked" : ""}><span><b>${esc(M.ko)}</b> <small>${esc(M.note)}</small></span></label>`).join("");
     $$("#miscbuffs .mb").forEach((el) => el.addEventListener("change", renderFrameStats));
   }
   const auraOk = (A, w) => (!A.cls || A.cls.includes(w.cls)) && typeOk(A, w);
@@ -988,11 +988,13 @@ self.onmessage = function (ev) {
     for (const p of picks) if (p.s.kind === "weapon" && (p.s.slot === "any" || p.s.slot === st.weapon.slot)) list.push(p.s.fx(p.t, cnt, s));
     const au = pickedAura();
     if (au && au.fx && auraOk(au, st.weapon)) list.push(au.fx);
-    for (const M of pickedMisc()) if (M.fx) { let e = M.fx(st.weapon); if (M.area && scenario === "crowd") e = BUFFS.scale(e, Math.min(1, (M.area / 20) ** 2)); list.push(e); }
+    const gear = [];   // companion Bond mods: always-on gear, kept in the "without buffs" comparison too
+    for (const M of pickedMisc()) if (M.fx) { let e = M.fx(st.weapon); if (M.area && scenario === "crowd") e = BUFFS.scale(e, Math.min(1, (M.area / 20) ** 2)); (M.gear ? gear : list).push(e); }
     const xs = Math.max(0, Math.min(10, +$("#extstatus").value || 0));
     if (xs) list.push({ statusExtra: xs });
-    const ext = BUFFS.merge(list);
+    const ext = BUFFS.merge(list.concat(gear));
     ext.active = list.length > 0;
+    ext.gearExt = gear.length ? BUFFS.merge(gear) : {};
     if (st.weapon.cls === "melee") ext.cdMult = 1;
     ext.maxEnergy = s.energy;
     return ext;
@@ -1103,7 +1105,7 @@ self.onmessage = function (ev) {
     const locked = owned ? ["__riven"] : [];
     const jobs = [{ tag: "main" }];
     if (owned) jobs.push({ tag: "free", locked: [] });      // riven-free best build, to grade the owned riven against
-    if (o.ext.active || o.frameArcs.length) jobs.push({ tag: "nobuff", optsPatch: { ext: {}, frameArcs: [], hs: $("#aimmods").checked && w.cls !== "melee" ? 0.5 : 0 } });
+    if (o.ext.active || o.frameArcs.length) jobs.push({ tag: "nobuff", optsPatch: { ext: o.ext.gearExt || {}, frameArcs: [], hs: $("#aimmods").checked && w.cls !== "melee" ? 0.5 : 0 } });
     $("#runbtn").disabled = true; $("#progress").hidden = false; $("#progress .bar").style.width = "0%";
     const wk = freshWorker();
     wk.onmessage = (ev) => {
@@ -1629,7 +1631,7 @@ self.onmessage = function (ev) {
     // buffs comparison
     if (R.nobuff && R.nobuff.length) {
       const nb = R.nobuff[0];
-      const oNo = Object.assign({}, o, { ext: {}, frameArcs: [], hs: R.flags.aim ? 0.5 : 0 });
+      const oNo = Object.assign({}, o, { ext: o.ext.gearExt || {}, frameArcs: [], hs: R.flags.aim ? 0.5 : 0 });
       const recNo = evalBuild(top.ids, top.val, top.arcane, oNo);          // recommended build, buff off
       const nbWith = evalBuild(nb.ids, nb.val, nb.arcane);                  // no-buff-best, buff on
       const nbNo = evalBuild(nb.ids, nb.val, nb.arcane, oNo);
