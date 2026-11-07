@@ -448,6 +448,18 @@ const { chromium } = require("playwright");
       check("v1.95 세도: 기본 사격 상태이상 종류당 +60%(기본 피해 합연산), 글레이브 1개(멀티샷 1), 글레이브 폭발 확정 상태이상 2개가 종류 수에 들어감", ok,
         [a1.pst, r1.gco && r1.gco.toFixed(2), r1.ntypes.toFixed(2), r0.ntypes.toFixed(2), glaive.pellets, (r0.score / r1.score).toFixed(2)].join(" / "));
     }
+    // v1.95 independent review (2026-11-07): the glaive's procs must also feed status-triggered arcanes (Primary Frostbite "On Cold
+    // Status Effect") — the viral layout (no cold on the main fire) had 0 stacks — and the explosion's procs are the 2 guaranteed
+    // ones, not its 50% status chance
+    {
+      const w = weapon("cedo_prime"), a0 = w.attacks.find((q) => q.en === "Normal Attack+primer"), gx = w.attacks.find((q) => q.en === "Glaive Radial Attack");
+      const ms = ["Primed Chilling Grasp", "Toxic Barrage", "Critical Deceleration", "Primed Ravage"].map(M);
+      const o = Object.assign(baseO(), { arcane: "primary_frostbite", elemOrder: ["cold", "tox"] });
+      const r = E.evaluate(w, a0, ms, o), rx = E.evaluate(w, gx, [], baseO());
+      const pt = Object.values(rx.procs || {}).reduce((q, v) => q + v, 0);
+      check("v1.95 세도 글레이브 상태이상이 프라이머리 프로스트바이트 중첩에도 들어감(바이러스 배치에서 0 → 쌓임), 글레이브 폭발 상태이상 = 확정 2개", gx.explProcs === 2 && r.fArc > 0.5 && Math.abs(pt - 2) < 1e-6,
+        [gx.explProcs, r.fArc && r.fArc.toFixed(2), pt.toFixed(2)].join(" / "));
+    }
     // v1.70 (대기열 4b): Perigale "Gale Force" — wiki: "Landing 4 headshots in a burst or a headshot kill grants the "Gale Force"
     // buff, granting Infinite Ammo. The buff lasts 4 seconds". With headshots (o.hs 0.5, aimed) the magazine lasts longer →
     // fewer reloads → higher average rate and less ammo used; without headshots nothing changes.

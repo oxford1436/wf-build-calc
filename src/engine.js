@@ -551,15 +551,18 @@
     // Cedo: first by normal status weighting of the explosion's elements, second "an even chance" of Heat/Cold/Electricity/Toxin).
     // They count toward per-status-type bonuses of the main fire (Cedo's own +60%, Galvanized Savvy). Bounce explosions (up to 11)
     // are not counted — the wiki doesn't say each bounce explodes on the same target (lower bound).
-    let oP = o;
+    // Independent review (2026-11-07): the same procs also feed status-triggered arcanes (Primary Frostbite/Blight: "On Cold/Toxin
+    // Status Effect") — the direct hit on one enemy, the explosion on every enemy in its 6 m — and the explosion's procs count in
+    // the time-to-kill status effects (heat armor strip, cold, viral, corrosive) like the direct hit's already did.
+    let oP = o, primX = null;
     if (atk.primer && atk.primerAoe) {
-      const k0 = atk.primerRate || 0.25, add = {};
+      const k0 = atk.primerRate || 0.25, add = {}, addD = {}, addX = {};
       const pr = perShot(weapon, atk.primer, mods, o, riven, atk), px = perShot(weapon, atk.primerAoe, mods, o, riven, atk);
-      for (const t in (pr && pr.procs) || {}) add[t] = (add[t] || 0) + k0 * pr.procs[t];
-      const n = (px && px.ms) || 1, ex = atk.primerAoe.explProcs || 0;
-      if (ex >= 1 && px && px.share) for (const t in px.share) add[t] = (add[t] || 0) + k0 * n * px.share[t];
-      if (ex >= 2) for (const t of ["heat", "cold", "elec", "tox"]) add[t] = (add[t] || 0) + k0 * n * 0.25;
-      oP = Object.assign({}, o, { _procAdd: add });
+      for (const t in (pr && pr.procs) || {}) addD[t] = k0 * pr.procs[t];
+      for (const t in (px && px.procs) || {}) addX[t] = k0 * px.procs[t];
+      for (const t of new Set(Object.keys(addD).concat(Object.keys(addX)))) add[t] = (addD[t] || 0) + (addX[t] || 0);
+      oP = Object.assign({}, o, { _procAdd: add, _procArc: { d: addD, x: addX, r: atk.primerAoe.radius || 0 } });
+      primX = addX;
     }
     const res = parts.map((p) => perShot(weapon, p, mods, oP, riven, atk));
     const main = res[0];
@@ -598,6 +601,7 @@
         const pr = perShot(weapon, atk.primer, mods, o, riven, atk).perF[f];
         const k = (atk.primerRate || 0.25) / Math.max(0.05, main.rate);
         acc.pv += pr.pv * k; acc.ph += pr.ph * k; acc.pc += pr.pc * k; acc.pk += pr.pk * k;
+        if (primX) { const m = 1 / Math.max(0.05, main.rate); acc.pv += (primX.viral || 0) * m; acc.ph += (primX.heat || 0) * m; acc.pc += (primX.corr || 0) * m; acc.pk += (primX.cold || 0) * m; }
       }
       const base = { field: !!o.napField, strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, nc: main.nc || 0, corrMax: 10 + (o.ext.corrMax || 0), dt: o.dt, tmax: o.tmax, Tdur: main.Tdur, dotN: main.dotN,
         ogM: main.ogM || 1, frozenM: main.frozenM || 0, coldVuln: main.coldVuln || 0 };
@@ -1162,6 +1166,13 @@
         }
         procs = {};
         for (const k in share) procs[k] = sc * ms * share[k];
+        // Cedo glaive explosion (wiki): "applies two separate guaranteed procs. The number of procs cannot be increased with status
+        // chance bonuses" — one by normal status weighting, one "an even chance" of Heat/Cold/Electricity/Toxin, per glaive
+        if (atk.explProcs) {
+          procs = {};
+          for (const k in share) procs[k] = ms * share[k];
+          if (atk.explProcs >= 2) for (const t of ["heat", "cold", "elec", "tox"]) procs[t] = (procs[t] || 0) + 0.25 * ms;
+        }
         if (a.hm > 0) procs.slash = (procs.slash || 0) + a.hm * Math.min(1, ccBase) * ms;
         if (a.ib > 0 && procs.impact) procs.slash = (procs.slash || 0) + procs.impact * Math.min(1, a.ib * (rate < 2.5 ? 2 : 1));
         if (a.welt > 0 && procs.impact) procs.mag = (procs.mag || 0) + procs.impact * Math.min(1, a.welt * (rate < 2.5 ? 2 : 1));
@@ -1171,7 +1182,8 @@
           // lasts e^(rr*win) - 1 procs before it resets; nf = time-average stacks over a run (ramp to the cap, then held).
           const ps = arc.procStack;
           const per = (procs[ps.type] || 0) + (atk.forced && atk.forced.includes(ps.type) ? 1 : 0);
-          const rr = per * rate * K, run = Math.expm1(Math.min(50, rr * ps.win));
+          const pq = o._procArc, nX = pq ? (o.scenario === "crowd" && pq.r > 0 ? Math.min(N, 1 + rho * Math.PI * pq.r * pq.r) : 1) : 0;
+          const rr = per * rate * K + (pq ? (pq.d[ps.type] || 0) + (pq.x[ps.type] || 0) * nX : 0), run = Math.expm1(Math.min(50, rr * ps.win));
           const nbar = run >= ps.max ? ps.max - ps.max * ps.max / (2 * run) : run / 2;
           const nf = Math.max(0, Math.min(1, nbar / ps.max));
           if (Math.abs(nf - fArc) < 1e-6) break;
@@ -1244,7 +1256,9 @@
       const gco = kind === "radial" ? 0 : (kills ? a.gco * ntypes : 0) + pst * ntypes;
       const co = isMelee && !atk.noCO ? a.co * ntypes : 0;
       // v1.80: the first hit on a fresh enemy finds no statuses of its own yet (only ones other sources keep: ext.statusExtra)
-      const nt0 = Math.min(14, (ext.statusExtra || 0) + ntPrimer), gco0 = kind === "radial" ? 0 : (kills ? a.gco * nt0 : 0) + pst * nt0, co0 = isMelee && !atk.noCO ? a.co * nt0 : 0;
+      // first hit on a fresh enemy: the glaive's statuses are already on it at their long-run average (default) — o.noPrimerFirst
+      // drops them (the wiki doesn't say; the app checks the pick both ways)
+      const nt0 = Math.min(14, (ext.statusExtra || 0) + (o.noPrimerFirst ? 0 : ntPrimer)), gco0 = kind === "radial" ? 0 : (kills ? a.gco * nt0 : 0) + pst * nt0, co0 = isMelee && !atk.noCO ? a.co * nt0 : 0;
       const first0 = (1 + dmgb + dmgArc + platedB + gco0 + co0) / Math.max(1e-9, 1 + dmgb + dmgArc + platedB + gco + co);
       const mbd = Btot * exS * (1 + dmgb + dmgArc + platedB) * fallM;
       // on-kill damage fields of the weapon itself (wiki Incarnon notes; convert.py KILL_FIELD): Dual Ichor "Fields do 350 Toxin

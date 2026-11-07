@@ -1420,6 +1420,9 @@ self.onmessage = function (ev) {
     }
     // v1.88: beam-end AoE on the struck enemy too (default) / only the AoE part removed — wiki weapon pages don't say
     if (atk && (atk.parts || []).some((q) => q.beamAoe)) alts.push({ o: { noBeamAoe: true }, why: "빔 끝점 범위 피해를 빔에 맞은 적도 받는지 위키에 없음 — 받음(기본) / 안 받음" });
+    // v1.95 (independent review 2026-11-07): Cedo priming — whether the glaive's statuses are already on an enemy before the primary
+    // fire's first hit isn't on the wiki
+    if (atk && atk.primerAoe) alts.push({ o: { noPrimerFirst: true }, why: "글레이브로 묻힌 상태이상이 기본 사격 첫 발 전에 이미 걸려 있는지 위키에 없음 — 걸려 있음(기본) / 없음" });
     if (atk && atk.killField && !atk.killField.every && o.scenario === "crowd") alts.push({ o: { fieldHigh: true }, why: `처치 시 장판(${atk.killField.dmg} 피해, ${atk.killField.dur}초)이 몇 초마다 들어가는지 위키에 없음 — 한 번 / 1초마다` });
     // v1.86 (independent review 2026-11-06, Kuva Zarr): between one-shot kills a gunner needs time to put the crosshair on the next
     // enemy. No source gives it (engine T_ACQ = 0.2 s); when most enemies die to one shot it decides how much fire rate is worth,

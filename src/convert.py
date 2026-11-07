@@ -302,7 +302,8 @@ def conv(w, typ):
                         y["pellets"] = int(wa_["Multishot"])
                 gx = next((y for y in base if y["en"] == "Glaive Radial Attack"), None)
                 if gx is not None:
-                    cedo_aoe = dict(gx, explProcs=2)
+                    gx["explProcs"] = 2
+                    cedo_aoe = dict(gx)
             # combined direct + AoE parts
             combos = []
             # primer combos: main gun attack + alt-fire statuses
