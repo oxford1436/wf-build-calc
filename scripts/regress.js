@@ -398,6 +398,16 @@ const { chromium } = require("playwright");
       const rS = E.evaluate(w, a, [M("Primed Shred")], baseO()), rN = E.evaluate(w, a, [], baseO());
       check("v1.91 관통 무리: 프라임드 슈레드(2.2m)로 한 발이 맞히는 적 1.1~1.25명 (줄 선 적 = 밀도 × 몸 폭 × 무리 깊이), 관통 없으면 1명", rS.K > 1.1 && rS.K < 1.25 && rN.K === 1, rS.K.toFixed(3) + " / " + rN.K);
     }
+    // v1.92 (사용자 2026-11-07 "헤비 칼리버의 정확도 패널티 … 정확히 얼마나"): Heavy Caliber "+2.97 spread" (wiki rank table, flat
+    // degrees on the max deviation) was free in the calculator — now the share of shots that still land on a 0.6 × 1.8 m enemy at
+    // 2–20 m falls with the wider cone (Burston Prime 0–8° → 0–10.97°: avg 4° → 5.49°)
+    {
+      const w = weapon("burston_prime"), a = w.attacks.find((q) => q.en === "Normal Attack");
+      const r = E.evaluate(w, a, [M("Heavy Caliber")], baseO()), r0 = E.evaluate(w, a, [M("Serration")], baseO());
+      const sg = W.find((x) => x.id === "hek") || W.find((x) => x.cls === "shotgun" && x.attacks[0].spread);
+      const rv = E.evaluate(sg, sg.attacks[0], [M("Vicious Spread")], baseO());
+      check("v1.92 헤비 칼리버 탄 퍼짐 +2.97°: 버스튼 프라임 맞는 비율 ×0.76 (평균 퍼짐 4° → 5.49°), 서레이션은 1, 비셔스 스프레드도 1 미만", r.accF > 0.70 && r.accF < 0.82 && r0.accF === 1 && rv.accF < 1, [r.accF, r0.accF, sg.id + " " + rv.accF].join(" / "));
+    }
     // v1.70 (대기열 4b): Perigale "Gale Force" — wiki: "Landing 4 headshots in a burst or a headshot kill grants the "Gale Force"
     // buff, granting Infinite Ammo. The buff lasts 4 seconds". With headshots (o.hs 0.5, aimed) the magazine lasts longer →
     // fewer reloads → higher average rate and less ammo used; without headshots nothing changes.

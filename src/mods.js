@@ -8,7 +8,7 @@
   /* ---------------- RIFLE (also bows / snipers / launchers) ---------------- */
   add("serration", "세레이션", "Serration", ["rifle"], { dmg: 1.65 }, { group: "r_dmg" });
   add("amalgam_serration", "아말감 세레이션", "Amalgam Serration", ["rifle"], { dmg: 1.55 }, { group: "r_dmg" });
-  add("heavy_caliber", "헤비 칼리버", "Heavy Caliber", ["rifle"], { dmg: 1.65 });
+  add("heavy_caliber", "헤비 칼리버", "Heavy Caliber", ["rifle"], { dmg: 1.65, spreadAdd: 2.97 });   // wiki rank table: "+2.97 spread" at rank 10 (flat degrees, not reduced by accuracy mods)
   add("semi_rifle_cannonade", "세미 라이플 캐노네이드", "Semi-Rifle Cannonade", ["rifle"], { dmg: 2.4, pt: 1.5, lock: 1 }, { req: "semi" });
   add("split_chamber", "스플릿 챔버", "Split Chamber", ["rifle"], { ms: 0.9 }, { group: "r_ms" });
   add("galvanized_chamber", "갈바나이즈드 챔버", "Galvanized Chamber", ["rifle"], { ms: 0.8 }, { group: "r_ms", cond: [{ when: "kill", eff: { ms: 1.5 }, stk: 5 }] });
@@ -43,7 +43,7 @@
   add("point_blank", "포인트 블랭크", "Point Blank", ["shotgun"], { dmg: 0.9 }, { group: "s_dmg" });
   add("primed_point_blank", "프라임드 포인트 블랭크", "Primed Point Blank", ["shotgun"], { dmg: 1.65 }, { group: "s_dmg" });
   add("semi_shotgun_cannonade", "세미 샷건 캐노네이드", "Semi-Shotgun Cannonade", ["shotgun"], { dmg: 2.4, pt: 1.5, lock: 1 }, { req: "semi" });
-  add("vicious_spread", "비셔스 스프레드", "Vicious Spread", ["shotgun"], { dmg: 0.9 });
+  add("vicious_spread", "비셔스 스프레드", "Vicious Spread", ["shotgun"], { dmg: 0.9, spreadPct: 0.6 });   // wiki: "+60%" spread at rank 5 (percent of the base cone)
   add("blaze", "블레이즈", "Blaze", ["shotgun"], { dmg: 0.6, heat: 0.6 });
   add("frail_momentum", "프레일 모멘텀", "Frail Momentum", ["shotgun"], { fr: 0.9, dmg: -0.15 });
   add("shotgun_barrage", "샷건 배라지", "Shotgun Barrage", ["shotgun"], { fr: 0.9 }, { group: "s_fr" });
@@ -75,7 +75,7 @@
 
   /* ---------------- PISTOL ---------------- */
   add("hornet_strike", "호넷 스트라이크", "Hornet Strike", ["pistol"], { dmg: 2.2 });
-  add("magnum_force", "매그넘 포스", "Magnum Force", ["pistol"], { dmg: 1.65 });
+  add("magnum_force", "매그넘 포스", "Magnum Force", ["pistol"], { dmg: 1.65, spreadAdd: 5.5 });   // wiki: "+5.5" spread at rank 10 (flat)
   add("augur_pact", "어거 팩트", "Augur Pact", ["pistol"], { dmg: 0.9 });
   add("semi_pistol_cannonade", "세미 피스톨 캐노네이드", "Semi-Pistol Cannonade", ["pistol"], { dmg: 3.0, pt: 1.5, lock: 1 }, { req: "semi" });
   add("barrel_diffusion", "배럴 디퓨전", "Barrel Diffusion", ["pistol"], { ms: 1.2 }, { group: "p_ms" });

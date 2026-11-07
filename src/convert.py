@@ -125,6 +125,10 @@ def wiki_traits(at, wa):
         at["hsMult"] = max(1, 2 + float(wa["ExtraHeadshotDmg"]))
     if wa.get("PunchThrough"):
         at["pt"] = float(wa["PunchThrough"])          # innate punch through (Incarnon forms, Ignis Wraith, Boltor …)
+    # spread (wiki Module:Weapons/data MinSpread/MaxSpread, degrees from the reticle while aiming; wiki Accuracy: "Base Accuracy
+    # = 100 / Avg Spread") — used only to weigh mods that add spread (Heavy Caliber, Magnum Force, Vicious Spread), v1.92
+    if wa.get("MaxSpread") is not None and wa.get("ShotType") in ("Hit-Scan", "Projectile"):
+        at["spread"] = [float(wa.get("MinSpread") or 0), float(wa["MaxSpread"])]
     # Burst fire (wiki Fire Rate): "Fire Rate: Number of bursts per second if Burst Delay is 0 seconds … This is the 'Fire Rate'
     # value listed in the arsenal"; "Burst Count: Number of shots per burst", "Burst Delay: Delay between shots fired in a single
     # burst". The engine wants shots per second: BurstCount / (1/FireRate + BurstCount × BurstDelay) — this matches DE's export

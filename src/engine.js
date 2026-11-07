@@ -44,6 +44,18 @@
   // enemies whose centre lies within half a body width of its line, so the mean is density × body width (BODY_W) × the mean depth
   // of the crowd behind a target (8R / 3π for a uniform disc of radius R holding the crowd) — 12 enemies at 6 per 7.9 m radius
   // → about 0.17. o.lineMean overrides it (corridor fights, sensitivity checks).
+  // Spread → share of shots that land on an enemy (v1.92). Wiki Accuracy: spread is "an angle in degrees from the reticle",
+  // "Base Accuracy = 100 / Avg Spread" with Avg = (Min + Max) / 2; accuracy-lowering mods add spread (Heavy Caliber "+2.97 spread"
+  // at rank 10, flat, added after accuracy mods: "5.0 × (1 − 40%) + 2.97"; Vicious Spread +60% of the cone). Not on the wiki and
+  // assumed here: shots spread evenly over the disc of that radius, an enemy is a 0.6 m × 1.8 m body (BODY_W), distances 2–20 m
+  // like the rest of the model. Only the CHANGE a mod makes is applied (hit share with the mod / without), so weapons without such
+  // mods are unchanged.
+  const stripHit = (a, r) => { if (r <= a) return 1; const u = a / r; return (2 / Math.PI) * (Math.asin(u) + u * Math.sqrt(1 - u * u)); };
+  function hitShare(deg) {
+    const t = Math.tan(Math.max(0, deg) * Math.PI / 180); let s = 0, n = 0;
+    for (let d = 2; d <= 20.0001; d += 0.5) { const r = d * t; s += r <= 1e-9 ? 1 : stripHit(BODY_W / 2, r) * stripHit(0.9, r); n++; }
+    return s / n;
+  }
   function lineHits(cap, mean) {     // expected extra enemies hit = E[min(n, cap)], n ~ Poisson(mean)
     const mu = mean != null ? mean : LINE_MEAN;
     let p = Math.exp(-mu), e = 0;
@@ -101,7 +113,7 @@
   const NUM_KEYS = ["dmg", "heavy", "ms", "cc", "ccHeavyNoDouble", "cd", "sc", "sd", "dur", "fr", "frneg", "lock", "mag", "reload", "wind",
     "ic", "hae", "ccc", "br", "ww", "co", "gco", "radius", "pt", "cdFlat", "ccFlat", "hsMult", "msLock", "hm", "ib", "welt",
     "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot", "evoPst", "wpcc",
-    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd", "napalm", "hata", "burstDmg", "burstCap", "finalBurstMs"];
+    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd", "napalm", "hata", "burstDmg", "burstCap", "finalBurstMs", "spreadAdd", "spreadPct"];
   const EXTRA = ["radm", "magm", "gasm", "blastm", "viralm", "corrm", "heatx", "coldx", "elecx", "toxx", "voidx"];
   function newAgg() {
     const a = { elem: { heat: 0, cold: 0, elec: 0, tox: 0 }, phys: { impact: 0, punct: 0, slash: 0 }, extra: {} };
@@ -1028,7 +1040,15 @@
     const dmgb = a.dmg + burstAdd + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (tenno && o.tennoAdd ? tenno.dmg || 0 : 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0);
     const msLock = a.msLock > 0;
     // atk.noMs: a radial part the wiki says multishot doesn't multiply (one blast per trigger pull)
-    const ms0 = atk.noMs ? 1 : ((atk.pellets || 1) + finalMs) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)));
+    // accuracy-lowering mods: fewer of the shots reach the enemy (see hitShare); the flat spread goes on the max deviation (wiki
+    // examples), o.spreadFlatBoth also puts it on the min (not stated on the wiki)
+    let accF = 1;
+    const spr = atk.spread || (parentAtk && parentAtk.spread);
+    if (spr && (a.spreadAdd > 0 || a.spreadPct > 0) && !isMeleeKind(kind)) {
+      const lo = spr[0] * (1 + a.spreadPct) + (o.spreadFlatBoth ? a.spreadAdd : 0), hi = spr[1] * (1 + a.spreadPct) + a.spreadAdd;
+      accF = hitShare((lo + hi) / 2) / Math.max(1e-9, hitShare((spr[0] + spr[1]) / 2));
+    }
+    const ms0 = (atk.noMs ? 1 : ((atk.pellets || 1) + finalMs) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)))) * accF;
     const tierNow = isHeavy ? M : (isMelee ? swingTier(atk.fr) : 1);
     // Hata-Satya (wiki): "Each hit increases Critical Chance by 1.2%", "additive with similar mods", capped at +500%,
     // multishot and punch-through hits count, "Bonus ends as soon as the reload animation begins" (switching to the Incarnon
@@ -1329,7 +1349,7 @@
       const cD = conceptDist(shareC, procs, o);
       scoreSS -= 50 * cD;      // a layout that breaks the element concept is used only when no layout keeps it
       if (!best || scoreSS > best.scoreSS) {
-        best = { conceptOk: cD === 0, conceptD: cD, nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, cc, cd, critf: 1 + cc * (cd - 1) + (a.nc ? Math.max(0, 1 - cc) * a.nc : 0), sc, ms, rate, M, tierNow, K, N, u, ntypes, gco, co, nc: a.nc || 0, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, dotN, fArc, hsFrac, hsM,
+        best = { conceptOk: cD === 0, conceptD: cD, nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, cc, cd, critf: 1 + cc * (cd - 1) + (a.nc ? Math.max(0, 1 - cc) * a.nc : 0), sc, ms, rate, accF, M, tierNow, K, N, u, ntypes, gco, co, nc: a.nc || 0, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, dotN, fArc, hsFrac, hsM,
           fallM, ogM: (arc && arc.ogMult ? arc.ogMult : 1) * (1 + 0.5 * (share.void || 0)), frozenM: arc && arc.frozenMult && isMelee ? arc.frozenMult : 0, coldVuln: arc && arc.coldVuln ? arc.coldVuln : 0 };
       }
     }
