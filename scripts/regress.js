@@ -369,6 +369,25 @@ const { chromium } = require("playwright");
       const g = weapon("nataruk").gaps || [];
       check("v1.85 나타루크 재장전 0.6/0.05 미확정 → 모든 공격 추천 보류 (관통 항목은 처리됨)", g.some((x) => x.cat === "all") && !g.some((x) => x.type === "punch-through-rule"), JSON.stringify(g.map((x) => x.cat + ":" + x.type)));
     }
+    // v1.90 (버스튼 프라임 질문 2026-11-07): Reaver's Rapture "On Full Burst Hit: +20% Damage, resets on Reload", "Caps at 5x",
+    // "cannot be stacked in Incarnon form" was a flat +100% on both forms; Forceful Finality "+5 Base Multishot on final magazine
+    // burst" ("added before mods") was left out; auto evolutions were picked with no mods (Reaver's Rapture over Absolute Valor)
+    {
+      const A = window.WF_APP, st = A.st, w0 = weapon("burston_prime"), o = baseO();
+      const ev = (sel, ai, mods) => { const w = A.applyEvos(w0, sel); return E.evaluate(w, w.attacks[ai], mods || [], o); };
+      const riv = { id: "__riven", eff: { cd: 1.466, cc: 1.701, tox: 0.957, mag: -0.432 } };
+      const rA = ev({ 2: 1, 3: 2, 4: 0 }, 1), rB = ev({ 2: 1, 3: 2, 4: 0 }, 1, [riv]), rI = ev({ 2: 1, 3: 2, 4: 0 }, 0);
+      check("v1.90 버스튼 리버즈 랩처: 탄창 45발 = 점사 15번 → 평균 4중첩(+80%), 탄창 −43.2% → 8번 → +62.5%, 인카논 형태 미적용", Math.abs(rA.dmgb - 0.8) < 1e-6 && Math.abs(rB.dmgb - 0.625) < 1e-6 && rI.dmgb === 0, [rA.dmgb, rB.dmgb, rI.dmgb].join(" / "));
+      const mF = ev({ 2: 0, 3: 2, 4: 1 }, 1).ms, mS = ev({ 2: 1, 3: 2, 4: 1 }, 1).ms, mI = ev({ 2: 0, 3: 2, 4: 1 }, 0).ms;
+      check("v1.90 버스튼 포스풀 피날리티: 마지막 점사 기본 멀티샷 +5 → 점사 15번 평균 ×1.333 (포트리스 샐보·인카논 형태는 1)", Math.abs(mF - 4 / 3) < 1e-6 && mS === 1 && mI === 1, [mF, mS, mI].join(" / "));
+      const ids = ["amalgam_serration", "critical_delay", "primed_cryo_rounds", "vile_acceleration", "galvanized_chamber", "gilded_truth", "vital_sense", "__riven"];
+      const keep = { base: st.base, weapon: st.weapon, atk: st.atk, evoSel: st.evoSel, evoManual: st.evoManual, results: st.results };
+      st.base = w0; st.evoSel = { 2: 1, 3: 1, 4: 0 }; st.evoManual = {}; st.weapon = A.applyEvos(w0, st.evoSel); st.atk = 1;
+      st.results = { o: Object.assign(A.readOpts(), { targets: null }), owned: { eff: riv.eff } };
+      const ns = typeof A.betterEvo === "function" ? A.betterEvo({ ids, val: null, arcane: "primary_merciless" }) : null;
+      Object.assign(st, keep);
+      check("v1.90 자동 진화를 추천 세팅으로 다시 고름: 치명타 세팅이면 진화 IV = 앱솔루트 밸러 (모드 없이 고른 리버즈 랩처 아님)", ns && ns[4] === 1, JSON.stringify(ns));
+    }
     // v1.70 (대기열 4b): Perigale "Gale Force" — wiki: "Landing 4 headshots in a burst or a headshot kill grants the "Gale Force"
     // buff, granting Infinite Ammo. The buff lasts 4 seconds". With headshots (o.hs 0.5, aimed) the magazine lasts longer →
     // fewer reloads → higher average rate and less ammo used; without headshots nothing changes.

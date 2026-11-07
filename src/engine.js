@@ -95,7 +95,7 @@
   const NUM_KEYS = ["dmg", "heavy", "ms", "cc", "ccHeavyNoDouble", "cd", "sc", "sd", "dur", "fr", "frneg", "lock", "mag", "reload", "wind",
     "ic", "hae", "ccc", "br", "ww", "co", "gco", "radius", "pt", "cdFlat", "ccFlat", "hsMult", "msLock", "hm", "ib", "welt",
     "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot", "evoPst", "wpcc",
-    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd", "napalm", "hata"];
+    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd", "napalm", "hata", "burstDmg", "burstCap", "finalBurstMs"];
   const EXTRA = ["radm", "magm", "gasm", "blastm", "viralm", "corrm", "heatx", "coldx", "elecx", "toxx", "voidx"];
   function newAgg() {
     const a = { elem: { heat: 0, cold: 0, elec: 0, tox: 0 }, phys: { impact: 0, punct: 0, slash: 0 }, extra: {} };
@@ -1002,10 +1002,22 @@
         else rate = atk.mag ? mag / (mag * (ct + 1 / fr) + reload) : 1 / (ct + 1 / fr);
       }
     }
-    const dmgb = a.dmg + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (tenno && o.tennoAdd ? tenno.dmg || 0 : 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0);
+    // Burst-per-magazine evolutions (burst attacks only; nb = full bursts in one modded magazine):
+    // Reaver's Rapture (wiki Burston Incarnon Genesis): "On Full Burst Hit: +20% Damage, resets on Reload", "Caps at 5x for +100%
+    // damage, additive with base damage mods such as Serration", "activates even if the first hit of a burst kills the target",
+    // "cannot be stacked in Incarnon form" → burst k (k = 0, 1, …) of a magazine has min(k, cap) stacks; average over the magazine.
+    // Forceful Finality: "+5 Base Multishot on final magazine burst", "added before mods, and is thus multiplied by multishot
+    // bonuses" → base multishot 1 + 5 on 1 burst of nb, i.e. 1 + 5 / nb on average.
+    let burstAdd = 0, finalMs = 0;
+    if (atk.burst && atk.mag && (a.burstDmg > 0 || a.finalBurstMs > 0)) {
+      const nb = Math.max(1, Math.floor(magShots(atk.mag * (1 + a.mag)) / Math.max(1, atk.burst[0]) + 1e-9));
+      if (a.burstDmg > 0) { const cap = Math.max(1, a.burstCap || 1); let s = 0; for (let k = 0; k < nb; k++) s += Math.min(k, cap); burstAdd = a.burstDmg * s / nb; }
+      if (a.finalBurstMs > 0) finalMs = a.finalBurstMs / nb;
+    }
+    const dmgb = a.dmg + burstAdd + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (tenno && o.tennoAdd ? tenno.dmg || 0 : 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0);
     const msLock = a.msLock > 0;
     // atk.noMs: a radial part the wiki says multishot doesn't multiply (one blast per trigger pull)
-    const ms0 = atk.noMs ? 1 : (atk.pellets || 1) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)));
+    const ms0 = atk.noMs ? 1 : ((atk.pellets || 1) + finalMs) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)));
     const tierNow = isHeavy ? M : (isMelee ? swingTier(atk.fr) : 1);
     // Hata-Satya (wiki): "Each hit increases Critical Chance by 1.2%", "additive with similar mods", capped at +500%,
     // multishot and punch-through hits count, "Bonus ends as soon as the reload animation begins" (switching to the Incarnon

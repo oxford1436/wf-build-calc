@@ -369,7 +369,7 @@ self.onmessage = function (ev) {
         else if (it.key === "setSC") x.sc = it.v;
         else if (it.key === "prelude" || it.key === "wise" || it.key === "highground") { x.evoSp = Object.assign({}, x.evoSp || {}, { [it.key]: { v: it.v, below: it.below, cap: it.cap } }); }
         else if (it.when) { x.evoCond = (x.evoCond || []).concat([{ when: it.when, eff: { [it.key]: it.v } }]); }
-        else eff[it.key] = (eff[it.key] || 0) + it.v;
+        else { eff[it.key] = (eff[it.key] || 0) + it.v; if (it.key === "burstDmg" && it.cap) eff.burstCap = Math.max(eff.burstCap || 0, it.cap); }
       }
       if (Object.keys(eff).length) x.evoEff = Object.assign({}, x.evoEff || {}, eff);
       return x;
@@ -1110,6 +1110,11 @@ self.onmessage = function (ev) {
       if (ev.data.type === "progress") { $("#progress .bar").style.width = (ev.data.p * 100).toFixed(0) + "%"; return; }
       const out = {}; for (const x of ev.data.out) out[x.tag] = x.res;
       st.results = { res: out.main, nobuff: out.nobuff || null, free: out.free || null, o, owned, flags };
+      // v1.90: auto evolutions are first picked with no mods (autoEvo) — Burston Prime got Reaver's Rapture (+100% damage with no
+      // mods) where its crit build wants Absolute Valor. With the result in hand, climb the auto tiers keeping the #1 build and,
+      // if that is faster, search once more with those evolutions (recommendations are the final form)
+      if (!st.evoRetry) { const ns = betterEvo(out.main && out.main[0]); if (ns) { st.evoRetry = true; st.evoSel = ns; st.weapon = applyEvos(st.base, ns); renderEvoBox(); run(); return; } }
+      st.evoRetry = false;
       if ($("#rivmode").value === "plan" && !w.noRiven && out.main && out.main.length) { planRivenPhase(wk, w, o, cands, jobs.some((j) => j.tag === "nobuff")); return; }
       $("#runbtn").disabled = false; $("#progress").hidden = true;
       renderResults();
@@ -1165,6 +1170,17 @@ self.onmessage = function (ev) {
         <td><small>${finalElements(x.r)}</small></td><td class="modlist">${x.ids.filter((id) => !top.ids.includes(id)).map((id) => `<span class="diff">${esc(modName(id))}</span>`).join("") || "<small>추천과 같음</small>"}</td></tr>`).join("")}
       </tbody></table></div>
       <p class="hint">"만들 수 없음"은 추천 세팅에서 원소·물리 모드가 차지한 칸 수 안에서는 그 속성을 충분히 넣지 못하는 조합입니다 (원소는 10% 이상이고 다른 원소 없이, 물리 하나만 고른 줄은 그 물리 속성이 가장 커야 함). 칸이 더 필요한 조합(예: 원소 모드가 1칸뿐인 세팅에서 바이러스 + 화염)도 여기서는 만들 수 없음으로 나옵니다. 칸 순서까지 반영한 계산이며, 원하는 조합으로 처음부터 다시 짜려면 왼쪽 "속성 콘셉트"에서 고르세요.</p>`;
+  }
+  // the auto (not hand-picked) evolution tiers re-chosen for a given build: coordinate climb, two passes, 0.5% to move
+  function betterEvo(top) {
+    const w = st.base; if (!w || !w.evos || !top || !st.results) return null;
+    const sc = (sel) => evalBuild(top.ids, top.val, top.arcane, null, null, null, applyEvos(w, sel)).score;
+    let sel = Object.assign({}, st.evoSel), best = sc(sel), changed = false;
+    for (let pass = 0; pass < 2; pass++) for (const t of w.evos) {
+      if (t.tier === 1 || t.perks.length < 2 || (st.evoManual && st.evoManual[t.tier])) continue;
+      t.perks.forEach((p, i) => { if (i === sel[t.tier]) return; const s2 = Object.assign({}, sel, { [t.tier]: i }), v = sc(s2); if (v > best * 1.005) { best = v; sel = s2; changed = true; } });
+    }
+    return changed ? sel : null;
   }
   // Incarnon evolutions with the recommended build kept: each other perk of a tier, swapped in alone
   function evoCompareHtml(top, ref) {
@@ -2234,7 +2250,7 @@ self.onmessage = function (ev) {
   F0 = captureFields();
   // read-only handle for checking results from the browser console / test scripts
   // test/automation handle (scripts/regress.js, scripts/community_check.js): arcAuto = the arcanes the 'auto' option compares
-  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts, boundCheck, renderResults,
+  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts, boundCheck, renderResults, betterEvo, autoEvo,
     arcAuto: (w) => arcanesFor(w).filter(([, x]) => !x.manual && !x.none && !x.aim).map(([k]) => k).concat([null]) };
   restoreFromHash();
 })();

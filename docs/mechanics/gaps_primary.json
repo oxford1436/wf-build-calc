@@ -3858,7 +3858,7 @@
   },
   "quote": "+5 Base Multishot on final magazine burst. | Multishot bonus is added before mods, and is thus multiplied by multishot bonuses. | Multishot bonus does not affect the Incarnon form.",
   "url": "https://wiki.warframe.com/w/Burston_Incarnon_Genesis",
-  "handled": null,
+  "handled": "v1.90: 마지막 점사 기본 멀티샷 +5를 탄창 평균(1 + 5/점사 수)으로",
   "variants": [
    "Burston",
    "Burston Prime"
@@ -3897,7 +3897,7 @@
   },
   "quote": "On Full Burst Hit: +20% Damage, resets on Reload. | Caps at 5x for +100% damage, additive with base damage mods such as Serration. | Burst condition is not affected by multishot or punch through, but counts object hits such as nullifier bubbles, and activates even if the first hit of a burst kills the target. | Resets when activating incarnon, and cannot be stacked in Incarnon form.",
   "url": "https://wiki.warframe.com/w/Burston_Incarnon_Genesis",
-  "handled": null,
+  "handled": "v1.90: 탄창마다 점사 k번째 min(k, 최대) 중첩 평균 / 마지막 점사 기본 멀티샷 +5를 탄창 평균으로",
   "variants": [
    "Burston",
    "Burston Prime"
@@ -4582,7 +4582,7 @@
   },
   "quote": "On Full Burst Hit: +20% Damage, resets on Reload | Stacks up to 4x. | Bonus is additive with other sources of base damage such as Serration.",
   "url": "https://wiki.warframe.com/w/Sybaris_Incarnon_Genesis",
-  "handled": null,
+  "handled": "v1.90: 탄창마다 점사 k번째 min(k, 최대) 중첩 평균 / 마지막 점사 기본 멀티샷 +5를 탄창 평균으로",
   "variants": [
    "Sybaris",
    "Dex Sybaris",
