@@ -440,11 +440,33 @@ const { chromium } = require("playwright");
     // Glaxion "Consumes 0.5 ammo per tick of damage"), so a 90-round magazine lasts 180 ticks; Primary Plated Round's 10 s covers
     // 10 / (180/12 + 2 s reload) of the cycle (wiki Plated Round: "Double the amount shown for most continuous weapons")
     {
-      const tg = weapon("tenet_glaxion"), a0 = tg.attacks[0], o = baseO();
+      const tg = weapon("tenet_glaxion"), a0 = tg.attacks[0], o = Object.assign(baseO(), { killRamp: false });
       const r0 = E.evaluate(tg, a0, [], o), rP = E.evaluate(tg, a0, [], Object.assign({}, o, { arcane: "primary_plated_round" }));
-      const wantRate = 180 / (180 / 12 + (1 - 0.2) * 0.6 / 2 + 2), wantPl = 15 * Math.sqrt(5 * 90) / 100 * 10 / (180 / 12 + 2);
-      check("v1.96 빔 탄약 0.5/틱: 테넷 글랙시온 탄창 90 = 180틱 (발 간격·재장전 주기), 플레이티드 라운드 지속 비율 10/17초", Math.abs(r0.rate - wantRate) < 0.05 && Math.abs((rP.dmgb - r0.dmgb) - wantPl) < 0.02,
+      const wantRate = 180 / (180 / 12 + (1 - 0.2) * 0.6 / 2 + 2), wantPl = 15 * Math.sqrt(5 * 90) / 100 * 10 / (180 / 12);
+      check("v1.96 빔 탄약 0.5/틱: 테넷 글랙시온 탄창 90 = 180틱 (발 간격·재장전 주기), 연속 사격 플레이티드 라운드 지속 비율 10/15초", Math.abs(r0.rate - wantRate) < 0.05 && Math.abs((rP.dmgb - r0.dmgb) - wantPl) < 0.02,
         "rate " + r0.rate.toFixed(2) + " (기대 " + wantRate.toFixed(2) + "), plated " + (rP.dmgb - r0.dmgb).toFixed(3) + " (기대 " + wantPl.toFixed(3) + ")");
+    }
+    // v1.96 independent review: game-data magazines counted in shots (wiki counts rounds) must not be divided by AmmoCost again —
+    // Twin Grakatas 60 shots (wiki 120 rounds, 2 per shot), Ballistica Prime 8 (32 at 4), Fulmin full auto 60 (wiki magazine 60)
+    {
+      const shots = (id, en) => { const w = weapon(id), a = w.attacks.find((x) => x.en === en); const c = a.ammoCost != null ? a.ammoCost : a.parts && a.parts[0].ammoCost != null ? a.parts[0].ammoCost : 1; return a.mag / c; };
+      const tg = shots("twin_grakatas", "Normal Attack"), bp = shots("ballistica_prime", "Normal Shot"), fu = shots("fulmin", "Full Auto Mode");
+      check("v1.98 탄창 단위: 트윈 그라카타 60발·발리스티카 프라임 8발·풀민 자동 60발 (위키 탄창 ÷ 발당 소모)", Math.abs(tg - 60) < 0.5 && Math.abs(bp - 8) < 0.5 && Math.abs(fu - 60) < 0.5, tg + " / " + bp + " / " + fu);
+    }
+    // v1.96 independent review: Primary Plated Round must follow the same pack assumption as kill stacks — packs start from 0
+    // stacks, so Plated gets the partial reload bonus of one pack (wiki "Partial Damage Bonus"); with stacks kept (continuous fire)
+    // the bonus covers the whole magazine when it is fired within 10 s (Tenet Glaxion riven build: 252 ticks at ~36/s)
+    {
+      const tg = weapon("tenet_glaxion"), a0 = tg.attacks[0];
+      const riv = A.effFromStats([["cd", 1.485], ["cc", 1.856], ["corrm", 1.114]]);
+      const ids = ["__riven", "galvanized_chamber", "primed_cryo_rounds", "malignant_force", "galvanized_aptitude", "magnetic_capacity", "vile_acceleration", "primed_shred"];
+      const o0 = Object.assign(baseO(), { val: { type: "heat", pct: 0.6 } });
+      const mods = ids.map((id) => id === "__riven" ? { id: "__riven", eff: riv } : M(id));
+      const sc = (arc, kr) => E.evaluate(tg, a0, mods, Object.assign({}, o0, { arcane: arc, killRamp: kr })).score;
+      const none = E.evaluate(tg, a0, mods, Object.assign({}, o0, { arcane: null, killRamp: false })), pl = E.evaluate(tg, a0, mods, Object.assign({}, o0, { arcane: "primary_plated_round", killRamp: false }));
+      const full = 15 * Math.sqrt(5 * 126) / 100;
+      check("v1.98 플레이티드 라운드: 무리마다 중첩 0이면 머시리스보다 약함(부분 재장전), 연속 사격이면 탄창 내내 +" + Math.round(full * 100) + "%", sc("primary_merciless") > sc("primary_plated_round") && Math.abs((pl.dmgb - none.dmgb) - full) < 0.03,
+        "머시리스/플레이티드 " + (sc("primary_merciless") / sc("primary_plated_round")).toFixed(3) + ", 연속 " + (pl.dmgb - none.dmgb).toFixed(3));
     }
     // v1.96 (사용자 설문 2026-11-02 "리벤 '맞출 예정' 수치는 최대값", 테넷 글랙시온 질문 2026-11-07): plan-mode riven values are the
     // top of the roll range — wiki Riven Mods, Rifle Attribute Ranges, 3 positives + 1 negative: Critical Damage 121.5% — 148.5%
@@ -679,6 +701,8 @@ const { chromium } = require("playwright");
     const src = require("fs").readFileSync(path.resolve(__dirname, "..", "src", "app.js"), "utf8");
     const bare = src.split("\n").filter((l) => /1\.2 \* (Math\.abs\()?RIV_FORM/.test(l) && !/rangeTxt/.test(l));
     results.push({ name: "v1.96 앱의 '맞출 예정' 리벤 배율이 모두 RIV_PLAN_W(최대치)를 거침", ok: bare.length === 0, detail: bare.map((l) => l.trim().slice(0, 60)).join(" | ") });
+    const plan = src.slice(src.indexOf("function planRivenPhase"), src.indexOf("/* ---------------- evaluation helpers"));
+    results.push({ name: "v1.98 '처음부터 리벤 전제' 세팅은 베일런스·아케인도 다시 고름 (테넷 글랙시온: 리벤 없으면 플레이티드+화염, 리벤 넣으면 머시리스+자성)", ok: /valOptions: valOptions\(\), arcOptions: arcOptions\(\)/.test(plan) && !/valOptions: \[top0\.val\]/.test(plan) });
   }
   let fail = 0;
   for (const r of results) { console.log((r.ok ? "PASS " : "FAIL ") + r.name + (r.detail ? "  (" + r.detail + ")" : "")); if (!r.ok) fail++; }

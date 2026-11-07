@@ -1240,7 +1240,9 @@ self.onmessage = function (ev) {
       return { eff: effFromStats(info.map((x) => [x.k, x.v])), info };
     });
     const jobs2 = [];
-    rivs.forEach((rv, i) => jobs2.push({ tag: "riv" + i, riven: rv.eff, locked: ["__riven"], valOptions: [top0.val], arcOptions: [top0.arcane], beam: 70 }));
+    // v1.96 (테넷 글랙시온): with the riven in, valence and arcane are picked again too — the riven-free #1 had Plated Round + Heat,
+    // the riven build is faster with Merciless + Magnetic (the riven covers crit, so the other slots change)
+    rivs.forEach((rv, i) => jobs2.push({ tag: "riv" + i, riven: rv.eff, locked: ["__riven"], valOptions: valOptions(), arcOptions: arcOptions(), beam: 70 }));
     $("#runbtn").textContent = "리벤을 넣은 전제로 다시 계산 중…"; $("#progress .bar").style.width = "0%";
     wk.onmessage = (ev) => {
       if (ev.data.type === "progress") { $("#progress .bar").style.width = (ev.data.p * 100).toFixed(0) + "%"; return; }
@@ -1253,7 +1255,7 @@ self.onmessage = function (ev) {
       $("#results").scrollIntoView({ behavior: "smooth", block: "start" });
       conceptPhase(wk, w, o, cands);
     };
-    wk.postMessage({ weapon: JSON.parse(JSON.stringify(w)), atk: st.atk, opts: o, cands, locked: [], beam: 70, valOptions: [top0.val], arcOptions: [top0.arcane], riven: null, jobs: jobs2 });
+    wk.postMessage({ weapon: JSON.parse(JSON.stringify(w)), atk: st.atk, opts: o, cands, locked: [], beam: 70, valOptions: valOptions(), arcOptions: arcOptions(), riven: null, jobs: jobs2 });
   }
 
   /* ---------------- evaluation helpers ---------------- */
@@ -2009,7 +2011,7 @@ self.onmessage = function (ev) {
     const rows = [
       { n: "① 리벤 없이 짠 추천 세팅", d: "위 추천 세팅 그대로", ids: top.ids, rr: r0, riv: null },
       { n: "② ①에서 한 칸만 리벤으로 교체", d: `${modName(g.slot)} 대신 리벤 (아래 가이드 1순위)`, ids: swapIds, rr: rSwap, riv: gInfo },
-      { n: "③ 처음부터 리벤을 넣고 다시 짠 세팅", d: "리벤을 고정하고 나머지 칸·익실러스를 전부 다시 고름", ids: B.top.ids, rr: rFull, riv: B.riv.info },
+      { n: "③ 처음부터 리벤을 넣고 다시 짠 세팅", d: "리벤을 고정하고 나머지 칸·익실러스·베일런스·아케인을 전부 다시 고름" + (B.top.val && (!top.val || B.top.val.type !== top.val.type) ? ` · 베일런스 ${TYPE_KO[B.top.val.type]}` : "") + (B.top.arcane !== top.arcane ? ` · 아케인 ${B.top.arcane ? ARC[B.top.arcane].ko : "없음"}` : ""), ids: B.top.ids, rr: rFull, riv: B.riv.info },
     ];
     const changed = B.top.ids.filter((id) => id !== "__riven" && !top.ids.includes(id));
     const dropped = top.ids.filter((id) => !B.top.ids.includes(id));
@@ -2028,7 +2030,7 @@ self.onmessage = function (ev) {
       </tbody></table>
       <p>${k3 > 1.005 && !changed.length ? `처음부터 리벤을 전제로 짜도 모드는 한 칸만 바꾼 세팅과 같고, 리벤 옵션 차이(${esc(B.riv.info.filter((x) => x.v > 0).map((x) => x.k).sort().join() === g.stats.slice().sort().join() ? B.riv.info.filter((x) => x.v < 0).map((x) => "부정 " + RIV_KO[x.k]).join(", ") : "옵션 조합")}) 때문에 <b>×${k3.toFixed(2)}</b> 빠릅니다. 리벤이 생기면 ${esc(modName(g.slot))} 자리에 넣으면 됩니다.` : k3 > 1.005 ? `처음부터 리벤을 전제로 짜면 한 칸만 바꾸는 것보다 <b>×${k3.toFixed(2)}</b> 더 빠릅니다. 리벤이 생기면 ${dropped.filter((id) => id !== g.slot).length ? `<b>${dropped.filter((id) => id !== g.slot).map(modName).map(esc).join(", ")}</b>도 빼고 ` : ""}<b>${changed.map(modName).map(esc).join(", ") || "-"}</b>${changed.length ? "을(를) 넣는" : ""} 쪽이 좋습니다.` : `처음부터 리벤을 전제로 짜도 한 칸만 바꾼 세팅과 거의 같습니다 (×${k3.toFixed(2)}). 리벤이 생기면 ${esc(modName(g.slot))} 자리에만 넣으면 됩니다.`}</p>
       ${altTable}
-      <p class="hint">리벤 수치는 3긍정 1부정 리벤의 각 옵션 최대치(범위 상한)로 가정했습니다 (부정은 이 세팅을 가장 빠르게 만드는 옵션 — 없으면 피해 계산에 영향 없는 옵션). ③은 한 칸 교체 기준 상위 리벤 옵션 조합 네 가지로 각각 다시 짜 본 뒤 가장 빠른 쪽입니다. 베일런스·아케인은 ①과 같게 두었습니다. 실제로 뽑은 리벤이 생기면 리벤 모드를 "보유 리벤 고정"으로 바꿔 그 수치로 계산하세요.</p></section>`;
+      <p class="hint">리벤 수치는 3긍정 1부정 리벤의 각 옵션 최대치(범위 상한)로 가정했습니다 (부정은 이 세팅을 가장 빠르게 만드는 옵션 — 없으면 피해 계산에 영향 없는 옵션). ③은 한 칸 교체 기준 상위 리벤 옵션 조합 네 가지로 각각 나머지 칸·베일런스·아케인까지 다시 짜 본 뒤 가장 빠른 쪽입니다. 실제로 뽑은 리벤이 생기면 리벤 모드를 "보유 리벤 고정"으로 바꿔 그 수치로 계산하세요.</p></section>`;
   }
   function ownedRivenSection(owned, R, top) {
     const inc = owned.info.filter((x) => x.inc), exc = owned.info.filter((x) => !x.inc);

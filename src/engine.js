@@ -485,6 +485,19 @@
   // Element arrangement: o.elemOrder fixes it (slot order as typed). Otherwise every possible arrangement is a
   // candidate; o.layoutTTK picks the one with the best time-to-kill score (exact), else steady-state damage (fast).
   function evaluate(weapon, atk, mods, o, riven) {
+    // v1.96 Plated Round in a crowd with kill stacks from 0: the partial bonus depends on how long the pack takes — fixed point
+    // on the pack firing time (mean 12-enemy clear over factions and levels), three passes at most
+    const arcP = o.arcane ? (root.WF_ARCANES || {})[o.arcane] : null;
+    if (arcP && arcP.plated && o._platedT == null && o.scenario === "crowd" && o.killRamp !== false && (atk.mag || (atk.parts && atk.parts[0].mag))) {
+      const packT = (r) => { const xs = []; for (const f of o.factions || []) { const x = r.perF && r.perF[f]; if (!x) continue; for (const y of [x, x.hi, x.top]) if (y && isFinite(y.clear) && y.clear > 0) xs.push(y.clear); } return xs.length ? xs.reduce((q, v) => q + v, 0) / xs.length : null; };
+      let r = evaluate(weapon, atk, mods, Object.assign({}, o, { _platedT: 1e6, killRamp: o.killRamp }), riven), T = packT(r);
+      for (let i = 0; i < 3 && T != null; i++) {
+        const r2 = evaluate(weapon, atk, mods, Object.assign({}, o, { _platedT: T }), riven), T2 = packT(r2);
+        r = r2; if (T2 == null || Math.abs(T2 - T) < 0.02 * T) { T = T2; break; } T = T2;
+      }
+      if (r) r.platedT = T;
+      return r;
+    }
     if (o.layoutTTK && o.layoutIdx === undefined && !(o.elemOrder && o.elemOrder.length)) {
       let best = evaluate1(weapon, atk, mods, Object.assign({}, o, { layoutIdx: 0 }), riven);
       for (let i = 1; i < (best.nLayouts || 1); i++) {
@@ -1138,12 +1151,19 @@
     // falloff: distance (bullets/pellets) and blast edge (enemies around the centre of an explosion)
     let fallM = distFall(atk.fo, o) * armFrac(atk.arm, o);
     if (atk.rfo && o.scenario === "crowd" && K > 1) fallM *= (1 + (K - 1) * (1 - atk.rfo * 2 / 3)) / K;
-    // Primary Plated Round: bonus ≈ 33.5%·√magazine for 10 s after each full reload (wiki examples)
+    // Primary Plated Round (wiki): "Max Damage Bonus = 15·√(5·Magazine Size)" on a full reload, "Partial Damage Bonus = (Magazine
+    // Size − Leftover Ammunition) / Magazine Size · 15·√(5·Magazine Size)", lasts 10 s; "The Ideal Fire Rate … how quickly a weapon
+    // must fire for a 10s bonus to last for its entire next magazine". Continuous fire (o.killRamp false, single targets): every
+    // reload is from empty and the bonus covers min(1, 10 s / time to fire the magazine) of the shots (the reload itself is no
+    // firing time — v1.96 review). Crowd with kill stacks from 0 (user's choice 2026-11-02, Merciless etc. restart each pack): the
+    // same assumption for Plated — the pack starts after a reload of what the last pack used (o._platedT = pack firing time from
+    // evaluate()), so the bonus is the partial one: rounds used / magazine, for min(1, 10 s / pack time) of the pack
     let platedB = 0;
     if (arc && arc.plated && atk.mag) {
-      const rl = (atk.reload || 2) / Math.max(0.1, 1 + a.reload);
-      const magN = atk.mag * (1 + a.mag), cyc = magShots(magN) / Math.max(0.05, (atk.fr || 1) * (1 + a.fr)) + (ext.reloadCast != null ? Math.min(rl, ext.reloadCast) : rl);
-      platedB = 0.335 * Math.sqrt(magN) * Math.min(1, 10 / cyc);
+      const magN = atk.mag * (1 + a.mag), frM = Math.max(0.05, (atk.fr || 1) * Math.max(0.05, 1 + a.fr + a.frneg + (ext.frAdd || 0)));
+      const fireT = magShots(magN) / frM, full = 0.335 * Math.sqrt(magN);
+      if (o._platedT != null) { const T = Math.max(0.05, o._platedT); platedB = full * Math.min(1, T / fireT) * Math.min(1, 10 / T); }
+      else platedB = full * Math.min(1, 10 / fireT);
     }
 
     const allLayouts = elementLayouts(atk, a, o.val, Btot, base0, o.elemOrder, tail);

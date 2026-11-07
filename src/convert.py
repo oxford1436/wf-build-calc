@@ -236,6 +236,15 @@ def conv(w, typ):
                 wa = wiki_attack(WIKI.get(name), a["name"])
                 if wa.get("AmmoCost") is not None:
                     at["ammoCost"] = wa["AmmoCost"]
+                # v1.96 independent review: some game-data magazines are counted in shots while the wiki counts rounds (Twin
+                # Grakatas 60 vs 120 at 2 per shot, Ballistica Prime 8 vs 32 at 4, Panthera 30 vs 60, Fulmin 6 vs 60, Staticor 12
+                # vs 48). The engine divides the magazine by AmmoCost, so when the wiki magazine is a whole multiple of the game
+                # one, scale the cost (rounds per shot) down by that multiple: shots per magazine = wiki rounds / wiki cost
+                wmag = (WIKI.get(name) or {}).get("Magazine")
+                if wmag and at["mag"]:
+                    rr = wmag / at["mag"]
+                    if rr >= 1.9 and abs(rr - round(rr)) < 0.05:
+                        at["ammoCost"] = round((wa.get("AmmoCost") if wa.get("AmmoCost") is not None else 1) / round(rr), 6)
                 if wa.get("AttackName") == a["name"]:
                     wiki_traits(at, wa)
                 # Incarnon Form: its own ammo pool (charges → rounds), no magazine or reload; mods and ammo efficiency don't
@@ -245,6 +254,8 @@ def conv(w, typ):
                     if not any(x.get("Magazine") for x in incs):
                         ch = next((x["IncarnonCharges"] for x in incs if x.get("IncarnonCharges")), None)
                         at["mag"], at["reload"], at["inc"] = 0, 0, True
+                        at.pop("ammoCost", None)   # its own pool: no magazine-unit scaling
+                        if wa.get("AmmoCost") is not None: at["ammoCost"] = wa["AmmoCost"]
                         if ch:
                             at["incAmmo"] = ch
                 ch_ = CHAIN.get(name, {}).get(a["name"])
