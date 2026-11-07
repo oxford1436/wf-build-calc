@@ -377,7 +377,10 @@ const { chromium } = require("playwright");
       const ev = (sel, ai, mods) => { const w = A.applyEvos(w0, sel); return E.evaluate(w, w.attacks[ai], mods || [], o); };
       const riv = { id: "__riven", eff: { cd: 1.466, cc: 1.701, tox: 0.957, mag: -0.432 } };
       const rA = ev({ 2: 1, 3: 2, 4: 0 }, 1), rB = ev({ 2: 1, 3: 2, 4: 0 }, 1, [riv]), rI = ev({ 2: 1, 3: 2, 4: 0 }, 0);
-      check("v1.90 버스튼 리버즈 랩처: 탄창 45발 = 점사 15번 → 평균 4중첩(+80%), 탄창 −43.2% → 8번 → +62.5%, 인카논 형태 미적용", Math.abs(rA.dmgb - 0.8) < 1e-6 && Math.abs(rB.dmgb - 0.625) < 1e-6 && rI.dmgb === 0, [rA.dmgb, rB.dmgb, rI.dmgb].join(" / "));
+      check("v1.90 버스튼 리버즈 랩처: 탄창 45발 = 점사 15번 → 평균 4중첩(+80%), 탄창 −43.2% = 26발(점사 8번 + 2발) → 발마다 평균 (3×25 + 2×5)/26중첩, 인카논 형태 미적용", Math.abs(rA.dmgb - 0.8) < 1e-6 && Math.abs(rB.dmgb - 0.2 * 85 / 26) < 1e-6 && rI.dmgb === 0, [rA.dmgb, rB.dmgb, rI.dmgb].join(" / "));
+      // v1.90 독립 검토: 3의 배수가 아닌 탄창은 마지막 점사가 1~2발 — 마지막 점사 멀티샷 +5는 그 발에만 (위키 Burston Prime 팁)
+      const mR = ev({ 2: 0, 3: 2, 4: 1 }, 1, [riv]).ms;
+      check("v1.90 포스풀 피날리티 + 탄창 26발: 마지막 점사는 2발 → 발마다 평균 멀티샷 1 + 5×2/26", Math.abs(mR - (1 + 10 / 26)) < 1e-6, mR);
       const mF = ev({ 2: 0, 3: 2, 4: 1 }, 1).ms, mS = ev({ 2: 1, 3: 2, 4: 1 }, 1).ms, mI = ev({ 2: 0, 3: 2, 4: 1 }, 0).ms;
       check("v1.90 버스튼 포스풀 피날리티: 마지막 점사 기본 멀티샷 +5 → 점사 15번 평균 ×1.333 (포트리스 샐보·인카논 형태는 1)", Math.abs(mF - 4 / 3) < 1e-6 && mS === 1 && mI === 1, [mF, mS, mI].join(" / "));
       const ids = ["amalgam_serration", "critical_delay", "primed_cryo_rounds", "vile_acceleration", "galvanized_chamber", "gilded_truth", "vital_sense", "__riven"];

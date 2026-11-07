@@ -39,9 +39,12 @@
   // crowd geometry: enemies lined up behind the one you shoot ~ Poisson(2); a humanoid body uses ~0.6 m of punch through
   // (wiki "Punch Through": 0.6 m passes a humanoid, 1.0 m a quadruped). Re-aiming to the next target takes ~0.2 s.
   const LINE_MEAN = 2, BODY_PT = 0.6, T_ACQ = 0.2;
-  function lineHits(cap) {           // expected extra enemies hit = E[min(n, cap)], n ~ Poisson(LINE_MEAN)
-    let p = Math.exp(-LINE_MEAN), e = 0;
-    for (let n = 1; n < 30; n++) { p *= LINE_MEAN / n; e += p * Math.min(n, cap); }
+  // LINE_MEAN (enemies lined up behind the target) is a crowd-geometry assumption, not a wiki number — o.lineMean overrides it for
+  // sensitivity checks (Kuva Zarr Nox test 2026-11-07: the real crowd was more spread out than the density model)
+  function lineHits(cap, mean) {     // expected extra enemies hit = E[min(n, cap)], n ~ Poisson(mean, default LINE_MEAN)
+    const mu = mean != null ? mean : LINE_MEAN;
+    let p = Math.exp(-mu), e = 0;
+    for (let n = 1; n < 30; n++) { p *= mu / n; e += p * Math.min(n, cap); }
     return e;
   }
 
@@ -906,11 +909,11 @@
       const key = (parentAtk || atk).name;
       if (o.hits && o.hits[key]) K = o.hits[key];
       else if (radius > 0) K = Math.max(1, Math.min(N, rho * Math.PI * radius * radius));
-      else if (atk.punch) K = Math.min(N, 1 + lineHits(Infinity));
+      else if (atk.punch) K = Math.min(N, 1 + lineHits(Infinity, o.lineMean));
       // punch-through: the enemies lined up behind the target (Poisson, mean 2) that the punch-through distance can pass
       // (0.6 m per body) — 3 m already reaches almost all of them, so more distance adds little. Explosive projectiles burst on first contact
       // and can't use it (wiki "Punch Through": the stat is locked for projectile AoE weapons)
-      else if (!isMeleeKind(kind) && a.pt > 0 && !atk.ptLock && !(parentAtk && parentAtk.ptLock)) K = Math.min(N, 1 + lineHits(a.pt / BODY_PT));
+      else if (!isMeleeKind(kind) && a.pt > 0 && !atk.ptLock && !(parentAtk && parentAtk.ptLock)) K = Math.min(N, 1 + lineHits(a.pt / BODY_PT, o.lineMean));
       else if (kind === "melee") K = Math.min(N, 2);
       else K = 1;
       n3 = Math.min(N, 1 + rho * Math.PI * 9);
@@ -1007,12 +1010,16 @@
     // damage, additive with base damage mods such as Serration", "activates even if the first hit of a burst kills the target",
     // "cannot be stacked in Incarnon form" → burst k (k = 0, 1, …) of a magazine has min(k, cap) stacks; average over the magazine.
     // Forceful Finality: "+5 Base Multishot on final magazine burst", "added before mods, and is thus multiplied by multishot
-    // bonuses" → base multishot 1 + 5 on 1 burst of nb, i.e. 1 + 5 / nb on average.
+    // bonuses". The magazine is whole rounds (arsenal: 45 × (1 − 0.432) = 25.56 shows 26) and a magazine that isn't a multiple of
+    // the burst ends in a short burst — wiki Burston Prime tips: "you might be reduced to only 1 or 2 rounds in your last shot"
+    // (independent review 2026-11-07). Per round: the final burst's rounds get 1 + 5 base multishot, so 1 + 5 × last / magazine;
+    // Reaver's stacks are weighted by the rounds of each burst (the short last burst fires with min(full bursts, cap) stacks).
     let burstAdd = 0, finalMs = 0;
     if (atk.burst && atk.mag && (a.burstDmg > 0 || a.finalBurstMs > 0)) {
-      const nb = Math.max(1, Math.floor(magShots(atk.mag * (1 + a.mag)) / Math.max(1, atk.burst[0]) + 1e-9));
-      if (a.burstDmg > 0) { const cap = Math.max(1, a.burstCap || 1); let s = 0; for (let k = 0; k < nb; k++) s += Math.min(k, cap); burstAdd = a.burstDmg * s / nb; }
-      if (a.finalBurstMs > 0) finalMs = a.finalBurstMs / nb;
+      const bn = Math.max(1, atk.burst[0]), m = Math.max(1, Math.round(atk.mag * (1 + a.mag)));
+      const nb = Math.floor(m / bn + 1e-9), rem = m - nb * bn;
+      if (a.burstDmg > 0) { const cap = Math.max(1, a.burstCap || 1); let s = 0; for (let k = 0; k < nb; k++) s += bn * Math.min(k, cap); s += rem * Math.min(nb, cap); burstAdd = a.burstDmg * s / m; }
+      if (a.finalBurstMs > 0) finalMs = a.finalBurstMs * (rem || Math.min(bn, m)) / m;
     }
     const dmgb = a.dmg + burstAdd + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (tenno && o.tennoAdd ? tenno.dmg || 0 : 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0);
     const msLock = a.msLock > 0;
