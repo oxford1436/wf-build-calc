@@ -1,0 +1,11 @@
+const { MODS } = require("./opt.js"); const R2 = require("./run2.js"); const K = require("./kuva_grattler.js");
+const sc = JSON.parse(process.argv[2] || '{"overMs":1.575,"deFrac":0}');
+const X2 = ["pdr", "mc", "hb", "ppm", "at", "peb", "pcr", "prb"];
+const m = R2.bestOrder(X2, sc); const DRM = 120 / 180;
+const mS = m.r.s * DRM;
+console.log("Mausolon best", m.ids.map((i) => MODS[i].ko).join(", "), "score", mS.toFixed(0), "P12", (m.r.r12.dps * DRM).toFixed(0), "P34", (m.r.r34.dps * DRM).toFixed(0));
+const pool = ["prb", "sabot", "pdr", "cb", "mc", "at", "ps", "hb", "ppm", "peb", "pcr", "pvc", "hs", "cbul", "mag", "cc_", "qd", "cbl", "pde", "me", "qr"];
+const t0 = Date.now();
+const top = K.searchKG(sc, pool, 8);
+for (const x of top) console.log((100 * x.r.s / mS).toFixed(1) + "% of Mausolon", "val", x.val, x.ids.map((i) => MODS[i].ko).join(", "), "| P12", (x.r.r12.dps).toFixed(0), "P34", x.r.r34.dps.toFixed(0), "ms", x.r.r12.ms.toFixed(2), "cc", x.r.r12.ccH.toFixed(2), "cd", x.r.r12.cd.toFixed(2), "up", x.r.r12.up.toFixed(2), "expl share P12", (x.r.r12.expD / (x.r.r12.expD + x.r.r12.hitD)).toFixed(2));
+console.log("sec", (Date.now() - t0) / 1000);
