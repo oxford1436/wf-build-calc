@@ -2,7 +2,18 @@
 
 계산기 기본 조건(강철의 길 150·250·400, 3팩션 평균, 12명 무리, 처치 중첩은 무리마다 0부터)에서 계산기 1위 = 100%. '중첩 유지'·'처치 없음'은 같은 조건에서 처치 중첩만 바꾼 비교입니다. 이 파일은 scripts/community_check.js가 만듭니다.
 
-표시 4건
+표시 7건
+
+## 버스튼 프라임 (burston_prime.json)
+
+계산기 1위: 프라임드 크라이오 라운즈, 프라임드 슈레드, 갈바나이즈드 체임버, 바이탈 센스, 크리티컬 딜레이, 서레이션, 길디드 트루스, 인펙티드 클립 · primary_merciless
+
+| 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
+| --- | --- | --- | --- | --- | --- | --- |
+| [sportskeeda Build 1 바이러스 + 베기 (인카논 형태)](https://sportskeeda.com/mmo/warframe-burston-incarnon-build-guide-best-evolution-talents-mod-setup) | sportskeeda | 바이러스+화염 | 18% | 16% | 22% | 인식 못 함: Primed Bane of Corrupted |
+| [sportskeeda Build 2 (갈바나이즈드 스코프, 조준 헤드샷)](https://sportskeeda.com/mmo/warframe-burston-incarnon-build-guide-best-evolution-talents-mod-setup) | sportskeeda | 부식+화염 | 9% | 8% | 11% | — |
+| 사용자 구성 A (2026-11-07) | session | 폭발 | 45% | 49% | 39% | 인식 못 함: 리벤 수치 없음 |
+| 추천 v1.90 (보유 리벤, 기본·인카논 공용) | session | 자성+폭발 | 48% | 56% | 19% | 인식 못 함: 리벤 수치 없음 |
 
 ## 코린트 프라임 (corinth_prime.json)
 
