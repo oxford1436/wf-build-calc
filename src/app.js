@@ -1476,22 +1476,20 @@ self.onmessage = function (ev) {
   function renderResults() {
     const R = st.results, res = R.res, o = R.o;
     if (!res || !res.length) { $("#results").innerHTML = `<div class="placeholder"><h3>결과 없음</h3></div>`; return; }
+    // 2026-11-07 사용자 결정: 보류하지 않고 지금 계산대로 1위를 보여 줌 — 계산에 없는 메커니즘·양쪽 가정은 참고 메모로만
     const gaps = openGaps(R);
+    let noteHtml = "";
     if (gaps.length) {
-      $("#results").innerHTML = shareBarHtml() + `<section class="card"><h3>추천 보류 — 계산에 아직 없는 메커니즘 ${gaps.length}개</h3>
-        <p>${esc(st.weapon.ko)}의 이 공격에는 위키에 적힌 고유 메커니즘 중 계산기에 아직 들어가지 않은 것이 있습니다. 이대로 계산한 세팅은 틀릴 수 있어서(포르마·랭크업 손해) 추천을 보여 주지 않습니다. 계산에 넣는 대로 보류가 풀립니다.</p>
-        <ul>${gaps.map((x) => `<li><b>${esc(GAP_TYPE[x.type] || x.type)}</b> · ${esc(x.atk || "")}${x.stated ? "" : " (위키에 수치 일부 없음)"}<br><span class="muted">${esc(x.q)}</span></li>`).join("")}</ul>
-        <p class="muted">출처: 무기 위키 문서 (2026-11-05 전수 조사). 다른 공격 방식을 고르면 그 공격에 해당하는 것만 확인합니다.</p></section>`;
-      return;
+      noteHtml += `<section class="card note"><h3>참고 — 계산에 아직 없는 메커니즘 ${gaps.length}개</h3>
+        <p class="muted">${esc(st.weapon.ko)}의 이 공격에는 위키에 적힌 고유 메커니즘 중 계산기에 아직 들어가지 않은 것이 있습니다. 아래 추천은 이것을 빼고 지금 계산대로 낸 1위입니다.</p>
+        <ul>${gaps.map((x) => `<li><b>${esc(GAP_TYPE[x.type] || x.type)}</b> · ${esc(x.atk || "")}${x.stated ? "" : " (위키에 수치 일부 없음)"}<br><span class="muted">${esc(x.q)}</span></li>`).join("")}</ul></section>`;
     }
     const bc = boundCheck(R);
     if (bc && bc.bad.length) {
       const lst = (x) => x.ids.map((id) => esc(id === "__riven" ? "리벤" : (MOD_BY_ID[id] || { ko: id }).ko)).join(" · ") + (x.arcane ? " · 아케인 " + esc(((window.WF_ARCANES || {})[x.arcane] || { ko: x.arcane }).ko) : "");
-      $("#results").innerHTML = shareBarHtml() + `<section class="card"><h3>추천 보류 — 위키로 확인 안 된 가정에 따라 1위가 바뀜</h3>
-        <p>아래 가정은 위키에 답이 없어 양쪽으로 계산했습니다. 어느 쪽이냐에 따라 1위가 달라서, 틀릴 수 있는 세팅(포르마·랭크업 손해)을 추천하지 않습니다.</p>
-        <ul><li>계산기 기본 가정의 1위: ${lst(res[0])}</li>${bc.bad.map((x) => `<li><b>${esc(x.why)}</b><br>반대쪽 가정의 1위(${((x.gain - 1) * 100).toFixed(0)}% 빠름): ${lst(x.alt)}</li>`).join("")}</ul>
-        <p>게임에서 확인되면 그 값으로 고정해 다시 계산합니다.</p></section>`;
-      return;
+      noteHtml += `<section class="card note"><h3>참고 — 위키로 확인 안 된 가정</h3>
+        <p class="muted">아래 가정은 위키에 답이 없어 양쪽으로 계산했습니다. 추천은 계산기 기본 가정의 1위이고, 반대쪽 가정이면 1위가 다음처럼 바뀝니다.</p>
+        <ul>${bc.bad.map((x) => `<li><b>${esc(x.why)}</b><br>반대쪽 가정의 1위(${((x.gain - 1) * 100).toFixed(0)}% 빠름): ${lst(x.alt)}</li>`).join("")}</ul></section>`;
     }
     const top = res[0];
     const r = evalBuild(top.ids, top.val, top.arcane);
@@ -1502,7 +1500,7 @@ self.onmessage = function (ev) {
     const buffNames = buffSummary();
     const rm0 = $("#rivmode").value;
     const xa = exilusAdvice(xid, r, atk, top);
-    let html = shareBarHtml();
+    let html = shareBarHtml() + noteHtml;
     try { if (/github\.io$/.test(location.hostname)) history.replaceState(null, "", "#s=" + b64e(JSON.stringify(captureState()))); } catch (e) {}
 
     // per-slot importance: how much slower the build gets without that mod, and the best mod to put there instead
@@ -1656,7 +1654,7 @@ self.onmessage = function (ev) {
     </ul></section>`;
     const toc = [["sec1", "① 추천 세팅"], ["sec2", "② 내 세팅과 비교"], ["sec3", "③ 리벤"], ["sec4", "④ 속성·아케인"], ["sec5", "⑤ 상세"]];
     html += `<nav class="rtoc" aria-label="결과 목차">${toc.map(([id, t]) => `<button type="button" data-go="${id}">${t}</button>`).join("")}</nav>`
-      + sec("①", "추천 세팅", "리벤 없이 · 모든 모드 보유 전제" + (bc && bc.all.length ? " · 위키에 없는 가정(" + bc.all.map((x) => x.why.split(" — ")[0]).join(", ") + ")은 양쪽 모두에서 이 세팅이 1위" : ""), h1, "sec1")
+      + sec("①", "추천 세팅", "리벤 없이 · 모든 모드 보유 전제" + (() => { if (!bc || !bc.all.length) return ""; const badW = new Set(bc.bad.map((x) => x.why)), same = [...new Set(bc.all.filter((x) => !badW.has(x.why)).map((x) => x.why.split(" — ")[0]))].filter((w) => !bc.bad.some((b) => b.why.split(" — ")[0] === w)); return (same.length ? " · 위키에 없는 가정(" + same.join(", ") + ")은 양쪽 모두에서 이 세팅이 1위" : "") + (bc.bad.length ? " · 확인 안 된 가정 " + bc.bad.length + "개는 반대쪽이면 1위가 바뀜(위 참고)" : ""); })(), h1, "sec1")
       + sec("②", "내 세팅과 비교", "왼쪽 '비교할 세팅'에 넣은 세팅", `<section class="card" id="cmpout"></section>`, "sec2")
       + sec("③", "리벤", "어떤 리벤을 노릴까", h3, "sec3")
       + sec("④", "속성·아케인", "추천 모드 그대로 바꿨을 때", h4, "sec4")
@@ -2236,7 +2234,7 @@ self.onmessage = function (ev) {
   F0 = captureFields();
   // read-only handle for checking results from the browser console / test scripts
   // test/automation handle (scripts/regress.js, scripts/community_check.js): arcAuto = the arcanes the 'auto' option compares
-  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts, boundCheck,
+  window.WF_APP = { st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts, boundCheck, renderResults,
     arcAuto: (w) => arcanesFor(w).filter(([, x]) => !x.manual && !x.none && !x.aim).map(([k]) => k).concat([null]) };
   restoreFromHash();
 })();

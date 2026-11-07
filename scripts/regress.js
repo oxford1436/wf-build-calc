@@ -533,6 +533,20 @@ const { chromium } = require("playwright");
     results.push({ name: "v1.73 듀얼 이코르 처치 시 독 장판 계산됨 (1초마다 가정 > 한 번 가정, Lv150 강철의 길 아님, 밀리 듀플리케이트)", ok: !r.err && r.fieldHi > r.fieldLo * 1.05, detail: r.err || "×" + f2(r.fieldHi / r.fieldLo) });
     results.push({ name: "v1.75 (민감도) 강공 연속기 배율을 상태이상에서 빼면 듀얼 이코르 인플루언스 세팅이 듀플리케이트·폭발 세팅보다 빠름 — 그래서 게임 확인이 필요했음", ok: !r.err && r.ncsRatio > 1.2, detail: r.err || "×" + f2(r.ncsRatio) });
     results.push({ name: "v1.78 연속기 배율은 상태이상에도 곱해짐(게임 확인: 12배 강공 출혈 1.3K, 인카논 3배 641) — 앱이 이 가정으로 추천을 보류하지 않음", ok: !r.err && r.comboAlt === false, detail: r.err || String(r.comboAlt) });
+    // v1.89 (사용자 결정 2026-11-07 "보류같은거 하지마"): open wiki gaps / unconfirmed assumptions no longer replace the
+    // recommendation — the #1 still renders, with the gaps as a note above it
+    {
+      const ui = await p3.evaluate(() => {
+        const A = window.WF_APP, st = A.st, w0 = window.WF_WEAPONS.find((x) => x.id === "nataruk");
+        st.base = w0; st.weapon = w0; st.atk = A.defaultAttack(w0);
+        const o = Object.assign(A.readOpts(), { targets: null });
+        st.results = { res: [{ ids: ["serration", "split_chamber", "vital_sense", "point_strike"], val: null, arcane: null, score: 1 }], o, flags: {} };
+        A.renderResults();
+        const h = document.querySelector("#results").innerHTML;
+        return { gaps: (w0.gaps || []).length, withheld: /추천 보류 —/.test(h), table: /서레이션|세레이션/.test(h) && /참고 — 계산에 아직 없는 메커니즘/.test(h) };
+      }).catch((e) => ({ err: e.message }));
+      results.push({ name: "v1.89 위키 메커니즘이 남은 무기(나타루크)도 추천을 보류하지 않고 1위 + 참고 메모를 보여 줌", ok: !ui.err && ui.gaps > 0 && !ui.withheld && ui.table, detail: ui.err || JSON.stringify(ui) });
+    }
     await p3.close();
   }
 
