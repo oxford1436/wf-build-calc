@@ -1,0 +1,96 @@
+{
+ "weapon": "kuva_nukor",
+ "attack": 0,
+ "valence": {
+  "type": "mag",
+  "pct": 0.6
+ },
+ "riven": null,
+ "notes": "쿠바 뉴코어 기본 사격(연쇄 빔: 주 대상 9m 안 2명, 연쇄마다 주 빔의 50% 고정 — convert.py CHAIN, v1.72). 2026-11-08 04시 묶음 9(보조 빔·연쇄). 파일 기본 베일런스는 자성 60%(Sportskeeda가 '메타 프로제니터'라고 함; 세팅마다 글에 적힌 베일런스로 따로 계산, 수치는 글에 없어 60%). kind: read = 출처 본문 글자로 모드 전체를 읽은 세팅. Sportskeeda(모드 일부만 글자)·Overframe 572637(모드 칸 글자 없음)은 세팅을 기록하지 않고 주장만 노트에.",
+ "builds": [
+  {
+   "name": "Shacknews 에너베이트 (냉기 베일런스, 부식·폭발·자성)",
+   "community": "shacknews",
+   "kind": "read",
+   "url": "https://www.shacknews.com/article/142676/kuva-nukor-arcane-enervate-build-warframe",
+   "author": "Aidan O'Brien",
+   "date": "2025-01-08",
+   "valence": {
+    "type": "cold",
+    "pct": 0.6
+   },
+   "mods": [
+    "Galvanized Diffusion",
+    "Galvanized Shot",
+    "Primed Target Cracker",
+    "Lethal Torrent",
+    "Magnetic Might",
+    "Pistol Pestilence",
+    "Jolt",
+    "Primed Heated Charge"
+   ],
+   "exilus": "Ruinous Extension",
+   "arcane": "secondary_enervate",
+   "claims": [
+    "에너베이트 필수 — 기본 치명타 7%",
+    "모든 팩션에 보너스 피해를 주는 방사능·부식·폭발·자성",
+    "무리용 무기",
+    "프라임드 히티드 차지는 방어구 제거에 도움"
+   ],
+   "verdict": "v1.97 기본 조건 64%(에너베이트). 계산기 1위 모드에 에너베이트를 끼우면 63.7% — 모드 차이는 0, 차이 전부가 아케인(세컨더리 이레디에이트 ×1.57). 냉기 베일런스 대신 자성이면 65.4%(+2%). '에너베이트 필수' △: 이레디에이트 없는 조건에서는 맞음(아케인 없음의 ×3, 머시리스의 ×2.3)."
+  },
+  {
+   "name": "Overframe 780179 Melting Pot (독 베일런스, 부식·방사능·자성)",
+   "community": "overframe",
+   "kind": "read",
+   "url": "https://overframe.gg/build/780179/",
+   "author": "xLeGiT",
+   "date": "2025-01-08",
+   "valence": {
+    "type": "tox",
+    "pct": 0.6
+   },
+   "mods": [
+    "Galvanized Diffusion",
+    "Galvanized Shot",
+    "Jolt",
+    "Pistol Pestilence",
+    "Primed Target Cracker",
+    "Primed Pistol Gambit",
+    "Lethal Torrent",
+    "Magnetic Might"
+   ],
+   "exilus": "Primed Pistol Ammo Mutation",
+   "arcane": "secondary_enervate",
+   "claims": [
+    "부식은 방어구 제거용",
+    "방사능은 고유 원소, 군중 혼란",
+    "에너베이트는 치명타 확률 때문에 필수",
+    "프라임드 피스톨 갬빗은 필수 아님 — 치명타 피해로 대체 가능",
+    "크리티컬 딜레이와 포인트 스트라이크는 같이 못 낌"
+   ],
+   "verdict": "v1.97 기본 조건 33%(에너베이트). 화염 칸이 없어서 — 프라임드 피스톨 갬빗을 프라임드 히티드 차지로 바꾸면 64.8%. 독/자성 베일런스는 같음(33.4/33.3%). '피스톨 갬빗은 필수 아님' ✅(이 세팅에서 갬빗 칸을 화염으로 바꾸면 ×1.94; 단 계산기 1위에서는 갬빗을 빼면 89%)."
+  }
+ ],
+ "meta": {
+  "read_builds": 2,
+  "elements": "부식+방사능+자성(+폭발) 2 — 고유 방사능 위에 졸트+피스톨 페스틸런스 = 부식",
+  "valence": "냉기 1(프라임드 히티드 차지와 폭발) · 독 1 / Sportskeeda는 자성을 '메타 프로제니터'라고 씀(세팅 글자 일부만)",
+  "core": [
+   "갈바나이즈드 디퓨전",
+   "갈바나이즈드 샷",
+   "프라임드 타겟 크래커",
+   "리썰 토렌트",
+   "마그네틱 마이트",
+   "피스톨 페스틸런스",
+   "졸트"
+  ],
+  "flex": [
+   "프라임드 히티드 차지 / 프라임드 피스톨 갬빗"
+  ],
+  "arcane": [
+   "세컨더리 에너베이트 2"
+  ],
+  "why": "기본 치명타 7%라 에너베이트로 치명타를 올림(두 글 모두 '필수'). 부식은 방어구, 방사능은 고유 원소, 자성은 실드·치명타 피해(마그네틱 마이트). 무리용 무기 — 단일은 다른 무기."
+ }
+}
