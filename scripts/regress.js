@@ -49,6 +49,19 @@ const { chromium } = require("playwright");
         const vFull = steady(P(6, 1, 0)), vShort = steady(P(0.93, 1, 0));
         check("v1.83 바이러스 중첩은 6초 × 상태이상 지속 뒤 사라짐 — 지속 −84.5%(0.93초)면 2발/초에 약 1.9중첩", vShort < vFull * 0.6 && Math.abs(vShort - (2 + 0.25 * 0.86) * (1 - 0.9 * Math.sqrt(1000 / 2700))) < 0.03, vShort.toFixed(3) + " / 지속 100% " + vFull.toFixed(3));
       }
+      // v1.87 (Simulacrum 2026-11-07, Kuva Zarr vs 20 Nox): shots land whole (a 2-shot kill at 5 shots/s takes 0.2 s, the smeared
+      // continuous model said 0.02 s), and the next target's first shot comes max(interval, re-aim) after the killing shot
+      {
+        const q = { hp: 1000, sh: 0, ar0: 0, strip: 0, r: 5, D: 600, blast: 0, F: 0, dot: {}, Tdur: 6, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, cc: 0, cd: 1, corrMax: 10, dt: 0.2, tmax: 30 };
+        const t2 = E.ttk(q);
+        check("v1.87 두 발에 죽는 적은 두 번째 발이 들어가는 1/연사(0.2초)에 죽음 (이전: 0.02초)", Math.abs(t2 - 0.2) < 0.011, t2.toFixed(3));
+        const sp = weapon("rubico_prime"), K2 = ["serration", "split_chamber", "vital_sense", "point_strike"];
+        const oc = Object.assign(baseO(), { factions: ["corpus"], level: 60, steel: false, levelSteps: [0, 0, 0] });
+        const r0 = ev(sp, K2, Object.assign({}, oc, { tAcq: 0 })), per = 1 / Math.max(0.05, r0.rate);
+        const rP = ev(sp, K2, Object.assign({}, oc, { tAcq: per }));
+        const c0 = r0.perF.corpus.clear, cP = rP.perF.corpus.clear;
+        check("v1.87 다음 적 첫 발은 처치한 발 뒤 max(발 간격, 다시 조준) — 다시 조준 0초와 발 간격만큼일 때 전멸 시간이 같음", Math.abs(c0 / cP - 1) < 0.01, c0.toFixed(3) + " / " + cP.toFixed(3) + " (처치 " + r0.perF.corpus.ttk.toFixed(2) + "초)");
+      }
       // v1.86 (independent review 2026-11-06, Kuva Zarr): the re-aim time between one-shot kills (T_ACQ 0.2 s, no source) decides
       // what fire rate is worth — guns are checked at 0.15 s and 0.3 s, and the engine takes o.tAcq
       {
@@ -424,7 +437,7 @@ const { chromium } = require("playwright");
       A.st.results = A.st.results || { o };
       return { clear: A.evalBuild(ids, null, "cascadia_flare", o, null).perF.corrupted.clear };
     });
-    results.push({ name: "v1.56 킷건 세팅 A (캐스케디아 플레어) 커럽티드 강철의 길 150 20명 < 6초", ok: !r.err && r.clear < 6, detail: r.err || r.clear.toFixed(2) + "초" });
+    results.push({ name: "v1.56 킷건 세팅 A (캐스케디아 플레어) 커럽티드 강철의 길 150 20명 < 12초 (v1.87 정수 발·처치 후 간격: 4.5초 → 9.8초, 옛 롤링 창 버그는 같은 계산에서 약 1.7배)", ok: !r.err && r.clear < 12, detail: r.err || r.clear.toFixed(2) + "초" });
     await p2.close();
   }
 

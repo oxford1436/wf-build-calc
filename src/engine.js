@@ -321,6 +321,7 @@
     let hp = p.hp, sh = p.sh, og = p.og || 0, t = 0, lastRate = 1, dealt = 0, magT = -1, magDps = 0;
     const sh0 = p.sh || 0;
     const dt = p.dt, r = p.r, Td = Math.max(0.5, p.Tdur);
+    const win = [], winN = Math.max(1, Math.round(1 / dt)); let winSum = 0;
     const stepsMax = until ? Math.ceil(until / dt) - 1 : Math.ceil(p.tmax / dt);
     // stack-based multipliers after `shots` trigger pulls have landed their status procs
     // v1.83 stacks run out (wiki, each status page): Viral "for 6 seconds", Corrosive "for 8 seconds", Magnetic 6 s, Cold
@@ -357,7 +358,7 @@
       if (og > 0) {
         // overguard first: no armor, no Viral; Magnetic and Void boost it
         const raw = (S + tx + sl) * f.magM * (p.ogM || 1);
-        if (raw < og) { og -= raw; lastRate = raw / dt; return 0; }
+        if (raw < og) { og -= raw; win.push(raw); winSum += raw; if (win.length > winN) winSum -= win.shift(); lastRate = Math.max(1e-9, winSum / (win.length * dt)); return 0; }
         const keep = 1 - og / Math.max(1e-9, raw); og = 0; S *= keep; tx *= keep; sl *= keep;
       }
       if (sh > 0) {
@@ -366,7 +367,8 @@
       }
       const dmgH = S * f.vm * f.ar + tx * f.vm * f.ar + sl * f.vm;
       hp -= dmgH; dealt += dmgH;
-      lastRate = dmgH / dt;
+      win.push(dmgH); winSum += dmgH; if (win.length > winN) winSum -= win.shift();
+      lastRate = Math.max(1e-9, winSum / (win.length * dt));   // v1.87: rate over the last second (discrete shots leave empty steps)
       return dmgH;
     };
     // the first trigger pull lands before its own status procs (wiki "Viral Damage": attacks deal their initial damage
@@ -379,7 +381,12 @@
     for (let i = 0; i <= stepsMax; i++) {
       const shots = 1 + r * t;
       const f = stacks(shots);
-      let shieldable = p.D * r * f.critf + (t >= 1.5 ? p.blast * r * f.critf : 0) + (p.F || 0) * r;
+      // v1.87 (Simulacrum 2026-11-07, Kuva Zarr vs 20 Nox): shots land whole, at k/r after the first — the k-th shot's damage in
+      // the step it lands, not smeared over the time before it (smearing put a 2-shot kill's second shot at 0.02 s instead of
+      // 1/r = 0.2 s, and made the blast alone look like it kills a bystander within one fire interval)
+      const kA = Math.floor(t * r + 1e-9), kB = Math.floor((t + dt) * r + 1e-9), nShot = Math.max(0, kB - kA);
+      const shotDmg = nShot * (p.D * f.critf + (t >= 1.5 ? p.blast * f.critf : 0) + (p.F || 0));
+      let shieldable = 0;
       let toxRate = 0, slashRate = 0;
       for (const T in p.dot) {
         // procs whose ticks are running now: applied between t − delay − span and t − delay (span = number of 1 s ticks)
@@ -412,8 +419,12 @@
       }
       // Magnetic (wiki): stripping the shields triggers an Electricity proc of 3% of max shields per Magnetic stack (max 30%)
       if (magT >= 0 && t < magT + 6) shieldable += magDps;
-      const dmgH = land(shieldable * dt * f.extraM, toxRate * dt * f.extraM, slashRate * dt * f.extraM, f);
-      if (!until && hp <= 0) return t + dt * (1 - Math.min(1, -hp / Math.max(1e-9, dmgH)));
+      const dmgH = land((shieldable * dt + shotDmg) * f.extraM, toxRate * dt * f.extraM, slashRate * dt * f.extraM, f);
+      if (!until && hp <= 0) {
+        const need = 1 - Math.min(1, -hp / Math.max(1e-9, dmgH));
+        // killed by a shot: at the time of the shot that crossed (whole shots); by damage over time: inside the step
+        return nShot > 0 && shotDmg >= shieldable * dt ? (kA + Math.max(1, Math.ceil(need * nShot - 1e-9))) / r : t + dt * need;
+      }
       t += dt;
     }
     if (until) return dealt;
@@ -680,7 +691,9 @@
           // The heavy mixed in is one of the engagements. Past one-shot kills more fire rate stops paying off.
           // (the first shot goes off as soon as the crosshair is on it, so a one-shot kill costs only the re-aim time,
           // unless the weapon's own fire interval is longer than that)
-          const eng = (t) => Math.max(period, tAcq + t);
+          // v1.87: the next target's first shot comes max(fire interval, re-aim) after the shot that killed (t, whole shots since
+          // v1.87) — before: max(interval, re-aim + t), which let a 2-shot kill at 5 shots/s with no re-aim count as one interval
+          const eng = (t) => t + Math.max(period, tAcq);
           const nL = main.N - (tgs.heavy ? 1 : 0) - (tgs.ex ? 1 : 0);
           const extra = (tgs.heavy ? eng(tHeavy) : 0) + (tgs.ex ? eng(tEx) : 0);   // the heavy and the Eximus are engagements of their own
           const sweep = (nL / Keff) * eng(tHit) + extra;
