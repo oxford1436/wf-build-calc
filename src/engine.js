@@ -1199,6 +1199,13 @@
       const dupf = 1 + dupD * (cc < 1 ? cc : cc < 2 ? 2 - cc : 0);
       if (dupf !== 1) for (const k in procs) procs[k] *= dupf;
       if (atk.forced) for (const f of atk.forced) procs[f] = (procs[f] || 0) + dupf;
+      // v1.97 Hemorrhage / Welt (game data: "Impact Status Effects have 35% chance to apply a Slash Status Effect (x2 when Fire
+      // Rate is below 2.5)") — a forced Impact proc is an Impact status effect too (Lex Incarnon "guarantees Impact procs"); the
+      // conversion above ran before the forced procs were added, so they never rolled for Slash/Magnetic
+      if (atk.forced && atk.forced.includes("impact")) {
+        if (a.ib > 0) procs.slash = (procs.slash || 0) + dupf * Math.min(1, a.ib * (rate < 2.5 ? 2 : 1));
+        if (a.welt > 0) procs.mag = (procs.mag || 0) + dupf * Math.min(1, a.welt * (rate < 2.5 ? 2 : 1));
+      }
       // Cyte-09 Resupply (wiki "Resupply", "Extra Hit"): every hit — each multishot instance — also lands an Extra Hit of the
       // chosen element that forces that element's status ("Main and extra hit have their own independent status procs")
       const xhitP = ext.xhit > 0 && ext.xhitElem ? ms : 0;

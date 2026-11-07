@@ -1,0 +1,41 @@
+{
+  "weapon": "lex_prime",
+  "attack": 1,
+  "evo": { "2": 0, "3": 0, "4": 2 },
+  "valence": null,
+  "riven": null,
+  "notes": "렉스 프라임 인카논 형태(충격 400 + 방사능 800, 확정 충격, 관통 1.4m, 연사 0.67). 2026-11-07 22시 묶음 8. 진화는 Ackbar(U33.5.6)가 고른 III 렉스 탈리오니스·IV 크리티컬 패럴렐(II는 둘 다 기본 피해 +20). 직접 읽은 세팅 0개 — Ackbar 세팅은 그림, Overframe 749838·471184는 모드 칸이 복사 문자열뿐, Sportskeeda는 개념만. 아래는 Ackbar 글의 주장을 계산기 1위에서 한 칸 바꿔 시험한 것(kind claim, 커뮤니티 세팅 아님).",
+  "builds": [
+    {
+      "name": "주장 시험: 헤모리지(확정 충격 → 출혈) — Ackbar",
+      "community": "ackbar",
+      "kind": "claim",
+      "url": "https://ackbarwarframe.blogspot.com/2023/07/review-lex-incarnon-u3356.html?m=1",
+      "date": "2023-07-18",
+      "mods": ["Primed Heated Charge", "Galvanized Diffusion", "Primed Pistol Gambit", "Lethal Torrent", "Primed Target Cracker", "Frostbite", "Hornet Strike", "Hemorrhage"],
+      "arcane": "secondary_irradiate",
+      "claims": ["렉스 인카논은 확정 충격·낮은 연사로 헤모리지를 가장 잘 쓰는 무기 중 하나"],
+      "verdict": "v1.97(확정 충격도 출혈로 바꿈 — 고친 것): 무리 기본 조건 71%(아네믹 어질리티 자리), 보스 단일 대상 108.5% △ — 단일·보스용. 무리는 한 방·폭발 처치가 대부분이라 출혈이 돌기 전에 죽음."
+    },
+    {
+      "name": "주장 시험: 세컨더리 머시리스 — Ackbar",
+      "community": "ackbar",
+      "kind": "claim",
+      "url": "https://ackbarwarframe.blogspot.com/2023/07/review-lex-incarnon-u3356.html?m=1",
+      "date": "2023-07-18",
+      "mods": ["Primed Heated Charge", "Galvanized Diffusion", "Primed Pistol Gambit", "Lethal Torrent", "Primed Target Cracker", "Frostbite", "Hornet Strike", "Anemic Agility"],
+      "arcane": "secondary_merciless",
+      "claims": ["아케인은 머시리스"],
+      "verdict": "v1.97: 1위(세컨더리 이레디에이트 — 방사능 10중첩 대상 명중 시 7m 안 적에게 그 피해의 180%, 게임 데이터)의 76% △. 이레디에이트는 글(2023-07) 이후 나온 아케인이라 비교 대상이 아니었음. 인카논 형태 고유 방사능 800이 10중첩을 빨리 채움."
+    }
+  ],
+  "meta": {
+    "read_builds": 0,
+    "elements": "직접 읽은 세팅 없음 (Ackbar 설명: 바이러스 + 헤모리지 출혈)",
+    "valence": "해당 없음",
+    "core": ["갈바나이즈드 디퓨전", "치명타 모드 (Ackbar 설명)"],
+    "flex": ["갈바나이즈드 샷 / 헤모리지 / 갈바나이즈드 크로스헤어 (Ackbar)"],
+    "arcane": ["세컨더리 머시리스 (Ackbar 개인 선택)"],
+    "why": "인카논 형태: 기본 피해 1200·치명타 35% 3배·상태이상 44%, 확정 충격, 연사 0.67 → 헤모리지 2배 구간. 리썰 모멘텀으로 사거리 28 → 약 40m(Ackbar). 관통 모드는 인카논에 의미 없음(Ackbar)."
+  }
+}

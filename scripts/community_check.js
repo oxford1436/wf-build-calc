@@ -76,7 +76,7 @@ const OUT = path.join(ROOT, "docs", "community", "report.md");
         const r = ev(ids, a, undefined, bv);
         const hasR = ids.includes("__riven"), R0 = hasR ? ref : fRef, R1 = hasR ? refSus : fSus, R2 = hasR ? refZero : fZero;
         return { name: bd.name, community: bd.community || "", url: bd.url || "", rel: r.score / R0, sus: ev(ids, a, { killRamp: false }, bv).score / R1,
-          zero: ev(ids, a, { kills: false }, bv).score / R2, hasR, unknown, clash, mods: ids.map(ko).join(", "), arc: a, ids, combo: comboOf(r.share), kind: bd.kind || (bd.community === "session" ? "session" : "claim"), vdiff: bd.valence !== undefined ? (bd.valence ? bd.valence.type : "없음") : null };
+          zero: ev(ids, a, { kills: false }, bv).score / R2, hasR, unknown, clash, mods: ids.map(ko).join(", "), arc: a, ids, combo: comboOf(r.share), kind: bd.kind || (bd.community === "session" ? "session" : "claim"), man: a && window.WF_ARCANES[a] && window.WF_ARCANES[a].manual ? (window.WF_ARCANES[a].ko + " — " + (window.WF_ARCANES[a].note || "조건부")) : null, vdiff: bd.valence !== undefined ? (bd.valence ? bd.valence.type : "없음") : null };
       });
       // community meta: what players converge on (element combo, mods, arcane), and the calculator's #1 measured against it —
       // a popular mod the #1 leaves out, or a #1 mod nobody uses, gets a number so the difference is explained (or investigated)
@@ -114,6 +114,8 @@ const OUT = path.join(ROOT, "docs", "community", "report.md");
     for (const r of res.rows) {
       const notes = [];
       if (r.rel > 1.005 && r.vdiff) notes.push(`베일런스가 달라서(${r.vdiff}) — 같은 베일런스 비교 아님`);
+      // manual (conditional) arcanes are scored as if the condition always holds and the search never picks them — not a miss
+      else if (r.rel > 1.005 && r.man) notes.push(`조건부 아케인(${r.man})이라 조건 충족 가정 — 검색 후보 아님`);
       else if (r.rel > 1.005 && r.kind !== "session") { notes.push("**계산기 1위보다 강함 — 조사 필요**"); flags++; }
       if (r.clash.length) { notes.push("같이 못 끼는 모드: " + r.clash.join(", ")); flags++; }
       if (r.unknown.length) { notes.push("인식 못 함: " + r.unknown.join(", ")); flags++; }

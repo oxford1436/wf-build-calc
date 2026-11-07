@@ -265,7 +265,7 @@
   const ARC = {
     primary_merciless: { ko: "프라이머리 머시리스", slot: "primary", eff: { reload: 0.3 }, cond: [{ when: "kill", eff: { dmg: 3.6 }, stk: 12 }] },   // wiki: +30%/kill x12, 4 s; reload +30% passive
     primary_deadhead: { ko: "프라이머리 데드헤드", slot: "primary", eff: { hsMult: 0.3 }, cond: [{ when: "hs", eff: { dmg: 3.6 } }] },
-    primary_dexterity: { ko: "프라이머리 덱스터리티", slot: "primary", manual: true, cond: [{ when: "kill", eff: { dmg: 3.6 } }], note: "근접 처치 6회로 최대 중첩" },
+    primary_dexterity: { ko: "프라이머리 덱스터리티", slot: "primary", manual: true, cond: [{ when: "kill", eff: { dmg: 3.6 }, stk: 6 }], note: "근접 처치 6회로 최대 중첩" },   // v1.97 game data (Arcanes.json): "On Melee Kill: +60% Damage for 20s. Stacks up to 6x." — stk 6 so a pack ramps up like Merciless (was full +360% from the first kill)
     primary_frostbite: { ko: "프라이머리 프로스트바이트", slot: "primary", procStack: { type: "cold", cd: 1.2, ms: 0.9, win: 12, max: 40 } },
     primary_blight: { ko: "프라이머리 블라이트", slot: "primary", procStack: { type: "tox", cd: 1.44, ms: 0.72, win: 12, max: 40 } },
     primary_overcharge: { ko: "프라이머리 오버차지", en: "Primary Overcharge", slot: "primary", manual: true, energyMs: 0.35, note: "에너지 90% 이상 유지 시 최대 에너지의 35%만큼 멀티샷 (최대 350%)" },
@@ -281,7 +281,7 @@
     longbow_sharpshot: { ko: "롱보우 샤프샷", en: "Longbow Sharpshot", slot: "primary", types: ["Bow"], cond: [{ when: "hs", eff: { dmg: 1.5 } }], note: "약점 명중 후 다음 발 +300% (헤드샷 50% 가정)" },
     secondary_merciless: { ko: "세컨더리 머시리스", slot: "secondary", eff: { reload: 0.3 }, cond: [{ when: "kill", eff: { dmg: 3.6 }, stk: 12 }] },
     secondary_deadhead: { ko: "세컨더리 데드헤드", slot: "secondary", eff: { hsMult: 0.3 }, cond: [{ when: "hs", eff: { dmg: 3.6 } }] },
-    secondary_dexterity: { ko: "세컨더리 덱스터리티", en: "Secondary Dexterity", slot: "secondary", manual: true, cond: [{ when: "kill", eff: { dmg: 3.6 } }], note: "근접 처치 6회로 최대 중첩" },
+    secondary_dexterity: { ko: "세컨더리 덱스터리티", en: "Secondary Dexterity", slot: "secondary", manual: true, cond: [{ when: "kill", eff: { dmg: 3.6 }, stk: 6 }], note: "근접 처치 6회로 최대 중첩" },
     secondary_shiver: { ko: "세컨더리 쉬버", en: "Secondary Shiver", slot: "secondary", coldVuln: 0.45 },
     cascadia_flare: { ko: "캐스케디아 플레어", slot: "secondary", procStack: { type: "heat", dmg: 4.8, win: 10, max: 40 } },
     conjunction_voltage: { ko: "컨정션 볼티지", slot: "secondary", procStack: { type: "elec", ms: 1.2, reload: 0.6, win: 12, max: 40 } },

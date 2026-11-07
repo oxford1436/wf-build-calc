@@ -1,0 +1,155 @@
+{
+  "weapon": "laetum",
+  "attack": 3,
+  "evo": {
+    "2": 1,
+    "3": 0,
+    "4": 2,
+    "5": 0
+  },
+  "valence": null,
+  "riven": null,
+  "notes": "레이텀 인카논 형태(직격 + 2m 방사능 폭발, 자동). 2026-11-07 22시 묶음 8(권총). attack 3 = 인카논 형태 한 발 전체 피해. 진화는 Shacknews·Sportskeeda가 고른 II 래피드 래스(연사 +20%)·IV 엘리멘탈 엑세스(상태이상 +20%·치명타 −10% 고정값)·V 디바우링 어트리션(비치명타 50% 확률 +2000%) — III은 피해와 무관. 파일 하나에 진화 하나라 IV·V를 적지 않은 Item Level·GGRecon·GamesFuze 세팅도 같은 진화로 계산(치명타 세팅에는 불리 — verdict에 표시). kind: read = 출처 본문 글자로 모드 전체를 읽은 세팅. 글 날짜가 2022~2024라 최신 패치(44.1) 이전임. GamesFuze 저상태이상 세팅은 '프라임드 풀미네이션'(권총 모드 아님 — 게임에서 못 낌)이 들어 있어 기록하지 않음. 레이텀 위키 문서는 이번에 못 읽음(권한 시간 초과) — 진화 문장은 저장소 data/raw/incarnon_evos.json(위키에서 받은 진화 표)으로 대조.",
+  "builds": [
+    {
+      "name": "Shacknews 비치명타 (방사능·부식·화염, 액셀러레이티드 아이소토프)",
+      "community": "shacknews",
+      "kind": "read",
+      "url": "https://shacknews.com/article/142636/the-best-laetum-build-warframe",
+      "date": "2024-12-26",
+      "mods": [
+        "Galvanized Diffusion",
+        "Galvanized Shot",
+        "Pistol Pestilence",
+        "Primed Convulsion",
+        "Lethal Torrent",
+        "Hornet Strike",
+        "Accelerated Isotope",
+        "Primed Heated Charge"
+      ],
+      "exilus": "Lethal Momentum",
+      "arcane": null,
+      "claims": [
+        "치명타 확률을 최대한 낮춰 비치명타(디바우링 어트리션) 혜택",
+        "인카논 형태 고유 방사능 + 모드로 방사능·부식·화염"
+      ],
+      "verdict": "v1.97 기본 조건: 계산기 1위의 54%(아케인 없음; 머시리스면 58%). 액셀러레이티드 아이소토프(방사능)·프라임드 컨벌션(전기)이 부식을 만들고 냉기가 없어 폭발 10중첩이 안 생김. '치명타를 최대한 낮춰 비치명타 혜택' ✅ — 디바우링 어트리션 평균 배율 = 1 + 치명타 확률 × (배율 − 1) + (1 − 치명타 확률) × 10(위키 노트: 50% × +2000%)이라 치명타 확률이 낮을수록 셈."
+    },
+    {
+      "name": "Sportskeeda 비치명타 바이러스+화염 (덱스터리티)",
+      "community": "sportskeeda",
+      "kind": "read",
+      "url": "https://sportskeeda.com/mmo/warframe-complete-laetum-build-guide",
+      "date": "표시 없음",
+      "mods": [
+        "Galvanized Shot",
+        "Galvanized Diffusion",
+        "Frostbite",
+        "Pistol Pestilence",
+        "Lethal Torrent",
+        "Hornet Strike",
+        "Scorch",
+        "Primed Heated Charge"
+      ],
+      "exilus": null,
+      "arcane": "secondary_dexterity",
+      "claims": [
+        "비치명타가 수학적으로 지속·순간 피해 모두 우월",
+        "엘리멘탈 엑세스로 디바우링 어트리션이 더 쉽게 발동",
+        "갈바나이즈드 샷 상태이상당 피해가 디바우링 어트리션과 곱해짐",
+        "무리에는 세컨더리 덱스터리티 또는 머시리스, 우선 표적엔 캐스케디아 플레어",
+        "리벤은 음수 치명타 확률이 가장 중요"
+      ],
+      "verdict": "v1.97 기본 조건: 덱스터리티 그대로 98%, 머시리스로 바꾸면 93%. 덱스터리티는 '근접 처치 시 +60% 20초, 6중첩'(게임 데이터) — 총 처치로는 안 쌓이는데 점검은 조건 충족으로 계산(조건부 아케인, 검색 후보 아님). v1.97 전에는 6중첩 대신 첫 처치부터 +360%로 계산해 103%('계산기 1위보다 강함')였음 — 고침. 글이 말한 바이러스+화염 순서(냉기·독을 먼저)로 놓으면 무리 53% — 같은 모드를 냉기+화염(폭발)으로 놓은 쪽이 무리에서 셈(폭발 10중첩 범위 폭발). 보스(어트리션 미적용, v1.61)에서는 바이러스+화염 순서가 계산기 1위의 5.8배 — '단일 대상 최고' △ 단일·보스 조건에서 맞음."
+    },
+    {
+      "name": "Item Level 치명타 (프라임드 타겟 크래커·크리핑 불스아이, 머시리스)",
+      "community": "itemlevel",
+      "kind": "read",
+      "url": "https://itemlevel.net/warframe-laetum-build-guide/",
+      "date": "2022-05-04",
+      "mods": [
+        "Galvanized Diffusion",
+        "Primed Target Cracker",
+        "Lethal Torrent",
+        "Pistol Pestilence",
+        "Frostbite",
+        "Sharpened Bullets",
+        "Creeping Bullseye",
+        "Scorch"
+      ],
+      "exilus": null,
+      "arcane": "secondary_merciless",
+      "claims": [
+        "세컨더리 머시리스가 최선"
+      ],
+      "verdict": "v1.97: 37%. 치명타 세팅인데 같은 파일의 진화(V 디바우링 어트리션)로 계산 — 글은 IV·V를 고르지 않음. 어트리션이 있으면 치명타 모드는 손해 ✅(치명타 확률 모드가 비치명타 몫을 줄임)."
+    },
+    {
+      "name": "GGRecon 치명타 (프라임드 피스톨 갬빗, 대 그리니어)",
+      "community": "ggrecon",
+      "kind": "read",
+      "url": "https://ggrecon.com/guides/warframe-laetum-builds",
+      "date": "2022-05-13",
+      "mods": [
+        "Galvanized Diffusion",
+        "Primed Target Cracker",
+        "Primed Pistol Gambit",
+        "Frostbite",
+        "Pistol Pestilence",
+        "Primed Heated Charge",
+        "Primed Expel Grineer",
+        "Lethal Torrent"
+      ],
+      "exilus": "Lethal Momentum",
+      "arcane": null,
+      "claims": [],
+      "verdict": "v1.97: 32%. 치명타 세팅 + 프라임드 익스펠 그리니어(그리니어만). 글에 이유 없음."
+    },
+    {
+      "name": "GamesFuze 고상태이상 (스터닝 스피드, 머시리스)",
+      "community": "gamesfuze",
+      "kind": "read",
+      "url": "https://gamesfuze.com/guides/warframe-laetum-build-guide-new-strongest-secondary/",
+      "date": "2022-05-03",
+      "mods": [
+        "Galvanized Diffusion",
+        "Galvanized Shot",
+        "Frostbite",
+        "Pistol Pestilence",
+        "Scorch",
+        "Lethal Torrent",
+        "Stunning Speed",
+        "Hornet Strike"
+      ],
+      "exilus": "Primed Pistol Ammo Mutation",
+      "arcane": "secondary_merciless",
+      "claims": [
+        "비치명타 절반에 +2000% (디바우링 어트리션)"
+      ],
+      "verdict": "v1.97: 74%(중첩 유지 81%). 스터닝 스피드(재장전·충격 상태이상)가 칸을 차지하고 화염 칸이 하나 — 1위와 차이 대부분은 프라임드 히티드 차지 없음(1위에서 빼면 89%)."
+    }
+  ],
+  "meta": {
+    "read_builds": 5,
+    "elements": "폭발+독 2(계산기 순서 — 글은 바이러스+화염이라고 씀) · 바이러스+화염 2 · 부식+화염+방사능 1 (모두 인카논 고유 방사능 위에)",
+    "valence": "해당 없음",
+    "core": [
+      "갈바나이즈드 디퓨전",
+      "피스톨 페스틸런스",
+      "리썰 토렌트",
+      "프로스트바이트"
+    ],
+    "flex": [
+      "갈바나이즈드 샷 / 프라임드 타겟 크래커(치명타 세팅)",
+      "호넷 스트라이크 / 샤픈드 불릿",
+      "스코치 / 프라임드 히티드 차지 / 프라임드 컨벌션"
+    ],
+    "arcane": [
+      "세컨더리 머시리스 2",
+      "세컨더리 덱스터리티 1(근접 처치 조건)",
+      "없음 2"
+    ],
+    "why": "진화 V 디바우링 어트리션(비치명타 50% 확률 +2000%, 기본 피해 보너스와 곱) 때문에 최근 글(2024~)은 치명타를 버리고 상태이상(엘리멘탈 엑세스 +20%)·갈바나이즈드 샷·호넷 스트라이크로 감. 2022년 글은 어트리션 전제 없이 치명타 세팅. 리벤은 음수 치명타 확률이 핵심(Sportskeeda)."
+  }
+}

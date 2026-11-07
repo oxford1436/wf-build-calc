@@ -452,6 +452,23 @@ const { chromium } = require("playwright");
       const v = A.rivPlanVal ? A.rivPlanVal("rifle", "cd", "3+1") : null;
       check("v1.96 리벤 '맞출 예정' = 최대치: 소총 치명타 피해 3긍1부 148.5% (위키 범위 상한)", v != null && Math.abs(v - 1.485) < 0.002, v);
     }
+    // v1.97 (묶음 8 레이텀): Secondary/Primary Dexterity — game data "On Melee Kill: +60% Damage for 20s. Stacks up to 6x." The
+    // arcane had no stack count, so the pack got the full +360% from the first kill (no ramp like Merciless)
+    {
+      const w = weapon("laetum"), a = w.attacks[0];
+      const o1 = Object.assign(baseO(), { arcane: "secondary_dexterity" }), o2 = Object.assign(baseO(), { arcane: "secondary_dexterity", killRamp: false });
+      const ids = ["Hornet Strike", "Lethal Torrent", "Frostbite", "Pistol Pestilence"].map(M);   // no other on-kill stacks
+      const s1 = E.evaluate(w, a, ids, o1).score, s2 = E.evaluate(w, a, ids, o2).score;
+      check("v1.97 덱스터리티는 6중첩(무리에서 0부터 쌓임) — 처음부터 최대인 것보다 느림", s1 < s2 * 0.97, (s1 / s2).toFixed(3));
+    }
+    // v1.97 (묶음 8 렉스 프라임): Hemorrhage turns Impact status effects into Slash ones — the Lex Incarnon form's forced Impact
+    // proc (wiki "guarantees Impact procs") must roll too: at fire rate 0.67 (< 2.5, x2) that is 0.7 Slash procs per shot
+    {
+      const w = weapon("lex_prime"), a = w.attacks.find((x) => x.inc), o = baseO();
+      const r0 = E.evaluate(w, a, [M("Hornet Strike")], o), r1 = E.evaluate(w, a, [M("Hornet Strike"), M("Hemorrhage")], o);
+      const d = ((r1.procs || {}).slash || 0) - ((r0.procs || {}).slash || 0);
+      check("v1.97 헤모리지: 렉스 인카논 확정 충격 상태이상도 출혈로 (연사 2.5 미만 x2 → 한 발에 출혈 +0.7 이상)", d >= 0.69, "출혈 +" + d.toFixed(2));
+    }
     // v1.95 (세도 프라임 질문 2026-11-07): Cedo's own "+60% bonus damage per unique status effect on target … additive to all base
     // damage bonuses" (wiki) was not in the engine (gaps: handled null), the alt-fire glaive used the buckshot's 7 pellets (wiki
     // attack data Multishot 1), and its explosion's "two separate guaranteed procs" never counted as status types on the target.
