@@ -41,7 +41,7 @@ function evalBuild(ids, opt) {
   const order = []; const amt = {};
   for (const [t, v] of els) { if (!(t in amt)) { order.push(t); amt[t] = 0; } amt[t] += v; }
   const types = {}; // fraction-of-base amounts for modded elements, plus innate heat (separately in absolute units)
-  const rate = 8.33 * fr, mag = Math.round(300 * magp), reload = 2 / rl;
+  const rate = 8.33 * fr, mag = Math.round(300 * magp), reload = (o.mReload || 2) / rl /* Necramech regenerate (Archwing data): 4 s delay + 300/200 = 5.5 s */;
   const tMag = mag / rate, up = tMag / (tMag + reload);
   // build per-hit type table: hitscan base I35 P70 H75 (base total 180); explosion H72
   function table(base, innateHeat, ipsBase) {
