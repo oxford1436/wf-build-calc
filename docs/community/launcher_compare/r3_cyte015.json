@@ -1,0 +1,164 @@
+[
+ {
+  "k": "tonkor",
+  "sc": "cyte0.15",
+  "score": 13.748270661601174,
+  "mods": [
+   "갈바나이즈드 체임버",
+   "프라임드 매거진 워프",
+   "바일 액셀러레이션",
+   "크리티컬 딜레이",
+   "바이탈 센스",
+   "프라임드 파이어스톰",
+   "서레이션",
+   "비질란티 아마먼츠"
+  ],
+  "arcane": "primary_merciless",
+  "val": {
+   "type": "tox",
+   "pct": 0.6
+  },
+  "pf": {
+   "grineer": {
+    "clear150": 0.85,
+    "clearTop": 1.5,
+    "kps": 9.675,
+    "oneLv": 70
+   },
+   "corpus": {
+    "clear150": 0.64,
+    "clearTop": 0.64,
+    "kps": 18.706,
+    "oneLv": 1118
+   },
+   "infested": {
+    "clear150": 0.64,
+    "clearTop": 1.07,
+    "kps": 14.359,
+    "oneLv": 175
+   }
+  },
+  "rate": 4.713526093772727,
+  "ammo": {
+   "resupply": true,
+   "sustain": null
+  },
+  "steel": true,
+  "level": 150,
+  "factions": [
+   "grineer",
+   "corpus",
+   "infested"
+  ],
+  "riv": null,
+  "errs": []
+ },
+ {
+  "k": "zarr",
+  "sc": "cyte0.15",
+  "score": 17.265208480862327,
+  "mods": [
+   "리벤",
+   "바일 액셀러레이션",
+   "갈바나이즈드 체임버",
+   "프라임드 파이어스톰",
+   "서레이션",
+   "비질란티 퍼버",
+   "크리티컬 딜레이",
+   "바이탈 센스"
+  ],
+  "arcane": "primary_merciless",
+  "val": {
+   "type": "tox",
+   "pct": 0.37
+  },
+  "pf": {
+   "grineer": {
+    "clear150": 0.8,
+    "clearTop": 1.2,
+    "kps": 13.071,
+    "oneLv": 92
+   },
+   "corpus": {
+    "clear150": 0.6,
+    "clearTop": 0.6,
+    "kps": 19.843,
+    "oneLv": 5206
+   },
+   "infested": {
+    "clear150": 0.6,
+    "clearTop": 0.6,
+    "kps": 19.843,
+    "oneLv": 669
+   }
+  },
+  "rate": 5.0613854668051985,
+  "ammo": {
+   "resupply": true,
+   "sustain": null
+  },
+  "steel": true,
+  "level": 150,
+  "factions": [
+   "grineer",
+   "corpus",
+   "infested"
+  ],
+  "riv": null,
+  "errs": []
+ },
+ {
+  "k": "ogris",
+  "sc": "cyte0.15",
+  "score": 8.722143437460863,
+  "mods": [
+   "리벤",
+   "갈바나이즈드 체임버",
+   "바일 액셀러레이션",
+   "멀리그난트 포스",
+   "스톰브링어",
+   "프라임드 파이어스톰",
+   "스피드 트리거",
+   "프라임드 슈레드"
+  ],
+  "arcane": "primary_merciless",
+  "val": {
+   "type": "heat",
+   "pct": 0.29
+  },
+  "pf": {
+   "grineer": {
+    "clear150": 1.55,
+    "clearTop": 2.21,
+    "kps": 6.203,
+    "oneLv": 49
+   },
+   "corpus": {
+    "clear150": 1.12,
+    "clearTop": 1.12,
+    "kps": 10.672,
+    "oneLv": 98
+   },
+   "infested": {
+    "clear150": 1.12,
+    "clearTop": 1.36,
+    "kps": 10.023,
+    "oneLv": 75
+   }
+  },
+  "rate": 4.298331697742885,
+  "ammo": {
+   "resupply": true,
+   "sustain": null
+  },
+  "steel": true,
+  "level": 150,
+  "factions": [
+   "grineer",
+   "corpus",
+   "infested"
+  ],
+  "riv": null,
+  "errs": []
+ }
+]

@@ -1,0 +1,998 @@
+[
+ {
+  "k": "tonkor",
+  "sc": "cyte0.15",
+  "r": [
+   {
+    "n": "A viral+heat L150 grineer",
+    "score": 5.999307119873695,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      2,
+      2,
+      80
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L150 grineer",
+    "score": 5.999307119873695,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      2,
+      2,
+      79
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L150 grineer",
+    "score": 6.117613125246073,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      1.96,
+      1.96,
+      75
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L150 corpus",
+    "score": 7.454464527053685,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "corpus": [
+      1.61,
+      1.61,
+      2616
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L150 corpus",
+    "score": 7.454464527053685,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "corpus": [
+      1.61,
+      1.61,
+      2261
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L150 corpus",
+    "score": 10.164026075104196,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "corpus": [
+      1.18,
+      1.18,
+      1710
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L150 infested",
+    "score": 7.454464527053685,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "infested": [
+      1.61,
+      1.61,
+      366
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L150 infested",
+    "score": 7.454464527053685,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "infested": [
+      1.61,
+      1.61,
+      322
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L150 infested",
+    "score": 10.164026075104196,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "infested": [
+      1.18,
+      1.18,
+      253
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L250 grineer",
+    "score": 3.3240955239650405,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      3.61,
+      3.61,
+      80
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L250 grineer",
+    "score": 3.3240955239650405,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      3.61,
+      3.61,
+      79
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L250 grineer",
+    "score": 4.360898600835803,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      2.75,
+      2.75,
+      75
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L250 corpus",
+    "score": 7.454464527053685,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "corpus": [
+      1.61,
+      1.61,
+      2616
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L250 corpus",
+    "score": 7.454464527053685,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "corpus": [
+      1.61,
+      1.61,
+      2261
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L250 corpus",
+    "score": 10.164026075104196,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "corpus": [
+      1.18,
+      1.18,
+      1710
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L250 infested",
+    "score": 7.454464527053685,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "infested": [
+      1.61,
+      1.61,
+      366
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L250 infested",
+    "score": 7.454464527053685,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "infested": [
+      1.61,
+      1.61,
+      322
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L250 infested",
+    "score": 10.164026075104196,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "infested": [
+      1.18,
+      1.18,
+      253
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L400 grineer",
+    "score": 3.3240955239650405,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      3.61,
+      3.61,
+      80
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L400 grineer",
+    "score": 2.9996535599368475,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      4,
+      4,
+      79
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L400 grineer",
+    "score": 2.8683428915262184,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      4.18,
+      4.18,
+      75
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L400 corpus",
+    "score": 7.454464527053685,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "corpus": [
+      1.61,
+      1.61,
+      2616
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L400 corpus",
+    "score": 7.454464527053685,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "corpus": [
+      1.61,
+      1.61,
+      2261
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L400 corpus",
+    "score": 10.164026075104196,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "corpus": [
+      1.18,
+      1.18,
+      1710
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L400 infested",
+    "score": 5.999307119873695,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "infested": [
+      2,
+      2,
+      366
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L400 infested",
+    "score": 5.999307119873695,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "infested": [
+      2,
+      2,
+      322
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L400 infested",
+    "score": 6.117613125246073,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "infested": [
+      1.96,
+      1.96,
+      253
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L700 grineer",
+    "score": 2.048292819038661,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      5.86,
+      5.86,
+      80
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L700 grineer",
+    "score": 2.1389476252259003,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      5.61,
+      5.61,
+      79
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L700 grineer",
+    "score": 2.5459999679091725,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      4.71,
+      4.71,
+      75
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L700 corpus",
+    "score": 7.454464527053685,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "corpus": [
+      1.61,
+      1.61,
+      2616
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L700 corpus",
+    "score": 5.999307119873695,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "corpus": [
+      2,
+      2,
+      2261
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L700 corpus",
+    "score": 7.637999903727518,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "corpus": [
+      1.57,
+      1.57,
+      1710
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L700 infested",
+    "score": 5.019474725427349,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "infested": [
+      2.39,
+      2.39,
+      366
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L700 infested",
+    "score": 5.019474725427349,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "infested": [
+      2.39,
+      2.39,
+      322
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L700 infested",
+    "score": 6.117613125246073,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "infested": [
+      1.96,
+      1.96,
+      253
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L1000 grineer",
+    "score": 2.1389476252259003,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      5.61,
+      5.61,
+      80
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L1000 grineer",
+    "score": 1.6491354670207437,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      7.28,
+      7.28,
+      79
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L1000 grineer",
+    "score": 1.997941118363608,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      6.01,
+      6.01,
+      75
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L1000 corpus",
+    "score": 5.999307119873695,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "corpus": [
+      2,
+      2,
+      2616
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L1000 corpus",
+    "score": 5.999307119873695,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "corpus": [
+      2,
+      2,
+      2261
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L1000 corpus",
+    "score": 7.637999903727518,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "corpus": [
+      1.57,
+      1.57,
+      1710
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "A viral+heat L1000 infested",
+    "score": 5.019474725427349,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "infested": [
+      2.39,
+      2.39,
+      366
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash L1000 infested",
+    "score": 5.019474725427349,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "infested": [
+      2.39,
+      2.39,
+      322
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community L1000 infested",
+    "score": 6.117613125246073,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "infested": [
+      1.96,
+      1.96,
+      253
+     ]
+    },
+    "rate": 2.56
+   }
+  ]
+ }
+]

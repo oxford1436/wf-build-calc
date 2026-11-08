@@ -1,0 +1,358 @@
+[
+ {
+  "k": "tonkor",
+  "sc": "cyte0.15",
+  "r": [
+   {
+    "n": "A viral+heat (gen#1)",
+    "score": 5.936283109208196,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      2,
+      3.61,
+      80
+     ],
+     "corpus": [
+      1.61,
+      1.61,
+      2616
+     ],
+     "infested": [
+      1.61,
+      2,
+      366
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "B viral+slash (A, MF->HM)",
+    "score": 5.868928019442433,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      2,
+      4,
+      79
+     ],
+     "corpus": [
+      1.61,
+      1.61,
+      2261
+     ],
+     "infested": [
+      1.61,
+      2,
+      322
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C community SRC viral+slash",
+    "score": 7.181065378767163,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      1.96,
+      4.18,
+      75
+     ],
+     "corpus": [
+      1.18,
+      1.18,
+      1710
+     ],
+     "infested": [
+      1.18,
+      1.96,
+      253
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "D community, HM->MF, heat",
+    "score": 7.7879607590846565,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "malignant_force"
+    ],
+    "pf": {
+     "grineer": [
+      1.57,
+      3.14,
+      78
+     ],
+     "corpus": [
+      1.18,
+      1.18,
+      2010
+     ],
+     "infested": [
+      1.18,
+      1.57,
+      291
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "C lv400-only grineer",
+    "score": 2.7540700277253474,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      4.18,
+      4.32,
+      75
+     ]
+    },
+    "rate": 2.56
+   },
+   {
+    "n": "D lv400-only grineer",
+    "score": 3.0630454714069697,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "malignant_force"
+    ],
+    "pf": {
+     "grineer": [
+      3.14,
+      4.57,
+      78
+     ]
+    },
+    "rate": 2.56
+   }
+  ]
+ },
+ {
+  "k": "tonkor",
+  "sc": "cyte0.3",
+  "r": [
+   {
+    "n": "A viral+heat (gen#1)",
+    "score": 4.979759009435746,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      2.38,
+      4.3,
+      80
+     ],
+     "corpus": [
+      1.92,
+      1.92,
+      2616
+     ],
+     "infested": [
+      1.92,
+      2.38,
+      366
+     ]
+    },
+    "rate": 2.15
+   },
+   {
+    "n": "B viral+slash (A, MF->HM)",
+    "score": 4.923256967851487,
+    "ids": [
+     "galvanized_chamber",
+     "hunter_munitions",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      2.38,
+      4.77,
+      79
+     ],
+     "corpus": [
+      1.92,
+      1.92,
+      2261
+     ],
+     "infested": [
+      1.92,
+      2.38,
+      322
+     ]
+    },
+    "rate": 2.15
+   },
+   {
+    "n": "C community SRC viral+slash",
+    "score": 6.0239672467428385,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      2.34,
+      4.99,
+      75
+     ],
+     "corpus": [
+      1.41,
+      1.41,
+      1710
+     ],
+     "infested": [
+      1.41,
+      2.34,
+      253
+     ]
+    },
+    "rate": 2.15
+   },
+   {
+    "n": "D community, HM->MF, heat",
+    "score": 6.533072470048822,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "malignant_force"
+    ],
+    "pf": {
+     "grineer": [
+      1.87,
+      3.75,
+      78
+     ],
+     "corpus": [
+      1.41,
+      1.41,
+      2010
+     ],
+     "infested": [
+      1.41,
+      1.87,
+      291
+     ]
+    },
+    "rate": 2.15
+   },
+   {
+    "n": "C lv400-only grineer",
+    "score": 2.3103017125157903,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      4.99,
+      5.15,
+      75
+     ]
+    },
+    "rate": 2.15
+   },
+   {
+    "n": "D lv400-only grineer",
+    "score": 2.718508605116457,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "malignant_force"
+    ],
+    "pf": {
+     "grineer": [
+      3.75,
+      5.45,
+      78
+     ]
+    },
+    "rate": 2.15
+   }
+  ]
+ }
+]

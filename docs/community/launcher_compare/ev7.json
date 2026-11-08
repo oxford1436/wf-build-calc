@@ -1,0 +1,359 @@
+[
+ {
+  "k": "tonkor",
+  "sc": "cyte0.15",
+  "r": [
+   {
+    "n": "T1 cyte#1",
+    "score": 13.748270661601174,
+    "ids": [
+     "galvanized_chamber",
+     "primed_magazine_warp",
+     "vile_acceleration",
+     "critical_delay",
+     "vital_sense",
+     "primed_firestorm",
+     "serration",
+     "vigilante_armaments"
+    ],
+    "pf": {
+     "grineer": [
+      0.85,
+      1.5,
+      70
+     ],
+     "corpus": [
+      0.64,
+      0.64,
+      1118
+     ],
+     "infested": [
+      0.64,
+      1.07,
+      175
+     ]
+    },
+    "rate": 4.71,
+    "share": {
+     "punct": 0.16,
+     "corr": 0.47,
+     "viral": 0.37
+    }
+   },
+   {
+    "n": "T1 VigArm->HM",
+    "score": 11.61458084726381,
+    "ids": [
+     "galvanized_chamber",
+     "primed_magazine_warp",
+     "vile_acceleration",
+     "critical_delay",
+     "vital_sense",
+     "primed_firestorm",
+     "serration",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      1.28,
+      2.06,
+      64
+     ],
+     "corpus": [
+      0.64,
+      0.85,
+      776
+     ],
+     "infested": [
+      0.85,
+      1.07,
+      128
+     ]
+    },
+    "rate": 4.71,
+    "share": {
+     "punct": 0.16,
+     "corr": 0.47,
+     "viral": 0.37
+    }
+   },
+   {
+    "n": "T1 Serration->HM",
+    "score": 11.61458084726381,
+    "ids": [
+     "galvanized_chamber",
+     "primed_magazine_warp",
+     "vile_acceleration",
+     "critical_delay",
+     "vital_sense",
+     "primed_firestorm",
+     "hunter_munitions",
+     "vigilante_armaments"
+    ],
+    "pf": {
+     "grineer": [
+      1.28,
+      2.06,
+      61
+     ],
+     "corpus": [
+      0.64,
+      0.85,
+      642
+     ],
+     "infested": [
+      0.85,
+      1.07,
+      108
+     ]
+    },
+    "rate": 4.71,
+    "share": {
+     "punct": 0.16,
+     "corr": 0.47,
+     "viral": 0.37
+    }
+   },
+   {
+    "n": "T1 VigArm->MF heat",
+    "score": 11.643416406222393,
+    "ids": [
+     "galvanized_chamber",
+     "primed_magazine_warp",
+     "vile_acceleration",
+     "critical_delay",
+     "vital_sense",
+     "primed_firestorm",
+     "serration",
+     "malignant_force"
+    ],
+    "pf": {
+     "grineer": [
+      1.28,
+      2.35,
+      64
+     ],
+     "corpus": [
+      0.64,
+      0.85,
+      971
+     ],
+     "infested": [
+      0.64,
+      1.07,
+      155
+     ]
+    },
+    "rate": 4.71,
+    "share": {
+     "punct": 0.14,
+     "gas": 0.21,
+     "elec": 0.33,
+     "viral": 0.32
+    }
+   },
+   {
+    "n": "T1 VigArm->PCR (viral?)",
+    "score": 12.49143921073244,
+    "ids": [
+     "galvanized_chamber",
+     "primed_magazine_warp",
+     "vile_acceleration",
+     "critical_delay",
+     "vital_sense",
+     "primed_firestorm",
+     "serration",
+     "primed_cryo_rounds"
+    ],
+    "pf": {
+     "grineer": [
+      1.07,
+      2.49,
+      70
+     ],
+     "corpus": [
+      0.64,
+      0.64,
+      1350
+     ],
+     "infested": [
+      0.64,
+      1.07,
+      206
+     ]
+    },
+    "rate": 4.71,
+    "share": {
+     "punct": 0.11,
+     "viral": 0.62,
+     "elec": 0.27
+    }
+   },
+   {
+    "n": "C community",
+    "score": 7.181065378767163,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      1.96,
+      4.18,
+      75
+     ],
+     "corpus": [
+      1.18,
+      1.18,
+      1710
+     ],
+     "infested": [
+      1.18,
+      1.96,
+      253
+     ]
+    },
+    "rate": 2.56,
+    "share": {
+     "punct": 0.11,
+     "viral": 0.62,
+     "elec": 0.27
+    }
+   },
+   {
+    "n": "D community MF heat",
+    "score": 7.7879607590846565,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "malignant_force"
+    ],
+    "pf": {
+     "grineer": [
+      1.57,
+      3.14,
+      78
+     ],
+     "corpus": [
+      1.18,
+      1.18,
+      2010
+     ],
+     "infested": [
+      1.18,
+      1.57,
+      291
+     ]
+    },
+    "rate": 2.56,
+    "share": {
+     "punct": 0.1,
+     "viral": 0.6,
+     "rad": 0.3
+    }
+   },
+   {
+    "n": "T1 lv400 grineer",
+    "score": 6.718805728794849,
+    "ids": [
+     "galvanized_chamber",
+     "primed_magazine_warp",
+     "vile_acceleration",
+     "critical_delay",
+     "vital_sense",
+     "primed_firestorm",
+     "serration",
+     "vigilante_armaments"
+    ],
+    "pf": {
+     "grineer": [
+      1.5,
+      2.06,
+      70
+     ]
+    },
+    "rate": 4.71,
+    "share": {
+     "punct": 0.16,
+     "corr": 0.47,
+     "viral": 0.37
+    }
+   },
+   {
+    "n": "T1 VigArm->HM lv400 grineer",
+    "score": 5.56800886102755,
+    "ids": [
+     "galvanized_chamber",
+     "primed_magazine_warp",
+     "vile_acceleration",
+     "critical_delay",
+     "vital_sense",
+     "primed_firestorm",
+     "serration",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      2.06,
+      2.14,
+      64
+     ]
+    },
+    "rate": 4.71,
+    "share": {
+     "punct": 0.16,
+     "corr": 0.47,
+     "viral": 0.37
+    }
+   },
+   {
+    "n": "T1 kills maxed",
+    "score": 15.049258794608766,
+    "ids": [
+     "galvanized_chamber",
+     "primed_magazine_warp",
+     "vile_acceleration",
+     "critical_delay",
+     "vital_sense",
+     "primed_firestorm",
+     "serration",
+     "vigilante_armaments"
+    ],
+    "pf": {
+     "grineer": [
+      0.85,
+      1.28,
+      80
+     ],
+     "corpus": [
+      0.64,
+      0.64,
+      2113
+     ],
+     "infested": [
+      0.64,
+      0.85,
+      304
+     ]
+    },
+    "rate": 4.71,
+    "share": {
+     "punct": 0.16,
+     "corr": 0.47,
+     "viral": 0.37
+    }
+   }
+  ]
+ }
+]

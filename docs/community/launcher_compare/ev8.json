@@ -1,0 +1,129 @@
+[
+ {
+  "k": "tonkor",
+  "sc": "cyte0.15",
+  "r": [
+   {
+    "n": "Nourish, cast 0.15",
+    "score": 13.748270661601174,
+    "ids": [
+     "galvanized_chamber",
+     "primed_magazine_warp",
+     "vile_acceleration",
+     "critical_delay",
+     "vital_sense",
+     "primed_firestorm",
+     "serration",
+     "vigilante_armaments"
+    ],
+    "pf": {
+     "grineer": [
+      0.85,
+      1.5,
+      70
+     ],
+     "corpus": [
+      0.64,
+      0.64,
+      1118
+     ],
+     "infested": [
+      0.64,
+      1.07,
+      175
+     ]
+    },
+    "rate": 4.71,
+    "share": {
+     "punct": 0.16,
+     "corr": 0.47,
+     "viral": 0.37
+    }
+   }
+  ]
+ },
+ {
+  "k": "tonkor",
+  "sc": "cyte0.15nn",
+  "r": [
+   {
+    "n": "no helminth, cast 0.15",
+    "score": 10.35938303435091,
+    "ids": [
+     "galvanized_chamber",
+     "primed_magazine_warp",
+     "vile_acceleration",
+     "critical_delay",
+     "vital_sense",
+     "primed_firestorm",
+     "serration",
+     "vigilante_armaments"
+    ],
+    "pf": {
+     "grineer": [
+      1.28,
+      2.35,
+      60
+     ],
+     "corpus": [
+      0.64,
+      0.85,
+      542
+     ],
+     "infested": [
+      0.85,
+      1.28,
+      94
+     ]
+    },
+    "rate": 4.71,
+    "share": {
+     "punct": 0.25,
+     "corr": 0.75
+    }
+   }
+  ]
+ },
+ {
+  "k": "tonkor",
+  "sc": "cyte0.0375nn",
+  "r": [
+   {
+    "n": "EM what-if: no Nourish, cast 0.15/4",
+    "score": 11.845692323118751,
+    "ids": [
+     "galvanized_chamber",
+     "primed_magazine_warp",
+     "vile_acceleration",
+     "critical_delay",
+     "vital_sense",
+     "primed_firestorm",
+     "serration",
+     "vigilante_armaments"
+    ],
+    "pf": {
+     "grineer": [
+      1.07,
+      1.86,
+      60
+     ],
+     "corpus": [
+      0.6,
+      0.76,
+      542
+     ],
+     "infested": [
+      0.76,
+      1.07,
+      94
+     ]
+    },
+    "rate": 6.41,
+    "share": {
+     "punct": 0.25,
+     "corr": 0.75
+    }
+   }
+  ]
+ }
+]

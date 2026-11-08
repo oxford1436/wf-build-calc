@@ -31,3 +31,19 @@ The user pasted a community Kuva Tonkor guide with an arsenal screenshot (magazi
 - Old v2.01 #1 (Magnetic Capacity alone, 1.4 → 1 round) drops 1.453 → 1.127.
 - Slot checks on the Tonkor #1: Radiated Reload → Primed Firestorm 92.4%; heat valence + Malignant Force → toxin valence + Hunter Munitions (viral + slash) 77.7%; Semi-Rifle Cannonade → Amalgam Serration 96.4%; remove Primed Magazine Warp 64.0%.
 - Cyte-09 without Resupply: Tonkor 3.11 (17.5% of Zarr's 17.74 with Resupply), unchanged.
+
+## Cyte-09 only (user 2026-11-08: launchers are only used on Cyte-09) — Resupply cast 0.15 s
+Cast time per Resupply is not on the wiki; 0.15 s comes from the user's Kuva Zarr Nox x20 video (25 shots in 5.35 s, 0.20 s between shots inside a magazine, 4 casts → (5.35 − 4.8) / 4 ≈ 0.14 s). Each weapon re-optimised (`r3_cyte015.json`):
+
+| weapon | cast 0 s | cast 0.15 s |
+|---|---|---|
+| Kuva Zarr (user's riven, toxin 37%) | 17.74 (100%) | 17.27 (100%) |
+| Kuva Tonkor, no riven | 16.65 (94%) | 13.75 (80%) |
+| Kuva Ogris (user's riven, heat 28.7%) | 10.20 (58%) | 8.72 (51%) |
+
+- Tonkor Cyte #1 (0.15 s): Galvanized Chamber, Primed Magazine Warp, Vile Acceleration, Critical Delay, Vital Sense, Primed Firestorm, Serration, Vigilante Armaments + Primary Merciless, toxin 60%. Elements: toxin valence + the two violet shards' Electricity = Corrosive 47%, Nourish Viral 37% (+ Resupply Magnetic extra hits).
+- Slash check (`ev7.json`): Hunter Munitions in place of Vigilante Armaments or Serration 84.5% (Lv400 Grineer only: 82.9%); Malignant Force + heat valence 84.7%; Primed Cryo Rounds (viral) 90.9%.
+- The pasted community build (Semi-Rifle Cannonade, Primed Cryo Rounds, Hunter Munitions) is 52% on this Cyte: Cannonade locks the fire rate that Resupply makes valuable, and Primed Cryo Rounds + the shards' Electricity turn the planned Viral into Viral + separate Electricity.
+- Energized Munitions what-if (`ev8.json`, not in the calculator): no Nourish 75.4%; no Nourish but Resupply casts cut 4x (75% ammo efficiency, mag 2 -> 8 shots) 86.2% → Nourish stays.
+- Slash/armor facts (wiki): Steel Path = +100 levels, health and shields x2.5, "Steel Path no longer increases Armor values"; enemy armor caps at 2,700 = 90% damage reduction; Slash bleed ignores armor and shields (engine header). Heat strips up to 50%, Corrosive up to 80% of current armor.
+- Kuva Tonkor + max riven on Cyte-09 0.15 s (`r3_triv.json`): 17.14 = 99.3% of the user's Kuva Zarr — riven crit damage / crit chance / damage (−recoil), mods Galvanized Chamber, Primed Magazine Warp, Vile Acceleration, Primed Firestorm, Point Strike, Vital Sense, Vigilante Armaments.
