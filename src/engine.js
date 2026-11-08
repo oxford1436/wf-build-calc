@@ -962,9 +962,13 @@
     // ammo differently"; Quanta cube 10, Kohm full spool 4 per shot). AmmoCost 0 (Regulators, Cedo glaive …) never empties.
     const ammoCostM = atk.ammoCost != null ? atk.ammoCost : atk.parts && atk.parts[0] && atk.parts[0].ammoCost != null ? atk.parts[0].ammoCost : 1;
     const magShots = (n) => (ammoCostM > 0 ? n / ammoCostM : 1e9) / (1 - Math.min(0.75, Math.max(0, a.ammoEff || 0))) / (1 - galeG);
+    // v2.02: modded magazine capacity is a whole number — wiki Primed Magazine Warp: "For any non-integer magazine values the
+    // magazine size is simply rounded to the nearest whole number" (Braton 45 x 1.55 = 69.75 -> 70). Matters for 1-round magazines:
+    // Kuva Tonkor + Primed Magazine Warp 1.55 -> 2 (arsenal screenshot shows 2), + Magnetic Capacity alone 1.4 -> 1 (no extra round).
+    const magCap = (base) => Math.max(1, Math.round(base * (1 + a.mag)));
     for (const m of mods) {
       if (!m || !atk.mag) continue;
-      const magN = Math.max(1, magShots(atk.mag * (1 + a.mag)));
+      const magN = Math.max(1, magShots(magCap(atk.mag)));
       if (m.clipDeleg) { const stk = Math.min(m.clipDeleg.max, Math.floor(magN)); a.sc += m.clipDeleg.per * stk; a.ms += m.clipDeleg.per * stk; }
       if (m.reloadBuff && (!m.reloadBuff.aim || o.aim)) {
         const frB = (atk.fr || 1) * Math.max(0.05, 1 + a.fr + m.reloadBuff.fr);
@@ -1033,7 +1037,7 @@
         const cc0 = Math.min(1, (atk.cc || 0) * (1 + a.cc * (isHeavy ? 2 : 1)) + a.ccFlat);
         const lam = def.trig === "crit" ? hits * cc0 * def.p : def.trig === "hit" ? hits * def.p
           : def.trig === "hs" ? hits * Math.max(o.hs || 0, (ext.weakFrac || 0)) * def.p
-          : def.trig === "reload" ? (atk.mag ? fr0 / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0) * def.p : 0;
+          : def.trig === "reload" ? (atk.mag ? fr0 / Math.max(1, magShots(magCap(atk.mag))) : 0) * def.p : 0;
         up = uptime(lam, def.t);
       }
       for (const k in def.eff || {}) a[k] = (a[k] || 0) + def.eff[k] * up;
@@ -1083,8 +1087,8 @@
       // spool-down while the trigger is held (Phenmor Incarnon Form: 100% → 60% over 51 shots, reset on release):
       // short bursts, so the average rate over one 51-shot burst
       if (atk.spoolDown) { const to = atk.spoolDown[1]; fr *= (1 - to) / Math.log(1 / to); }
-      const mag = Math.max(1, magShots((atk.mag || 30) * (1 + a.mag)));   // shots between reloads
-      let reload = (atk.reload || 2) * (atk.byRound ? Math.max(0.1, 1 + a.mag) : 1) / Math.max(0.1, 1 + a.reload);
+      const mag = Math.max(1, magShots(magCap(atk.mag || 30)));   // shots between reloads
+      let reload = (atk.reload || 2) * (atk.byRound ? Math.max(0.1, magCap(atk.mag || 30) / (atk.mag || 30)) : 1) / Math.max(0.1, 1 + a.reload);
       // Cyte-09 Resupply (wiki): casting instantly reloads the held firearm → a reload costs only the cast
       if (ext.reloadCast != null) reload = Math.min(reload, ext.reloadCast);
       // spool-up (Gorgon, Soma, Cestra …: wiki "Spool" shots, starting near 60% fire rate): ~0.28 x shots of extra time per magazine
@@ -1114,12 +1118,12 @@
     // Reaver's stacks are weighted by the rounds of each burst (the short last burst fires with min(full bursts, cap) stacks).
     let burstAdd = 0, finalMs = 0;
     if (atk.burst && atk.mag && (a.burstDmg > 0 || a.finalBurstMs > 0)) {
-      const bn = Math.max(1, atk.burst[0]), m = Math.max(1, Math.round(atk.mag * (1 + a.mag)));
+      const bn = Math.max(1, atk.burst[0]), m = magCap(atk.mag);
       const nb = Math.floor(m / bn + 1e-9), rem = m - nb * bn;
       if (a.burstDmg > 0) { const cap = Math.max(1, a.burstCap || 1); let s = 0; for (let k = 0; k < nb; k++) s += bn * Math.min(k, cap); s += rem * Math.min(nb, cap); burstAdd = a.burstDmg * s / m; }
       if (a.finalBurstMs > 0) finalMs = a.finalBurstMs * (rem || Math.min(bn, m)) / m;
     }
-    const dmgb = a.dmg + burstAdd + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (tenno && o.tennoAdd ? tenno.dmg || 0 : 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(atk.mag * (1 + a.mag))) : 0);
+    const dmgb = a.dmg + burstAdd + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (tenno && o.tennoAdd ? tenno.dmg || 0 : 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(magCap(atk.mag))) : 0);
     const msLock = a.msLock > 0;
     // atk.noMs: a radial part the wiki says multishot doesn't multiply (one blast per trigger pull)
     // accuracy-lowering mods: fewer of the shots reach the enemy (see hitShare); the flat spread goes on the max deviation (wiki
@@ -1137,7 +1141,7 @@
     // Form counts as a reload). Average over one magazine of hits (linear ramp 0 → min(cap, 1.2% × hits)).
     let hataAdd = 0;
     if (a.hata > 0 && !isMelee) {
-      const shots = atk.inc ? (atk.incAmmo || 0) : magShots((atk.mag || 0) * (1 + a.mag));
+      const shots = atk.inc ? (atk.incAmmo || 0) : (atk.mag ? magShots(magCap(atk.mag)) : 0);
       const H = Math.max(0, shots) * ms0, Hc = 5 / a.hata;
       hataAdd = H <= 0 ? 0 : H <= Hc ? a.hata * H / 2 : 5 - 5 * Hc / (2 * H);
     }
@@ -1195,7 +1199,7 @@
     // evaluate()), so the bonus is the partial one: rounds used / magazine, for min(1, 10 s / pack time) of the pack
     let platedB = 0;
     if (arc && arc.plated && atk.mag) {
-      const magN = atk.mag * (1 + a.mag), frM = Math.max(0.05, (atk.fr || 1) * Math.max(0.05, 1 + a.fr + a.frneg + (ext.frAdd || 0)));
+      const magN = magCap(atk.mag), frM = Math.max(0.05, (atk.fr || 1) * Math.max(0.05, 1 + a.fr + a.frneg + (ext.frAdd || 0)));
       const fireT = magShots(magN) / frM, full = 0.335 * Math.sqrt(magN);
       if (o._platedT != null) { const T = Math.max(0.05, o._platedT); platedB = full * Math.min(1, T / fireT) * Math.min(1, 10 / T); }
       else platedB = full * Math.min(1, 10 / fireT);
@@ -1483,7 +1487,7 @@
       const cost = atk.ammoCost != null ? atk.ammoCost : atk.parts && atk.parts[0].ammoCost != null ? atk.parts[0].ammoCost : 1;
       best.inc = { rounds, sec: rounds ? rounds / Math.max(1e-6, rate * cost) : null };
     } else if (best && weapon.ammoMax && !isMelee) {
-      const magN = (atk.mag || 0) * (1 + a.mag), maxA = weapon.ammoMax * (1 + a.ammoMax);
+      const magN = atk.mag ? magCap(atk.mag) : 0, maxA = weapon.ammoMax * (1 + a.ammoMax);
       const cost = atk.ammoCost != null ? atk.ammoCost : atk.parts && atk.parts[0].ammoCost != null ? atk.parts[0].ammoCost : 1;
       const use = rate * cost * (1 - Math.min(0.75, a.ammoEff)) * (1 - galeG);      // all sources together cap at 75% (Hotfix 44.1.3); Gale Force shots are free
       best.ammo = { sustain: (magN + maxA) / Math.max(1e-6, use), use, mag: magN, max: maxA, pickup: weapon.ammoPickup || 0,

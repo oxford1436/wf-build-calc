@@ -2,6 +2,11 @@
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "2.02", date: "2026-11-08", title: "탄창 용량 반올림 (쿠바 톤코어 1발 탄창)",
+      items: [
+        "탄창 모드로 늘어난 탄창을 소수 그대로 계산하던 것을 위키대로 가장 가까운 정수로 반올림합니다: \"For any non-integer magazine values the magazine size is simply rounded to the nearest whole number\" (프라임드 매거진 워프 문서).",
+        "쿠바 톤코어(탄창 1발): 프라임드 매거진 워프 1.55 → 2발(커뮤니티 아스날 화면과 같음), 마그네틱 캐퍼시티만 끼면 1.4 → 1발(탄창 이득 없음). 이전에는 마그네틱 캐퍼시티의 +40%를 그대로 계산해 톤코어 추천에 들어갔습니다.",
+      ] },
     { v: "2.01", date: "2026-11-08", title: "프라이머리 컴프레션: 투사체 무기는 곱연산, 집속탄은 미적용",
       items: [
         "프라이머리 컴프레션(조준 시 폭발 반경 −80%, 줄어든 1m당 피해 +100%)이 서레이션과 합연산으로 계산되던 것을 위키대로 고쳤습니다: \"On projectile weapons, the damage bonus is multiplicative to other damage bonus sources (e.g. Serration)\". 위키 표에서 톤코어·쿠바 톤코어, 오그리스·쿠바 오그리스, 자르 캐논은 'Multiplies'입니다.",

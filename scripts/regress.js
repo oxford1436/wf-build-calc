@@ -202,6 +202,15 @@ const { chromium } = require("playwright");
       const k = d(["Serration"]) / d([]);
       check("v2.01 프라이머리 컴프레션: 투사체 무기(쿠바 톤코어)는 곱연산 — 서레이션을 넣으면 직격 ×2.65 (합연산이면 ×1.25)", Math.abs(k - 2.65) < 0.06, k.toFixed(3));
     }
+    // v2.02: modded magazine capacity rounds to the nearest whole number (wiki Primed Magazine Warp: "For any non-integer magazine
+    // values the magazine size is simply rounded to the nearest whole number"). Kuva Tonkor (1 round): Primed Magazine Warp
+    // 1.55 -> 2 (arsenal screenshot 2026-11-08 shows 2), Magnetic Capacity 1.4 -> 1
+    {
+      const w = weapon("kuva_tonkor"), o = baseO();
+      const mag = (ids) => { const r = E.evaluate(w, w.attacks[0], ids.map(M), o); return r.ammo ? r.ammo.mag : null; };
+      const a = mag(["Primed Magazine Warp"]), b = mag(["Magnetic Capacity"]);
+      check("v2.02 탄창 반올림: 쿠바 톤코어 + 프라임드 매거진 워프 = 2발, + 마그네틱 캐퍼시티 = 1발 (위키: 가장 가까운 정수)", a === 2 && b === 1, `PMW ${a} · MC ${b}`);
+    }
     // v1.56: proc-stack arcanes expire all at once -> with frequent heat procs Cascadia Flare is near its cap
     {
       const w = weapon("kuva_nukor");   // heat-heavy secondary (kitguns are assembled in app.js)
