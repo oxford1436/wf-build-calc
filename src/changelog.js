@@ -2,6 +2,11 @@
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "2.00", date: "2026-11-08", title: "생티 캐스타나스: 확정 전기 상태이상이 전기가 합쳐져도 전기 모드 보너스를 받음",
+      items: [
+        "생티 캐스타나스 부착 폭발의 확정 전기 상태이상(위키: \"Guaranteed Electricity proc scales with Electricity mods regardless if they combine with other elements as Corrosive, Radiation, or Magnetic\")이, 전기가 부식·방사능·자성으로 합쳐지면 전기 모드 보너스 없이 계산됐습니다. 이제 합쳐져도 전기 모드(컨벌션 등) 보너스가 전기 지속 피해에 들어갑니다.",
+        "예: 패서전 라운즈 + 컨벌션(부식) + 프라임드 히티드 차지 세팅의 부착 폭발 점수 +15%. 기본 공격(공중 폭발)과 다른 무기는 바뀌지 않습니다.",
+      ] },
     { v: "1.99", date: "2026-11-08", title: "세컨더리 이레디에이트: 방사능 10중첩이 쌓인 뒤의 타격만 퍼짐",
       items: [
         "세컨더리 이레디에이트(게임 데이터: \"방사능 10중첩이 걸린 적을 맞히면 7m 안 적에게 그 피해의 180%\")를 적이 12초 내내 맞는다고 보고 늘 켜진 것으로 계산했습니다. 이제 표적마다 '그 적이 죽기 전에 맞는 발 수'에서 앞선 발이 쌓은 방사능(상태이상 지속 12초)으로 10중첩이 된 뒤의 발만 퍼집니다. 한두 발에 죽는 적에게는 거의 터지지 않습니다.",

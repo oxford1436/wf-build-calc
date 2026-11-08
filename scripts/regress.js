@@ -627,6 +627,30 @@ const { chromium } = require("playwright");
     await p3.close();
   }
 
+  // v2.00: wiki Sancti Castanas "Guaranteed Electricity proc scales with Electricity mods regardless if they combine with other
+  // elements as Corrosive, Radiation, or Magnetic" — with Pathogen Rounds (innate Electricity + Toxin = Corrosive) the forced
+  // Electricity procs of the embedded detonation still take Convulsion's +90%
+  {
+    const p3 = await ctx.newPage();
+    p3.on("pageerror", (e) => errs.push(e.message));
+    await p3.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p3.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p3.evaluate(() => {
+      const A = window.WF_APP, E = window.WFEngine, w = window.WF_WEAPONS.find((x) => x.id === "sancti_castanas");
+      if (!w) return { err: "no Sancti Castanas" };
+      const ai = w.attacks.findIndex((a) => a.en === "Embedded Detonation");
+      A.st.base = w; A.st.weapon = w; A.st.atk = ai;
+      const o = Object.assign(A.readOpts(), { targets: null, val: null }); o.targets = E.targetsFor(o); A.st.results = { o };
+      const en = (n) => window.WF_MODS.find((x) => x.en === n).id;
+      const ids = ["Pathogen Rounds", "Convulsion", "Primed Heated Charge", "Hornet Strike", "Galvanized Diffusion", "Primed Pistol Gambit", "Primed Target Cracker", "Lethal Torrent"].map(en);
+      const sc = () => A.evalBuild(ids, null, null, Object.assign({}, o, { arcane: null }), null).score;
+      const s1 = sc(), fs = w.forcedScale; delete w.forcedScale; const s0 = sc(); if (fs) w.forcedScale = fs;
+      return { k: s1 / s0, fs: !!fs };
+    });
+    results.push({ name: "v2.00 생티 캐스타나스 확정 전기 상태이상: 전기가 부식으로 합쳐져도 전기 모드 보너스 적용 (부착 폭발 점수가 미적용보다 5% 넘게 높음)", ok: !r.err && r.fs && r.k > 1.05, detail: r.err || "×" + r.k.toFixed(3) });
+    await p3.close();
+  }
+
   // v1.71: the cases the user caught in game (2026-11-04).
   //  - Torid Incarnon Form, setting A (blast + corrosive) vs the old pick (viral + magnetic, Primed Shred): Simulacrum, Grineer Nox
   //    x20, Lv150, from zero stacks. In game A clears all 20 in < 3 s, the old pick takes 6 s for 5. Old engine: old pick faster.

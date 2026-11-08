@@ -1196,6 +1196,10 @@
       const share = {}; for (const k in coef) share[k] = coef[k] / total;
       const bonus = { heat: 0, tox: 0, elec: 0, gas: 0, slash: 0 };
       for (const T of ["heat", "tox", "elec"]) if (L.mp[T] === T && a.elem[T] > 0) bonus[T] = a.elem[T];
+      // v2.00 (wiki Sancti Castanas): "Guaranteed Electricity proc scales with Electricity mods regardless if they combine with
+      // other elements as Corrosive, Radiation, or Magnetic" — once Electricity combines, every Electricity proc left is the
+      // guaranteed one, so the Electricity mod bonus applies to all of them
+      if (weapon.forcedScale && atk.forced) for (const T of weapon.forcedScale) if (atk.forced.includes(T) && a.elem[T] > 0) bonus[T] = a.elem[T];
       bonus.gas = Math.max(0, a.extra.gasm || 0);   // gas ticks grow only with standalone Gas mods (wiki), not heat + toxin
       for (const [p, x] of tail) if (L.mp[p] === p && bonus[p] !== undefined) bonus[p] += x;
       // arcane proc stacks (frostbite/blight/flare/voltage)

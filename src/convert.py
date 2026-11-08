@@ -90,6 +90,10 @@ PT_NONE_ATK = {"Kunai": ("Incarnon Form",), "Mk1-Kunai": ("Incarnon Form",)}
 # weapon-wide crit traits (wiki weapon pages): Gotva Prime "Status Effects have a 15% chance to set the next shot's Critical
 # Chance to 300%" (15% confirmed by DE on the official forums, wiki footnote), ignoring mods
 PROC_CRIT = {"Gotva Prime": {"p": 0.15, "cc": 3.0}}
+# forced procs that keep their own element's mod bonus even when that element combines (wiki Sancti Castanas, 2026-11-08 batch 11,
+# docs/mechanics/gaps_secondary.json): "Guaranteed Electricity proc scales with Electricity mods regardless if they combine with
+# other elements as Corrosive, Radiation, or Magnetic."
+FORCED_SCALE = {"Sancti Castanas": ["elec"]}
 # Perigale / Perigale Prime "Gale Force" (wiki Perigale, 2026-11-04): "Landing 4 headshots in a burst or a headshot kill grants
 # the "Gale Force" buff, granting Infinite Ammo. The buff lasts 4 seconds and can be refreshed on subsequent chained headshots."
 # Notes: "Multishot, Xata's Whisper, and Punch Through hitting multiple heads all count as separate headshot hits".
@@ -413,6 +417,8 @@ def conv(w, typ):
                         at_["pellets"] = at_["parts"][0].get("pellets", 1)
             if name in PROC_CRIT:
                 W["procCrit"] = PROC_CRIT[name]
+            if name in FORCED_SCALE:
+                W["forcedScale"] = FORCED_SCALE[name]
             if name in GALE_FORCE:
                 W["galeForce"] = GALE_FORCE[name]
             wk = WIKI.get(name) or {}

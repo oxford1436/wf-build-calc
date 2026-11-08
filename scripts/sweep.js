@@ -41,16 +41,28 @@ const { chromium } = require("playwright");
     const t0 = Date.now();
     const r = await p.evaluate((id) => {
       const A = window.WF_APP, E = window.WFEngine;
-      const w = window.WF_WEAPONS.find((x) => x.id === id);
-      const row = { id, name: w.ko, atk: "", flags: [] };
+      const w0 = window.WF_WEAPONS.find((x) => x.id === id);
+      const row = { id, name: w0.ko, atk: "", flags: [] };
       try {
-        A.st.weapon = w; A.st.atk = A.defaultAttack(w); const atk = w.attacks[A.st.atk];
-        row.atk = atk.name;
-        const val = w.valence ? { type: "tox", pct: 0.6 } : null;
+        A.st.base = w0; A.st.weapon = w0; A.st.atk = A.defaultAttack(w0); A.st.evoManual = {};
+        const val = w0.valence ? { type: "tox", pct: 0.6 } : null;
         const o = Object.assign(A.readOpts(), { targets: null, concept: [], conceptOnly: false, val }); o.targets = E.targetsFor(o);
         A.st.results = { o };
+        // Incarnon weapons: final form, like the app (autoEvo with no mods, then betterEvo climbs the tiers keeping the #1
+        // build and searches once more). Before 2026-11-08 the sweep used the raw weapon with no evolution at all.
+        let w = w0, top = null;
+        const search = (ww) => { const a0 = ww.attacks[A.st.atk]; return E.optimize(ww, a0, A.candidateMods(ww, a0, { aim: false, cast: false, boss: true }), o, { slots: 8, beam: 20, valOptions: [val], arcOptions: [null] })[0]; };
+        if (w0.evos && A.autoEvo) {
+          A.st.evoSel = A.autoEvo(w0, {}); w = A.applyEvos(w0, A.st.evoSel); A.st.weapon = w;
+          top = search(w);
+          const ns = top && A.betterEvo({ ids: top.mods.map((m) => m.id), val, arcane: null });
+          if (ns) { A.st.evoSel = ns; w = A.applyEvos(w0, ns); A.st.weapon = w; top = search(w); }
+          row.evo = Object.entries(A.st.evoSel).filter(([t]) => t !== "1").map(([t, i]) => t + ":" + (((w0.evos.find((x) => String(x.tier) === t) || {}).perks || [])[i] || {}).name).join(" ");
+        }
+        const atk = w.attacks[A.st.atk];
+        row.atk = atk.name;
         const cands = A.candidateMods(w, atk, { aim: false, cast: false, boss: true });
-        const top = E.optimize(w, atk, cands, o, { slots: 8, beam: 20, valOptions: [val], arcOptions: [null] })[0];
+        if (!top) top = E.optimize(w, atk, cands, o, { slots: 8, beam: 20, valOptions: [val], arcOptions: [null] })[0];
         if (!top || !isFinite(top.score) || top.score <= 0) { row.flags.push("추천 세팅 없음/점수 이상"); return row; }
         const ids2 = top.mods.map((m) => m.id);
         const ev = (x) => A.evalBuild(x, val, null, o, null);
