@@ -604,6 +604,29 @@ const { chromium } = require("playwright");
     await p2.close();
   }
 
+  // v1.99: Secondary Irradiate spread only on hits that find 10 Radiation stacks already on the target. Kitgun Catchmoon
+  // (innate heat + Primed Convulsion = Radiation, 0.4 procs a shot) one-shots Corpus up to Lv358, so a target never reaches
+  // 10 stacks — before, the 12-second steady state made every hit spread (Irradiate x8.3 over no arcane, x4.8 over Merciless).
+  {
+    const p3 = await ctx.newPage();
+    p3.on("pageerror", (e) => errs.push(e.message));
+    await p3.addInitScript(() => { try { localStorage.setItem("wfopt2", JSON.stringify({ mod: ["kit_secondary", "Catchmoon", "Haymaker", "Splat"] })); } catch (e) {} });
+    await p3.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p3.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p3.evaluate(() => {
+      const A = window.WF_APP, E = window.WFEngine;
+      if (!A.st.weapon.modular) return { err: "kitgun not loaded" };
+      const en = (n) => window.WF_MODS.find((x) => x.en === n).id;
+      const ids = ["Galvanized Diffusion", "Primed Convulsion", "Hornet Strike", "Lethal Torrent", "Primed Pistol Gambit", "Primed Target Cracker", "Magnum Force", "Anemic Agility"].map(en);
+      const o = Object.assign(A.readOpts(), { factions: ["corpus"], targets: null, val: null });
+      o.targets = E.targetsFor(o); A.st.results = { o };
+      const sc = (arc) => A.evalBuild(ids, null, arc, Object.assign({}, o, { arcane: arc }), null).score;
+      return { k: sc("secondary_irradiate") / sc(null) };
+    });
+    results.push({ name: "v1.99 이레디에이트: 한두 발에 죽는 표적(캐치문 코퍼스)은 방사능 10중첩 전에 죽어 퍼짐이 거의 없음 — 아케인 없음의 1.5배 미만", ok: !r.err && r.k < 1.5, detail: r.err || "×" + r.k.toFixed(2) });
+    await p3.close();
+  }
+
   // v1.71: the cases the user caught in game (2026-11-04).
   //  - Torid Incarnon Form, setting A (blast + corrosive) vs the old pick (viral + magnetic, Primed Shred): Simulacrum, Grineer Nox
   //    x20, Lv150, from zero stacks. In game A clears all 20 in < 3 s, the old pick takes 6 s for 5. Old engine: old pick faster.

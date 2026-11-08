@@ -585,7 +585,7 @@
     const perF = {};
     for (const f of o.factions) {
       // sum per-shot params across parts (same trigger)
-      const acc = { kf: 0, D: 0, D0: 0, Dnon: 0, pbN: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
+      const acc = { irrX: 0, irrX0: 0, irrF: 0, irrF0: 0, irrLam: 0, kf: 0, D: 0, D0: 0, Dnon: 0, pbN: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, pp: 0, dotNon: {}, pvN: 0, phN: 0, pcN: 0, pkN: 0 };
       res.forEach((r, ri) => {
         const x = r.perF[f];
         // v1.84 (second review 2026-11-06): the time-to-kill applies the main part's crit (the swing's) to everything pooled; a
@@ -593,6 +593,9 @@
         // average crit multiplier (Dual Ichor: Tennokai damage was 14.6% low)
         const cr = parts[ri].kind === "tennokai" && r.critf > 0 && main.critf > 0 ? r.critf / main.critf : 1;
         const wgt = weights[ri] * cr, wN = weights[ri];
+        // Secondary Irradiate (v1.99): split the spread out of D — irrX = the extra it adds now, irrF = the extra at full uptime
+        if (x.irrG > 0) { const dB = x.D / x.irrM, d0 = (x.D0 != null ? x.D0 : x.D) / x.irrM; acc.irrX += (x.D - dB) * wgt; acc.irrX0 += ((x.D0 != null ? x.D0 : x.D) - d0) * wgt; acc.irrF += dB * x.irrG * wgt; acc.irrF0 += d0 * x.irrG * wgt; }
+        acc.irrLam += ((r.procs && r.procs.rad) || 0) * wN;
         acc.D += x.D * wgt; acc.D0 += (x.D0 != null ? x.D0 : x.D) * wgt; acc.Dnon += (x.Dnon || 0) * wgt; acc.pbN += (x.pbN || 0) * wN; acc.kf = Math.max(acc.kf, x.kf || 0); acc.blast += x.blast * wgt; acc.F += (x.F || 0) * wN; acc.napH += (x.napH || 0) * wgt;
         for (const T in x.dot) acc.dot[T] = (acc.dot[T] || 0) + x.dot[T] * wgt;
         for (const T in x.dotNon) acc.dotNon[T] = (acc.dotNon[T] || 0) + x.dotNon[T] * wgt;
@@ -627,11 +630,28 @@
       const solve = (tgs) => {
         const tg = tgs.main;
         const shc = 1 - (o.ext.shieldCut || 0);
-        const pMain = Object.assign({}, base, hitP, { hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar, og: tg.og || 0 });
+        // v1.99 Secondary Irradiate per target (game data: "On hitting enemies afflicted by 10 stacks of Radiation: Deal 180% of
+        // the hit damage to enemies within 7m"): the k-th hit on a target carries (k − 1) shots' worth of Radiation procs
+        // (Poisson, stacks last 12 s × status duration), and only the hits that find 10 stacks spread. Shots on the target =
+        // until it dies without the spread (the spread goes to the others, not to it). Before: every hit spread at the
+        // 12-second steady state, so a target that dies in one or two shots (Catchmoon at Lv150–400) still spread every time.
+        const irrFit = (p) => {
+          if (!(acc.irrF > 0)) return p;
+          const pb = Object.assign({}, p, { D: p.D - acc.irrX, D0: p.D0 - acc.irrX0 });
+          const t0 = ttk(pb), lam = acc.irrLam, win = 12 * (main.dur || 1) * main.rate;
+          const n = isFinite(t0) ? 1 + Math.round(Math.max(0, t0) / period) : 400;
+          const tl = (m) => { let pmf = Math.exp(-m), cdf = pmf; for (let k = 1; k < 10; k++) { pmf *= m / k; cdf += pmf; } return Math.max(0, 1 - cdf); };
+          let sum = 0; const nn = Math.min(n, 400);
+          for (let j = 1; j <= nn; j++) sum += tl(lam * Math.min(j - 1, win));
+          if (n > nn) sum += (n - nn) * tl(lam * Math.min(nn, win));
+          const u = lam > 0 ? sum / n : 0;
+          return Object.assign({}, pb, { D: pb.D + u * acc.irrF, D0: pb.D0 + u * acc.irrF0 });
+        };
+        const pMain = irrFit(Object.assign({}, base, hitP, { hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar, og: tg.og || 0 }));
         const tHit = ttk(pMain);
         let tHeavy = tHit, pHeavy = pMain;
-        if (tgs.heavy) { pHeavy = Object.assign({}, base, hitP, { hp: tgs.heavy.hp, sh: tgs.heavy.sh * shc, ar0: tgs.heavy.ar }); tHeavy = ttk(pHeavy); }
-        const tEx = tgs.ex ? ttk(Object.assign({}, base, hitP, { hp: tgs.ex.hp, sh: tgs.ex.sh * shc, ar0: tgs.ex.ar, og: tgs.ex.og })) : 0;
+        if (tgs.heavy) { pHeavy = irrFit(Object.assign({}, base, hitP, { hp: tgs.heavy.hp, sh: tgs.heavy.sh * shc, ar0: tgs.heavy.ar })); tHeavy = ttk(pHeavy); }
+        const tEx = tgs.ex ? ttk(irrFit(Object.assign({}, base, hitP, { hp: tgs.ex.hp, sh: tgs.ex.sh * shc, ar0: tgs.ex.ar, og: tgs.ex.og }))) : 0;
         let tNon = Infinity, tNonH = Infinity;
         // what the enemies the shot doesn't strike keep taking while one is being hit (Melee Influence spread, Blast 10-stack
         // detonations); Melee Influence (wiki): "Hits that one-hit-kill enemies cannot trigger nor benefit" — of the hits a target
@@ -1304,13 +1324,19 @@
         kfTot = kf.dmg * (1 + dmgb + dmgArc) * (1 + elemSum) * ticks;
       }
       let directMult = Btot * exS * (1 + dmgb + dmgArc + platedB + gco + co) * fallM;
-      // Secondary Irradiate (wiki): only direct hits spread, and elemental mods are 33% less effective on the spread hits
+      // Secondary Irradiate (wiki): only direct hits spread, and elemental mods are 33% less effective on the spread hits.
+      // irrM = the multiplier at the steady-state uptime (stacks over the 12 s Radiation lifetime); irrG = the gain at full uptime.
+      // v1.99: evaluate() rescales it per target by the hits that land while the target already has 10 stacks
+      // (game data: "On hitting enemies afflicted by 10 stacks of Radiation") — a target that dies first never triggers it.
+      let irrM = 1, irrG = 0;
       if (arc && arc.irradiate && o.scenario === "crowd" && kind !== "radial") {
         const radSt = (procs.rad || 0) * rate * 12 * dur, upR = Math.min(1, radSt / 10);
         const n7 = Math.min(N - 1, rho * Math.PI * 49);
         let modEl = 0; for (const p of PRIM) modEl += Math.max(0, a.elem[p]); for (const t in a.extra) modEl += Math.max(0, a.extra[t]);
         const spreadEff = total > 0 ? Math.max(0, (total - 0.33 * modEl) / total) : 1;
-        directMult *= 1 + arc.irradiate * spreadEff * n7 * upR / Math.max(1, K);
+        irrG = arc.irradiate * spreadEff * n7 / Math.max(1, K);
+        irrM = 1 + irrG * upR;
+        directMult *= irrM;
       }
       // DoT ticks (wiki "Damage over Time"): heat, toxin and slash tick once a second starting 1 s after the proc
       // (⌊duration − 1⌋ + 1 ticks, none if the status lasts under 1 s); electricity and gas tick right away
@@ -1405,7 +1431,7 @@
         const dispDotBy = {}; for (const T in dot) dispDotBy[T] = dot[T] * vm0;
         if (napHdisp > 0) dispDotBy.napalmHeat = napHdisp * vm0;
         perF[fname] = {
-          D, D0: D * first0, Dnon: Dsp * spreadNon, pbN, kf: kfTot * fac, blast, dot, dotNon, napH, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
+          D, D0: D * first0, irrM, irrG, Dnon: Dsp * spreadNon, pbN, kf: kfTot * fac, blast, dot, dotNon, napH, F: arc && arc.flatPerProc ? arc.flatPerProc * procSum * fin * fac : 0,
           pv: (procs.viral || 0) * spreadHit, ph: ((procs.heat || 0) + napPh) * spreadHit, pc: (procs.corr || 0) * spreadHit, pk: (procs.cold || 0) * spreadHit, pm: (procs.mag || 0) * spreadHit,
           pp: kind === "radial" ? 0 : (procs.punct || 0) * spreadHit,
           pvN: (procs.viral || 0) * spreadNon, phN: (procs.heat || 0) * spreadNon, pcN: (procs.corr || 0) * spreadNon, pkN: (procs.cold || 0) * spreadNon,
