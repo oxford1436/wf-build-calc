@@ -1,0 +1,49 @@
+{
+  "weapon": "tatsu_prime",
+  "attack": 1,
+  "valence": null,
+  "riven": null,
+  "notes": "타츠 프라임(양손 니카나, 스탠스 와이즈 레이저). 강공 연타 운용(묶음 13, 2026-11-08 예약 실행). 직접 읽은 세팅 2개는 모두 2022~2023년(업데이트 32) 글 — 텐노카이·아케인·익실러스 칸이 글에 없음. 위키 Tatsu Prime 문서는 이번 실행에서 권한 시간 초과(못 읽음) — 강공 확정 베기 상태이상은 저장소 위키 전수 조사(docs/mechanics/gaps_melee.json) 인용문 기준.",
+  "meta": {
+    "read_builds": 2,
+    "elements": "원소 없음 2/2 — 고유 방사능(강공 480) + 베기 출혈",
+    "valence": "해당 없음",
+    "core": ["블러드 러시", "오르건 섀터(아말감 포함)", "버서커 퓨리 또는 리플렉스 코일", "트루 스틸 또는 새크리피셜 스틸"],
+    "flex": ["프라임드 프레셔 포인트·프라임드 리치·스포일드 스트라이크·트루 퍼니시먼트 (ProGameGuides)", "컨디션 오버로드·위핑 운즈·글래디에이터 마이트·프라임드 스마이트 그리니어 (Overframe 375026)"],
+    "arcane": ["글에 없음 2/2"],
+    "why": "375026: '12배 강공 세팅의 표준', 새크리피셜 스틸 = 강공에서 치명타 두 배, 팩션 모드는 지속 피해에 두 번 곱해짐, 리플렉스 코일 = 강공 때 빠지는 연속기를 줄임. ProGameGuides: 버서커 퓨리로 느린 공격 속도 보완, 트루 퍼니시먼트는 연속기 지속 −50% 대신 연속기 추가 확률.",
+    "limit": "직접 읽은 세팅 2개, 둘 다 2022~2023 — 업데이트 36 상태이상 개편·텐노카이(업데이트 35) 이전 형식."
+  },
+  "sources_read": [
+    {"url": "https://progameguides.com/warframe/best-tatsu-prime-build-in-warframe/", "date": "2022(제목)", "what": "모드 8칸 글자 + 이유, 익실러스·아케인 없음"},
+    {"url": "https://overframe.gg/build/375026/tatsu-prime/tatsu-prime-build/", "date": "2022-10 작성, 2023-01 수정(Update 32.2)", "what": "모드 8칸 글자 + 칸마다 이유, 익실러스·아케인 없음"},
+    {"url": "https://overframe.gg/build/597558/tatsu-prime/heavy-attack-tatsu-prime/", "date": "2024-01(35.0)", "what": "모드 칸 글자 없음 — 기록 안 함"},
+    {"url": "https://overframe.gg/build/381499/tatsu-prime/tatsu-prime-heavy-attacks/", "date": "2022-10(32.0)", "what": "모드 칸 글자 없음 — 기록 안 함"},
+    {"url": "https://gamepur.com/?p=417045", "date": "날짜 없음", "what": "세팅이 아니라 모드 후보 9개 목록 — 기록 안 함"}
+  ],
+  "builds": [
+    {
+      "name": "ProGameGuides 강공 (2022)",
+      "community": "ProGameGuides",
+      "kind": "read",
+      "url": "https://progameguides.com/warframe/best-tatsu-prime-build-in-warframe/",
+      "date": "2022",
+      "mods": ["Primed Pressure Point", "Berserker Fury", "Primed Reach", "Blood Rush", "True Steel", "Organ Shatter", "Spoiled Strike", "True Punishment"],
+      "exilus": null,
+      "arcane": null,
+      "claims": ["버서커 퓨리가 느린 공격 속도를 보완", "스포일드 스트라이크는 빼기엔 너무 강함", "트루 퍼니시먼트: 연속기 지속 −50%를 연속기 추가 확률 +100%가 만회"]
+    },
+    {
+      "name": "Overframe 375026 12배 강공 (2023)",
+      "community": "Overframe",
+      "kind": "read",
+      "url": "https://overframe.gg/build/375026/tatsu-prime/tatsu-prime-build/",
+      "author": "DeathAndTaxes",
+      "date": "2023-01-15",
+      "mods": ["Condition Overload", "Blood Rush", "Weeping Wounds", "Amalgam Organ Shatter", "Sacrificial Steel", "Gladiator Might", "Primed Smite Grineer", "Reflex Coil"],
+      "exilus": null,
+      "arcane": null,
+      "claims": ["새크리피셜 스틸 = 강공에서 치명타 두 배", "팩션 모드는 지속 피해에 두 번 곱해짐", "리플렉스 코일이 강공 때 소모되는 연속기를 줄임"]
+    }
+  ]
+}

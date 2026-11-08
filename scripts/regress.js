@@ -669,6 +669,29 @@ const { chromium } = require("playwright");
     await p3.close();
   }
 
+  // v2.03: wiki Tatsu Prime "Heavy attacks with this weapon have a guaranteed Slash proc." — the heavy attack (built from the
+  // normal attack's split) must carry the forced Slash, and with the combo-scaled bleed it must raise the heavy-attack score
+  {
+    const p3 = await ctx.newPage();
+    p3.on("pageerror", (e) => errs.push(e.message));
+    await p3.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p3.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p3.evaluate(() => {
+      const A = window.WF_APP, E = window.WFEngine, w = window.WF_WEAPONS.find((x) => x.id === "tatsu_prime");
+      if (!w) return { err: "no Tatsu Prime" };
+      const ai = w.attacks.findIndex((a) => a.en === "Heavy Attack"), atk = w.attacks[ai];
+      A.st.base = w; A.st.weapon = w; A.st.atk = ai;
+      const o = Object.assign(A.readOpts(), { targets: null, val: null }); o.targets = E.targetsFor(o); A.st.results = { o };
+      const en = (n) => window.WF_MODS.find((x) => x.en === n).id;
+      const ids = ["Condition Overload", "Blood Rush", "Weeping Wounds", "Amalgam Organ Shatter", "Sacrificial Steel", "Gladiator Might", "Reflex Coil", "Primed Pressure Point"].map(en);
+      const sc = () => A.evalBuild(ids, null, null, Object.assign({}, o, { arcane: null }), null).score;
+      const forced = (atk.forced || []).slice(), s1 = sc(); atk.forced = forced.filter((x) => x !== "slash"); const s0 = sc(); atk.forced = forced.length ? forced : undefined;
+      return { has: forced.includes("slash"), k: s1 / s0 };
+    });
+    results.push({ name: "v2.03 타츠 프라임 강공 확정 베기 상태이상(위키) — 강공 데이터에 있고 점수를 올림", ok: !r.err && r.has && r.k > 1.02, detail: r.err || JSON.stringify(r) });
+    await p3.close();
+  }
+
   // v1.71: the cases the user caught in game (2026-11-04).
   //  - Torid Incarnon Form, setting A (blast + corrosive) vs the old pick (viral + magnetic, Primed Shred): Simulacrum, Grineer Nox
   //    x20, Lv150, from zero stacks. In game A clears all 20 in < 3 s, the old pick takes 6 s for 5. Old engine: old pick faster.

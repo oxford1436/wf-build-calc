@@ -630,6 +630,15 @@ for w in weapons:
 # no mods) shows 610 (5 x 122, two blade hits). Slam/slide 244 match the wiki, only the heavy differs. Arsenal wins (P5).
 # Simulacrum video the same day: Tennokai heavy hits 782/391 at 2x and 4.7K/2.3K at 12x — x6, the full combo multiplier.
 ARSENAL_HEAVY = {"Dual Ichor": 610}
+# heavy attacks with a guaranteed status (wiki weapon notes, docs/mechanics/gaps_melee.json):
+# - Tatsu Prime: "Heavy attacks with this weapon have a guaranteed Slash proc." (wiki Tatsu Prime, 2026-11-08 batch 13)
+#   The heavy attack is built from the normal attack's damage split, so the wiki attack's ForcedProcs never reached it.
+HEAVY_FORCED = {"Tatsu Prime": ["slash"]}
+for w in weapons:
+    if w.get("en") in HEAVY_FORCED:
+        for a in w["attacks"]:
+            if a.get("en") == "Heavy Attack":
+                a["forced"] = sorted(set((a.get("forced") or []) + HEAVY_FORCED[w["en"]]))
 for w in weapons:
     if w.get("en") in ARSENAL_HEAVY:
         for a in w["attacks"]:

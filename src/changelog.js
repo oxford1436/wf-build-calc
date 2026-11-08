@@ -2,6 +2,11 @@
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "2.03", date: "2026-11-08", title: "타츠 프라임 강공 확정 베기 상태이상",
+      items: [
+        "타츠 프라임 강공(텐노카이 강공 포함)에 위키의 확정 베기 상태이상을 넣었습니다: \"Heavy attacks with this weapon have a guaranteed Slash proc.\" (Tatsu Prime 문서). 강공 데이터를 일반 공격 피해 비율로 만들면서 빠져 있었습니다. 출혈은 강공 연속기 배율을 받습니다(v1.78 게임 확인).",
+        "묶음 13(근접 강공) 조사에서 발견. 기본 타츠는 위키에 이 문장이 없어 그대로입니다.",
+      ] },
     { v: "2.02", date: "2026-11-08", title: "탄창 용량 반올림 (쿠바 톤코어 1발 탄창)",
       items: [
         "탄창 모드로 늘어난 탄창을 소수 그대로 계산하던 것을 위키대로 가장 가까운 정수로 반올림합니다: \"For any non-integer magazine values the magazine size is simply rounded to the nearest whole number\" (프라임드 매거진 워프 문서).",
