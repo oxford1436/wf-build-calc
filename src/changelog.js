@@ -2,6 +2,12 @@
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "2.01", date: "2026-11-08", title: "프라이머리 컴프레션: 투사체 무기는 곱연산, 집속탄은 미적용",
+      items: [
+        "프라이머리 컴프레션(조준 시 폭발 반경 −80%, 줄어든 1m당 피해 +100%)이 서레이션과 합연산으로 계산되던 것을 위키대로 고쳤습니다: \"On projectile weapons, the damage bonus is multiplicative to other damage bonus sources (e.g. Serration)\". 위키 표에서 톤코어·쿠바 톤코어, 오그리스·쿠바 오그리스, 자르 캐논은 'Multiplies'입니다.",
+        "투사체 무기는 그 한 발의 직격까지 곱해지고(무기 피해), 히트스캔은 지금처럼 더해집니다. 쿠바 자르·쿠바 브람마 집속탄은 위키 표 'Doesn't work'라 반경·피해가 그대로입니다.",
+        "예: 쿠바 톤코어 + 서레이션은 2.65 × 6.6 = 17.5배(이전 계산 1 + 1.65 + 5.6 = 8.25배). 조준 모드를 켰을 때만 해당하며 기본 계산(조준 제외)은 바뀌지 않습니다.",
+      ] },
     { v: "2.00", date: "2026-11-08", title: "생티 캐스타나스: 확정 전기 상태이상이 전기가 합쳐져도 전기 모드 보너스를 받음",
       items: [
         "생티 캐스타나스 부착 폭발의 확정 전기 상태이상(위키: \"Guaranteed Electricity proc scales with Electricity mods regardless if they combine with other elements as Corrosive, Radiation, or Magnetic\")이, 전기가 부식·방사능·자성으로 합쳐지면 전기 모드 보너스 없이 계산됐습니다. 이제 합쳐져도 전기 모드(컨벌션 등) 보너스가 전기 지속 피해에 들어갑니다.",

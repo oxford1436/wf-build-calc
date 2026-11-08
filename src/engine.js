@@ -975,12 +975,27 @@
     const tenno = kind === "tennokai" ? atk.tenno : null;
     const isMelee = kind === "melee" || kind === "heavy" || kind === "glaive" || kind === "tennokai";
     const isHeavy = kind === "heavy" || kind === "glaive" || kind === "tennokai";
-    // Primary Compression (aiming): blast radius x0.2, +100% damage per metre lost
-    let radiusMul = 1;
-    if (arc && arc.compression && atk.radius && o.aim) { const lost = atk.radius * 0.8; a.dmg += lost; a.ammoEff += 0.055 * lost; radiusMul = 0.2; }
+    // Primary Compression (aiming): blast radius x0.2, +100% damage per metre lost (wiki "Primary Compression").
+    // v2.01: "On projectile weapons, the damage bonus is multiplicative to other damage bonus sources (e.g. Serration)"; the
+    // wiki effectiveness table lists Tonkor / Kuva Tonkor, Ogris / Kuva Ogris and Zarr cannon "Multiplies", hitscan ones such as
+    // Braton / Burston Incarnon "Adds", and Zarr / Kuva Bramma bomblets "Doesn't work". So: a projectile shot (explosive parts
+    // carry ptLock) multiplies every part of that shot (the direct hit too — "the weapon's damage"), otherwise it adds; cluster
+    // bomblets keep their radius and get nothing. Before v2.01 it was always added beside Serration (e.g. Kuva Tonkor: 1 + 1.65 +
+    // 5.6 instead of 2.65 × 6.6).
+    let radiusMul = 1, compM = 1;
+    if (arc && arc.compression && o.aim && !atk.cluster) {
+      const grp = parentAtk && parentAtk.parts ? parentAtk.parts : [atk];
+      const R = atk.radius || (grp.find((p) => p.radius && !p.cluster) || {}).radius || 0;
+      if (R > 0) {
+        const lost = R * 0.8;
+        if (grp.some((p) => p.ptLock) || atk.ptLock) compM = 1 + lost; else a.dmg += lost;
+        a.ammoEff += 0.055 * lost;
+        if (atk.radius) radiusMul = 0.2;
+      }
+    }
     const base0 = Object.values(atk.dmg).reduce((s, x) => s + x, 0) * (o.evoHeavyScale && atk.evoScaleAlt ? atk.evoScaleAlt : 1);
     const vpct = o.val && o.val.type ? o.val.pct : 0;
-    const Btot = (base0 + (a.baseAdd || 0)) * (1 + vpct);
+    const Btot = (base0 + (a.baseAdd || 0)) * (1 + vpct) * compM;
 
     const rho = o.density;
     // atk.fsLock: Firestorm doesn't reach this explosion (wiki Trumna "Explosion range cannot be increased with Firestorm")

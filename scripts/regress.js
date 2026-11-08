@@ -193,6 +193,15 @@ const { chromium } = require("playwright");
       const fr = w.attacks[0].fr || (w.attacks[0].parts && w.attacks[0].parts[0].fr);
       check("v1.50 리서플라이: 재장전 시간 0, 탄약 무한", r.ammo && r.ammo.resupply && Math.abs(r.rate - fr) / fr < 0.02, "rate " + r.rate.toFixed(2) + " / fr " + fr);
     }
+    // v2.01: Primary Compression on projectile weapons is multiplicative with Serration (wiki note "On projectile weapons, the
+    // damage bonus is multiplicative to other damage bonus sources (e.g. Serration)"; effectiveness table: Tonkor (Kuva Tonkor)
+    // "Multiplies") — adding Serration must scale the shot by 2.65, not (1 + 1.65 + 5.6) / (1 + 5.6) = 1.25
+    {
+      const w = weapon("kuva_tonkor"), o = Object.assign(baseO(), { aim: true, arcane: "primary_compression", factions: ["grineer"] });
+      const d = (ids) => E.evaluate(w, w.attacks[0], ids.map(M), o).perF.grineer.direct;
+      const k = d(["Serration"]) / d([]);
+      check("v2.01 프라이머리 컴프레션: 투사체 무기(쿠바 톤코어)는 곱연산 — 서레이션을 넣으면 직격 ×2.65 (합연산이면 ×1.25)", Math.abs(k - 2.65) < 0.06, k.toFixed(3));
+    }
     // v1.56: proc-stack arcanes expire all at once -> with frequent heat procs Cascadia Flare is near its cap
     {
       const w = weapon("kuva_nukor");   // heat-heavy secondary (kitguns are assembled in app.js)
