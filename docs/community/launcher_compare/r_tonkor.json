@@ -1,0 +1,110 @@
+[
+ {
+  "k": "tonkor",
+  "sc": "cytenr",
+  "score": 3.0575458044760557,
+  "mods": [
+   "갈바나이즈드 체임버",
+   "크리티컬 딜레이",
+   "바이탈 센스",
+   "마그네틱 캐퍼시티",
+   "해머 샷",
+   "프라임드 매거진 워프",
+   "라디에이티드 리로드",
+   "프라임드 파이어스톰"
+  ],
+  "arcane": "primary_merciless",
+  "val": {
+   "type": "tox",
+   "pct": 0.6
+  },
+  "pf": {
+   "grineer": {
+    "clear150": 4.08,
+    "clearTop": 7.26,
+    "kps": 2.018,
+    "oneLv": 55
+   },
+   "corpus": {
+    "clear150": 2.05,
+    "clearTop": 3.41,
+    "kps": 4.494,
+    "oneLv": 310
+   },
+   "infested": {
+    "clear150": 3.41,
+    "clearTop": 4.76,
+    "kps": 3.152,
+    "oneLv": 78
+   }
+  },
+  "rate": 1.4753279181708785,
+  "ammo": {
+   "resupply": false,
+   "sustain": 21.656202398455136
+  },
+  "steel": true,
+  "level": 150,
+  "factions": [
+   "grineer",
+   "corpus",
+   "infested"
+  ],
+  "riv": null,
+  "errs": []
+ },
+ {
+  "k": "tonkor",
+  "sc": "gen",
+  "score": 1.452526261814612,
+  "mods": [
+   "갈바나이즈드 체임버",
+   "멀리그난트 포스",
+   "프라임드 크라이오 라운즈",
+   "크리티컬 딜레이",
+   "바이탈 센스",
+   "마그네틱 캐퍼시티",
+   "세미-라이플 캐노네이드",
+   "프라임드 파이어스톰"
+  ],
+  "arcane": "primary_merciless",
+  "val": {
+   "type": "heat",
+   "pct": 0.6
+  },
+  "pf": {
+   "grineer": {
+    "clear150": 9.17,
+    "clearTop": 16.39,
+    "kps": 0.77,
+    "oneLv": 52
+   },
+   "corpus": {
+    "clear150": 4.59,
+    "clearTop": 6.86,
+    "kps": 2.124,
+    "oneLv": 203
+   },
+   "infested": {
+    "clear150": 5.73,
+    "clearTop": 8,
+    "kps": 1.874,
+    "oneLv": 75
+   }
+  },
+  "rate": 0.8774752851711027,
+  "ammo": {
+   "resupply": false,
+   "sustain": 35.78448365514611
+  },
+  "steel": true,
+  "level": 150,
+  "factions": [
+   "grineer",
+   "corpus",
+   "infested"
+  ],
+  "riv": null,
+  "errs": []
+ }
+]

@@ -1,0 +1,56 @@
+[
+ {
+  "k": "tonkor_riv",
+  "sc": "gen",
+  "score": 2.5304248784705923,
+  "mods": [
+   "리벤",
+   "갈바나이즈드 체임버",
+   "프라임드 크라이오 라운즈",
+   "서레이션",
+   "마그네틱 캐퍼시티",
+   "포인트 스트라이크",
+   "바이탈 센스",
+   "프라임드 파이어스톰"
+  ],
+  "arcane": "primary_merciless",
+  "val": {
+   "type": "tox",
+   "pct": 0.6
+  },
+  "pf": {
+   "grineer": {
+    "clear150": 5.31,
+    "clearTop": 11.62,
+    "kps": 1.096,
+    "oneLv": 55
+   },
+   "corpus": {
+    "clear150": 2.28,
+    "clearTop": 3.04,
+    "kps": 4.341,
+    "oneLv": 421
+   },
+   "infested": {
+    "clear150": 3.04,
+    "clearTop": 3.8,
+    "kps": 3.404,
+    "oneLv": 87
+   }
+  },
+  "rate": 1.3234898399890607,
+  "ammo": {
+   "resupply": false,
+   "sustain": 23.725153795105474
+  },
+  "steel": true,
+  "level": 150,
+  "factions": [
+   "grineer",
+   "corpus",
+   "infested"
+  ],
+  "riv": "[{\"k\":\"reload\",\"v\":0.618688125,\"inc\":true},{\"k\":\"cd\",\"v\":1.4849628750000001,\"inc\":true},{\"k\":\"cc\",\"v\":1.85612625,\"inc\":true},{\"k\":\"x_recoil\",\"v\":-0.891,\"inc\":true}]",
+  "errs": []
+ }
+]

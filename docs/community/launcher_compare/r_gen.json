@@ -1,0 +1,110 @@
+[
+ {
+  "k": "zarr",
+  "sc": "gen",
+  "score": 1.8740399199309552,
+  "mods": [
+   "리벤",
+   "프라임드 크라이오 라운즈",
+   "갈바나이즈드 체임버",
+   "세미-라이플 캐노네이드",
+   "크리티컬 딜레이",
+   "프라임드 파이어스톰",
+   "라디에이티드 리로드",
+   "바이탈 센스"
+  ],
+  "arcane": "primary_merciless",
+  "val": {
+   "type": "tox",
+   "pct": 0.37
+  },
+  "pf": {
+   "grineer": {
+    "clear150": 4.13,
+    "clearTop": 8.25,
+    "kps": 0.932,
+    "oneLv": 69
+   },
+   "corpus": {
+    "clear150": 3.1,
+    "clearTop": 4.13,
+    "kps": 3.147,
+    "oneLv": 846
+   },
+   "infested": {
+    "clear150": 3.1,
+    "clearTop": 5.15,
+    "kps": 2.243,
+    "oneLv": 182
+   }
+  },
+  "rate": 0.975100421696258,
+  "ammo": {
+   "resupply": false,
+   "sustain": 10.255353989699106
+  },
+  "steel": true,
+  "level": 150,
+  "factions": [
+   "grineer",
+   "corpus",
+   "infested"
+  ],
+  "riv": null,
+  "errs": []
+ },
+ {
+  "k": "ogris",
+  "sc": "gen",
+  "score": 0.4543947401186491,
+  "mods": [
+   "리벤",
+   "갈바나이즈드 체임버",
+   "멀리그난트 포스",
+   "프라임드 크라이오 라운즈",
+   "마그네틱 캐퍼시티",
+   "크리티컬 딜레이",
+   "바이탈 센스",
+   "서레이션"
+  ],
+  "arcane": "primary_merciless",
+  "val": {
+   "type": "heat",
+   "pct": 0.29
+  },
+  "pf": {
+   "grineer": {
+    "clear150": 10.83,
+    "clearTop": 20.09,
+    "kps": 0.158,
+    "oneLv": 46
+   },
+   "corpus": {
+    "clear150": 5.94,
+    "clearTop": 8.03,
+    "kps": 0.778,
+    "oneLv": 84
+   },
+   "infested": {
+    "clear150": 5.94,
+    "clearTop": 9.78,
+    "kps": 0.761,
+    "oneLv": 71
+   }
+  },
+  "rate": 0.9545454793388436,
+  "ammo": {
+   "resupply": false,
+   "sustain": 11.733333028571428
+  },
+  "steel": true,
+  "level": 150,
+  "factions": [
+   "grineer",
+   "corpus",
+   "infested"
+  ],
+  "riv": null,
+  "errs": []
+ }
+]

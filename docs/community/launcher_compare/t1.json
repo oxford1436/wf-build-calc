@@ -1,0 +1,56 @@
+[
+ {
+  "k": "tonkor",
+  "sc": "cyte0",
+  "score": 16.649110830285018,
+  "mods": [
+   "갈바나이즈드 체임버",
+   "크리티컬 딜레이",
+   "바이탈 센스",
+   "서레이션",
+   "바일 액셀러레이션",
+   "프라임드 파이어스톰",
+   "인펙티드 클립",
+   "하이 볼티지"
+  ],
+  "arcane": "primary_frostbite",
+  "val": {
+   "type": "cold",
+   "pct": 0.6
+  },
+  "pf": {
+   "grineer": {
+    "clear150": 0.74,
+    "clearTop": 1.16,
+    "kps": 12.547,
+    "oneLv": 80
+   },
+   "corpus": {
+    "clear150": 0.6,
+    "clearTop": 0.6,
+    "kps": 19.843,
+    "oneLv": 2005
+   },
+   "infested": {
+    "clear150": 0.6,
+    "clearTop": 0.74,
+    "kps": 18.536,
+    "oneLv": 290
+   }
+  },
+  "rate": 7.2909999999999995,
+  "ammo": {
+   "resupply": true,
+   "sustain": null
+  },
+  "steel": true,
+  "level": 150,
+  "factions": [
+   "grineer",
+   "corpus",
+   "infested"
+  ],
+  "riv": null,
+  "errs": []
+ }
+]

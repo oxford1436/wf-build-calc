@@ -1,0 +1,21 @@
+[
+ {"k":"zarr","sc":"cyte0","sets":[
+   {"n":"#1","mods":["__riven","Vile Acceleration","Primed Firestorm","Galvanized Chamber","Serration","Heavy Caliber","Point Strike","Vital Sense"],"arc":"primary_merciless","val":{"type":"tox","pct":0.37}},
+   {"n":"confirmed 11-07","mods":["__riven","Vile Acceleration","Primed Firestorm","Galvanized Chamber","Speed Trigger","Hammer Shot","Critical Delay","Amalgam Serration"],"arc":"primary_merciless","val":{"type":"tox","pct":0.37}}]},
+ {"k":"zarr","sc":"cyte0.2","sets":[{"n":"#1","mods":["__riven","Vile Acceleration","Primed Firestorm","Galvanized Chamber","Serration","Heavy Caliber","Point Strike","Vital Sense"],"arc":"primary_merciless","val":{"type":"tox","pct":0.37}}]},
+ {"k":"zarr","sc":"cyte0.5","sets":[{"n":"#1","mods":["__riven","Vile Acceleration","Primed Firestorm","Galvanized Chamber","Serration","Heavy Caliber","Point Strike","Vital Sense"],"arc":"primary_merciless","val":{"type":"tox","pct":0.37}}]},
+ {"k":"tonkor","sc":"cyte0","sets":[{"n":"#1res","mods":["Galvanized Chamber","Critical Delay","Vital Sense","Serration","Vile Acceleration","Primed Firestorm","Infected Clip","High Voltage"],"arc":"primary_frostbite","val":{"type":"cold","pct":0.6}}]},
+ {"k":"tonkor","sc":"cyte0.2","sets":[{"n":"#1res","mods":["Galvanized Chamber","Critical Delay","Vital Sense","Serration","Vile Acceleration","Primed Firestorm","Infected Clip","High Voltage"],"arc":"primary_frostbite","val":{"type":"cold","pct":0.6}}]},
+ {"k":"tonkor","sc":"cyte0.5","sets":[{"n":"#1res","mods":["Galvanized Chamber","Critical Delay","Vital Sense","Serration","Vile Acceleration","Primed Firestorm","Infected Clip","High Voltage"],"arc":"primary_frostbite","val":{"type":"cold","pct":0.6}}]},
+ {"k":"ogris","sc":"cyte0","sets":[
+   {"n":"#1","mods":["__riven","Galvanized Chamber","Vile Acceleration","Malignant Force","High Voltage","Speed Trigger","Primed Firestorm","Serration"],"arc":"primary_merciless","val":{"type":"heat","pct":0.287}},
+   {"n":"user CYTE-09","mods":["Malignant Force","__riven","Primed Firestorm","Galvanized Chamber","Nightwatch Napalm","Tainted Mag","Primed Bane of Grineer","Vile Acceleration","Terminal Velocity"],"arc":"primary_merciless","val":{"type":"heat","pct":0.287}}]},
+ {"k":"ogris","sc":"cyte0.2","sets":[{"n":"#1","mods":["__riven","Galvanized Chamber","Vile Acceleration","Malignant Force","High Voltage","Speed Trigger","Primed Firestorm","Serration"],"arc":"primary_merciless","val":{"type":"heat","pct":0.287}}]},
+ {"k":"ogris","sc":"cyte0.5","sets":[{"n":"#1","mods":["__riven","Galvanized Chamber","Vile Acceleration","Malignant Force","High Voltage","Speed Trigger","Primed Firestorm","Serration"],"arc":"primary_merciless","val":{"type":"heat","pct":0.287}}]},
+ {"k":"tonkor","sc":"gen","sets":[
+   {"n":"#1","mods":["Galvanized Chamber","Malignant Force","Primed Cryo Rounds","Critical Delay","Vital Sense","Magnetic Capacity","Semi-Rifle Cannonade","Primed Firestorm"],"arc":"primary_merciless","val":{"type":"heat","pct":0.6}},
+   {"n":"#1 compression aim","mods":["Galvanized Chamber","Malignant Force","Primed Cryo Rounds","Critical Delay","Vital Sense","Magnetic Capacity","Semi-Rifle Cannonade","Primed Firestorm"],"arc":"primary_compression","val":{"type":"heat","pct":0.6},"o":{"aim":true}}]},
+ {"k":"zarr","sc":"gen","sets":[
+   {"n":"#1","mods":["__riven","Primed Cryo Rounds","Galvanized Chamber","Semi-Rifle Cannonade","Critical Delay","Primed Firestorm","Radiated Reload","Vital Sense"],"arc":"primary_merciless","val":{"type":"tox","pct":0.37}},
+   {"n":"#1 compression aim","mods":["__riven","Primed Cryo Rounds","Galvanized Chamber","Semi-Rifle Cannonade","Critical Delay","Primed Firestorm","Radiated Reload","Vital Sense"],"arc":"primary_compression","val":{"type":"tox","pct":0.37},"o":{"aim":true}}]}
+]

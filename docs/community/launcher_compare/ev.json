@@ -1,0 +1,549 @@
+[
+ {
+  "k": "zarr",
+  "sc": "cyte0",
+  "r": [
+   {
+    "n": "#1",
+    "score": 17.74038675580169,
+    "ids": [
+     "__riven",
+     "vile_acceleration",
+     "primed_firestorm",
+     "galvanized_chamber",
+     "serration",
+     "heavy_caliber",
+     "point_strike",
+     "vital_sense"
+    ],
+    "pf": {
+     "grineer": [
+      0.79,
+      0.97,
+      106
+     ],
+     "corpus": [
+      0.6,
+      0.6,
+      6219
+     ],
+     "infested": [
+      0.6,
+      0.6,
+      782
+     ]
+    },
+    "rate": 5.42
+   },
+   {
+    "n": "confirmed 11-07",
+    "score": 17.288379177251155,
+    "ids": [
+     "__riven",
+     "vile_acceleration",
+     "primed_firestorm",
+     "galvanized_chamber",
+     "speed_trigger",
+     "hammer_shot",
+     "critical_delay",
+     "amalgam_serration"
+    ],
+    "pf": {
+     "grineer": [
+      0.76,
+      1.09,
+      84
+     ],
+     "corpus": [
+      0.6,
+      0.6,
+      3699
+     ],
+     "infested": [
+      0.6,
+      0.6,
+      496
+     ]
+    },
+    "rate": 6.29
+   }
+  ]
+ },
+ {
+  "k": "zarr",
+  "sc": "cyte0.2",
+  "r": [
+   {
+    "n": "#1",
+    "score": 15.691906730482087,
+    "ids": [
+     "__riven",
+     "vile_acceleration",
+     "primed_firestorm",
+     "galvanized_chamber",
+     "serration",
+     "heavy_caliber",
+     "point_strike",
+     "vital_sense"
+    ],
+    "pf": {
+     "grineer": [
+      0.9,
+      1.13,
+      106
+     ],
+     "corpus": [
+      0.68,
+      0.68,
+      6219
+     ],
+     "infested": [
+      0.68,
+      0.68,
+      782
+     ]
+    },
+    "rate": 4.46
+   }
+  ]
+ },
+ {
+  "k": "zarr",
+  "sc": "cyte0.5",
+  "r": [
+   {
+    "n": "#1",
+    "score": 12.380583786707744,
+    "ids": [
+     "__riven",
+     "vile_acceleration",
+     "primed_firestorm",
+     "galvanized_chamber",
+     "serration",
+     "heavy_caliber",
+     "point_strike",
+     "vital_sense"
+    ],
+    "pf": {
+     "grineer": [
+      1.14,
+      1.43,
+      106
+     ],
+     "corpus": [
+      0.86,
+      0.86,
+      6219
+     ],
+     "infested": [
+      0.86,
+      0.86,
+      782
+     ]
+    },
+    "rate": 3.52
+   }
+  ]
+ },
+ {
+  "k": "tonkor",
+  "sc": "cyte0",
+  "r": [
+   {
+    "n": "#1res",
+    "score": 16.649110830285018,
+    "ids": [
+     "galvanized_chamber",
+     "critical_delay",
+     "vital_sense",
+     "serration",
+     "vile_acceleration",
+     "primed_firestorm",
+     "infected_clip",
+     "high_voltage"
+    ],
+    "pf": {
+     "grineer": [
+      0.74,
+      1.16,
+      80
+     ],
+     "corpus": [
+      0.6,
+      0.6,
+      2005
+     ],
+     "infested": [
+      0.6,
+      0.74,
+      290
+     ]
+    },
+    "rate": 7.29
+   }
+  ]
+ },
+ {
+  "k": "tonkor",
+  "sc": "cyte0.2",
+  "r": [
+   {
+    "n": "#1res",
+    "score": 8.799468935018718,
+    "ids": [
+     "galvanized_chamber",
+     "critical_delay",
+     "vital_sense",
+     "serration",
+     "vile_acceleration",
+     "primed_firestorm",
+     "infected_clip",
+     "high_voltage"
+    ],
+    "pf": {
+     "grineer": [
+      1.36,
+      2.38,
+      72
+     ],
+     "corpus": [
+      1.02,
+      1.02,
+      1155
+     ],
+     "infested": [
+      1.02,
+      1.69,
+      180
+     ]
+    },
+    "rate": 2.97
+   }
+  ]
+ },
+ {
+  "k": "tonkor",
+  "sc": "cyte0.5",
+  "r": [
+   {
+    "n": "#1res",
+    "score": 4.510803050578345,
+    "ids": [
+     "galvanized_chamber",
+     "critical_delay",
+     "vital_sense",
+     "serration",
+     "vile_acceleration",
+     "primed_firestorm",
+     "infected_clip",
+     "high_voltage"
+    ],
+    "pf": {
+     "grineer": [
+      2.56,
+      4.49,
+      71
+     ],
+     "corpus": [
+      1.93,
+      2.56,
+      1105
+     ],
+     "infested": [
+      1.93,
+      3.2,
+      173
+     ]
+    },
+    "rate": 1.57
+   }
+  ]
+ },
+ {
+  "k": "ogris",
+  "sc": "cyte0",
+  "r": [
+   {
+    "n": "#1",
+    "score": 10.204308562446984,
+    "ids": [
+     "__riven",
+     "galvanized_chamber",
+     "vile_acceleration",
+     "malignant_force",
+     "high_voltage",
+     "speed_trigger",
+     "primed_firestorm",
+     "serration"
+    ],
+    "pf": {
+     "grineer": [
+      1.22,
+      1.95,
+      50
+     ],
+     "corpus": [
+      1.04,
+      1.04,
+      129
+     ],
+     "infested": [
+      1.04,
+      1.04,
+      77
+     ]
+    },
+    "rate": 4.65
+   },
+   {
+    "n": "user CYTE-09",
+    "score": 6.252134857689524,
+    "ids": [
+     "malignant_force",
+     "__riven",
+     "primed_firestorm",
+     "galvanized_chamber",
+     "nightwatch_napalm",
+     "tainted_mag",
+     "?Primed Bane of Grineer",
+     "vile_acceleration",
+     "terminal_velocity"
+    ],
+    "pf": {
+     "grineer": [
+      2.95,
+      4.31,
+      46
+     ],
+     "corpus": [
+      1.29,
+      1.56,
+      87
+     ],
+     "infested": [
+      1.29,
+      1.67,
+      73
+     ]
+    },
+    "rate": 3.75
+   }
+  ]
+ },
+ {
+  "k": "ogris",
+  "sc": "cyte0.2",
+  "r": [
+   {
+    "n": "#1",
+    "score": 7.65014990550984,
+    "ids": [
+     "__riven",
+     "galvanized_chamber",
+     "vile_acceleration",
+     "malignant_force",
+     "high_voltage",
+     "speed_trigger",
+     "primed_firestorm",
+     "serration"
+    ],
+    "pf": {
+     "grineer": [
+      1.88,
+      2.56,
+      50
+     ],
+     "corpus": [
+      1.36,
+      1.36,
+      129
+     ],
+     "infested": [
+      1.36,
+      1.36,
+      77
+     ]
+    },
+    "rate": 3.55
+   }
+  ]
+ },
+ {
+  "k": "ogris",
+  "sc": "cyte0.5",
+  "r": [
+   {
+    "n": "#1",
+    "score": 5.646026127446703,
+    "ids": [
+     "__riven",
+     "galvanized_chamber",
+     "vile_acceleration",
+     "malignant_force",
+     "high_voltage",
+     "speed_trigger",
+     "primed_firestorm",
+     "serration"
+    ],
+    "pf": {
+     "grineer": [
+      2.54,
+      3.46,
+      50
+     ],
+     "corpus": [
+      1.84,
+      1.84,
+      129
+     ],
+     "infested": [
+      1.84,
+      1.84,
+      77
+     ]
+    },
+    "rate": 2.62
+   }
+  ]
+ },
+ {
+  "k": "tonkor",
+  "sc": "gen",
+  "r": [
+   {
+    "n": "#1",
+    "score": 1.452526261814612,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "vital_sense",
+     "magnetic_capacity",
+     "semi_rifle_cannonade",
+     "primed_firestorm"
+    ],
+    "pf": {
+     "grineer": [
+      9.17,
+      16.39,
+      52
+     ],
+     "corpus": [
+      4.59,
+      6.86,
+      203
+     ],
+     "infested": [
+      5.73,
+      8,
+      75
+     ]
+    },
+    "rate": 0.88
+   },
+   {
+    "n": "#1 compression aim",
+    "score": 0.7815826291670854,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "vital_sense",
+     "magnetic_capacity",
+     "semi_rifle_cannonade",
+     "primed_firestorm"
+    ],
+    "pf": {
+     "grineer": [
+      13.74,
+      26.42,
+      82
+     ],
+     "corpus": [
+      12.68,
+      12.68,
+      3191
+     ],
+     "infested": [
+      12.68,
+      12.68,
+      511
+     ]
+    },
+    "rate": 0.95
+   }
+  ]
+ },
+ {
+  "k": "zarr",
+  "sc": "gen",
+  "r": [
+   {
+    "n": "#1",
+    "score": 1.8740399199309552,
+    "ids": [
+     "__riven",
+     "primed_cryo_rounds",
+     "galvanized_chamber",
+     "semi_rifle_cannonade",
+     "critical_delay",
+     "primed_firestorm",
+     "radiated_reload",
+     "vital_sense"
+    ],
+    "pf": {
+     "grineer": [
+      4.13,
+      8.25,
+      69
+     ],
+     "corpus": [
+      3.1,
+      4.13,
+      846
+     ],
+     "infested": [
+      3.1,
+      5.15,
+      182
+     ]
+    },
+    "rate": 0.98
+   },
+   {
+    "n": "#1 compression aim",
+    "score": 0.7380242095227372,
+    "ids": [
+     "__riven",
+     "primed_cryo_rounds",
+     "galvanized_chamber",
+     "semi_rifle_cannonade",
+     "critical_delay",
+     "primed_firestorm",
+     "radiated_reload",
+     "vital_sense"
+    ],
+    "pf": {
+     "grineer": [
+      9.5,
+      11.31,
+      139
+     ],
+     "corpus": [
+      7.08,
+      7.08,
+      7566
+     ],
+     "infested": [
+      7.08,
+      7.08,
+      1231
+     ]
+    },
+    "rate": 1.07
+   }
+  ]
+ }
+]

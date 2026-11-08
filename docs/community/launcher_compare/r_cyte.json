@@ -1,0 +1,110 @@
+[
+ {
+  "k": "zarr",
+  "sc": "cyte0",
+  "score": 17.74038675580169,
+  "mods": [
+   "리벤",
+   "바일 액셀러레이션",
+   "프라임드 파이어스톰",
+   "갈바나이즈드 체임버",
+   "서레이션",
+   "헤비 칼리버",
+   "포인트 스트라이크",
+   "바이탈 센스"
+  ],
+  "arcane": "primary_merciless",
+  "val": {
+   "type": "tox",
+   "pct": 0.37
+  },
+  "pf": {
+   "grineer": {
+    "clear150": 0.79,
+    "clearTop": 0.97,
+    "kps": 14.18,
+    "oneLv": 106
+   },
+   "corpus": {
+    "clear150": 0.6,
+    "clearTop": 0.6,
+    "kps": 19.843,
+    "oneLv": 6219
+   },
+   "infested": {
+    "clear150": 0.6,
+    "clearTop": 0.6,
+    "kps": 19.843,
+    "oneLv": 782
+   }
+  },
+  "rate": 5.425,
+  "ammo": {
+   "resupply": true,
+   "sustain": null
+  },
+  "steel": true,
+  "level": 150,
+  "factions": [
+   "grineer",
+   "corpus",
+   "infested"
+  ],
+  "riv": null,
+  "errs": []
+ },
+ {
+  "k": "ogris",
+  "sc": "cyte0",
+  "score": 10.204308562446984,
+  "mods": [
+   "리벤",
+   "갈바나이즈드 체임버",
+   "바일 액셀러레이션",
+   "멀리그난트 포스",
+   "하이 볼티지",
+   "스피드 트리거",
+   "프라임드 파이어스톰",
+   "서레이션"
+  ],
+  "arcane": "primary_merciless",
+  "val": {
+   "type": "heat",
+   "pct": 0.29
+  },
+  "pf": {
+   "grineer": {
+    "clear150": 1.22,
+    "clearTop": 1.95,
+    "kps": 7.972,
+    "oneLv": 50
+   },
+   "corpus": {
+    "clear150": 1.04,
+    "clearTop": 1.04,
+    "kps": 11.545,
+    "oneLv": 129
+   },
+   "infested": {
+    "clear150": 1.04,
+    "clearTop": 1.04,
+    "kps": 11.545,
+    "oneLv": 77
+   }
+  },
+  "rate": 4.65,
+  "ammo": {
+   "resupply": true,
+   "sustain": null
+  },
+  "steel": true,
+  "level": 150,
+  "factions": [
+   "grineer",
+   "corpus",
+   "infested"
+  ],
+  "riv": null,
+  "errs": []
+ }
+]
