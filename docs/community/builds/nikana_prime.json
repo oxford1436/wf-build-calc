@@ -1,0 +1,107 @@
+{
+  "weapon": "nikana_prime",
+  "attack": 0,
+  "valence": null,
+  "riven": null,
+  "notes": "니카나 프라임(일반 공격 = 휘두르기, 연속기 빌드). 2026-11-08 묶음 12 조사. 본문에서 모드 8칸을 글자로 직접 읽은 세팅은 ProGameTalk 2개(2019 작성, 2026-03-10 갱신 표기 — 업데이트 번호 없음, 아케인 없음). Overframe 380521·827193·1001207·504441은 모드 칸이 그림이라 본문 설명만. 위키 Nikana Prime·일본 위키 Nikana Prime 문서는 못 읽음(일본 위키는 기본 NIKANA만 열림). kind: read = 출처 본문에서 모드 전체를 직접 읽은 세팅.",
+  "meta": {
+    "read_builds": 2,
+    "elements": "읽은 세팅 2개 모두 원소 없음(물리 베기·치명타 — 버즈 킬·트루 스틸·오르건 섀터). 본문 설명(Overframe 380521, 2026-04 갱신 'No Changes Necessary'): 바이러스·화염·부식 조합을 바꿔 끼움(비셔스 프로스트·볼택 스트라이크), 공식 포럼 1398735 답변: '베기+약한 바이러스', '순수 베기 + 프라이머', '원소 최대'가 연속기 확장 세팅 세 갈래.",
+    "valence": "해당 없음",
+    "core": [
+      "블러드 러쉬",
+      "오르건 섀터",
+      "버서커 퓨리",
+      "프라임드 프레셔 포인트"
+    ],
+    "flex": [
+      "트루 스틸 / 컨디션 오버로드",
+      "버즈 킬",
+      "렐런틀리스 컴비네이션 / 메이밍 스트라이크(슬라이드 공격)",
+      "프라임드 리치(사거리)"
+    ],
+    "arcane": [
+      "읽은 세팅에 없음. Overframe 380521 본문: 아케인 스트라이크(공격 속도). Overframe 1001207 제목: 밀리 인플루언스 텐노카이 세팅(모드 칸 못 읽음)"
+    ],
+    "why": "ProGameTalk: 블러드 러쉬와 연속기 카운터로 치명타를 띄우는 것이 목적, 메이밍 스트라이크는 회전(슬라이드) 공격 치명타. Overframe 380521: 프라임드 프레셔 포인트 대신 컨디션 오버로드를 넣어 더 범용으로, 밀리 듀플리케이트는 주황·빨강 치명타가 꾸준히 뜨는 세팅에서 쓸모없다며 뺌, 강공 위주면 킬링 블로우. Overframe 1001207: 스마이트(팩션) 모드 자리에 갈바나이즈드 엘리멘탈리스트 — 바자린 극성 칸이라서.",
+    "limit": "직접 읽은 세팅 2개, 모두 원소·아케인 없는 옛 형식(2019 작성). 최신 텐노카이·인플루언스 세팅은 모드 칸이 그림이라 못 읽음."
+  },
+  "sources_read": [
+    {
+      "url": "https://progametalk.com/warframe/weapon-builds/nikana-prime/",
+      "date": "2019-04-08 작성, 2026-03-10 갱신 표기",
+      "what": "세팅 4개 중 2개는 8칸 전체 글자(연속기 치명타·메이밍 스트라이크), 나머지 2개는 '원소 모드 2개/4개'로만 적혀 기록 안 함"
+    },
+    {
+      "url": "https://overframe.gg/build/380521/nikana-prime/universal-50k-sustained-dps-300-cc-interchangeable-exilus-faction-status-read-desc/",
+      "date": "2022-10-19 작성, 2026-04-02 갱신(Update 42.0)",
+      "what": "본문 설명만(모드 칸 글자 없음)"
+    },
+    {
+      "url": "https://overframe.gg/build/1001207/nikana-prime/nikana-prime-melee-influence/",
+      "date": "2026-04-19 작성, 2026-06-23 수정(Update 43.0)",
+      "what": "본문 한 줄만: 스마이트 대신 갈바나이즈드 엘리멘탈리스트(바자린 칸)"
+    },
+    {
+      "url": "https://overframe.gg/build/504441/nikana-prime/7-278-170-slash-proc-damage/",
+      "date": "2023-07-22 (Update 33.5)",
+      "what": "본문만: 강공 세팅(렐런틀리스 컴비네이션·스프링로디드 블레이드·새크리피셜 스틸·블러드 러쉬·컨디션 오버로드), 피해 수치 주장은 작성자도 공식으로 못 맞춤"
+    },
+    {
+      "url": "https://forums.warframe.com/topic/1398735-how-do-i-build-nikana-prime",
+      "date": "2024-05 답변",
+      "what": "세팅은 그림, 본문 설명만"
+    },
+    {
+      "url": "https://cw-warframe-guides.github.io/guides/mod-melees/",
+      "date": "2026-04 갱신",
+      "what": "근접 모드 점검표(텐노카이·강공·컨디션 오버로드 주장)"
+    }
+  ],
+  "builds": [
+    {
+      "name": "ProGameTalk 연속기 치명타 (렐런틀리스 컴비네이션)",
+      "community": "progametalk",
+      "kind": "read",
+      "url": "https://progametalk.com/warframe/weapon-builds/nikana-prime/",
+      "date": "2026-03-10 갱신 표기",
+      "mods": [
+        "Primed Pressure Point",
+        "Buzz Kill",
+        "Primed Reach",
+        "True Steel",
+        "Organ Shatter",
+        "Berserker Fury",
+        "Relentless Combination",
+        "Blood Rush"
+      ],
+      "arcane": null,
+      "claims": [
+        "블러드 러쉬와 연속기 카운터로 치명타를 띄우는 것이 목적"
+      ],
+      "verdict": "2026-11-08 기본 조건 3.4%(계산기 1위 = 100%). 이유: 익실러스 텐노카이 모드 없음(드리머즈 라스를 더하면 30.5%), 아케인·원소 없음(1위는 전기 + 밀리 인플루언스, 아케인을 빼면 51.4%), 프라임드 리치는 계산기에서 0(근접 사거리 미반영). 2019 작성 형식."
+    },
+    {
+      "name": "ProGameTalk 메이밍 스트라이크 (슬라이드 공격)",
+      "community": "progametalk",
+      "kind": "read",
+      "url": "https://progametalk.com/warframe/weapon-builds/nikana-prime/",
+      "date": "2026-03-10 갱신 표기",
+      "mods": [
+        "Primed Pressure Point",
+        "Buzz Kill",
+        "Primed Reach",
+        "True Steel",
+        "Organ Shatter",
+        "Berserker Fury",
+        "Maiming Strike",
+        "Blood Rush"
+      ],
+      "arcane": null,
+      "claims": [
+        "메이밍 스트라이크는 회전 공격에 매우 높은 치명타 확률"
+      ],
+      "verdict": "3.4%. 메이밍 스트라이크는 슬라이드 공격 치명타라 일반 휘두르기 계산에서 0 — 위와 같은 이유."
+    }
+  ]
+}

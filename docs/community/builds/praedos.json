@@ -1,0 +1,106 @@
+{
+  "weapon": "praedos",
+  "attack": 0,
+  "evo": {
+    "2": 1,
+    "3": 2,
+    "4": 0,
+    "5": 1
+  },
+  "valence": null,
+  "riven": null,
+  "notes": "프라에도스(톤파, 인카논 진화 내장). 일반 공격 = 휘두르기(연속기 빌드). 2026-11-08 묶음 12 조사. Overframe 1031750(2026-07, Update 44.0)·314559(2022, Update 32.3)는 본문에 모드 8칸이 글자로 다 있어 read로 셈. 진화는 계산기 데이터 이름 기준 II 훨링 플러리(+20% 공격 속도), III 어뎁트 리플렉스(초기 연속기 +20), IV 스위프트 트랜스뮤트, V 키네틱 하모니 — 1031750 글의 진화 이름(Relentless Whirlwind·Surging Synergy·Swift Transmutation)은 계산기 데이터 이름과 달라 대응 미확인. 위키 Praedos 문서 권한 요청 시간 초과(못 읽음).",
+  "meta": {
+    "read_builds": 2,
+    "elements": "2026 세팅: 전기(볼택 스트라이크) 단일 — 밀리 인플루언스를 터뜨리기 위함. 2022 세팅: 원소 없음(베기 출혈 + 컨디션 오버로드, 팩션 모드).",
+    "valence": "해당 없음",
+    "core": [
+      "블러드 러쉬",
+      "위핑 운즈",
+      "컨디션 오버로드",
+      "오르건 섀터(아말감)",
+      "버서커 퓨리",
+      "프라임드 리치"
+    ],
+    "flex": [
+      "갈바나이즈드 엘리멘탈리스트 + 볼택 스트라이크 / 프라임드 스마이트 그리니어 + 글래디에이터 마이트"
+    ],
+    "arcane": [
+      "밀리 인플루언스 1 (2026), 2022 세팅은 아케인 없음"
+    ],
+    "why": "1031750: 밀리 인플루언스가 핵심 엔진(전기 상태이상에서 주변 적에게 상태이상 전파), 프라임드 리치로 4.95m까지 맞혀 많은 적을 침, 소버린 아웃캐스트 스탠스, 블러드 러쉬로 20% 기본 치명타를 12배 연속기에서 빨강까지. 314559: 베기 출혈이 주 피해, 리치로 더 많은 적을 맞혀 연속기를 빨리 쌓음, 팩션 모드는 지속 피해에 두 번 곱해짐(2.40 vs 1.69배).",
+    "limit": "직접 읽은 세팅 2개(1개는 2022 — 업데이트 36 상태이상 개편 전). 위키 문서 못 읽음."
+  },
+  "sources_read": [
+    {
+      "url": "https://overframe.gg/build/1031750/praedos/shockwave-slice/",
+      "date": "2026-07-03 작성, 2026-10-18 수정(Update 44.0)",
+      "what": "본문에 모드 8칸·아케인·스탠스·진화 이름 + 이유"
+    },
+    {
+      "url": "https://overframe.gg/build/314559/praedos/praedos-light-attack-build/",
+      "date": "2022-05-07 작성, 2023-03-26 수정(Update 32.3)",
+      "what": "본문에 모드 8칸 + 대안·이유"
+    },
+    {
+      "url": "https://overframe.gg/build/732625/praedos/praedos-full-crit-damage-dps/",
+      "date": "2024-10-01 (Update 36.1)",
+      "what": "본문만(모드 칸 글자 없음): 키네틱 하모니 필수(강공 속도), 디시플린즈 메리트"
+    },
+    {
+      "url": "https://overframe.gg/items/arsenal/5839/praedos/",
+      "date": "날짜 없음",
+      "what": "인기 모드 목록: 블러드 러쉬, 컨디션 오버로드, 위핑 운즈, 글래디에이터 마이트, 새크리피셜 스틸, 오르건 섀터, 프라임드 피버 스트라이크, 프라임드 리치"
+    }
+  ],
+  "builds": [
+    {
+      "name": "Overframe 1031750 전기 인플루언스 (소버린 아웃캐스트)",
+      "community": "overframe",
+      "kind": "read",
+      "url": "https://overframe.gg/build/1031750/praedos/shockwave-slice/",
+      "date": "2026-10-18",
+      "mods": [
+        "Weeping Wounds",
+        "Condition Overload",
+        "Galvanized Elementalist",
+        "Blood Rush",
+        "Amalgam Organ Shatter",
+        "Berserker Fury",
+        "Primed Reach",
+        "Voltaic Strike"
+      ],
+      "arcane": "melee_influence",
+      "claims": [
+        "밀리 인플루언스가 핵심 엔진: 전기 상태이상에서 주변 적에게 상태이상 전파",
+        "프라임드 리치로 4.95m — 최대한 많은 적을 맞힘",
+        "블러드 러쉬로 20% 기본 치명타가 12배 연속기에서 빨강 치명타"
+      ],
+      "verdict": "2026-11-08 기본 조건 12.9%. 이유: 익실러스 텐노카이 없음(마스터즈 엣지 44.4%, 드리머즈 라스 45.8%), 프라임드 리치가 계산에서 0(리치 → 프라임드 프레셔 포인트면 61.5/65.0%, 실제 리치 가치는 더 큼 — 열린 문제), 같은 인플루언스 뼈대를 니카나 1위처럼 짜면 89.4%. 주장 '20% 기본 치명타가 12배에서 빨강'은 ❌(108%)."
+    },
+    {
+      "name": "Overframe 314559 일반 공격 출혈 (그리니어 팩션)",
+      "community": "overframe",
+      "kind": "read",
+      "url": "https://overframe.gg/build/314559/praedos/praedos-light-attack-build/",
+      "date": "2023-03-26 (Update 32.3)",
+      "mods": [
+        "Condition Overload",
+        "Blood Rush",
+        "Weeping Wounds",
+        "Organ Shatter",
+        "Berserker Fury",
+        "Primed Reach",
+        "Primed Smite Grineer",
+        "Gladiator Might"
+      ],
+      "arcane": null,
+      "claims": [
+        "팩션 모드는 지속 피해에 두 번 곱해짐(2.40 vs 1.69배)",
+        "베기 출혈이 주 피해",
+        "리치로 더 많은 적을 맞혀 연속기를 빨리 쌓음"
+      ],
+      "verdict": "4%. 2023(Update 32.3) 형식: 아케인·익실러스 없음, 원소 없음. 팩션 지속 피해 두 번 곱하기 주장은 ✅(엔진 동일)."
+    }
+  ]
+}
