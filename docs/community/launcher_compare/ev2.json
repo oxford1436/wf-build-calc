@@ -1,0 +1,212 @@
+[
+ {
+  "k": "tonkor",
+  "sc": "gen",
+  "r": [
+   {
+    "n": "old #1 (MC)",
+    "score": 1.1266202868268342,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "vital_sense",
+     "magnetic_capacity",
+     "semi_rifle_cannonade",
+     "primed_firestorm"
+    ],
+    "pf": {
+     "grineer": [
+      11.82,
+      21.13,
+      52
+     ],
+     "corpus": [
+      5.91,
+      8.85,
+      203
+     ],
+     "infested": [
+      7.38,
+      10.32,
+      75
+     ]
+    },
+    "rate": 0.68
+   },
+   {
+    "n": "community AS tox60",
+    "score": 1.1434627935661608,
+    "ids": [
+     "amalgam_serration",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      10.2,
+      17.29,
+      48
+     ],
+     "corpus": [
+      4.83,
+      6.44,
+      88
+     ],
+     "infested": [
+      5.63,
+      8.86,
+      64
+     ]
+    },
+    "rate": 1.25
+   },
+   {
+    "n": "community AS tox25",
+    "score": 0.9027919382627347,
+    "ids": [
+     "amalgam_serration",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      11.19,
+      19.67,
+      46
+     ],
+     "corpus": [
+      4.83,
+      9.38,
+      81
+     ],
+     "infested": [
+      6.46,
+      10.47,
+      57
+     ]
+    },
+    "rate": 1.25
+   },
+   {
+    "n": "community SRC tox60",
+    "score": 1.2758772198187005,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      9.02,
+      16.61,
+      49
+     ],
+     "corpus": [
+      4.48,
+      7.16,
+      105
+     ],
+     "infested": [
+      5.38,
+      9.86,
+      69
+     ]
+    },
+    "rate": 1.12
+   }
+  ]
+ },
+ {
+  "k": "zarr",
+  "sc": "gen",
+  "r": [
+   {
+    "n": "#1",
+    "score": 1.8740399199309552,
+    "ids": [
+     "__riven",
+     "primed_cryo_rounds",
+     "galvanized_chamber",
+     "semi_rifle_cannonade",
+     "critical_delay",
+     "primed_firestorm",
+     "radiated_reload",
+     "vital_sense"
+    ],
+    "pf": {
+     "grineer": [
+      4.13,
+      8.25,
+      69
+     ],
+     "corpus": [
+      3.1,
+      4.13,
+      846
+     ],
+     "infested": [
+      3.1,
+      5.15,
+      182
+     ]
+    },
+    "rate": 0.98
+   }
+  ]
+ },
+ {
+  "k": "ogris",
+  "sc": "gen",
+  "r": [
+   {
+    "n": "#1",
+    "score": 0.4428880967069595,
+    "ids": [
+     "__riven",
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "magnetic_capacity",
+     "critical_delay",
+     "vital_sense",
+     "serration"
+    ],
+    "pf": {
+     "grineer": [
+      11.12,
+      20.52,
+      46
+     ],
+     "corpus": [
+      6.1,
+      8.25,
+      84
+     ],
+     "infested": [
+      6.1,
+      10.04,
+      71
+     ]
+    },
+    "rate": 0.93
+   }
+  ]
+ }
+]

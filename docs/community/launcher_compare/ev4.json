@@ -1,0 +1,136 @@
+[
+ {
+  "k": "tonkor",
+  "sc": "cytenr",
+  "r": [
+   {
+    "n": "old cytenr #1",
+    "score": 3.1094399626982843,
+    "ids": [
+     "galvanized_chamber",
+     "critical_delay",
+     "vital_sense",
+     "magnetic_capacity",
+     "hammer_shot",
+     "primed_magazine_warp",
+     "radiated_reload",
+     "primed_firestorm"
+    ],
+    "pf": {
+     "grineer": [
+      4.01,
+      7.14,
+      55
+     ],
+     "corpus": [
+      2.02,
+      3.35,
+      310
+     ],
+     "infested": [
+      3.35,
+      4.68,
+      78
+     ]
+    },
+    "rate": 1.5
+   },
+   {
+    "n": "gen #1 heat",
+    "score": 2.4258665092800515,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      5.39,
+      10.87,
+      65
+     ],
+     "corpus": [
+      3.12,
+      3.88,
+      744
+     ],
+     "infested": [
+      3.12,
+      4.63,
+      162
+     ]
+    },
+    "rate": 1.32
+   },
+   {
+    "n": "gen #1 tox",
+    "score": 2.402632344216881,
+    "ids": [
+     "galvanized_chamber",
+     "malignant_force",
+     "primed_cryo_rounds",
+     "critical_delay",
+     "semi_rifle_cannonade",
+     "vital_sense",
+     "primed_magazine_warp",
+     "radiated_reload"
+    ],
+    "pf": {
+     "grineer": [
+      5.39,
+      11.35,
+      65
+     ],
+     "corpus": [
+      3.12,
+      3.88,
+      744
+     ],
+     "infested": [
+      3.12,
+      4.63,
+      162
+     ]
+    },
+    "rate": 1.32
+   },
+   {
+    "n": "community SRC tox60",
+    "score": 2.372392281029691,
+    "ids": [
+     "semi_rifle_cannonade",
+     "galvanized_chamber",
+     "vital_sense",
+     "critical_delay",
+     "primed_magazine_warp",
+     "primed_firestorm",
+     "primed_cryo_rounds",
+     "hunter_munitions"
+    ],
+    "pf": {
+     "grineer": [
+      5.68,
+      10.27,
+      58
+     ],
+     "corpus": [
+      2.7,
+      3.59,
+      487
+     ],
+     "infested": [
+      3.59,
+      4.48,
+      112
+     ]
+    },
+    "rate": 1.12
+   }
+  ]
+ }
+]

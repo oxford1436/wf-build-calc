@@ -1,0 +1,11 @@
+[
+ {"k":"tonkor","sc":"gen","sets":[
+   {"n":"old #1 (MC)","mods":["Galvanized Chamber","Malignant Force","Primed Cryo Rounds","Critical Delay","Vital Sense","Magnetic Capacity","Semi-Rifle Cannonade","Primed Firestorm"],"arc":"primary_merciless","val":{"type":"heat","pct":0.6}},
+   {"n":"community AS tox60","mods":["Amalgam Serration","Galvanized Chamber","Vital Sense","Critical Delay","Primed Magazine Warp","Primed Firestorm","Primed Cryo Rounds","Hunter Munitions"],"arc":"primary_merciless","val":{"type":"tox","pct":0.6}},
+   {"n":"community AS tox25","mods":["Amalgam Serration","Galvanized Chamber","Vital Sense","Critical Delay","Primed Magazine Warp","Primed Firestorm","Primed Cryo Rounds","Hunter Munitions"],"arc":"primary_merciless","val":{"type":"tox","pct":0.25}},
+   {"n":"community SRC tox60","mods":["Semi-Rifle Cannonade","Galvanized Chamber","Vital Sense","Critical Delay","Primed Magazine Warp","Primed Firestorm","Primed Cryo Rounds","Hunter Munitions"],"arc":"primary_merciless","val":{"type":"tox","pct":0.6}}]},
+ {"k":"zarr","sc":"gen","sets":[
+   {"n":"#1","mods":["__riven","Primed Cryo Rounds","Galvanized Chamber","Semi-Rifle Cannonade","Critical Delay","Primed Firestorm","Radiated Reload","Vital Sense"],"arc":"primary_merciless","val":{"type":"tox","pct":0.37}}]},
+ {"k":"ogris","sc":"gen","sets":[
+   {"n":"#1","mods":["__riven","Galvanized Chamber","Malignant Force","Primed Cryo Rounds","Magnetic Capacity","Critical Delay","Vital Sense","Serration"],"arc":"primary_merciless","val":{"type":"heat","pct":0.287}}]}
+]

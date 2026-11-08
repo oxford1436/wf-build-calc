@@ -1,0 +1,56 @@
+[
+ {
+  "k": "tonkor",
+  "sc": "gen",
+  "score": 1.6232703092531124,
+  "mods": [
+   "갈바나이즈드 체임버",
+   "멀리그난트 포스",
+   "프라임드 크라이오 라운즈",
+   "크리티컬 딜레이",
+   "세미-라이플 캐노네이드",
+   "바이탈 센스",
+   "프라임드 매거진 워프",
+   "라디에이티드 리로드"
+  ],
+  "arcane": "primary_merciless",
+  "val": {
+   "type": "heat",
+   "pct": 0.6
+  },
+  "pf": {
+   "grineer": {
+    "clear150": 7.75,
+    "clearTop": 13.99,
+    "kps": 0.694,
+    "oneLv": 53
+   },
+   "corpus": {
+    "clear150": 3.88,
+    "clearTop": 5.39,
+    "kps": 2.614,
+    "oneLv": 203
+   },
+   "infested": {
+    "clear150": 4.63,
+    "clearTop": 6.15,
+    "kps": 2.357,
+    "oneLv": 76
+   }
+  },
+  "rate": 1.3216431637032495,
+  "ammo": {
+   "resupply": false,
+   "sustain": 24.212284282798294
+  },
+  "steel": true,
+  "level": 150,
+  "factions": [
+   "grineer",
+   "corpus",
+   "infested"
+  ],
+  "riv": null,
+  "errs": []
+ }
+]

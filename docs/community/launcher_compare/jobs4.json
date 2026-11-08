@@ -1,0 +1,5 @@
+[{"k":"tonkor","sc":"cytenr","sets":[
+ {"n":"old cytenr #1","mods":["Galvanized Chamber","Critical Delay","Vital Sense","Magnetic Capacity","Hammer Shot","Primed Magazine Warp","Radiated Reload","Primed Firestorm"],"arc":"primary_merciless","val":{"type":"tox","pct":0.6}},
+ {"n":"gen #1 heat","mods":["Galvanized Chamber","Malignant Force","Primed Cryo Rounds","Critical Delay","Semi-Rifle Cannonade","Vital Sense","Primed Magazine Warp","Radiated Reload"],"arc":"primary_merciless","val":{"type":"heat","pct":0.6}},
+ {"n":"gen #1 tox","mods":["Galvanized Chamber","Malignant Force","Primed Cryo Rounds","Critical Delay","Semi-Rifle Cannonade","Vital Sense","Primed Magazine Warp","Radiated Reload"],"arc":"primary_merciless","val":{"type":"tox","pct":0.6}},
+ {"n":"community SRC tox60","mods":["Semi-Rifle Cannonade","Galvanized Chamber","Vital Sense","Critical Delay","Primed Magazine Warp","Primed Firestorm","Primed Cryo Rounds","Hunter Munitions"],"arc":"primary_merciless","val":{"type":"tox","pct":0.6}}]}]
