@@ -748,6 +748,28 @@ const { chromium } = require("playwright");
     await p3.close();
   }
 
+  // v2.06: an attack striking Keff enemies also strikes the pack around the heavy/Eximus while they are worked on. Xoris charged
+  // throw (9 m) + Volatile Quick Return (+3 m, game Mods.json) covers the whole 12-enemy pack — before, the heavy and the Eximus
+  // were separate engagements plus a fresh sweep of the lights, and VQR in place of Voltaic Strike scored 0.77 (every read
+  // Xoris build runs VQR, batch 15). Without Melee Influence too (no spread path involved).
+  {
+    const p3 = await ctx.newPage();
+    p3.on("pageerror", (e) => errs.push(e.message));
+    await p3.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p3.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p3.evaluate(() => {
+      const A = window.WF_APP, E = window.WFEngine, w = window.WF_WEAPONS.find((x) => x.id === "xoris"); if (!w) return { err: "xoris 없음" };
+      A.st.base = w; A.st.weapon = w; A.st.atk = 0;
+      const o = Object.assign(A.readOpts(), { targets: null, val: null }); o.targets = E.targetsFor(o); A.st.results = { o };
+      const en = (n) => (window.WF_MODS.find((x) => x.en === n) || {}).id;
+      const base = ["Galvanized Reflex", "Killing Blow", "Galvanized Steel", "Melee Elementalist", "Whirlwind", "Shocking Touch", "Amalgam Organ Shatter", "Primed Pressure Point"].map(en);
+      const sc = (last, arc) => A.evalBuild(base.concat([en(last)]), null, arc, Object.assign({}, o, { arcane: arc }), null).score;
+      return { infl: sc("Volatile Quick Return", "melee_influence") / sc("Voltaic Strike", "melee_influence"), none: sc("Volatile Quick Return", null) / sc("Voltaic Strike", null) };
+    }).catch((e) => ({ err: e.message }));
+    results.push({ name: "v2.06 무리 전체를 덮는 폭발은 중장갑·엑시무스를 칠 때 주변 적도 같이 처치 — 조리스 볼래틸 퀵 리턴(+3m)이 볼택 스트라이크보다 셈(인플루언스·아케인 없음 둘 다)", ok: !r.err && r.infl > 1.05 && r.none > 1.05, detail: r.err || JSON.stringify(r) });
+    await p3.close();
+  }
+
   // v1.71: the cases the user caught in game (2026-11-04).
   //  - Torid Incarnon Form, setting A (blast + corrosive) vs the old pick (viral + magnetic, Primed Shred): Simulacrum, Grineer Nox
   //    x20, Lv150, from zero stacks. In game A clears all 20 in < 3 s, the old pick takes 6 s for 5. Old engine: old pick faster.

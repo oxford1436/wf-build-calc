@@ -801,6 +801,21 @@
             const left = tNonH > 1e-9 ? Math.max(0, 1 - tHeavy / tNonH) : 0;
             clear = Math.min(clear, eng(tHeavy) + (tgs.ex ? eng(tEx) : 0) + (lights - extra) * left);
           }
+          // v2.06 an attack that strikes Keff enemies at once (blast radius, glaive explosion, swing, punch through) strikes the
+          // pack around the heavy / the Eximus too while it is being worked on: those (Keff − 1) enemies take the same hits and
+          // die with it when they need no longer than it does (the bystander rule above). Before, the heavy and the Eximus were
+          // separate engagements and the lights were swept again afterwards — an explosion that covers the whole pack (Xoris
+          // 9 m + Volatile Quick Return 3 m = 12 enemies) counted 0.8 extra throws on top of the heavy's, so the +3 m scored
+          // −22% while every read Xoris/Glaive Prime build runs it (batch 15).
+          if (tgs.heavy || tgs.ex) {
+            const anchor = tgs.heavy ? tHeavy : tEx;
+            const others = Math.max(0, Math.min(main.N - 1, Keff - 1)), share = others / Math.max(1, main.N - 1);
+            const with_ = (t) => Math.min(1, Math.max(anchor, period) / Math.max(t, period));
+            const lightsLeft = nL * (1 - share * with_(tHit));
+            const exLeft = tgs.heavy && tgs.ex ? 1 - share * with_(tEx) : 0;
+            const clr2 = eng(anchor) + exLeft * eng(tEx) + (lightsLeft / Keff) * eng(tHit);
+            if (!o.noAoeAnchor) clear = Math.min(clear, clr2);
+          }
           kps = main.N / Math.max(period, clear);
           // ammo in a long fight (players: "탄약이 부족해서 탄창·탄약 효율을 챙긴다"): rounds a wave costs vs rounds its kills drop.
           // Wiki "Ammo": solo, "Chance to drop Primary or Secondary Ammo" 45% per kill (taken as 22.5% each — the page gives

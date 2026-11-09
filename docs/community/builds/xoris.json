@@ -1,0 +1,58 @@
+{
+  "weapon": "xoris",
+  "attack": 0,
+  "valence": null,
+  "riven": null,
+  "notes": "조리스(글레이브). 충전 투척 + 강공 기폭 운용(묶음 15, 2026-11-09 22시 예약 실행). 고유 특성: 연속기 지속 무한, 회수 폭발 확정 충격·전기. Overframe 121393(투표 1398)은 모드 목록이 복사 문자열이라 기록 안 함(설명만).",
+  "meta": {
+    "read_builds": 3,
+    "elements": "원소 칸 없음 1(고유 전기 + 쇼킹 터치) · 쇼킹 터치(전기) 2 · 바이러스(비셔스 프로스트 + 비럴런트 스커지) 1 — 전기 위주",
+    "valence": "해당 없음",
+    "core": ["볼래틸 퀵 리턴 2/3(나머지 1개는 볼래틸 리바운드)", "아말감 오르건 섀터 2/3", "프라임드 프레셔 포인트 2/3", "쇼킹 터치 2/3"],
+    "flex": ["블러드 러시·위핑 운즈(연속기 무한 활용)", "새크리피셜 스틸·갈바나이즈드 리플렉스(5배 강공)", "파워 스로우·프라임드 스마이트(팩션)·멜레 엘리멘탈리스트"],
+    "arcane": ["밀리 인플루언스 2/3", "글에 없음 1/3"],
+    "why": "조리스는 연속기가 끊기지 않아 연속기 비례 모드(블러드 러시)가 쉽게 최대, 회수 폭발의 확정 전기가 밀리 인플루언스를 늘 발동(전기 상태이상으로 발동). 프라임드 스마이트는 퍼진 전기에 팩션이 세 번 곱해진다고 주장(Overframe 618917). 볼래틸 퀵 리턴 = 폭발 반경 +3m.",
+    "limit": "직접 읽은 세팅 3개, Sportskeeda 2개는 2024(이미지 경로), Overframe 618917은 2025-11 수정(40.0)."
+  },
+  "sources_read": [
+    {"url": "https://sportskeeda.com/mmo/warframe-xoris-build-guide-beginners-end-game", "date": "2024(이미지 경로)", "what": "세팅 2개 모드 8칸 글자, 인플루언스 세팅은 익실러스 디시플린즈 메리트"},
+    {"url": "https://overframe.gg/build/618917/xoris/xoris-falcor-x5-heavy-spam-influence/", "date": "2024-02 작성, 2025-11 수정(40.0)", "what": "칸마다 모드·대안·이유(첫 선택지로 기록), 익실러스 훨윈드 또는 디스패치 오버드라이브"},
+    {"url": "https://overframe.gg/build/121393/xoris/xoris-30-the-new-s-tier-melee-volatile-quick-return-steel-path-endurance-approved-patch-40/", "date": "2025-11 수정(40.0)", "what": "모드 목록은 복사 문자열 — 세팅은 기록 안 함, 설명(주장)만"}
+  ],
+  "builds": [
+    {
+      "name": "Sportskeeda 포르마 없음 (바이러스)",
+      "community": "Sportskeeda",
+      "kind": "read",
+      "url": "https://sportskeeda.com/mmo/warframe-xoris-build-guide-beginners-end-game",
+      "date": "2024",
+      "mods": ["Volatile Quick Return", "Weeping Wounds", "Organ Shatter", "Berserker Fury", "Whirlwind", "Blood Rush", "Vicious Frost", "Virulent Scourge"],
+      "exilus": null,
+      "arcane": null,
+      "claims": ["연속기 지속 무한이라 블러드 러시 같은 연속기 비례 모드가 최선"]
+    },
+    {
+      "name": "Sportskeeda 6포르마 밀리 인플루언스",
+      "community": "Sportskeeda",
+      "kind": "read",
+      "url": "https://sportskeeda.com/mmo/warframe-xoris-build-guide-beginners-end-game",
+      "date": "2024",
+      "mods": ["Primed Pressure Point", "Blood Rush", "Amalgam Organ Shatter", "Weeping Wounds", "Primed Smite Grineer", "Power Throw", "Volatile Rebound", "Shocking Touch"],
+      "exilus": "Discipline's Merit",
+      "arcane": "melee_influence",
+      "claims": ["밀리 인플루언스는 전기 상태이상으로 발동 — 조리스가 가장 잘 맞는 무기", "리벤 성향이 낮아 리벤 투자 비추천"]
+    },
+    {
+      "name": "Overframe 618917 5배 강공 인플루언스 (2025-11)",
+      "community": "Overframe",
+      "kind": "read",
+      "url": "https://overframe.gg/build/618917/xoris/xoris-falcor-x5-heavy-spam-influence/",
+      "author": "ninjase",
+      "date": "2025-11-10",
+      "mods": ["Primed Pressure Point", "Sacrificial Steel", "Amalgam Organ Shatter", "Primed Smite Grineer", "Melee Elementalist", "Volatile Quick Return", "Shocking Touch", "Galvanized Reflex"],
+      "exilus": "Whirlwind",
+      "arcane": "melee_influence",
+      "claims": ["프라임드 프레셔 포인트 필수(기본 피해)", "프라임드 스마이트가 인플루언스로 퍼진 전기에 세 번 곱해짐", "볼래틸 퀵 리턴 폭발 반경 +3m → 12m", "갈바나이즈드 리플렉스 최대 중첩 초기 연속기 80"]
+    }
+  ]
+}

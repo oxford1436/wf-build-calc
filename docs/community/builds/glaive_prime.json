@@ -1,0 +1,36 @@
+{
+  "weapon": "glaive_prime",
+  "attack": 0,
+  "valence": null,
+  "riven": null,
+  "notes": "글레이브 프라임. 충전 투척 + 강공 기폭(묶음 15, 2026-11-09 22시 예약 실행). 회수 폭발 확정 충격·베기. Sportskeeda(2023)는 모드 일부만 글자, 세팅은 그림 → 주장만. Overframe 134974는 복사 문자열 → 설명만.",
+  "meta": {
+    "read_builds": 1,
+    "elements": "원소 없음 1/1 — 확정 베기 출혈 위주(Sportskeeda는 바이러스를 대안으로 언급)",
+    "valence": "해당 없음",
+    "core": ["새크리피셜 스틸", "프라임드 프레셔 포인트", "아말감 오르건 섀터", "볼래틸 퀵 리턴", "멜레 엘리멘탈리스트", "프라임드 스마이트(팩션)"],
+    "flex": ["파워 스로우·킬링 블로우·글래디에이터 마이트", "갈바나이즈드 리플렉스(5배)"],
+    "arcane": ["밀리 듀플리케이트 1/1"],
+    "why": "270712: 5배 강공 기폭으로 확정 베기, 새크리피셜 스틸이 강공에서 두 배라 치명타 140%, 밀리 듀플리케이트가 피해를 거의 두 배(치명타 131% 근처가 최적), 멜레 엘리멘탈리스트가 출혈에 1.9배.",
+    "limit": "직접 읽은 세팅 1개(2024-10 갱신, 38.5)."
+  },
+  "sources_read": [
+    {"url": "https://overframe.gg/build/270712/glaive-prime/glaive-prime-x5-heavy-spam-detonation/", "date": "2022-01 작성, 2024-10 갱신(38.5)", "what": "칸마다 모드·이유 글자, 익실러스 디스패치 오버드라이브(선택), 아케인 밀리 듀플리케이트"},
+    {"url": "https://sportskeeda.com/mmo/warframe-glaive-prime-build-guide-best-mods-synergies", "date": "2023", "what": "모드 일부만 글자(세팅 그림) — 주장만"},
+    {"url": "https://overframe.gg/build/134974/glaive-prime/the-explosive-spinner-glaive-prime/", "date": "2025-03 수정(38.5)", "what": "복사 문자열 — 설명만"}
+  ],
+  "builds": [
+    {
+      "name": "Overframe 270712 5배 강공 기폭 (2024-10)",
+      "community": "Overframe",
+      "kind": "read",
+      "url": "https://overframe.gg/build/270712/glaive-prime/glaive-prime-x5-heavy-spam-detonation/",
+      "author": "ninjase",
+      "date": "2024-10",
+      "mods": ["Sacrificial Steel", "Primed Pressure Point", "Melee Elementalist", "Amalgam Organ Shatter", "Volatile Quick Return", "Primed Smite Grineer", "Galvanized Reflex", "Power Throw"],
+      "exilus": "Dispatch Overdrive",
+      "arcane": "melee_duplicate",
+      "claims": ["멜레 엘리멘탈리스트가 출혈에 곱연산 1.9배", "새크리피셜 스틸이 강공에서 두 배 → 치명타 약 140%", "밀리 듀플리케이트가 피해를 거의 두 배, 치명타 약 131%가 최적", "파워 스로우는 받아서 다시 던지는 타이밍이 필요(최대 4배)"]
+    }
+  ]
+}

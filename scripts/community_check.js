@@ -61,7 +61,9 @@ const OUT = path.join(ROOT, "docs", "community", "report.md");
       const comboOf = (share) => Object.keys(TK).filter((k) => (share || {})[k] >= 0.1).sort((x, y) => ["viral", "corr", "heat", "rad", "mag", "gas", "blast", "elec", "tox", "cold"].indexOf(x) - ["viral", "corr", "heat", "rad", "mag", "gas", "blast", "elec", "tox", "cold"].indexOf(y)).map((k) => TK[k]).join("+") || "물리 위주";
       const rows = (spec.builds || []).map((bd) => {
         const unknown = [], ids = [];
-        for (const n of bd.mods || []) {
+        // the exilus slot counts too (the calculator's #1 has 8 mods + exilus) — before 2026-11-09 it was dropped, so a build
+        // whose exilus matters (Whirlwind on a glaive, Lethal Momentum) was compared one mod short
+        for (const n of (bd.mods || []).concat(bd.exilus ? [bd.exilus] : [])) {
           if (/^(riven|리벤)/i.test(n)) { ids.push("__riven"); continue; }
           const m = findMod(n);
           if (m) ids.push(m.id); else unknown.push(n);
