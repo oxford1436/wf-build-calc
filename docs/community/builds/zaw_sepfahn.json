@@ -1,0 +1,52 @@
+{
+ "kit": [
+  "zaw",
+  "Sepfahn",
+  "Peye",
+  "Vargeet II Jai"
+ ],
+ "attack": 0,
+ "valence": null,
+ "riven": null,
+ "notes": "자우 셉판(타격부)·페예(한손 손잡이 → 니카나)·바르기트 II 자이(연결부). 2026-11-10 04시 묶음 16(자우). 조립 수치는 위키 Module:Modular/data(일본 위키 ZAW 표와 대조해 일치). 자우 아케인(엑소디아)·자우 강공은 계산기 미반영. kind: read = 출처 본문 글자로 모드 8개를 읽은 세팅(아케인은 글에 없음).",
+ "builds": [
+  {
+   "name": "Prima Games 셉판 니카나 (컨디션 오버로드, 바이러스+냉기)",
+   "community": "primagames",
+   "kind": "read",
+   "url": "https://primagames.com/tips/what-is-the-best-zaw-in-warframe-answered",
+   "author": "Shawn Robinson",
+   "date": "날짜 표기 없음",
+   "mods": [
+    "Condition Overload",
+    "Fury",
+    "Organ Shatter",
+    "Weeping Wounds",
+    "Reach",
+    "Vicious Frost",
+    "Virulent Scourge",
+    "Blood Rush"
+   ],
+   "arcane": null,
+   "claims": [
+    "셉판은 니카나라 한 방 피해보다 빠른 타격을 노린다 — 페예는 피해를 깎고 공격 속도를 준다",
+    "바르기트 II 자이는 상태이상·피해를 깎고 공격 속도·치명타 확률을 준다",
+    "프라임드 퓨리·프라임드 리치로 바꾸면 공격 속도·사거리가 더 오른다"
+   ],
+   "verdict": "v2.06 기본 조건 10%(아케인 1위 = 밀리 인플루언스 + 전기와 비교), 같은 조건(아케인 없음) 1위의 13.3%. 예전 형식(갈바나이즈드 스틸·프라임드 프레셔 포인트·버서커 퓨리·마스터즈 엣지 없음), 리치는 계산상 0(근접 사거리 미반영). 프라임드 퓨리·프라임드 리치 16.9%. 자세히 16_zaw.md.",
+   "claim_verdicts": [
+    "✅ 피해보다 속도: 셉판 1위 점수 페예 100%·라카 95.1%·코브 90.8%",
+    "✅ 바르기트 II 자이: 페예 + 바르기트 II 루행 92.9%",
+    "△ 프라임드 리치는 계산상 0(사거리 미반영) — 프라임드 퓨리만 효과"
+   ]
+  }
+ ],
+ "meta": {
+  "elements": "읽은 세팅 1개: 바이러스(비셔스 프로스트 + 비럴런트 스커지)",
+  "valence": "없음",
+  "core": "컨디션 오버로드·블러드 러쉬·오르건 섀터·위핑 운즈·퓨리",
+  "flex": "리치↔프라임드 리치, 퓨리↔프라임드 퓨리",
+  "arcane": "글에 없음(자우 엑소디아 아케인 미구현)",
+  "why": "니카나라 빠른 타격 — 페예·바르기트 II 자이로 속도·치명타 확률"
+ }
+}
