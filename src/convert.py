@@ -458,7 +458,13 @@ def conv(w, typ):
                         wiki_traits(ga, wa)
                     atks.append(ga)
                 elif n == "Heavy Slam Attack":
-                    sl = {"name": "강한 내려찍기 (슬램)", "en": n, "kind": "heavy", "desc": "공중에서 강공으로 내려찍는 슬램 운용 (생티 마기스타 등)", "dmg": d, "cc": (a.get("crit_chance") or 0) / 100,
+                    # v2.04: this AoE attack is the slam's radial part (game heavySlamRadialDamage — 219 of 224 melee weapons
+                    # in the wiki data hold that value). Galariak Prime's wiki entry holds the direct value instead (1170 =
+                    # heavySlamAttack, radial 702; same 5:3 ratio as the others, e.g. Sancti Magistar 1200/720) → use the radial
+                    hs_, hr_ = w.get("heavySlamAttack"), w.get("heavySlamRadialDamage")
+                    if hs_ and hr_ and abs(sum(d.values()) - hs_) < 1 and abs(hs_ - hr_) >= 1:
+                        d = {k: round(v * hr_ / hs_, 2) for k, v in d.items()}
+                    sl = {"slam": True,"name": "강한 내려찍기 (슬램)", "en": n, "kind": "heavy", "desc": "공중에서 강공으로 내려찍는 슬램 운용 (생티 마기스타 등)", "dmg": d, "cc": (a.get("crit_chance") or 0) / 100,
                           "cd": a.get("crit_mult") or cd, "sc": (a.get("status_chance") or 0) / 100,
                           "windup": w.get("windUp") or 1.0, "radius": (a.get("falloff") or {}).get("end") or 6, "noCO": True}
                     if (a.get("falloff") or {}).get("reduction"):

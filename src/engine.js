@@ -113,7 +113,7 @@
   const NUM_KEYS = ["dmg", "heavy", "ms", "cc", "ccHeavyNoDouble", "cd", "sc", "sd", "dur", "fr", "frneg", "lock", "mag", "reload", "wind",
     "ic", "hae", "ccc", "br", "ww", "co", "gco", "radius", "pt", "cdFlat", "ccFlat", "hsMult", "msLock", "hm", "ib", "welt",
     "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot", "evoPst", "wpcc",
-    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd", "napalm", "hata", "burstDmg", "burstCap", "finalBurstMs", "spreadAdd", "spreadPct"];
+    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd", "napalm", "hata", "burstDmg", "burstCap", "finalBurstMs", "spreadAdd", "spreadPct", "slamDmg"];
   const EXTRA = ["radm", "magm", "gasm", "blastm", "viralm", "corrm", "heatx", "coldx", "elecx", "toxx", "voidx"];
   function newAgg() {
     const a = { elem: { heat: 0, cold: 0, elec: 0, tox: 0 }, phys: { impact: 0, punct: 0, slash: 0 }, extra: {} };
@@ -1186,7 +1186,7 @@
       for (let i = 0; i < n; i++) { const c = hps * 20 * (i + 0.5) / n; s += c < mn ? 1 : 1.5 + 0.5 * Math.floor(Math.log(c / mn) / Math.log(3) + 1e-9); }
       sniperM = s / n;
     }
-    const fin = (ext.final || 1) * (tenno && !o.tennoAdd ? 1 + (tenno.dmg || 0) : 1) * exChain * sniperM * (1 + (a.evoMult || 0));   // evoMult: Incarnon "unique multiplier" perks
+    const fin = (ext.final || 1) * (tenno && !o.tennoAdd ? 1 + (tenno.dmg || 0) : 1) * exChain * sniperM * (1 + (a.evoMult || 0)) * (atk.slam ? 1 + (a.slamDmg || 0) : 1);   // evoMult: Incarnon "unique multiplier" perks; slamDmg (v2.04): Seismic Wave — its own multiplier on slams (wiki Arca Titron: Slam Capacitor "is multiplicative to Seismic Wave and the Nira's Set bonus, and additive to base damage (e.g. Pressure Point …)"; wiki Jat Kusar: Slam Radial Damage "can only be increased with Seismic Wave")
     // falloff: distance (bullets/pellets) and blast edge (enemies around the centre of an explosion)
     let fallM = distFall(atk.fo, o) * armFrac(atk.arm, o);
     if (atk.rfo && o.scenario === "crowd" && K > 1) fallM *= (1 + (K - 1) * (1 - atk.rfo * 2 / 3)) / K;

@@ -1,5 +1,5 @@
 /* Damage-relevant mods (max rank). eff = always on; cond = conditional ({when:'kill'|'aim'|'headshot'|'hs'|'cast'}).
- * compat: rifle | shotgun | pistol | melee ; req: 'semi' (semi-auto only), 'glaive', 'heavy'.
+ * compat: rifle | shotgun | pistol | melee ; req: 'semi' (semi-auto only), 'glaive', 'heavy', 'slam'.
  * group: mutually exclusive variants. */
 (function (root) {
   const M = [];
@@ -442,6 +442,11 @@
   // Hata-Satya (Soma Prime only, wiki): +1.2% crit chance per hit, resets on reload, cap +500% — engine "hata"
   for (const m of M) if (m.en === "Hata-Satya") Object.assign(m, { eff: { hata: 0.012 }, noCalc: false, unparsed: [], auto: false,
     note: "맞힐 때마다 치명타 확률 +1.2% (멀티샷·관통 타격 포함, 최대 +500%), 재장전하면 초기화 — 탄창 한 번 동안의 평균으로 계산 (위키)" });
+  // Seismic Wave (v2.04): Mods.json "+200% Slam Attack Damage" — a separate multiplier on slams (wiki Arca Titron: Slam Capacitor
+  // "is multiplicative to Seismic Wave and the Nira's Set bonus, and additive to base damage (e.g. Pressure Point, Arcane Fury)";
+  // wiki Jat Kusar: Slam Radial Damage "can only be increased with Seismic Wave") — engine "slamDmg", only on slam attacks
+  for (const m of M) if (m.en === "Seismic Wave" && m.compat.includes("melee")) Object.assign(m, { eff: { slamDmg: 2.0 }, noCalc: false, unparsed: [], auto: false, req: "slam",
+    note: "슬램 피해 +200% — 근접 피해 모드(프레셔 포인트)와 따로 곱함 (위키 아르카 티트론·젯 쿠사르 노트), 슬램에만 적용" });
   // Nightwatch Napalm (Ogris/Kuva Ogris augment, wiki): blaze of 150 Heat x 6 ticks per rocket — engine "napalm"
   for (const m of M) if (m.en === "Nightwatch Napalm") Object.assign(m, { eff: { napalm: 150 }, noCalc: false, unparsed: [], auto: false,
     note: "로켓마다 화염 장판: 고정 150 화염 × 6틱 (서레이션류·아케인·팩션·베일런스만 적용, 치명타 없음, 멀티샷마다 겹침 — 위키)" });

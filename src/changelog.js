@@ -2,6 +2,12 @@
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "2.04", date: "2026-11-09", title: "세이스믹 웨이브 슬램 피해 +200%, 갈라리아크 프라임 슬램 수치",
+      items: [
+        "세이스믹 웨이브(슬램 피해 +200%, 게임 데이터 Mods.json)가 계산에서 효과 0이었던 것을 반영했습니다. 근접 피해 모드(프레셔 포인트)와 합치지 않고 따로 곱합니다 — 위키 아르카 티트론 노트 \"multiplicative to Seismic Wave and the Nira's Set bonus, and additive to base damage (e.g. Pressure Point, Arcane Fury)\", 젯 쿠사르 노트 \"treated as Slam Radial Damage and its damage can only be increased with Seismic Wave\". 슬램(강한 내려찍기)에만 후보로 나옵니다.",
+        "갈라리아크 프라임 강한 내려찍기를 1170 → 702로 고쳤습니다. 위키 무기 데이터가 이 무기만 직격 값(게임 데이터 heavySlamAttack 1170)을 넣었고, 다른 근접 무기 219개는 범위 값(heavySlamRadialDamage — 이 무기는 702)입니다. 두 값 비율 5:3은 생티 마기스타(1200/720)와 같습니다.",
+        "묶음 14(근접 슬램) 조사에서 발견. 커뮤니티 슬램 세팅(Overframe 668910·1030577)이 늘 넣는 세이스믹 웨이브가 계산기 1위에 없던 이유였습니다. 생티 마기스타 강한 내려찍기 1위에 세이스믹 웨이브가 들어갑니다(빼면 62.6%).",
+      ] },
     { v: "2.03", date: "2026-11-08", title: "타츠 프라임 강공 확정 베기 상태이상",
       items: [
         "타츠 프라임 강공(텐노카이 강공 포함)에 위키의 확정 베기 상태이상을 넣었습니다: \"Heavy attacks with this weapon have a guaranteed Slash proc.\" (Tatsu Prime 문서). 강공 데이터를 일반 공격 피해 비율로 만들면서 빠져 있었습니다. 출혈은 강공 연속기 배율을 받습니다(v1.78 게임 확인).",

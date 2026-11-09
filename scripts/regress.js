@@ -692,6 +692,37 @@ const { chromium } = require("playwright");
     await p3.close();
   }
 
+  // v2.04: (1) Galariak Prime's wiki "Heavy Slam Attack" holds the direct value (1170 = game heavySlamAttack) where the other
+  // 219 melee weapons hold the radial one (game heavySlamRadialDamage, 702 here) — the AoE attack must use the radial value.
+  // (2) Seismic Wave "+200% Slam Attack Damage" (Mods.json) is its own multiplier — wiki Arca Titron: Slam Capacitor "is
+  // multiplicative to Seismic Wave and the Nira's Set bonus, and additive to base damage (e.g. Pressure Point …)"; wiki Jat
+  // Kusar: the heavy explosion "is treated as Slam Radial Damage and its damage can only be increased with Seismic Wave".
+  {
+    const p3 = await ctx.newPage();
+    p3.on("pageerror", (e) => errs.push(e.message));
+    await p3.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p3.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p3.evaluate(() => {
+      const A = window.WF_APP, E = window.WFEngine, W = window.WF_WEAPONS;
+      const slamOf = (id) => { const w = W.find((x) => x.id === id); return w && w.attacks.find((a) => a.en === "Heavy Slam Attack"); };
+      const tot = (a) => a ? Object.values(a.dmg).reduce((s, v) => s + v, 0) : NaN;
+      const out = { gal: tot(slamOf("galariak_prime")), mag: tot(slamOf("sancti_magistar")) };
+      const sw = window.WF_MODS.find((x) => x.en === "Seismic Wave");
+      out.sw = !!sw && !sw.noCalc && sw.eff && sw.eff.slamDmg;
+      const w = W.find((x) => x.id === "sancti_magistar"), ai = w.attacks.findIndex((a) => a.en === "Heavy Slam Attack");
+      A.st.base = w; A.st.weapon = w; A.st.atk = ai;
+      const o = Object.assign(A.readOpts(), { targets: null, val: null }); o.targets = E.targetsFor(o); A.st.results = { o };
+      const en = (n) => (window.WF_MODS.find((x) => x.en === n) || {}).id;
+      const base = ["Primed Pressure Point", "Primed Fever Strike", "Sacrificial Steel", "Blood Rush", "Organ Shatter", "Corrupt Charge", "Galvanized Reflex"].map(en);
+      const sc = (ids) => A.evalBuild(ids, null, null, Object.assign({}, o, { arcane: null }), null).score;
+      out.k = sw ? sc(base.concat([sw.id])) / sc(base.concat([en("Gladiator Might")])) : 0;
+      return out;
+    }).catch((e) => ({ err: e.message }));
+    results.push({ name: "v2.04 갈라리아크 프라임 강한 내려찍기 범위 피해 = 게임 데이터 702 (위키 데이터의 1170은 직격 값), 생티 마기스타 720", ok: !r.err && Math.abs(r.gal - 702) < 1 && Math.abs(r.mag - 720) < 1, detail: r.err || JSON.stringify({ gal: r.gal, mag: r.mag }) });
+    results.push({ name: "v2.04 세이스믹 웨이브 슬램 피해 +200%(별도 배율) — 생티 마기스타 강한 내려찍기에서 글래디에이터 마이트 자리보다 1.3배 넘게 빠름", ok: !r.err && r.sw === 2 && r.k > 1.3, detail: r.err || JSON.stringify({ sw: r.sw, k: r.k }) });
+    await p3.close();
+  }
+
   // v1.71: the cases the user caught in game (2026-11-04).
   //  - Torid Incarnon Form, setting A (blast + corrosive) vs the old pick (viral + magnetic, Primed Shred): Simulacrum, Grineer Nox
   //    x20, Lv150, from zero stacks. In game A clears all 20 in < 3 s, the old pick takes 6 s for 5. Old engine: old pick faster.

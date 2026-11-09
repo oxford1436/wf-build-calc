@@ -160,6 +160,7 @@ self.onmessage = function (ev) {
       if (m.req === "semi" && !atk.semi) return false;
       if (m.req === "glaive" && atk.kind !== "glaive") return false;
       if (m.req === "heavy" && !(atk.kind === "heavy" || atk.kind === "glaive")) return false;
+      if (m.req === "slam" && !atk.slam) return false;
       if (atk.kind === "glaive" && m.id === "condition_overload") return false;
       if (m.cond) {
         const needsAim = m.cond.some((c) => c.when === "aim" || c.when === "headshot" || c.when === "hs");
@@ -494,7 +495,7 @@ self.onmessage = function (ev) {
     $$("#sets .cx").forEach((el) => syncEx(el));
   }
   // exilus-slot mods the weapon can take (utility mods), and name lookups for the comparison inputs
-  const exilusMods = (w) => MODS.filter((m) => m.exilus && m.compat.includes(modClass(w)) && typeOk(m, w) && !(m.req === "glaive" && w.sub !== "glaive"));
+  const exilusMods = (w) => MODS.filter((m) => m.exilus && m.compat.includes(modClass(w)) && typeOk(m, w) && !(m.req === "glaive" && w.sub !== "glaive") && m.req !== "slam");
   function fuzzyPick(text, pool, keyKo) {
     const t = (text || "").trim().replace(/\s+/g, " ");
     if (!t) return null;
