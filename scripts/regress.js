@@ -723,6 +723,31 @@ const { chromium } = require("playwright");
     await p3.close();
   }
 
+  // v2.05: Galariak Prime (wiki): "Gains a flat +10% Critical Chance bonus per unique Status Effect type on the target hit"
+  // (Blast is not in the wiki's list of valid types) — every attack carries ccType 0.1 and it must raise a crit build's score
+  {
+    const p3 = await ctx.newPage();
+    p3.on("pageerror", (e) => errs.push(e.message));
+    await p3.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p3.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p3.evaluate(() => {
+      const A = window.WF_APP, E = window.WFEngine, W = window.WF_WEAPONS;
+      const w = W.find((x) => x.id === "galariak_prime"); if (!w) return { err: "galariak_prime 없음" };
+      const all = w.attacks.every((a) => a.ccType === 0.1);
+      // single target (boss scenario): a crowd heavy slam kills on its first hit, which sees no statuses yet (first0)
+      const ai = w.attacks.findIndex((a) => a.en === "Normal Attack");
+      A.st.base = w; A.st.weapon = w; A.st.atk = ai;
+      const o = Object.assign(A.readOpts(), { targets: null, val: null, scenario: "boss" }); o.targets = E.targetsFor(o); A.st.results = { o };
+      const en = (n) => (window.WF_MODS.find((x) => x.en === n) || {}).id;
+      const ids = ["Primed Pressure Point", "Primed Fever Strike", "Sacrificial Steel", "Blood Rush", "Organ Shatter", "North Wind", "Gladiator Might", "Shocking Touch"].map(en);
+      const sc = () => A.evalBuild(ids, null, null, Object.assign({}, o, { arcane: null }), null).score;
+      const on = sc(); const keep = w.attacks.map((a) => a.ccType); w.attacks.forEach((a) => delete a.ccType); const off = sc(); w.attacks.forEach((a, i) => { a.ccType = keep[i]; });
+      return { all, k: on / off };
+    }).catch((e) => ({ err: e.message }));
+    results.push({ name: "v2.05 갈라리아크 프라임 고유 효과(상태이상 종류당 치명타 +10%) — 모든 공격에 있고 단일 대상(보스) 치명타 세팅 점수를 1.05배 넘게 올림", ok: !r.err && r.all && r.k > 1.05, detail: r.err || JSON.stringify(r) });
+    await p3.close();
+  }
+
   // v1.71: the cases the user caught in game (2026-11-04).
   //  - Torid Incarnon Form, setting A (blast + corrosive) vs the old pick (viral + magnetic, Primed Shred): Simulacrum, Grineer Nox
   //    x20, Lv150, from zero stacks. In game A clears all 20 in < 3 s, the old pick takes 6 s for 5. Old engine: old pick faster.

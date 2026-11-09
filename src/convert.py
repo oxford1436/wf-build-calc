@@ -645,6 +645,13 @@ for w in weapons:
         for a in w["attacks"]:
             if a.get("en") == "Heavy Attack":
                 a["forced"] = sorted(set((a.get("forced") or []) + HEAVY_FORCED[w["en"]]))
+# Galariak Prime (wiki, docs/mechanics/gaps_melee.json, cat "all"): "Gains a flat +10% Critical Chance bonus per unique Status
+# Effect type on the target hit." — every attack; engine adds 0.1 x status types (Blast not counted) after mods (v2.05)
+CC_PER_TYPE = {"Galariak Prime": 0.1}
+for w in weapons:
+    if w.get("en") in CC_PER_TYPE:
+        for a in w["attacks"]:
+            a["ccType"] = CC_PER_TYPE[w["en"]]
 for w in weapons:
     if w.get("en") in ARSENAL_HEAVY:
         for a in w["attacks"]:

@@ -2,6 +2,12 @@
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "2.05", date: "2026-11-09", title: "갈라리아크 프라임 고유 효과: 상태이상 종류당 치명타 +10%",
+      items: [
+        "갈라리아크 프라임의 고유 효과를 넣었습니다: \"Gains a flat +10% Critical Chance bonus per unique Status Effect type on the target hit.\" (위키 Galariak Prime). 모드를 다 계산한 뒤 고정값으로 더하고, 표적에 걸린 상태이상 종류 수는 컨디션 오버로드와 같은 방식으로 셉니다. 위키 목록에 폭발이 없어 폭발은 세지 않습니다.",
+        "처음 맞는 적은 아직 상태이상이 없어 첫 타에는 보너스가 없습니다. 그래서 무리에서 한 방에 처치하는 강한 내려찍기는 거의 그대로이고(1위 같음, 고유 효과를 빼면 97.6%), 여러 번 때리는 단일 대상·보스에서 커집니다. 밀리 듀플리케이트 확률 곡선에는 아직 이 보너스를 넣지 않았습니다.",
+        "묶음 14(근접 슬램) 조사에서 위키 인용문은 확인했지만 한 실행 수정 2건 제한으로 미뤘던 것(대기열 14b).",
+      ] },
     { v: "2.04", date: "2026-11-09", title: "세이스믹 웨이브 슬램 피해 +200%, 갈라리아크 프라임 슬램 수치",
       items: [
         "세이스믹 웨이브(슬램 피해 +200%, 게임 데이터 Mods.json)가 계산에서 효과 0이었던 것을 반영했습니다. 근접 피해 모드(프레셔 포인트)와 합치지 않고 따로 곱합니다 — 위키 아르카 티트론 노트 \"multiplicative to Seismic Wave and the Nira's Set bonus, and additive to base damage (e.g. Pressure Point, Arcane Fury)\", 젯 쿠사르 노트 \"treated as Slam Radial Damage and its damage can only be increased with Seismic Wave\". 슬램(강한 내려찍기)에만 후보로 나옵니다.",

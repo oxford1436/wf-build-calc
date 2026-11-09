@@ -645,7 +645,7 @@
   },
   "quote": "Gains a flat +10% Critical Chance bonus per unique Status Effect type on the target hit. | Valid status effects are Impact, Puncture, Slash, Heat, Cold, Electricity, Toxin, Radiation, Gas, Magnetic, Viral, Corrosive, Void, and Tau.",
   "url": "https://wiki.warframe.com/w/Galariak_Prime",
-  "handled": null
+  "handled": "v2.05"
  },
  {
   "weapon": "Galatine",

@@ -1257,7 +1257,7 @@
           fArc = nf;
         } else break;
       }
-      const cc = ccBase;
+      let cc = ccBase;
       if (arc && arc.doughty) cd += 10 * Math.min(1, sc) * (share.punct || 0);   // +1.0x per 10% Puncture status chance
       const dupf = 1 + dupD * (cc < 1 ? cc : cc < 2 ? 2 - cc : 0);
       if (dupf !== 1) for (const k in procs) procs[k] *= dupf;
@@ -1290,15 +1290,6 @@
         }
       }
       const procSum = Object.values(procs).reduce((x, y) => x + y, 0);
-      // head portion (o.hs = real headshots): weak-point multiplier and doubled crit multiplier; ttk later multiplies by the body crit factor
-      const hsReal = Math.min(1, o.hs || 0), hsBase = (atk.hsMult || 2) + a.hsMult;
-      const ccH = cc + (atk.cc || 0) * (ext.wpcc || 0) + (ext.hsCcFlat || 0);   // Covenant: weak-point crit chance cap is higher
-      const critBody = 1 + cc * (cd - 1), critHead = 1 + ccH * (2 * cd - 1);
-      // Sonar-type weak spots (ext.weakFrac) are not heads: keep whichever of the two models gives more
-      const hsmC = hsReal > 0 ? Math.max(hsm, ((1 - hsReal) * critBody + hsReal * hsBase * critHead) / critBody) : hsm;
-      const hsDot = hsReal > 0 ? (1 - hsReal) + hsReal * hsBase : 1;
-      // melee sneak attack on an unaware enemy: +700% (rank 30) added beside the crit term — Dmg x (1 + 7 + tier x (CD-1))
-      const stealthM = ext.stealth && isMelee ? (critBody + ext.stealth) / critBody : 1;
       // Melee Influence (wiki): a melee Electricity proc has a "20% chance to grant a timed buff" (rank 5: 18 s, 20 m) that
       // "cannot have its duration refreshed" — so after it ends it waits for the next trigger: uptime = 18λ / (1 + 18λ)
       // with λ = triggers per second while it is off (renewal average).
@@ -1322,6 +1313,33 @@
       }
       // statuses other sources keep on the target (abilities, teammates) also count for Condition Overload / Galvanized
       if (ext.statusExtra) ntypes = Math.min(14, ntypes + ext.statusExtra);
+      // v2.05 Galariak Prime (wiki Galariak Prime, docs/mechanics/gaps_melee.json): "Gains a flat +10% Critical Chance bonus per
+      // unique Status Effect type on the target hit. | Valid status effects are Impact, Puncture, Slash, Heat, Cold, Electricity,
+      // Toxin, Radiation, Gas, Magnetic, Viral, Corrosive, Void, and Tau." — flat (added after mods, like Puncture's), counted
+      // from the same steady-state types as Condition Overload but without Blast (not in the list); the first hit on a fresh
+      // enemy only sees nt0 types (first0 below). Duplicate's chance curve (dupf above) still uses the crit chance without it.
+      let ccTyF = 1;
+      if (atk.ccType > 0) {
+        let ntC = 0;
+        for (const k of new Set(Object.keys(procs).concat(Object.keys(pAdd)))) {
+          if (k === "blast") continue;
+          const r = (procs[k] || 0) * rate * spreadHit + (pAdd[k] || 0); if (r <= 0) continue;
+          ntC += 1 - Math.exp(-r * (PROC_WIN[k] || 6) * dur);
+        }
+        if (ext.statusExtra) ntC = Math.min(14, ntC + ext.statusExtra);
+        const c0 = cc + atk.ccType * Math.min(14, (ext.statusExtra || 0)), cF = cc + atk.ccType * Math.min(14, ntC);
+        ccTyF = (1 + c0 * (cd - 1)) / Math.max(1e-9, 1 + cF * (cd - 1));
+        cc = cF;
+      }
+      // head portion (o.hs = real headshots): weak-point multiplier and doubled crit multiplier; ttk later multiplies by the body crit factor
+      const hsReal = Math.min(1, o.hs || 0), hsBase = (atk.hsMult || 2) + a.hsMult;
+      const ccH = cc + (atk.cc || 0) * (ext.wpcc || 0) + (ext.hsCcFlat || 0);   // Covenant: weak-point crit chance cap is higher
+      const critBody = 1 + cc * (cd - 1), critHead = 1 + ccH * (2 * cd - 1);
+      // Sonar-type weak spots (ext.weakFrac) are not heads: keep whichever of the two models gives more
+      const hsmC = hsReal > 0 ? Math.max(hsm, ((1 - hsReal) * critBody + hsReal * hsBase * critHead) / critBody) : hsm;
+      const hsDot = hsReal > 0 ? (1 - hsReal) + hsReal * hsBase : 1;
+      // melee sneak attack on an unaware enemy: +700% (rank 30) added beside the crit term — Dmg x (1 + 7 + tier x (CD-1))
+      const stealthM = ext.stealth && isMelee ? (critBody + ext.stealth) / critBody : 1;
       // Spiteful Defilement: +100% crit damage (flat) on targets with fewer than 3 status types
       if (a.cdFew) cd += a.cdFew * Math.max(0, Math.min(1, 3 - ntypes));
       // Galvanized Shot/Aptitude/Diffusion stacks need kills and boost direct hits only, not explosions (wiki)
@@ -1333,7 +1351,7 @@
       // first hit on a fresh enemy: the glaive's statuses are already on it at their long-run average (default) — o.noPrimerFirst
       // drops them (the wiki doesn't say; the app checks the pick both ways)
       const nt0 = Math.min(14, (ext.statusExtra || 0) + (o.noPrimerFirst ? 0 : ntPrimer)), gco0 = kind === "radial" ? 0 : (kills ? a.gco * nt0 : 0) + pst * nt0, co0 = isMelee && !atk.noCO ? a.co * nt0 : 0;
-      const first0 = (1 + dmgb + dmgArc + platedB + gco0 + co0) / Math.max(1e-9, 1 + dmgb + dmgArc + platedB + gco + co);
+      const first0 = ccTyF * (1 + dmgb + dmgArc + platedB + gco0 + co0) / Math.max(1e-9, 1 + dmgb + dmgArc + platedB + gco + co);
       const mbd = Btot * exS * (1 + dmgb + dmgArc + platedB) * fallM;
       // on-kill damage fields of the weapon itself (wiki Incarnon notes; convert.py KILL_FIELD): Dual Ichor "Fields do 350 Toxin
       // damage (increased to 440 by EVO2) and last for 7 seconds", "4m range", "affected by faction damage bonuses", melee damage
