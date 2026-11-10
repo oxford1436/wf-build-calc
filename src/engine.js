@@ -7,7 +7,7 @@
  *  - Electricity DoT hits all enemies within 3m; Gas cloud 3m (+0.3m/stack, max 6m).
  *  - Blast: 0.3*MBD per proc on the target after 1.5s.
  *  - Viral x2 then +25%/stack to x4.25 (health only); Corrosive 20%+6%/stack (max 80%); Heat -50% armor.
- *  - Cold: flat +0.1 crit damage first stack, +0.05/stack, max +0.45.
+ *  - Cold: flat +0.1 crit damage first stack, +0.05/stack, +0.5 at 9 stacks, +1.0 while frozen at 10 (wiki Cold Damage).
  *  - Armor DR = 0.9*sqrt(A/2700), A capped at 2700; Steel Path: health/shields x2.5, armor unchanged.
  *  - Enemy level scaling (wiki, community-measured): f1 below +70 levels, f2 above +80, smoothstep between.
  *  - Heavy attacks: combo multiplier floor(combo/20)+1; crit-chance mods doubled; melee swings assume 12x combo.
