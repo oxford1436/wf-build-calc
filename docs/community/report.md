@@ -2,7 +2,7 @@
 
 계산기 기본 조건(강철의 길 150·250·400, 3팩션 평균, 12명 무리, 처치 중첩은 무리마다 0부터)에서 계산기 1위 = 100%. '중첩 유지'·'처치 없음'은 같은 조건에서 처치 중첩만 바꾼 비교입니다. 이 파일은 scripts/community_check.js가 만듭니다.
 
-표시 18건
+표시 20건
 
 ## 액셀트라 프라임 (acceltra_prime.json)
 
@@ -28,6 +28,15 @@
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
 | [Sportskeeda 인카논 아토모스 (8 포르마, 프라임드 익스펠 그리니어)](https://www.sportskeeda.com/mmo/warframe-incarnon-atomos-build-guide-mods-incarnon-talents) | sportskeeda | 부식 | 23% | 25% | 24% | — |
+
+## 브래튼 프라임 (braton_prime.json)
+
+계산기 1위: 갈바나이즈드 체임버, 크리티컬 딜레이, 프라임드 크라이오 라운즈, 인펙티드 클립, 바이탈 센스, 서레이션, 프라임드 파이어스톰, 바일 액셀러레이션 · primary_merciless
+
+| 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
+| --- | --- | --- | --- | --- | --- | --- |
+| [Overframe 777150 Rainollon 데드헤드 (인카논 형태)](https://overframe.gg/build/777150/braton-prime/rainollons-braton-prime-incarnon-deadhead-build-2025/) | overframe | 폭발 | 3% | 2% | 6% | — |
+| [Overframe 461627 ninjase 핵심 모드 (주장만 — 고정 8칸 아님)](https://overframe.gg/build/461627/) | overframe (주장 시험) | 바이러스 | 58% | 48% | 77% | — |
 
 ## 버스튼 프라임 (burston_prime.json)
 
@@ -300,6 +309,16 @@
 - 아케인: 프라이머리 데드헤드 2
 - 커뮤니티 인기 모드인데 1위에 없음: 프라이머리 어큐이티(갈바나이즈드 체임버 대신 넣으면 32%) · 갈바나이즈드 스코프(바이탈 센스 대신 넣으면 74%) · 라이플 엘리멘탈리스트(바이탈 센스 대신 넣으면 74%) · 써마이트 라운즈(와일드파이어 대신 넣으면 97%)
 - 1위에만 있는 모드: 갈바나이즈드 체임버(빼고 써마이트 라운즈로 바꾸면 41%) · 크리티컬 딜레이(빼고 써마이트 라운즈로 바꾸면 71%) · 와일드파이어(빼고 써마이트 라운즈로 바꾸면 97%) · 마그네틱 캐퍼시티(빼고 써마이트 라운즈로 바꾸면 82%)
+
+## 펜모어 (phenmor.json)
+
+계산기 1위: 갈바나이즈드 체임버, 프라임드 크라이오 라운즈, 갈바나이즈드 앱티튜드, 서레이션, 써마이트 라운즈, 라이플 엘리멘탈리스트, 바일 액셀러레이션, 라임 라운즈 · primary_merciless
+
+| 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
+| --- | --- | --- | --- | --- | --- | --- |
+| [Overframe 614137 arniox 41k avg hit (인카논 형태)](https://overframe.gg/build/614137/phenmor/41k-avg-hit-1429k-sustained-0-riven/) | overframe | 바이러스+화염+방사능 | 47% | 39% | 37% | — |
+| [GamesFuze 치명타 세팅 (2022, 진화 전)](https://gamesfuze.com/guides/warframe-phenmor-build-guide-after-fix/) | gamesfuze | 바이러스+방사능 | 33% | 33% | 19% | 인식 못 함: Primed Bane of Orokin |
+| [GamesFuze 비치명타 세팅 (2022, 진화 전)](https://gamesfuze.com/guides/warframe-phenmor-build-guide-after-fix/) | gamesfuze | 바이러스+방사능 | 55% | 47% | 68% | 인식 못 함: Primed Bane of Orokin |
 
 ## 프레이도스 (praedos.json)
 
