@@ -1,0 +1,68 @@
+{
+ "weapon": "exalted_umbra_blade",
+ "attack": 0,
+ "valence": null,
+ "riven": null,
+ "notes": "익절티드 엄브라 블레이드(엑스칼리버 엄브라 4번). 2026-11-10 10시 묶음 17(익절티드). 익절티드 무기는 리벤·아케인 칸 없음. 크로매틱 블레이드(에너지 색 원소 변환)·검기(에너지 웨이브)는 계산기 미반영 — 17_exalted.md. 위력은 기본 100%(프레임 미선택).",
+ "builds": [
+  {
+   "name": "HighGround 엄브라 (크로매틱 블레이드 화염 + 부식, 새크리피셜 세트)",
+   "community": "highgroundgaming",
+   "kind": "read",
+   "url": "https://www.highgroundgaming.com/warframe-best-excalibur-umbra-build/",
+   "author": "Justin Moniquette",
+   "date": "2024-11-04 (2025-02-05 수정)",
+   "mods": [
+    "Sacrificial Steel",
+    "Sacrificial Pressure",
+    "Shocking Touch",
+    "Fever Strike",
+    "Condition Overload",
+    "Organ Shatter",
+    "Gladiator Might",
+    "Gladiator Vice"
+   ],
+   "arcane": null,
+   "claims": [
+    "크로매틱 블레이드가 이 빌드에서 가장 중요한 모드 중 하나(블레이드 기본 원소 화염)",
+    "쇼킹 터치 + 피버 스트라이크로 부식",
+    "컨디션 오버로드가 피해를 크게 올림",
+    "강철의 길에서 버틸 만큼 피해와 생존"
+   ],
+   "verdict": "v2.07 기본 조건 4%(1위 = 텐노카이 + 밀리 듀플리케이트), 같은 아케인 없음 1위의 10.3%. 2025-03 업데이트 38.5(익절티드 아케인·텐노카이) 이전 형식. 크로매틱 블레이드 원소 변환은 계산기 미구현. 17_exalted.md"
+  },
+  {
+   "name": "Nerd Stash 엄브라 (아콘 플로우 냉기 + 부식 샤드)",
+   "community": "thenerdstash",
+   "kind": "read",
+   "url": "https://thenerdstash.com/?p=523133",
+   "author": "Sid Natividad",
+   "date": "2024-01-10",
+   "mods": [
+    "Sacrificial Steel",
+    "Sacrificial Pressure",
+    "Primed Fever Strike",
+    "Berserker Fury",
+    "Condition Overload",
+    "Shocking Touch",
+    "North Wind",
+    "Organ Shatter"
+   ],
+   "arcane": null,
+   "claims": [
+    "부식이 새 메타",
+    "강철의 길·최고 난이도에서 쓸 만함",
+    "아콘 플로우로 거의 무한히 유지"
+   ],
+   "verdict": "v2.07 같은 아케인 없음 1위의 13.6%. 글 순서대로 계산하면 독이 냉기보다 먼저라 바이러스+전기(글은 부식이라고 함 — 칸 순서 불명). 17_exalted.md"
+  }
+ ],
+ "meta": {
+  "elements": "읽은 세팅 2개: 부식(쇼킹 터치 + 피버 스트라이크) 2 — 둘 다 크로매틱 블레이드 원소(화염·냉기)를 더함",
+  "valence": "없음",
+  "core": "새크리피셜 스틸·새크리피셜 프레셔(엄브라 세트)·컨디션 오버로드·쇼킹 터치·(프라임드) 피버 스트라이크·오르건 섀터",
+  "flex": "글래디에이터 마이트·바이스 ↔ 버서커 퓨리·노스 윈드",
+  "arcane": "무기 아케인 칸 없음(프레임 아케인: 블레싱·몰트 오그먼티드 / 퓨리)",
+  "why": "크로매틱 블레이드로 에너지 색 원소를 공짜로 얻고 부식을 더함, 새크리피셜 세트, 컨디션 오버로드(검기·상태이상)"
+ }
+}

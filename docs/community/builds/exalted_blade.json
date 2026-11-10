@@ -1,0 +1,41 @@
+{
+ "weapon": "exalted_blade",
+ "attack": 0,
+ "valence": null,
+ "riven": null,
+ "notes": "익절티드 블레이드(일반 엑스칼리버). 2026-11-10 10시 묶음 17. Gfinity 목록의 'Voltaic Blade'는 그런 이름의 모드가 없음(볼택 스트라이크·볼캐닉 엣지 중 무엇인지 알 수 없어 글자 그대로 둠 → 인식 못 함).",
+ "builds": [
+  {
+   "name": "Gfinity 엑스칼리버 올라운더 익절티드 블레이드 (상태이상)",
+   "community": "gfinityesports",
+   "kind": "read",
+   "url": "https://www.gfinityesports.com/warframe/warframe-excalibur-build-guide-how-to-obtain-craft-and-best-builds/",
+   "author": "표기 없음",
+   "date": "표기 없음",
+   "mods": [
+    "Virulent Scourge",
+    "Voltaic Blade",
+    "Reach",
+    "Pressure Point",
+    "Drifting Contact",
+    "Shocking Touch",
+    "Fever Strike",
+    "Condition Overload"
+   ],
+   "arcane": null,
+   "claims": [
+    "엄브라가 아니면 치명타보다 상태이상 우선",
+    "상태이상 모드는 원하는 것으로 바꾸면 됨"
+   ],
+   "verdict": "'Voltaic Blade'는 없는 모드 이름이라 계산 불완전(1%). 17_exalted.md"
+  }
+ ],
+ "meta": {
+  "elements": "읽은 세팅 1개: 부식(쇼킹 터치 + 피버 스트라이크) + 바이러스 모드",
+  "valence": "없음",
+  "core": "컨디션 오버로드·쇼킹 터치·피버 스트라이크·드리프팅 콘택트",
+  "flex": "리치·프레셔 포인트",
+  "arcane": "칸 없음",
+  "why": "상태이상 우선(엄브라가 아니면)"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "weapon": "regulators_prime",
+ "attack": 0,
+ "valence": null,
+ "riven": null,
+ "notes": "레귤레이터 프라임(메사 프라임 피스메이커). 2026-11-10 10시 묶음 17. 피스메이커 고유 피해 +150%(서레이션 계열과 합연산, 위키)는 계산에 있음. 20점사 동안 오르는 피해·연사(+7.5% → +150%, 연사 0.25 → 1.0배)는 gaps에 남아 있음 — 17_exalted.md.",
+ "builds": [
+  {
+   "name": "Gamertweak 메사 프라임 레귤레이터 (독 + 냉기 = 바이러스)",
+   "community": "gamertweak",
+   "kind": "read",
+   "url": "https://gamertweak.com/warframe-mesa-prime-guide-best-peacemaker-build",
+   "author": "Raj",
+   "date": "2020-07-03",
+   "mods": [
+    "Hornet Strike",
+    "Barrel Diffusion",
+    "Pathogen Rounds",
+    "Anemic Agility",
+    "Primed Pistol Gambit",
+    "Primed Target Cracker",
+    "Deep Freeze",
+    "Lethal Torrent"
+   ],
+   "arcane": null,
+   "claims": [
+    "늘 바꿔 쓰는 추천 목록",
+    "메사가 피스메이커에 충분한 힘을 얻음"
+   ],
+   "verdict": "v2.07 기본 조건 44%(1위 아케인 세컨더리 에너베이트), 아케인 없음 1위의 73%. 호넷 스트라이크 → 갈바나이즈드 샷 ×1.25(무리). 17_exalted.md"
+  }
+ ],
+ "meta": {
+  "elements": "읽은 세팅 1개: 바이러스(독 + 냉기 90% 모드). Overframe 글(설명만): 코퍼스 방사능, 그리니어·커럽티드 바이러스, 갈바나이즈드 샷 vs 호넷 스트라이크 논쟁",
+  "valence": "없음",
+  "core": "호넷 스트라이크·배럴 디퓨전·리썰 토렌트·프라임드 피스톨 갬빗·프라임드 타겟 크래커",
+  "flex": "어네믹 애질리티·원소",
+  "arcane": "칸 없음",
+  "why": "치명타 25%·3배 — 치명타 모드, 연사·멀티샷"
+ }
+}

@@ -550,8 +550,10 @@
     if (tn) {
       const heavyAtk = (weapon.attacks || []).find((x) => x.en === "Heavy Attack") || atk;
       const tp = Object.assign({}, heavyAtk, { kind: "tennokai", name: atk.name, tenno: tn, swingFr: atk.fr });
+      // v2.07: a swing made of parts (Exalted Blade swing + energy wave) keeps them all, Tennokai shares the time with the whole swing
+      const sw = atk.parts ? atk.parts : [atk];
       if (o._tennoOnly) { parts = [tp]; weights = [1]; }
-      else { parts = [atk, tp]; weights = [1 / (1 + tn.f), tn.f / (1 + tn.f)]; }
+      else { parts = sw.concat([tp]); weights = sw.map(() => 1 / (1 + tn.f)).concat([tn.f / (1 + tn.f)]); }
     }
     // Volatile Quick Return with a detonation build: the first contact also sets off a bounce explosion
     // (50% damage, no combo multiplier, no guaranteed procs) before the heavy-attack detonation in the same throw
@@ -606,8 +608,9 @@
       const aoe = { D: 0, blast: 0, F: 0, dot: {}, napH: 0, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0 };
       let Kaoe = 0;
       if (res.length > 1) res.forEach((r, ri) => {
-        if (parts[ri].kind !== "radial" || r.K <= 1) return;
-        const x = r.perF[f], wgt = weights[ri];
+        // v2.07 Exalted Blade waves: the enemies in the wave's strip take the wave only, at r.waveAoe of the target's wave hit
+        if ((parts[ri].kind !== "radial" && !parts[ri].wave) || r.K <= 1) return;
+        const x = r.perF[f], sW = parts[ri].wave ? r.waveAoe || 0 : 1, wgt = weights[ri] * sW;
         Kaoe = Math.max(Kaoe, r.K);
         aoe.D += x.D * wgt; aoe.blast += x.blast * wgt; aoe.F += (x.F || 0) * wgt; aoe.napH += (x.napH || 0) * wgt;
         for (const T in x.dot) aoe.dot[T] = (aoe.dot[T] || 0) + x.dot[T] * wgt;
@@ -1019,12 +1022,30 @@
     const rho = o.density;
     // atk.fsLock: Firestorm doesn't reach this explosion (wiki Trumna "Explosion range cannot be increased with Firestorm")
     const radius = ((atk.radius || 0) * (kind === "glaive" ? 1 : 1 + (atk.fsLock ? 0 : a.blastR)) + (kind === "glaive" ? a.radius : 0)) * radiusMul;
-    let N, K, n3, n5;
+    let N, K, n3, n5, waveAoe = 0;
     if (o.scenario === "crowd") {
       N = o.crowdN;
       const lineMu = o.lineMean != null ? o.lineMean : (rho > 0 ? rho * BODY_W * 8 * Math.sqrt(N / (Math.PI * rho)) / (3 * Math.PI) : 0);
       const key = (parentAtk || atk).name;
       if (o.hits && o.hits[key]) K = o.hits[key];
+      // v2.07 Exalted Blade energy waves (wiki Exalted Blade, docs/mechanics/gaps_melee.json): "Normal, slide, and aerial attacks
+      // will emit a 3 meter-wide energy wave in the direction of aim. Energy waves have the same base damage as the attacks that
+      // release them"; "The energy waves and Exalted Blade itself are considered separate entities and will both deal damage
+      // separately"; "Energy waves will punch through and hit enemies … up to their maximum range"; "Wave damage falls off linearly
+      // with distance from 100% to 0% between 0 and 70m"; "Energy waves lose 20% of their damage each time they hit an enemy".
+      // The wave strikes the swung-at target (falloff at 2 m, in convert.py) and the enemies whose centre lies in its 3 m strip
+      // (+ a body width) behind it — the same crowd geometry as punch through (v1.91), density × width × mean depth 8R/3π.
+      // Those extras take 0.8^k of it (k-th enemy past the target) at the falloff of the mean depth (waveAoe, relative to the
+      // target's hit). "lose 40% of their damage per second" (30 m/s) is read as the same falloff told in time (40%/s × 70/30 s
+      // ≈ 93% at 70 m), not a second loss.
+      else if (atk.wave && rho > 0) {
+        const R = Math.sqrt(N / (Math.PI * rho)), depth = 8 * R / (3 * Math.PI), mu = rho * (atk.wave.w + BODY_W) * depth;
+        let pk = Math.exp(-mu), cdf = pk, sum = 0, en = 0;
+        for (let k = 1; k < 30; k++) { const ge = 1 - cdf; sum += Math.pow(1 - atk.wave.loss, k) * ge; en += ge; pk *= mu / k; cdf += pk; }
+        const fT = Math.max(0, 1 - atk.wave.d0 / atk.wave.end), fB = Math.max(0, 1 - (atk.wave.d0 + depth) / atk.wave.end);
+        K = Math.min(N, 1 + en);
+        waveAoe = en > 0 && fT > 0 ? (sum / en) * (fB / fT) : 0;
+      }
       else if (radius > 0) K = Math.max(1, Math.min(N, rho * Math.PI * radius * radius));
       else if (atk.punch) K = Math.min(N, 1 + lineHits(Infinity, lineMu));
       // punch-through: the enemies lined up behind the target (Poisson, mean 2) that the punch-through distance can pass
@@ -1505,7 +1526,7 @@
       const cD = conceptDist(shareC, procs, o);
       scoreSS -= 50 * cD;      // a layout that breaks the element concept is used only when no layout keeps it
       if (!best || scoreSS > best.scoreSS) {
-        best = { conceptOk: cD === 0, conceptD: cD, nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, cc, cd, critf: 1 + cc * (cd - 1) + (a.nc ? Math.max(0, 1 - cc) * a.nc : 0), sc, ms, rate, accF, M, tierNow, K, N, u, ntypes, gco, co, nc: a.nc || 0, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, dotN, fArc, hsFrac, hsM,
+        best = { conceptOk: cD === 0, conceptD: cD, nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, waveAoe, cc, cd, critf: 1 + cc * (cd - 1) + (a.nc ? Math.max(0, 1 - cc) * a.nc : 0), sc, ms, rate, accF, M, tierNow, K, N, u, ntypes, gco, co, nc: a.nc || 0, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, dotN, fArc, hsFrac, hsM,
           fallM, ogM: (arc && arc.ogMult ? arc.ogMult : 1) * (1 + 0.5 * (share.void || 0)), frozenM: arc && arc.frozenMult && isMelee ? arc.frozenMult : 0, coldVuln: arc && arc.coldVuln ? arc.coldVuln : 0 };
       }
     }

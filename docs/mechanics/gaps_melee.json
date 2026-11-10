@@ -536,7 +536,7 @@
   },
   "quote": "Normal, slide, and aerial attacks will emit a 3 meter-wide energy wave in the direction of aim. Energy waves have the same base damage as the attacks that release them, inflict Stagger, and fly at a constant speed of 30 m/s until they dissipate after 2.5s, which corresponds to a maximum distance of 75 meters. | The energy waves and Exalted Blade itself are considered separate entities and will both deal damage separately. | Energy waves will punch through and hit enemies and terrain regardless of thickness up to their maximum range. | Energy waves lose 40% of their damage per second; Wave damage falls off linearly with distance from 100% to 0% between 0 and 70m. | Energy waves lose 20% of their damage each time they hit an enemy; this decreases the projectile lifetime by 0.5s (range by 15m) for every enemy hit from the max lifetime of 2.5s (max range of 70m).",
   "url": "https://wiki.warframe.com/w/Exalted_Blade",
-  "handled": null
+  "handled": "v2.07"
  },
  {
   "weapon": "Exalted Blade",
@@ -569,7 +569,7 @@
   },
   "quote": "Being a Sword, Exalted Blade will always gain the 10% damage and attack speed bonuses of Excalibur's Passive.",
   "url": "https://wiki.warframe.com/w/Exalted_Blade",
-  "handled": null
+  "handled": "convert.py passive (+10% 피해·공격 속도)"
  },
  {
   "weapon": "Exalted Blade",
@@ -588,7 +588,7 @@
  {
   "weapon": "Exalted Prime Blade",
   "attack": "All attacks: waves",
-  "cat": "all",
+  "cat": "heavy",
   "type": "secondary-projectile",
   "stated": false,
   "numbers": {
@@ -598,12 +598,13 @@
   },
   "quote": "Attacks release waves with unlimited punch through up to 40 meters. | Exalted Blade will perform a + pattern wave on its heavy attacks. This wave is made out of 4 individual waves, being able to trigger 4 instances of Melee Afflictions for a total of 28 status proc.",
   "url": "https://wiki.warframe.com/w/Exalted_Prime_Blade",
-  "handled": null
+  "handled": null,
+  "note": "v2.07: 일반 공격 검기는 반영(Exalted Blade 항목 수치), 강공 십자 검기만 남음"
  },
  {
   "weapon": "Exalted Umbra Blade",
   "attack": "All attacks: waves",
-  "cat": "all",
+  "cat": "heavy",
   "type": "secondary-projectile",
   "stated": false,
   "numbers": {
@@ -613,7 +614,8 @@
   },
   "quote": "Attacks release waves with unlimited punch through up to 40 meters. | Exalted Blade will perform a + pattern wave on its heavy attacks. This wave is made out of 4 individual waves, being able to trigger 4 instances of Melee Afflictions for a total of 28 status proc.",
   "url": "https://wiki.warframe.com/w/Exalted_Umbra_Blade",
-  "handled": null
+  "handled": null,
+  "note": "v2.07: 일반 공격 검기는 반영(Exalted Blade 항목 수치), 강공 십자 검기만 남음"
  },
  {
   "weapon": "Falcor",

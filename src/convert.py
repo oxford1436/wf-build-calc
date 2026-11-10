@@ -532,6 +532,7 @@ for src in (P, S, ME):
 # x1.25 x Strength multiplier additive with Serration-type mods; "none" = Garuda Talons.
 MISC = json.load(open(A + "Misc.json")) if os.path.exists(A + "Misc.json") else []
 EX_SKIP = {"Shadow Clones", "Shadow Clones Prime", "Arquebex", "Ironbride"}   # Blade Storm finisher clones, Necramech weapons
+EX_WAVE = {"Exalted Blade", "Exalted Prime Blade", "Exalted Umbra Blade"}   # v2.07 normal-swing energy waves
 EX_PSEUDO = {"Whipclaw", "Whipclaw Prime", "Shattered Lash", "Shattered Lash Prime", "Landslide Fists", "Landslide Fists Prime"}   # no heavy attacks
 
 
@@ -582,6 +583,18 @@ for n in ex_names:
     if n.startswith("Exalted") and "Blade" in n:
         W["exalted"]["passive"] = {"dmg": 0.1, "fr": 0.1}     # Excalibur passive: +10% damage and attack speed with Exalted Blade
     W["noRiven"] = True
+    # v2.07 Exalted Blade energy waves (wiki Exalted Blade): normal swings also send a 3 m wave with "the same base damage as the
+    # attacks that release them", a separate entity that "will both deal damage" — the swing becomes two parts, the wave at the
+    # falloff of a 2 m swing range ("falls off linearly with distance from 100% to 0% between 0 and 70m"), losing 20% per enemy
+    # hit (engine waveAoe). Heavy cross waves ("do not scale off combo counter", 10 m) are not built yet.
+    if n in EX_WAVE:
+        a0 = next((x for x in W["attacks"] if x.get("en") == "Normal Attack"), None)
+        if a0 is not None and not a0.get("parts"):
+            sw = {k: v for k, v in a0.items() if k != "parts"}
+            wv = dict(sw, name=sw["name"] + " 검기", en="Normal Attack Wave", wave={"w": 3, "loss": 0.2, "end": 70, "d0": 2},
+                      dmg={k: round(v * (1 - 2 / 70), 4) for k, v in sw["dmg"].items()}, desc="검기 부분만")
+            a0["parts"] = [sw, wv]
+            a0["desc"] = (a0.get("desc") or "") + " · 검기(에너지 웨이브) 포함"
     if n in EX_PSEUDO:
         W["pseudo"] = True
     if W.get("en") in KILL_FIELD:

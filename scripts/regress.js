@@ -862,6 +862,31 @@ const { chromium } = require("playwright");
     await p3.close();
   }
 
+  // v2.07: Exalted Blade energy waves (wiki Exalted Blade: "same base damage as the attacks that release them", "will both deal
+  // damage separately", 3 m wide, punch through, −20% per enemy hit, falloff 0–70 m). The normal swing must carry a wave part, the
+  // wave must strike more than the target in a crowd, and a read community build (HighGround Umbra) must score over 1.5x without it.
+  {
+    const p3 = await ctx.newPage();
+    p3.on("pageerror", (e) => errs.push(e.message));
+    await p3.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p3.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p3.evaluate(() => {
+      const A = window.WF_APP, E = window.WFEngine, W = window.WF_WEAPONS;
+      const w = W.find((x) => x.id === "exalted_umbra_blade"); if (!w) return { err: "exalted_umbra_blade 없음" };
+      const atk = w.attacks[0], wv = (atk.parts || []).find((x) => x.wave);
+      if (!wv) return { err: "검기 부분 없음" };
+      A.st.base = w; A.st.weapon = w; A.st.atk = 0;
+      const o = Object.assign(A.readOpts(), { targets: null, val: null, arcane: null }); o.targets = E.targetsFor(o); A.st.results = { o };
+      const en = (n) => (window.WF_MODS.find((x) => x.en === n) || {}).id;
+      const ids = ["Sacrificial Steel", "Sacrificial Pressure", "Shocking Touch", "Fever Strike", "Condition Overload", "Organ Shatter", "Gladiator Might", "Gladiator Vice"].map(en);
+      const on = A.evalBuild(ids, null, null, o, null).score;
+      const keep = atk.parts; delete atk.parts; const off = A.evalBuild(ids, null, null, o, null).score; atk.parts = keep;
+      return { k: on / off, wave: wv.wave };
+    }).catch((e) => ({ err: e.message }));
+    results.push({ name: "v2.07 익절티드 블레이드 검기(에너지 웨이브)가 휘두르기와 따로 피해 — 엄브라 HighGround 세팅이 검기 없을 때의 1.5배 넘음", ok: !r.err && r.k > 1.5, detail: r.err || JSON.stringify(r) });
+    await p3.close();
+  }
+
   // v1.96: every plan-mode riven multiplier in app.js goes through RIV_PLAN_W (only the displayed 0.9–1.1 range may skip it)
   {
     const src = require("fs").readFileSync(path.resolve(__dirname, "..", "src", "app.js"), "utf8");
