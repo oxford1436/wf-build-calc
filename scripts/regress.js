@@ -897,6 +897,28 @@ const { chromium } = require("playwright");
     await p3.close();
   }
 
+  // v2.09: Primary Debilitate adds a base status on a proc of the 10-stack combined status (game data "inflicting the same Status
+  // Effect again"; ProGameTalk "only triggers once per damage instance"), not on every pellet. Low-status Soma Prime viral build:
+  // before v2.09 debilitate scored x2.33 over no arcane, after x1.53.
+  {
+    const p4 = await ctx.newPage();
+    p4.on("pageerror", (e) => errs.push(e.message));
+    await p4.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p4.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p4.evaluate(() => {
+      const A = window.WF_APP, E = window.WFEngine, W = window.WF_WEAPONS;
+      const w = W.find((x) => x.id === "soma_prime"); if (!w) return { err: "soma_prime 없음" };
+      A.st.base = w; A.st.weapon = w; A.st.atk = 0;
+      const o = Object.assign(A.readOpts(), { targets: null }); o.targets = E.targetsFor(o); A.st.results = { o };
+      const en = (n) => (window.WF_MODS.find((x) => x.en === n) || {}).id;
+      const ids = ["Serration", "Split Chamber", "Point Strike", "Vital Sense", "Infected Clip", "Cryo Rounds", "Stormbringer", "Hellfire"].map(en);
+      const s = (a) => A.evalBuild(ids, null, a, Object.assign({}, o, { val: null, arcane: a }), null).score;
+      return { k: s("primary_debilitate") / s(null) };
+    }).catch((e) => ({ err: e.message }));
+    results.push({ name: "v2.09 디빌리테이트는 합성 상태이상이 걸릴 때만(명중마다 아님) — 상태이상 낮은 소마 프라임 바이러스 세팅에서 아케인 없음의 1.8배 미만", ok: !r.err && r.k < 1.8, detail: r.err || "×" + r.k.toFixed(2) });
+    await p4.close();
+  }
+
   // v1.96: every plan-mode riven multiplier in app.js goes through RIV_PLAN_W (only the displayed 0.9–1.1 range may skip it)
   {
     const src = require("fs").readFileSync(path.resolve(__dirname, "..", "src", "app.js"), "utf8");

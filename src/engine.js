@@ -1323,14 +1323,18 @@
         for (const t of types) procs[t] = (procs[t] || 0) + arc.encumber * tot / types.length;
       }
       if (arc && arc.punctCold) procs.cold = (procs.cold || 0) + arc.punctCold * (procs.punct || 0);
-      // Primary Debilitate (wiki): once a combined element sits at 10 stacks, every hit (each pellet is its own damage instance)
-      // adds one of its base statuses — as a separate instance, so faction damage multiplies those DoTs once more
+      // Primary Debilitate: once a combined element sits at 10 stacks, a new proc of it adds one of its base statuses — as a
+      // separate instance, so faction damage multiplies those DoTs once more (ProGameTalk 2025-12: "applies as a separate damage
+      // instance, letting Faction Damage Bonuses multiply each DoT component individually")
       let debil = null;
       if (arc && arc.debilitate) {
         const cmb = Object.keys(COMP).filter((T) => (procs[T] || 0) > 0).sort((x, y) => procs[y] - procs[x])[0];
         if (cmb) {
           const up = Math.min(1, procs[cmb] * rate * K * 6 / 10);     // share of the time the target holds 10 stacks
-          debil = { comps: COMP[cmb], n: arc.debilitate * ms * up };
+          // v2.09: it fires on a proc of that combined status, not on every hit — game data (Arcanes.json): "inflicting the same
+          // Status Effect again has a 100% chance to inflict one of the base Status Effects"; ProGameTalk (2025-12): "only triggers
+          // once per damage instance" → min(procs of the combined type, damage instances) per shot (was ms per shot)
+          debil = { comps: COMP[cmb], n: arc.debilitate * Math.min(ms, procs[cmb]) * up };
           for (const c of COMP[cmb]) procs[c] = (procs[c] || 0) + debil.n / 2;
         }
       }
