@@ -1599,7 +1599,7 @@ self.onmessage = function (ev) {
       ${kv("상태이상 피해", "+" + pct(r.sd))}${kv("상태이상 지속", pct(r.dur))}
       ${r.u ? kv("인플루언스 가동률", pct(r.u)) : ""}${kv(o.scenario === "crowd" && r.perF[o.factions[0]].Keff > r.K + 0.05 ? "한 발에 같이 잡히는 적 (폭발 포함)" : "한 번에 맞는 적", Math.max(r.K, o.scenario === "crowd" ? r.perF[o.factions[0]].Keff || 0 : 0).toFixed(1) + "명")}
       ${r.fallM && r.fallM < 0.995 ? kv("거리·폭발 가장자리 감쇠", pct(r.fallM)) : ""}${r.tenno ? kv("텐노카이 강공", `${Math.round(r.tenno.f * 100)}% 타격마다 1회`) : ""}
-      ${r.ammo ? kv("탄약 (연속 사격)", r.ammo.resupply ? "무한 (리서플라이)" : ammoSec(r.ammo.sustain)) : ""}${r.inc ? kv("인카논 탄 (모드 영향 없음)", r.inc.sec ? `${r.inc.rounds}발 · ${ammoSec(r.inc.sec)}` : "충전식") : ""}
+      ${r.ammo ? kv("탄약 (연속 사격)", r.ammo.resupply ? "무한 (리서플라이)" : ammoSec(r.ammo.sustain)) : ""}${r.inc ? kv("인카논 탄 (모드 영향 없음)", r.inc.sec ? `${r.inc.rounds}발 · ${ammoSec(r.inc.sec)}${r.inc.drainN > 1.01 ? ` (멀티샷 탄마다 소모 ×${r.inc.drainN.toFixed(1)})` : ""}` : "충전식") : ""}
       ${r.exS && r.exS !== 1 ? kv("익절티드 기본 피해 (위력)", "×" + r.exS.toFixed(2)) : ""}${r.exChain > 1 ? kv("피스메이커 연사 보너스", "×" + r.exChain.toFixed(2)) : ""}
       ${r.sniperM > 1 ? kv("저격 콤보 (20초 평균)", "×" + r.sniperM.toFixed(2)) : ""}${r.vigil ? kv("비질란테 세트 (치명 단계 상승)", pct(r.vigil)) : ""}${r.glad && atk.kind !== "gun" ? kv("글래디에이터 세트", `연속기 배율당 +${pct(r.glad)}`) : ""}
     </div>

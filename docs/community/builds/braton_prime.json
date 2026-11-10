@@ -1,0 +1,89 @@
+{
+ "weapon": "braton_prime",
+ "attack": 0,
+ "evo": {
+  "2": 0,
+  "3": 1,
+  "4": 0
+ },
+ "valence": null,
+ "riven": null,
+ "notes": "브래튼 프라임 + 브래튼 인카논 제네시스. 2026-11-10 조사(묶음 18). attack 0 = 인카논 형태 한 발 전체(직격 + 3m 화염 폭발). 진화는 읽은 글 기준 II 데어링 레버리·III 보이드 가이던스·IV 크리티컬 패럴렐. Overframe 글은 대부분 모드 칸이 글자로 없음(복사 문자열·Cloudflare) — 아래 둘만 본문 글자로 모드 이름을 읽음.",
+ "meta": {
+  "read_builds": 1,
+  "elements": "폭발(프라임드 크라이오 라운즈 + 써마이트 라운즈, Rainollon) / 바이러스(프라임드 크라이오 + 말리그넌트 포스, ninjase 핵심 모드 — 부식·방사능 대안). 인카논 형태 고유 화염 폭발.",
+  "valence": "해당 없음",
+  "evo": "II 데어링 레버리 2/2(Rainollon·ninjase 권장, 무니션즈 그릿 비권장 — 탄약이 빨리 닳아 형태가 금방 풀림) / 무니션즈 그릿은 Overframe 462530(상태이상)·일본 위키 '치명타 단발' 예시. III 보이드 가이던스 2/2. IV 크리티컬 패럴렐 2/2(일본 위키 기본 선택), 서바이버즈 엣지는 상태이상 세팅(462530·일본 위키).",
+  "core": [
+   "갈바나이즈드 스코프",
+   "바이탈 센스",
+   "프라임드 슈레드",
+   "프라임드 크라이오 라운즈"
+  ],
+  "flex": [
+   "프라이머리 어큐이티 / 크리티컬 딜레이",
+   "블레이디드 라운드 / 팩션 모드 / 리벤",
+   "써마이트 라운즈(폭발) / 말리그넌트 포스(바이러스)",
+   "서레이션(ninjase) / 라이플 엘리멘탈리스트(Rainollon)"
+  ],
+  "arcane": [
+   "프라이머리 데드헤드 2/2"
+  ],
+  "why": "약점(헤드샷) 사격 운용: 인카논 형태는 약점 명중으로 충전, 데드헤드·갈바나이즈드 스코프·프라이머리 어큐이티는 약점 조건. 크리티컬 패럴렐은 모드 전 기본 치명타 +18%·배율 +0.2(ninjase: 2023-10 프렐류드 오브 마이트 수정 뒤 최선). 데어링 레버리는 기본 피해 +4, 채널링 어빌리티 중 +38."
+ },
+ "builds": [
+  {
+   "name": "Overframe 777150 Rainollon 데드헤드 (인카논 형태)",
+   "community": "overframe",
+   "kind": "read",
+   "url": "https://overframe.gg/build/777150/braton-prime/rainollons-braton-prime-incarnon-deadhead-build-2025/",
+   "author": "Rainollon",
+   "date": "2025-01-02 (Updated for 44.0 표기)",
+   "mods": [
+    "Primary Acuity",
+    "Galvanized Scope",
+    "Vital Sense",
+    "Bladed Rounds",
+    "Rifle Elementalist",
+    "Primed Shred",
+    "Primed Cryo Rounds",
+    "Thermite Rounds"
+   ],
+   "exilus": "Vigilante Supplies",
+   "arcane": "primary_deadhead",
+   "claims": [
+    "프라이머리 어큐이티·갈바나이즈드 스코프·바이탈 센스 필수(약점 치명타)",
+    "블레이디드 라운드는 리벤·베인으로 바꿔도 됨",
+    "프라임드 크라이오 + 써마이트 = 폭발",
+    "진화 II 데어링 레버리·III 보이드 가이던스·IV 크리티컬 패럴렐"
+   ],
+   "verdict": "글이 칸을 나누지 않고 10개 이름을 적음 — 데드헤드(아케인)·비질란티 서플라이즈(익실러스)를 빼면 정확히 8개. 헤드샷·조준 조건 모드(어큐이티·스코프·데드헤드)는 계산기 기본(헤드샷·조준 제외)에서 효과가 작음 — 점검표 숫자는 기본 조건."
+  },
+  {
+   "name": "Overframe 461627 ninjase 핵심 모드 (주장만 — 고정 8칸 아님)",
+   "community": "overframe",
+   "kind": "claim",
+   "url": "https://overframe.gg/build/461627/",
+   "author": "ninjase",
+   "date": "2023-04-27 (수정 2025-09-15)",
+   "mods": [
+    "Amalgam Serration",
+    "Critical Delay",
+    "Galvanized Scope",
+    "Vital Sense",
+    "Primed Shred",
+    "Primed Cryo Rounds",
+    "Malignant Force",
+    "Galvanized Chamber"
+   ],
+   "exilus": "Vigilante Supplies",
+   "arcane": "primary_deadhead",
+   "claims": [
+    "무니션즈 그릿은 멀티샷이 탄약을 써서 잠재 피해가 크지만 인카논 형태가 금방 풀림 → 데어링 레버리 권장",
+    "크리티컬 패럴렐 > 프렐류드 오브 마이트(2023-10 수정 뒤 평균 피해 감소)",
+    "서바이버즈 엣지는 상태이상 80~100%로 안정적이지만 최대 피해는 낮음"
+   ],
+   "verdict": "핵심 7개 + 대안 목록에서 갈바나이즈드 체임버를 8번째로 골라 넣은 시험(kind claim). 커뮤니티 세팅으로 세지 않음."
+  }
+ ]
+}
