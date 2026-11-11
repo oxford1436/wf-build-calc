@@ -975,6 +975,19 @@
       const bursts = (atk.fr || 1) * Math.max(0.05, 1 + a.fr + a.frneg + (ext.frAdd || 0)) / bn;
       galeG = Math.min(0.99, 1 - Math.exp(-bursts * pB * gf.dur));
     }
+    // v2.11 Magnus Prime / Akmagnus Prime "Chamber Cascade" (wiki): "Landing a successful hit (including from Multishot) or
+    // inflicting Status damage … has a 4% chance to grant the "Chamber Cascade" buff, granting Infinite Ammo for 4 seconds and can
+    // be refreshed on subsequent shots". Triggers = hits/s (shots × pellets × multishot) × 4%; status-damage triggers left out
+    // (lower bound). Share of shots under the buff ≈ 1 − e^(−rate × 4 s), like Gale Force; those shots use no ammo.
+    if (weapon.chamberCascade && !isMeleeKind(atk.kind)) {
+      const cc0 = weapon.chamberCascade;
+      const hitsS = (atk.fr || 1) * Math.max(0.05, 1 + a.fr + a.frneg + (ext.frAdd || 0)) * (atk.pellets || 1) * Math.max(0, 1 + a.ms + (ext.msAdd || 0));
+      const g2 = 1 - Math.exp(-hitsS * cc0.p * cc0.dur);
+      galeG = Math.min(0.99, 1 - (1 - galeG) * (1 - g2));
+    }
+    // v2.10 innate Ammo Efficiency (wiki AX-52 "When hip-firing, the weapon has +75% ammo efficiency"; Velox "innate 20% Ammo
+    // Efficiency"), added to the modded stat before the 75% cap
+    if (weapon.ammoEffInnate && !isMeleeKind(atk.kind) && !(weapon.ammoEffInnate.hip && o.aim)) a.ammoEff = (a.ammoEff || 0) + weapon.ammoEffInnate.eff;
     // v1.96: a magazine of n rounds holds n / AmmoCost shots (wiki weapon data AmmoCost; Tenet Glaxion "Consumes 0.5 ammo per tick
     // of damage" → 90 rounds = 180 ticks; Primary Plated Round: "Double the amount shown for most continuous weapons, which consume
     // ammo differently"; Quanta cube 10, Kohm full spool 4 per shot). AmmoCost 0 (Regulators, Cedo glaive …) never empties.

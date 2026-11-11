@@ -2,6 +2,16 @@
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "2.11", date: "2026-11-12", title: "매그너스 프라임·아크매그너스 프라임 '챔버 캐스케이드'(4% 확률 4초 탄약 무한) 반영",
+      items: [
+        "위키: \"Landing a successful hit (including from Multishot) … has a 4% chance to grant the \"Chamber Cascade\" buff, granting Infinite Ammo for 4 seconds and can be refreshed\". 초당 명중(연사 × 산탄 × 멀티샷) × 4%로 버프가 켜져 있는 비율(1 − e^(−발동률 × 4초))을 계산해, 그동안 쏜 탄은 탄창·예비 탄약을 쓰지 않습니다(페리게일 갈 포스와 같은 방식). 상태이상 피해로 발동하는 몫은 넣지 않았습니다(낮게).",
+        "탄창 8발이라 재장전이 길던 매그너스 프라임 1위가 바뀝니다: 프라임드 퀵드로·아이스 스톰(재장전·탄창) → 피해·멀티샷 모드(리썰 토렌트·프라임드 피스톨 갬빗 등), 점수 ×1.80, 이전 1위는 새 계산에서 70.7%. 묶음 24(탄약·재장전) 조사에서 위키 전수 조사 gaps에 handled 없이 남아 있던 것을 발견.",
+      ] },
+    { v: "2.10", date: "2026-11-12", title: "무기 고유 탄약 효율: AX-52 비조준 +75%, 벨록스 +20%",
+      items: [
+        "위키 AX-52 \"When hip-firing, the weapon has +75% ammo efficiency\"(핫픽스 44.1.3 \"Hip-fired shots have +75% Ammo Efficiency\"), 위키 벨록스 \"innate 20% Ammo Efficiency\"가 빠져 있었습니다. 모드 탄약 효율에 더한 뒤 75% 상한을 적용합니다. AX-52는 조준하면 적용하지 않습니다(계산기 기본은 비조준).",
+        "AX-52는 탄창이 4배 오래 가 평균 연사 6.67 → 8.89(×1.33), 1위 점수 ×1.29(이전 1위는 89.7%). 벨록스 프라임은 위키 문서에 프로테아 40%만 적혀 있어 넣지 않았습니다.",
+      ] },
     { v: "2.09", date: "2026-11-10", title: "프라이머리 디빌리테이트는 합성 상태이상이 다시 걸릴 때만 발동",
       items: [
         "디빌리테이트가 합성 상태이상 10중첩 적에게 명중(탄)마다 기본 상태이상을 하나씩 더하고 있었습니다. 게임 데이터 문장 \"inflicting the same Status Effect again has a 100% chance to inflict one of the base Status Effects\", ProGameTalk(2025-12) \"only triggers once per damage instance\" — 그 합성 상태이상이 걸린 횟수(탄 수 상한)만큼만 더합니다.",

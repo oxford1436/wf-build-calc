@@ -555,6 +555,28 @@ const { chromium } = require("playwright");
       check("v1.70 페리게일 갈 포스: 헤드샷 조건에서 탄약 무소모(재장전 줄고 탄약 사용 감소), 헤드샷 없으면 그대로", ok,
         `연사 ${(rHn.rate).toFixed(2)} → ${(rH.rate).toFixed(2)}, 탄약 ${(rHn.ammo.use).toFixed(2)} → ${(rH.ammo.use).toFixed(2)}/초`);
     }
+    // v2.10 (묶음 24): innate Ammo Efficiency — wiki AX-52 "When hip-firing, the weapon has +75% ammo efficiency" (patch 44.1.3
+    // "Hip-fired shots have +75% Ammo Efficiency"), wiki Velox "innate 20% Ammo Efficiency". Hip-fire (default) → longer magazine,
+    // fewer reloads; aimed AX-52 unchanged.
+    {
+      const w = weapon("ax_52"), a = w.attacks[0], ids = ["Serration", "Split Chamber"].map(M);
+      const wNo = Object.assign({}, w, { ammoEffInnate: undefined }), oA = Object.assign(baseO(), { aim: true });
+      const r = E.evaluate(w, a, ids, baseO()), rn = E.evaluate(wNo, a, ids, baseO()), rA = E.evaluate(w, a, ids, oA), rAn = E.evaluate(wNo, a, ids, oA);
+      const v = weapon("velox"), rv = E.evaluate(v, v.attacks[0], [], baseO()), rvn = E.evaluate(Object.assign({}, v, { ammoEffInnate: undefined }), v.attacks[0], [], baseO());
+      check("v2.10 AX-52 비조준 탄약 효율 +75%·벨록스 +20% (재장전 줄어 평균 연사 상승, 조준한 AX-52는 그대로)",
+        !!w.ammoEffInnate && r.rate / rn.rate > 1.2 && Math.abs(rA.rate / rAn.rate - 1) < 1e-9 && rv.ammo.use < rvn.ammo.use * 0.9 && rv.rate > rvn.rate * 1.03,
+        `AX-52 연사 ${rn.rate.toFixed(2)} → ${r.rate.toFixed(2)}, 벨록스 탄약 ${rvn.ammo.use.toFixed(2)} → ${rv.ammo.use.toFixed(2)}/초`);
+    }
+    // v2.11 (묶음 24): Magnus Prime / Akmagnus Prime "Chamber Cascade" — wiki: "Landing a successful hit (including from Multishot) …
+    // has a 4% chance to grant the "Chamber Cascade" buff, granting Infinite Ammo for 4 seconds and can be refreshed". Shots under
+    // the buff use no ammo → 8-round magazine lasts longer, fewer reloads.
+    {
+      const w = weapon("magnus_prime"), a = w.attacks[0], ids = ["Hornet Strike", "Barrel Diffusion"].map(M);
+      const wNo = Object.assign({}, w, { chamberCascade: undefined });
+      const r = E.evaluate(w, a, ids, baseO()), rn = E.evaluate(wNo, a, ids, baseO());
+      check("v2.11 매그너스 프라임 챔버 캐스케이드: 명중마다 4% 확률 4초 탄약 무한 → 재장전 줄고 탄약 사용 감소", !!w.chamberCascade && r.rate / rn.rate > 1.1 && r.ammo.use < rn.ammo.use * 0.6,
+        `연사 ${rn.rate.toFixed(2)} → ${r.rate.toFixed(2)}, 탄약 ${rn.ammo.use.toFixed(2)} → ${r.ammo.use.toFixed(2)}/초`);
+    }
     // v1.69 (묶음 4 저격총): wiki Perigale Prime "Class = Sniper Rifle" (DE export says Rifle) → sniper-only mods, not assault-rifle ones
     check("v1.69 페리게일 프라임 = 저격총 (위키 분류)", weapon("perigale_prime").type === "Sniper", weapon("perigale_prime").type);
     // v1.68 (묶음 3 런처): Torid Incarnon beam — wiki "Punch Through mods have no effect on the behavior of the beam" —

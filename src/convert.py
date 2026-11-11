@@ -98,6 +98,14 @@ FORCED_SCALE = {"Sancti Castanas": ["elec"]}
 # the "Gale Force" buff, granting Infinite Ammo. The buff lasts 4 seconds and can be refreshed on subsequent chained headshots."
 # Notes: "Multishot, Xata's Whisper, and Punch Through hitting multiple heads all count as separate headshot hits".
 GALE_FORCE = {"Perigale": {"hits": 4, "dur": 4}, "Perigale Prime": {"hits": 4, "dur": 4}}
+# v2.10 (묶음 24) innate Ammo Efficiency: wiki AX-52 "When hip-firing, the weapon has +75% ammo efficiency" (Hotfix 44.1.3:
+# "AX-52: Now: Hip-fired shots have +75% Ammo Efficiency"); wiki Velox "innate 20% Ammo Efficiency" (Velox Prime's page states
+# only the Protea 40% — not assumed). hip: only when not aiming.
+AMMO_EFF_INNATE = {"Ax-52": {"eff": 0.75, "hip": True}, "Velox": {"eff": 0.2}}
+# v2.11 (묶음 24) wiki Magnus Prime / Akmagnus Prime: "Landing a successful hit (including from Multishot) or inflicting Status
+# damage (Slash, Heat, Toxin, Electricity, [Blast,] and Gas procs) … has a 4% chance to grant the "Chamber Cascade" buff, granting
+# Infinite Ammo for 4 seconds and can be refreshed on subsequent shots."
+CHAMBER_CASCADE = {"Magnus Prime": {"p": 0.04, "dur": 4}, "Akmagnus Prime": {"p": 0.04, "dur": 4}}
 # radial parts that are NOT added to their wiki parent shot (checked 2026-11-03, queue item 0):
 # - Castanas: "Mid-Flight Detonation" and "Embedded Detonation" are alternatives — a dart detonated in flight never also
 #   detonates embedded (wiki Castanas: detonating before it sticks uses the mid-flight values)
@@ -421,6 +429,10 @@ def conv(w, typ):
                 W["forcedScale"] = FORCED_SCALE[name]
             if name in GALE_FORCE:
                 W["galeForce"] = GALE_FORCE[name]
+            if name in AMMO_EFF_INNATE:
+                W["ammoEffInnate"] = AMMO_EFF_INNATE[name]
+            if name in CHAMBER_CASCADE:
+                W["chamberCascade"] = CHAMBER_CASCADE[name]
             wk = WIKI.get(name) or {}
             if wk.get("ReloadStyle") == "ByRound":   # shells loaded one by one: bigger magazine = longer reload
                 for at_ in base:

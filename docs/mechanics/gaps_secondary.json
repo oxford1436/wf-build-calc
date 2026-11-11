@@ -108,7 +108,7 @@
   },
   "quote": "Landing a successful hit (including from Multishot) or inflicting Status damage (Slash, Heat, Toxin, Electricity, Blast, and Gas procs) with Akmagnus Prime has a 4% chance to grant the \"Chamber Cascade\" buff, granting Infinite Ammo for 4 seconds and can be refreshed on subsequent shots.",
   "url": "https://wiki.warframe.com/w/Akmagnus_Prime",
-  "handled": null,
+  "handled": "v2.11",
   "variants": null
  },
  {
@@ -1036,7 +1036,7 @@
   },
   "quote": "Landing a successful hit (including from Multishot) or inflicting Status damage (Slash, Heat, Toxin, Electricity, and Gas procs) with Magnus Prime has a 4% chance to grant the \"Chamber Cascade\" buff, granting Infinite Ammo for 4 seconds and can be refreshed on subsequent shots.",
   "url": "https://wiki.warframe.com/w/Magnus_Prime",
-  "handled": null,
+  "handled": "v2.11",
   "variants": null
  },
  {
