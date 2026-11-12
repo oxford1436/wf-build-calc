@@ -53,3 +53,9 @@ Sportskeeda 두 세팅이 낮은 이유: 갈바나이즈드 리플렉스·새크
 ## 남은 것
 - 투척 직격(위키 데이터 Charged Throw: 글레이브 프라임 충격 54·관통 54·베기 252, 확정 충격·베기, 관통 1)이 공격에 없음 — 기폭 전 날아가며 맞히는 피해. 기폭 폭발(1184 × 연속기 배율)보다 작아 1위 영향은 작을 것으로 보지만, 확정 베기 출혈과 연속기 배율이 붙는지 위키 미확인. 대기열 15b.
 - 볼래틸 퀵 리턴이 투과를 막는 것("Disables Punch Through")은 기폭 운용에선 무관.
+
+## 2026-11-12 22시 추가 확인 (대기열 15b)
+위키 Glaive·Glaive Prime은 이번에도 권한 시간 초과로 못 읽음(우회 안 함). 대신 공식 포럼 2개를 직접 읽음:
+- [Glaive Revisit Workshop](https://forums.warframe.com/topic/1234487-glaive-revisit-workshop/) ([DE]Connor, 2020-11-06): "Heavy Attack (aka Glaive detonation) will now do more damage, more consistently!", 폭발 거리 감쇠 제거, 모드 폭발은 "Unlike a Heavy Attack, … do NOT consume your combo counter" → 강공 기폭은 연속기를 소모. ✅ 계산기 모델(기폭이 연속기를 쓰고 다시 쌓음)과 같음. 날아가며 맞히는 직격에 연속기 배율이 붙는지는 이 글에 없음(댓글 추측만).
+- [Forced procs on glaive explosion should get readjusted](https://forums.warframe.com/topic/1267141-forced-procs-on-glaive-explosion-should-get-readjusted/) (작성자·날짜 안 보임, 유저 글): "The Glaive Prime … is guaranteed to proc Slash on enemies upon detonation." ✅ 위키 데이터 Charged Throw Recall Explosion ForcedProcs { Impact, Slash }와 같음. 직격의 확정 상태이상은 이 글에서 "제안"으로만 나옴 — 근거로 쓰지 않음.
+- 판정: 맞음 2, 미확인 1(직격 연속기 배율). 엔진 수정 없음. 15b는 위키 Glaive 문서가 열릴 때까지 남김.

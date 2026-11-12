@@ -47,3 +47,6 @@
 - 계산 밖: 크로매틱 블레이드 원소 변환, 검기 강공, 레귤레이터 20점사 램프(피해 +7.5% → +150%, 연사 0.25 → 1.0배 — 위키 gaps, 일반 레귤레이터는 "multiplicative to final damage", 프라임 문장에는 없음). 램프는 모든 세팅에 같이 곱해져 순위 영향이 작다고 보고 이번에 넣지 않음.
 
 엔진 수정 v2.07 1건. 질문 0.
+
+## 2026-11-12 22시 추가 확인 (대기열 17b)
+위키 Exalted Blade 권한 시간 초과. [ProGameTalk Techrot Encore Exalted Weapon Changes](https://progametalk.com/warframe/techrot-encore-exalted-weapon-updates/)(2025-03, 2026-02 갱신)를 직접 읽음: "Melee Combo Counter now affects Exalted Blade", "Exalted Blade's ranged attacks now trigger Tennokai" ✅(이미 반영 — 마스터즈 엣지), "Exalted Blade Heavy Attacks now apply Lifted status" — 군중 제어라 계산 밖(사용자 결정: 처치 속도만). 십자 검기 폭·감소, 크로매틱 블레이드, 레귤레이터 램프는 이 글에 없음 → 17b 그대로. 엔진 수정 없음.
