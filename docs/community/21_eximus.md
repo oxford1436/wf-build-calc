@@ -39,3 +39,17 @@
 
 ## 숫자 참고
 - 오버가드(계산기) Lv150 281,865 · Lv250 447,451 · Lv400 683,971.
+
+## 2026-11-13 04시 (대기열 21b) — 위키 Eximus 2.0 일부 확인
+읽은 곳: [위키 Eximus 2.0](https://wiki.warframe.com/w/Eximus_2.0) — 본문 앞부분(약 4만 자)만 원문으로 읽음, 수식 숫자는 추출에서 빠짐. 최신 패치 기록 Update 43.0(2026-06-17).
+못 읽은 곳: 위키 Overguard·Enemy Level Scaling·Primary Plated Round(권한 시간 초과), warframe.fandom.com Overguard(권한 시간 초과). 같은 쪽 `?action=raw`도 렌더링된 글이라 수식 없음. arca.live·Reddit·YouTube는 열지 않음.
+
+| 주장 | 원문 | 계산기 | 판정 |
+|---|---|---|---|
+| 엑시무스 기본 오버가드 12 | "All Eximus units have a base Overguard of 12." | `overguardAt` 12 × 배율 | ✅ |
+| Lv45~50은 두 곡선을 smoothstep으로 이음 | "Stat scaling between 45-50 inclusive is interpolated from the two functions using smoothstep." / "Health, shields, armor, Overguard … use two endpoint curves." | d 45~50에서 3t² − 2t³ | ✅ |
+| 두 곡선의 계수(1 + 0.0015d⁴, 1 + 260d^0.9) | "Overguard uses and ." — 숫자가 빠져 읽지 못함 | 그대로 | ❓ |
+| 강철의 길이 오버가드를 곱하는지 | 읽은 원문 오버가드 단락에 언급 없음 | 안 곱함 | ❓ |
+| 아크윙·워든·프로세큐터 엑시무스는 오버가드 없음 | "Archwing, Warden, and Prosecutor Eximus are exempt from Overguard." | 무리 엑시무스는 일반 지상 유닛 | ✅(영향 없음) |
+
+엔진 수정 없음(바뀐 수치 없음). 남은 것: 계수와 강철의 길 배율 — 수식이 보이는 원문(위키 Enemy Level Scaling)이 열리는 실행에서.
