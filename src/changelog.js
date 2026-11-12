@@ -2,6 +2,12 @@
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "2.12", date: "2026-11-12", title: "프라이머리 디빌리테이트: 표적이 죽기 전에 10중첩이 되는 명중만 계산",
+      items: [
+        "위키 Primary Debilitate: \"If an enemy has 10 stacks of a combined Status Effect\" 같은 상태이상을 다시 걸 때 기본 상태이상 하나를 더하고, \"will only activate once per damage instance\". 그런데 10중첩 유지 비율을 표적이 6초 동안 계속 맞는다고 계산해서, 몇 발에 죽는 적에게도 거의 늘 발동했습니다.",
+        "이제 아케인 없이 한 번 계산해 표적마다 죽기까지 맞는 발 수를 구하고, k번째 발에는 앞선 (k − 1)발의 합성 상태이상이 쌓였다고 보아(포아송, 6초 — 부식 8초 — × 상태이상 지속) 10중첩을 찾은 발만 셉니다(v1.99 이레디에이트와 같은 방식). 팩션·레벨마다 일반 적 기준 평균.",
+        "상태이상 낮은 소마 프라임 바이러스 세팅: 아케인 없음 대비 ×1.53 → ×1.15(무리), 보스 ×1.50(오래 맞아 거의 그대로), Lv10~260 ×1.05. 전체 점검에서 디빌리테이트를 1위 아케인으로 고르던 무기 20개는 다른 아케인으로 바뀔 수 있습니다. 묶음 19b."
+      ] },
     { v: "2.11", date: "2026-11-12", title: "매그너스 프라임·아크매그너스 프라임 '챔버 캐스케이드'(4% 확률 4초 탄약 무한) 반영",
       items: [
         "위키: \"Landing a successful hit (including from Multishot) … has a 4% chance to grant the \"Chamber Cascade\" buff, granting Infinite Ammo for 4 seconds and can be refreshed\". 초당 명중(연사 × 산탄 × 멀티샷) × 4%로 버프가 켜져 있는 비율(1 − e^(−발동률 × 4초))을 계산해, 그동안 쏜 탄은 탄창·예비 탄약을 쓰지 않습니다(페리게일 갈 포스와 같은 방식). 상태이상 피해로 발동하는 몫은 넣지 않았습니다(낮게).",

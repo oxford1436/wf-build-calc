@@ -941,6 +941,32 @@ const { chromium } = require("playwright");
     await p4.close();
   }
 
+  // v2.12: Primary Debilitate only fires on hits that find 10 stacks of the combined status already on the target (game data
+  // "On hitting an enemy with 10 stacks of a combined Status Effect, inflicting the same Status Effect again …"). A target that
+  // dies within a few hits never reaches 10 stacks — before v2.12 the 10-stack share `up` was min(1, procs × rate × K × 6 / 10),
+  // i.e. a target hit for six seconds, so the same Soma Prime build at Lv30 (dies in a few shots) still got the full bonus.
+  {
+    const p5 = await ctx.newPage();
+    p5.on("pageerror", (e) => errs.push(e.message));
+    await p5.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p5.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p5.evaluate(() => {
+      const A = window.WF_APP, E = window.WFEngine, W = window.WF_WEAPONS;
+      const w = W.find((x) => x.id === "soma_prime"); if (!w) return { err: "soma_prime 없음" };
+      A.st.base = w; A.st.weapon = w; A.st.atk = 0;
+      const en = (n) => (window.WF_MODS.find((x) => x.en === n) || {}).id;
+      const ids = ["Serration", "Split Chamber", "Point Strike", "Vital Sense", "Infected Clip", "Cryo Rounds", "Stormbringer", "Hellfire"].map(en);
+      const k = (lv, sc) => {
+        const o = Object.assign(A.readOpts(), { targets: null, level: lv, scenario: sc || "crowd" }); o.targets = E.targetsFor(o); A.st.results = { o };
+        const s = (a) => A.evalBuild(ids, null, a, Object.assign({}, o, { val: null, arcane: a }), null).score;
+        return s("primary_debilitate") / s(null);
+      };
+      return { low: k(10), base: k(150), boss: k(150, "boss") };
+    }).catch((e) => ({ err: e.message }));
+    results.push({ name: "v2.12 디빌리테이트: 몇 발에 죽는 적(Lv10~260 소마 프라임)은 10중첩 전에 죽어 이득이 작음 — 아케인 없음의 1.15배 미만, 보스는 더 큼", ok: !r.err && r.low < 1.15 && r.boss > r.low, detail: r.err || JSON.stringify(r) });
+    await p5.close();
+  }
+
   // v1.96: every plan-mode riven multiplier in app.js goes through RIV_PLAN_W (only the displayed 0.9–1.1 range may skip it)
   {
     const src = require("fs").readFileSync(path.resolve(__dirname, "..", "src", "app.js"), "utf8");

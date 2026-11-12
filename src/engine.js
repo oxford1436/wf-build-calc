@@ -485,6 +485,30 @@
   // Element arrangement: o.elemOrder fixes it (slot order as typed). Otherwise every possible arrangement is a
   // candidate; o.layoutTTK picks the one with the best time-to-kill score (exact), else steady-state damage (fast).
   function evaluate(weapon, atk, mods, o, riven) {
+    // v2.12 Primary Debilitate (game data Arcanes.json: "On hitting an enemy with 10 stacks of a combined Status Effect,
+    // inflicting the same Status Effect again has a 100% chance to inflict one of the base Status Effects"): only the hits
+    // that find 10 stacks on the target count. Pass 1 without it gives each target's time to kill; the k-th hit carries
+    // (k − 1) shots' worth of that combined status (Poisson, stacks expire after 6 s — Corrosive 8 s — × status duration);
+    // the share u is averaged over the main target of every faction and level, then pass 2 uses it. Before: the target was
+    // assumed to be hit for 6 seconds, so a target that dies in a few shots still got the full bonus.
+    const arcD = o.arcane ? (root.WF_ARCANES || {})[o.arcane] : null;
+    if (arcD && arcD.debilitate && o._debilU == null) {
+      const r0 = evaluate(weapon, atk, mods, Object.assign({}, o, { _debilU: 0 }), riven);
+      const lam = r0 && r0.debilLam || 0, win = r0 && r0.debilWin || 0, rate = r0 && r0.rate || 1;
+      const tail = (m) => { let pmf = Math.exp(-m), cdf = pmf; for (let k = 1; k < 10; k++) { pmf *= m / k; cdf += pmf; } return Math.max(0, 1 - cdf); };
+      const uOf = (t) => {
+        const n = isFinite(t) ? 1 + Math.round(Math.max(0, t) * rate) : 400, nn = Math.min(n, 400);
+        let sum = 0; for (let j = 1; j <= nn; j++) sum += tail(lam * Math.min(j - 1, win));
+        if (n > nn) sum += (n - nn) * tail(lam * Math.min(nn, win));
+        return sum / n;
+      };
+      const us = [];
+      if (lam > 0) for (const f of o.factions || []) { const x = r0.perF && r0.perF[f]; if (!x) continue; for (const y of [x, x.hi, x.top]) if (y && y.ttk != null) us.push(uOf(y.ttk)); }
+      const U = us.length ? us.reduce((q, v) => q + v, 0) / us.length : 0;
+      const r = evaluate(weapon, atk, mods, Object.assign({}, o, { _debilU: U }), riven);
+      if (r) r.debilU = U;
+      return r;
+    }
     // v1.96 Plated Round in a crowd with kill stacks from 0: the partial bonus depends on how long the pack takes — fixed point
     // on the pack firing time (mean 12-enemy clear over factions and levels), three passes at most
     const arcP = o.arcane ? (root.WF_ARCANES || {})[o.arcane] : null;
@@ -1343,11 +1367,14 @@
       if (arc && arc.debilitate) {
         const cmb = Object.keys(COMP).filter((T) => (procs[T] || 0) > 0).sort((x, y) => procs[y] - procs[x])[0];
         if (cmb) {
-          const up = Math.min(1, procs[cmb] * rate * K * 6 / 10);     // share of the time the target holds 10 stacks
+          // v2.12: share of the target's hits that find 10 stacks already there — evaluate() works it out per target from the
+          // shots it lives (o._debilU, Poisson like v1.99 Irradiate). Fallback (no pass yet): the old 6-second steady state.
+          const up = o._debilU != null ? o._debilU : Math.min(1, procs[cmb] * rate * K * 6 / 10);
           // v2.09: it fires on a proc of that combined status, not on every hit — game data (Arcanes.json): "inflicting the same
           // Status Effect again has a 100% chance to inflict one of the base Status Effects"; ProGameTalk (2025-12): "only triggers
           // once per damage instance" → min(procs of the combined type, damage instances) per shot (was ms per shot)
-          debil = { comps: COMP[cmb], n: arc.debilitate * Math.min(ms, procs[cmb]) * up };
+          debil = { comps: COMP[cmb], n: arc.debilitate * Math.min(ms, procs[cmb]) * up,
+            lam: procs[cmb], win: (cmb === "corr" ? 8 : 6) * dur * rate };   // stacks per shot on the target, stack life in shots
           for (const c of COMP[cmb]) procs[c] = (procs[c] || 0) + debil.n / 2;
         }
       }
@@ -1552,7 +1579,7 @@
       const cD = conceptDist(shareC, procs, o);
       scoreSS -= 50 * cD;      // a layout that breaks the element concept is used only when no layout keeps it
       if (!best || scoreSS > best.scoreSS) {
-        best = { conceptOk: cD === 0, conceptD: cD, nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, evoM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, waveAoe, cc, cd, critf: 1 + cc * (cd - 1) + (a.nc ? Math.max(0, 1 - cc) * a.nc : 0), sc, ms, rate, accF, M, tierNow, K, N, u, ntypes, gco, co, nc: a.nc || 0, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, dotN, fArc, hsFrac, hsM,
+        best = { debilLam: debil ? debil.lam : 0, debilWin: debil ? debil.win : 0, conceptOk: cD === 0, conceptD: cD, nLayouts: allLayouts.length, scoreSS, exS, exChain, sniperM, evoM, vigil: a.vigil, glad: a.glad, perF, layout: L, share, procs, waveAoe, cc, cd, critf: 1 + cc * (cd - 1) + (a.nc ? Math.max(0, 1 - cc) * a.nc : 0), sc, ms, rate, accF, M, tierNow, K, N, u, ntypes, gco, co, nc: a.nc || 0, dmgb: dmgb + dmgArc + platedB, sd, dur, total, Btot, mbd, Tdur, dotN, fArc, hsFrac, hsM,
           fallM, ogM: (arc && arc.ogMult ? arc.ogMult : 1) * (1 + 0.5 * (share.void || 0)), frozenM: arc && arc.frozenMult && isMelee ? arc.frozenMult : 0, coldVuln: arc && arc.coldVuln ? arc.coldVuln : 0 };
       }
     }
