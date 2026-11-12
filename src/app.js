@@ -183,6 +183,8 @@ self.onmessage = function (ev) {
   function defaultAttack(w) {
     const a = w.attacks;
     let i = a.findIndex((x) => x.kind === "glaive" && /Recall/.test(x.en));
+    // v2.13: the wiki's first attack when it is a charged shot (Epitaph family — convert.py wikiMain)
+    if (i < 0) i = a.findIndex((x) => x.wikiMain);
     if (i < 0) i = a.findIndex((x) => x.parts && !x.primer && !x.alt);
     // Bows: the charged shot (wiki Fire Rate gives bow cadence only for it: "1 / (Modded Charge Time + Modded Reload Time)";
     // uncharged/quick shots have no wiki cadence). Not the Incarnon Form shot — that is chosen through the Incarnon toggle.

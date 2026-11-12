@@ -2,6 +2,11 @@
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "2.13", date: "2026-11-12", title: "에피타프·에피타프 프라임 기본 공격을 충전 사격으로",
+      items: [
+        "위키 무기 데이터는 에피타프의 첫 공격(AttackIndex 1)을 'Charged Shot'으로 둡니다(무기 발사 방식 'Semi / Charge'). 활이 아닌 무기 중 이런 무기는 에피타프 둘뿐입니다. 그런데 계산기 기본 공격은 비충전 직격 + 폭발이었고, 계산기 스스로도 무리 기본 조건에서 충전 사격 1위가 더 빨랐습니다(에피타프 프라임 ×1.15, 에피타프 ×1.80, 보스 프라임 ×1.53, 헤드샷 50% ×1.72).",
+        "이제 무기를 고르면 충전 사격이 기본입니다. 비충전 사격(프라이머 운용)은 공격 목록에서 그대로 고를 수 있습니다. 드락군·스태티코어·뮤탈리스트 세르노스는 위키 첫 공격이 비충전이라 그대로입니다. 대기열 7b."
+      ] },
     { v: "2.12", date: "2026-11-12", title: "프라이머리 디빌리테이트: 표적이 죽기 전에 10중첩이 되는 명중만 계산",
       items: [
         "위키 Primary Debilitate: \"If an enemy has 10 stacks of a combined Status Effect\" 같은 상태이상을 다시 걸 때 기본 상태이상 하나를 더하고, \"will only activate once per damage instance\". 그런데 10중첩 유지 비율을 표적이 6초 동안 계속 맞는다고 계산해서, 몇 발에 죽는 적에게도 거의 늘 발동했습니다.",

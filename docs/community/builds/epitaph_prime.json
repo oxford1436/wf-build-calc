@@ -1,0 +1,28 @@
+{
+  "weapon": "epitaph_prime",
+  "attack": 0,
+  "valence": null,
+  "riven": null,
+  "notes": "에피타프 프라임 비충전 사격(직격 + 8m 폭발, 확정 냉기·충격, 상태이상 50%). 2026-11-12 16시 대기열 7b. 직접 읽은 세팅 1개(Destructoid 2024-08, 프라이머 세팅 — 비충전). 충전 사격 세팅 글(Ackbar 2024-10, Lords of Gaming 2024-09, Overframe 939273·717225)은 모드 목록이 그림·복사 문자열이라 기록하지 않고 이유만 [07b_epitaph.md]에 남김. abewwab은 Destructoid 복사본이라 제외.",
+  "builds": [
+    {
+      "name": "Destructoid 프라이머 (가스·방사능 계열, 캐스케디아 플레어)",
+      "community": "destructoid",
+      "kind": "read",
+      "url": "https://www.destructoid.com/best-epitaph-prime-build-in-warframe/",
+      "date": "2024-08-21",
+      "mods": ["Amalgam Barrel Diffusion", "Accelerated Isotope", "Sure Shot", "Pistol Pestilence", "Augur Seeker", "Frostbite", "Convulsion", "Heated Charge"],
+      "exilus": "Lethal Momentum",
+      "arcane": "cascadia_flare",
+      "claims": ["it's better built as a primer secondary", "Primed Fulmination can be a great mod for giving your shots some extra blast radius"]
+    }
+  ],
+  "meta": {
+    "elements": "읽은 세팅 1개뿐(프라이머: 상태이상 확률·여러 원소). 충전 사격 세팅은 모드 목록을 못 읽음",
+    "valence": "없음(쿠바·테넷 아님)",
+    "core": [],
+    "flex": [],
+    "arcane": "캐스케디아 플레어(Destructoid)",
+    "why": "커뮤니티 설명은 두 갈래: ① 비충전 = 폭발·확정 냉기로 상태이상을 뿌리는 프라이머(Destructoid·Sportskeeda), ② 충전 = 치명타 48~50%·2.6~3배 단일 대상 한 방, 헤드샷·세바고스 헤드샷 +20%(Ackbar·Lords of Gaming·Overframe 939273·717225)."
+  }
+}

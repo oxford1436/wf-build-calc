@@ -347,6 +347,14 @@ def conv(w, typ):
             idx_name = {x.get("AttackIndex"): x.get("AttackName") for x in wk_atks}
             parent_of = {x.get("AttackName"): idx_name.get(x.get("AttackParentIndex")) for x in wk_atks if x.get("AttackParentIndex")}
             parent_of.update(PAIR_EXTRA.get(name, {}))
+            # v2.13 (대기열 7b): the wiki weapon data lists the charged shot as the weapon's first attack (AttackIndex 1 "Charged Shot",
+            # weapon Trigger "Semi / Charge") — Epitaph/Epitaph Prime are the only non-bow weapons that do. That attack becomes the
+            # default (app defaultAttack), not the uncharged direct + AoE combo
+            w1 = idx_name.get(1) or ""
+            if re.match(r"Charged", w1) and (WIKI.get(name) or {}).get("Class") != "Bow":
+                for y in base:
+                    if y["en"] == w1 and y["kind"] == "gun":
+                        y["wikiMain"] = True
             groups, order, extra, keep = {}, [], set(), set()
             for x in base:
                 if x["en"] in NO_PAIR.get(name, {}):

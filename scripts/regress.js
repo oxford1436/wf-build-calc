@@ -391,6 +391,16 @@ const { chromium } = require("playwright");
       for (const id of ids) { const w = W.find((x) => x.id === id); if (!w) { bad += id + " 없음 · "; continue; } const en = w.attacks[A.defaultAttack(w)].en; if (!/Charged/.test(en) || /^Incarnon/.test(en)) bad += `${id}: ${en} · `; }
       check("v1.81 활 기본 공격 = 충전 사격 (패리스·나타루크·다이큐 프라임·서노스 프라임·드레드 — 비충전·퀵 사격 아님, 인카논 형태 아님)", !bad, bad);
     }
+    // v2.13 (대기열 7b, 2026-11-12): Epitaph/Epitaph Prime default to the Charged Shot. The wiki weapon data lists it as the weapon's
+    // first attack (AttackIndex 1 "Charged Shot", weapon Trigger "Semi / Charge" — the only non-bow weapons that do); before this the
+    // default was the uncharged direct + AoE shot, which the calculator itself scores 13% (Prime) / 45% (Epitaph) slower in the crowd.
+    {
+      const A = window.WF_APP;
+      let bad = "";
+      for (const id of ["epitaph", "epitaph_prime"]) { const w = W.find((x) => x.id === id); if (!w) { bad += id + " 없음 · "; continue; } const en = w.attacks[A.defaultAttack(w)].en; if (en !== "Charged Shot") bad += `${id}: ${en} · `; }
+      for (const id of ["drakgoon", "kuva_drakgoon", "staticor", "mutalist_cernos"]) { const w = W.find((x) => x.id === id); if (w && /^(Charged|Fully)/.test(w.attacks[A.defaultAttack(w)].en)) bad += `${id}: 충전 사격이 기본이 됨 · `; }
+      check("v2.13 에피타프·에피타프 프라임 기본 공격 = 충전 사격 (위키 첫 공격), 드락군·스태티코어·뮤탈리스트 세르노스는 그대로", !bad, bad);
+    }
     // v1.85 (묶음 5, 2026-11-06 22시): Nataruk reload — wiki data Reload 0.6 vs game data 0.05; bow cadence 1/(charge + reload)
     // flips the #1 (both-ends run) → every Nataruk attack (Perfect Shot too) is withheld until the Arsenal value is known. The old
     // punch-through gap is handled (INF_BODY_PT), so it no longer withholds by itself.

@@ -1,0 +1,73 @@
+{
+  "weapon": "epitaph",
+  "attack": 1,
+  "valence": null,
+  "riven": null,
+  "notes": "에피타프(일반) 충전 사격(v2.13부터 기본 공격). 2026-11-12 16시 대기열 7b. 직접 읽은 세팅 2개(The Nerd Stash 2024-01 출혈·바이러스 강철의 길 + 세컨더리 머시리스, Gfinity 날짜 없음 올라운더 — 아케인 없음). 두 세팅 모두 치명타 모드(피스톨 갬빗·타겟 크래커)를 넣어 충전 사격 기준으로 계산 — 비충전은 치명타 2~4%. Nerd Stash는 '기본 사격으로 출혈 순환, 위험한 적은 충전 사격'이라고 써서 공격 구분이 애매함. Gfinity는 공격을 밝히지 않음.",
+  "builds": [
+    {
+      "name": "Nerd Stash 출혈 + 바이러스 (헤모리지, 머시리스) — 강철의 길",
+      "community": "thenerdstash",
+      "kind": "read",
+      "url": "https://thenerdstash.com/the-best-warframe-epitaph-build-guide-for-steel-path",
+      "date": "2024-01-27",
+      "mods": [
+        "Hemorrhage",
+        "Galvanized Diffusion",
+        "Primed Pistol Gambit",
+        "Primed Target Cracker",
+        "Hornet Strike",
+        "Lethal Torrent",
+        "Frostbite",
+        "Pistol Pestilence"
+      ],
+      "arcane": "secondary_merciless",
+      "claims": [
+        "relies on the Bleed status effect",
+        "Viral needs to come first",
+        "You can take it to Steel Path without much worry"
+      ]
+    },
+    {
+      "name": "Gfinity 올라운더 (폭발: 냉기 + 화염, 아케인 없음)",
+      "community": "gfinity",
+      "kind": "read",
+      "url": "https://www.gfinityesports.com/warframe/warframe-epitaph-guide-how-to-obtain-craft-and-best-builds/",
+      "date": "",
+      "mods": [
+        "Hornet Strike",
+        "Augur Pact",
+        "Lethal Torrent",
+        "Frostbite",
+        "Scorch",
+        "Pistol Gambit",
+        "Target Cracker",
+        "Barrel Diffusion"
+      ],
+      "exilus": "Lethal Momentum",
+      "arcane": null,
+      "claims": [
+        "Boost as much raw damage and Blast as you can"
+      ]
+    }
+  ],
+  "meta": {
+    "elements": "바이러스 1(냉기 + 독) · 폭발 1(냉기 + 화염)",
+    "valence": "없음",
+    "core": [
+      "Frostbite",
+      "Hornet Strike",
+      "Lethal Torrent",
+      "Pistol Gambit 계열",
+      "Target Cracker 계열",
+      "Barrel Diffusion 계열"
+    ],
+    "flex": [
+      "Hemorrhage",
+      "Augur Pact",
+      "Lethal Momentum"
+    ],
+    "arcane": "세컨더리 머시리스 1",
+    "why": "Nerd Stash: 충전 사격의 확정 충격을 헤모리지로 출혈로 바꾸고(\"relies on the Bleed status effect\") 냉기 + 독 바이러스. Gfinity: 피해·폭발(냉기 + 화염), 리썰 모멘텀은 투사체 속도. Ackbar(세팅 그림)도 \"Charged Shots can make exceptional use of Hemorrhage\"."
+  }
+}
