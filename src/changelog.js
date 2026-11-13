@@ -2,6 +2,11 @@
  * Add an entry for every change: { v, date, title, items: [...] }. */
 (function (root) {
   root.WF_CHANGELOG = [
+    { v: "2.15", date: "2026-11-14", title: "토리드 유탄 독 구름: 1초마다 40, 10초",
+      items: [
+        "위키 무기 데이터의 토리드 'Poison Cloud'는 독 40, 지속 10초, 연사 1(틱 간격)이고, 일본 위키 토리드 표는 독 구름 총 피해 400, \"dealing damage over time for 10 seconds over a 3-meter radius\", 업데이트 14.2 \"Now has 40 DPS in Gas Cloud\"입니다. 그런데 계산기는 구름의 연사(1)가 유탄(1.5)과 달라 유탄에 묶지 않고 따로 두어, 기본 공격이 유탄 직격 100만 계산했습니다.",
+        "이제 유탄 한 발 = 직격 100 + 구름 40 × 10틱(3m, 바깥으로 갈수록 감소 — 위키 데이터)으로 계산합니다. 10초에 걸쳐 들어가는 시간 차이와 먼저 죽은 적에게 남는 틱은 계산하지 않아 높게 나옵니다. 인카논 형태는 그대로. 폭스·뮤탈리스트 세르노스 구름은 틱 간격 근거가 아직 없어 따로 둡니다. 대기열 0b."
+      ] },
     { v: "2.14", date: "2026-11-13", title: "자크티·자크티 프라임: 다트 + 가스 폭발을 한 발로",
       items: [
         "위키 무기 데이터에서 자크티의 'Gas Cloud'는 다트에 딸린 범위 공격(AttackParentIndex 1)이고, 지속 시간이 없으며 연사가 다트와 같습니다(5). 몇 초 동안 피해를 주는 폭스·뮤탈리스트 세르노스 구름은 모두 지속 시간이 있고 연사가 1입니다. Overframe 글도 \"Darts explode in a 3.8 meter radius after 1 second on impact\", \"~70% of the damage is in the gas explosion\"라고 씁니다.",

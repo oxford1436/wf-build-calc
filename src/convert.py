@@ -124,7 +124,12 @@ NO_PAIR = {"Castanas": {"Embedded Detonation": "either"}, "Sancti Castanas": {"E
 # parts that hit more than once per shot (wiki weapon pages, 2026-11-03):
 # - Proboscis Cernos: appendages "tick damage twice on all affected enemies before exploding" (9 m), explosion 1.7 s later
 # - Stug: "Blobs then deal two ticks of damage in a 2 meter radius before exploding" (embed damage ×2, then Blob Explosion)
-PART_REPEAT = {"Proboscis Cernos": {"Appendages": 2}, "Stug": {"Blob Embed": 2}}
+# - v2.15 (대기열 0b, 2026-11-14): Torid "Poison Cloud" (wiki data Toxin 40, EffectDuration 10, FireRate 1, parent = grenade):
+#   wiki3.jp Torid stats table "Poison Cloud … 合計ダメージ 400", "dealing damage over time for 10 seconds over a 3-meter radius",
+#   Update 14.2 "Now has 40 DPS in Gas Cloud" → 40 per second for 10 s = 10 ticks. The ticks are counted as part of the shot
+#   (long-run damage per grenade is the same; the 0–10 s spread and overkill on enemies that die early are not modelled → high).
+#   Pox / Mutalist Cernos clouds stay unpaired (NO_PAIR) — no readable tick rate for them yet.
+PART_REPEAT = {"Proboscis Cernos": {"Appendages": 2}, "Stug": {"Blob Embed": 2}, "Torid": {"Poison Cloud": 10}}
 PAIR_EXTRA = {"Stug": {"Blob Explosion": "Blob Embed"}, "Evensong": {"Charged Radial Attack": "Charged Shot"}}
 # cluster bombs released by every main shot (queue bundle 3, 2026-11-04) — separate root attacks in the wiki data, so the
 # parent index doesn't tie them to the shot that makes them:
@@ -371,7 +376,9 @@ def conv(w, typ):
                     partners = [y for y in base if y["kind"] == "gun" and abs(y["fr"] - x["fr"]) < 0.05]
                 oldp = partners[0] if partners else None
                 pn = parent_of.get(x["en"])
-                py = next((y for y in base if y["en"] == pn and y is not x and abs(y["fr"] - x["fr"]) < 0.05), None) if pn else None
+                # v2.15: a lingering cloud with a known tick count (PART_REPEAT, Torid) has FireRate 1 = its tick rate, not the shot rate
+                fr_ok = lambda y: abs(y["fr"] - x["fr"]) < 0.05 or (x["en"] in PART_REPEAT.get(name, {}) and name == "Torid")
+                py = next((y for y in base if y["en"] == pn and y is not x and fr_ok(y)), None) if pn else None
                 if py is not None and (py["kind"] == "gun" or name in PAIR_EXTRA):
                     if py["en"] not in groups:
                         groups[py["en"]] = [py]

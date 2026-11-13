@@ -412,6 +412,14 @@ const { chromium } = require("playwright");
       for (const id of ["pox", "mutalist_cernos"]) { const w = W.find((x) => x.id === id); if (w && w.attacks.some((a) => /\+.*(Poison|Toxin) Cloud/.test(a.en))) bad += `${id}: 지속 구름이 묶임 · `; }
       check("v2.14 자크티·자크티 프라임 기본 공격 = 다트 + 가스 폭발 한 번 (폭스·뮤탈리스트 세르노스 지속 구름은 그대로 따로)", !bad, bad);
     }
+    // v2.15 (대기열 0b, 2026-11-14): Torid "Poison Cloud" — wiki data Toxin 40 with EffectDuration 10 / FireRate 1; wiki3.jp Torid
+    // stats "合計ダメージ 400", "damage over time for 10 seconds", Update 14.2 "40 DPS in Gas Cloud" → 10 ticks per grenade (was 1).
+    {
+      const w = W.find((x) => x.id === "torid");
+      const a = w && w.attacks.find((x) => /Poison Cloud/.test(x.en) && /\+/.test(x.en));
+      const n = a ? a.parts.filter((q) => q.en === "Poison Cloud").length : 0;
+      check("v2.15 토리드 독 구름 = 1초마다 40 × 10초 (한 발에 10틱)", n === 10, "구름 틱 " + n);
+    }
     // v1.85 (묶음 5, 2026-11-06 22시): Nataruk reload — wiki data Reload 0.6 vs game data 0.05; bow cadence 1/(charge + reload)
     // flips the #1 (both-ends run) → every Nataruk attack (Perfect Shot too) is withheld until the Arsenal value is known. The old
     // punch-through gap is handled (INF_BODY_PT), so it no longer withholds by itself.
