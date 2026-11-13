@@ -109,10 +109,15 @@ CHAMBER_CASCADE = {"Magnus Prime": {"p": 0.04, "dur": 4}, "Akmagnus Prime": {"p"
 # radial parts that are NOT added to their wiki parent shot (checked 2026-11-03, queue item 0):
 # - Castanas: "Mid-Flight Detonation" and "Embedded Detonation" are alternatives — a dart detonated in flight never also
 #   detonates embedded (wiki Castanas: detonating before it sticks uses the mid-flight values)
-# - lingering clouds (Pox Poison Cloud EffectDuration 5, Zakti Gas Cloud, Mutalist Cernos Toxin Cloud Duration 10) tick for
-#   several seconds; the tick rate is not in the wiki data, so they stay separate until verified (P1: no assumed numbers)
+# - lingering clouds (Pox Poison Cloud EffectDuration 5, Mutalist Cernos Toxin Cloud Duration 10) tick for several seconds; the
+#   tick rate is not in the wiki data, so they stay separate until verified (P1: no assumed numbers)
+# - v2.14 (대기열 0b, 2026-11-13): Zakti/Zakti Prime "Gas Cloud" is NOT a lingering cloud — wiki data gives it AttackParentIndex 1,
+#   no EffectDuration and the dart's FireRate (5), unlike every lingering cloud (EffectDuration, FireRate 1); game text "darts that
+#   anchor themselves in their target before erupting in a plume of toxic gas"; Overframe 131876 "Darts explode in a 3.8 meter
+#   radius after 1 second on impact", 20081 "~70% of the damage is in the gas explosion". Paired as dart + one burst (the gas
+#   status cloud it procs is the normal Gas status). The 1 s delay is not modelled (like projectile flight time).
 NO_PAIR = {"Castanas": {"Embedded Detonation": "either"}, "Sancti Castanas": {"Embedded Detonation": "either"},
-           "Pox": {"Poison Cloud": "cloud"}, "Zakti": {"Gas Cloud": "cloud"}, "Zakti Prime": {"Gas Cloud": "cloud"}, "Mutalist Cernos": {"Toxin Cloud": "cloud"}}
+           "Pox": {"Poison Cloud": "cloud"}, "Mutalist Cernos": {"Toxin Cloud": "cloud"}}
 # pairs the wiki data leaves without AttackParentIndex (wiki attack tables, 2026-11-03):
 # - Stug: each blob deals "Blob Embed" on sticking and "Blob Explosion" (ExplosionDelay 1.5 s) — both are AoE
 # - Evensong: "Charged Radial Attack" is the burst of the charged arrow (same charge time 1.2 s)

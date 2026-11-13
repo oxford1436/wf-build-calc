@@ -401,6 +401,17 @@ const { chromium } = require("playwright");
       for (const id of ["drakgoon", "kuva_drakgoon", "staticor", "mutalist_cernos"]) { const w = W.find((x) => x.id === id); if (w && /^(Charged|Fully)/.test(w.attacks[A.defaultAttack(w)].en)) bad += `${id}: 충전 사격이 기본이 됨 · `; }
       check("v2.13 에피타프·에피타프 프라임 기본 공격 = 충전 사격 (위키 첫 공격), 드락군·스태티코어·뮤탈리스트 세르노스는 그대로", !bad, bad);
     }
+    // v2.14 (대기열 0b, 2026-11-13): Zakti/Zakti Prime "Gas Cloud" is the dart's one-time AoE burst, not a lingering cloud — wiki
+    // data: AttackParentIndex 1, no EffectDuration, FireRate equal to the dart (the lingering clouds of Pox/Mutalist Cernos all have
+    // EffectDuration and FireRate 1); Overframe 131876 "Darts explode in a 3.8 meter radius after 1 second on impact", 20081 "~70% of
+    // the damage is in the gas explosion". Before v2.14 the default attack was the dart alone (30 of 130 damage, Prime).
+    {
+      const A = window.WF_APP;
+      let bad = "";
+      for (const id of ["zakti", "zakti_prime"]) { const w = W.find((x) => x.id === id); if (!w) { bad += id + " 없음 · "; continue; } const en = w.attacks[A.defaultAttack(w)].en; if (!/Gas Cloud/.test(en) || !/\+/.test(en)) bad += `${id}: ${en} · `; }
+      for (const id of ["pox", "mutalist_cernos"]) { const w = W.find((x) => x.id === id); if (w && w.attacks.some((a) => /\+.*(Poison|Toxin) Cloud/.test(a.en))) bad += `${id}: 지속 구름이 묶임 · `; }
+      check("v2.14 자크티·자크티 프라임 기본 공격 = 다트 + 가스 폭발 한 번 (폭스·뮤탈리스트 세르노스 지속 구름은 그대로 따로)", !bad, bad);
+    }
     // v1.85 (묶음 5, 2026-11-06 22시): Nataruk reload — wiki data Reload 0.6 vs game data 0.05; bow cadence 1/(charge + reload)
     // flips the #1 (both-ends run) → every Nataruk attack (Perfect Shot too) is withheld until the Arsenal value is known. The old
     // punch-through gap is handled (INF_BODY_PT), so it no longer withholds by itself.
