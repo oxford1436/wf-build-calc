@@ -57,6 +57,13 @@ const { chromium } = require("playwright");
           top = search(w);
           const ns = top && A.betterEvo({ ids: top.mods.map((m) => m.id), val, arcane: null });
           if (ns) { A.st.evoSel = ns; w = A.applyEvos(w0, ns); A.st.weapon = w; top = search(w); }
+          // v2.16: like the app, search each close alternative perk on its own (betterEvo keeps the #1 mods)
+          if (top && A.evoProbes) {
+            A.st.results = { o };
+            let bestS = top.score * 1.005, best = null, bestTop = null;
+            for (const sel of A.evoProbes({ ids: top.mods.map((m) => m.id), val, arcane: null })) { const t2 = search(A.applyEvos(w0, sel)); if (t2 && t2.score > bestS) { bestS = t2.score; best = sel; bestTop = t2; } }
+            if (best) { A.st.evoSel = best; w = A.applyEvos(w0, best); A.st.weapon = w; top = bestTop; }
+          }
           row.evo = Object.entries(A.st.evoSel).filter(([t]) => t !== "1").map(([t, i]) => t + ":" + (((w0.evos.find((x) => String(x.tier) === t) || {}).perks || [])[i] || {}).name).join(" ");
         }
         const atk = w.attacks[A.st.atk];

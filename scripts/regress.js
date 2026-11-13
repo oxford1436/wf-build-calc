@@ -996,6 +996,35 @@ const { chromium } = require("playwright");
     await p5.close();
   }
 
+  // v2.16: betterEvo swaps one evolution perk keeping the #1 build's mods, so a perk that needs other mods never wins — Braton
+  // Prime kept IV Prelude of Might (non-crit build); Critical Parallel scored 0.906 with those mods but its own search is
+  // x1.26 in the app (community 2/2 Critical Parallel). Now each close perk gets a search of its own (evoProbes).
+  {
+    const p6 = await ctx.newPage();
+    p6.on("pageerror", (e) => errs.push(e.message));
+    await p6.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p6.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p6.evaluate(() => {
+      const A = window.WF_APP, E = window.WFEngine, W = window.WF_WEAPONS;
+      const w0 = W.find((x) => x.id === "braton_prime"); if (!w0) return { err: "braton_prime 없음" };
+      if (typeof A.evoProbes !== "function") return { err: "evoProbes 없음 (진화 대안 재검색 안 함)" };
+      const o = Object.assign(A.readOpts(), { targets: null, val: null }); o.targets = E.targetsFor(o);
+      A.st.base = w0; A.st.atk = A.defaultAttack(w0); A.st.evoManual = {}; A.st.evoSel = { 2: 1, 3: 0, 4: 1 }; A.st.weapon = A.applyEvos(w0, A.st.evoSel); A.st.results = { o };
+      const ids = ["galvanized_chamber", "primed_cryo_rounds", "malignant_force", "vital_sense", "serration", "primed_firestorm", "vile_acceleration", "magnetic_capacity"];
+      const top = { ids, val: null, arcane: "primary_merciless" };
+      const ref = A.evalBuild(ids, null, "primary_merciless", Object.assign({}, o, { arcane: "primary_merciless" }), null).score;
+      const probes = A.evoProbes(top);
+      const cp = probes.find((s) => s[4] === 0); if (!cp) return { err: "크리티컬 패럴렐이 재검색 후보에 없음", probes };
+      const ww = A.applyEvos(w0, cp), a0 = ww.attacks[A.st.atk];
+      const t = E.optimize(ww, a0, A.candidateMods(ww, a0, { aim: false, cast: false, boss: false }), Object.assign({}, o, { arcane: "primary_merciless" }), { slots: 8, beam: 20, valOptions: [null], arcOptions: ["primary_merciless"] })[0];
+      return { k: t.score / ref };
+    }).catch((e) => ({ err: e.message }));
+    results.push({ name: "v2.16 진화 대안 재검색: 브래튼 프라임 IV 크리티컬 패럴렐은 프렐류드 오브 마이트 세팅 그대로면 느리지만 자기 세팅으로는 5% 넘게 빠름 → 후보에 들어감", ok: !r.err && r.k > 1.05, detail: r.err || "×" + r.k.toFixed(3) });
+    const src = require("fs").readFileSync(path.resolve(__dirname, "..", "src", "app.js"), "utf8");
+    results.push({ name: "v2.16 앱 계산(run)이 진화 대안 재검색 단계(evoProbePhase)를 거침", ok: /evoProbePhase\(wk,/.test(src.slice(src.indexOf("function run()"), src.indexOf("function evoProbes"))) });
+    await p6.close();
+  }
+
   // v1.96: every plan-mode riven multiplier in app.js goes through RIV_PLAN_W (only the displayed 0.9–1.1 range may skip it)
   {
     const src = require("fs").readFileSync(path.resolve(__dirname, "..", "src", "app.js"), "utf8");

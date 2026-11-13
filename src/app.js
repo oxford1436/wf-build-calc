@@ -120,7 +120,8 @@ self.onmessage = function (ev) {
     const locked = (j.locked || d.locked).map(id => byId[id]);
     const opts = Object.assign({}, d.opts, j.optsPatch || {});
     const seeds = (d.seeds || []).map(s => ({ name: s.name, arcane: s.arcane, mods: s.ids.map(id => byId[id]) })).filter(s => s.mods.every(Boolean));
-    const res = E.optimize(d.weapon, d.weapon.attacks[d.atk], cands, opts, { slots: 8, beam: j.beam || d.beam, locked, valOptions: j.valOptions || d.valOptions, arcOptions: j.arcOptions || d.arcOptions, seeds: j.noSeeds ? [] : seeds },
+    const jw = j.weapon || d.weapon;   // v2.16: evolution probes send their own (evolved) weapon per job
+    const res = E.optimize(jw, jw.attacks[d.atk], cands, opts, { slots: 8, beam: j.beam || d.beam, locked, valOptions: j.valOptions || d.valOptions, arcOptions: j.arcOptions || d.arcOptions, seeds: j.noSeeds ? [] : seeds },
       p => self.postMessage({ type: "progress", p: (done + p) / jobs.length }));
     out.push({ tag: j.tag, res: res.slice(0, 40).map(r => ({ ids: r.mods.map(m => m.id), score: r.score, val: r.val, arcane: r.arcane, community: r.community || null })) });
     done++;
@@ -1122,14 +1123,24 @@ self.onmessage = function (ev) {
       // mods) where its crit build wants Absolute Valor. With the result in hand, climb the auto tiers keeping the #1 build and,
       // if that is faster, search once more with those evolutions (recommendations are the final form)
       if (!st.evoRetry) { const ns = betterEvo(out.main && out.main[0]); if (ns) { st.evoRetry = true; st.evoSel = ns; st.weapon = applyEvos(st.base, ns); renderEvoBox(); run(); return; } }
-      st.evoRetry = false;
-      if ($("#rivmode").value === "plan" && !w.noRiven && out.main && out.main.length) { planRivenPhase(wk, w, o, cands, jobs.some((j) => j.tag === "nobuff")); return; }
-      $("#runbtn").disabled = false; $("#progress").hidden = true;
-      renderResults();
-      $("#results").scrollIntoView({ behavior: "smooth", block: "start" });
-      conceptPhase(wk, w, o, cands);
+      const proceed = () => {
+        st.evoRetry = false; st.evoProbed = false;
+        if ($("#rivmode").value === "plan" && !w.noRiven && out.main && out.main.length) { planRivenPhase(wk, w, o, cands, jobs.some((j) => j.tag === "nobuff")); return; }
+        $("#runbtn").disabled = false; $("#progress").hidden = true;
+        renderResults();
+        $("#results").scrollIntoView({ behavior: "smooth", block: "start" });
+        conceptPhase(wk, w, o, cands);
+      };
+      // v2.16: betterEvo keeps the #1 build's mods, so a perk that needs other mods never wins the swap — Braton Prime
+      // evolution IV Critical Parallel scored 0.906 with the Survivor's Edge build but its own search is 1.109. Search each
+      // close alternative perk (narrow beam, the #1 build's valence and arcane) and switch if its best build is faster.
+      if (!st.evoProbed) {
+        const probes = evoProbes(out.main && out.main[0]);
+        if (probes.length) { st.evoProbed = true; evoProbePhase(wk, w, o, cands, locked, out.main[0], probes, proceed, owned); return; }
+      }
+      proceed();
     };
-    wk.onerror = (e) => { $("#runbtn").disabled = false; $("#progress").hidden = true; $("#results").innerHTML = `<div class="placeholder"><h3>계산 중 오류</h3><p>${esc(e.message)}</p></div>`; };
+    wk.onerror = (e) => { st.evoProbed = false; st.evoRetry = false; $("#runbtn").disabled = false; $("#progress").hidden = true; $("#results").innerHTML = `<div class="placeholder"><h3>계산 중 오류</h3><p>${esc(e.message)}</p></div>`; };
     wk.postMessage({ weapon: JSON.parse(JSON.stringify(w)), atk: st.atk, opts: o, cands, locked, beam: 100, valOptions: valOptions(), arcOptions: arcOptions(), riven: owned ? owned.eff : null, jobs, seeds: communitySeeds(w) });
   }
 
@@ -1189,6 +1200,33 @@ self.onmessage = function (ev) {
       t.perks.forEach((p, i) => { if (i === sel[t.tier]) return; const s2 = Object.assign({}, sel, { [t.tier]: i }), v = sc(s2); if (v > best * 1.005) { best = v; sel = s2; changed = true; } });
     }
     return changed ? sel : null;
+  }
+  // v2.16: auto (not hand-picked) tiers' other perks worth a search of their own — the ones that already reach 75% of the #1
+  // build with its mods kept (a perk far below that would need a very different build to win; capped at 6 searches)
+  function evoProbes(top, minK) {
+    const w = st.base; if (!w || !w.evos || !top || !st.results) return [];
+    const sc = (sel) => evalBuild(top.ids, top.val, top.arcane, null, null, null, applyEvos(w, sel)).score;
+    const ref = sc(st.evoSel), out = [];
+    for (const t of w.evos) {
+      if (t.tier === 1 || t.perks.length < 2 || (st.evoManual && st.evoManual[t.tier])) continue;
+      t.perks.forEach((p, i) => {
+        if (i === st.evoSel[t.tier] || !p.items.some((it) => it.key)) return;
+        const sel = Object.assign({}, st.evoSel, { [t.tier]: i }), k = sc(sel) / ref;
+        if (k >= (minK || 0.75)) out.push({ sel, k });
+      });
+    }
+    return out.sort((a, b) => b.k - a.k).slice(0, 6).map((x) => x.sel);
+  }
+  function evoProbePhase(wk, w, o, cands, locked, top, probes, proceed, owned) {
+    const jobs = probes.map((sel, i) => ({ tag: "e" + i, weapon: JSON.parse(JSON.stringify(applyEvos(st.base, sel))), valOptions: [top.val], arcOptions: [top.arcane], beam: 30 }));
+    wk.onmessage = (ev) => {
+      if (ev.data.type === "progress") { $("#progress .bar").style.width = (ev.data.p * 100).toFixed(0) + "%"; return; }
+      let best = null, bestS = top.score * 1.005;
+      for (const x of ev.data.out) { const r = x.res[0]; if (r && r.score > bestS) { bestS = r.score; best = probes[+x.tag.slice(1)]; } }
+      if (best) { st.evoRetry = true; st.evoSel = best; st.weapon = applyEvos(st.base, best); renderEvoBox(); run(); return; }
+      proceed();
+    };
+    wk.postMessage({ weapon: JSON.parse(JSON.stringify(w)), atk: st.atk, opts: o, cands, locked, beam: 30, valOptions: [top.val], arcOptions: [top.arcane], riven: owned ? owned.eff : null, jobs, seeds: communitySeeds(w) });
   }
   // Incarnon evolutions with the recommended build kept: each other perk of a tier, swapped in alone
   function evoCompareHtml(top, ref) {
@@ -2263,7 +2301,7 @@ self.onmessage = function (ev) {
   F0 = captureFields();
   // read-only handle for checking results from the browser console / test scripts
   // test/automation handle (scripts/regress.js, scripts/community_check.js): arcAuto = the arcanes the 'auto' option compares
-  window.WF_APP = { effFromStats, RIV_PLAN_W, rivPlanVal: (cls, k, form) => rivBaseOf(cls, k) * 1.2 * RIV_PLAN_W * RIV_FORM[form].pos, st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts, boundCheck, renderResults, betterEvo, autoEvo,
+  window.WF_APP = { effFromStats, RIV_PLAN_W, rivPlanVal: (cls, k, form) => rivBaseOf(cls, k) * 1.2 * RIV_PLAN_W * RIV_FORM[form].pos, st, evalBuild, candidateMods, MOD_BY_ID, readOpts, parseRiven, buildModular, defaultAttack, applyEvos, boundAlts, boundCheck, renderResults, betterEvo, evoProbes, autoEvo,
     arcAuto: (w) => arcanesFor(w).filter(([, x]) => !x.manual && !x.none && !x.aim).map(([k]) => k).concat([null]) };
   restoreFromHash();
 })();
