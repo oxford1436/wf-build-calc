@@ -1,0 +1,361 @@
+{
+ "weapon": "arquebex",
+ "notes": "2026-11-17 알퀘벡스 질문. Overframe 무기 페이지 1쪽(투표순 25개) 중 17개 빌드의 모드 8칸을 페이지 데이터로 직접 읽음. 아카라이브 검색은 사이트 오류로 못 읽음, 레딧 글은 못 찾음. 알퀘벡스는 계산기 무기 목록에 없어(convert.py EX_SKIP) 이 폴더의 arq.js가 계산기 엔진에 무기·아크건 모드를 직접 넣어 계산.",
+ "tally": {
+  "Primed Rubedo-Lined Barrel": 17,
+  "Dual Rounds": 12,
+  "Hollowed Bullets": 17,
+  "Parallax Scope": 17,
+  "Combustion Rounds": 12,
+  "Polar Magazine": 4,
+  "Venomous Clip": 10,
+  "Electrified Barrel": 10,
+  "Automatic Trigger": 14,
+  "Primed Dual Rounds": 5,
+  "Primed Venomous Clip": 2,
+  "Hypothermic Shell": 5,
+  "Primed Combustion Rounds": 1,
+  "Sabot Rounds": 1,
+  "Charged Bullets": 1,
+  "Contamination Casing": 3,
+  "Quick Reload": 1,
+  "Magazine Extension": 1,
+  "Magma Chamber": 2,
+  "Magnetized Cycle": 1
+ },
+ "elements": {
+  "blast + corr + blast(내장)": 1,
+  "viral + heat + blast(내장)": 6,
+  "rad + blast(내장)": 1,
+  "corr + heat + blast(내장)": 5,
+  "rad + cold + blast(내장)": 1,
+  "corr + heat(내장) + blast(내장)": 1,
+  "viral + heat(내장) + blast(내장)": 1,
+  "rad + tox + blast(내장)": 1
+ },
+ "builds": [
+  {
+   "name": "Arquebex: Deimos Destroyer",
+   "community": "Overframe Solcarius (535 votes)",
+   "url": "https://overframe.gg/build/76116/",
+   "kind": "read",
+   "date": "2020-09-16",
+   "forma": 2,
+   "mods": [
+    "Primed Rubedo-Lined Barrel",
+    "Dual Rounds",
+    "Hollowed Bullets",
+    "Parallax Scope",
+    "Combustion Rounds",
+    "Polar Magazine",
+    "Venomous Clip",
+    "Electrified Barrel"
+   ],
+   "elements": "blast + corr + blast(내장)"
+  },
+  {
+   "name": "The Last Judgment for Everyday Use | Config A",
+   "community": "Overframe THeMooN85 (530 votes)",
+   "url": "https://overframe.gg/build/76939/",
+   "kind": "read",
+   "date": "2020-11-22",
+   "forma": 4,
+   "mods": [
+    "Parallax Scope",
+    "Dual Rounds",
+    "Polar Magazine",
+    "Venomous Clip",
+    "Hollowed Bullets",
+    "Combustion Rounds",
+    "Automatic Trigger",
+    "Primed Rubedo-Lined Barrel"
+   ],
+   "elements": "viral + heat + blast(내장)"
+  },
+  {
+   "name": "Arquebex: Maximum Possible damage/dps (Viral/heat)",
+   "community": "Overframe cheesetastegood (277 votes)",
+   "url": "https://overframe.gg/build/435440/",
+   "kind": "read",
+   "date": "2026-09-09",
+   "forma": 4,
+   "mods": [
+    "Primed Rubedo-Lined Barrel",
+    "Parallax Scope",
+    "Automatic Trigger",
+    "Hollowed Bullets",
+    "Primed Dual Rounds",
+    "Primed Venomous Clip",
+    "Hypothermic Shell",
+    "Primed Combustion Rounds"
+   ],
+   "elements": "viral + heat + blast(내장)"
+  },
+  {
+   "name": "The Last Judgment for Eidolons Hunt | Config B",
+   "community": "Overframe THeMooN85 (276 votes)",
+   "url": "https://overframe.gg/build/78110/",
+   "kind": "read",
+   "date": "2020-11-22",
+   "forma": 4,
+   "mods": [
+    "Sabot Rounds",
+    "Dual Rounds",
+    "Electrified Barrel",
+    "Parallax Scope",
+    "Hollowed Bullets",
+    "Combustion Rounds",
+    "Automatic Trigger",
+    "Primed Rubedo-Lined Barrel"
+   ],
+   "elements": "rad + blast(내장)"
+  },
+  {
+   "name": "The Last Judgment for Isolation Vaults | Config C",
+   "community": "Overframe THeMooN85 (169 votes)",
+   "url": "https://overframe.gg/build/78116/",
+   "kind": "read",
+   "date": "2020-11-22",
+   "forma": 4,
+   "mods": [
+    "Parallax Scope",
+    "Dual Rounds",
+    "Electrified Barrel",
+    "Venomous Clip",
+    "Hollowed Bullets",
+    "Combustion Rounds",
+    "Automatic Trigger",
+    "Primed Rubedo-Lined Barrel"
+   ],
+   "elements": "corr + heat + blast(내장)"
+  },
+  {
+   "name": "The Optimal Arquebex- Orphix, Eidolon, Profit Taker, General",
+   "community": "Overframe Michael5623 (112 votes)",
+   "url": "https://overframe.gg/build/308008/",
+   "kind": "read",
+   "date": "2022-06-23",
+   "forma": 3,
+   "mods": [
+    "Primed Rubedo-Lined Barrel",
+    "Dual Rounds",
+    "Parallax Scope",
+    "Hollowed Bullets",
+    "Automatic Trigger",
+    "Combustion Rounds",
+    "Electrified Barrel",
+    "Polar Magazine"
+   ],
+   "elements": "rad + cold + blast(내장)"
+  },
+  {
+   "name": "Arquebex: Orphix",
+   "community": "Overframe The-Simulacrum-Warriors (101 votes)",
+   "url": "https://overframe.gg/build/113739/",
+   "kind": "read",
+   "date": "2021-10-08",
+   "forma": 3,
+   "mods": [
+    "Primed Rubedo-Lined Barrel",
+    "Dual Rounds",
+    "Parallax Scope",
+    "Hollowed Bullets",
+    "Automatic Trigger",
+    "Venomous Clip",
+    "Electrified Barrel",
+    "Combustion Rounds"
+   ],
+   "elements": "corr + heat + blast(내장)"
+  },
+  {
+   "name": "Critical Destruction vs Factions",
+   "community": "Overframe lotodrandel (76 votes)",
+   "url": "https://overframe.gg/build/758750/",
+   "kind": "read",
+   "date": "2026-10-24",
+   "forma": 3,
+   "mods": [
+    "Electrified Barrel",
+    "Venomous Clip",
+    "Charged Bullets",
+    "Hollowed Bullets",
+    "Primed Rubedo-Lined Barrel",
+    "Primed Dual Rounds",
+    "Automatic Trigger",
+    "Parallax Scope"
+   ],
+   "elements": "corr + heat(내장) + blast(내장)"
+  },
+  {
+   "name": "Arquebex: General Use",
+   "community": "Overframe The-Simulacrum-Warriors (48 votes)",
+   "url": "https://overframe.gg/build/75425/",
+   "kind": "read",
+   "date": "2021-10-08",
+   "forma": 3,
+   "mods": [
+    "Primed Rubedo-Lined Barrel",
+    "Dual Rounds",
+    "Parallax Scope",
+    "Hollowed Bullets",
+    "Automatic Trigger",
+    "Contamination Casing",
+    "Hypothermic Shell",
+    "Combustion Rounds"
+   ],
+   "elements": "viral + heat + blast(내장)"
+  },
+  {
+   "name": "ARQUEBEX Build (1 million per shot)",
+   "community": "Overframe WetArgonCrystal (28 votes)",
+   "url": "https://overframe.gg/build/273327/",
+   "kind": "read",
+   "date": "2022-09-16",
+   "forma": 1,
+   "mods": [
+    "Hollowed Bullets",
+    "Polar Magazine",
+    "Venomous Clip",
+    "Parallax Scope",
+    "Dual Rounds",
+    "Primed Rubedo-Lined Barrel",
+    "Quick Reload",
+    "Magazine Extension"
+   ],
+   "elements": "viral + heat(내장) + blast(내장)"
+  },
+  {
+   "name": "Profit Taker Arquebex | Toxin Element",
+   "community": "Overframe xHappy- (14 votes)",
+   "url": "https://overframe.gg/build/332694/",
+   "kind": "read",
+   "date": "2023-12-29",
+   "forma": 3,
+   "mods": [
+    "Primed Rubedo-Lined Barrel",
+    "Parallax Scope",
+    "Hollowed Bullets",
+    "Dual Rounds",
+    "Automatic Trigger",
+    "Combustion Rounds",
+    "Electrified Barrel",
+    "Venomous Clip"
+   ],
+   "elements": "rad + tox + blast(내장)"
+  },
+  {
+   "name": "Wet For Entrati : Viral & Heat / Magnetic",
+   "community": "Overframe ImCalledBethy (11 votes)",
+   "url": "https://overframe.gg/build/821343/",
+   "kind": "read",
+   "date": "2026-09-19",
+   "forma": 2,
+   "mods": [
+    "Hypothermic Shell",
+    "Primed Venomous Clip",
+    "Hollowed Bullets",
+    "Magma Chamber",
+    "Primed Dual Rounds",
+    "Primed Rubedo-Lined Barrel",
+    "Magnetized Cycle",
+    "Parallax Scope"
+   ],
+   "elements": "viral + heat + blast(내장)"
+  },
+  {
+   "name": "RAINOLLON'S ARQUEBEX BUILD",
+   "community": "Overframe Rainollon (8 votes)",
+   "url": "https://overframe.gg/build/929924/",
+   "kind": "read",
+   "date": "2026-01-10",
+   "forma": 2,
+   "mods": [
+    "Primed Dual Rounds",
+    "Hollowed Bullets",
+    "Contamination Casing",
+    "Hypothermic Shell",
+    "Primed Rubedo-Lined Barrel",
+    "Automatic Trigger",
+    "Parallax Scope",
+    "Magma Chamber"
+   ],
+   "elements": "viral + heat + blast(내장)"
+  },
+  {
+   "name": "Arquebex godlike vs any faction",
+   "community": "Overframe Didjynn (4 votes)",
+   "url": "https://overframe.gg/build/830990/",
+   "kind": "read",
+   "date": "2025-06-20",
+   "forma": 4,
+   "mods": [
+    "Automatic Trigger",
+    "Primed Dual Rounds",
+    "Hollowed Bullets",
+    "Parallax Scope",
+    "Electrified Barrel",
+    "Primed Rubedo-Lined Barrel",
+    "Venomous Clip",
+    "Combustion Rounds"
+   ],
+   "elements": "corr + heat + blast(내장)"
+  },
+  {
+   "name": "Arquebex | Config A – General Usage",
+   "community": "Overframe Aekrios (4 votes)",
+   "url": "https://overframe.gg/build/233688/",
+   "kind": "read",
+   "date": "2021-10-17",
+   "forma": 3,
+   "mods": [
+    "Primed Rubedo-Lined Barrel",
+    "Dual Rounds",
+    "Hollowed Bullets",
+    "Parallax Scope",
+    "Automatic Trigger",
+    "Contamination Casing",
+    "Hypothermic Shell",
+    "Combustion Rounds"
+   ],
+   "elements": "viral + heat + blast(내장)"
+  },
+  {
+   "name": "General-purpose Arquebex",
+   "community": "Overframe Arsonistic (3 votes)",
+   "url": "https://overframe.gg/build/113737/",
+   "kind": "read",
+   "date": "2021-04-13",
+   "forma": 3,
+   "mods": [
+    "Primed Rubedo-Lined Barrel",
+    "Dual Rounds",
+    "Parallax Scope",
+    "Hollowed Bullets",
+    "Automatic Trigger",
+    "Electrified Barrel",
+    "Venomous Clip",
+    "Combustion Rounds"
+   ],
+   "elements": "corr + heat + blast(내장)"
+  },
+  {
+   "name": "Corrosive-Heat-Sentry",
+   "community": "Overframe M1LT1R (5 votes)",
+   "url": "https://overframe.gg/build/445238/",
+   "kind": "read",
+   "date": "2023-05-03",
+   "forma": 3,
+   "mods": [
+    "Primed Rubedo-Lined Barrel",
+    "Hollowed Bullets",
+    "Parallax Scope",
+    "Dual Rounds",
+    "Automatic Trigger",
+    "Electrified Barrel",
+    "Venomous Clip",
+    "Combustion Rounds"
+   ],
+   "elements": "corr + heat + blast(내장)"
+  }
+ ]
+}
