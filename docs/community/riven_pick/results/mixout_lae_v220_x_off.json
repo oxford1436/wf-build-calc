@@ -1,0 +1,151 @@
+{
+ "atk": "인카논 형태 한 발 전체 피해 (직격 + 폭발)",
+ "evo": {
+  "2": 1,
+  "3": 0,
+  "4": 2,
+  "5": 0
+ },
+ "scen": [
+  "crowd",
+  "boss",
+  "boss+{\"hpMult\":10}",
+  "boss+{\"hpMult\":10,\"stCap\":4}"
+ ],
+ "nCands": 42,
+ "seeds": [],
+ "found": [],
+ "evals": [
+  {
+   "n": "2000 EE #0 secondary_shiver",
+   "mods": [
+    "리벤",
+    "갈바나이즈드 디퓨젼",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "딥 프리즈",
+    "아네믹 어질리티",
+    "프라임드 컨벌션",
+    "호넷 스트라이크"
+   ],
+   "ids": [
+    "__riven",
+    "galvanized_diffusion",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "deep_freeze",
+    "anemic_agility",
+    "primed_convulsion",
+    "hornet_strike"
+   ],
+   "arcane": "secondary_shiver",
+   "riv": [
+    "dmg",
+    "ms",
+    "viralm"
+   ],
+   "neg": "cc",
+   "per": {
+    "crowd": 4.728313760876788,
+    "boss": 1.909453144046718,
+    "boss+{\"hpMult\":10}": 0.3609551189665298,
+    "boss+{\"hpMult\":10,\"stCap\":4}": 0.11639742612587965
+   },
+   "stat": {
+    "cc": 0,
+    "cd": 3.4,
+    "sc": 0.552,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+cold0.90+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+cold0.90+viral1.11": {
+     "crowd": 4.7283,
+     "boss": 1.9095,
+     "boss+{\"hpMult\":10}": 0.361,
+     "boss+{\"hpMult\":10,\"stCap\":4}": 0.1164
+    },
+    "impact1.00+viral2.61+elec1.65": {
+     "crowd": 4.687,
+     "boss": 0.4022,
+     "boss+{\"hpMult\":10}": 0.0459,
+     "boss+{\"hpMult\":10,\"stCap\":4}": 0.0325
+    },
+    "impact1.00+mag2.55+tox0.60+viral1.11": {
+     "crowd": 4.6813,
+     "boss": 0.4627,
+     "boss+{\"hpMult\":10}": 0.0544,
+     "boss+{\"hpMult\":10,\"stCap\":4}": 0.0344
+    }
+   }
+  },
+  {
+   "n": "2000 EE #1 cascadia_flare",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "호넷 스트라이크",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지",
+    "아네믹 어질리티"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "hornet_strike",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_convulsion",
+    "primed_heated_charge",
+    "anemic_agility"
+   ],
+   "arcane": "cascadia_flare",
+   "riv": [
+    "ms",
+    "dmg",
+    "viralm"
+   ],
+   "neg": "cc",
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 1.3400420081525775,
+    "boss+{\"hpMult\":10}": 0.17563474793631392,
+    "boss+{\"hpMult\":10,\"stCap\":4}": 0.11760042684202518
+   },
+   "stat": {
+    "cc": 0,
+    "cd": 3.4,
+    "sc": 0.552,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 1.34,
+     "boss+{\"hpMult\":10}": 0.1756,
+     "boss+{\"hpMult\":10,\"stCap\":4}": 0.1176
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.687,
+     "boss": 0.4489,
+     "boss+{\"hpMult\":10}": 0.0534,
+     "boss+{\"hpMult\":10,\"stCap\":4}": 0.0379
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.687,
+     "boss": 0.4224,
+     "boss+{\"hpMult\":10}": 0.0446,
+     "boss+{\"hpMult\":10,\"stCap\":4}": 0.0314
+    }
+   }
+  }
+ ],
+ "nStarts": 0,
+ "nEval": 24,
+ "errs": []
+}
