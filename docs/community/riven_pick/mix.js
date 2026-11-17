@@ -34,7 +34,7 @@ const job = JSON.parse(require("fs").readFileSync(process.argv[2], "utf8"));
       // one build has one element order in game, so every scenario is scored with the same arrangement: each arrangement
       // (o.layoutIdx) is evaluated in every scenario and the one with the best weighted product is kept
       const out = { per: {}, obj: -Infinity }; const eff = bd.ids.includes("__riven") ? rivEff(bd.riv, bd.neg, bd.form) : undefined;
-      const ev1 = (s, i) => { nEval++; return A.evalBuild(bd.ids, null, bd.arcane || null, Object.assign({}, O[s], { layoutIdx: i }), eff, null, w); };
+      const ev1 = (s, i) => { nEval++; return A.evalBuild(bd.ids, job.val || null, bd.arcane || null, Object.assign({}, O[s], { layoutIdx: i }), eff, null, w); };
       const layStr = (x) => x.layout ? Object.entries(x.layout.coef).filter(([, q]) => q > 0.005).map(([t, q]) => t + q.toFixed(2)).join("+") : "";
       const tab = {}; let n = 1;
       for (let i = 0; i < n; i++) for (const s of scen) { const x = ev1(s, i); n = Math.max(n, x.nLayouts || 1); const k = layStr(x); (tab[k] = tab[k] || {})[s] = x;
@@ -48,7 +48,7 @@ const job = JSON.parse(require("fs").readFileSync(process.argv[2], "utf8"));
     const mk = (sd) => ({ n: sd.n, ids: sd.ids || sd.mods.map(idOf), arcane: sd.arcane === undefined ? null : sd.arcane, riv: sd.riv || null, neg: sd.neg || null, form: sd.form || null });
     const show = (bd) => { const s = score(bd); return { n: bd.n, mods: bd.ids.map(ko), ids: bd.ids, arcane: bd.arcane, riv: bd.riv, neg: bd.neg, per: s.per, stat: s.stat, lay: s.lay, lays: s.lays }; };
     const out = { atk: atk.name, evo: st.evoSel, scen, nCands: cands.length, seeds: [], found: [], evals: [] };
-    const arcs = job.arcanes || Object.keys(window.WF_ARCANES).filter((k) => { const a = window.WF_ARCANES[k]; return a.slot === "secondary" && !a.manual && !a.none && !(a.types && !a.types.includes(w.type)); });
+    const arcs = job.arcanes || Object.keys(window.WF_ARCANES).filter((k) => { const a = window.WF_ARCANES[k]; return a.slot === (w.slot === "primary" ? "primary" : "secondary") && !a.manual && !a.none && !(a.types && !a.types.includes(w.type)); });
     // riven: three positives out of the natural stats, at most one of them a Riven Splicer stat (one spliced trait per riven)
     const keys = job.rivKeys || ["dmg", "ms", "cc", "cd", "fr", "sc", "heat", "cold", "tox", "elec"], spl = job.rivSplice || ["viralm", "corrm", "radm", "magm", "gasm", "blastm", "sd"];
     const triples = []; for (let i = 0; i < keys.length; i++) for (let j = i + 1; j < keys.length; j++) { for (let k = j + 1; k < keys.length; k++) triples.push([keys[i], keys[j], keys[k]]); for (const q of spl) triples.push([keys[i], keys[j], q]); }

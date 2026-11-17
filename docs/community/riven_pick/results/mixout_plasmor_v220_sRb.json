@@ -1,0 +1,712 @@
+{
+ "atk": "기본 사격",
+ "evo": {},
+ "scen": [
+  "crowd+{\"blastKillShot\":false}",
+  "single+{\"hpMult\":10}",
+  "single+{\"tier\":\"heavy\"}",
+  "single+{\"tier\":\"heavy\",\"og\":true}",
+  "boss"
+ ],
+ "nCands": 36,
+ "seeds": [
+  {
+   "n": "C0 현재",
+   "mods": [
+    "갈바나이즈드 헬",
+    "샷건 배러지",
+    "마그네틱 스트레이프",
+    "프라임드 칠링 그래스프",
+    "갈바나이즈드 새비",
+    "톡식 배러지",
+    "리벤",
+    "스캐터링 인페르노"
+   ],
+   "ids": [
+    "galvanized_hell",
+    "shotgun_barrage",
+    "magnetic_strafe",
+    "primed_chilling_grasp",
+    "galvanized_savvy",
+    "toxic_barrage",
+    "__riven",
+    "scattering_inferno"
+   ],
+   "arcane": "primary_merciless",
+   "riv": [
+    "fr",
+    "ms",
+    "ammoeff"
+   ],
+   "neg": null,
+   "per": {
+    "crowd+{\"blastKillShot\":false}": 1.4983592329718984,
+    "single+{\"hpMult\":10}": 0.4548165206116171,
+    "single+{\"tier\":\"heavy\"}": 1.8405405959630414,
+    "single+{\"tier\":\"heavy\",\"og\":true}": 1.4608380391109543,
+    "boss": 0.061394442632501094
+   },
+   "stat": {
+    "cc": 0.22,
+    "cd": 3.2,
+    "sc": 1.02,
+    "rate": 2.74,
+    "ms": 4.49
+   },
+   "lay": "rad0.63+viral2.63+heat0.60+mag0.60",
+   "lays": {
+    "rad0.63+viral2.63+heat0.60+mag0.60": {
+     "crowd+{\"blastKillShot\":false}": 1.4984,
+     "single+{\"hpMult\":10}": 0.4548,
+     "single+{\"tier\":\"heavy\"}": 1.8405,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 1.4608,
+     "boss": 0.0614
+    },
+    "rad0.63+gas1.57+cold1.65+mag0.60": {
+     "crowd+{\"blastKillShot\":false}": 1.1152,
+     "single+{\"hpMult\":10}": 0.113,
+     "single+{\"tier\":\"heavy\"}": 0.9359,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 0.7125,
+     "boss": 0.0106
+    },
+    "rad0.63+blast2.25+tox0.97+mag0.60": {
+     "crowd+{\"blastKillShot\":false}": 1.2175,
+     "single+{\"hpMult\":10}": 0.0997,
+     "single+{\"tier\":\"heavy\"}": 0.8463,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 0.6663,
+     "boss": 0.0094
+    }
+   }
+  },
+  {
+   "n": "C1 부식+자성 치명타(sA 1위)",
+   "mods": [
+    "마그네틱 스트레이프",
+    "갈바나이즈드 헬",
+    "프라임드 포인트 블랭크",
+    "프라임드 래비지",
+    "크리티컬 디셀러레이션",
+    "리벤",
+    "프라임드 차지드 쉘",
+    "샷건 배러지"
+   ],
+   "ids": [
+    "magnetic_strafe",
+    "galvanized_hell",
+    "primed_point_blank",
+    "primed_ravage",
+    "critical_deceleration",
+    "__riven",
+    "primed_charged_shell",
+    "shotgun_barrage"
+   ],
+   "arcane": "primary_merciless",
+   "riv": [
+    "fr",
+    "ms",
+    "ammoeff"
+   ],
+   "neg": null,
+   "per": {
+    "crowd+{\"blastKillShot\":false}": 2.0174516444470485,
+    "single+{\"hpMult\":10}": 0.22910978931660023,
+    "single+{\"tier\":\"heavy\"}": 1.7158851073127819,
+    "single+{\"tier\":\"heavy\",\"og\":true}": 1.4061347943179294,
+    "boss": 0.07535430245869652
+   },
+   "stat": {
+    "cc": 0.66,
+    "cd": 5.4,
+    "sc": 0.34,
+    "rate": 2.64,
+    "ms": 4.49
+   },
+   "lay": "rad0.63+corr2.02+mag0.60",
+   "lays": {
+    "rad0.63+corr2.02+mag0.60": {
+     "crowd+{\"blastKillShot\":false}": 2.0175,
+     "single+{\"hpMult\":10}": 0.2291,
+     "single+{\"tier\":\"heavy\"}": 1.7159,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 1.4061,
+     "boss": 0.0754
+    }
+   }
+  },
+  {
+   "n": "C2 C1 스트레이프>새비",
+   "mods": [
+    "갈바나이즈드 새비",
+    "갈바나이즈드 헬",
+    "프라임드 포인트 블랭크",
+    "프라임드 래비지",
+    "크리티컬 디셀러레이션",
+    "리벤",
+    "프라임드 차지드 쉘",
+    "샷건 배러지"
+   ],
+   "ids": [
+    "galvanized_savvy",
+    "galvanized_hell",
+    "primed_point_blank",
+    "primed_ravage",
+    "critical_deceleration",
+    "__riven",
+    "primed_charged_shell",
+    "shotgun_barrage"
+   ],
+   "arcane": "primary_merciless",
+   "riv": [
+    "fr",
+    "ms",
+    "ammoeff"
+   ],
+   "neg": null,
+   "per": {
+    "crowd+{\"blastKillShot\":false}": 1.7770217627657052,
+    "single+{\"hpMult\":10}": 0.24162965899260833,
+    "single+{\"tier\":\"heavy\"}": 1.923277641395266,
+    "single+{\"tier\":\"heavy\",\"og\":true}": 1.3949776839008026,
+    "boss": 0.05558899996728648
+   },
+   "stat": {
+    "cc": 0.66,
+    "cd": 5.4,
+    "sc": 0.612,
+    "rate": 2.42,
+    "ms": 4.49
+   },
+   "lay": "rad0.63+corr2.02",
+   "lays": {
+    "rad0.63+corr2.02": {
+     "crowd+{\"blastKillShot\":false}": 1.777,
+     "single+{\"hpMult\":10}": 0.2416,
+     "single+{\"tier\":\"heavy\"}": 1.9233,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 1.395,
+     "boss": 0.0556
+    }
+   }
+  },
+  {
+   "n": "C3 C1 차지드쉘>칠링(바이러스+자성)",
+   "mods": [
+    "마그네틱 스트레이프",
+    "갈바나이즈드 헬",
+    "프라임드 포인트 블랭크",
+    "프라임드 래비지",
+    "크리티컬 디셀러레이션",
+    "리벤",
+    "프라임드 칠링 그래스프",
+    "샷건 배러지"
+   ],
+   "ids": [
+    "magnetic_strafe",
+    "galvanized_hell",
+    "primed_point_blank",
+    "primed_ravage",
+    "critical_deceleration",
+    "__riven",
+    "primed_chilling_grasp",
+    "shotgun_barrage"
+   ],
+   "arcane": "primary_merciless",
+   "riv": [
+    "fr",
+    "ms",
+    "ammoeff"
+   ],
+   "neg": null,
+   "per": {
+    "crowd+{\"blastKillShot\":false}": 1.8146288770782348,
+    "single+{\"hpMult\":10}": 0.3400547128045973,
+    "single+{\"tier\":\"heavy\"}": 1.673864989063029,
+    "single+{\"tier\":\"heavy\",\"og\":true}": 1.5187095787984095,
+    "boss": 0.12422786628981249
+   },
+   "stat": {
+    "cc": 0.66,
+    "cd": 5.4,
+    "sc": 0.34,
+    "rate": 2.64,
+    "ms": 4.49
+   },
+   "lay": "rad0.63+viral2.02+mag0.60",
+   "lays": {
+    "rad0.63+viral2.02+mag0.60": {
+     "crowd+{\"blastKillShot\":false}": 1.8146,
+     "single+{\"hpMult\":10}": 0.3401,
+     "single+{\"tier\":\"heavy\"}": 1.6739,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 1.5187,
+     "boss": 0.1242
+    }
+   }
+  },
+  {
+   "n": "C4 메타: 새비·칠링·PPB·배러지",
+   "mods": [
+    "갈바나이즈드 새비",
+    "갈바나이즈드 헬",
+    "프라임드 포인트 블랭크",
+    "프라임드 래비지",
+    "크리티컬 디셀러레이션",
+    "리벤",
+    "프라임드 칠링 그래스프",
+    "샷건 배러지"
+   ],
+   "ids": [
+    "galvanized_savvy",
+    "galvanized_hell",
+    "primed_point_blank",
+    "primed_ravage",
+    "critical_deceleration",
+    "__riven",
+    "primed_chilling_grasp",
+    "shotgun_barrage"
+   ],
+   "arcane": "primary_merciless",
+   "riv": [
+    "fr",
+    "ms",
+    "ammoeff"
+   ],
+   "neg": null,
+   "per": {
+    "crowd+{\"blastKillShot\":false}": 1.7992283435382355,
+    "single+{\"hpMult\":10}": 0.3692381674794759,
+    "single+{\"tier\":\"heavy\"}": 1.7022702535428924,
+    "single+{\"tier\":\"heavy\",\"og\":true}": 1.4592609320394192,
+    "boss": 0.09432596099296324
+   },
+   "stat": {
+    "cc": 0.66,
+    "cd": 5.4,
+    "sc": 0.612,
+    "rate": 2.42,
+    "ms": 4.49
+   },
+   "lay": "rad0.63+viral2.02",
+   "lays": {
+    "rad0.63+viral2.02": {
+     "crowd+{\"blastKillShot\":false}": 1.7992,
+     "single+{\"hpMult\":10}": 0.3692,
+     "single+{\"tier\":\"heavy\"}": 1.7023,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 1.4593,
+     "boss": 0.0943
+    }
+   }
+  },
+  {
+   "n": "C5 바이러스+화염 치명타(sC 1위)",
+   "mods": [
+    "갈바나이즈드 헬",
+    "프라임드 포인트 블랭크",
+    "프라임드 래비지",
+    "프라임드 칠링 그래스프",
+    "크리티컬 디셀러레이션",
+    "톡식 배러지",
+    "리벤",
+    "블레이즈"
+   ],
+   "ids": [
+    "galvanized_hell",
+    "primed_point_blank",
+    "primed_ravage",
+    "primed_chilling_grasp",
+    "critical_deceleration",
+    "toxic_barrage",
+    "__riven",
+    "blaze"
+   ],
+   "arcane": "primary_merciless",
+   "riv": [
+    "fr",
+    "ms",
+    "ammoeff"
+   ],
+   "neg": null,
+   "per": {
+    "crowd+{\"blastKillShot\":false}": 1.578872270674615,
+    "single+{\"hpMult\":10}": 0.46023867999800605,
+    "single+{\"tier\":\"heavy\"}": 1.4313352619767687,
+    "single+{\"tier\":\"heavy\",\"og\":true}": 1.4313352619767687,
+    "boss": 0.18953853985866426
+   },
+   "stat": {
+    "cc": 0.66,
+    "cd": 5.4,
+    "sc": 0.544,
+    "rate": 1.89,
+    "ms": 4.49
+   },
+   "lay": "rad0.63+viral2.63+heat0.60",
+   "lays": {
+    "rad0.63+viral2.63+heat0.60": {
+     "crowd+{\"blastKillShot\":false}": 1.5789,
+     "single+{\"hpMult\":10}": 0.4602,
+     "single+{\"tier\":\"heavy\"}": 1.4313,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 1.4313,
+     "boss": 0.1895
+    },
+    "rad0.63+gas1.57+cold1.65": {
+     "crowd+{\"blastKillShot\":false}": 1.3463,
+     "single+{\"hpMult\":10}": 0.1383,
+     "single+{\"tier\":\"heavy\"}": 1.0518,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 0.8363,
+     "boss": 0.0476
+    },
+    "rad0.63+blast2.25+tox0.97": {
+     "crowd+{\"blastKillShot\":false}": 1.3319,
+     "single+{\"hpMult\":10}": 0.1255,
+     "single+{\"tier\":\"heavy\"}": 0.9612,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 0.8063,
+     "boss": 0.0449
+    }
+   }
+  },
+  {
+   "n": "C6 새비·스트레이프·칠링",
+   "mods": [
+    "마그네틱 스트레이프",
+    "갈바나이즈드 헬",
+    "프라임드 포인트 블랭크",
+    "프라임드 래비지",
+    "크리티컬 디셀러레이션",
+    "리벤",
+    "프라임드 칠링 그래스프",
+    "갈바나이즈드 새비"
+   ],
+   "ids": [
+    "magnetic_strafe",
+    "galvanized_hell",
+    "primed_point_blank",
+    "primed_ravage",
+    "critical_deceleration",
+    "__riven",
+    "primed_chilling_grasp",
+    "galvanized_savvy"
+   ],
+   "arcane": "primary_merciless",
+   "riv": [
+    "fr",
+    "ms",
+    "ammoeff"
+   ],
+   "neg": null,
+   "per": {
+    "crowd+{\"blastKillShot\":false}": 1.6545029034408736,
+    "single+{\"hpMult\":10}": 0.4636823170392231,
+    "single+{\"tier\":\"heavy\"}": 1.619716124119106,
+    "single+{\"tier\":\"heavy\",\"og\":true}": 1.5483645164423687,
+    "boss": 0.11022507217282229
+   },
+   "stat": {
+    "cc": 0.66,
+    "cd": 5.4,
+    "sc": 0.612,
+    "rate": 2.13,
+    "ms": 4.49
+   },
+   "lay": "rad0.63+viral2.02+mag0.60",
+   "lays": {
+    "rad0.63+viral2.02+mag0.60": {
+     "crowd+{\"blastKillShot\":false}": 1.6545,
+     "single+{\"hpMult\":10}": 0.4637,
+     "single+{\"tier\":\"heavy\"}": 1.6197,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 1.5484,
+     "boss": 0.1102
+    }
+   }
+  },
+  {
+   "n": "C7 폭발+블라이트(앱 1위)",
+   "mods": [
+    "리벤",
+    "갈바나이즈드 새비",
+    "프라임드 칠링 그래스프",
+    "갈바나이즈드 헬",
+    "크리티컬 디셀러레이션",
+    "프라임드 포인트 블랭크",
+    "샷건 배러지",
+    "스캐터링 인페르노"
+   ],
+   "ids": [
+    "__riven",
+    "galvanized_savvy",
+    "primed_chilling_grasp",
+    "galvanized_hell",
+    "critical_deceleration",
+    "primed_point_blank",
+    "shotgun_barrage",
+    "scattering_inferno"
+   ],
+   "arcane": "primary_blight",
+   "riv": [
+    "fr",
+    "ms",
+    "ammoeff"
+   ],
+   "neg": null,
+   "per": {
+    "crowd+{\"blastKillShot\":false}": 1.6329668871080054,
+    "single+{\"hpMult\":10}": 0.12244930734643156,
+    "single+{\"tier\":\"heavy\"}": 0.9810518233225916,
+    "single+{\"tier\":\"heavy\",\"og\":true}": 0.7802504970616692,
+    "boss": 0.04677165686530937
+   },
+   "stat": {
+    "cc": 0.66,
+    "cd": 6.08,
+    "sc": 0.816,
+    "rate": 2.25,
+    "ms": 5.21
+   },
+   "lay": "rad0.63+blast2.25+tox0.38",
+   "lays": {
+    "rad0.63+blast2.25+tox0.38": {
+     "crowd+{\"blastKillShot\":false}": 1.633,
+     "single+{\"hpMult\":10}": 0.1224,
+     "single+{\"tier\":\"heavy\"}": 0.9811,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 0.7803,
+     "boss": 0.0468
+    }
+   }
+  },
+  {
+   "n": "C8 메타+톡식(배러지 대신)",
+   "mods": [
+    "갈바나이즈드 새비",
+    "갈바나이즈드 헬",
+    "프라임드 포인트 블랭크",
+    "프라임드 래비지",
+    "크리티컬 디셀러레이션",
+    "리벤",
+    "프라임드 칠링 그래스프",
+    "톡식 배러지"
+   ],
+   "ids": [
+    "galvanized_savvy",
+    "galvanized_hell",
+    "primed_point_blank",
+    "primed_ravage",
+    "critical_deceleration",
+    "__riven",
+    "primed_chilling_grasp",
+    "toxic_barrage"
+   ],
+   "arcane": "primary_merciless",
+   "riv": [
+    "fr",
+    "ms",
+    "ammoeff"
+   ],
+   "neg": null,
+   "per": {
+    "crowd+{\"blastKillShot\":false}": 1.4187651562176458,
+    "single+{\"hpMult\":10}": 0.3897734797177329,
+    "single+{\"tier\":\"heavy\"}": 1.4313352619767687,
+    "single+{\"tier\":\"heavy\",\"og\":true}": 1.4313352619767687,
+    "boss": 0.09059248384208969
+   },
+   "stat": {
+    "cc": 0.66,
+    "cd": 5.4,
+    "sc": 0.816,
+    "rate": 1.89,
+    "ms": 4.49
+   },
+   "lay": "rad0.63+viral2.63",
+   "lays": {
+    "rad0.63+viral2.63": {
+     "crowd+{\"blastKillShot\":false}": 1.4188,
+     "single+{\"hpMult\":10}": 0.3898,
+     "single+{\"tier\":\"heavy\"}": 1.4313,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 1.4313,
+     "boss": 0.0906
+    }
+   }
+  },
+  {
+   "n": "C9 현재 +치명타 2칸(톡식·인페르노 대신)",
+   "mods": [
+    "갈바나이즈드 헬",
+    "샷건 배러지",
+    "마그네틱 스트레이프",
+    "프라임드 칠링 그래스프",
+    "갈바나이즈드 새비",
+    "크리티컬 디셀러레이션",
+    "리벤",
+    "프라임드 래비지"
+   ],
+   "ids": [
+    "galvanized_hell",
+    "shotgun_barrage",
+    "magnetic_strafe",
+    "primed_chilling_grasp",
+    "galvanized_savvy",
+    "critical_deceleration",
+    "__riven",
+    "primed_ravage"
+   ],
+   "arcane": "primary_merciless",
+   "riv": [
+    "fr",
+    "ms",
+    "ammoeff"
+   ],
+   "neg": null,
+   "per": {
+    "crowd+{\"blastKillShot\":false}": 1.786455496780058,
+    "single+{\"hpMult\":10}": 0.4439040865307543,
+    "single+{\"tier\":\"heavy\"}": 1.85325842097344,
+    "single+{\"tier\":\"heavy\",\"og\":true}": 1.7158851073127819,
+    "boss": 0.05524241077268057
+   },
+   "stat": {
+    "cc": 0.66,
+    "cd": 5.4,
+    "sc": 0.612,
+    "rate": 2.64,
+    "ms": 4.49
+   },
+   "lay": "rad0.63+viral2.02+mag0.60",
+   "lays": {
+    "rad0.63+viral2.02+mag0.60": {
+     "crowd+{\"blastKillShot\":false}": 1.7865,
+     "single+{\"hpMult\":10}": 0.4439,
+     "single+{\"tier\":\"heavy\"}": 1.8533,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 1.7159,
+     "boss": 0.0552
+    }
+   }
+  }
+ ],
+ "found": [
+  {
+   "n": "found from C0 현재",
+   "mods": [
+    "갈바나이즈드 헬",
+    "프라임드 래비지",
+    "샷건 배러지",
+    "프라임드 칠링 그래스프",
+    "크리티컬 디셀러레이션",
+    "톡식 배러지",
+    "리벤",
+    "블레이즈"
+   ],
+   "ids": [
+    "galvanized_hell",
+    "primed_ravage",
+    "shotgun_barrage",
+    "primed_chilling_grasp",
+    "critical_deceleration",
+    "toxic_barrage",
+    "__riven",
+    "blaze"
+   ],
+   "arcane": "primary_merciless",
+   "riv": [
+    "fr",
+    "ms",
+    "ammoeff"
+   ],
+   "neg": null,
+   "per": {
+    "crowd+{\"blastKillShot\":false}": 1.7337510493044348,
+    "single+{\"hpMult\":10}": 0.4752616959104972,
+    "single+{\"tier\":\"heavy\"}": 1.7575617480802175,
+    "single+{\"tier\":\"heavy\",\"og\":true}": 1.5066592330344948,
+    "boss": 0.13129552335184158
+   },
+   "stat": {
+    "cc": 0.66,
+    "cd": 5.4,
+    "sc": 0.544,
+    "rate": 2.42,
+    "ms": 4.49
+   },
+   "lay": "rad0.63+viral2.63+heat0.60",
+   "lays": {
+    "rad0.63+viral2.63+heat0.60": {
+     "crowd+{\"blastKillShot\":false}": 1.7338,
+     "single+{\"hpMult\":10}": 0.4753,
+     "single+{\"tier\":\"heavy\"}": 1.7576,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 1.5067,
+     "boss": 0.1313
+    },
+    "rad0.63+gas1.57+cold1.65": {
+     "crowd+{\"blastKillShot\":false}": 1.3749,
+     "single+{\"hpMult\":10}": 0.1335,
+     "single+{\"tier\":\"heavy\"}": 1.1408,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 0.8955,
+     "boss": 0.0312
+    },
+    "rad0.63+blast2.25+tox0.97": {
+     "crowd+{\"blastKillShot\":false}": 1.3842,
+     "single+{\"hpMult\":10}": 0.122,
+     "single+{\"tier\":\"heavy\"}": 1.1072,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 0.8597,
+     "boss": 0.0277
+    }
+   },
+   "g": -0.699797435757368
+  },
+  {
+   "n": "found from C1 부식+자성 치명타(sA 1위)",
+   "mods": [
+    "마그네틱 스트레이프",
+    "갈바나이즈드 헬",
+    "프라임드 포인트 블랭크",
+    "프라임드 래비지",
+    "크리티컬 디셀러레이션",
+    "리벤",
+    "프라임드 칠링 그래스프",
+    "샷건 배러지"
+   ],
+   "ids": [
+    "magnetic_strafe",
+    "galvanized_hell",
+    "primed_point_blank",
+    "primed_ravage",
+    "critical_deceleration",
+    "__riven",
+    "primed_chilling_grasp",
+    "shotgun_barrage"
+   ],
+   "arcane": "primary_merciless",
+   "riv": [
+    "fr",
+    "ms",
+    "ammoeff"
+   ],
+   "neg": null,
+   "per": {
+    "crowd+{\"blastKillShot\":false}": 1.8146288770782348,
+    "single+{\"hpMult\":10}": 0.3400547128045973,
+    "single+{\"tier\":\"heavy\"}": 1.673864989063029,
+    "single+{\"tier\":\"heavy\",\"og\":true}": 1.5187095787984095,
+    "boss": 0.12422786628981249
+   },
+   "stat": {
+    "cc": 0.66,
+    "cd": 5.4,
+    "sc": 0.34,
+    "rate": 2.64,
+    "ms": 4.49
+   },
+   "lay": "rad0.63+viral2.02+mag0.60",
+   "lays": {
+    "rad0.63+viral2.02+mag0.60": {
+     "crowd+{\"blastKillShot\":false}": 1.8146,
+     "single+{\"hpMult\":10}": 0.3401,
+     "single+{\"tier\":\"heavy\"}": 1.6739,
+     "single+{\"tier\":\"heavy\",\"og\":true}": 1.5187,
+     "boss": 0.1242
+    }
+   },
+   "g": -1.0395282498617877
+  }
+ ],
+ "evals": [],
+ "nStarts": 20,
+ "nEval": 62295,
+ "errs": []
+}
