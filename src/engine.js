@@ -341,7 +341,11 @@
   function ttk(p, until) {
     let hp = p.hp, sh = p.sh, og = p.og || 0, t = 0, lastRate = 1, dealt = 0, magT = -1, magDps = 0;
     const sh0 = p.sh || 0;
-    const dt = p.dt, r = p.r, Td = Math.max(0.5, p.Tdur);
+    // v2.20: the step is never longer than one fire interval. Status stacks are read once per step, so at the old fixed 0.2 s a
+    // 22 shots/s weapon landed 4.4 shots on the stack state of the step's start — in a fight of a few shots that froze Viral,
+    // Corrosive and Heat for most of it and made kill speed jump with the step boundary (independent review 2026-11-17, Laetum
+    // 1200%: Elemental Excess +8.4% at 0.2 s, +3.8% at 0.02 s). Floor 0.02 s keeps the cost bounded.
+    const r = p.r, dt = r > 0 ? Math.max(Math.min(0.02, p.dt), Math.min(p.dt, 1 / r)) : p.dt, Td = Math.max(0.5, p.Tdur);
     const win = [], winN = Math.max(1, Math.round(1 / dt)); let winSum = 0;
     const stepsMax = until ? Math.ceil(until / dt) - 1 : Math.ceil(p.tmax / dt);
     // stack-based multipliers after `shots` trigger pulls have landed their status procs

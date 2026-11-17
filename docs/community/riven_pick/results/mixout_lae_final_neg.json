@@ -1,0 +1,1593 @@
+{
+ "atk": "인카논 형태 한 발 전체 피해 (직격 + 폭발)",
+ "evo": {
+  "2": 1,
+  "3": 0,
+  "4": 1,
+  "5": 2
+ },
+ "scen": [
+  "crowd",
+  "boss",
+  "single+{\"hpMult\":10}",
+  "single+{\"hpMult\":100,\"kills\":false}",
+  "single+{\"hpMult\":100}",
+  "single+{\"hpMult\":100,\"stCap\":4}"
+ ],
+ "nCands": 42,
+ "seeds": [],
+ "found": [],
+ "evals": [
+  {
+   "n": "neg None",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 6.6091786606812555,
+    "single+{\"hpMult\":10}": 9.08370100433394,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.280065571462782,
+    "single+{\"hpMult\":100}": 1.6228128282543206,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.2957998635622787
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 6.6092,
+     "single+{\"hpMult\":10}": 9.0837,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.2801,
+     "single+{\"hpMult\":100}": 1.6228,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.2958
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9454,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7826,
+     "single+{\"hpMult\":100}": 0.9789,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8188
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9141,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7517,
+     "single+{\"hpMult\":100}": 0.9631,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8035
+    }
+   }
+  },
+  {
+   "n": "neg cc",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "cc",
+   "per": {
+    "crowd": 4.857289770892372,
+    "boss": 6.6091786606812555,
+    "single+{\"hpMult\":10}": 8.410369053891461,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.2096686519955198,
+    "single+{\"hpMult\":100}": 1.5271965027765038,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.2088196635998247
+   },
+   "stat": {
+    "cc": 1.05,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8573,
+     "boss": 6.6092,
+     "single+{\"hpMult\":10}": 8.4104,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.2097,
+     "single+{\"hpMult\":100}": 1.5272,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.2088
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.707,
+     "single+{\"hpMult\":10}": 6.2515,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7194,
+     "single+{\"hpMult\":100}": 0.9157,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.757
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.6788,
+     "single+{\"hpMult\":10}": 6.2037,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7043,
+     "single+{\"hpMult\":100}": 0.8971,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.7394
+    }
+   }
+  },
+  {
+   "n": "neg sc",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "sc",
+   "per": {
+    "crowd": 4.858962980188001,
+    "boss": 5.831424204965325,
+    "single+{\"hpMult\":10}": 7.596254329719201,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.0349326081296615,
+    "single+{\"hpMult\":100}": 1.3146625696439322,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.196951888483582
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.156,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.859,
+     "boss": 5.8314,
+     "single+{\"hpMult\":10}": 7.5963,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.0349,
+     "single+{\"hpMult\":100}": 1.3147,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.197
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8312,
+     "boss": 4.4067,
+     "single+{\"hpMult\":10}": 5.4957,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6707,
+     "single+{\"hpMult\":100}": 0.8485,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.7555
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8312,
+     "boss": 4.4067,
+     "single+{\"hpMult\":10}": 5.4957,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6621,
+     "single+{\"hpMult\":100}": 0.8429,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.7486
+    }
+   }
+  },
+  {
+   "n": "neg fr",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "fr",
+   "per": {
+    "crowd": 4.8333971412025045,
+    "boss": 5.364372645931081,
+    "single+{\"hpMult\":10}": 7.3728309814585815,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.0214640725846793,
+    "single+{\"hpMult\":100}": 1.3041981118368142,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.0434561728769214
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 17.08,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8334,
+     "boss": 5.3644,
+     "single+{\"hpMult\":10}": 7.3728,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.0215,
+     "single+{\"hpMult\":100}": 1.3042,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.0435
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.7985,
+     "boss": 3.948,
+     "single+{\"hpMult\":10}": 5.5445,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6232,
+     "single+{\"hpMult\":100}": 0.7885,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.6518
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.7985,
+     "boss": 3.948,
+     "single+{\"hpMult\":10}": 5.5445,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6033,
+     "single+{\"hpMult\":100}": 0.7651,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.634
+    }
+   }
+  },
+  {
+   "n": "neg dmg",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "dmg",
+   "per": {
+    "crowd": 4.857289770892372,
+    "boss": 5.950761593654672,
+    "single+{\"hpMult\":10}": 8.00349162766736,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.1344398936220084,
+    "single+{\"hpMult\":100}": 1.4337065339286186,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.110553895383073
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8573,
+     "boss": 5.9508,
+     "single+{\"hpMult\":10}": 8.0035,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.1344,
+     "single+{\"hpMult\":100}": 1.4337,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.1106
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8312,
+     "boss": 4.2659,
+     "single+{\"hpMult\":10}": 5.6886,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6696,
+     "single+{\"hpMult\":100}": 0.8542,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.6919
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8312,
+     "boss": 4.2354,
+     "single+{\"hpMult\":10}": 5.6886,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6542,
+     "single+{\"hpMult\":100}": 0.8381,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.6739
+    }
+   }
+  },
+  {
+   "n": "neg impact",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "impact",
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 6.6091786606812555,
+    "single+{\"hpMult\":10}": 8.410369053891461,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.2740266283156394,
+    "single+{\"hpMult\":100}": 1.6228128282543206,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.259198911592333
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 6.6092,
+     "single+{\"hpMult\":10}": 8.4104,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.274,
+     "single+{\"hpMult\":100}": 1.6228,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.2592
+    },
+    "gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.8623,
+     "single+{\"hpMult\":10}": 6.4928,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7548,
+     "single+{\"hpMult\":100}": 0.9615,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.7923
+    },
+    "rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.8623,
+     "single+{\"hpMult\":10}": 6.4928,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7369,
+     "single+{\"hpMult\":100}": 0.9467,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.7693
+    }
+   }
+  },
+  {
+   "n": "neg x_zoom",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "x_zoom",
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 6.6091786606812555,
+    "single+{\"hpMult\":10}": 9.08370100433394,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.280065571462782,
+    "single+{\"hpMult\":100}": 1.6228128282543206,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.2957998635622787
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 6.6092,
+     "single+{\"hpMult\":10}": 9.0837,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.2801,
+     "single+{\"hpMult\":100}": 1.6228,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.2958
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9454,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7826,
+     "single+{\"hpMult\":100}": 0.9789,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8188
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9141,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7517,
+     "single+{\"hpMult\":100}": 0.9631,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8035
+    }
+   }
+  },
+  {
+   "n": "neg reload",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "reload",
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 6.6091786606812555,
+    "single+{\"hpMult\":10}": 9.08370100433394,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.280065571462782,
+    "single+{\"hpMult\":100}": 1.6228128282543206,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.2957998635622787
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 6.6092,
+     "single+{\"hpMult\":10}": 9.0837,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.2801,
+     "single+{\"hpMult\":100}": 1.6228,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.2958
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9454,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7826,
+     "single+{\"hpMult\":100}": 0.9789,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8188
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9141,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7517,
+     "single+{\"hpMult\":100}": 0.9631,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8035
+    }
+   }
+  },
+  {
+   "n": "neg mag",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "mag",
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 6.6091786606812555,
+    "single+{\"hpMult\":10}": 9.08370100433394,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.280065571462782,
+    "single+{\"hpMult\":100}": 1.6228128282543206,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.2957998635622787
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 6.6092,
+     "single+{\"hpMult\":10}": 9.0837,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.2801,
+     "single+{\"hpMult\":100}": 1.6228,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.2958
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9454,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7826,
+     "single+{\"hpMult\":100}": 0.9789,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8188
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9141,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7517,
+     "single+{\"hpMult\":100}": 0.9631,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8035
+    }
+   }
+  },
+  {
+   "n": "neg x_recoil",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "x_recoil",
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 6.6091786606812555,
+    "single+{\"hpMult\":10}": 9.08370100433394,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.280065571462782,
+    "single+{\"hpMult\":100}": 1.6228128282543206,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.2957998635622787
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 6.6092,
+     "single+{\"hpMult\":10}": 9.0837,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.2801,
+     "single+{\"hpMult\":100}": 1.6228,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.2958
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9454,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7826,
+     "single+{\"hpMult\":100}": 0.9789,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8188
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9141,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7517,
+     "single+{\"hpMult\":100}": 0.9631,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8035
+    }
+   }
+  },
+  {
+   "n": "neg x_speed",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "x_speed",
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 6.6091786606812555,
+    "single+{\"hpMult\":10}": 9.08370100433394,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.280065571462782,
+    "single+{\"hpMult\":100}": 1.6228128282543206,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.2957998635622787
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 6.6092,
+     "single+{\"hpMult\":10}": 9.0837,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.2801,
+     "single+{\"hpMult\":100}": 1.6228,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.2958
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9454,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7826,
+     "single+{\"hpMult\":100}": 0.9789,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8188
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9141,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7517,
+     "single+{\"hpMult\":100}": 0.9631,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8035
+    }
+   }
+  },
+  {
+   "n": "neg x_ammo",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "x_ammo",
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 6.6091786606812555,
+    "single+{\"hpMult\":10}": 9.08370100433394,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.280065571462782,
+    "single+{\"hpMult\":100}": 1.6228128282543206,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.2957998635622787
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 6.6092,
+     "single+{\"hpMult\":10}": 9.0837,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.2801,
+     "single+{\"hpMult\":100}": 1.6228,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.2958
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9454,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7826,
+     "single+{\"hpMult\":100}": 0.9789,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8188
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9141,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7517,
+     "single+{\"hpMult\":100}": 0.9631,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8035
+    }
+   }
+  },
+  {
+   "n": "neg dur",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "dur",
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 6.6091786606812555,
+    "single+{\"hpMult\":10}": 9.08370100433394,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.1250517983564958,
+    "single+{\"hpMult\":100}": 1.4983690411913135,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.2957998635622787
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 6.6092,
+     "single+{\"hpMult\":10}": 9.0837,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.1251,
+     "single+{\"hpMult\":100}": 1.4984,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.2958
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.769,
+     "single+{\"hpMult\":10}": 6.9591,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6165,
+     "single+{\"hpMult\":100}": 0.83,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8081
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.769,
+     "single+{\"hpMult\":10}": 6.9591,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6097,
+     "single+{\"hpMult\":100}": 0.8181,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8028
+    }
+   }
+  },
+  {
+   "n": "neg fac_g",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "fac_g",
+   "per": {
+    "crowd": 4.7596019962186,
+    "boss": 6.100147420752609,
+    "single+{\"hpMult\":10}": 8.410369053891461,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.1259892388457544,
+    "single+{\"hpMult\":100}": 1.4330720974504387,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.117335442624949
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.7596,
+     "boss": 6.1001,
+     "single+{\"hpMult\":10}": 8.4104,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.126,
+     "single+{\"hpMult\":100}": 1.4331,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.1173
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.7105,
+     "boss": 4.3033,
+     "single+{\"hpMult\":10}": 6.1471,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6504,
+     "single+{\"hpMult\":100}": 0.8117,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.6739
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.7105,
+     "boss": 4.2801,
+     "single+{\"hpMult\":10}": 6.1471,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6258,
+     "single+{\"hpMult\":100}": 0.8016,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.6625
+    }
+   }
+  },
+  {
+   "n": "neg fac_c",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "fac_c",
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 5.416094607407435,
+    "single+{\"hpMult\":10}": 7.443918004147788,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.1020489338080484,
+    "single+{\"hpMult\":100}": 1.395985692516702,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.0736790155094085
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 5.4161,
+     "single+{\"hpMult\":10}": 7.4439,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.102,
+     "single+{\"hpMult\":100}": 1.396,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.0737
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.0526,
+     "single+{\"hpMult\":10}": 5.7467,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6651,
+     "single+{\"hpMult\":100}": 0.8421,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.6814
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.027,
+     "single+{\"hpMult\":10}": 5.7467,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6471,
+     "single+{\"hpMult\":100}": 0.8285,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.6658
+    }
+   }
+  },
+  {
+   "n": "neg fac_i",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "fac_i",
+   "per": {
+    "crowd": 4.857103464624967,
+    "boss": 5.665678638469937,
+    "single+{\"hpMult\":10}": 7.842988509501553,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.1088806707176337,
+    "single+{\"hpMult\":100}": 1.4080241627832906,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.085103940067227
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8571,
+     "boss": 5.6657,
+     "single+{\"hpMult\":10}": 7.843,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.1089,
+     "single+{\"hpMult\":100}": 1.408,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.0851
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8093,
+     "boss": 4.1974,
+     "single+{\"hpMult\":10}": 5.7647,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6734,
+     "single+{\"hpMult\":100}": 0.8451,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.6793
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8093,
+     "boss": 4.1708,
+     "single+{\"hpMult\":10}": 5.7647,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6464,
+     "single+{\"hpMult\":100}": 0.8314,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.6652
+    }
+   }
+  },
+  {
+   "n": "neg punct",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "punct",
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 6.6091786606812555,
+    "single+{\"hpMult\":10}": 9.08370100433394,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.280065571462782,
+    "single+{\"hpMult\":100}": 1.6228128282543206,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.2957998635622787
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 6.6092,
+     "single+{\"hpMult\":10}": 9.0837,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.2801,
+     "single+{\"hpMult\":100}": 1.6228,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.2958
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9454,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7826,
+     "single+{\"hpMult\":100}": 0.9789,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8188
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9141,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7517,
+     "single+{\"hpMult\":100}": 0.9631,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8035
+    }
+   }
+  },
+  {
+   "n": "neg slash",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "slash",
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 6.6091786606812555,
+    "single+{\"hpMult\":10}": 9.08370100433394,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.280065571462782,
+    "single+{\"hpMult\":100}": 1.6228128282543206,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.2957998635622787
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 6.6092,
+     "single+{\"hpMult\":10}": 9.0837,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.2801,
+     "single+{\"hpMult\":100}": 1.6228,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.2958
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9454,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7826,
+     "single+{\"hpMult\":100}": 0.9789,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8188
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9141,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7517,
+     "single+{\"hpMult\":100}": 0.9631,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8035
+    }
+   }
+  },
+  {
+   "n": "neg heat",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "heat",
+   "per": {
+    "crowd": 4.857289770892372,
+    "boss": 6.3180316406323795,
+    "single+{\"hpMult\":10}": 8.204408467916073,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.18725783588878,
+    "single+{\"hpMult\":100}": 1.5163535493567362,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.1249477692785945
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat0.76+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat0.76+viral1.11": {
+     "crowd": 4.8573,
+     "boss": 6.318,
+     "single+{\"hpMult\":10}": 8.2044,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.1873,
+     "single+{\"hpMult\":100}": 1.5164,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.1249
+    },
+    "impact1.00+gas1.36+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.707,
+     "single+{\"hpMult\":10}": 6.2515,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7091,
+     "single+{\"hpMult\":100}": 0.8991,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.725
+    },
+    "impact1.00+rad2.41+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.6788,
+     "single+{\"hpMult\":10}": 6.2037,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6884,
+     "single+{\"hpMult\":100}": 0.8831,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.6889
+    }
+   }
+  },
+  {
+   "n": "neg cold",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "cold",
+   "per": {
+    "crowd": 4.8672345936735315,
+    "boss": 6.6091786606812555,
+    "single+{\"hpMult\":10}": 9.08370100433394,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.280065571462782,
+    "single+{\"hpMult\":100}": 1.6228128282543206,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.2957998635622787
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.8672,
+     "boss": 6.6092,
+     "single+{\"hpMult\":10}": 9.0837,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.2801,
+     "single+{\"hpMult\":100}": 1.6228,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.2958
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9454,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7826,
+     "single+{\"hpMult\":100}": 0.9789,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8188
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.9141,
+     "single+{\"hpMult\":10}": 7.0126,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7517,
+     "single+{\"hpMult\":100}": 0.9631,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.8035
+    }
+   }
+  },
+  {
+   "n": "neg elec",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "elec",
+   "per": {
+    "crowd": 4.857289770892372,
+    "boss": 6.191328968078042,
+    "single+{\"hpMult\":10}": 8.204408467916073,
+    "single+{\"hpMult\":100,\"kills\":false}": 1.1713046699292051,
+    "single+{\"hpMult\":100}": 1.5013090391442192,
+    "single+{\"hpMult\":100,\"stCap\":4}": 1.1290944518291206
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr1.36+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr1.36+heat1.65+viral1.11": {
+     "crowd": 4.8573,
+     "boss": 6.1913,
+     "single+{\"hpMult\":10}": 8.2044,
+     "single+{\"hpMult\":100,\"kills\":false}": 1.1713,
+     "single+{\"hpMult\":100}": 1.5013,
+     "single+{\"hpMult\":100,\"stCap\":4}": 1.1291
+    },
+    "impact1.00+gas2.25+elec0.76+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.707,
+     "single+{\"hpMult\":10}": 6.2515,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7005,
+     "single+{\"hpMult\":100}": 0.8938,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.7182
+    },
+    "impact1.00+rad2.41+tox0.60+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.6788,
+     "single+{\"hpMult\":10}": 6.2037,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.6884,
+     "single+{\"hpMult\":100}": 0.8831,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.6889
+    }
+   }
+  },
+  {
+   "n": "neg tox",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "tox",
+   "per": {
+    "crowd": 4.839306327151078,
+    "boss": 4.743223422580535,
+    "single+{\"hpMult\":10}": 6.251476590990544,
+    "single+{\"hpMult\":100,\"kills\":false}": 0.7103998895479641,
+    "single+{\"hpMult\":100}": 0.912593011891479,
+    "single+{\"hpMult\":100,\"stCap\":4}": 0.7305984258288963
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+rad3.30+viral1.11",
+   "lays": {
+    "impact1.00+rad3.30+viral1.11": {
+     "crowd": 4.8393,
+     "boss": 4.7432,
+     "single+{\"hpMult\":10}": 6.2515,
+     "single+{\"hpMult\":100,\"kills\":false}": 0.7104,
+     "single+{\"hpMult\":100}": 0.9126,
+     "single+{\"hpMult\":100,\"stCap\":4}": 0.7306
+    }
+   }
+  }
+ ],
+ "nStarts": 0,
+ "nEval": 384,
+ "errs": []
+}

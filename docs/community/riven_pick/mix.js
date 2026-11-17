@@ -15,7 +15,10 @@ const job = JSON.parse(require("fs").readFileSync(process.argv[2], "utf8"));
   const r = await pg.evaluate((job) => {
     const A = window.WF_APP, E = window.WFEngine, st = A.st, w = st.weapon, atk = w.attacks[st.atk], cls = w.cls === "pistol" ? "pistol" : w.cls;
     const scen = Object.keys(job.weights || { crowd: 1, boss: 1 }), wt = job.weights || { crowd: 1, boss: 1 };
-    const O = {}; for (const s of scen) { const [sc, extra] = s.split("+"); O[s] = Object.assign(A.readOpts(), { scenario: sc }, extra ? JSON.parse(extra) : {}, job.o || {}); O[s].targets = E.targetsFor(O[s]); }
+    const O = {}; for (const s of scen) { const [sc, extra] = s.split("+"); O[s] = Object.assign(A.readOpts(), { scenario: sc }, extra ? JSON.parse(extra) : {}, job.o || {}); O[s].targets = E.targetsFor(O[s]);
+      // "single+{"tier":"heavy","hpMult":10}" = the boss target (heavy unit, health and shields x10) fought among a pack, so on-kill
+      // stacks (Galvanized mods) are up — the engine's own boss scenario always runs without them
+      if (O[s].hpMult) for (const k of ["lo", "hi", "top"]) for (const f of Object.keys(O[s].targets[k])) for (const t of Object.values(O[s].targets[k][f])) { if (t && t.hp) { t.hp *= O[s].hpMult; t.sh *= O[s].hpMult; } } }
     const cands = [...new Map([].concat(A.candidateMods(w, atk, { boss: false }), A.candidateMods(w, atk, { boss: true })).filter((m) => !m.exilus && !m.manual).map((m) => [m.id, m])).values()];
     const idOf = (n) => /^riven/i.test(n) ? "__riven" : (window.WF_MODS.find((m) => m.en === n) || { id: "?" + n }).id;
     const ko = (id) => id === "__riven" ? "리벤" : (A.MOD_BY_ID[id] || { ko: id }).ko;

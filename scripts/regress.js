@@ -306,6 +306,15 @@ const { chromium } = require("playwright");
         const s0 = E.evaluate(w, oa, cr, oG).score, s10 = E.evaluate(w, oa, cr, Object.assign({}, oG, { stCap: 10 })).score, s1 = E.evaluate(w, oa, cr, Object.assign({}, oG, { stCap: 1 })).score;
         check("v2.19 상태이상 중첩 제한 대상은 옵션(o.stCap) — 기본은 10중첩 그대로, 1중첩으로 제한하면 부식에 기대는 그리니어 보스 점수가 내려감", Math.abs(s10 / s0 - 1) < 1e-9 && s1 < s0 * 0.9 && s1 > 0, `x${(s1 / s0).toFixed(2)}`);
       }
+      // v2.20: one step of the kill-time loop is never longer than one fire interval (status stacks are read once per step; at a
+      // fixed 0.2 s a 16.7 shots/s weapon landed 3 shots on the stacks of the step's start) — so a fast weapon's score no longer
+      // moves with o.dt (0.2 vs 0.1 s; both become 1/16.7 s)
+      {
+        const fast = ["Primed Target Cracker", "Lethal Torrent", "Anemic Agility", "Galvanized Diffusion", "Primed Heated Charge", "Pistol Pestilence", "Primed Convulsion"].map(M);
+        const oF = Object.assign(baseO(), { scenario: "boss", arcane: "secondary_enervate" });
+        const d2 = E.evaluate(w, oa, fast, Object.assign({}, oF, { dt: 0.2 })).score, d1 = E.evaluate(w, oa, fast, Object.assign({}, oF, { dt: 0.1 })).score;
+        check("v2.20 처치 시간 계산의 한 스텝이 발 간격을 넘지 않음 — 연사가 빠른 무기의 점수가 스텝 길이(0.2초 ↔ 0.1초)에 따라 달라지지 않음", Math.abs(d2 / d1 - 1) < 1e-6 && d2 > 0, `x${(d2 / d1).toFixed(4)}`);
+      }
     }
     // v1.62: community builds read from their source compete with the search (cfg.seeds) — a stronger one becomes #1,
     // one with mods the game won't equip together is never returned
