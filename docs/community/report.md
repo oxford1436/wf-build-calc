@@ -11,15 +11,15 @@
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
 | [Item Level 컴프레션 (서레이션·프라임드 파이어스톰, 바이러스)](https://itemlevel.net/warframe-acceltra-prime-compression-build-guide-2026/) | itemlevel | 바이러스 | 32% | 34% | 21% | — |
-| [Nerd Stash 바이러스 + 헌터 뮤니션즈 (갈바나이즈드 앱티튜드, 애모 뮤테이션)](https://thenerdstash.com/best-warframe-acceltra-prime-build-guide) | thenerdstash | 바이러스 | 58% | 81% | 11% | — |
+| [Nerd Stash 바이러스 + 헌터 뮤니션즈 (갈바나이즈드 앱티튜드, 애모 뮤테이션)](https://thenerdstash.com/best-warframe-acceltra-prime-build-guide) | thenerdstash | 바이러스 | 58% | 78% | 11% | — |
 
 **커뮤니티 메타** (세팅 2개)
 
 - 속성 조합: 바이러스 2 — 계산기 1위(리벤 없이): 바이러스+화염+자성
 - 자주 쓰는 모드: 갈바나이즈드 체임버 2 · 크리티컬 딜레이 2 · 바이탈 센스 2 · 바일 액셀러레이션 2 · 서레이션 1 · 프라임드 파이어스톰 1 · 멀리그난트 포스 1 · 라임 라운즈 1 · 갈바나이즈드 앱티튜드 1 · 프라임드 크라이오 라운즈 1
 - 아케인: 프라이머리 컴프레션 1 · 프라이머리 머시리스 1
-- 커뮤니티 인기 모드인데 1위에 없음: 크리티컬 딜레이(포인트 스트라이크 대신 넣으면 98%) · 바일 액셀러레이션(써마이트 라운즈 대신 넣으면 88%)
-- 1위에만 있는 모드: 포인트 스트라이크(빼고 크리티컬 딜레이로 바꾸면 98%) · 마그네틱 캐퍼시티(빼고 바일 액셀러레이션로 바꾸면 80%) · 써마이트 라운즈(빼고 바일 액셀러레이션로 바꾸면 88%)
+- 커뮤니티 인기 모드인데 1위에 없음: 크리티컬 딜레이(포인트 스트라이크 대신 넣으면 100%) · 바일 액셀러레이션(써마이트 라운즈 대신 넣으면 90%)
+- 1위에만 있는 모드: 포인트 스트라이크(빼고 크리티컬 딜레이로 바꾸면 100%) · 마그네틱 캐퍼시티(빼고 바일 액셀러레이션로 바꾸면 78%) · 써마이트 라운즈(빼고 바일 액셀러레이션로 바꾸면 90%)
 
 ## 아토모스 (atomos.json)
 
@@ -31,12 +31,12 @@
 
 ## 보어 프라임 (boar_prime.json)
 
-계산기 1위: 갈바나이즈드 헬, 갈바나이즈드 새비, 프라임드 칠링 그래스프, 톡식 배러지, 블레이즈, 마그네틱 스트레이프, 프라임드 애모 스톡, 시킹 퓨리 · primary_plated_round
+계산기 1위: 갈바나이즈드 헬, 프라임드 칠링 그래스프, 톡식 배러지, 갈바나이즈드 새비, 마그네틱 스트레이프, 블레이즈, 시킹 퓨리, 크리티컬 디셀러레이션 · primary_merciless
 
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [아카라이브 187639117 사이트-09 강철 균열 범람 레벨캡 (전기, 리벤 멀티샷·연사·탄약 효율)](https://arca.live/b/warframe/187639117) | arca.live 워프레임 채널 | 전기 | 2% | 2% | 2% | 인식 못 함: 리벤 수치 없음 |
-| [Overframe 917889 Meta Arbitration Boar Prime (Max Pellets) - Host Weapon](https://overframe.gg/build/917889/) | Overframe Kuva_Generator (9 votes) | 물리 위주 | 0% | 0% | 0% | 인식 못 함: 리벤 수치 없음 |
+| [아카라이브 187639117 사이트-09 강철 균열 범람 레벨캡 (전기, 리벤 멀티샷·연사·탄약 효율)](https://arca.live/b/warframe/187639117) | arca.live 워프레임 채널 | 전기 | 2% | 2% | 3% | 인식 못 함: 리벤 수치 없음 |
+| [Overframe 917889 Meta Arbitration Boar Prime (Max Pellets) - Host Weapon](https://overframe.gg/build/917889/) | Overframe Kuva_Generator (9 votes) | 물리 위주 | 0% | 0% | 1% | 인식 못 함: 리벤 수치 없음 |
 
 ## 브래튼 프라임 (braton_prime.json)
 
@@ -45,22 +45,22 @@
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
 | [Overframe 777150 Rainollon 데드헤드 (인카논 형태)](https://overframe.gg/build/777150/braton-prime/rainollons-braton-prime-incarnon-deadhead-build-2025/) | overframe | 폭발 | 3% | 2% | 6% | — |
-| [Overframe 461627 ninjase 핵심 모드 (주장만 — 고정 8칸 아님)](https://overframe.gg/build/461627/) | overframe (주장 시험) | 바이러스 | 58% | 48% | 77% | — |
+| [Overframe 461627 ninjase 핵심 모드 (주장만 — 고정 8칸 아님)](https://overframe.gg/build/461627/) | overframe (주장 시험) | 바이러스 | 60% | 48% | 77% | — |
 
 ## 버스튼 프라임 (burston_prime.json)
 
-계산기 1위: 프라임드 크라이오 라운즈, 갈바나이즈드 체임버, 크리티컬 딜레이, 해머 샷, 라이플 엘리멘탈리스트, 바이탈 센스, 서레이션, 바일 액셀러레이션 · primary_merciless
+계산기 1위: 프라임드 크라이오 라운즈, 갈바나이즈드 체임버, 바이탈 센스, 서레이션, 해머 샷, 라이플 엘리멘탈리스트, 바일 액셀러레이션, 크리티컬 딜레이 · primary_merciless
 
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [sportskeeda Build 1 바이러스 + 베기 (인카논 형태)](https://sportskeeda.com/mmo/warframe-burston-incarnon-build-guide-best-evolution-talents-mod-setup) | sportskeeda | 바이러스+화염 | 25% | 20% | 36% | 인식 못 함: Primed Bane of Orokin |
-| [sportskeeda Build 2 (갈바나이즈드 스코프, 조준 헤드샷)](https://sportskeeda.com/mmo/warframe-burston-incarnon-build-guide-best-evolution-talents-mod-setup) | sportskeeda | 부식+화염 | 14% | 12% | 20% | — |
-| 사용자 구성 A (2026-11-07) | session | 폭발 | 51% | 49% | 54% | 인식 못 함: 리벤 수치 없음 |
-| 추천 v1.90 (보유 리벤, 기본·인카논 공용) | session | 자성+폭발 | 39% | 42% | 21% | 인식 못 함: 리벤 수치 없음 |
-| 추천 v1.90 — 프라임드 슈레드 없음 | session | 자성+폭발 | 29% | 33% | 13% | 인식 못 함: 리벤 수치 없음 |
+| [sportskeeda Build 1 바이러스 + 베기 (인카논 형태)](https://sportskeeda.com/mmo/warframe-burston-incarnon-build-guide-best-evolution-talents-mod-setup) | sportskeeda | 바이러스+화염 | 25% | 21% | 37% | 인식 못 함: Primed Bane of Orokin |
+| [sportskeeda Build 2 (갈바나이즈드 스코프, 조준 헤드샷)](https://sportskeeda.com/mmo/warframe-burston-incarnon-build-guide-best-evolution-talents-mod-setup) | sportskeeda | 부식+화염 | 15% | 12% | 20% | — |
+| 사용자 구성 A (2026-11-07) | session | 폭발 | 51% | 49% | 53% | 인식 못 함: 리벤 수치 없음 |
+| 추천 v1.90 (보유 리벤, 기본·인카논 공용) | session | 자성+폭발 | 39% | 43% | 22% | 인식 못 함: 리벤 수치 없음 |
+| 추천 v1.90 — 프라임드 슈레드 없음 | session | 자성+폭발 | 30% | 34% | 14% | 인식 못 함: 리벤 수치 없음 |
 | 추천 v1.91 — 무리·보스 균형 (보유 리벤) | session | 폭발 | 31% | 31% | 34% | 인식 못 함: 리벤 수치 없음 |
 | 추천 v1.92 — 무리·보스 균형 (보유 리벤, 탄 퍼짐 반영) | session | 폭발 | 48% | 46% | 52% | 인식 못 함: 리벤 수치 없음 |
-| 추천 v1.92 — 인카논 형태 (보유 리벤, 사용자 운용) | session | 폭발 | 52% | 49% | 55% | 인식 못 함: 리벤 수치 없음 |
+| 추천 v1.92 — 인카논 형태 (보유 리벤, 사용자 운용) | session | 폭발 | 51% | 50% | 55% | 인식 못 함: 리벤 수치 없음 |
 
 ## 세도 프라임 (cedo_prime.json)
 
@@ -69,9 +69,9 @@
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
 | [Overframe 816108 바이러스 + 글레이브 프라이밍 (U44)](https://overframe.gg/build/816108/) | overframe | 바이러스+자성 | 95% | 93% | 103% | — |
-| [Destructoid 2025 바이러스 + 방사능 + 화염](https://www.destructoid.com/best-cedo-prime-build-in-warframe/) | destructoid | 바이러스+화염+방사능 | 56% | 54% | 77% | — |
-| 사용자 지금 세팅 (구성 A, 2026-11-07 스크린샷) |  | 자성 | 73% | 73% | 67% | 인식 못 함: 리벤 수치 없음 |
-| 추천 (v1.95 검토 반영, 보유 리벤, 기본 사격 + 글레이브 프라이밍) |  | 자성 | 73% | 73% | 67% | 인식 못 함: 리벤 수치 없음 |
+| [Destructoid 2025 바이러스 + 방사능 + 화염](https://www.destructoid.com/best-cedo-prime-build-in-warframe/) | destructoid | 바이러스+화염+방사능 | 56% | 53% | 77% | — |
+| 사용자 지금 세팅 (구성 A, 2026-11-07 스크린샷) |  | 자성 | 73% | 73% | 68% | 인식 못 함: 리벤 수치 없음 |
+| 추천 (v1.95 검토 반영, 보유 리벤, 기본 사격 + 글레이브 프라이밍) |  | 자성 | 73% | 73% | 68% | 인식 못 함: 리벤 수치 없음 |
 
 **커뮤니티 메타** (세팅 2개)
 
@@ -79,7 +79,7 @@
 - 자주 쓰는 모드: 갈바나이즈드 헬 2 · 크리티컬 디셀러레이션 2 · 프라임드 래비지 2 · 톡식 배러지 2 · 갈바나이즈드 새비 1 · 프라임드 칠링 그래스프 1 · 마그네틱 스트레이프 1 · 샷건 배러지 1 · 비질란티 서플라이즈 1 · 아토믹 폴아웃 1
 - 아케인: 프라이머리 블라이트 2
 - 커뮤니티 인기 모드인데 1위에 없음: 톡식 배러지(컨테이저스 스프레드 대신 넣으면 98%)
-- 1위에만 있는 모드: 프라임드 차지드 쉘(빼고 톡식 배러지로 바꾸면 68%) · 컨테이저스 스프레드(빼고 톡식 배러지로 바꾸면 98%)
+- 1위에만 있는 모드: 프라임드 차지드 쉘(빼고 톡식 배러지로 바꾸면 66%) · 컨테이저스 스프레드(빼고 톡식 배러지로 바꾸면 98%)
 
 ## 코린트 프라임 (corinth_prime.json)
 
@@ -105,7 +105,7 @@
 
 ## 듀얼 톡소시스트 (dual_toxocyst.json)
 
-계산기 1위: 갈바나이즈드 샷, 갈바나이즈드 디퓨젼, 프로스트바이트, 피스톨 페스틸런스, 마그네틱 마이트, 리썰 토렌트, 프라임드 히티드 차지, 머시리스 건파이트 · secondary_enervate
+계산기 1위: 갈바나이즈드 샷, 갈바나이즈드 디퓨젼, 딥 프리즈, 피스톨 페스틸런스, 마그네틱 마이트, 리썰 토렌트, 프라임드 히티드 차지, 머시리스 건파이트 · secondary_enervate
 
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -174,15 +174,15 @@
 
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [Shacknews 바이러스+화염 하이브리드 (해머 샷)](https://www.shacknews.com/article/141682/best-gotva-prime-build-warframe) | shacknews | 바이러스+화염 | 54% | 69% | 14% | — |
-| [Destructoid 바이러스+방사능 치명타 (크리티컬 딜레이·헌터 뮤니션즈)](https://www.destructoid.com/best-gotva-prime-build-in-warframe/) | destructoid | 바이러스+방사능 | 54% | 72% | 10% | — |
+| [Shacknews 바이러스+화염 하이브리드 (해머 샷)](https://www.shacknews.com/article/141682/best-gotva-prime-build-warframe) | shacknews | 바이러스+화염 | 53% | 72% | 13% | — |
+| [Destructoid 바이러스+방사능 치명타 (크리티컬 딜레이·헌터 뮤니션즈)](https://www.destructoid.com/best-gotva-prime-build-in-warframe/) | destructoid | 바이러스+방사능 | 52% | 72% | 10% | — |
 
 **커뮤니티 메타** (세팅 2개)
 
 - 속성 조합: 바이러스+화염 1 · 바이러스+방사능 1 — 계산기 1위(리벤 없이): 바이러스+화염+자성
 - 자주 쓰는 모드: 바이탈 센스 2 · 갈바나이즈드 체임버 2 · 멀리그난트 포스 2 · 갈바나이즈드 앱티튜드 2 · 비질란티 아마먼츠 1 · 라임 라운즈 1 · 해머 샷 1 · 써마이트 라운즈 1 · 프라임드 크라이오 라운즈 1 · 라디에이티드 리로드 1
 - 아케인: 프라이머리 머시리스 2
-- 1위에만 있는 모드: 마그네틱 캐퍼시티(빼고 빈 칸으로 두면 61%)
+- 1위에만 있는 모드: 마그네틱 캐퍼시티(빼고 빈 칸으로 두면 59%)
 
 ## 이그니스 레이스 (ignis_wraith.json)
 
@@ -191,32 +191,32 @@
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
 | [Sportskeeda 폭발 + 부식 (Jade Shadows 폭발 상태이상)](https://sportskeeda.com/mmo/warframe-ignis-wraith-build) | sportskeeda | 자성+가스 | 3% | 3% | 3% | — |
-| [Overframe ESO Heat Nuke (바이러스 + 화염, 머시리스)](https://overframe.gg/build/927649/ignis-wraith/eso-heat-nuke/) | overframe | 바이러스+화염 | 50% | 74% | 9% | — |
+| [Overframe ESO Heat Nuke (바이러스 + 화염, 머시리스)](https://overframe.gg/build/927649/ignis-wraith/eso-heat-nuke/) | overframe | 바이러스+화염 | 49% | 72% | 9% | — |
 
 **커뮤니티 메타** (세팅 2개)
 
 - 속성 조합: 자성+가스 1 · 바이러스+화염 1 — 계산기 1위(리벤 없이): 바이러스+화염+자성
 - 자주 쓰는 모드: 크리티컬 딜레이 2 · 멀리그난트 포스 2 · 갈바나이즈드 체임버 2 · 하이 볼티지 1 · 프라임드 크라이오 라운즈 1 · 프라임드 베인 오브 오로킨 1 · 해머 샷 1 · 라이플 엘리멘탈리스트 1 · 갈바나이즈드 앱티튜드 1 · 바이탈 센스 1
 - 아케인: 없음 1 · 프라이머리 머시리스 1
-- 커뮤니티 인기 모드인데 1위에 없음: 멀리그난트 포스(인펙티드 클립 대신 넣으면 98%)
-- 1위에만 있는 모드: 마그네틱 캐퍼시티(빼고 멀리그난트 포스로 바꾸면 81%) · 인펙티드 클립(빼고 멀리그난트 포스로 바꾸면 98%)
+- 커뮤니티 인기 모드인데 1위에 없음: 멀리그난트 포스(인펙티드 클립 대신 넣으면 99%)
+- 1위에만 있는 모드: 마그네틱 캐퍼시티(빼고 멀리그난트 포스로 바꾸면 79%) · 인펙티드 클립(빼고 멀리그난트 포스로 바꾸면 99%)
 
 ## 쿠바 뉴코어 (kuva_nukor.json)
 
-계산기 1위: 갈바나이즈드 샷, 패서전 라운즈, 프로스트바이트, 갈바나이즈드 디퓨젼, 프라임드 히티드 차지, 프라임드 타겟 크래커, 머시리스 건파이트, 호넷 스트라이크 · secondary_enervate
+계산기 1위: 갈바나이즈드 샷, 패서전 라운즈, 딥 프리즈, 갈바나이즈드 디퓨젼, 프라임드 히티드 차지, 프라임드 타겟 크래커, 머시리스 건파이트, 호넷 스트라이크 · secondary_enervate
 
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [Shacknews 에너베이트 (냉기 베일런스, 부식·폭발·자성)](https://www.shacknews.com/article/142676/kuva-nukor-arcane-enervate-build-warframe) | shacknews | 부식+방사능+자성+폭발 | 69% | 77% | 22% | — |
-| [Overframe 780179 Melting Pot (독 베일런스, 부식·방사능·자성)](https://overframe.gg/build/780179/) | overframe | 부식+방사능+자성 | 50% | 55% | 10% | — |
+| [Shacknews 에너베이트 (냉기 베일런스, 부식·폭발·자성)](https://www.shacknews.com/article/142676/kuva-nukor-arcane-enervate-build-warframe) | shacknews | 부식+방사능+자성+폭발 | 71% | 75% | 22% | — |
+| [Overframe 780179 Melting Pot (독 베일런스, 부식·방사능·자성)](https://overframe.gg/build/780179/) | overframe | 부식+방사능+자성 | 50% | 53% | 10% | — |
 
 **커뮤니티 메타** (세팅 2개)
 
 - 속성 조합: 부식+방사능+자성+폭발 1 · 부식+방사능+자성 1 — 계산기 1위(리벤 없이): 바이러스+화염+방사능
 - 자주 쓰는 모드: 갈바나이즈드 디퓨젼 2 · 갈바나이즈드 샷 2 · 프라임드 타겟 크래커 2 · 리썰 토렌트 2 · 마그네틱 마이트 2 · 피스톨 페스틸런스 2 · 졸트 2 · 프라임드 히티드 차지 1 · 루이너스 익스텐션 1 · 프라임드 피스톨 갬빗 1
 - 아케인: 세컨더리 에너베이트 2
-- 커뮤니티 인기 모드인데 1위에 없음: 리썰 토렌트(호넷 스트라이크 대신 넣으면 99%) · 마그네틱 마이트(머시리스 건파이트 대신 넣으면 97%) · 피스톨 페스틸런스(패서전 라운즈 대신 넣으면 97%) · 졸트(프로스트바이트 대신 넣으면 78%)
-- 1위에만 있는 모드: 패서전 라운즈(빼고 피스톨 페스틸런스로 바꾸면 97%) · 프로스트바이트(빼고 졸트로 바꾸면 78%) · 머시리스 건파이트(빼고 리썰 토렌트로 바꾸면 99%) · 호넷 스트라이크(빼고 리썰 토렌트로 바꾸면 99%)
+- 커뮤니티 인기 모드인데 1위에 없음: 리썰 토렌트(머시리스 건파이트 대신 넣으면 99%) · 마그네틱 마이트(머시리스 건파이트 대신 넣으면 94%) · 피스톨 페스틸런스(패서전 라운즈 대신 넣으면 97%) · 졸트(딥 프리즈 대신 넣으면 78%)
+- 1위에만 있는 모드: 패서전 라운즈(빼고 피스톨 페스틸런스로 바꾸면 97%) · 딥 프리즈(빼고 졸트로 바꾸면 78%) · 머시리스 건파이트(빼고 리썰 토렌트로 바꾸면 99%) · 호넷 스트라이크(빼고 리썰 토렌트로 바꾸면 98%)
 
 ## 쿠바 오그리스 (kuva_ogris.json)
 
@@ -270,23 +270,23 @@
 
 ## 레이텀 (laetum.json)
 
-계산기 1위: 프라임드 히티드 차지, 갈바나이즈드 디퓨젼, 호넷 스트라이크, 프로스트바이트, 리썰 토렌트, 피스톨 엘리멘탈리스트, 스코치, 아네믹 어질리티 · secondary_merciless
+계산기 1위: 갈바나이즈드 디퓨젼, 호넷 스트라이크, 프라임드 히티드 차지, 프로스트바이트, 갈바나이즈드 샷, 피스톨 엘리멘탈리스트, 리썰 토렌트, 스코치 · secondary_encumber
 
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [Shacknews 비치명타 (방사능·부식·화염, 액셀러레이티드 아이소토프)](https://shacknews.com/article/142636/the-best-laetum-build-warframe) | shacknews | 부식+화염+방사능 | 48% | 43% | 63% | — |
-| [Sportskeeda 비치명타 바이러스+화염 (덱스터리티)](https://sportskeeda.com/mmo/warframe-complete-laetum-build-guide) | sportskeeda | 폭발+독 | 98% | 94% | 78% | — |
-| [Item Level 치명타 (프라임드 타겟 크래커·크리핑 불스아이, 머시리스)](https://itemlevel.net/warframe-laetum-build-guide/) | itemlevel | 바이러스+화염 | 32% | 44% | 27% | — |
-| [GGRecon 치명타 (프라임드 피스톨 갬빗, 대 그리니어)](https://ggrecon.com/guides/warframe-laetum-builds) | ggrecon | 바이러스+화염 | 28% | 25% | 35% | — |
-| [GamesFuze 고상태이상 (스터닝 스피드, 머시리스)](https://gamesfuze.com/guides/warframe-laetum-build-guide-new-strongest-secondary/) | gamesfuze | 폭발+독 | 72% | 79% | 58% | — |
+| [Shacknews 비치명타 (방사능·부식·화염, 액셀러레이티드 아이소토프)](https://shacknews.com/article/142636/the-best-laetum-build-warframe) | shacknews | 부식+화염+방사능 | 48% | 47% | 58% | — |
+| [Sportskeeda 비치명타 바이러스+화염 (덱스터리티)](https://sportskeeda.com/mmo/warframe-complete-laetum-build-guide) | sportskeeda | 폭발+독 | 97% | 103% | 70% | — |
+| [Item Level 치명타 (프라임드 타겟 크래커·크리핑 불스아이, 머시리스)](https://itemlevel.net/warframe-laetum-build-guide/) | itemlevel | 바이러스+화염 | 32% | 47% | 24% | — |
+| [GGRecon 치명타 (프라임드 피스톨 갬빗, 대 그리니어)](https://ggrecon.com/guides/warframe-laetum-builds) | ggrecon | 바이러스+화염 | 28% | 28% | 32% | — |
+| [GamesFuze 고상태이상 (스터닝 스피드, 머시리스)](https://gamesfuze.com/guides/warframe-laetum-build-guide-new-strongest-secondary/) | gamesfuze | 폭발+독 | 71% | 86% | 52% | — |
 
 **커뮤니티 메타** (세팅 5개)
 
 - 속성 조합: 폭발+독 2 · 바이러스+화염 2 · 부식+화염+방사능 1 — 계산기 1위(리벤 없이): 폭발
 - 자주 쓰는 모드: 갈바나이즈드 디퓨젼 5 · 피스톨 페스틸런스 5 · 리썰 토렌트 5 · 프로스트바이트 4 · 갈바나이즈드 샷 3 · 호넷 스트라이크 3 · 프라임드 히티드 차지 3 · 스코치 3 · 리썰 모멘텀 2 · 프라임드 타겟 크래커 2
 - 아케인: 없음 2 · 세컨더리 머시리스 2 · 세컨더리 덱스터리티 1
-- 커뮤니티 인기 모드인데 1위에 없음: 피스톨 페스틸런스(아네믹 어질리티 대신 넣으면 96%) · 갈바나이즈드 샷(스코치 대신 넣으면 99%)
-- 1위에만 있는 모드: 피스톨 엘리멘탈리스트(빼고 갈바나이즈드 샷로 바꾸면 95%) · 아네믹 어질리티(빼고 갈바나이즈드 샷로 바꾸면 98%)
+- 커뮤니티 인기 모드인데 1위에 없음: 피스톨 페스틸런스(스코치 대신 넣으면 93%)
+- 1위에만 있는 모드: 피스톨 엘리멘탈리스트(빼고 피스톨 페스틸런스로 바꾸면 85%)
 - **계산기 1위 속성 조합이 커뮤니티 세팅에 없음 — 이유 확인 필요**
 
 ## 레이텀 (laetum_1200.json)
@@ -295,7 +295,7 @@
 
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 사용자가 붙여 준 커뮤니티 글 '레이텀 (인카논) 1200%' + 사용자 아스날 화면(2026-11-17) | 출처 주소 없음 — 사용자가 대화에 붙여 준 글과 자기 아스날 화면 | 부식+화염 | 47% | 46% | 53% | — |
+| 사용자가 붙여 준 커뮤니티 글 '레이텀 (인카논) 1200%' + 사용자 아스날 화면(2026-11-17) | 출처 주소 없음 — 사용자가 대화에 붙여 준 글과 자기 아스날 화면 | 부식+화염 | 47% | 46% | 54% | — |
 | [아카라이브 188602878 '레이텀 1200 모딩' 질문자 세팅 (리벤 치명타 피해·멀티샷·바이러스)](https://arca.live/b/warframe/188602878) | arca.live 워프레임 채널 | 화염+자성 | 40% | 40% | 47% | 인식 못 함: 리벤 수치 없음 |
 
 ## 렉스 프라임 (lex_prime.json)
@@ -358,17 +358,17 @@
 - 자주 쓰는 모드: 프라이머리 어큐이티 2 · 갈바나이즈드 스코프 2 · 바이탈 센스 2 · 갈바나이즈드 앱티튜드 2 · 라이플 엘리멘탈리스트 2 · 써마이트 라운즈 2 · 바일 액셀러레이션 1 · 프라임드 크라이오 라운즈 1 · 해머 샷 1 · 멀리그난트 포스 1
 - 아케인: 프라이머리 데드헤드 2
 - 커뮤니티 인기 모드인데 1위에 없음: 프라이머리 어큐이티(갈바나이즈드 체임버 대신 넣으면 32%) · 갈바나이즈드 스코프(바이탈 센스 대신 넣으면 74%) · 라이플 엘리멘탈리스트(바이탈 센스 대신 넣으면 74%) · 써마이트 라운즈(와일드파이어 대신 넣으면 97%)
-- 1위에만 있는 모드: 갈바나이즈드 체임버(빼고 써마이트 라운즈로 바꾸면 41%) · 크리티컬 딜레이(빼고 써마이트 라운즈로 바꾸면 71%) · 와일드파이어(빼고 써마이트 라운즈로 바꾸면 97%) · 마그네틱 캐퍼시티(빼고 써마이트 라운즈로 바꾸면 82%)
+- 1위에만 있는 모드: 갈바나이즈드 체임버(빼고 써마이트 라운즈로 바꾸면 41%) · 크리티컬 딜레이(빼고 써마이트 라운즈로 바꾸면 70%) · 와일드파이어(빼고 써마이트 라운즈로 바꾸면 97%) · 마그네틱 캐퍼시티(빼고 써마이트 라운즈로 바꾸면 82%)
 
 ## 펜모어 (phenmor.json)
 
-계산기 1위: 갈바나이즈드 체임버, 프라임드 크라이오 라운즈, 갈바나이즈드 앱티튜드, 서레이션, 써마이트 라운즈, 라이플 엘리멘탈리스트, 바일 액셀러레이션, 라임 라운즈 · primary_merciless
+계산기 1위: 갈바나이즈드 체임버, 프라임드 크라이오 라운즈, 갈바나이즈드 앱티튜드, 서레이션, 써마이트 라운즈, 라이플 엘리멘탈리스트, 라임 라운즈, 바일 액셀러레이션 · primary_merciless
 
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [Overframe 614137 arniox 41k avg hit (인카논 형태)](https://overframe.gg/build/614137/phenmor/41k-avg-hit-1429k-sustained-0-riven/) | overframe | 바이러스+화염+방사능 | 47% | 39% | 37% | — |
-| [GamesFuze 치명타 세팅 (2022, 진화 전)](https://gamesfuze.com/guides/warframe-phenmor-build-guide-after-fix/) | gamesfuze | 바이러스+방사능 | 33% | 33% | 19% | 인식 못 함: Primed Bane of Orokin |
-| [GamesFuze 비치명타 세팅 (2022, 진화 전)](https://gamesfuze.com/guides/warframe-phenmor-build-guide-after-fix/) | gamesfuze | 바이러스+방사능 | 55% | 47% | 68% | 인식 못 함: Primed Bane of Orokin |
+| [Overframe 614137 arniox 41k avg hit (인카논 형태)](https://overframe.gg/build/614137/phenmor/41k-avg-hit-1429k-sustained-0-riven/) | overframe | 바이러스+화염+방사능 | 48% | 40% | 37% | — |
+| [GamesFuze 치명타 세팅 (2022, 진화 전)](https://gamesfuze.com/guides/warframe-phenmor-build-guide-after-fix/) | gamesfuze | 바이러스+방사능 | 33% | 34% | 19% | 인식 못 함: Primed Bane of Orokin |
+| [GamesFuze 비치명타 세팅 (2022, 진화 전)](https://gamesfuze.com/guides/warframe-phenmor-build-guide-after-fix/) | gamesfuze | 바이러스+방사능 | 57% | 49% | 68% | 인식 못 함: Primed Bane of Orokin |
 
 ## 프레이도스 (praedos.json)
 
@@ -406,11 +406,11 @@
 
 ## 레귤레이터즈 프라임 (regulators_prime.json)
 
-계산기 1위: 갈바나이즈드 디퓨젼, 프라임드 컨벌션, 갈바나이즈드 샷, 패서전 라운즈, 리썰 토렌트, 머시리스 건파이트, 프라임드 히티드 차지, 프라임드 타겟 크래커 · secondary_enervate
+계산기 1위: 갈바나이즈드 디퓨젼, 프라임드 컨벌션, 갈바나이즈드 샷, 패서전 라운즈, 프라임드 타겟 크래커, 리썰 토렌트, 머시리스 건파이트, 프라임드 히티드 차지 · secondary_enervate
 
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [Gamertweak 메사 프라임 레귤레이터 (독 + 냉기 = 바이러스)](https://gamertweak.com/warframe-mesa-prime-guide-best-peacemaker-build) | gamertweak | 바이러스 | 44% | 41% | 82% | — |
+| [Gamertweak 메사 프라임 레귤레이터 (독 + 냉기 = 바이러스)](https://gamertweak.com/warframe-mesa-prime-guide-best-peacemaker-build) | gamertweak | 바이러스 | 45% | 43% | 86% | — |
 
 ## 루비코 프라임 (rubico_prime.json)
 
@@ -423,20 +423,20 @@
 
 ## 소마 프라임 (soma_prime.json)
 
-계산기 1위: 갈바나이즈드 체임버, 갈바나이즈드 앱티튜드, 프라임드 크라이오 라운즈, 인펙티드 클립, 하타-사트야, 바이탈 센스, 마그네틱 캐퍼시티, 프라임드 슈레드 · primary_plated_round
+계산기 1위: 갈바나이즈드 체임버, 갈바나이즈드 앱티튜드, 프라임드 크라이오 라운즈, 멀리그난트 포스, 하타-사트야, 마그네틱 캐퍼시티, 바이탈 센스, 프라임드 슈레드 · primary_plated_round
 
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
 | [Sportskeeda 인카논 소마 바이러스+베기 (3포르마)](https://www.sportskeeda.com/mmo/warframe-incarnon-soma-build-guide-mod-setup-evolution-talents) | sportskeeda | 바이러스 | 2% | 3% | 8% | — |
-| [HighGround 바이러스+베기 소마 (베인 자리에 글이 제시한 하타-사트야)](https://www.highgroundgaming.com/warframe-best-soma-build/) | highgroundgaming | 바이러스 | 41% | 57% | 16% | — |
+| [HighGround 바이러스+베기 소마 (베인 자리에 글이 제시한 하타-사트야)](https://www.highgroundgaming.com/warframe-best-soma-build/) | highgroundgaming | 바이러스 | 41% | 55% | 15% | — |
 
 **커뮤니티 메타** (세팅 2개)
 
 - 속성 조합: 바이러스 2 — 계산기 1위(리벤 없이): 바이러스+자성
 - 자주 쓰는 모드: 갈바나이즈드 체임버 2 · 헌터 뮤니션즈 2 · 하타-사트야 2 · 바이탈 센스 2 · 멀리그난트 포스 2 · 프라임드 슈레드 1 · 프라임드 베인 오브 오로킨 1 · 라임 라운즈 1 · 프라임드 크라이오 라운즈 1 · 갈바나이즈드 앱티튜드 1
 - 아케인: 없음 1 · 프라이머리 머시리스 1
-- 커뮤니티 인기 모드인데 1위에 없음: 헌터 뮤니션즈(프라임드 슈레드 대신 넣으면 67%) · 멀리그난트 포스(인펙티드 클립 대신 넣으면 98%)
-- 1위에만 있는 모드: 인펙티드 클립(빼고 멀리그난트 포스로 바꾸면 98%) · 마그네틱 캐퍼시티(빼고 멀리그난트 포스로 바꾸면 66%)
+- 커뮤니티 인기 모드인데 1위에 없음: 헌터 뮤니션즈(프라임드 슈레드 대신 넣으면 70%)
+- 1위에만 있는 모드: 마그네틱 캐퍼시티(빼고 헌터 뮤니션즈로 바꾸면 53%)
 
 ## 스포어레이서 · 헤이메이커 · 스플랫 (sporelacer.json)
 
@@ -502,8 +502,8 @@
 
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [The Nerd Stash 가이드 (2024-05, U35.6)](https://thenerdstash.com/the-ultimate-warframe-tenet-glaxion-build-guide) | web | 부식+냉기 | 25% | 27% | 9% | — |
-| 최종 추천 (v1.96 독립 검토 반영, 2026-11-08 답변) |  | 바이러스 | 32% | 54% | 7% | 인식 못 함: 리벤 수치 없음 |
+| [The Nerd Stash 가이드 (2024-05, U35.6)](https://thenerdstash.com/the-ultimate-warframe-tenet-glaxion-build-guide) | web | 부식+냉기 | 25% | 26% | 8% | — |
+| 최종 추천 (v1.96 독립 검토 반영, 2026-11-08 답변) |  | 바이러스 | 32% | 53% | 7% | 인식 못 함: 리벤 수치 없음 |
 
 ## 토리드 (torid.json)
 
@@ -524,20 +524,20 @@
 
 ## 트럼나 프라임 (trumna_prime.json)
 
-계산기 1위: 인펙티드 클립, 프라임드 크라이오 라운즈, 갈바나이즈드 체임버, 갈바나이즈드 앱티튜드, 마그네틱 캐퍼시티, 크리티컬 딜레이, 바이탈 센스, 프라임드 슈레드 · primary_merciless
+계산기 1위: 갈바나이즈드 체임버, 프라임드 크라이오 라운즈, 크리티컬 딜레이, 바이탈 센스, 바일 액셀러레이션, 프라임드 슈레드, 갈바나이즈드 앱티튜드, 인펙티드 클립 · primary_plated_round
 
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [Sportskeeda 부식+폭발 (프라임드 슈레드·하이 볼티지, 고유 화염+냉기 = 폭발)](https://sportskeeda.com/mmo/warframe-trumna-prime-build-guide) | sportskeeda | 바이러스+방사능 | 64% | 74% | 121% | — |
-| [Destructoid 바이러스+방사능 치명타 (갈바나이즈드 앱티튜드·레디에이티드 리로드)](https://www.destructoid.com/the-best-trumna-prime-build-in-warframe/) | destructoid | 바이러스+화염+방사능 | 84% | 87% | 40% | — |
+| [Sportskeeda 부식+폭발 (프라임드 슈레드·하이 볼티지, 고유 화염+냉기 = 폭발)](https://sportskeeda.com/mmo/warframe-trumna-prime-build-guide) | sportskeeda | 바이러스+방사능 | 66% | 85% | 44% | — |
+| [Destructoid 바이러스+방사능 치명타 (갈바나이즈드 앱티튜드·레디에이티드 리로드)](https://www.destructoid.com/the-best-trumna-prime-build-in-warframe/) | destructoid | 바이러스+화염+방사능 | 85% | 101% | 14% | — |
 
 **커뮤니티 메타** (세팅 2개)
 
-- 속성 조합: 바이러스+방사능 1 · 바이러스+화염+방사능 1 — 계산기 1위(리벤 없이): 바이러스+화염+자성
+- 속성 조합: 바이러스+방사능 1 · 바이러스+화염+방사능 1 — 계산기 1위(리벤 없이): 바이러스+화염
 - 자주 쓰는 모드: 갈바나이즈드 체임버 2 · 크리티컬 딜레이 2 · 바이탈 센스 2 · 멀리그난트 포스 2 · 프라임드 크라이오 라운즈 2 · 스테빌라이저 2 · 서레이션 1 · 하이 볼티지 1 · 프라임드 슈레드 1 · 갈바나이즈드 앱티튜드 1
 - 아케인: 프라이머리 머시리스 2
-- 커뮤니티 인기 모드인데 1위에 없음: 멀리그난트 포스(인펙티드 클립 대신 넣으면 100%) · 스테빌라이저(프라임드 슈레드 대신 넣으면 75%)
-- 1위에만 있는 모드: 인펙티드 클립(빼고 멀리그난트 포스로 바꾸면 100%) · 마그네틱 캐퍼시티(빼고 멀리그난트 포스로 바꾸면 82%)
+- 커뮤니티 인기 모드인데 1위에 없음: 멀리그난트 포스(인펙티드 클립 대신 넣으면 98%) · 스테빌라이저(갈바나이즈드 앱티튜드 대신 넣으면 77%)
+- 1위에만 있는 모드: 인펙티드 클립(빼고 멀리그난트 포스로 바꾸면 98%)
 
 ## 조리스 (xoris.json)
 
