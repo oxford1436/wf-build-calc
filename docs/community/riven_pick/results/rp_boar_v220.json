@@ -1,0 +1,268 @@
+[
+ {
+  "k": "boar",
+  "sec": 1542,
+  "weapon": "boar_prime",
+  "attack": "기본 사격",
+  "pellets": 0.4,
+  "fo": null,
+  "evo": {
+   "2": 0,
+   "3": 0,
+   "4": 1
+  },
+  "evoNames": [
+   "2:Reified Bane",
+   "3:Ready Retaliation",
+   "4:Critical Parallel"
+  ],
+  "o": {
+   "level": 100,
+   "steel": false,
+   "factions": [
+    "grineer",
+    "corpus",
+    "infested"
+   ],
+   "scenario": "crowd",
+   "hits": {
+    "기본 사격": 12
+   },
+   "tAcq": 0.01,
+   "xhit": 0.8075,
+   "xhitElem": "elec",
+   "abil": [
+    "Resupply"
+   ],
+   "spread": null,
+   "extKeys": "elem,reloadCast,xhit,xhitElem,cdFinalAdd,frAdd,final,cdMult,active,gearExt,maxEnergy",
+   "elem": {
+    "viralm": 1.4535,
+    "elecmod": 4.2
+   },
+   "cdFinalAdd": 1.2,
+   "frAdd": 0.6,
+   "levels": [
+    100,
+    200,
+    350
+   ]
+  },
+  "base": {
+   "score": 24.669722511151896,
+   "ids": [
+    "galvanized_hell",
+    "critical_deceleration",
+    "shotgun_barrage",
+    "primed_ravage",
+    "galvanized_savvy",
+    "primed_chilling_grasp",
+    "frail_momentum",
+    "accelerated_blast"
+   ],
+   "mods": [
+    "갈바나이즈드 헬",
+    "크리티컬 디셀러레이션",
+    "샷건 배러지",
+    "프라임드 래비지",
+    "갈바나이즈드 새비",
+    "프라임드 칠링 그래스프",
+    "프레일 모멘텀",
+    "액셀러레이티드 블래스트"
+   ],
+   "arcane": "primary_merciless",
+   "val": null,
+   "pf": {
+    "grineer": {
+     "c": 0.73,
+     "cHi": 1.07,
+     "cTop": 1.41,
+     "one": 42
+    },
+    "corpus": {
+     "c": 0.26,
+     "cHi": 0.31,
+     "cTop": 0.43,
+     "one": 74
+    },
+    "infested": {
+     "c": 0.23,
+     "cHi": 0.34,
+     "cTop": 0.51,
+     "one": 47
+    }
+   },
+   "rate": 17.746,
+   "cc": 1.0499999999999998,
+   "cd": 6.45,
+   "ms": 1.22,
+   "sc": 0.2025,
+   "layout": {
+    "impact": 0.51,
+    "slash": 0.16,
+    "punct": 0.19,
+    "mag": 5.85,
+    "viral": 1.45
+   }
+  },
+  "riv": {
+   "score": 50.96928150605244,
+   "ids": [
+    "__riven",
+    "critical_deceleration",
+    "galvanized_hell",
+    "galvanized_savvy",
+    "primed_chilling_grasp",
+    "shotgun_barrage",
+    "primed_ravage",
+    "primed_point_blank"
+   ],
+   "mods": [
+    "리벤",
+    "크리티컬 디셀러레이션",
+    "갈바나이즈드 헬",
+    "갈바나이즈드 새비",
+    "프라임드 칠링 그래스프",
+    "샷건 배러지",
+    "프라임드 래비지",
+    "프라임드 포인트 블랭크"
+   ],
+   "arcane": "primary_merciless",
+   "val": null,
+   "pf": {
+    "grineer": {
+     "c": 0.38,
+     "cHi": 0.5,
+     "cTop": 0.69,
+     "one": 52
+    },
+    "corpus": {
+     "c": 0.06,
+     "cHi": 0.16,
+     "cTop": 0.29,
+     "one": 212
+    },
+    "infested": {
+     "c": 0.13,
+     "cHi": 0.19,
+     "cTop": 0.25,
+     "one": 74
+    }
+   },
+   "rate": 15.942212499999997,
+   "cc": 1.0499999999999998,
+   "cd": 9.234375,
+   "ms": 1.8125150000000003,
+   "sc": 0.2025,
+   "layout": {
+    "impact": 0.51,
+    "slash": 0.16,
+    "punct": 0.12,
+    "mag": 5.85,
+    "viral": 1.45
+   },
+   "riven": [
+    {
+     "k": "ms",
+     "v": 1.4812875,
+     "inc": true
+    },
+    {
+     "k": "fr",
+     "v": 1.11375,
+     "inc": true
+    },
+    {
+     "k": "cd",
+     "v": 1.11375,
+     "inc": true
+    },
+    {
+     "k": "x_recoil",
+     "v": -0.891,
+     "inc": true
+    }
+   ],
+   "eff": {
+    "ms": 1.4812875,
+    "fr": 1.11375,
+    "cd": 1.11375
+   }
+  },
+  "alts": [
+   {
+    "info": "ms:1.5 fr:1.1 cd:1.1 x_recoil:-0.9",
+    "score": 50.96928150605244,
+    "mods": [
+     "리벤",
+     "크리티컬 디셀러레이션",
+     "갈바나이즈드 헬",
+     "갈바나이즈드 새비",
+     "프라임드 칠링 그래스프",
+     "샷건 배러지",
+     "프라임드 래비지",
+     "프라임드 포인트 블랭크"
+    ],
+    "arcane": "primary_merciless"
+   },
+   {
+    "info": "ms:1.5 fr:1.1 cc:1.1 x_recoil:-0.9",
+    "score": 50.69683394986036,
+    "mods": [
+     "리벤",
+     "갈바나이즈드 헬",
+     "갈바나이즈드 새비",
+     "프라임드 칠링 그래스프",
+     "프라임드 래비지",
+     "크리티컬 디셀러레이션",
+     "샷건 배러지",
+     "프레일 모멘텀"
+    ],
+    "arcane": "primary_merciless"
+   },
+   {
+    "info": "ms:1.5 fr:1.1 dmg:2.0 x_recoil:-0.9",
+    "score": 50.57822154808554,
+    "mods": [
+     "리벤",
+     "갈바나이즈드 헬",
+     "크리티컬 디셀러레이션",
+     "프라임드 래비지",
+     "갈바나이즈드 새비",
+     "프리지드 블래스트",
+     "샷건 배러지",
+     "프레일 모멘텀"
+    ],
+    "arcane": "primary_merciless"
+   },
+   {
+    "info": "ms:1.5 cd:1.1 dmg:2.0 punct:-1.2",
+    "score": 47.77786915250614,
+    "mods": [
+     "리벤",
+     "갈바나이즈드 헬",
+     "크리티컬 디셀러레이션",
+     "샷건 배러지",
+     "프라임드 칠링 그래스프",
+     "갈바나이즈드 새비",
+     "프레일 모멘텀",
+     "프라임드 래비지"
+    ],
+    "arcane": "primary_merciless"
+   }
+  ],
+  "planTop": [
+   "3+1 ms+fr+cd  slot:액셀러레이티드 블래스트",
+   "3+1 ms+fr+cc  slot:액셀러레이티드 블래스트",
+   "3+1 ms+fr+dmg  slot:액셀러레이티드 블래스트",
+   "3+1 ms+fr+cd  slot:프레일 모멘텀",
+   "3+1 ms+fr+cd  slot:샷건 배러지",
+   "3+1 ms+cd+dmg  slot:액셀러레이티드 블래스트",
+   "3+1 ms+fr+dmg  slot:샷건 배러지",
+   "3+1 ms+fr+cc  slot:샷건 배러지",
+   "3+1 ms+fr+dmg  slot:프레일 모멘텀",
+   "3+1 ms+fr+cc  slot:프레일 모멘텀"
+  ],
+  "errs": []
+ }
+]
