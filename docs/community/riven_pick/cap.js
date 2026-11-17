@@ -1,7 +1,6 @@
 const p = require("playwright"); const repo = "/home/claude/wf-build-calc";
-const J = [{ w: "boar_prime", mods: ["Riven", "Galvanized Hell", "Shotgun Barrage", "Critical Deceleration", "Primed Blunderbuss", "Primed Ravage", "Primed Point Blank", "Galvanized Savvy", "Galvanized Acceleration"] },
-  { w: "boar_prime", mods: ["Riven", "Galvanized Hell", "Shotgun Barrage", "Critical Deceleration", "Primed Blunderbuss", "Primed Ravage", "Primed Point Blank", "Galvanized Savvy"] },
-  { w: "laetum", mods: ["Riven", "Primed Heated Charge", "Frostbite", "Galvanized Diffusion", "Hornet Strike", "Lethal Torrent", "Scorch", "Anemic Agility", "Lethal Momentum"] },
+const J = [{ w: "boar_prime", mods: ["Riven", "Galvanized Hell", "Critical Deceleration", "Primed Ravage", "Shotgun Barrage", "Frail Momentum", "Primed Point Blank", "Galvanized Savvy", "Galvanized Acceleration"] },
+  { w: "boar_prime", mods: ["Riven", "Galvanized Hell", "Critical Deceleration", "Primed Ravage", "Shotgun Barrage", "Frail Momentum", "Primed Chilling Grasp", "Galvanized Savvy", "Galvanized Acceleration"] },
   { w: "laetum", mods: ["Riven", "Primed Heated Charge", "Frostbite", "Galvanized Diffusion", "Hornet Strike", "Lethal Torrent", "Scorch", "Anemic Agility"] }];
 (async () => { const b = await p.chromium.launch(); const pg = await b.newPage();
   await pg.goto("file://" + repo + "/index.html"); await pg.waitForFunction(() => window.WF_APP && window.WF_WEAPONS && window.WFEngine);

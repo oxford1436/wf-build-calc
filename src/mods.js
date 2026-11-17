@@ -52,7 +52,8 @@
   add("galvanized_hell", "갈바나이즈드 헬", "Galvanized Hell", ["shotgun"], { ms: 1.1 }, { group: "s_ms", cond: [{ when: "kill", eff: { ms: 1.2 }, stk: 4 }] });
   add("critical_deceleration", "크리티컬 디셀러레이션", "Critical Deceleration", ["shotgun"], { cc: 2.0, frneg: -0.2 });
   add("blunderbuss", "블런더버스", "Blunderbuss", ["shotgun"], { cc: 0.9 }, { group: "s_cc" });
-  add("primed_blunderbuss", "프라임드 블런더버스", "Primed Blunderbuss", ["shotgun"], { cc: 1.65 }, { group: "s_cc" });
+  // v2.17: Primed Blunderbuss is NOT listed — it exists in the game files (Mods.json, no release version, no drop source) but was
+  // never released; wiki Critical Deceleration (Update 30.5): "can no longer stack with Blunderbuss/Primed Blunderbuss"
   add("laser_sight", "레이저 사이트", "Laser Sight", ["shotgun"], {}, { cond: [{ when: "headshot", eff: { cc: 1.2 } }], note: "조준+헤드샷" });
   add("ravage", "래비지", "Ravage", ["shotgun"], { cd: 0.6 }, { group: "s_cd" });
   add("primed_ravage", "프라임드 래비지", "Primed Ravage", ["shotgun"], { cd: 1.1 }, { group: "s_cd" });

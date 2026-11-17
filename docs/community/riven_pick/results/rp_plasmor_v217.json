@@ -1,0 +1,103 @@
+[
+ {
+  "k": "plasmor",
+  "sec": 279,
+  "weapon": "tenet_arca_plasmor",
+  "attack": "기본 사격",
+  "pellets": 1,
+  "fo": [
+   18,
+   36,
+   0.5
+  ],
+  "evo": {},
+  "evoNames": [],
+  "o": {
+   "level": 150,
+   "steel": true,
+   "factions": [
+    "grineer",
+    "corpus",
+    "infested"
+   ],
+   "scenario": "crowd",
+   "hits": null,
+   "abil": [],
+   "spread": [
+    6,
+    16
+   ],
+   "extKeys": "elem,cdFinalAdd,frAdd,final,cdMult,active,gearExt,maxEnergy",
+   "elem": {},
+   "cdFinalAdd": 1.2,
+   "frAdd": 0.6,
+   "levels": [
+    150,
+    250,
+    400
+   ]
+  },
+  "base": {
+   "score": 2.6805312887087,
+   "ids": [
+    "__riven",
+    "galvanized_savvy",
+    "primed_chilling_grasp",
+    "galvanized_hell",
+    "critical_deceleration",
+    "primed_point_blank",
+    "shotgun_barrage",
+    "scattering_inferno"
+   ],
+   "mods": [
+    "리벤",
+    "갈바나이즈드 새비",
+    "프라임드 칠링 그래스프",
+    "갈바나이즈드 헬",
+    "크리티컬 디셀러레이션",
+    "프라임드 포인트 블랭크",
+    "샷건 배러지",
+    "스캐터링 인페르노"
+   ],
+   "arcane": "primary_blight",
+   "val": {
+    "type": "tox",
+    "pct": 0.6
+   },
+   "pf": {
+    "grineer": {
+     "c": 6.34,
+     "cHi": 13.11,
+     "cTop": 20.01,
+     "one": 52
+    },
+    "corpus": {
+     "c": 1.96,
+     "cHi": 2.4,
+     "cTop": 2.96,
+     "one": 158
+    },
+    "infested": {
+     "c": 2.4,
+     "cHi": 3.21,
+     "cTop": 4.03,
+     "one": 74
+    }
+   },
+   "rate": 2.2506318882386678,
+   "cc": 0.66,
+   "cd": 6.079989765375383,
+   "ms": 5.205997441343845,
+   "sc": 0.8160000000000001,
+   "layout": {
+    "rad": 0.63,
+    "blast": 2.25,
+    "tox": 0.38
+   }
+  },
+  "riv": null,
+  "alts": [],
+  "planTop": null,
+  "errs": []
+ }
+]

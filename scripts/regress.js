@@ -1033,6 +1033,21 @@ const { chromium } = require("playwright");
     const plan = src.slice(src.indexOf("function planRivenPhase"), src.indexOf("/* ---------------- evaluation helpers"));
     results.push({ name: "v1.98 '처음부터 리벤 전제' 세팅은 베일런스·아케인도 다시 고름 (테넷 글랙시온: 리벤 없으면 플레이티드+화염, 리벤 넣으면 머시리스+자성)", ok: /valOptions: valOptions\(\), arcOptions: arcOptions\(\)/.test(plan) && !/valOptions: \[top0\.val\]/.test(plan) });
   }
+  // v2.17: a mod that sits in the game files but was never released must not be offered. Primed Blunderbuss (Mods.json: no release
+  // version, no drop source; wiki Critical Deceleration, Update 30.5: "can no longer stack with Blunderbuss/Primed Blunderbuss")
+  // was in the shotgun list and came out next to Critical Deceleration in Boar Prime / Strun Prime / Tenet Arca Plasmor builds.
+  {
+    const fs = require("fs"), src = fs.readFileSync(path.resolve(__dirname, "..", "src", "mods.js"), "utf8");
+    const raw = JSON.parse(fs.readFileSync(path.resolve(__dirname, "..", "data", "raw", "Mods.json"), "utf8"));
+    const by = {}; for (const m of raw) (by[m.name] = by[m.name] || []).push(m);
+    const ens = [...src.matchAll(/add\("[a-z0-9_]+",\s*"[^"]*",\s*"([^"]+)"/g)].map((x) => x[1]);
+    const bad = ens.filter((en) => by[en] && by[en].every((m) => m.introduced == null && !(m.drops && m.drops.length)));
+    // the full game mod list the app reads (data/mods_ko.js WF_MODS_ALL) is where the shotgun candidates really came from
+    const full = fs.readFileSync(path.resolve(__dirname, "..", "data", "mods_ko.js"), "utf8");
+    const unrel = raw.filter((m) => /^(Primary|Secondary|Shotgun|Melee) Mod$/.test(m.type || "") && m.introduced == null && !(m.drops && m.drops.length) && !m.wikiaUrl).map((m) => m.name);
+    const inFull = [...new Set(unrel)].filter((n) => full.includes('{"en":"' + n + '"'));
+    results.push({ name: "v2.17 출시되지 않은 모드(게임 데이터에 출시 버전·획득처가 없음)는 후보에 없음 — 프라임드 블런더버스", ok: ens.length > 150 && bad.length === 0 && unrel.length >= 5 && inFull.length === 0, detail: bad.concat(inFull).join(", ") });
+  }
   let fail = 0;
   for (const r of results) { console.log((r.ok ? "PASS " : "FAIL ") + r.name + (r.detail ? "  (" + r.detail + ")" : "")); if (!r.ok) fail++; }
   if (errs.length) { console.log("PAGE ERRORS", errs); fail++; }

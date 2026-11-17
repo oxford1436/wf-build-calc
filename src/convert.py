@@ -1037,6 +1037,9 @@ for m in MODS:
     if prev and not re.search(r"(Beginner|Expert|Intermediate)$", prev["uniqueName"]) and re.search(r"(Beginner|Expert|Intermediate)$", un):
         continue
     by_name[m["name"]] = m
+# v2.17: mods that sit in the game files but were never released (no release version, no drop source, no wiki page in the game
+# data: Primed Blunderbuss, Primed Charged Chamber, Air Martial, Harrowed Hook, Soaring Truth) are not offered
+by_name = {n: m for n, m in by_name.items() if not (m.get("introduced") is None and not m.get("drops") and not m.get("wikiaUrl"))}
 mods_all = []
 for m in by_name.values():
     k = KO.get(m["uniqueName"]) or {}

@@ -12,6 +12,8 @@ const CFG = {
   toxo: { w: "dual_toxocyst", f: { rivmode: "plan" } },
   toxoinc: { w: "dual_toxocyst", a: 1, f: { rivmode: "plan" } },
   laetum3: { w: "laetum", a: 3, f: { rivmode: "plan" } },      // the whole Incarnon shot (direct hit + 2 m blast), as in builds/laetum.json
+  // P4 (v2.17): the Arca Plasmor recommendation in the notes had the unreleased Primed Blunderbuss — re-run with the user's riven
+  plasmor: { w: "tenet_arca_plasmor", early: true, f: { rivmode: "owned", rk0: "fr", rv0: "95.5", ri0: true, rk1: "ms", rv1: "143.6", ri1: true, rk2: "ammoeff", rv2: "54.3", ri2: true, rk3: "x_zoom", rv3: "37.4", ri3: true, valtype: "tox", valpct: "60" } },
   laetum0: { w: "laetum", f: { rivmode: "none" } },
   nukor0: { w: "kuva_nukor", f: { rivmode: "none", valtype: "mag", valpct: "37.8" } },
   toxo0: { w: "dual_toxocyst", f: { rivmode: "none" } },
@@ -48,7 +50,7 @@ const which = (process.argv[2] || "").split(",").filter(Boolean);
     await pg.goto("file://" + repo + "/index.html#s=" + h); await pg.waitForFunction(() => window.WF_APP);
     const plan = c.f.rivmode === "plan";
     try {
-      await pg.waitForFunction((plan) => { const R = window.WF_APP && window.WF_APP.st.results; return R && R.res && R.res.length && (plan ? !!R.rivBest : !document.querySelector("#runbtn").disabled); }, plan, { timeout: 3000000, polling: 3000 });
+      await pg.waitForFunction((plan) => { const R = window.WF_APP && window.WF_APP.st.results; return R && R.res && R.res.length && (plan.plan ? !!R.rivBest : plan.early ? true : !document.querySelector("#runbtn").disabled); }, { plan, early: !!c.early }, { timeout: 3000000, polling: 3000 });
     } catch (e) { out.push({ k, err: "timeout", errs }); await pg.close(); continue; }
     const r = await pg.evaluate(() => {
       const A = window.WF_APP, st = A.st, Rr = st.results, o = Rr.o;

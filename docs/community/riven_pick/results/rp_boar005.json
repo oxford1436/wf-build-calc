@@ -1,7 +1,7 @@
 [
  {
   "k": "boar005",
-  "sec": 871,
+  "sec": 908,
   "weapon": "boar_prime",
   "attack": "기본 사격",
   "pellets": 0.04,
@@ -49,16 +49,16 @@
    ]
   },
   "base": {
-   "score": 3.5549630398081384,
+   "score": 3.2664965280434672,
    "ids": [
     "galvanized_hell",
     "critical_deceleration",
     "primed_ravage",
     "shotgun_barrage",
     "shotgun_elementalist",
-    "primed_blunderbuss",
+    "primed_point_blank",
     "frail_momentum",
-    "primed_point_blank"
+    "primed_charged_shell"
    ],
    "mods": [
     "갈바나이즈드 헬",
@@ -66,34 +66,34 @@
     "프라임드 래비지",
     "샷건 배러지",
     "샷건 엘리멘탈리스트",
-    "프라임드 블런더버스",
+    "프라임드 포인트 블랭크",
     "프레일 모멘텀",
-    "프라임드 포인트 블랭크"
+    "프라임드 차지드 쉘"
    ],
    "arcane": "primary_plated_round",
    "val": null,
    "pf": {
     "grineer": {
-     "c": 4.06,
-     "cHi": 5.48,
-     "cTop": 6.9,
-     "one": 26
+     "c": 4.42,
+     "cHi": 5.94,
+     "cTop": 7.56,
+     "one": 25
     },
     "corpus": {
-     "c": 1.79,
-     "cHi": 2.74,
-     "cTop": 3.75,
-     "one": 36
+     "c": 1.98,
+     "cHi": 2.97,
+     "cTop": 4.02,
+     "one": 34
     },
     "infested": {
-     "c": 1.87,
-     "cHi": 2.81,
-     "cTop": 3.84,
-     "one": 20
+     "c": 2.05,
+     "cHi": 3.06,
+     "cTop": 4.15,
+     "one": 19
     }
    },
    "rate": 14.943999999999999,
-   "cc": 1.6275,
+   "cc": 1.0499999999999998,
    "cd": 6.45,
    "ms": 0.122,
    "sc": 0.1125,
@@ -101,56 +101,56 @@
     "impact": 0.51,
     "slash": 0.16,
     "punct": 0.12,
-    "elec": 4.2,
+    "elec": 5.85,
     "viral": 1.45
    }
   },
   "riv": {
-   "score": 6.329087921462886,
+   "score": 5.698750512217492,
    "ids": [
     "__riven",
     "critical_deceleration",
     "galvanized_hell",
-    "primed_blunderbuss",
+    "shotgun_elementalist",
     "primed_ravage",
-    "primed_point_blank",
     "shotgun_barrage",
+    "primed_point_blank",
     "primed_charged_shell"
    ],
    "mods": [
     "리벤",
     "크리티컬 디셀러레이션",
     "갈바나이즈드 헬",
-    "프라임드 블런더버스",
+    "샷건 엘리멘탈리스트",
     "프라임드 래비지",
-    "프라임드 포인트 블랭크",
     "샷건 배러지",
+    "프라임드 포인트 블랭크",
     "프라임드 차지드 쉘"
    ],
-   "arcane": "primary_merciless",
+   "arcane": "primary_plated_round",
    "val": null,
    "pf": {
     "grineer": {
-     "c": 2.45,
-     "cHi": 3.45,
-     "cTop": 4.49,
-     "one": 35
+     "c": 2.59,
+     "cHi": 3.57,
+     "cTop": 4.52,
+     "one": 32
     },
     "corpus": {
-     "c": 0.92,
-     "cHi": 1.42,
-     "cTop": 2.12,
-     "one": 51
+     "c": 1.11,
+     "cHi": 1.66,
+     "cTop": 2.35,
+     "one": 45
     },
     "infested": {
-     "c": 0.89,
-     "cHi": 1.52,
-     "cTop": 2.22,
-     "one": 32
+     "c": 1.08,
+     "cHi": 1.73,
+     "cTop": 2.41,
+     "one": 27
     }
    },
-   "rate": 15.942212499999997,
-   "cc": 1.6275,
+   "rate": 15.942212499999998,
+   "cc": 1.0499999999999998,
    "cd": 9.234375,
    "ms": 0.1812515,
    "sc": 0.1125,
@@ -192,76 +192,76 @@
   "alts": [
    {
     "info": "ms:1.5 cd:1.1 fr:1.1 x_recoil:-0.9",
-    "score": 6.329087921462886,
+    "score": 5.698750512217492,
     "mods": [
      "리벤",
      "크리티컬 디셀러레이션",
      "갈바나이즈드 헬",
-     "프라임드 블런더버스",
+     "샷건 엘리멘탈리스트",
      "프라임드 래비지",
-     "프라임드 포인트 블랭크",
      "샷건 배러지",
+     "프라임드 포인트 블랭크",
      "프라임드 차지드 쉘"
     ],
-    "arcane": "primary_merciless"
+    "arcane": "primary_plated_round"
    },
    {
     "info": "ms:1.5 cd:1.1 dmg:2.0 x_recoil:-0.9",
-    "score": 6.214676491814407,
+    "score": 5.54006710101709,
     "mods": [
      "리벤",
      "크리티컬 디셀러레이션",
      "갈바나이즈드 헬",
      "샷건 배러지",
-     "프라임드 블런더버스",
+     "샷건 엘리멘탈리스트",
      "프라임드 래비지",
      "프레일 모멘텀",
-     "프라임드 포인트 블랭크"
+     "프라임드 차지드 쉘"
     ],
-    "arcane": "primary_merciless"
+    "arcane": "primary_plated_round"
+   },
+   {
+    "info": "ms:1.5 cd:1.1 cc:1.1 x_recoil:-0.9",
+    "score": 5.500350072956915,
+    "mods": [
+     "리벤",
+     "갈바나이즈드 헬",
+     "샷건 배러지",
+     "크리티컬 디셀러레이션",
+     "프라임드 래비지",
+     "프라임드 포인트 블랭크",
+     "프레일 모멘텀",
+     "샷건 엘리멘탈리스트"
+    ],
+    "arcane": "primary_plated_round"
    },
    {
     "info": "ms:1.5 fr:1.1 dmg:2.0 x_recoil:-0.9",
-    "score": 6.0208802426111,
+    "score": 5.4393561763115725,
     "mods": [
      "리벤",
      "갈바나이즈드 헬",
      "크리티컬 디셀러레이션",
      "프라임드 래비지",
-     "프라임드 블런더버스",
-     "샷건 배러지",
-     "프라임드 포인트 블랭크",
-     "프라임드 차지드 쉘"
-    ],
-    "arcane": "primary_merciless"
-   },
-   {
-    "info": "cd:1.1 fr:1.1 dmg:2.0 x_recoil:-0.9",
-    "score": 5.950485239113742,
-    "mods": [
-     "리벤",
-     "갈바나이즈드 헬",
-     "크리티컬 디셀러레이션",
-     "프라임드 블런더버스",
-     "프라임드 래비지",
-     "샷건 배러지",
      "샷건 엘리멘탈리스트",
-     "프라임드 차지드 쉘"
+     "샷건 배러지",
+     "프라임드 차지드 쉘",
+     "프라임드 포인트 블랭크"
     ],
     "arcane": "primary_plated_round"
    }
   ],
   "planTop": [
    "3+1 ms+cd+fr  slot:프레일 모멘텀",
+   "3+1 ms+cd+fr  slot:프라임드 차지드 쉘",
    "3+1 ms+cd+fr  slot:샷건 배러지",
    "3+1 ms+cd+dmg  slot:프라임드 포인트 블랭크",
-   "3+1 ms+cd+dmg  slot:샷건 엘리멘탈리스트",
-   "3+1 ms+cd+fr  slot:샷건 엘리멘탈리스트",
+   "3+1 ms+cd+dmg  slot:프라임드 차지드 쉘",
+   "3+1 ms+cd+cc  slot:프라임드 차지드 쉘",
    "3+1 ms+fr+dmg  slot:프레일 모멘텀",
-   "3+1 ms+fr+dmg  slot:프라임드 포인트 블랭크",
-   "3+1 ms+fr+dmg  slot:샷건 배러지",
-   "3+1 ms+cd+fr  slot:프라임드 포인트 블랭크",
-   "3+1 ms+fr+dmg  slot:샷건 엘리멘탈리스트"
+   "3+1 ms+cd+fr  slot:샷건 엘리멘탈리스트",
+   "3+1 ms+cd+dmg  slot:샷건 엘리멘탈리스트",
+   "3+1 ms+fr+dmg  slot:프라임드 포인트 블랭크"
   ],
   "errs": []
  }
