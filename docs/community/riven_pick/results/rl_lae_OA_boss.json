@@ -1,0 +1,258 @@
+[
+ {
+  "k": "laeOAb",
+  "sec": 362,
+  "weapon": "laetum",
+  "attack": "인카논 형태 한 발 전체 피해 (직격 + 폭발)",
+  "pellets": 1,
+  "fo": null,
+  "evo": {
+   "2": 1,
+   "3": 0,
+   "4": 1,
+   "5": 2
+  },
+  "evoNames": [
+   "2:Rapid Wrath",
+   "3:Lethal Rearmament",
+   "4:Incarnon Efficiency",
+   "5:Overwhelming Attrition"
+  ],
+  "o": {
+   "level": 150,
+   "steel": true,
+   "factions": [
+    "grineer",
+    "corpus",
+    "infested"
+   ],
+   "scenario": "boss",
+   "hits": null,
+   "abil": [],
+   "spread": null,
+   "extKeys": "elem,cdFinalAdd,frAdd,final,cdMult,active,gearExt,maxEnergy",
+   "elem": {},
+   "cdFinalAdd": 1.2,
+   "frAdd": 0.6,
+   "levels": [
+    150,
+    250,
+    400
+   ]
+  },
+  "base": {
+   "score": 2.945902209678854,
+   "ids": [
+    "deep_freeze",
+    "pistol_pestilence",
+    "barrel_diffusion",
+    "primed_heated_charge",
+    "lethal_torrent",
+    "primed_target_cracker",
+    "anemic_agility",
+    "magnetic_might"
+   ],
+   "mods": [
+    "딥 프리즈",
+    "피스톨 페스틸런스",
+    "배럴 디퓨젼",
+    "프라임드 히티드 차지",
+    "리썰 토렌트",
+    "프라임드 타겟 크래커",
+    "아네믹 어질리티",
+    "마그네틱 마이트"
+   ],
+   "arcane": "secondary_enervate",
+   "val": null,
+   "pf": {
+    "grineer": {
+     "c": 0.73,
+     "cHi": 0.91,
+     "cTop": 1.09,
+     "one": 39
+    },
+    "corpus": {
+     "c": 0.09,
+     "cHi": 0.14,
+     "cTop": 0.23,
+     "one": 60
+    },
+    "infested": {
+     "c": 0.23,
+     "cHi": 0.32,
+     "cTop": 0.41,
+     "one": 42
+    }
+   },
+   "rate": 22.011000000000003,
+   "cc": 1.1700000000000004,
+   "cd": 6.7,
+   "ms": 2.8,
+   "sc": 0.35200000000000004,
+   "layout": {
+    "impact": 1,
+    "viral": 1.5,
+    "heat": 1.65,
+    "mag": 0.6
+   }
+  },
+  "riv": {
+   "score": 6.91374229402124,
+   "ids": [
+    "__riven",
+    "frostbite",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "mods": [
+    "리벤",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "arcane": "secondary_enervate",
+   "val": null,
+   "pf": {
+    "grineer": {
+     "c": 0.23,
+     "cHi": 0.27,
+     "cTop": 0.32,
+     "one": 46
+    },
+    "corpus": {
+     "c": 0.05,
+     "cHi": 0.09,
+     "cTop": 0.09,
+     "one": 77
+    },
+    "infested": {
+     "c": 0.09,
+     "cHi": 0.18,
+     "cTop": 0.23,
+     "one": 58
+    }
+   },
+   "rate": 22.011000000000003,
+   "cc": 1.1700000000000004,
+   "cd": 8.27025,
+   "ms": 4.2812875,
+   "sc": 0.48400000000000004,
+   "layout": {
+    "impact": 1,
+    "viral": 1.2,
+    "heat": 1.65,
+    "corr": 1.11
+   },
+   "riven": [
+    {
+     "k": "ms",
+     "v": 1.4812875,
+     "inc": true
+    },
+    {
+     "k": "cd",
+     "v": 1.11375,
+     "inc": true
+    },
+    {
+     "k": "corrm",
+     "v": 1.11375,
+     "inc": true
+    },
+    {
+     "k": "x_recoil",
+     "v": -0.891,
+     "inc": true
+    }
+   ],
+   "eff": {
+    "ms": 1.4812875,
+    "cd": 1.11375,
+    "corrm": 1.11375
+   }
+  },
+  "alts": [
+   {
+    "info": "ms:1.5 cd:1.1 corrm:1.1 x_recoil:-0.9",
+    "score": 6.91374229402124,
+    "mods": [
+     "리벤",
+     "프로스트바이트",
+     "피스톨 페스틸런스",
+     "리썰 토렌트",
+     "배럴 디퓨젼",
+     "아네믹 어질리티",
+     "프라임드 타겟 크래커",
+     "프라임드 히티드 차지"
+    ],
+    "arcane": "secondary_enervate"
+   },
+   {
+    "info": "ms:1.5 fr:0.9 corrm:1.1 x_recoil:-0.9",
+    "score": 6.607140491661645,
+    "mods": [
+     "리벤",
+     "프로스트바이트",
+     "피스톨 페스틸런스",
+     "리썰 토렌트",
+     "프라임드 타겟 크래커",
+     "배럴 디퓨젼",
+     "프라임드 히티드 차지",
+     "아네믹 어질리티"
+    ],
+    "arcane": "secondary_enervate"
+   },
+   {
+    "info": "ms:1.5 cd:1.1 cold:1.1 x_recoil:-0.9",
+    "score": 6.4432466267978175,
+    "mods": [
+     "리벤",
+     "피스톨 페스틸런스",
+     "프라임드 히티드 차지",
+     "리썰 토렌트",
+     "배럴 디퓨젼",
+     "아네믹 어질리티",
+     "프라임드 타겟 크래커",
+     "프로스트바이트"
+    ],
+    "arcane": "secondary_enervate"
+   },
+   {
+    "info": "ms:1.5 cd:1.1 tox:1.1 x_recoil:-0.9",
+    "score": 6.4432466267978175,
+    "mods": [
+     "리벤",
+     "프로스트바이트",
+     "프라임드 히티드 차지",
+     "리썰 토렌트",
+     "배럴 디퓨젼",
+     "아네믹 어질리티",
+     "프라임드 타겟 크래커",
+     "피스톨 페스틸런스"
+    ],
+    "arcane": "secondary_enervate"
+   }
+  ],
+  "planTop": [
+   "3+1 ms+cd+corrm  slot:마그네틱 마이트",
+   "3+1 ms+fr+corrm  slot:프라임드 히티드 차지",
+   "3+1 ms+cd+cold  slot:마그네틱 마이트",
+   "3+1 ms+cd+tox  slot:마그네틱 마이트",
+   "3+1 ms+cd+viralm  slot:마그네틱 마이트",
+   "2+1 ms+corrm  slot:마그네틱 마이트",
+   "3+1 ms+cd+corrm  slot:프라임드 히티드 차지",
+   "3+1 ms+cd+cold  slot:딥 프리즈",
+   "3+1 ms+fr+corrm  slot:아네믹 어질리티",
+   "2+1 ms+corrm  slot:프라임드 히티드 차지"
+  ],
+  "errs": []
+ }
+]

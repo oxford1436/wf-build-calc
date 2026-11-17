@@ -113,7 +113,7 @@
   const NUM_KEYS = ["dmg", "heavy", "ms", "cc", "ccHeavyNoDouble", "cd", "sc", "sd", "dur", "fr", "frneg", "lock", "mag", "reload", "wind",
     "ic", "hae", "ccc", "br", "ww", "co", "gco", "radius", "pt", "cdFlat", "ccFlat", "hsMult", "msLock", "hm", "ib", "welt",
     "ammoMax", "ammoEff", "ammoConv", "throwSpd", "projSpd", "volatile", "blastR", "firstShot", "evoPst", "wpcc",
-    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd", "napalm", "hata", "burstDmg", "burstCap", "finalBurstMs", "spreadAdd", "spreadPct", "slamDmg"];
+    "scFlat", "nc", "cdFew", "evoMult", "cdBase", "ccBase", "baseAdd", "napalm", "hata", "burstDmg", "burstCap", "finalBurstMs", "spreadAdd", "spreadPct", "slamDmg", "oaDmg", "oaMax", "oaDur"];
   const EXTRA = ["radm", "magm", "gasm", "blastm", "viralm", "corrm", "heatx", "coldx", "elecx", "toxx", "voidx"];
   function newAgg() {
     const a = { elem: { heat: 0, cold: 0, elec: 0, tox: 0 }, phys: { impact: 0, punct: 0, slash: 0 }, extra: {} };
@@ -219,7 +219,10 @@
       for (const t in atk.dmg) {
         const v = atk.dmg[t] / Btot;
         if (!v || PRIM.includes(t)) continue;
-        coef[t] = (coef[t] || 0) + v * (PHYS.includes(t) ? Math.max(0, 1 + a.phys[t]) : 1);
+        // v2.18: a negative physical riven stat can take a pure-physical part to nothing (Laetum's direct hit is all Impact; a riven
+        // with −118.8% Impact, the negative arca.live players look for on it). With no elemental mod that part has no damage at
+        // all; the floor keeps it a part that deals (next to) nothing instead of a missing result that crashed the search.
+        coef[t] = (coef[t] || 0) + v * (PHYS.includes(t) ? Math.max(1e-9, 1 + a.phys[t]) : 1);
         // Madurai Phoenix Talons: +30% of total base damage as physical, split by the weapon's physical weights, after physical mods
         if (a.phoenix && PHYS.includes(t) && physSum > 0) coef[t] += a.phoenix * (base0 / Btot) * (atk.dmg[t] / physSum);
       }
@@ -759,8 +762,13 @@
         if (o.scenario === "crowd" && pbl > 0 && acc.blast > 0) {
           const unit = acc.blast / pbl;
           const shots = 1 + tHit * main.rate;
-          const onDeath = 1 - Math.exp(-pbl * Math.max(1, tHit * main.rate));
-          const nSt = Math.max(1, Math.min(10, pbl * Math.min(shots, 1.5 * main.rate)));
+          // v2.18 (independent review 2026-11-17, Laetum): the wiki sentence covers an enemy "afflicted with" stacks when it dies; that
+          // the Blast procs of the killing shot itself also go off is this model's reading, not a quoted rule. It decides whether a
+          // weapon that kills every pack enemy in one shot gets any chain from Blast at all, so o.blastKillShot = false gives the
+          // other end: only procs put on the enemy by earlier shots count (the app shows both, boundAlts).
+          const ks = o.blastKillShot === false ? 0 : 1;
+          const onDeath = 1 - Math.exp(-pbl * Math.max(ks, tHit * main.rate));
+          const nSt = Math.max(ks || 1e-9, Math.min(10, pbl * Math.min(shots - (ks ? 0 : 1), 1.5 * main.rate)));
           const dealt = ttk(Object.assign({}, base, { D: unit * 10 * nSt, blast: 0, F: 0, dot: {}, pv: 0, ph: 0, pc: 0, pk: 0, pm: 0, r: 0, hp: tg.hp, sh: tg.sh * shc, ar0: tg.ar }), o.dt);
           const n5 = Math.min(main.N - 1, (o.density || 0) * Math.PI * 25);
           Keff = Math.min(main.N, Keff * (1 + onDeath * n5 * Math.min(1, dealt / Math.max(1, tg.hp))));
@@ -914,6 +922,28 @@
     while (big < 6 && n < 400) { sum += cc; n++; big += Math.max(0, Math.min(1, cc - 1)); cc += 0.1; }
     return sum / Math.max(1, n);
   }
+  // share of the hits of one Enervate cycle that are not critical (the first hits of every cycle, while the chance is below 100%)
+  function enervateNonCrit(cc0) {
+    let cc = cc0, big = 0, sum = 0, n = 0;
+    while (big < 6 && n < 400) { sum += Math.max(0, 1 - cc); n++; big += Math.max(0, Math.min(1, cc - 1)); cc += 0.1; }
+    return sum / Math.max(1, n);
+  }
+  // Overwhelming Attrition (wiki Laetum): one stack per qualifying hit (up to max), "When the buff times out, one stack is lost and
+  // the buff duration resets" — time-average of the stacks while firing, qualifying hits arriving at lam per second.
+  // States 0..max; from a middle state the next event is a hit (chance p = 1 − e^(−lam·dur), then one more stack) or the timeout
+  // (one stack fewer); at max a hit only restarts the timer, so the stack is lost when a gap of dur seconds turns up.
+  function attritionStacks(lam, max, dur) {
+    if (!(lam > 0) || !(max > 0)) return 0;
+    const x = lam * dur; if (x > 30) return max;
+    const p = 1 - Math.exp(-x), hold = p / lam, top = (Math.exp(x) - 1) / lam;
+    // embedded chain: 0 → 1; s → s + 1 (p) / s − 1 (1 − p); max → max − 1. Unnormalised stationary weights by detailed balance:
+    const pi = [1 - p]; pi[1] = 1; for (let k = 2; k < max; k++) pi[k] = pi[k - 1] * p / (1 - p + 1e-12);
+    pi[max] = max > 1 ? pi[max - 1] * p : 1;
+    if (max === 1) { pi[0] = 1; pi[1] = 1; }
+    let tw = 0, sw = 0;
+    for (let k = 0; k <= max; k++) { const t = k === 0 ? 1 / lam : k === max ? top : hold; tw += pi[k] * t; sw += pi[k] * t * k; }
+    return tw > 0 ? sw / tw : 0;
+  }
   const isMeleeKind = (k) => k === "melee" || k === "heavy" || k === "glaive" || k === "tennokai";
   // uptime of an on-trigger buff: chance at least one trigger happened within the last t seconds
   const uptime = (lambda, t) => 1 - Math.exp(-Math.max(0, lambda) * t);
@@ -937,8 +967,10 @@
       if (on) applyEff(a, c.eff);
     }
     // Devouring/Devastating Attrition (wiki Laetum/Felarx): "50% chance to deal +2000% damage on non-critical hits" —
-    // "Bosses ignore this perk."
-    if (o.scenario === "boss") a.nc = 0;
+    // v1.61 switched it off for bosses citing "Bosses ignore this perk." — that sentence is not on the wiki Laetum or Felarx page
+    // (read 2026-11-17, v2.18). Off stays the cautious default (a non-crit build that really is ignored would be useless on a
+    // boss); o.ncBoss = true applies it, and the app shows both.
+    if (o.scenario === "boss" && !o.ncBoss) a.nc = 0;
     a.pt += atk.pt || 0;                 // innate punch through of the attack (wiki), e.g. Phenmor Incarnon Form 3 m
     const sp = atk.evoSp || {};          // perks that read the weapon's own final stats (Prelude of Might, Wiseman's Regard …)
     const ext = o.ext || {};
@@ -1196,7 +1228,7 @@
       if (a.burstDmg > 0) { const cap = Math.max(1, a.burstCap || 1); let s = 0; for (let k = 0; k < nb; k++) s += bn * Math.min(k, cap); s += rem * Math.min(nb, cap); burstAdd = a.burstDmg * s / m; }
       if (a.finalBurstMs > 0) finalMs = a.finalBurstMs * (rem || Math.min(bn, m)) / m;
     }
-    const dmgb = a.dmg + burstAdd + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (tenno && o.tennoAdd ? tenno.dmg || 0 : 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(magCap(atk.mag))) : 0);
+    let dmgb = a.dmg + burstAdd + (isHeavy ? a.heavy : 0) + (ext.dmgAdd || 0) + (tenno && o.tennoAdd ? tenno.dmg || 0 : 0) + (a.firstShot && atk.mag ? a.firstShot / Math.max(1, magShots(magCap(atk.mag))) : 0);
     const msLock = a.msLock > 0;
     // atk.noMs: a radial part the wiki says multishot doesn't multiply (one blast per trigger pull)
     // accuracy-lowering mods: fewer of the shots reach the enemy (see hitShare); the flat spread goes on the max deviation (wiki
@@ -1225,6 +1257,7 @@
     let ccBase = ((atk.cc || 0) + a.ccBase + hgAdd) * (1 + ccMod + (a.br + (isMelee ? a.glad : 0)) * Math.max(0, tierNow - 1)) + a.ccFlat + (ext.ccFlat || 0);
     ccBase = Math.max(0, ccBase);
     if (o.arcane === "melee_animosity" && isHeavy) ccBase += (atk.cc || 0) * 0.42 * 1.5;
+    const ccPreArc = ccBase;
     if (arc && arc.enervate) ccBase = enervateCC(ccBase);
     // Vigilante set: a crit has a chance to go one tier higher = same average as that much more crit chance on crits
     if (a.vigil && weapon.slot === "primary") ccBase += a.vigil * Math.min(1, ccBase);
@@ -1248,6 +1281,21 @@
     if (weapon.procCrit && !isMelee) {
       const f = Math.min(1, weapon.procCrit.p * Math.min(1, sc));
       ccBase = (1 - f) * ccBase + f * weapon.procCrit.cc;
+    }
+    // v2.18 Overwhelming Attrition (wiki Laetum, Evolution V): "On Hit that is neither Critical nor applies a Status Effect: +400%
+    // damage for 10 seconds. Stacks up to 3 times.", "Damage bonus is additive to base damage bonuses such as Hornet Strike.",
+    // "When the buff times out, one stack is lost and the buff duration resets." Every bullet rolls on its own (Update 31.6 fixed
+    // "If any projectile in the multishot group was a critical hit or status effect, the entire thing became invalid"); status
+    // damage ticks don't count (Hotfix 31.5.7). A hit qualifies with (1 − crit chance) × (1 − status chance), both capped at 0;
+    // with Secondary Enervate the first hits of every cycle are below 100% crit chance, so the non-crit share is the cycle average.
+    // The buff outlasts a pack (10 s a stack), so the stacks are the average while firing, not rebuilt from zero for each pack.
+    let oaStk = 0;
+    if (a.oaDmg > 0 && !isMelee) {
+      const ncShare = arc && arc.enervate ? enervateNonCrit(ccPreArc) : Math.max(0, 1 - ccBase);
+      const q = ncShare * Math.max(0, 1 - Math.min(1, sc));
+      const nParts = parentAtk && parentAtk.parts ? parentAtk.parts.length : 1;
+      oaStk = o.oaStacks != null ? o.oaStacks : attritionStacks(rate * Math.max(1, ms0) * nParts * q, a.oaMax || 3, a.oaDur || 10);
+      dmgb += a.oaDmg * oaStk;
     }
     const facAll = 1 + (ext.faction || 0);
     // sniper combo (scoped): x1.5 at SniperComboMin hits, +0.5 each time the count triples; hits = shots x multishot.

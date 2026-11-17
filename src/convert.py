@@ -877,6 +877,14 @@ EVO_NONE = [(r"Recoil", "반동"), (r"Accuracy", "정확도"), (r"Projectile Spe
             (r"Incarnon Transmutation", "인카논 충전"), (r"Magazine Reloaded", "보관 중 재장전")]
 def evo_line(line):
     line = re.sub(r"([A-Za-z%.])\d$", r"\1", line.strip())      # footnote digit left over from the wiki markup
+    # v2.18 Overwhelming Attrition (wiki Laetum, Evolution V): "On Hit that is neither Critical nor applies a Status Effect: +400%
+    # damage for 10 seconds. Stacks up to 3 times." — notes: "Damage bonus is additive to base damage bonuses such as Hornet
+    # Strike.", "When the buff times out, one stack is lost and the buff duration resets." The engine works out the stacks
+    # from how often a hit is neither a crit nor a status proc (oaDmg / oaMax / oaDur).
+    m = re.match(r"^On Hit that is neither Critical nor applies a Status Effect: \+(\d+(?:\.\d+)?)% damage for (\d+) seconds\. Stacks up to (\d+) times\.?$", line)
+    if m:
+        return {"key": "oaDmg", "v": round(float(m.group(1)) / 100, 4), "oaMax": int(m.group(3)), "oaDur": int(m.group(2)),
+                "ko": f"치명타도 상태이상도 아닌 명중 시 {m.group(2)}초간 피해 +{m.group(1)}% (최대 {m.group(3)}중첩 = +{float(m.group(1)) * int(m.group(3)):g}%, 기본 피해 모드와 합연산)"}
     for rx, when, wko in EVO_WHEN:
         m = re.match(rx, line)
         if m and line[m.end():].strip():

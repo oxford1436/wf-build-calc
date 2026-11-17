@@ -376,7 +376,8 @@ self.onmessage = function (ev) {
         else if (it.key === "setSC") x.sc = it.v;
         else if (it.key === "prelude" || it.key === "wise" || it.key === "highground") { x.evoSp = Object.assign({}, x.evoSp || {}, { [it.key]: { v: it.v, below: it.below, cap: it.cap } }); }
         else if (it.when) { x.evoCond = (x.evoCond || []).concat([{ when: it.when, eff: { [it.key]: it.v } }]); }
-        else { eff[it.key] = (eff[it.key] || 0) + it.v; if (it.key === "burstDmg" && it.cap) eff.burstCap = Math.max(eff.burstCap || 0, it.cap); }
+        else { eff[it.key] = (eff[it.key] || 0) + it.v; if (it.key === "burstDmg" && it.cap) eff.burstCap = Math.max(eff.burstCap || 0, it.cap);
+          if (it.key === "oaDmg") { eff.oaMax = it.oaMax || 3; eff.oaDur = it.oaDur || 10; } }
       }
       if (Object.keys(eff).length) x.evoEff = Object.assign({}, x.evoEff || {}, eff);
       return x;
@@ -1464,6 +1465,12 @@ self.onmessage = function (ev) {
       // would have come after one or two swings in the crowd (o.tennoPerHit stays in the engine for regress only)
       if (w.attacks.some((q) => q.evoScaleAlt)) alts.push({ o: { evoHeavyScale: true }, why: "진화 '기본 피해 +X'가 강공에 그대로 X만 더해짐(기본) / 휘두르기와 같은 비율로 커짐(강공 = 기본 피해 × 5) — 위키 확인 안 됨" });
     }
+    // v2.18: Devouring / Devastating Attrition against bosses. v1.61 switched it off for bosses citing a wiki sentence ("Bosses ignore
+    // this perk.") that is not on the Laetum or Felarx pages (read 2026-11-17); an Overframe author (720828) writes it has "zero
+    // effect on acolytes", the most-voted guide (315005) uses the same build on Archons. Off stays the cautious default, on is shown.
+    if (atk && o.scenario === "boss" && (((atk.evoEff || {}).nc > 0) || (atk.parts || []).some((q) => (q.evoEff || {}).nc > 0))) alts.push({ o: { ncBoss: true }, why: "디바우링·디바스테이팅 어트리션(비치명타 +2000%)이 보스에게 적용되는지 확인 안 됨 — 미적용(기본) / 적용" });
+    // v2.18 (independent review 2026-11-17): Blast explosions on death — whether the procs of the shot that kills count
+    if (atk && w.slot !== "melee" && o.scenario === "crowd") alts.push({ o: { blastKillShot: false }, key: "blastKill", why: "한 방에 죽은 적도 그 한 발의 폭발 상태이상으로 주변을 터뜨리는지 확인 안 됨 — 터뜨림(기본) / 먼저 맞아 폭발 중첩이 있던 적만" });
     // v1.88: beam-end AoE on the struck enemy too (default) / only the AoE part removed — wiki weapon pages don't say
     if (atk && (atk.parts || []).some((q) => q.beamAoe)) alts.push({ o: { noBeamAoe: true }, why: "빔 끝점 범위 피해를 빔에 맞은 적도 받는지 위키에 없음 — 받음(기본) / 안 받음" });
     // v1.95 (independent review 2026-11-07): Cedo priming — whether the glaive's statuses are already on an enemy before the primary

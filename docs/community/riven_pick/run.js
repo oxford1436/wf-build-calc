@@ -14,6 +14,13 @@ const CFG = {
   laetum3: { w: "laetum", a: 3, f: { rivmode: "plan" } },      // the whole Incarnon shot (direct hit + 2 m blast), as in builds/laetum.json
   // P4 (v2.17): the Arca Plasmor recommendation in the notes had the unreleased Primed Blunderbuss — re-run with the user's riven
   plasmor: { w: "tenet_arca_plasmor", early: true, f: { rivmode: "owned", rk0: "fr", rv0: "95.5", ri0: true, rk1: "ms", rv1: "143.6", ri1: true, rk2: "ammoeff", rv2: "54.3", ri2: true, rk3: "x_zoom", rv3: "37.4", ri3: true, valtype: "tox", valpct: "60" } },
+  // 2026-11-17 follow-up: Incarnon form only, crowd and boss, the user's evolutions (II Rapid Wrath, III Lethal Rearmament,
+  // IV Incarnon Efficiency, V Overwhelming Attrition = "1200%") against Devouring Attrition ("2000%", IV Elemental Excess)
+  laeOAc: { w: "laetum", a: 3, evo: { 2: 1, 3: 0, 4: 1, 5: 2 }, f: { rivmode: "plan", scenario: "crowd" } },
+  laeOAb: { w: "laetum", a: 3, evo: { 2: 1, 3: 0, 4: 1, 5: 2 }, f: { rivmode: "plan", scenario: "boss" } },
+  laeDAb: { w: "laetum", a: 3, evo: { 2: 1, 3: 0, 4: 2, 5: 0 }, f: { rivmode: "plan", scenario: "boss" }, patch: { defaults: { ncBoss: true } } },
+  laeDAb0: { w: "laetum", a: 3, evo: { 2: 1, 3: 0, 4: 2, 5: 0 }, f: { rivmode: "plan", scenario: "boss" } },
+  laeDAc: { w: "laetum", a: 3, evo: { 2: 1, 3: 0, 4: 2, 5: 0 }, f: { rivmode: "plan", scenario: "crowd" } },
   laetum0: { w: "laetum", f: { rivmode: "none" } },
   nukor0: { w: "kuva_nukor", f: { rivmode: "none", valtype: "mag", valpct: "37.8" } },
   toxo0: { w: "dual_toxocyst", f: { rivmode: "none" } },
@@ -43,7 +50,8 @@ const which = (process.argv[2] || "").split(",").filter(Boolean);
     await pg.goto("file://" + repo + "/index.html"); await pg.waitForFunction(() => window.WF_APP && window.WF_WEAPONS);
     const a = c.a;      // undefined = the app's own default attack (restoreState leaves it alone)
     const f = Object.assign({}, c.cyte ? CYTE : {}, c.f);
-    const S = { w: c.w, a, f, ab: c.cyte ? ["Resupply"].concat(c.ab || ["Nourish"]) : [], abp: c.cyte ? { Resupply: "0" } : {}, mb: ["tenacious_bond", "reinforced_bond"], s: [] };
+    const S = { w: c.w, a, f, ab: c.cyte ? ["Resupply"].concat(c.ab || ["Nourish"]) : [], abp: c.cyte ? { Resupply: "0" } : {}, mb: c.mb || ["tenacious_bond", "reinforced_bond"], s: [] };
+    if (c.evo) S.evo = c.evo;
     const h = Buffer.from(JSON.stringify(S), "utf8").toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
     await pg.close(); pg = await b.newPage(); pg.on("pageerror", (e) => errs.push(e.message));
     if (c.patch) await pg.addInitScript(init, c.patch);

@@ -1,0 +1,797 @@
+{
+ "atk": "인카논 형태 한 발 전체 피해 (직격 + 폭발)",
+ "evo": {
+  "2": 1,
+  "3": 0,
+  "4": 1,
+  "5": 2
+ },
+ "scen": [
+  "crowd",
+  "boss",
+  "crowd+{\"killRamp\":false}",
+  "heavy",
+  "crowd+{\"factions\":[\"grineer\"]}",
+  "boss+{\"factions\":[\"grineer\"]}",
+  "crowd+{\"factions\":[\"corpus\"]}",
+  "boss+{\"factions\":[\"corpus\"]}",
+  "crowd+{\"factions\":[\"infested\"]}",
+  "boss+{\"factions\":[\"infested\"]}",
+  "crowd+{\"levels\":[150]}",
+  "boss+{\"levels\":[150]}",
+  "crowd+{\"levels\":[400]}",
+  "boss+{\"levels\":[400]}"
+ ],
+ "nCands": 42,
+ "seeds": [],
+ "found": [],
+ "evals": [
+  {
+   "n": "FINAL",
+   "mods": [
+    "리벤",
+    "프라임드 히티드 차지",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "졸트",
+    "리썰 토렌트",
+    "갈바나이즈드 디퓨젼",
+    "프라임드 타겟 크래커"
+   ],
+   "ids": [
+    "__riven",
+    "primed_heated_charge",
+    "frostbite",
+    "pistol_pestilence",
+    "jolt",
+    "lethal_torrent",
+    "galvanized_diffusion",
+    "primed_target_cracker"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 9.610053360304907,
+    "boss": 5.430730688617655,
+    "crowd+{\"killRamp\":false}": 9.778257342170445,
+    "heavy": 16.008,
+    "crowd+{\"factions\":[\"grineer\"]}": 6.228456440204452,
+    "boss+{\"factions\":[\"grineer\"]}": 3.08291154231513,
+    "crowd+{\"factions\":[\"corpus\"]}": 12.186820375085263,
+    "boss+{\"factions\":[\"corpus\"]}": 12.705558019953466,
+    "crowd+{\"factions\":[\"infested\"]}": 11.692477850429498,
+    "boss+{\"factions\":[\"infested\"]}": 4.089027131251999,
+    "crowd+{\"levels\":[150]}": 9.610053360304907,
+    "boss+{\"levels\":[150]}": 5.430730688617655,
+    "crowd+{\"levels\":[400]}": 9.610053360304907,
+    "boss+{\"levels\":[400]}": 5.430730688617655
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.616,
+    "rate": 16.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+blast2.25+corr1.20+viral1.11",
+   "lays": {
+    "impact1.00+blast2.25+corr1.20+viral1.11": {
+     "crowd": 9.6101,
+     "boss": 5.4307,
+     "crowd+{\"killRamp\":false}": 9.7783,
+     "heavy": 16.008,
+     "crowd+{\"factions\":[\"grineer\"]}": 6.2285,
+     "boss+{\"factions\":[\"grineer\"]}": 3.0829,
+     "crowd+{\"factions\":[\"corpus\"]}": 12.1868,
+     "boss+{\"factions\":[\"corpus\"]}": 12.7056,
+     "crowd+{\"factions\":[\"infested\"]}": 11.6925,
+     "boss+{\"factions\":[\"infested\"]}": 4.089,
+     "crowd+{\"levels\":[150]}": 9.6101,
+     "boss+{\"levels\":[150]}": 5.4307,
+     "crowd+{\"levels\":[400]}": 9.6101,
+     "boss+{\"levels\":[400]}": 5.4307
+    },
+    "impact1.00+rad2.25+viral2.31": {
+     "crowd": 4.7997,
+     "boss": 4.7723,
+     "crowd+{\"killRamp\":false}": 4.7997,
+     "heavy": 14.8214,
+     "crowd+{\"factions\":[\"grineer\"]}": 4.4229,
+     "boss+{\"factions\":[\"grineer\"]}": 1.5415,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 12.7056,
+     "crowd+{\"factions\":[\"infested\"]}": 5,
+     "boss+{\"factions\":[\"infested\"]}": 5.5497,
+     "crowd+{\"levels\":[150]}": 4.7997,
+     "boss+{\"levels\":[150]}": 4.7723,
+     "crowd+{\"levels\":[400]}": 4.7997,
+     "boss+{\"levels\":[400]}": 4.7723
+    },
+    "impact1.00+gas2.25+mag1.20+viral1.11": {
+     "crowd": 4.7997,
+     "boss": 4.1372,
+     "crowd+{\"killRamp\":false}": 4.7997,
+     "heavy": 14.8214,
+     "crowd+{\"factions\":[\"grineer\"]}": 4.4229,
+     "boss+{\"factions\":[\"grineer\"]}": 1.363,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 12.7056,
+     "crowd+{\"factions\":[\"infested\"]}": 5,
+     "boss+{\"factions\":[\"infested\"]}": 4.089,
+     "crowd+{\"levels\":[150]}": 4.7997,
+     "boss+{\"levels\":[150]}": 4.1372,
+     "crowd+{\"levels\":[400]}": 4.7997,
+     "boss+{\"levels\":[400]}": 4.1372
+    }
+   }
+  },
+  {
+   "n": "FINAL −impact",
+   "mods": [
+    "리벤",
+    "프라임드 히티드 차지",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "졸트",
+    "리썰 토렌트",
+    "갈바나이즈드 디퓨젼",
+    "프라임드 타겟 크래커"
+   ],
+   "ids": [
+    "__riven",
+    "primed_heated_charge",
+    "frostbite",
+    "pistol_pestilence",
+    "jolt",
+    "lethal_torrent",
+    "galvanized_diffusion",
+    "primed_target_cracker"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": "impact",
+   "per": {
+    "crowd": 10.094353611793602,
+    "boss": 5.430730688617655,
+    "crowd+{\"killRamp\":false}": 10.26313219666552,
+    "heavy": 16.008,
+    "crowd+{\"factions\":[\"grineer\"]}": 6.4801710339143215,
+    "boss+{\"factions\":[\"grineer\"]}": 3.08291154231513,
+    "crowd+{\"factions\":[\"corpus\"]}": 12.811474314494651,
+    "boss+{\"factions\":[\"corpus\"]}": 12.705558019953466,
+    "crowd+{\"factions\":[\"infested\"]}": 12.389391140397365,
+    "boss+{\"factions\":[\"infested\"]}": 4.089027131251999,
+    "crowd+{\"levels\":[150]}": 10.094353611793602,
+    "boss+{\"levels\":[150]}": 5.430730688617655,
+    "crowd+{\"levels\":[400]}": 10.094353611793602,
+    "boss+{\"levels\":[400]}": 5.430730688617655
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.616,
+    "rate": 16.01,
+    "ms": 5.13
+   },
+   "lay": "blast2.25+corr1.20+viral1.11",
+   "lays": {
+    "blast2.25+corr1.20+viral1.11": {
+     "crowd": 10.0944,
+     "boss": 5.4307,
+     "crowd+{\"killRamp\":false}": 10.2631,
+     "heavy": 16.008,
+     "crowd+{\"factions\":[\"grineer\"]}": 6.4802,
+     "boss+{\"factions\":[\"grineer\"]}": 3.0829,
+     "crowd+{\"factions\":[\"corpus\"]}": 12.8115,
+     "boss+{\"factions\":[\"corpus\"]}": 12.7056,
+     "crowd+{\"factions\":[\"infested\"]}": 12.3894,
+     "boss+{\"factions\":[\"infested\"]}": 4.089,
+     "crowd+{\"levels\":[150]}": 10.0944,
+     "boss+{\"levels\":[150]}": 5.4307,
+     "crowd+{\"levels\":[400]}": 10.0944,
+     "boss+{\"levels\":[400]}": 5.4307
+    },
+    "rad2.25+viral2.31": {
+     "crowd": 4.7997,
+     "boss": 4.7221,
+     "crowd+{\"killRamp\":false}": 4.7997,
+     "heavy": 14.8214,
+     "crowd+{\"factions\":[\"grineer\"]}": 4.4229,
+     "boss+{\"factions\":[\"grineer\"]}": 1.4933,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 12.7056,
+     "crowd+{\"factions\":[\"infested\"]}": 5,
+     "boss+{\"factions\":[\"infested\"]}": 5.5497,
+     "crowd+{\"levels\":[150]}": 4.7997,
+     "boss+{\"levels\":[150]}": 4.7221,
+     "crowd+{\"levels\":[400]}": 4.7997,
+     "boss+{\"levels\":[400]}": 4.7221
+    },
+    "gas2.25+mag1.20+viral1.11": {
+     "crowd": 4.7997,
+     "boss": 4.1076,
+     "crowd+{\"killRamp\":false}": 4.7997,
+     "heavy": 14.8214,
+     "crowd+{\"factions\":[\"grineer\"]}": 4.4229,
+     "boss+{\"factions\":[\"grineer\"]}": 1.334,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 12.7056,
+     "crowd+{\"factions\":[\"infested\"]}": 5,
+     "boss+{\"factions\":[\"infested\"]}": 4.089,
+     "crowd+{\"levels\":[150]}": 4.7997,
+     "boss+{\"levels\":[150]}": 4.1076,
+     "crowd+{\"levels\":[400]}": 4.7997,
+     "boss+{\"levels\":[400]}": 4.1076
+    }
+   }
+  },
+  {
+   "n": "alt2 (Anemic, Scorch 대신 졸트·페스틸런스)",
+   "mods": [
+    "리벤",
+    "프라임드 히티드 차지",
+    "프로스트바이트",
+    "스코치",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "갈바나이즈드 디퓨젼",
+    "프라임드 타겟 크래커"
+   ],
+   "ids": [
+    "__riven",
+    "primed_heated_charge",
+    "frostbite",
+    "scorch",
+    "anemic_agility",
+    "lethal_torrent",
+    "galvanized_diffusion",
+    "primed_target_cracker"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 10.043069287698373,
+    "boss": 4.986258622239069,
+    "crowd+{\"killRamp\":false}": 10.218607612936342,
+    "heavy": 18.868797306578983,
+    "crowd+{\"factions\":[\"grineer\"]}": 6.60815541705672,
+    "boss+{\"factions\":[\"grineer\"]}": 1.6898274056680336,
+    "crowd+{\"factions\":[\"corpus\"]}": 12.53859908386763,
+    "boss+{\"factions\":[\"corpus\"]}": 13.866061114618025,
+    "crowd+{\"factions\":[\"infested\"]}": 12.225598018543076,
+    "boss+{\"factions\":[\"infested\"]}": 5.290892548672728,
+    "crowd+{\"levels\":[150]}": 10.043069287698373,
+    "boss+{\"levels\":[150]}": 4.986258622239069,
+    "crowd+{\"levels\":[400]}": 10.043069287698373,
+    "boss+{\"levels\":[400]}": 4.986258622239069
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.484,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+blast2.85+viral1.11",
+   "lays": {
+    "impact1.00+blast2.85+viral1.11": {
+     "crowd": 10.0431,
+     "boss": 4.9863,
+     "crowd+{\"killRamp\":false}": 10.2186,
+     "heavy": 18.8688,
+     "crowd+{\"factions\":[\"grineer\"]}": 6.6082,
+     "boss+{\"factions\":[\"grineer\"]}": 1.6898,
+     "crowd+{\"factions\":[\"corpus\"]}": 12.5386,
+     "boss+{\"factions\":[\"corpus\"]}": 13.8661,
+     "crowd+{\"factions\":[\"infested\"]}": 12.2256,
+     "boss+{\"factions\":[\"infested\"]}": 5.2909,
+     "crowd+{\"levels\":[150]}": 10.0431,
+     "boss+{\"levels\":[150]}": 4.9863,
+     "crowd+{\"levels\":[400]}": 10.0431,
+     "boss+{\"levels\":[400]}": 4.9863
+    }
+   }
+  },
+  {
+   "n": "alt3 (졸트→프라임드 컨벌션)",
+   "mods": [
+    "리벤",
+    "프라임드 히티드 차지",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "프라임드 컨벌션",
+    "리썰 토렌트",
+    "갈바나이즈드 디퓨젼",
+    "프라임드 타겟 크래커"
+   ],
+   "ids": [
+    "__riven",
+    "primed_heated_charge",
+    "frostbite",
+    "pistol_pestilence",
+    "primed_convulsion",
+    "lethal_torrent",
+    "galvanized_diffusion",
+    "primed_target_cracker"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 8.387553846027151,
+    "boss": 5.7791304027159915,
+    "crowd+{\"killRamp\":false}": 8.63591347854327,
+    "heavy": 16.008,
+    "crowd+{\"factions\":[\"grineer\"]}": 5.592601888201776,
+    "boss+{\"factions\":[\"grineer\"]}": 3.245462984837966,
+    "crowd+{\"factions\":[\"corpus\"]}": 10.776918929447048,
+    "boss+{\"factions\":[\"corpus\"]}": 12.705558019953466,
+    "crowd+{\"factions\":[\"infested\"]}": 9.790332529864612,
+    "boss+{\"factions\":[\"infested\"]}": 4.680767595331155,
+    "crowd+{\"levels\":[150]}": 8.387553846027151,
+    "boss+{\"levels\":[150]}": 5.7791304027159915,
+    "crowd+{\"levels\":[400]}": 8.387553846027151,
+    "boss+{\"levels\":[400]}": 5.7791304027159915
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.484,
+    "rate": 16.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+blast2.25+corr2.25+viral1.11",
+   "lays": {
+    "impact1.00+blast2.25+corr2.25+viral1.11": {
+     "crowd": 8.3876,
+     "boss": 5.7791,
+     "crowd+{\"killRamp\":false}": 8.6359,
+     "heavy": 16.008,
+     "crowd+{\"factions\":[\"grineer\"]}": 5.5926,
+     "boss+{\"factions\":[\"grineer\"]}": 3.2455,
+     "crowd+{\"factions\":[\"corpus\"]}": 10.7769,
+     "boss+{\"factions\":[\"corpus\"]}": 12.7056,
+     "crowd+{\"factions\":[\"infested\"]}": 9.7903,
+     "boss+{\"factions\":[\"infested\"]}": 4.6808,
+     "crowd+{\"levels\":[150]}": 8.3876,
+     "boss+{\"levels\":[150]}": 5.7791,
+     "crowd+{\"levels\":[400]}": 8.3876,
+     "boss+{\"levels\":[400]}": 5.7791
+    },
+    "impact1.00+rad3.30+viral2.31": {
+     "crowd": 4.8131,
+     "boss": 4.8837,
+     "crowd+{\"killRamp\":false}": 4.8131,
+     "heavy": 14.8214,
+     "crowd+{\"factions\":[\"grineer\"]}": 4.46,
+     "boss+{\"factions\":[\"grineer\"]}": 1.6519,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 12.7056,
+     "crowd+{\"factions\":[\"infested\"]}": 5,
+     "boss+{\"factions\":[\"infested\"]}": 5.5497,
+     "crowd+{\"levels\":[150]}": 4.8131,
+     "boss+{\"levels\":[150]}": 4.8837,
+     "crowd+{\"levels\":[400]}": 4.8131,
+     "boss+{\"levels\":[400]}": 4.8837
+    },
+    "impact1.00+gas2.25+mag2.25+viral1.11": {
+     "crowd": 4.8131,
+     "boss": 4.6743,
+     "crowd+{\"killRamp\":false}": 4.8131,
+     "heavy": 14.8214,
+     "crowd+{\"factions\":[\"grineer\"]}": 4.46,
+     "boss+{\"factions\":[\"grineer\"]}": 1.363,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 16.008,
+     "crowd+{\"factions\":[\"infested\"]}": 5,
+     "boss+{\"factions\":[\"infested\"]}": 4.6808,
+     "crowd+{\"levels\":[150]}": 4.8131,
+     "boss+{\"levels\":[150]}": 4.6743,
+     "crowd+{\"levels\":[400]}": 4.8131,
+     "boss+{\"levels\":[400]}": 4.6743
+    }
+   }
+  },
+  {
+   "n": "boss top (app)",
+   "mods": [
+    "리벤",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "frostbite",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "corrm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.767704463394871,
+    "boss": 6.91374229402124,
+    "crowd+{\"killRamp\":false}": 4.767704463394871,
+    "heavy": 22.011000000000006,
+    "crowd+{\"factions\":[\"grineer\"]}": 4.334988721992512,
+    "boss+{\"factions\":[\"grineer\"]}": 3.7031105345802575,
+    "crowd+{\"factions\":[\"corpus\"]}": 4.999999999999999,
+    "boss+{\"factions\":[\"corpus\"]}": 13.866061114618025,
+    "crowd+{\"factions\":[\"infested\"]}": 4.999999999999999,
+    "boss+{\"factions\":[\"infested\"]}": 6.43605544358034,
+    "crowd+{\"levels\":[150]}": 4.767704463394871,
+    "boss+{\"levels\":[150]}": 6.91374229402124,
+    "crowd+{\"levels\":[400]}": 4.767704463394871,
+    "boss+{\"levels\":[400]}": 6.91374229402124
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.484,
+    "rate": 22.01,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+viral1.20+heat1.65+corr1.11",
+   "lays": {
+    "impact1.00+viral1.20+heat1.65+corr1.11": {
+     "crowd": 4.7677,
+     "boss": 6.9137,
+     "crowd+{\"killRamp\":false}": 4.7677,
+     "heavy": 22.011,
+     "crowd+{\"factions\":[\"grineer\"]}": 4.335,
+     "boss+{\"factions\":[\"grineer\"]}": 3.7031,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 13.8661,
+     "crowd+{\"factions\":[\"infested\"]}": 5,
+     "boss+{\"factions\":[\"infested\"]}": 6.4361,
+     "crowd+{\"levels\":[150]}": 4.7677,
+     "boss+{\"levels\":[150]}": 6.9137,
+     "crowd+{\"levels\":[400]}": 4.7677,
+     "boss+{\"levels\":[400]}": 6.9137
+    },
+    "impact1.00+gas2.25+cold0.60+corr1.11": {
+     "crowd": 4.7416,
+     "boss": 3.6336,
+     "crowd+{\"killRamp\":false}": 4.7416,
+     "heavy": 18.8688,
+     "crowd+{\"factions\":[\"grineer\"]}": 4.291,
+     "boss+{\"factions\":[\"grineer\"]}": 2.1725,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 7.6308,
+     "crowd+{\"factions\":[\"infested\"]}": 4.9688,
+     "boss+{\"factions\":[\"infested\"]}": 2.8939,
+     "crowd+{\"levels\":[150]}": 4.7416,
+     "boss+{\"levels\":[150]}": 3.6336,
+     "crowd+{\"levels\":[400]}": 4.7416,
+     "boss+{\"levels\":[400]}": 3.6336
+    },
+    "impact1.00+blast2.25+tox0.60+corr1.11": {
+     "crowd": 8.5465,
+     "boss": 3.5953,
+     "crowd+{\"killRamp\":false}": 8.5465,
+     "heavy": 18.8688,
+     "crowd+{\"factions\":[\"grineer\"]}": 5.6321,
+     "boss+{\"factions\":[\"grineer\"]}": 2.1046,
+     "crowd+{\"factions\":[\"corpus\"]}": 11.1413,
+     "boss+{\"factions\":[\"corpus\"]}": 7.6308,
+     "crowd+{\"factions\":[\"infested\"]}": 9.9484,
+     "boss+{\"factions\":[\"infested\"]}": 2.8939,
+     "crowd+{\"levels\":[150]}": 8.5465,
+     "boss+{\"levels\":[150]}": 3.5953,
+     "crowd+{\"levels\":[400]}": 8.5465,
+     "boss+{\"levels\":[400]}": 3.5953
+    }
+   }
+  },
+  {
+   "n": "crowd top (app)",
+   "mods": [
+    "리벤",
+    "프라임드 히티드 차지",
+    "프로스트바이트",
+    "갈바나이즈드 디퓨젼",
+    "프라임드 타겟 크래커",
+    "리썰 토렌트",
+    "피스톨 엘리멘탈리스트",
+    "딥 프리즈"
+   ],
+   "ids": [
+    "__riven",
+    "primed_heated_charge",
+    "frostbite",
+    "galvanized_diffusion",
+    "primed_target_cracker",
+    "lethal_torrent",
+    "pistol_elementalist",
+    "deep_freeze"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "sc"
+   ],
+   "neg": "impact",
+   "per": {
+    "crowd": 12.414010202094955,
+    "boss": 1.3928500898368106,
+    "crowd+{\"killRamp\":false}": 12.431607427342152,
+    "heavy": 10.625035992985874,
+    "crowd+{\"factions\":[\"grineer\"]}": 9.588730756387813,
+    "boss+{\"factions\":[\"grineer\"]}": 0.32545285709923805,
+    "crowd+{\"factions\":[\"corpus\"]}": 14.294961064699814,
+    "boss+{\"factions\":[\"corpus\"]}": 5.15185135625564,
+    "crowd+{\"factions\":[\"infested\"]}": 13.957003676937312,
+    "boss+{\"factions\":[\"infested\"]}": 1.6116165443270685,
+    "crowd+{\"levels\":[150]}": 12.414010202094955,
+    "boss+{\"levels\":[150]}": 1.3928500898368106,
+    "crowd+{\"levels\":[400]}": 12.414010202094955,
+    "boss+{\"levels\":[400]}": 1.3928500898368106
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.597,
+    "rate": 16.01,
+    "ms": 5.13
+   },
+   "lay": "blast3.15",
+   "lays": {
+    "blast3.15": {
+     "crowd": 12.414,
+     "boss": 1.3929,
+     "crowd+{\"killRamp\":false}": 12.4316,
+     "heavy": 10.625,
+     "crowd+{\"factions\":[\"grineer\"]}": 9.5887,
+     "boss+{\"factions\":[\"grineer\"]}": 0.3255,
+     "crowd+{\"factions\":[\"corpus\"]}": 14.295,
+     "boss+{\"factions\":[\"corpus\"]}": 5.1519,
+     "crowd+{\"factions\":[\"infested\"]}": 13.957,
+     "boss+{\"factions\":[\"infested\"]}": 1.6116,
+     "crowd+{\"levels\":[150]}": 12.414,
+     "boss+{\"levels\":[150]}": 1.3929,
+     "crowd+{\"levels\":[400]}": 12.414,
+     "boss+{\"levels\":[400]}": 1.3929
+    }
+   }
+  },
+  {
+   "n": "current, Might→Riven",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.84611088340672,
+    "boss": 6.794203189206239,
+    "crowd+{\"killRamp\":false}": 4.951468297590447,
+    "heavy": 18.676000000000013,
+    "crowd+{\"factions\":[\"grineer\"]}": 4.552395991121821,
+    "boss+{\"factions\":[\"grineer\"]}": 3.5967301327009844,
+    "crowd+{\"factions\":[\"corpus\"]}": 4.999999999999999,
+    "boss+{\"factions\":[\"corpus\"]}": 14.823151023279047,
+    "crowd+{\"factions\":[\"infested\"]}": 4.999999999999999,
+    "boss+{\"factions\":[\"infested\"]}": 5.8825713819591625,
+    "crowd+{\"levels\":[150]}": 4.84611088340672,
+    "boss+{\"levels\":[150]}": 6.794203189206239,
+    "crowd+{\"levels\":[400]}": 4.84611088340672,
+    "boss+{\"levels\":[400]}": 6.794203189206239
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 18.68,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+rad0.60+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+rad0.60+viral1.11": {
+     "crowd": 4.8461,
+     "boss": 6.7942,
+     "crowd+{\"killRamp\":false}": 4.9515,
+     "heavy": 18.676,
+     "crowd+{\"factions\":[\"grineer\"]}": 4.5524,
+     "boss+{\"factions\":[\"grineer\"]}": 3.5967,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 14.8232,
+     "crowd+{\"factions\":[\"infested\"]}": 5,
+     "boss+{\"factions\":[\"infested\"]}": 5.8826,
+     "crowd+{\"levels\":[150]}": 4.8461,
+     "boss+{\"levels\":[150]}": 6.7942,
+     "crowd+{\"levels\":[400]}": 4.8461,
+     "boss+{\"levels\":[400]}": 6.7942
+    },
+    "impact1.00+gas2.25+elec1.65+rad0.60+viral1.11": {
+     "crowd": 4.8367,
+     "boss": 4.7498,
+     "crowd+{\"killRamp\":false}": 4.8367,
+     "heavy": 17.2916,
+     "crowd+{\"factions\":[\"grineer\"]}": 4.526,
+     "boss+{\"factions\":[\"grineer\"]}": 1.5154,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 14.8232,
+     "crowd+{\"factions\":[\"infested\"]}": 5,
+     "boss+{\"factions\":[\"infested\"]}": 4.7705,
+     "crowd+{\"levels\":[150]}": 4.8367,
+     "boss+{\"levels\":[150]}": 4.7498,
+     "crowd+{\"levels\":[400]}": 4.8367,
+     "boss+{\"levels\":[400]}": 4.7498
+    },
+    "impact1.00+rad3.90+tox0.60+viral1.11": {
+     "crowd": 4.8367,
+     "boss": 4.6945,
+     "crowd+{\"killRamp\":false}": 4.8367,
+     "heavy": 17.2916,
+     "crowd+{\"factions\":[\"grineer\"]}": 4.526,
+     "boss+{\"factions\":[\"grineer\"]}": 1.4631,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 14.8232,
+     "crowd+{\"factions\":[\"infested\"]}": 5,
+     "boss+{\"factions\":[\"infested\"]}": 4.7705,
+     "crowd+{\"levels\":[150]}": 4.8367,
+     "boss+{\"levels\":[150]}": 4.6945,
+     "crowd+{\"levels\":[400]}": 4.8367,
+     "boss+{\"levels\":[400]}": 4.6945
+    }
+   }
+  },
+  {
+   "n": "current (no riven)",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "마그네틱 마이트",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "magnetic_might",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": null,
+   "neg": null,
+   "per": {
+    "crowd": 4.692833062944699,
+    "boss": 2.145121231833677,
+    "crowd+{\"killRamp\":false}": 4.7017822094126425,
+    "heavy": 16.00988862376399,
+    "crowd+{\"factions\":[\"grineer\"]}": 4.164468192206005,
+    "boss+{\"factions\":[\"grineer\"]}": 1.2621244941036538,
+    "crowd+{\"factions\":[\"corpus\"]}": 4.999999999999999,
+    "boss+{\"factions\":[\"corpus\"]}": 4.489242162510194,
+    "crowd+{\"factions\":[\"infested\"]}": 4.963359842822227,
+    "boss+{\"factions\":[\"infested\"]}": 1.7421289429327445,
+    "crowd+{\"levels\":[150]}": 4.692833062944699,
+    "boss+{\"levels\":[150]}": 2.145121231833677,
+    "crowd+{\"levels\":[400]}": 4.692833062944699,
+    "boss+{\"levels\":[400]}": 2.145121231833677
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 6.7,
+    "sc": 0.352,
+    "rate": 18.68,
+    "ms": 3.65
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+rad0.60+mag0.60",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+rad0.60+mag0.60": {
+     "crowd": 4.6928,
+     "boss": 2.1451,
+     "crowd+{\"killRamp\":false}": 4.7018,
+     "heavy": 16.0099,
+     "crowd+{\"factions\":[\"grineer\"]}": 4.1645,
+     "boss+{\"factions\":[\"grineer\"]}": 1.2621,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 4.4892,
+     "crowd+{\"factions\":[\"infested\"]}": 4.9634,
+     "boss+{\"factions\":[\"infested\"]}": 1.7421,
+     "crowd+{\"levels\":[150]}": 4.6928,
+     "boss+{\"levels\":[150]}": 2.1451,
+     "crowd+{\"levels\":[400]}": 4.6928,
+     "boss+{\"levels\":[400]}": 2.1451
+    },
+    "impact1.00+gas2.25+elec1.65+rad0.60+mag0.60": {
+     "crowd": 4.533,
+     "boss": 1.3062,
+     "crowd+{\"killRamp\":false}": 4.5546,
+     "heavy": 12.1473,
+     "crowd+{\"factions\":[\"grineer\"]}": 3.7805,
+     "boss+{\"factions\":[\"grineer\"]}": 0.3189,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 4.4892,
+     "crowd+{\"factions\":[\"infested\"]}": 4.9278,
+     "boss+{\"factions\":[\"infested\"]}": 1.5563,
+     "crowd+{\"levels\":[150]}": 4.533,
+     "boss+{\"levels\":[150]}": 1.3062,
+     "crowd+{\"levels\":[400]}": 4.533,
+     "boss+{\"levels\":[400]}": 1.3062
+    },
+    "impact1.00+rad3.90+tox0.60+mag0.60": {
+     "crowd": 4.533,
+     "boss": 1.2591,
+     "crowd+{\"killRamp\":false}": 4.5546,
+     "heavy": 12.1473,
+     "crowd+{\"factions\":[\"grineer\"]}": 3.7805,
+     "boss+{\"factions\":[\"grineer\"]}": 0.3052,
+     "crowd+{\"factions\":[\"corpus\"]}": 5,
+     "boss+{\"factions\":[\"corpus\"]}": 4.4892,
+     "crowd+{\"factions\":[\"infested\"]}": 4.9278,
+     "boss+{\"factions\":[\"infested\"]}": 1.457,
+     "crowd+{\"levels\":[150]}": 4.533,
+     "boss+{\"levels\":[150]}": 1.2591,
+     "crowd+{\"levels\":[400]}": 4.533,
+     "boss+{\"levels\":[400]}": 1.2591
+    }
+   }
+  }
+ ],
+ "nStarts": 0,
+ "nEval": 280,
+ "errs": []
+}

@@ -262,6 +262,43 @@ const { chromium } = require("playwright");
       const c0 = E.evaluate(w, a0, ids.map(M), oc).score, c1 = E.evaluate(w, a1, ids.map(M), oc).score;
       check("v1.61 어트리션 진화: 보스에겐 미적용, 무리에선 적용", Math.abs(b1 / b0 - 1) < 0.005 && c1 > c0 * 1.5, `boss ${(b1 / b0).toFixed(3)} · crowd ${(c1 / c0).toFixed(2)}`);
     }
+    // v2.18: Overwhelming Attrition (wiki Laetum Evolution V: "On Hit that is neither Critical nor applies a Status Effect: +400%
+    // damage for 10 seconds. Stacks up to 3 times.", "additive to base damage bonuses such as Hornet Strike") was left out as
+    // "conditional", so the 1200% crit Laetum (Secondary Enervate) scored like a weapon with no Evolution V at all.
+    {
+      const w = weapon("laetum"), a0 = w.attacks.find((x) => x.en === "Incarnon Form");
+      const oa = Object.assign({}, a0, { evoEff: Object.assign({}, a0.evoEff || {}, { oaDmg: 4, oaMax: 3, oaDur: 10 }) });
+      const ob = Object.assign(baseO(), { scenario: "boss", arcane: "secondary_enervate" });
+      const crit = ["Primed Target Cracker", "Lethal Torrent", "Galvanized Diffusion", "Primed Heated Charge", "Pistol Pestilence", "Primed Convulsion"].map(M), hs = crit.concat([M("Hornet Strike")]);
+      const r0 = E.evaluate(w, a0, crit, ob).score, r1 = E.evaluate(w, oa, crit, ob).score;          // no base damage mod: damage x13 (kill speed less: armor strip builds up in a long fight)
+      const h0 = E.evaluate(w, a0, hs, ob).score, h1 = E.evaluate(w, oa, hs, ob).score;              // with Hornet Strike: damage x15.2 / 3.2 — additive, so less
+      // crit chance at 100% or more without Enervate: no hit qualifies, so the buff never starts
+      const oc = Object.assign(baseO(), { scenario: "boss", ext: { ccFlat: 1 } });
+      const c0 = E.evaluate(w, a0, crit, oc).score, c1 = E.evaluate(w, oa, crit, oc).score;
+      check("v2.18 오버웰밍 어트리션(1200%): 에너베이트 치명타 세팅에서 3중첩 = 기본 피해 +1200% 합연산, 치명타 100% 이상이면 발동 안 함",
+        r1 / r0 > 5 && r1 / r0 < 13.5 && h1 / h0 > 3 && h1 / h0 < 5 && h1 / h0 < r1 / r0 && Math.abs(c1 / c0 - 1) < 0.005, `x${(r1 / r0).toFixed(2)} · 호넷 x${(h1 / h0).toFixed(2)} · 치명타 122% x${(c1 / c0).toFixed(3)}`);
+      // the Devouring Attrition boss switch (v1.61's wiki sentence could not be found again): off by default, o.ncBoss applies it
+      const a1 = Object.assign({}, a0, { evoEff: Object.assign({}, a0.evoEff || {}, { nc: 10 }) });
+      const nb = ["Primed Heated Charge", "Pistol Pestilence", "Frostbite", "Hornet Strike", "Lethal Torrent", "Galvanized Diffusion"].map(M);
+      const b0 = E.evaluate(w, a1, nb, Object.assign(baseO(), { scenario: "boss" })).score, b1 = E.evaluate(w, a1, nb, Object.assign(baseO(), { scenario: "boss", ncBoss: true })).score;
+      check("v2.18 디바우링 어트리션 보스 적용 여부는 옵션(o.ncBoss) — 켜면 보스 점수가 크게 오름", b1 > b0 * 3, `x${(b1 / b0).toFixed(2)}`);
+      // a riven with −118.8% Impact (the negative players look for on the Laetum) empties the all-Impact direct hit; with no
+      // elemental mod that part had no result at all and the riven search stopped with "Cannot read properties of null"
+      const w3 = w.attacks.find((x) => x.parts && x.parts.length > 1 && /인카논/.test(x.name || "")) || w.attacks[3];
+      const rv = { id: "__riven", ko: "리벤", eff: { ms: 1.48, cd: 1.11, impact: -1.1877 }, drain: 18 };
+      let z = null, zerr = "";
+      try { z = E.evaluate(w, w3, [rv], Object.assign(baseO(), { arcane: "secondary_enervate" })).score; } catch (e) { zerr = e.message; }
+      check("v2.18 부정 충격 리벤으로 직격 피해가 0이 되어도 계산이 멈추지 않음", z > 0 && !zerr, zerr || String(z));
+      // Blast on death: counting the killing shot's own procs is an assumption — with o.blastKillShot = false a build that kills every
+      // pack enemy in one shot gets no chain from Blast (the 1200% Laetum's Blast order then scores like its other element orders)
+      {
+        const oaA = Object.assign({}, w3, { parts: w3.parts.map((q) => Object.assign({}, q, { evoEff: Object.assign({}, q.evoEff || {}, { oaDmg: 4, oaMax: 3, oaDur: 10 }) })) });
+        const bl = ["Primed Heated Charge", "Frostbite", "Lethal Torrent", "Galvanized Diffusion", "Primed Target Cracker"].map(M);
+        const oB = Object.assign(baseO(), { arcane: "secondary_enervate" });
+        const k1 = E.evaluate(w, oaA, bl, oB).score, k0 = E.evaluate(w, oaA, bl, Object.assign({}, oB, { blastKillShot: false })).score;
+        check("v2.18 한 방 처치의 폭발 연쇄는 옵션(o.blastKillShot) — 끄면 한 방에 다 죽이는 폭발 세팅의 무리 점수가 내려감", k0 < k1 * 0.75 && k0 > 0, `x${(k0 / k1).toFixed(2)}`);
+      }
+    }
     // v1.62: community builds read from their source compete with the search (cfg.seeds) — a stronger one becomes #1,
     // one with mods the game won't equip together is never returned
     {

@@ -1,0 +1,256 @@
+[
+ {
+  "k": "laeDAb0",
+  "sec": 311,
+  "weapon": "laetum",
+  "attack": "인카논 형태 한 발 전체 피해 (직격 + 폭발)",
+  "pellets": 1,
+  "fo": null,
+  "evo": {
+   "2": 1,
+   "3": 0,
+   "4": 2,
+   "5": 0
+  },
+  "evoNames": [
+   "2:Rapid Wrath",
+   "3:Lethal Rearmament",
+   "4:Elemental Excess",
+   "5:Devouring Attrition"
+  ],
+  "o": {
+   "level": 150,
+   "steel": true,
+   "factions": [
+    "grineer",
+    "corpus",
+    "infested"
+   ],
+   "scenario": "boss",
+   "hits": null,
+   "abil": [],
+   "spread": null,
+   "extKeys": "elem,cdFinalAdd,frAdd,final,cdMult,active,gearExt,maxEnergy",
+   "elem": {},
+   "cdFinalAdd": 1.2,
+   "frAdd": 0.6,
+   "levels": [
+    150,
+    250,
+    400
+   ]
+  },
+  "base": {
+   "score": 0.9375771786444753,
+   "ids": [
+    "pathogen_rounds",
+    "deep_freeze",
+    "primed_heated_charge",
+    "hornet_strike",
+    "barrel_diffusion",
+    "lethal_torrent",
+    "primed_target_cracker",
+    "magnum_force"
+   ],
+   "mods": [
+    "패서전 라운즈",
+    "딥 프리즈",
+    "프라임드 히티드 차지",
+    "호넷 스트라이크",
+    "배럴 디퓨젼",
+    "리썰 토렌트",
+    "프라임드 타겟 크래커",
+    "매그넘 포스"
+   ],
+   "arcane": "secondary_enervate",
+   "val": null,
+   "pf": {
+    "grineer": {
+     "c": 1.69,
+     "cHi": 2.12,
+     "cTop": 2.56,
+     "one": 27
+    },
+    "corpus": {
+     "c": 0.44,
+     "cHi": 0.62,
+     "cTop": 0.81,
+     "one": 37
+    },
+    "infested": {
+     "c": 0.75,
+     "cHi": 0.94,
+     "cTop": 1.25,
+     "one": 23
+    }
+   },
+   "rate": 16.008,
+   "cc": 1.1200000000000003,
+   "cd": 5.820000000000001,
+   "ms": 2.2530615564513843,
+   "sc": 0.42000000000000004,
+   "layout": {
+    "impact": 1,
+    "viral": 1.8,
+    "heat": 1.65
+   }
+  },
+  "riv": {
+   "score": 2.4871701137994706,
+   "ids": [
+    "__riven",
+    "deep_freeze",
+    "pathogen_rounds",
+    "lethal_torrent",
+    "primed_target_cracker",
+    "hornet_strike",
+    "barrel_diffusion",
+    "anemic_agility"
+   ],
+   "mods": [
+    "리벤",
+    "딥 프리즈",
+    "패서전 라운즈",
+    "리썰 토렌트",
+    "프라임드 타겟 크래커",
+    "호넷 스트라이크",
+    "배럴 디퓨젼",
+    "아네믹 어질리티"
+   ],
+   "arcane": "secondary_enervate",
+   "val": null,
+   "pf": {
+    "grineer": {
+     "c": 0.41,
+     "cHi": 0.5,
+     "cTop": 0.59,
+     "one": 33
+    },
+    "corpus": {
+     "c": 0.23,
+     "cHi": 0.27,
+     "cTop": 0.32,
+     "one": 45
+    },
+    "infested": {
+     "c": 0.36,
+     "cHi": 0.5,
+     "cTop": 0.64,
+     "one": 27
+    }
+   },
+   "rate": 22.011000000000003,
+   "cc": 1.1200000000000003,
+   "cd": 5.820000000000001,
+   "ms": 4.2812875,
+   "sc": 0.42000000000000004,
+   "layout": {
+    "impact": 1,
+    "viral": 1.8,
+    "corr": 1.11
+   },
+   "riven": [
+    {
+     "k": "ms",
+     "v": 1.4812875,
+     "inc": true
+    },
+    {
+     "k": "dmg",
+     "v": 2.71755,
+     "inc": true
+    },
+    {
+     "k": "corrm",
+     "v": 1.11375,
+     "inc": true
+    },
+    {
+     "k": "x_recoil",
+     "v": -0.891,
+     "inc": true
+    }
+   ],
+   "eff": {
+    "ms": 1.4812875,
+    "dmg": 2.71755,
+    "corrm": 1.11375
+   }
+  },
+  "alts": [
+   {
+    "info": "ms:1.5 dmg:2.7 corrm:1.1 x_recoil:-0.9",
+    "score": 2.4871701137994706,
+    "mods": [
+     "리벤",
+     "딥 프리즈",
+     "패서전 라운즈",
+     "리썰 토렌트",
+     "프라임드 타겟 크래커",
+     "호넷 스트라이크",
+     "배럴 디퓨젼",
+     "아네믹 어질리티"
+    ],
+    "arcane": "secondary_enervate"
+   },
+   {
+    "info": "ms:1.5 dmg:2.7 fr:0.9 x_recoil:-0.9",
+    "score": 2.107648900913962,
+    "mods": [
+     "리벤",
+     "패서전 라운즈",
+     "딥 프리즈",
+     "프라임드 히티드 차지",
+     "프라임드 타겟 크래커",
+     "배럴 디퓨젼",
+     "호넷 스트라이크",
+     "리썰 토렌트"
+    ],
+    "arcane": "secondary_enervate"
+   },
+   {
+    "info": "ms:1.5 dmg:2.7 cd:1.1 x_recoil:-0.9",
+    "score": 2.0679910818770426,
+    "mods": [
+     "리벤",
+     "패서전 라운즈",
+     "딥 프리즈",
+     "프라임드 히티드 차지",
+     "리썰 토렌트",
+     "호넷 스트라이크",
+     "배럴 디퓨젼",
+     "프라임드 타겟 크래커"
+    ],
+    "arcane": "secondary_enervate"
+   },
+   {
+    "info": "ms:1.5 fr:0.9 corrm:1.1 x_recoil:-0.9",
+    "score": 2.071221256375916,
+    "mods": [
+     "리벤",
+     "호넷 스트라이크",
+     "딥 프리즈",
+     "패서전 라운즈",
+     "프라임드 타겟 크래커",
+     "리썰 토렌트",
+     "배럴 디퓨젼",
+     "마그네틱 마이트"
+    ],
+    "arcane": "secondary_enervate"
+   }
+  ],
+  "planTop": [
+   "3+1 ms+dmg+corrm  slot:매그넘 포스",
+   "3+1 ms+dmg+fr  slot:매그넘 포스",
+   "3+1 ms+dmg+corrm  slot:프라임드 히티드 차지",
+   "3+1 ms+dmg+cd  slot:매그넘 포스",
+   "3+1 ms+fr+corrm  slot:프라임드 히티드 차지",
+   "3+1 dmg+fr+corrm  slot:매그넘 포스",
+   "3+1 ms+cd+corrm  slot:프라임드 히티드 차지",
+   "3+1 ms+dmg+cold  slot:매그넘 포스",
+   "3+1 ms+dmg+tox  slot:매그넘 포스",
+   "3+1 ms+dmg+viralm  slot:매그넘 포스"
+  ],
+  "errs": []
+ }
+]
