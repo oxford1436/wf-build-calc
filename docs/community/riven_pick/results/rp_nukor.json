@@ -1,0 +1,258 @@
+[
+ {
+  "k": "nukor",
+  "sec": 620,
+  "weapon": "kuva_nukor",
+  "attack": "기본 사격",
+  "pellets": 1,
+  "fo": null,
+  "evo": {},
+  "evoNames": [],
+  "o": {
+   "level": 150,
+   "steel": true,
+   "factions": [
+    "grineer",
+    "corpus",
+    "infested"
+   ],
+   "scenario": "crowd",
+   "hits": null,
+   "abil": [],
+   "spread": [
+    0,
+    0
+   ],
+   "extKeys": "elem,cdFinalAdd,frAdd,final,cdMult,active,gearExt,maxEnergy",
+   "elem": {},
+   "cdFinalAdd": 1.2,
+   "frAdd": 0.6,
+   "levels": [
+    150,
+    250,
+    400
+   ]
+  },
+  "base": {
+   "score": 3.659842786857114,
+   "ids": [
+    "galvanized_shot",
+    "pathogen_rounds",
+    "deep_freeze",
+    "galvanized_diffusion",
+    "primed_heated_charge",
+    "primed_target_cracker",
+    "lethal_torrent",
+    "hornet_strike"
+   ],
+   "mods": [
+    "갈바나이즈드 샷",
+    "패서전 라운즈",
+    "딥 프리즈",
+    "갈바나이즈드 디퓨젼",
+    "프라임드 히티드 차지",
+    "프라임드 타겟 크래커",
+    "리썰 토렌트",
+    "호넷 스트라이크"
+   ],
+   "arcane": "secondary_enervate",
+   "val": {
+    "type": "mag",
+    "pct": 0.38
+   },
+   "pf": {
+    "grineer": {
+     "c": 3.64,
+     "cHi": 5.43,
+     "cTop": 6.63,
+     "one": 29
+    },
+    "corpus": {
+     "c": 1.57,
+     "cHi": 2.62,
+     "cTop": 2.63,
+     "one": 41
+    },
+    "infested": {
+     "c": 2.23,
+     "cHi": 2.47,
+     "cTop": 2.94,
+     "one": 26
+    }
+   },
+   "rate": 14,
+   "cc": 1.0699999999999998,
+   "cd": 11.7,
+   "ms": 3.65,
+   "sc": 0.9,
+   "layout": {
+    "rad": 0.72,
+    "viral": 1.8,
+    "heat": 1.65,
+    "mag": 0.28
+   }
+  },
+  "riv": {
+   "score": 6.410446165708008,
+   "ids": [
+    "__riven",
+    "galvanized_shot",
+    "frostbite",
+    "pistol_pestilence",
+    "galvanized_diffusion",
+    "lethal_torrent",
+    "merciless_gunfight",
+    "primed_heated_charge"
+   ],
+   "mods": [
+    "리벤",
+    "갈바나이즈드 샷",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "갈바나이즈드 디퓨젼",
+    "리썰 토렌트",
+    "머시리스 건파이트",
+    "프라임드 히티드 차지"
+   ],
+   "arcane": "secondary_enervate",
+   "val": {
+    "type": "mag",
+    "pct": 0.38
+   },
+   "pf": {
+    "grineer": {
+     "c": 1.89,
+     "cHi": 2.25,
+     "cTop": 2.51,
+     "one": 26
+    },
+    "corpus": {
+     "c": 1.29,
+     "cHi": 1.33,
+     "cTop": 2.02,
+     "one": 34
+    },
+    "infested": {
+     "c": 1.79,
+     "cHi": 1.93,
+     "cTop": 2.21,
+     "one": 20
+    }
+   },
+   "rate": 14,
+   "cc": 1.0699999999999998,
+   "cd": 14.018749999999997,
+   "ms": 5.1312875,
+   "sc": 1.5,
+   "layout": {
+    "rad": 0.72,
+    "viral": 1.2,
+    "heat": 1.65,
+    "mag": 0.28,
+    "corr": 1.11
+   },
+   "riven": [
+    {
+     "k": "ms",
+     "v": 1.4812875,
+     "inc": true
+    },
+    {
+     "k": "cd",
+     "v": 1.11375,
+     "inc": true
+    },
+    {
+     "k": "corrm",
+     "v": 1.11375,
+     "inc": true
+    },
+    {
+     "k": "x_recoil",
+     "v": -0.891,
+     "inc": true
+    }
+   ],
+   "eff": {
+    "ms": 1.4812875,
+    "cd": 1.11375,
+    "corrm": 1.11375
+   }
+  },
+  "alts": [
+   {
+    "info": "ms:1.5 cd:1.1 corrm:1.1 x_recoil:-0.9",
+    "score": 6.410446165708008,
+    "mods": [
+     "리벤",
+     "갈바나이즈드 샷",
+     "프로스트바이트",
+     "피스톨 페스틸런스",
+     "갈바나이즈드 디퓨젼",
+     "리썰 토렌트",
+     "머시리스 건파이트",
+     "프라임드 히티드 차지"
+    ],
+    "arcane": "secondary_enervate"
+   },
+   {
+    "info": "ms:1.5 dmg:2.7 corrm:1.1 x_recoil:-0.9",
+    "score": 6.367102669262472,
+    "mods": [
+     "리벤",
+     "딥 프리즈",
+     "피스톨 페스틸런스",
+     "갈바나이즈드 샷",
+     "갈바나이즈드 디퓨젼",
+     "프라임드 타겟 크래커",
+     "리썰 토렌트",
+     "머시리스 건파이트"
+    ],
+    "arcane": "secondary_enervate"
+   },
+   {
+    "info": "ms:1.5 tox:1.1 corrm:1.1 x_recoil:-0.9",
+    "score": 6.3789475813625165,
+    "mods": [
+     "리벤",
+     "갈바나이즈드 샷",
+     "프로스트바이트",
+     "갈바나이즈드 디퓨젼",
+     "프라임드 타겟 크래커",
+     "리썰 토렌트",
+     "머시리스 건파이트",
+     "프라임드 히티드 차지"
+    ],
+    "arcane": "secondary_enervate"
+   },
+   {
+    "info": "ms:1.5 cold:1.1 corrm:1.1 x_recoil:-0.9",
+    "score": 6.3789475813625165,
+    "mods": [
+     "리벤",
+     "갈바나이즈드 샷",
+     "피스톨 페스틸런스",
+     "갈바나이즈드 디퓨젼",
+     "프라임드 타겟 크래커",
+     "리썰 토렌트",
+     "머시리스 건파이트",
+     "프라임드 히티드 차지"
+    ],
+    "arcane": "secondary_enervate"
+   }
+  ],
+  "planTop": [
+   "3+1 ms+cd+corrm  slot:프라임드 히티드 차지",
+   "3+1 ms+dmg+corrm  slot:호넷 스트라이크",
+   "3+1 ms+dmg+corrm  slot:프라임드 히티드 차지",
+   "3+1 ms+tox+corrm  slot:패서전 라운즈",
+   "3+1 ms+cold+corrm  slot:딥 프리즈",
+   "3+1 ms+cd+corrm  slot:프라임드 타겟 크래커",
+   "3+1 cd+tox+corrm  slot:패서전 라운즈",
+   "3+1 cd+cold+corrm  slot:딥 프리즈",
+   "3+1 cd+dmg+corrm  slot:호넷 스트라이크",
+   "3+1 ms+cd+corrm  slot:리썰 토렌트"
+  ],
+  "errs": []
+ }
+]

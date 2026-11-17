@@ -1,0 +1,69 @@
+{
+ "weapon": "boar_prime",
+ "attack": 0,
+ "riven": null,
+ "notes": "2026-11-17 사용자 질문(사이트-09로 중재 방어·감청에서 벽 뒤 적 광역 처치, 보어 프라임 vs 스트런 프라임 중 리벤을 맞출 무기). 아카라이브 글을 데스크톱 앱 브라우저로 직접 읽음(본문·댓글 글자만, 모딩 그림은 못 읽음). 이 무기의 커뮤니티 세팅은 전부 **사이트-09 전용**(시크로 지형 무한 관통, 리서플라이 전기, 인카논 형태는 안 켜고 진화만 사용 — attack = 기본 사격)이라 야간 점검(워프레임 없음·일반 조건)의 비율은 그 용도를 나타내지 않음 — 사이트-09 조건 계산은 docs/community/riven_pick/README.md.",
+ "builds": [
+  {
+   "name": "아카라이브 187639117 사이트-09 강철 균열 범람 레벨캡 (전기, 리벤 멀티샷·연사·탄약 효율)",
+   "community": "arca.live 워프레임 채널",
+   "url": "https://arca.live/b/warframe/187639117",
+   "kind": "read",
+   "date": "2026-10-31",
+   "mods": [
+    "Vicious Spread",
+    "Critical Deceleration",
+    "Shotgun Barrage",
+    "Galvanized Hell",
+    "Shotgun Elementalist",
+    "Primed Charged Shell",
+    "Primed Ravage",
+    "Riven"
+   ],
+   "exilus": "Galvanized Acceleration",
+   "arcane": null,
+   "claims": [
+    "리벤: 멀티샷·연사·탄약 효율(접합), 부정 재장전",
+    "높은 티어에서는 샷건 배러지를 냉기 60/60 모드로 바꿔 자성",
+    "잡몹·트락스는 잘 잡지만 엔트로픽은 따로 근접·레이텀"
+   ]
+  },
+  {
+   "name": "Overframe 917889 Meta Arbitration Boar Prime (Max Pellets) - Host Weapon",
+   "community": "Overframe Kuva_Generator (9 votes)",
+   "url": "https://overframe.gg/build/917889/",
+   "kind": "read",
+   "date": "2026-10-26",
+   "mods": [
+    "Vigilante Armaments",
+    "Shotgun Elementalist",
+    "Galvanized Hell",
+    "Shotgun Barrage",
+    "Riven",
+    "Primed Ammo Stock",
+    "Vicious Spread",
+    "Frail Momentum"
+   ],
+   "exilus": "Primed Counterbalance",
+   "arcane": "primary_overcharge",
+   "claims": [
+    "리벤: 멀티샷·연사(+탄약 효율이 최고 — 리서플라이를 덜 누름), 부정은 무해한 것",
+    "리벤에 탄약 효율이 있으면 샷건 엘리멘탈리스트 → 샷건 배러지",
+    "진화 II 리이파이드 베인 · III 프랙티스드 그립 · IV 크리티컬 패럴렐",
+    "원소 모드 없음 — 파티의 위습(써멀 선더)이 전제, 클라이언트로 쓰면 렉 유발"
+   ]
+  }
+ ],
+ "meta": {
+  "checked": "2026-11-17",
+  "claims": [
+   "사이트용 보어 vs 스트런 후기(189124725, 2026-11-14): 섬멸력 보어 승(비셔스 스프레드 3랭크로도 스트런 5랭크보다 넓게 퍼짐), 순수 딜 스트런 승(3~4배?), 편의성 보어 승(탄창·연사) → '그냥 보어 쓰셈, 중재도 보어'",
+   "리벤 종결 = 상태이상 피해·연사·멀티샷(187818492, 2026-11-02; 클라이언트는 렉 때문에 연사를 뺌)",
+   "접합: 메타 파티(고위력 모트로 탄이 빔) = 탄약 효율, 공방·솔로 = 상태이상 피해(188945125, 2026-11-12)",
+   "보어가 탄퍼짐이 압도적, 스트런 장점은 전기 상태이상 적 명중 시 자동 장전뿐. 적 레벨 500부터는 스트런이 더 세다고 느낌(187415666, 2026-10-29)",
+   "멀리까지 잡으려면 익실러스 갈바나이즈드 액셀러레이션, 반동은 프라임드 카운터밸런스(189105120)",
+   "보어 인카논은 빔이라 진화만 쓰고 형태는 안 켬(188780150)",
+   "보어 없으면 쿠바 소벡(자동사냥 너프 뒤에도 쓸 만함)(189283152, 2026-11-16)"
+  ]
+ }
+}
