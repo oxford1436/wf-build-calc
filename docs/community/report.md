@@ -2,7 +2,7 @@
 
 계산기 기본 조건(강철의 길 150·250·400, 3팩션 평균, 12명 무리, 처치 중첩은 무리마다 0부터)에서 계산기 1위 = 100%. '중첩 유지'·'처치 없음'은 같은 조건에서 처치 중첩만 바꾼 비교입니다. 이 파일은 scripts/community_check.js가 만듭니다.
 
-표시 20건
+표시 22건
 
 ## 액셀트라 프라임 (acceltra_prime.json)
 
@@ -28,6 +28,15 @@
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
 | [Sportskeeda 인카논 아토모스 (8 포르마, 프라임드 익스펠 그리니어)](https://www.sportskeeda.com/mmo/warframe-incarnon-atomos-build-guide-mods-incarnon-talents) | sportskeeda | 부식 | 23% | 25% | 24% | — |
+
+## 보어 프라임 (boar_prime.json)
+
+계산기 1위: 갈바나이즈드 헬, 프라임드 칠링 그래스프, 톡식 배러지, 갈바나이즈드 새비, 마그네틱 스트레이프, 블레이즈, 시킹 퓨리, 프라임드 블런더버스 · primary_merciless
+
+| 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
+| --- | --- | --- | --- | --- | --- | --- |
+| [아카라이브 187639117 사이트-09 강철 균열 범람 레벨캡 (전기, 리벤 멀티샷·연사·탄약 효율)](https://arca.live/b/warframe/187639117) | arca.live 워프레임 채널 | 전기 | 2% | 2% | 3% | 인식 못 함: 리벤 수치 없음 |
+| [Overframe 917889 Meta Arbitration Boar Prime (Max Pellets) - Host Weapon](https://overframe.gg/build/917889/) | Overframe Kuva_Generator (9 votes) | 물리 위주 | 0% | 0% | 0% | 인식 못 함: 리벤 수치 없음 |
 
 ## 브래튼 프라임 (braton_prime.json)
 
@@ -93,6 +102,13 @@
 | 가스+전기 (META.md 인플루언스 표준) — 1위 비셔스 프로스트 → 몰튼 임팩트 | meta (주장 시험) | 가스+전기 | 77% | 82% | 79% | — |
 | 사용자 세팅 A (바이러스+전기, 디시플린즈 메리트) | session | 바이러스+전기 | 66% | 71% | 82% | — |
 | 계산기 1위 v1.84 (드리머즈 라스 · 바이러스+전기 · 인플루언스) | session | 바이러스+전기 | 100% | 100% | 100% | — |
+
+## 듀얼 톡소시스트 (dual_toxocyst.json)
+
+계산기 1위: 갈바나이즈드 샷, 갈바나이즈드 디퓨젼, 프로스트바이트, 피스톨 페스틸런스, 마그네틱 마이트, 리썰 토렌트, 프라임드 히티드 차지, 머시리스 건파이트 · secondary_enervate
+
+| 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
+| --- | --- | --- | --- | --- | --- | --- |
 
 ## 에피타프 (epitaph.json)
 
@@ -420,6 +436,13 @@
 | 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
 | [Overframe 534800 Contagion Cannon (부식+화염, 머시리스)](https://overframe.gg/build/534800/sporelacer/contagion-cannon-the-ultimate-non-incarnon-secondary-weapon/) | overframe | 부식+화염 | 64% | 76% | 50% | — |
+
+## 스트런 프라임 (strun_prime.json)
+
+계산기 1위: 칠링 리로드, 갈바나이즈드 새비, 갈바나이즈드 헬, 컨테이저스 스프레드, 프라임드 차지드 쉘, 프라임드 택티컬 펌프, 크리티컬 디셀러레이션, 프라임드 포인트 블랭크 · primary_frostbite
+
+| 세팅 | 커뮤니티 | 속성 | 기본 | 중첩 유지 | 처치 없음 | 확인 |
+| --- | --- | --- | --- | --- | --- | --- |
 
 ## 타츠 프라임 (tatsu_prime.json)
 
