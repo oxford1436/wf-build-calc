@@ -1,0 +1,1857 @@
+{
+ "atk": "인카논 형태 한 발 전체 피해 (직격 + 폭발)",
+ "evo": {
+  "2": 1,
+  "3": 0,
+  "4": 1,
+  "5": 2
+ },
+ "scen": [
+  "crowd",
+  "boss"
+ ],
+ "nCands": 42,
+ "seeds": [
+  {
+   "n": "ms+cd+heat|min",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "heat"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.84611088340672,
+    "boss": 4.595474212345702
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 18.68,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat2.76+rad0.60",
+   "lays": {
+    "impact1.00+corr2.25+heat2.76+rad0.60": {
+     "crowd": 4.8461,
+     "boss": 4.5955
+    },
+    "impact1.00+gas3.36+elec1.65+rad0.60": {
+     "crowd": 4.816,
+     "boss": 2.7853
+    },
+    "impact1.00+rad5.01+tox0.60": {
+     "crowd": 4.816,
+     "boss": 2.7674
+    }
+   }
+  },
+  {
+   "n": "ms+cd+heat|boss",
+   "mods": [
+    "리벤",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "frostbite",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "heat"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.743559995988731,
+    "boss": 5.572630326670523
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.484,
+    "rate": 22.01,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+viral1.20+heat2.76",
+   "lays": {
+    "impact1.00+viral1.20+heat2.76": {
+     "crowd": 4.7436,
+     "boss": 5.5726
+    },
+    "impact1.00+gas3.36+cold0.60": {
+     "crowd": 4.6932,
+     "boss": 2.3962
+    },
+    "impact1.00+blast3.36+tox0.60": {
+     "crowd": 4.8932,
+     "boss": 2.3345
+    }
+   }
+  },
+  {
+   "n": "ms+cd+elec|min",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "elec"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.951468297590447,
+    "boss": 4.815661641710961
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 18.68,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr3.36+heat1.65+rad0.60",
+   "lays": {
+    "impact1.00+corr3.36+heat1.65+rad0.60": {
+     "crowd": 4.9515,
+     "boss": 4.8157
+    },
+    "impact1.00+gas2.25+elec2.76+rad0.60": {
+     "crowd": 4.816,
+     "boss": 2.793
+    },
+    "impact1.00+rad5.01+tox0.60": {
+     "crowd": 4.816,
+     "boss": 2.7674
+    }
+   }
+  },
+  {
+   "n": "ms+cd+elec|boss",
+   "mods": [
+    "리벤",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "frostbite",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "elec"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.733686295113198,
+    "boss": 5.088300089707872
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.484,
+    "rate": 22.01,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+rad2.76+viral1.20",
+   "lays": {
+    "impact1.00+blast2.25+corr1.71": {
+     "crowd": 4.8855,
+     "boss": 3.7647
+    },
+    "impact1.00+rad2.76+viral1.20": {
+     "crowd": 4.7337,
+     "boss": 5.0883
+    },
+    "impact1.00+gas2.25+mag1.71": {
+     "crowd": 4.6932,
+     "boss": 2.7367
+    }
+   }
+  },
+  {
+   "n": "ms+cd+dmg|min",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "dmg"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.951468297590447,
+    "boss": 4.649588291704106
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 18.68,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+rad0.60",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+rad0.60": {
+     "crowd": 4.9515,
+     "boss": 4.6496
+    },
+    "impact1.00+gas2.25+elec1.65+rad0.60": {
+     "crowd": 4.816,
+     "boss": 2.8089
+    },
+    "impact1.00+rad3.90+tox0.60": {
+     "crowd": 4.816,
+     "boss": 2.7779
+    }
+   }
+  },
+  {
+   "n": "ms+cd+dmg|boss",
+   "mods": [
+    "리벤",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "frostbite",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "dmg"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.733686295113198,
+    "boss": 5.397319809357437
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.484,
+    "rate": 22.01,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+viral1.20+heat1.65",
+   "lays": {
+    "impact1.00+viral1.20+heat1.65": {
+     "crowd": 4.7337,
+     "boss": 5.3973
+    },
+    "impact1.00+gas2.25+cold0.60": {
+     "crowd": 4.6854,
+     "boss": 2.3679
+    },
+    "impact1.00+blast2.25+tox0.60": {
+     "crowd": 4.8781,
+     "boss": 2.2215
+    }
+   }
+  },
+  {
+   "n": "ms+cd+cc|min",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "cc"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.84611088340672,
+    "boss": 4.595474212345702
+   },
+   "stat": {
+    "cc": 1.378,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 18.68,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+rad0.60",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+rad0.60": {
+     "crowd": 4.8461,
+     "boss": 4.5955
+    },
+    "impact1.00+gas2.25+elec1.65+rad0.60": {
+     "crowd": 4.8047,
+     "boss": 2.7315
+    },
+    "impact1.00+rad3.90+tox0.60": {
+     "crowd": 4.8047,
+     "boss": 2.6997
+    }
+   }
+  },
+  {
+   "n": "ms+cd+cc|boss",
+   "mods": [
+    "리벤",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "frostbite",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "cc"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.733686295113198,
+    "boss": 5.122690930165943
+   },
+   "stat": {
+    "cc": 1.378,
+    "cd": 8.27,
+    "sc": 0.484,
+    "rate": 22.01,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+viral1.20+heat1.65",
+   "lays": {
+    "impact1.00+viral1.20+heat1.65": {
+     "crowd": 4.7337,
+     "boss": 5.1227
+    },
+    "impact1.00+gas2.25+cold0.60": {
+     "crowd": 4.6099,
+     "boss": 2.2655
+    },
+    "impact1.00+blast2.25+tox0.60": {
+     "crowd": 4.8898,
+     "boss": 2.1644
+    }
+   }
+  },
+  {
+   "n": "ms+fr+viralm|min",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "fr",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.872210804688799,
+    "boss": 6.2661077246415005
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 5.82,
+    "sc": 0.352,
+    "rate": 24.84,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+rad0.60+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+rad0.60+viral1.11": {
+     "crowd": 4.8722,
+     "boss": 6.2661
+    },
+    "impact1.00+gas2.25+elec1.65+rad0.60+viral1.11": {
+     "crowd": 4.7607,
+     "boss": 4.6011
+    },
+    "impact1.00+rad3.90+tox0.60+viral1.11": {
+     "crowd": 4.7607,
+     "boss": 4.6011
+    }
+   }
+  },
+  {
+   "n": "ms+fr+viralm|boss",
+   "mods": [
+    "리벤",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "frostbite",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "fr",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.736014858200463,
+    "boss": 5.630007538077074
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 5.82,
+    "sc": 0.484,
+    "rate": 28.18,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+viral2.31+heat1.65",
+   "lays": {
+    "impact1.00+viral2.31+heat1.65": {
+     "crowd": 4.736,
+     "boss": 5.63
+    },
+    "impact1.00+gas2.25+cold0.60+viral1.11": {
+     "crowd": 4.736,
+     "boss": 4.7106
+    },
+    "impact1.00+blast2.25+tox0.60+viral1.11": {
+     "crowd": 4.8184,
+     "boss": 4.6578
+    }
+   }
+  },
+  {
+   "n": "ms+cd (2+1)|min",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.951468297590447,
+    "boss": 4.719087703049726
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 9.05,
+    "sc": 0.352,
+    "rate": 18.68,
+    "ms": 5.61
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+rad0.60",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+rad0.60": {
+     "crowd": 4.9515,
+     "boss": 4.7191
+    },
+    "impact1.00+gas2.25+elec1.65+rad0.60": {
+     "crowd": 4.816,
+     "boss": 2.8199
+    },
+    "impact1.00+rad3.90+tox0.60": {
+     "crowd": 4.816,
+     "boss": 2.7853
+    }
+   }
+  },
+  {
+   "n": "ms+cd (2+1)|boss",
+   "mods": [
+    "리벤",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "frostbite",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.733686295113198,
+    "boss": 5.638250923326764
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 9.05,
+    "sc": 0.484,
+    "rate": 22.01,
+    "ms": 4.76
+   },
+   "lay": "impact1.00+viral1.20+heat1.65",
+   "lays": {
+    "impact1.00+viral1.20+heat1.65": {
+     "crowd": 4.7337,
+     "boss": 5.6383
+    },
+    "impact1.00+gas2.25+cold0.60": {
+     "crowd": 4.6854,
+     "boss": 2.3679
+    },
+    "impact1.00+blast2.25+tox0.60": {
+     "crowd": 4.8883,
+     "boss": 2.2258
+    }
+   }
+  },
+  {
+   "n": "ms+viralm|min",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.834500250973612,
+    "boss": 4.807242481126009
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 5.82,
+    "sc": 0.352,
+    "rate": 18.68,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+rad0.60+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+rad0.60+viral1.11": {
+     "crowd": 4.8345,
+     "boss": 4.8072
+    },
+    "impact1.00+gas2.25+elec1.65+rad0.60+viral1.11": {
+     "crowd": 4.6928,
+     "boss": 3.5136
+    },
+    "impact1.00+rad3.90+tox0.60+viral1.11": {
+     "crowd": 4.6928,
+     "boss": 3.4825
+    }
+   }
+  },
+  {
+   "n": "ms+viralm|boss",
+   "mods": [
+    "리벤",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "frostbite",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.671566576121967,
+    "boss": 4.499649020317213
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 5.82,
+    "sc": 0.484,
+    "rate": 22.01,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+viral2.31+heat1.65",
+   "lays": {
+    "impact1.00+viral2.31+heat1.65": {
+     "crowd": 4.6716,
+     "boss": 4.4996
+    },
+    "impact1.00+gas2.25+cold0.60+viral1.11": {
+     "crowd": 4.6716,
+     "boss": 3.8001
+    },
+    "impact1.00+blast2.25+tox0.60+viral1.11": {
+     "crowd": 4.7522,
+     "boss": 3.6617
+    }
+   }
+  },
+  {
+   "n": "ms+cold+tox|min",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cold",
+    "tox"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.825138116475381,
+    "boss": 4.792218868690383
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 5.82,
+    "sc": 0.352,
+    "rate": 18.68,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+rad3.90+viral2.83",
+   "lays": {
+    "impact1.00+blast2.76+corr3.36+rad0.60": {
+     "crowd": 4.8549,
+     "boss": 3.5733
+    },
+    "impact1.00+rad3.90+viral2.83": {
+     "crowd": 4.8251,
+     "boss": 4.7922
+    },
+    "impact1.00+gas3.36+mag2.76+rad0.60": {
+     "crowd": 4.7732,
+     "boss": 2.422
+    }
+   }
+  },
+  {
+   "n": "ms+cold+tox|boss",
+   "mods": [
+    "리벤",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "frostbite",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cold",
+    "tox"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.733686295113198,
+    "boss": 5.183013258333699
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 5.82,
+    "sc": 0.484,
+    "rate": 22.01,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+viral3.43+heat1.65",
+   "lays": {
+    "impact1.00+viral3.43+heat1.65": {
+     "crowd": 4.7337,
+     "boss": 5.183
+    },
+    "impact1.00+gas3.36+cold1.71": {
+     "crowd": 4.5912,
+     "boss": 2.2268
+    },
+    "impact1.00+blast3.36+tox1.71": {
+     "crowd": 4.7574,
+     "boss": 2.1035
+    }
+   }
+  },
+  {
+   "n": "cd+fr+viralm|min",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "cd",
+    "fr",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.86471017172772,
+    "boss": 5.211708975173217
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 24.84,
+    "ms": 3.65
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+rad0.60+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+rad0.60+viral1.11": {
+     "crowd": 4.8647,
+     "boss": 5.2117
+    },
+    "impact1.00+gas2.25+elec1.65+rad0.60+viral1.11": {
+     "crowd": 4.7607,
+     "boss": 3.804
+    },
+    "impact1.00+rad3.90+tox0.60+viral1.11": {
+     "crowd": 4.7607,
+     "boss": 3.804
+    }
+   }
+  },
+  {
+   "n": "cd+fr+viralm|boss",
+   "mods": [
+    "리벤",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "frostbite",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "cd",
+    "fr",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.736014858200463,
+    "boss": 4.831958210354778
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.484,
+    "rate": 28.18,
+    "ms": 2.8
+   },
+   "lay": "impact1.00+viral2.31+heat1.65",
+   "lays": {
+    "impact1.00+viral2.31+heat1.65": {
+     "crowd": 4.736,
+     "boss": 4.832
+    },
+    "impact1.00+gas2.25+cold0.60+viral1.11": {
+     "crowd": 4.6651,
+     "boss": 3.876
+    },
+    "impact1.00+blast2.25+tox0.60+viral1.11": {
+     "crowd": 4.7664,
+     "boss": 3.8316
+    }
+   }
+  },
+  {
+   "n": "ms+fr (2+1)|min",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "fr"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.873834681480821,
+    "boss": 4.380031736737188
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 5.82,
+    "sc": 0.352,
+    "rate": 26.81,
+    "ms": 5.61
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+rad0.60",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+rad0.60": {
+     "crowd": 4.8738,
+     "boss": 4.38
+    },
+    "impact1.00+gas2.25+elec1.65+rad0.60": {
+     "crowd": 4.7418,
+     "boss": 2.5671
+    },
+    "impact1.00+rad3.90+tox0.60": {
+     "crowd": 4.7418,
+     "boss": 2.5519
+    }
+   }
+  },
+  {
+   "n": "ms+fr (2+1)|boss",
+   "mods": [
+    "리벤",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "frostbite",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "fr"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.744547857770759,
+    "boss": 5.038819161538704
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 5.82,
+    "sc": 0.484,
+    "rate": 30.15,
+    "ms": 4.76
+   },
+   "lay": "impact1.00+viral1.20+heat1.65",
+   "lays": {
+    "impact1.00+viral1.20+heat1.65": {
+     "crowd": 4.7445,
+     "boss": 5.0388
+    },
+    "impact1.00+gas2.25+cold0.60": {
+     "crowd": 4.574,
+     "boss": 2.108
+    },
+    "impact1.00+blast2.25+tox0.60": {
+     "crowd": 4.8233,
+     "boss": 1.998
+    }
+   }
+  }
+ ],
+ "found": [
+  {
+   "n": "found from ms+fr+viralm|min",
+   "mods": [
+    "배럴 디퓨젼",
+    "마그네틱 마이트",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "액셀러레이티드 아이소토프"
+   ],
+   "ids": [
+    "barrel_diffusion",
+    "magnetic_might",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "accelerated_isotope"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "fr",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.775264140287865,
+    "boss": 6.906269957336621
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 6.7,
+    "sc": 0.352,
+    "rate": 24.84,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+corr2.25+rad0.60+mag0.60+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+rad0.60+mag0.60+viral1.11": {
+     "crowd": 4.7753,
+     "boss": 6.9063
+    }
+   },
+   "g": 3.495878978204469
+  },
+  {
+   "n": "found from ms+cd (2+1)|min",
+   "mods": [
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "패서전 라운즈",
+    "프라임드 타겟 크래커",
+    "프로스트바이트",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "barrel_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pathogen_rounds",
+    "primed_target_cracker",
+    "frostbite",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.743559995988731,
+    "boss": 6.144048471260439
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 9.05,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 4.76
+   },
+   "lay": "impact1.00+viral1.50+heat1.65",
+   "lays": {
+    "impact1.00+viral1.50+heat1.65": {
+     "crowd": 4.7436,
+     "boss": 6.144
+    },
+    "impact1.00+gas2.55+cold0.60": {
+     "crowd": 4.6932,
+     "boss": 2.6349
+    },
+    "impact1.00+blast2.25+tox0.90": {
+     "crowd": 4.8104,
+     "boss": 2.4592
+    }
+   },
+   "g": 3.3722717928299226
+  },
+  {
+   "n": "found from ms+cd (2+1)|boss",
+   "mods": [
+    "리벤",
+    "딥 프리즈",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "deep_freeze",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.743559995988731,
+    "boss": 6.144048471260439
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 9.05,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 4.76
+   },
+   "lay": "impact1.00+viral1.50+heat1.65",
+   "lays": {
+    "impact1.00+viral1.50+heat1.65": {
+     "crowd": 4.7436,
+     "boss": 6.144
+    },
+    "impact1.00+gas2.25+cold0.90": {
+     "crowd": 4.6932,
+     "boss": 2.653
+    },
+    "impact1.00+blast2.55+tox0.60": {
+     "crowd": 4.8344,
+     "boss": 2.4541
+    }
+   },
+   "g": 3.3722717928299226
+  },
+  {
+   "n": "found from ms+cd+dmg|min",
+   "mods": [
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "패서전 라운즈",
+    "프라임드 타겟 크래커",
+    "프로스트바이트",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "barrel_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pathogen_rounds",
+    "primed_target_cracker",
+    "frostbite",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "dmg"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.743559995988731,
+    "boss": 6.072541166592439
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+viral1.50+heat1.65",
+   "lays": {
+    "impact1.00+viral1.50+heat1.65": {
+     "crowd": 4.7436,
+     "boss": 6.0725
+    },
+    "impact1.00+gas2.55+cold0.60": {
+     "crowd": 4.6932,
+     "boss": 2.4037
+    },
+    "impact1.00+blast2.25+tox0.90": {
+     "crowd": 4.8028,
+     "boss": 2.346
+    }
+   },
+   "g": 3.3605650688679423
+  },
+  {
+   "n": "found from ms+cd+dmg|boss",
+   "mods": [
+    "리벤",
+    "딥 프리즈",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "deep_freeze",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "barrel_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "dmg"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.743559995988731,
+    "boss": 6.072541166592439
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+viral1.50+heat1.65",
+   "lays": {
+    "impact1.00+viral1.50+heat1.65": {
+     "crowd": 4.7436,
+     "boss": 6.0725
+    },
+    "impact1.00+gas2.25+cold0.90": {
+     "crowd": 4.6932,
+     "boss": 2.5259
+    },
+    "impact1.00+blast2.55+tox0.60": {
+     "crowd": 4.8258,
+     "boss": 2.346
+    }
+   },
+   "g": 3.3605650688679423
+  },
+  {
+   "n": "found from ms+cold+tox|min",
+   "mods": [
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "스코치",
+    "프라임드 타겟 크래커",
+    "마그네틱 마이트",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "barrel_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "scorch",
+    "primed_target_cracker",
+    "magnetic_might",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cold",
+    "tox"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.743559995988731,
+    "boss": 6.018773655567113
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 6.7,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+viral2.23+heat2.25+mag0.60",
+   "lays": {
+    "impact1.00+viral2.23+heat2.25+mag0.60": {
+     "crowd": 4.7436,
+     "boss": 6.0188
+    },
+    "impact1.00+gas3.36+cold1.11+mag0.60": {
+     "crowd": 4.6932,
+     "boss": 2.5822
+    },
+    "impact1.00+blast3.36+tox1.11+mag0.60": {
+     "crowd": 4.7614,
+     "boss": 2.5058
+    }
+   },
+   "g": 3.3516714346819936
+  },
+  {
+   "n": "found from ms+viralm|min",
+   "mods": [
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "마그네틱 마이트"
+   ],
+   "ids": [
+    "barrel_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "magnetic_might"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.730123970004367,
+    "boss": 5.665678638469937
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 6.7,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+corr2.25+mag0.60+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+mag0.60+viral1.11": {
+     "crowd": 4.7301,
+     "boss": 5.6657
+    }
+   },
+   "g": 3.2883780937325606
+  },
+  {
+   "n": "found from ms+cd+heat|min",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "딥 프리즈",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "deep_freeze",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "heat"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.839306327151078,
+    "boss": 5.532812228461014
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+viral1.50+heat2.76",
+   "lays": {
+    "impact1.00+viral1.50+heat2.76": {
+     "crowd": 4.8393,
+     "boss": 5.5328
+    },
+    "impact1.00+gas3.36+cold0.90": {
+     "crowd": 4.8039,
+     "boss": 2.6812
+    },
+    "impact1.00+blast3.66+tox0.60": {
+     "crowd": 4.8725,
+     "boss": 2.5883
+    }
+   },
+   "g": 3.2874676163008285
+  },
+  {
+   "n": "found from ms+cd+heat|boss",
+   "mods": [
+    "리벤",
+    "프로스트바이트",
+    "피스톨 페스틸런스",
+    "리썰 토렌트",
+    "갈바나이즈드 디퓨젼",
+    "아네믹 어질리티",
+    "프라임드 타겟 크래커",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "__riven",
+    "frostbite",
+    "pistol_pestilence",
+    "lethal_torrent",
+    "galvanized_diffusion",
+    "anemic_agility",
+    "primed_target_cracker",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "heat"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.839306327151078,
+    "boss": 5.532812228461014
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.484,
+    "rate": 22.01,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+viral1.20+heat2.76",
+   "lays": {
+    "impact1.00+viral1.20+heat2.76": {
+     "crowd": 4.8393,
+     "boss": 5.5328
+    },
+    "impact1.00+gas3.36+cold0.60": {
+     "crowd": 4.7961,
+     "boss": 2.3908
+    },
+    "impact1.00+blast3.36+tox0.60": {
+     "crowd": 4.8953,
+     "boss": 2.3135
+    }
+   },
+   "g": 3.2874676163008285
+  },
+  {
+   "n": "found from ms+fr (2+1)|min",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "딥 프리즈",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "마그네틱 마이트",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "deep_freeze",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "magnetic_might",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "fr"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.763616243677501,
+    "boss": 5.477962017123336
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 6.7,
+    "sc": 0.352,
+    "rate": 24.15,
+    "ms": 5.61
+   },
+   "lay": "impact1.00+viral1.50+heat1.65+mag0.60",
+   "lays": {
+    "impact1.00+viral1.50+heat1.65+mag0.60": {
+     "crowd": 4.7636,
+     "boss": 5.478
+    },
+    "impact1.00+gas2.25+cold0.90+mag0.60": {
+     "crowd": 4.7169,
+     "boss": 2.3794
+    },
+    "impact1.00+blast2.55+tox0.60+mag0.60": {
+     "crowd": 4.8297,
+     "boss": 2.298
+    }
+   },
+   "g": 3.261740231968643
+  },
+  {
+   "n": "found from ms+cd+cc|min",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "딥 프리즈",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "deep_freeze",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "cc"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.825138116475381,
+    "boss": 5.385124533068598
+   },
+   "stat": {
+    "cc": 1.378,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 18.68,
+    "ms": 5.13
+   },
+   "lay": "impact1.00+viral1.50+heat1.65+rad0.60",
+   "lays": {
+    "impact1.00+viral1.50+heat1.65+rad0.60": {
+     "crowd": 4.8251,
+     "boss": 5.3851
+    },
+    "impact1.00+gas2.25+cold0.90+rad0.60": {
+     "crowd": 4.7957,
+     "boss": 2.5028
+    },
+    "impact1.00+blast2.55+tox0.60+rad0.60": {
+     "crowd": 4.8499,
+     "boss": 2.2647
+    }
+   },
+   "g": 3.2574797958164847
+  },
+  {
+   "n": "found from ms+cd+elec|min",
+   "mods": [
+    "배럴 디퓨젼",
+    "아네믹 어질리티",
+    "리썰 토렌트",
+    "리벤",
+    "패서전 라운즈",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "barrel_diffusion",
+    "anemic_agility",
+    "lethal_torrent",
+    "__riven",
+    "pathogen_rounds",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "elec"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.858962980188001,
+    "boss": 5.336330167606127
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.22,
+    "rate": 22.01,
+    "ms": 4.28
+   },
+   "lay": "impact1.00+corr3.66+heat1.65",
+   "lays": {
+    "impact1.00+corr3.66+heat1.65": {
+     "crowd": 4.859,
+     "boss": 5.3363
+    },
+    "impact1.00+gas2.55+elec2.76": {
+     "crowd": 4.8039,
+     "boss": 3.2192
+    },
+    "impact1.00+rad4.41+tox0.90": {
+     "crowd": 4.8039,
+     "boss": 3.1737
+    }
+   },
+   "g": 3.255363218769337
+  },
+  {
+   "n": "found from cd+fr+viralm|min",
+   "mods": [
+    "배럴 디퓨젼",
+    "호넷 스트라이크",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "barrel_diffusion",
+    "hornet_strike",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "cd",
+    "fr",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "crowd": 4.751322971485968,
+    "boss": 5.439109781899755
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 22.17,
+    "ms": 2.8
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+viral1.11": {
+     "crowd": 4.7513,
+     "boss": 5.4391
+    },
+    "impact1.00+gas2.25+elec1.65+viral1.11": {
+     "crowd": 4.7026,
+     "boss": 3.9589
+    },
+    "impact1.00+rad3.30+tox0.60+viral1.11": {
+     "crowd": 4.7026,
+     "boss": 3.9264
+    }
+   },
+   "g": 3.252038504023539
+  }
+ ],
+ "evals": [],
+ "nStarts": 20,
+ "nEval": 35880,
+ "errs": []
+}

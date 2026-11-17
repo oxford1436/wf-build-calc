@@ -1,0 +1,345 @@
+{
+ "atk": "인카논 형태 한 발 전체 피해 (직격 + 폭발)",
+ "evo": {
+  "2": 1,
+  "3": 0,
+  "4": 1,
+  "5": 2
+ },
+ "scen": [
+  "boss+{\"factions\":[\"grineer\"]}",
+  "boss+{\"factions\":[\"grineer\"],\"stCap\":4}",
+  "boss+{\"factions\":[\"grineer\"],\"stCap\":2}",
+  "boss+{\"factions\":[\"grineer\"],\"stCap\":0.001}",
+  "boss+{\"factions\":[\"corpus\"]}",
+  "boss+{\"factions\":[\"corpus\"],\"stCap\":4}",
+  "boss+{\"factions\":[\"corpus\"],\"stCap\":2}",
+  "boss+{\"factions\":[\"corpus\"],\"stCap\":0.001}",
+  "boss+{\"factions\":[\"infested\"]}",
+  "boss+{\"factions\":[\"infested\"],\"stCap\":4}",
+  "boss+{\"factions\":[\"infested\"],\"stCap\":2}",
+  "boss+{\"factions\":[\"infested\"],\"stCap\":0.001}",
+  "boss",
+  "crowd"
+ ],
+ "nCands": 42,
+ "seeds": [],
+ "found": [],
+ "evals": [
+  {
+   "n": "final ms+cd+viral",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "viralm"
+   ],
+   "neg": null,
+   "per": {
+    "boss+{\"factions\":[\"grineer\"]}": 3.5967301327009844,
+    "boss+{\"factions\":[\"grineer\"],\"stCap\":4}": 3.5967301327009844,
+    "boss+{\"factions\":[\"grineer\"],\"stCap\":2}": 3.0052466244824574,
+    "boss+{\"factions\":[\"grineer\"],\"stCap\":0.001}": 0.9838566634524459,
+    "boss+{\"factions\":[\"corpus\"]}": 14.823151023279047,
+    "boss+{\"factions\":[\"corpus\"],\"stCap\":4}": 14.823151023279047,
+    "boss+{\"factions\":[\"corpus\"],\"stCap\":2}": 14.823151023279047,
+    "boss+{\"factions\":[\"corpus\"],\"stCap\":0.001}": 10.277798883392673,
+    "boss+{\"factions\":[\"infested\"]}": 5.8825713819591625,
+    "boss+{\"factions\":[\"infested\"],\"stCap\":4}": 5.8825713819591625,
+    "boss+{\"factions\":[\"infested\"],\"stCap\":2}": 5.46089552788635,
+    "boss+{\"factions\":[\"infested\"],\"stCap\":0.001}": 3.9587137440285893,
+    "boss": 6.794203189206239,
+    "crowd": 4.84611088340672
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 18.68,
+    "ms": 4.18
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+rad0.60+viral1.11",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+rad0.60+viral1.11": {
+     "boss+{\"factions\":[\"grineer\"]}": 3.5967,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":4}": 3.5967,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":2}": 3.0052,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":0.001}": 0.9839,
+     "boss+{\"factions\":[\"corpus\"]}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":4}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":2}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":0.001}": 10.2778,
+     "boss+{\"factions\":[\"infested\"]}": 5.8826,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":4}": 5.8826,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":2}": 5.4609,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":0.001}": 3.9587,
+     "boss": 6.7942,
+     "crowd": 4.8461
+    },
+    "impact1.00+gas2.25+elec1.65+rad0.60+viral1.11": {
+     "boss+{\"factions\":[\"grineer\"]}": 1.5154,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":4}": 1.4338,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":2}": 1.325,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":0.001}": 0.6495,
+     "boss+{\"factions\":[\"corpus\"]}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":4}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":2}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":0.001}": 10.2778,
+     "boss+{\"factions\":[\"infested\"]}": 4.7705,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":4}": 4.7705,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":2}": 4.7705,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":0.001}": 3.2373,
+     "boss": 4.7498,
+     "crowd": 4.8367
+    },
+    "impact1.00+rad3.90+tox0.60+viral1.11": {
+     "boss+{\"factions\":[\"grineer\"]}": 1.4631,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":4}": 1.4067,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":2}": 1.325,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":0.001}": 0.637,
+     "boss+{\"factions\":[\"corpus\"]}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":4}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":2}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":0.001}": 10.2778,
+     "boss+{\"factions\":[\"infested\"]}": 4.7705,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":4}": 4.7705,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":2}": 4.7705,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":0.001}": 3.2373,
+     "boss": 4.6945,
+     "crowd": 4.8367
+    }
+   }
+  },
+  {
+   "n": "final ms+cd+cold",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "cold"
+   ],
+   "neg": null,
+   "per": {
+    "boss+{\"factions\":[\"grineer\"]}": 1.6369737454164641,
+    "boss+{\"factions\":[\"grineer\"],\"stCap\":4}": 1.525198278122274,
+    "boss+{\"factions\":[\"grineer\"],\"stCap\":2}": 1.3250467100979446,
+    "boss+{\"factions\":[\"grineer\"],\"stCap\":0.001}": 0.6370160160920019,
+    "boss+{\"factions\":[\"corpus\"]}": 14.823151023279047,
+    "boss+{\"factions\":[\"corpus\"],\"stCap\":4}": 14.823151023279047,
+    "boss+{\"factions\":[\"corpus\"],\"stCap\":2}": 14.823151023279047,
+    "boss+{\"factions\":[\"corpus\"],\"stCap\":0.001}": 10.277798883392673,
+    "boss+{\"factions\":[\"infested\"]}": 6.474607579886227,
+    "boss+{\"factions\":[\"infested\"],\"stCap\":4}": 6.474607579886227,
+    "boss+{\"factions\":[\"infested\"],\"stCap\":2}": 6.010493248964916,
+    "boss+{\"factions\":[\"infested\"],\"stCap\":0.001}": 3.237303789943114,
+    "boss": 5.395916654461719,
+    "crowd": 4.836726264619151
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 18.68,
+    "ms": 4.18
+   },
+   "lay": "impact1.00+rad3.90+viral1.71",
+   "lays": {
+    "impact1.00+blast2.76+corr2.25+rad0.60": {
+     "boss+{\"factions\":[\"grineer\"]}": 2.3853,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":4}": 2.0501,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":2}": 1.8375,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":0.001}": 0.7523,
+     "boss+{\"factions\":[\"corpus\"]}": 10.2778,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":4}": 10.2778,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":2}": 10.2778,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":0.001}": 10.2778,
+     "boss+{\"factions\":[\"infested\"]}": 3.2373,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":4}": 3.2373,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":2}": 3.2373,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":0.001}": 3.2373,
+     "boss": 4.2974,
+     "crowd": 4.8801
+    },
+    "impact1.00+rad3.90+viral1.71": {
+     "boss+{\"factions\":[\"grineer\"]}": 1.637,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":4}": 1.5252,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":2}": 1.325,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":0.001}": 0.637,
+     "boss+{\"factions\":[\"corpus\"]}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":4}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":2}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":0.001}": 10.2778,
+     "boss+{\"factions\":[\"infested\"]}": 6.4746,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":4}": 6.4746,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":2}": 6.0105,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":0.001}": 3.2373,
+     "boss": 5.3959,
+     "crowd": 4.8367
+    },
+    "impact1.00+gas2.25+mag2.76+rad0.60": {
+     "boss+{\"factions\":[\"grineer\"]}": 0.6443,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":4}": 0.6443,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":2}": 0.6443,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":0.001}": 0.6443,
+     "boss+{\"factions\":[\"corpus\"]}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":4}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":2}": 14.8232,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":0.001}": 14.8232,
+     "boss+{\"factions\":[\"infested\"]}": 3.2373,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":4}": 3.2373,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":2}": 3.2373,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":0.001}": 3.2373,
+     "boss": 3.1385,
+     "crowd": 4.816
+    }
+   }
+  },
+  {
+   "n": "final ms+cd+fr",
+   "mods": [
+    "갈바나이즈드 디퓨젼",
+    "액셀러레이티드 아이소토프",
+    "리썰 토렌트",
+    "리벤",
+    "피스톨 페스틸런스",
+    "프라임드 타겟 크래커",
+    "프라임드 컨벌션",
+    "프라임드 히티드 차지"
+   ],
+   "ids": [
+    "galvanized_diffusion",
+    "accelerated_isotope",
+    "lethal_torrent",
+    "__riven",
+    "pistol_pestilence",
+    "primed_target_cracker",
+    "primed_convulsion",
+    "primed_heated_charge"
+   ],
+   "arcane": "secondary_enervate",
+   "riv": [
+    "ms",
+    "cd",
+    "fr"
+   ],
+   "neg": null,
+   "per": {
+    "boss+{\"factions\":[\"grineer\"]}": 2.807194674323522,
+    "boss+{\"factions\":[\"grineer\"],\"stCap\":4}": 2.3172881470251787,
+    "boss+{\"factions\":[\"grineer\"],\"stCap\":2}": 2.1099729679857657,
+    "boss+{\"factions\":[\"grineer\"],\"stCap\":0.001}": 1.0848861456434142,
+    "boss+{\"factions\":[\"corpus\"]}": 10.850669298736637,
+    "boss+{\"factions\":[\"corpus\"],\"stCap\":4}": 10.850669298736637,
+    "boss+{\"factions\":[\"corpus\"],\"stCap\":2}": 10.850669298736637,
+    "boss+{\"factions\":[\"corpus\"],\"stCap\":0.001}": 10.850669298736637,
+    "boss+{\"factions\":[\"infested\"]}": 4.140305229166667,
+    "boss+{\"factions\":[\"infested\"],\"stCap\":4}": 4.140305229166667,
+    "boss+{\"factions\":[\"infested\"],\"stCap\":2}": 4.140305229166667,
+    "boss+{\"factions\":[\"infested\"],\"stCap\":0.001}": 4.140305229166667,
+    "boss": 5.014802179652808,
+    "crowd": 4.87356199668505
+   },
+   "stat": {
+    "cc": 1.17,
+    "cd": 8.27,
+    "sc": 0.352,
+    "rate": 24.84,
+    "ms": 4.18
+   },
+   "lay": "impact1.00+corr2.25+heat1.65+rad0.60",
+   "lays": {
+    "impact1.00+corr2.25+heat1.65+rad0.60": {
+     "boss+{\"factions\":[\"grineer\"]}": 2.8072,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":4}": 2.3173,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":2}": 2.11,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":0.001}": 1.0849,
+     "boss+{\"factions\":[\"corpus\"]}": 10.8507,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":4}": 10.8507,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":2}": 10.8507,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":0.001}": 10.8507,
+     "boss+{\"factions\":[\"infested\"]}": 4.1403,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":4}": 4.1403,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":2}": 4.1403,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":0.001}": 4.1403,
+     "boss": 5.0148,
+     "crowd": 4.8736
+    },
+    "impact1.00+gas2.25+elec1.65+rad0.60": {
+     "boss+{\"factions\":[\"grineer\"]}": 0.7195,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":4}": 0.7195,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":2}": 0.7195,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":0.001}": 0.7195,
+     "boss+{\"factions\":[\"corpus\"]}": 10.8507,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":4}": 10.8507,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":2}": 10.8507,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":0.001}": 10.8507,
+     "boss+{\"factions\":[\"infested\"]}": 3.525,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":4}": 3.525,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":2}": 3.525,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":0.001}": 3.525,
+     "boss": 3.0191,
+     "crowd": 4.8326
+    },
+    "impact1.00+rad3.90+tox0.60": {
+     "boss+{\"factions\":[\"grineer\"]}": 0.708,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":4}": 0.708,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":2}": 0.708,
+     "boss+{\"factions\":[\"grineer\"],\"stCap\":0.001}": 0.708,
+     "boss+{\"factions\":[\"corpus\"]}": 10.8507,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":4}": 10.8507,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":2}": 10.8507,
+     "boss+{\"factions\":[\"corpus\"],\"stCap\":0.001}": 10.8507,
+     "boss+{\"factions\":[\"infested\"]}": 3.525,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":4}": 3.525,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":2}": 3.525,
+     "boss+{\"factions\":[\"infested\"],\"stCap\":0.001}": 3.525,
+     "boss": 3.0029,
+     "crowd": 4.8326
+    }
+   }
+  }
+ ],
+ "nStarts": 0,
+ "nEval": 126,
+ "errs": []
+}

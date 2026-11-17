@@ -352,8 +352,11 @@
     const dS = (p.Tdur != null ? p.Tdur : 6) / 6;
     const live = (shots, T) => Math.min(shots, Math.max(1, r * T * dS));
     const stacks = (shots) => {
-      const nv = Math.min(10, p.pv * live(shots, 6)), nc = Math.min(p.corrMax, p.pc * live(shots, 8)), nk = Math.min(og > 0 ? 4 : 10, p.pk * live(shots, 6));
-      const nm = Math.min(10, (p.pm || 0) * live(shots, 6));
+      // v2.19 o.stCap: targets that take only a few stacks of each status (wiki Acolytes: "can only receive up to 4 stacks of any
+      // Status Effect") — a check for boss choices, off by default (the generic boss takes the full 10)
+      const cap = p.stCap > 0 ? p.stCap : 10;
+      const nv = Math.min(cap, p.pv * live(shots, 6)), nc = Math.min(p.corrMax, cap > 9 ? p.corrMax : cap, p.pc * live(shots, 8)), nk = Math.min(og > 0 ? 4 : 10, cap, p.pk * live(shots, 6));
+      const nm = Math.min(cap, (p.pm || 0) * live(shots, 6));
       const magM = nm <= 0 ? 1 : nm < 1 ? 1 + nm : 2 + 0.25 * (nm - 1);      // Magnetic: shields and overguard take more
       const extraM = (1 + (p.coldVuln || 0) * nk) * (p.frozenM && nk >= 10 ? p.frozenM : 1);
       const vm = nv <= 0 ? 1 : nv < 1 ? 1 + nv : 2 + 0.25 * (nv - 1);
@@ -649,7 +652,7 @@
         acc.pv += pr.pv * k; acc.ph += pr.ph * k; acc.pc += pr.pc * k; acc.pk += pr.pk * k;
         if (primX) { const m = 1 / Math.max(0.05, main.rate); acc.pv += (primX.viral || 0) * m; acc.ph += (primX.heat || 0) * m; acc.pc += (primX.corr || 0) * m; acc.pk += (primX.cold || 0) * m; }
       }
-      const base = { field: !!o.napField, strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, nc: main.nc || 0, corrMax: 10 + (o.ext.corrMax || 0), dt: o.dt, tmax: o.tmax, Tdur: main.Tdur, dotN: main.dotN,
+      const base = { field: !!o.napField, strip: o.ext.armorStrip || 0, r: main.rate, cc: main.cc, cd: main.cd, nc: main.nc || 0, corrMax: 10 + (o.ext.corrMax || 0), stCap: o.stCap || 0, dt: o.dt, tmax: o.tmax, Tdur: main.Tdur, dotN: main.dotN,
         ogM: main.ogM || 1, frozenM: main.frozenM || 0, coldVuln: main.coldVuln || 0 };
       const hitP = { D: acc.D, D0: acc.D0, blast: acc.blast, F: acc.F, dot: acc.dot, napH: acc.napH, pv: acc.pv, ph: acc.ph, pc: acc.pc, pk: acc.pk, pm: acc.pm, pp: acc.pp, aoeOnly: main && parts.every((q) => q.kind === "radial") };
       const nonP = { D: acc.Dnon, blast: 0, dot: acc.dotNon, pv: acc.pvN, ph: acc.phN, pc: acc.pcN, pk: acc.pkN };

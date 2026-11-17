@@ -298,6 +298,14 @@ const { chromium } = require("playwright");
         const k1 = E.evaluate(w, oaA, bl, oB).score, k0 = E.evaluate(w, oaA, bl, Object.assign({}, oB, { blastKillShot: false })).score;
         check("v2.18 한 방 처치의 폭발 연쇄는 옵션(o.blastKillShot) — 끄면 한 방에 다 죽이는 폭발 세팅의 무리 점수가 내려감", k0 < k1 * 0.75 && k0 > 0, `x${(k0 / k1).toFixed(2)}`);
       }
+      // v2.19 o.stCap: a target that takes only a few stacks of each status (wiki Acolyte: "can only receive up to 4 stacks of any
+      // Status Effect") — off by default (the generic boss takes the full 10); a small cap lowers a boss score that leans on Corrosive
+      {
+        const cr = ["Primed Target Cracker", "Lethal Torrent", "Galvanized Diffusion", "Pistol Pestilence", "Primed Convulsion", "Primed Heated Charge"].map(M);
+        const oG = Object.assign(baseO(), { scenario: "boss", factions: ["grineer"], arcane: "secondary_enervate" });
+        const s0 = E.evaluate(w, oa, cr, oG).score, s10 = E.evaluate(w, oa, cr, Object.assign({}, oG, { stCap: 10 })).score, s1 = E.evaluate(w, oa, cr, Object.assign({}, oG, { stCap: 1 })).score;
+        check("v2.19 상태이상 중첩 제한 대상은 옵션(o.stCap) — 기본은 10중첩 그대로, 1중첩으로 제한하면 부식에 기대는 그리니어 보스 점수가 내려감", Math.abs(s10 / s0 - 1) < 1e-9 && s1 < s0 * 0.9 && s1 > 0, `x${(s1 / s0).toFixed(2)}`);
+      }
     }
     // v1.62: community builds read from their source compete with the search (cfg.seeds) — a stronger one becomes #1,
     // one with mods the game won't equip together is never returned

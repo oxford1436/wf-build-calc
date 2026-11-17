@@ -19,16 +19,18 @@ const job = JSON.parse(require("fs").readFileSync(process.argv[2], "utf8"));
     const cands = [...new Map([].concat(A.candidateMods(w, atk, { boss: false }), A.candidateMods(w, atk, { boss: true })).filter((m) => !m.exilus && !m.manual).map((m) => [m.id, m])).values()];
     const idOf = (n) => /^riven/i.test(n) ? "__riven" : (window.WF_MODS.find((m) => m.en === n) || { id: "?" + n }).id;
     const ko = (id) => id === "__riven" ? "리벤" : (A.MOD_BY_ID[id] || { ko: id }).ko;
-    const pv = (k) => A.rivPlanVal(cls, k, "3+1");
-    const rivEff = (riv, neg) => riv ? A.effFromStats(riv.map((k) => [k, pv(k)]).concat(neg ? [[neg, -pv(neg) / 0.9375 * 0.75]] : [])) : undefined;
+    // job.rivVals: { key: value } replaces the planned maximum of a stat (e.g. the worst roll, or a different reading of a spliced
+    // value); a build with riv of two keys and form "2+1" uses the larger two-positive values
+    const pv = (k, form) => (job.rivVals && job.rivVals[k] != null) ? job.rivVals[k] : A.rivPlanVal(cls, k, form || "3+1");
+    const rivEff = (riv, neg, form) => riv ? A.effFromStats(riv.map((k) => [k, pv(k, form)]).concat(neg ? [[neg, -A.rivPlanVal(cls, neg, form || "3+1") / (form === "2+1" ? 1.2375 : 0.9375) * (form === "2+1" ? 0.495 : 0.75)]] : [])) : undefined;
     let nEval = 0;
     const memo = new Map();
     const score = (bd) => {
-      const key = bd.ids.join(",") + "|" + bd.arcane + "|" + (bd.riv || []).join("+") + "|" + (bd.neg || "");
+      const key = bd.ids.join(",") + "|" + bd.arcane + "|" + (bd.riv || []).join("+") + "|" + (bd.neg || "") + "|" + (bd.form || "");
       if (memo.has(key)) return memo.get(key);
       // one build has one element order in game, so every scenario is scored with the same arrangement: each arrangement
       // (o.layoutIdx) is evaluated in every scenario and the one with the best weighted product is kept
-      const out = { per: {}, obj: -Infinity }; const eff = bd.ids.includes("__riven") ? rivEff(bd.riv, bd.neg) : undefined;
+      const out = { per: {}, obj: -Infinity }; const eff = bd.ids.includes("__riven") ? rivEff(bd.riv, bd.neg, bd.form) : undefined;
       const ev1 = (s, i) => { nEval++; return A.evalBuild(bd.ids, null, bd.arcane || null, Object.assign({}, O[s], { layoutIdx: i }), eff, null, w); };
       const layStr = (x) => x.layout ? Object.entries(x.layout.coef).filter(([, q]) => q > 0.005).map(([t, q]) => t + q.toFixed(2)).join("+") : "";
       const tab = {}; let n = 1;
@@ -40,7 +42,7 @@ const job = JSON.parse(require("fs").readFileSync(process.argv[2], "utf8"));
         if (o_ > out.obj) { out.obj = o_; out.lay = k; for (const s of scen) out.per[s] = tab[k][s].score; } }
       memo.set(key, out); return out;
     };
-    const mk = (sd) => ({ n: sd.n, ids: sd.ids || sd.mods.map(idOf), arcane: sd.arcane === undefined ? null : sd.arcane, riv: sd.riv || null, neg: sd.neg || null });
+    const mk = (sd) => ({ n: sd.n, ids: sd.ids || sd.mods.map(idOf), arcane: sd.arcane === undefined ? null : sd.arcane, riv: sd.riv || null, neg: sd.neg || null, form: sd.form || null });
     const show = (bd) => { const s = score(bd); return { n: bd.n, mods: bd.ids.map(ko), ids: bd.ids, arcane: bd.arcane, riv: bd.riv, neg: bd.neg, per: s.per, stat: s.stat, lay: s.lay, lays: s.lays }; };
     const out = { atk: atk.name, evo: st.evoSel, scen, nCands: cands.length, seeds: [], found: [], evals: [] };
     const arcs = job.arcanes || Object.keys(window.WF_ARCANES).filter((k) => { const a = window.WF_ARCANES[k]; return a.slot === "secondary" && !a.manual && !a.none && !(a.types && !a.types.includes(w.type)); });
@@ -60,8 +62,8 @@ const job = JSON.parse(require("fs").readFileSync(process.argv[2], "utf8"));
       if (!job.search) continue;
       for (let pass = 0; pass < 8; pass++) {
         const before = score(cur).obj;
-        if (cur.ids.includes("__riven")) { let bt = cur; for (const t of triples) for (const ng of negs) { if (ng && t.includes(ng)) continue; const c = Object.assign({}, cur, { riv: t, neg: ng }); if (score(c).obj > score(bt).obj + 1e-9) bt = c; } cur = bt; }
-        { let ba = cur; for (const a of arcs) { const c = Object.assign({}, cur, { arcane: a }); if (score(c).obj > score(ba).obj + 1e-9) ba = c; } cur = ba; }
+        if (cur.ids.includes("__riven") && !job.fixRiv) { let bt = cur; for (const t of triples) for (const ng of negs) { if (ng && t.includes(ng)) continue; const c = Object.assign({}, cur, { riv: t, neg: ng }); if (score(c).obj > score(bt).obj + 1e-9) bt = c; } cur = bt; }
+        if (!job.fixArc) { let ba = cur; for (const a of arcs) { const c = Object.assign({}, cur, { arcane: a }); if (score(c).obj > score(ba).obj + 1e-9) ba = c; } cur = ba; }
         for (let i = 0; i < cur.ids.length; i++) {
           if (cur.ids[i] === "__riven") continue;
           const rest = cur.ids.filter((_, j) => j !== i); let bs = cur;
