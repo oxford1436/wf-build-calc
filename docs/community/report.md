@@ -2,7 +2,7 @@
 
 계산기 기본 조건(강철의 길 150·250·400, 3팩션 평균, 12명 무리, 처치 중첩은 무리마다 0부터)에서 계산기 1위 = 100%. '중첩 유지'·'처치 없음'은 같은 조건에서 처치 중첩만 바꾼 비교입니다. 이 파일은 scripts/community_check.js가 만듭니다.
 
-표시 25건
+표시 26건
 
 ## 액셀트라 프라임 (acceltra_prime.json)
 
@@ -37,6 +37,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | [아카라이브 187639117 사이트-09 강철 균열 범람 레벨캡 (전기, 리벤 멀티샷·연사·탄약 효율)](https://arca.live/b/warframe/187639117) | arca.live 워프레임 채널 | 전기 | 2% | 2% | 3% | 인식 못 함: 리벤 수치 없음 |
 | [Overframe 917889 Meta Arbitration Boar Prime (Max Pellets) - Host Weapon](https://overframe.gg/build/917889/) | Overframe Kuva_Generator (9 votes) | 물리 위주 | 0% | 0% | 1% | 인식 못 함: 리벤 수치 없음 |
+| 대화 세션 2026-11-18 v2.21 — 사이트-09 벽 너머 뿌리기 최종 (전기 + 상태이상 + 연사) |  | 전기 | 17% | 31% | 6% | 인식 못 함: 리벤 수치 없음 |
 
 ## 브래튼 프라임 (braton_prime.json)
 
