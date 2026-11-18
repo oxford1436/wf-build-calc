@@ -10,7 +10,8 @@ const { chromium } = require("playwright");
   const p = await ctx.newPage();
   const errs = [];
   p.on("pageerror", (e) => errs.push(e.message));
-  await p.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+  // WF_HTML=<file> checks another build (e.g. the build before a fix, to see the new check fail there)
+  await p.goto("file://" + path.resolve(process.env.WF_HTML || path.resolve(__dirname, "..", "index.html")));
   await p.waitForFunction(() => window.WFEngine && window.WF_MODS && window.WF_APP);
 
   const results = await p.evaluate(() => {
@@ -374,6 +375,50 @@ const { chromium } = require("playwright");
       const g0 = r0.perF.grineer, g1 = r1.perF.grineer;
       check("v1.65 리서플라이 추가 타격(위력 298% → 74.5%)이 직격·폭발 피해를 올리고 네이팜은 그대로", g1.direct > g0.direct * 1.4 && Math.abs((g1.dotBy.napalm || 0) / (g0.dotBy.napalm || 1) - 1) < 0.01,
         `hit ×${(g1.direct / g0.direct).toFixed(2)} · napalm ×${((g1.dotBy.napalm || 0) / (g0.dotBy.napalm || 1)).toFixed(3)}`);
+    }
+    // v2.21: a status effect made by an Extra Hit uses the Extra Hit's damage as its Modded Base Damage (wiki "Extra Hit" notes:
+    // "This allows Elemental Bonuses to contribute to the Modded Base Damage of a status effect when they normally would not",
+    // example "100 base damage with Infected Clip will deal an Extra Hit of 100 × (1 + .9) × 0.3 = 57 damage. The resulting Toxin
+    // status effect will deal 57 × (1 + .9) × 0.5 = 54.15 damage per tick") — an ordinary Toxin proc of that weapon ticks for
+    // 100 × 1.9 × 0.5 = 95, so the forced one is worth 0.57 of it. Before: 0.30 (only the Extra Hit percentage), which left the
+    // forced Electricity procs of Cyte-09's Resupply about 8 times too small on a weapon with +585% elemental damage.
+    {
+      const w = weapon("braton_prime"), atk = w.attacks.find((a) => a.en === "Normal Attack" && !a.parts), ids = ["Infected Clip"].map(M);
+      const o = (x) => Object.assign(baseO(), { ext: { reloadCast: 0, xhit: x, xhitElem: "tox" } });
+      const r0 = E.evaluate(w, atk, ids, o(1e-9)), r1 = E.evaluate(w, atk, ids, o(0.3));
+      const f = Object.keys(r0.perF)[0], d0 = r0.perF[f].dotBy.tox, d1 = r1.perF[f].dotBy.tox;
+      const own = r0.procs.tox - r0.ms;            // Toxin procs from the shot's own status chance (one forced proc per projectile taken out)
+      const wgt = (d1 - d0) / d0 * own / r0.ms;    // one forced proc against one ordinary Toxin proc
+      check("v2.21 추가 타격(리서플라이)의 확정 상태이상은 추가 타격 피해가 기준 — 위키 예시 57 × 1.9 × 0.5 = 54.15 (보통 독 틱 95의 0.57배)", Math.abs(wgt - 0.57) < 0.01, `0.57 기대, 계산 ${wgt.toFixed(3)} (독 자체 ${own.toFixed(3)}/발, 멀티샷 ${r0.ms})`);
+      // the matching elemental bonus counts when it is combined away (wiki: "This also works if the mod is part of a combined
+      // element, such as having both an Infected Clip and Cryo Rounds"): Viral build, forced Toxin → 100 × 2.8 × 0.3 × 1.9 × 0.5
+      // = 79.8 a tick against 95 for a plain Infected Clip Toxin proc
+      const ids2 = ["Infected Clip", "Cryo Rounds"].map(M);
+      const v1 = E.evaluate(w, atk, ids2, o(0.3)), fv = v1.perF[f];
+      const per1 = d0 / own;                       // total damage of one ordinary Toxin proc (Infected Clip only)
+      const wv = (fv.dotBy.tox || 0) / (v1.ms * per1);
+      check("v2.21 합쳐진 원소(바이러스)에서도 확정 독은 독 모드 보너스를 받음 — 100 × 2.8 × 0.3 × 1.9 × 0.5 = 79.8 (보통 독 틱 95의 0.84배)", Math.abs(wv - 0.84) < 0.015, `0.84 기대, 계산 ${wv.toFixed(3)}`);
+    }
+    // v2.21 (independent review): the two checks above run with no faction mod. "The Damage over Time formula applies Faction
+    // Damage Bonuses again, allowing status effects created by an Extra Hit to 'triple-dip'" — an ordinary proc already takes the
+    // faction bonus twice, so with Primed Bane of Grineer (x1.55) the forced proc is worth 0.57 × 1.55 = 0.8835 of an ordinary one
+    // against Grineer and stays 0.57 against the others.
+    {
+      const w = weapon("braton_prime"), atk = w.attacks.find((a) => a.en === "Normal Attack" && !a.parts), ids = ["Infected Clip", "Primed Bane Of Grineer"].map(M);
+      const o = (x) => Object.assign(baseO(), { ext: { reloadCast: 0, xhit: x, xhitElem: "tox" } });
+      const r0 = E.evaluate(w, atk, ids, o(1e-9)), r1 = E.evaluate(w, atk, ids, o(0.3));
+      const own = r0.procs.tox - r0.ms;
+      const wg = (f) => (r1.perF[f].dotBy.tox - r0.perF[f].dotBy.tox) / r0.perF[f].dotBy.tox * own / r0.ms;
+      check("v2.21 추가 타격의 확정 상태이상은 팩션 피해를 세 번 받음 — 프라임드 베인 오브 그리니어: 그리니어 0.57 × 1.55 = 0.88, 코퍼스 0.57", Math.abs(wg("grineer") - 0.8835) < 0.01 && Math.abs(wg("corpus") - 0.57) < 0.01, `그리니어 ${wg("grineer").toFixed(3)} · 코퍼스 ${wg("corpus").toFixed(3)}`);
+    }
+    // v2.21: a conditional "+X Base Damage" of an Incarnon evolution (Boar Reified Bane "On Reload From Empty: Increase Base Damage
+    // by +14") is base damage like the unconditional one — the shot's own Impact/Puncture/Slash grow with it. Before, only the
+    // elemental base grew: the physical coefficients of Boar Prime summed to 40 / 54 = 0.74 instead of 1.
+    {
+      const w = weapon("boar_prime"), atk = w.attacks.find((a) => a.en === "Normal Attack");
+      const r = E.evaluate(w, atk, [{ id: "__riven", eff: { baseAdd: 14 } }], baseO());
+      const phys = ["impact", "punct", "slash"].reduce((q, t) => q + (r.layout.coef[t] || 0), 0);
+      check("v2.21 진화의 조건부 기본 피해(보어 리이파이드 베인 +14)가 물리 피해에도 나뉨 — 물리 계수 합 1", Math.abs(phys - 1) < 0.005 && Math.abs(r.Btot - 54) < 0.01, `물리 계수 합 ${phys.toFixed(3)} · 기준 피해 ${r.Btot}`);
     }
     // v1.63 (대기열 0): impact + explosion of one shot under different wiki names must be one default attack
     // (wiki AttackParentIndex). Lenz = Charged Shot + Initial Blast + Bubble Collapse; Penta = Grenade Impact + Grenade Detonation.

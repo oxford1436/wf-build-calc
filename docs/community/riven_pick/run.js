@@ -28,6 +28,11 @@ const CFG = {
   strun: { w: "strun_prime", a: 1, cyte: true, f: Object.assign({ rivmode: "plan" }, ARB), patch: spray("strun_prime", "Normal Attack", 0.05, null) },
   boar005: { w: "boar_prime", a: 0, cyte: true, f: Object.assign({ rivmode: "plan" }, ARB), patch: spray("boar_prime", "Normal Attack", 0.005, null) },
   strun005: { w: "strun_prime", a: 1, cyte: true, f: Object.assign({ rivmode: "plan" }, ARB), patch: spray("strun_prime", "Normal Attack", 0.005, null) },
+  // 2026-11-18: the spread geometry (wiki Accuracy: spread = angle from the reticle; Boar Prime 10–30°) puts 15–30 m at c 0.003–0.012
+  boar003d3: { w: "boar_prime", a: 0, cyte: true, f: Object.assign({ rivmode: "plan" }, ARB), patch: spray("boar_prime", "Normal Attack", 0.003, null, { density: 3 * 6 / (Math.PI * 7.9 * 7.9) }) },
+  // P4 after v2.21 (Extra Hit status damage): the user's other Cyte-09 weapons, Resupply element re-check (sens.js jobs with patch.resupplyElem)
+  zarrCyte: { w: "kuva_zarr", cyte: true, f: { rivmode: "none", valtype: "tox", valpct: "37", level: "150", steel: true, scenario: "crowd" } },
+  ogrisCyte: { w: "kuva_ogris", cyte: true, f: { rivmode: "none", valtype: "heat", valpct: "28.7", level: "100", steel: false, scenario: "crowd" } },
   boar0: { w: "boar_prime", a: 0, cyte: true, f: Object.assign({ rivmode: "none" }, ARB), patch: spray("boar_prime", "Normal Attack", 0.05, null) },
   strun0: { w: "strun_prime", a: 1, cyte: true, f: Object.assign({ rivmode: "none" }, ARB), patch: spray("strun_prime", "Normal Attack", 0.05, null) },
 };

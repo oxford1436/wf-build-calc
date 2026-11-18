@@ -1,5 +1,6 @@
 // score given builds under a list of conditions (same app path as run.js: share hash -> app state -> WF_APP.evalBuild)
-// usage: node sens.js jobs.json   — jobs: [{ name, cfg: "<key in run.js CFG>", patch?, f?, ab?, evo?, a?, builds: [{ n, ids, arcane, val, rivEff }] }]
+// usage: node sens.js jobs.json [json|pf] — jobs: [{ name, cfg: "<key in run.js CFG>", patch?, f?, ab?, evo?, a?, cast?, vars: [{ v, pel?, fo?, o?, level?, steel?, factions? }],
+//   builds: [{ n, mods | ids, arcane, val, riv: [stat keys at the planned max, 3+1] | rivStats: [[key, value]] | rivEff }] }]
 const p = require("playwright"); const repo = "/home/claude/wf-build-calc";
 const { CFG, CYTE, init } = require("./run.js");
 const jobs = JSON.parse(require("fs").readFileSync(process.argv[2], "utf8"));
@@ -24,6 +25,8 @@ const jobs = JSON.parse(require("fs").readFileSync(process.argv[2], "utf8"));
         rows.push({ v: v.v, res: builds.map((bd) => {
           // bd.mods = English names ("Riven" = the riven slot); bd.riv = riven stat keys at the planned (max) value, 3 positives + 1 negative form
           if (bd.mods && !bd.ids) bd.ids = bd.mods.map((n) => /^riven/i.test(n) ? "__riven" : (window.WF_MODS.find((m) => m.en === n) || { id: "?" + n }).id);
+          // bd.rivStats = [[stat key, value as a fraction]] — any roll (min/mid/max) and a negative, e.g. [["ms",1.212],["x_zoom",-0.34]]
+          if (bd.rivStats && !bd.rivEff) bd.rivEff = A.effFromStats(bd.rivStats);
           if (bd.riv && !bd.rivEff) bd.rivEff = A.effFromStats(bd.riv.map((k) => [k, A.rivPlanVal(st.weapon.cls === "pistol" ? "pistol" : st.weapon.cls, k, "3+1")]));
           const bad = bd.ids.filter((i) => i[0] === "?"); if (bad.length) return { n: bd.n + " UNKNOWN " + bad.join(","), s: 0, pf: {}, cc: 0, cd: 0, ms: 0, rate: 0, sc: 0, lay: "" };
           const x = A.evalBuild(bd.ids, bd.val || null, bd.arcane === undefined ? null : bd.arcane, o, bd.rivEff || undefined, null, w);

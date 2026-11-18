@@ -216,8 +216,13 @@
       const coef = {}, mp = {}, partner = {};
       const singles = pr.singles.slice();
       const physSum = PHYS.reduce((s, t) => s + (atk.dmg[t] || 0), 0);
+      // v2.21: conditional "+X Base Damage" of an Incarnon evolution (a.baseAdd — Boar "On Reload From Empty: Increase Base Damage by
+      // +14", Strun/Braton etc.) is base damage like the unconditional "+X" (applyEvos scales every damage type by it), so the
+      // weapon's own damage types grow with it too. Before, it only entered Btot — the elements and status ticks grew, the
+      // Impact/Puncture/Slash of the shot did not (Boar Prime + Reified Bane: physical coefficients summed to 0.78, not 1).
+      const addK = base0 > 0 ? (base0 + (a.baseAdd || 0)) / base0 : 1;
       for (const t in atk.dmg) {
-        const v = atk.dmg[t] / Btot;
+        const v = atk.dmg[t] * addK / Btot;
         if (!v || PRIM.includes(t)) continue;
         // v2.18: a negative physical riven stat can take a pure-physical part to nothing (Laetum's direct hit is all Impact; a riven
         // with −118.8% Impact, the negative arca.live players look for on it). With no elemental mod that part has no damage at
@@ -1567,11 +1572,36 @@
         const xata = ext.xata || 0;
         if (xata) D *= 1 + xata * fac * hsmC / Math.max(0.25, vuln);
         // Resupply Extra Hit (wiki "Extra Hit"): "Weapon Hit Damage × Extra Hit Percentage × (1 + Faction Damage Bonuses)" as the
-        // chosen element; "Faction elemental weaknesses do not calculate inside the extra instance's base damage" — so the hit's
-        // own element vulnerability comes out and the chosen element's weakness (x1.5) goes in. Napalm ticks don't trigger it.
+        // chosen element — the Weapon Hit Damage is the hit before the enemy's own resistances ("can be tested on an unarmored
+        // enemy with no relevant resistances"), so the hit's own element vulnerability comes out and the chosen element's weakness
+        // (x1.5) goes in. Wiki Resupply (read 2026-11-18): "Faction elemental weaknesses affect the extra instance's base damage.
+        // A Murmur enemy with electric weakness will take : Base damage of extra instance x 0.5 x 1.5 x other DoT multipliers" —
+        // the forced status takes the weakness once (the x1.5 in `per` below). An earlier note here quoted the sentence as "do not
+        // calculate inside …", which is not what the page says now. Napalm ticks don't trigger it.
         if (ext.xhit > 0) D *= 1 + ext.xhit * fac * (ext.xhitElem && fac_.weak.includes(ext.xhitElem) ? 1.5 : 1) / Math.max(0.25, vuln);
         if (Dsp > 0) D += u * (K - 1) * Dsp;      // the other enemies struck by the same swing spread to this one too
         const dot = {}, dotNon = {};
+        // v2.21 — status effects made by an Extra Hit (Resupply's forced one per projectile). Wiki "Extra Hit" notes: "Damage over
+        // Time status effects created by an Extra Hit will use the Extra Hit Damage as Modded Base Damage in their damage
+        // calculations. This allows Elemental Bonuses to contribute to the Modded Base Damage of a status effect when they normally
+        // would not."; "The Damage over Time formula applies Faction Damage Bonuses again, allowing status effects created by an
+        // Extra Hit to 'triple-dip'"; "… will use the matching Elemental Bonuses of the weapon that triggered the hit … This also
+        // works if the mod is part of a combined element, such as having both an Infected Clip and Cryo Rounds … However, an already
+        // combined Elemental Bonus such as Nourish does not count as a matching Elemental Bonus for a Toxin status effect, though it
+        // will still contribute to the Extra Hit's damage"; "Status Damage modded on the weapon affects the damage of status effects
+        // created by Extra Hit effects". Example there: 100 base, Infected Clip → Extra Hit 100 × 1.9 × 0.3 = 57, Toxin tick
+        // 57 × 1.9 × 0.5 = 54.15 (an ordinary Toxin proc: 95). With "Extra Hit Damage = Weapon Hit Damage × Extra Hit Percentage ×
+        // (1 + Faction Damage Bonuses)" and "Weapon Hit Damage = Base Damage × [1 + Elemental Bonuses + …] × (1 + Damage Bonuses) ×
+        // (1 + Faction Damage Bonuses) × Additional Multipliers", one forced proc is worth, against an ordinary proc of that type:
+        //   xhit × total (the bracket = this layout's coefficients) × the direct-hit damage bonuses the hit carries (Galvanized
+        //   status mods, Condition Overload: the hit's own damage is the base — o.xhitNoDirect leaves them out) × faction once more
+        //   × (1 + the matching bonus, combined or not) / (1 + the bonus an ordinary proc gets).
+        // Before v2.21 only "xhit" was applied: on a weapon with +585% elemental damage the forced Electricity/Heat/Toxin/Gas procs
+        // of Resupply came out about 8 times too small (Boar Prime on Cyte-09, the community's Electricity + status damage builds).
+        // The Kuva valence bonus is not counted as a matching bonus (not on the wiki).
+        const xDir = (1 + dmgb + dmgArc + platedB + gco + co) / Math.max(1e-9, 1 + dmgb + dmgArc + platedB);
+        const xBase = xhitP ? ext.xhit * (o.xhitOld ? 1 : total * (o.xhitNoDirect ? 1 : xDir) * fac) : 0;
+        const xMatch = (T) => T === "gas" || T === "slash" ? bonus[T] : Math.max(0, a.elem[T] || 0) + tail.reduce((q, [tp, tx]) => q + (tp === T ? Math.max(0, tx) : 0), 0);   // tail = shard elements that did not join a mod of their type
         for (const T of DOT_TYPES) {
           const p = procs[T] || 0; if (p <= 0) continue;
           if (!dotN[T]) continue;
@@ -1580,8 +1610,8 @@
           if (T === "elec") per *= n3;
           if (T === "gas") per *= ng;
           const dShare = debil && debil.comps.includes(T) && p > 0 ? (debil.n / 2) / p : 0;
-          // a forced Resupply proc takes the Extra Hit's damage as its base (wiki), not the weapon hit's
-          const pEff = xhitP && T === ext.xhitElem ? p - xhitP + xhitP * ext.xhit : p;
+          // a forced Resupply proc takes the Extra Hit's damage as its base (wiki), not the weapon hit's (v2.21: see xBase above)
+          const pEff = xhitP && T === ext.xhitElem ? p - xhitP + xhitP * xBase * (o.xhitOld ? 1 : (1 + xMatch(T)) / (1 + bonus[T])) : p;
           dot[T] = pEff * per * spreadHit * (1 + dShare * (fac - 1));
           if (T !== "slash" && spreadNon > 0) dotNon[T] = p * per * spreadNon * fac;   // spread procs: faction damage x3 (wiki)
         }
@@ -1610,7 +1640,9 @@
         }
         // wiki Blast Damage: "Blast Proc Damage = 0.3 × Modded Base Damage × (1 + Faction Damage Bonuses) × (1 + Status Damage
         // Bonuses)", Modded Base Damage itself × (1 + Faction) — "Faction Damage Bonuses apply twice to Blast procs" (like DoTs)
-        const blast = (procs.blast || 0) * 0.3 * mbd * (1 + sd) * fin * fac * fac * (o.noComboStatus ? 1 : M) * (xata ? 1 + xata * fac : 1);
+        // v2.21: a forced Blast proc of an Extra Hit takes the Extra Hit's damage as its Modded Base Damage too (before: counted as a full ordinary proc)
+        const blastP = (procs.blast || 0) - (xhitP && ext.xhitElem === "blast" && !o.xhitOld ? xhitP * (1 - xBase) : 0);
+        const blast = blastP * 0.3 * mbd * (1 + sd) * fin * fac * fac * (o.noComboStatus ? 1 : M) * (xata ? 1 + xata * fac : 1);
         const vm0 = 4.25, dsum = Object.values(dot).reduce((s, x) => s + x, 0) + napHdisp;
         const dispDirect = D * vm0, dispDot = dsum * vm0, dispBlast = blast * vm0;
         const dispDotBy = {}; for (const T in dot) dispDotBy[T] = dot[T] * vm0;

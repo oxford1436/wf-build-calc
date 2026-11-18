@@ -1,0 +1,425 @@
+== c.005 (levels 100/200/350)
+  F cd           MC clear g/c/i x lo/hi/top: 1.42 1.99 2.57 0.86 0.96 1.20 0.88 1.08 1.37
+  E (PPB)        MC clear g/c/i x lo/hi/top: 1.39 1.91 2.46 1.08 1.05 1.28 1.08 1.13 1.32
+  F sd           MC clear g/c/i x lo/hi/top: 1.40 1.95 2.52 0.85 0.92 1.17 0.78 1.11 1.34
+  F Rav>PPB      MC clear g/c/i x lo/hi/top: 1.45 1.98 2.63 0.86 1.00 1.19 0.91 1.06 1.35
+  F Rav>AccB     MC clear g/c/i x lo/hi/top: 1.64 2.19 2.87 0.86 0.97 1.33 0.83 1.10 1.48
+  F Rav>Vig      MC clear g/c/i x lo/hi/top: 1.60 2.17 2.83 0.86 1.04 1.33 0.82 1.09 1.48
+  F Elem>AccB    MC clear g/c/i x lo/hi/top: 1.79 2.49 3.19 0.84 1.11 1.48 0.89 1.17 1.58
+  F PCS>AccB     MC clear g/c/i x lo/hi/top: 1.69 2.36 3.02 0.83 1.08 1.41 0.79 1.15 1.53
+  F Elem>PPB     MC clear g/c/i x lo/hi/top: 1.54 2.18 2.86 0.87 1.09 1.37 0.92 1.09 1.45
+  F PCS>PPB      MC clear g/c/i x lo/hi/top: 1.55 2.15 2.74 0.87 1.08 1.32 0.91 1.08 1.42
+  F Frail>Vic    MC clear g/c/i x lo/hi/top: 1.47 2.02 2.61 1.08 1.20 1.26 1.07 1.07 1.39
+  F Frail>AccB   MC clear g/c/i x lo/hi/top: 1.45 2.05 2.61 0.91 1.06 1.22 0.96 1.04 1.33
+  F Frail>Vig    MC clear g/c/i x lo/hi/top: 1.47 2.07 2.67 0.96 1.05 1.26 1.00 1.14 1.42
+  F CDec>Blund   MC clear g/c/i x lo/hi/top: 1.83 2.50 3.20 1.07 1.28 1.56 1.18 1.36 1.71
+  F Hell>HellCh  MC clear g/c/i x lo/hi/top: 1.67 2.29 3.02 1.05 1.21 1.47 1.11 1.30 1.57
+  F Bar>AccB     MC clear g/c/i x lo/hi/top: 1.50 2.07 2.69 0.91 1.06 1.27 0.98 1.09 1.40
+  F noRiv AccB   MC clear g/c/i x lo/hi/top: 2.54 3.46 4.39 1.58 1.74 2.21 1.49 1.88 2.46
+  F noRiv PPB    MC clear g/c/i x lo/hi/top: 2.43 3.30 4.21 1.69 1.91 2.17 1.55 1.98 2.25
+  F arc overcharge MC clear g/c/i x lo/hi/top: 1.47 2.07 2.67 0.64 0.88 1.23 0.67 0.97 1.36
+  F arc plated_round MC clear g/c/i x lo/hi/top: 1.49 2.02 2.63 0.88 1.00 1.25 0.81 1.09 1.35
+  F arc None     MC clear g/c/i x lo/hi/top: 1.99 2.72 3.44 0.98 1.27 1.72 1.01 1.32 1.82
+  F riv ms+fr+dmg MC clear g/c/i x lo/hi/top: 1.38 1.91 2.50 0.87 0.95 1.20 0.90 0.97 1.27
+  F riv ms+fr+cc MC clear g/c/i x lo/hi/top: 1.49 2.06 2.75 0.87 1.06 1.27 0.86 1.08 1.38
+  F riv ms+fr+elec MC clear g/c/i x lo/hi/top: 1.52 2.11 2.73 0.85 1.00 1.30 0.81 1.06 1.37
+  F riv ms+cd+sd MC clear g/c/i x lo/hi/top: 1.45 1.93 2.46 1.14 1.19 1.26 1.16 1.17 1.39
+  F riv fr+cd+sd MC clear g/c/i x lo/hi/top: 1.61 2.08 2.77 1.27 1.31 1.39 1.27 1.29 1.50
+  F riv ms+cd+dmg MC clear g/c/i x lo/hi/top: 1.44 1.99 2.48 1.12 1.19 1.39 1.17 1.19 1.37
+  F riv 2+1 ms+fr MC clear g/c/i x lo/hi/top: 1.56 2.17 2.81 0.82 1.00 1.31 0.76 1.05 1.46
+  F riv mid      MC clear g/c/i x lo/hi/top: 1.49 2.13 2.75 0.89 1.10 1.33 0.85 1.16 1.46
+  F riv min      MC clear g/c/i x lo/hi/top: 1.60 2.18 2.89 0.97 1.20 1.39 0.89 1.17 1.48
+  Frail>ClG      MC clear g/c/i x lo/hi/top: 0.92 1.24 1.52 1.03 1.18 1.44 1.19 1.27 1.56
+  Elem>ClG       MC clear g/c/i x lo/hi/top: 1.02 1.34 1.75 0.96 1.24 1.63 1.02 1.38 1.81
+  PCS>ClG        MC clear g/c/i x lo/hi/top: 0.92 1.31 1.70 0.98 1.17 1.62 0.94 1.27 1.76
+  Rav>ClG        MC clear g/c/i x lo/hi/top: 0.85 1.18 1.61 0.98 1.19 1.53 0.91 1.23 1.62
+  Frail>ClC      MC clear g/c/i x lo/hi/top: 1.71 2.28 2.96 1.00 0.99 1.07 1.13 1.25 1.59
+  Elem>ClC       MC clear g/c/i x lo/hi/top: 1.92 2.69 3.51 0.81 0.84 0.98 1.00 1.35 1.79
+  PCS>ClC        MC clear g/c/i x lo/hi/top: 1.84 2.58 3.32 0.80 0.85 0.96 0.92 1.30 1.73
+  Rav>ClC        MC clear g/c/i x lo/hi/top: 1.79 2.41 3.16 0.78 0.86 0.97 0.91 1.25 1.62
+  Frail>ClI      MC clear g/c/i x lo/hi/top: 1.68 2.27 2.96 1.04 1.16 1.47 0.97 1.00 0.95
+  Elem>ClI       MC clear g/c/i x lo/hi/top: 1.93 2.71 3.49 0.95 1.25 1.65 0.79 0.92 0.95
+  PCS>ClI        MC clear g/c/i x lo/hi/top: 1.87 2.55 3.30 0.94 1.18 1.62 0.80 0.79 0.90
+  Rav>ClI        MC clear g/c/i x lo/hi/top: 1.82 2.42 3.12 0.92 1.17 1.49 0.79 0.76 0.90
+   F cd           MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 8.99, eng 10.84)
+   E (PPB)        MC   94.0   engine  106.3   | per faction MC g/c/i 103/88/92  engine 106/106/107  (MC abs 8.46, eng 11.52)
+   F sd           MC  102.6   engine   99.7   | per faction MC g/c/i 102/102/104  engine 102/99/99  (MC abs 9.23, eng 10.81)
+   F Rav>PPB      MC   99.2   engine   99.4   | per faction MC g/c/i 99/99/100  engine 99/99/99  (MC abs 8.92, eng 10.77)
+   F Rav>AccB     MC   95.2   engine   89.3   | per faction MC g/c/i 89/97/99  engine 90/89/89  (MC abs 8.56, eng 9.68)
+   F Rav>Vig      MC   94.9   engine   90.1   | per faction MC g/c/i 91/95/100  engine 91/90/90  (MC abs 8.53, eng 9.77)
+   F Elem>AccB    MC   87.9   engine   84.9   | per faction MC g/c/i 81/90/93  engine 83/86/86  (MC abs 7.91, eng 9.20)
+   F PCS>AccB     MC   92.0   engine   86.6   | per faction MC g/c/i 85/93/98  engine 87/86/86  (MC abs 8.27, eng 9.39)
+   F Elem>PPB     MC   93.2   engine   95.2   | per faction MC g/c/i 91/92/97  engine 92/97/97  (MC abs 8.38, eng 10.32)
+   F PCS>PPB      MC   94.6   engine   96.6   | per faction MC g/c/i 93/93/98  engine 96/97/97  (MC abs 8.51, eng 10.47)
+   F Frail>Vic    MC   91.4   engine   98.7   | per faction MC g/c/i 97/84/93  engine 99/98/99  (MC abs 8.22, eng 10.70)
+   F Frail>AccB   MC   96.9   engine   98.3   | per faction MC g/c/i 98/94/99  engine 98/98/98  (MC abs 8.72, eng 10.66)
+   F Frail>Vig    MC   93.1   engine   97.1   | per faction MC g/c/i 96/91/92  engine 98/96/97  (MC abs 8.38, eng 10.53)
+   F CDec>Blund   MC   78.9   engine   82.6   | per faction MC g/c/i 80/78/79  engine 84/82/82  (MC abs 7.10, eng 8.95)
+   F Hell>HellCh  MC   83.8   engine   88.9   | per faction MC g/c/i 86/82/84  engine 89/89/89  (MC abs 7.54, eng 9.63)
+   F Bar>AccB     MC   94.7   engine   96.2   | per faction MC g/c/i 95/93/96  engine 96/96/96  (MC abs 8.52, eng 10.42)
+   F noRiv AccB   MC   57.2   engine   61.7   | per faction MC g/c/i 58/56/58  engine 62/61/61  (MC abs 5.14, eng 6.69)
+   F noRiv PPB    MC   56.9   engine   66.8   | per faction MC g/c/i 60/53/58  engine 67/66/67  (MC abs 5.12, eng 7.24)
+   F arc overcharge MC  106.8   engine   94.0   | per faction MC g/c/i 96/112/113  engine 96/93/94  (MC abs 9.60, eng 10.19)
+   F arc plated_round MC   98.9   engine   97.5   | per faction MC g/c/i 97/97/103  engine 98/97/98  (MC abs 8.89, eng 10.57)
+   F arc None     MC   77.8   engine   74.8   | per faction MC g/c/i 73/78/82  engine 76/74/74  (MC abs 7.00, eng 8.11)
+   F riv ms+fr+dmg MC  102.8   engine  102.6   | per faction MC g/c/i 103/100/105  engine 103/102/103  (MC abs 9.25, eng 11.12)
+   F riv ms+fr+cc MC   96.8   engine   95.3   | per faction MC g/c/i 95/95/101  engine 96/95/95  (MC abs 8.70, eng 10.33)
+   F riv ms+fr+elec MC   97.8   engine   93.3   | per faction MC g/c/i 94/96/103  engine 94/93/93  (MC abs 8.80, eng 10.11)
+   F riv ms+cd+sd MC   90.3   engine  101.3   | per faction MC g/c/i 101/83/88  engine 103/100/101  (MC abs 8.12, eng 10.97)
+   F riv fr+cd+sd MC   83.1   engine   97.3   | per faction MC g/c/i 92/76/81  engine 98/97/97  (MC abs 7.47, eng 10.55)
+   F riv ms+cd+dmg MC   88.9   engine  105.0   | per faction MC g/c/i 100/81/87  engine 105/105/105  (MC abs 8.00, eng 11.38)
+   F riv 2+1 ms+fr MC   97.7   engine   90.8   | per faction MC g/c/i 92/98/104  engine 92/90/91  (MC abs 8.79, eng 9.84)
+   F riv mid      MC   94.1   engine   95.4   | per faction MC g/c/i 94/91/97  engine 96/95/95  (MC abs 8.46, eng 10.34)
+   F riv min      MC   89.7   engine   91.0   | per faction MC g/c/i 90/85/94  engine 91/91/91  (MC abs 8.07, eng 9.86)
+   Frail>ClG      MC  102.1   engine  109.1   | per faction MC g/c/i 158/83/82  engine 166/88/89  (MC abs 9.18, eng 11.82)
+   Elem>ClG       MC   97.6   engine   95.7   | per faction MC g/c/i 143/80/81  engine 143/79/78  (MC abs 8.78, eng 10.38)
+   PCS>ClG        MC  101.7   engine   97.7   | per faction MC g/c/i 151/82/85  engine 149/79/79  (MC abs 9.15, eng 10.59)
+   Rav>ClG        MC  106.7   engine  101.3   | per faction MC g/c/i 162/83/90  engine 155/82/82  (MC abs 9.60, eng 10.98)
+   Frail>ClC      MC   88.3   engine  108.3   | per faction MC g/c/i 86/97/83  engine 89/161/89  (MC abs 7.94, eng 11.73)
+   Elem>ClC       MC   88.3   engine   95.4   | per faction MC g/c/i 74/113/82  engine 77/145/78  (MC abs 7.94, eng 10.34)
+   PCS>ClC        MC   91.3   engine   97.8   | per faction MC g/c/i 78/114/86  engine 80/147/79  (MC abs 8.21, eng 10.60)
+   Rav>ClC        MC   94.0   engine  101.1   | per faction MC g/c/i 81/114/89  engine 83/151/82  (MC abs 8.45, eng 10.95)
+   Frail>ClI      MC   92.0   engine  108.9   | per faction MC g/c/i 86/82/110  engine 89/88/164  (MC abs 8.27, eng 11.80)
+   Elem>ClI       MC   89.9   engine   96.0   | per faction MC g/c/i 74/80/122  engine 77/79/147  (MC abs 8.09, eng 10.40)
+   PCS>ClI        MC   94.1   engine   98.1   | per faction MC g/c/i 78/83/130  engine 80/79/148  (MC abs 8.47, eng 10.63)
+   Rav>ClI        MC   97.1   engine  101.4   | per faction MC g/c/i 81/85/132  engine 83/82/153  (MC abs 8.73, eng 10.99)
+== c.003 (levels 100/200/350)
+  F cd           MC clear g/c/i x lo/hi/top: 2.12 2.87 3.66 1.40 1.62 1.90 1.50 1.69 1.97
+  E (PPB)        MC clear g/c/i x lo/hi/top: 2.14 2.72 3.60 1.75 1.85 2.04 1.82 1.87 1.98
+  F sd           MC clear g/c/i x lo/hi/top: 2.11 2.80 3.56 1.46 1.52 1.77 1.29 1.69 1.97
+  F Rav>PPB      MC clear g/c/i x lo/hi/top: 2.10 2.89 3.63 1.42 1.60 1.80 1.45 1.68 2.02
+  F Rav>AccB     MC clear g/c/i x lo/hi/top: 2.33 3.18 4.05 1.42 1.56 2.02 1.35 1.65 2.11
+  F Rav>Vig      MC clear g/c/i x lo/hi/top: 2.29 3.10 3.92 1.38 1.52 1.93 1.29 1.65 2.08
+  F Elem>AccB    MC clear g/c/i x lo/hi/top: 2.51 3.45 4.36 1.35 1.75 2.17 1.47 1.83 2.39
+  F PCS>AccB     MC clear g/c/i x lo/hi/top: 2.44 3.29 4.27 1.36 1.61 2.06 1.32 1.74 2.33
+  F Elem>PPB     MC clear g/c/i x lo/hi/top: 2.31 3.23 3.99 1.47 1.66 2.00 1.52 1.69 2.23
+  F PCS>PPB      MC clear g/c/i x lo/hi/top: 2.20 3.03 3.84 1.42 1.67 1.93 1.54 1.65 2.08
+  F Frail>Vic    MC clear g/c/i x lo/hi/top: 2.23 3.08 3.81 1.74 1.98 2.00 1.72 1.73 2.14
+  F Frail>AccB   MC clear g/c/i x lo/hi/top: 2.10 2.97 3.72 1.57 1.65 1.86 1.62 1.66 2.06
+  F Frail>Vig    MC clear g/c/i x lo/hi/top: 2.22 2.99 3.76 1.55 1.70 2.01 1.65 1.79 2.09
+  F CDec>Blund   MC clear g/c/i x lo/hi/top: 2.69 3.55 4.55 1.66 2.03 2.37 1.81 2.10 2.53
+  F Hell>HellCh  MC clear g/c/i x lo/hi/top: 2.43 3.24 4.13 1.74 1.95 2.20 1.78 1.95 2.35
+  F Bar>AccB     MC clear g/c/i x lo/hi/top: 2.25 3.04 3.78 1.51 1.75 1.89 1.61 1.69 2.08
+  F noRiv AccB   MC clear g/c/i x lo/hi/top: 3.71 4.92 6.25 2.47 2.60 3.30 2.39 2.86 3.60
+  F noRiv PPB    MC clear g/c/i x lo/hi/top: 3.53 4.58 5.90 2.76 2.93 3.16 2.56 2.91 3.35
+  F arc overcharge MC clear g/c/i x lo/hi/top: 2.17 2.94 3.68 1.04 1.36 1.79 1.13 1.49 1.94
+  F arc plated_round MC clear g/c/i x lo/hi/top: 2.04 2.81 3.58 1.40 1.52 1.71 1.50 1.55 1.95
+  F arc None     MC clear g/c/i x lo/hi/top: 2.82 3.81 4.76 1.54 1.89 2.43 1.59 2.01 2.62
+  F riv ms+fr+dmg MC clear g/c/i x lo/hi/top: 2.03 2.75 3.59 1.40 1.56 1.77 1.49 1.57 1.98
+  F riv ms+fr+cc MC clear g/c/i x lo/hi/top: 2.23 2.97 3.87 1.47 1.60 1.89 1.43 1.69 2.12
+  F riv ms+fr+elec MC clear g/c/i x lo/hi/top: 2.22 3.06 3.87 1.35 1.54 1.93 1.37 1.62 2.15
+  F riv ms+cd+sd MC clear g/c/i x lo/hi/top: 2.20 2.87 3.61 1.87 1.86 2.02 1.91 1.85 2.07
+  F riv fr+cd+sd MC clear g/c/i x lo/hi/top: 2.37 2.98 3.85 2.06 2.16 2.24 2.10 2.01 2.25
+  F riv ms+cd+dmg MC clear g/c/i x lo/hi/top: 2.16 2.84 3.66 1.88 1.98 2.16 1.84 1.86 2.06
+  F riv 2+1 ms+fr MC clear g/c/i x lo/hi/top: 2.24 3.06 3.84 1.33 1.50 1.95 1.25 1.63 2.13
+  F riv mid      MC clear g/c/i x lo/hi/top: 2.17 3.00 3.86 1.52 1.70 1.97 1.38 1.70 2.06
+  F riv min      MC clear g/c/i x lo/hi/top: 2.42 3.19 4.03 1.59 1.82 2.11 1.39 1.78 2.20
+  Frail>ClG      MC clear g/c/i x lo/hi/top: 1.55 1.91 2.34 1.83 1.93 2.19 1.82 1.98 2.34
+  Elem>ClG       MC clear g/c/i x lo/hi/top: 1.57 1.98 2.63 1.60 1.92 2.39 1.64 2.07 2.60
+  PCS>ClG        MC clear g/c/i x lo/hi/top: 1.49 1.92 2.46 1.55 1.77 2.41 1.50 1.93 2.48
+  Rav>ClG        MC clear g/c/i x lo/hi/top: 1.34 1.73 2.44 1.54 1.74 2.16 1.47 1.93 2.38
+  Frail>ClC      MC clear g/c/i x lo/hi/top: 2.49 3.29 4.13 1.70 1.66 1.79 1.86 1.98 2.36
+  Elem>ClC       MC clear g/c/i x lo/hi/top: 2.82 3.78 4.79 1.37 1.40 1.54 1.60 2.12 2.60
+  PCS>ClC        MC clear g/c/i x lo/hi/top: 2.64 3.63 4.64 1.33 1.40 1.58 1.44 1.92 2.55
+  Rav>ClC        MC clear g/c/i x lo/hi/top: 2.55 3.38 4.41 1.32 1.42 1.54 1.44 1.87 2.38
+  Frail>ClI      MC clear g/c/i x lo/hi/top: 2.48 3.28 4.18 1.81 1.92 2.24 1.68 1.68 1.58
+  Elem>ClI       MC clear g/c/i x lo/hi/top: 2.79 3.79 4.83 1.52 1.91 2.41 1.31 1.48 1.49
+  PCS>ClI        MC clear g/c/i x lo/hi/top: 2.66 3.70 4.64 1.53 1.80 2.30 1.33 1.32 1.41
+  Rav>ClI        MC clear g/c/i x lo/hi/top: 2.57 3.41 4.42 1.51 1.77 2.18 1.34 1.21 1.43
+   F cd           MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 5.89, eng 8.15)
+   E (PPB)        MC   92.5   engine  106.6   | per faction MC g/c/i 102/86/90  engine 106/107/107  (MC abs 5.45, eng 8.69)
+   F sd           MC  103.3   engine  100.9   | per faction MC g/c/i 102/103/105  engine 102/100/100  (MC abs 6.09, eng 8.22)
+   F Rav>PPB      MC  100.8   engine   99.4   | per faction MC g/c/i 100/102/101  engine 99/99/99  (MC abs 5.94, eng 8.10)
+   F Rav>AccB     MC   97.4   engine   89.5   | per faction MC g/c/i 91/99/102  engine 90/89/89  (MC abs 5.74, eng 7.29)
+   F Rav>Vig      MC   99.6   engine   90.4   | per faction MC g/c/i 93/102/104  engine 91/90/90  (MC abs 5.87, eng 7.36)
+   F Elem>AccB    MC   90.3   engine   83.4   | per faction MC g/c/i 84/95/92  engine 82/84/84  (MC abs 5.32, eng 6.79)
+   F PCS>AccB     MC   94.5   engine   86.1   | per faction MC g/c/i 87/99/98  engine 86/86/86  (MC abs 5.57, eng 7.01)
+   F Elem>PPB     MC   94.1   engine   93.2   | per faction MC g/c/i 91/96/96  engine 91/94/94  (MC abs 5.55, eng 7.59)
+   F PCS>PPB      MC   97.3   engine   95.7   | per faction MC g/c/i 96/98/98  engine 95/96/96  (MC abs 5.73, eng 7.79)
+   F Frail>Vic    MC   90.4   engine   98.9   | per faction MC g/c/i 94/85/92  engine 99/99/99  (MC abs 5.32, eng 8.06)
+   F Frail>AccB   MC   97.1   engine   98.4   | per faction MC g/c/i 99/96/97  engine 98/98/98  (MC abs 5.72, eng 8.02)
+   F Frail>Vig    MC   93.7   engine   97.5   | per faction MC g/c/i 96/93/93  engine 98/97/98  (MC abs 5.52, eng 7.95)
+   F CDec>Blund   MC   81.1   engine   82.9   | per faction MC g/c/i 80/82/81  engine 84/82/83  (MC abs 4.78, eng 6.75)
+   F Hell>HellCh  MC   85.7   engine   89.2   | per faction MC g/c/i 89/84/85  engine 89/89/89  (MC abs 5.05, eng 7.26)
+   F Bar>AccB     MC   95.3   engine   96.4   | per faction MC g/c/i 95/95/96  engine 97/96/96  (MC abs 5.62, eng 7.85)
+   F noRiv AccB   MC   59.0   engine   62.3   | per faction MC g/c/i 58/59/59  engine 63/62/62  (MC abs 3.48, eng 5.08)
+   F noRiv PPB    MC   58.7   engine   67.5   | per faction MC g/c/i 62/56/59  engine 68/67/67  (MC abs 3.46, eng 5.50)
+   F arc overcharge MC  110.1   engine   94.1   | per faction MC g/c/i 98/119/115  engine 95/93/94  (MC abs 6.49, eng 7.67)
+   F arc plated_round MC  103.7   engine  102.4   | per faction MC g/c/i 103/105/103  engine 102/102/102  (MC abs 6.11, eng 8.34)
+   F arc None     MC   81.8   engine   75.3   | per faction MC g/c/i 76/85/85  engine 76/75/75  (MC abs 4.82, eng 6.13)
+   F riv ms+fr+dmg MC  103.2   engine  102.7   | per faction MC g/c/i 104/103/103  engine 103/103/103  (MC abs 6.08, eng 8.37)
+   F riv ms+fr+cc MC   97.9   engine   95.4   | per faction MC g/c/i 96/99/99  engine 96/95/95  (MC abs 5.77, eng 7.77)
+   F riv ms+fr+elec MC   99.4   engine   93.8   | per faction MC g/c/i 95/102/101  engine 94/93/94  (MC abs 5.86, eng 7.64)
+   F riv ms+cd+sd MC   90.0   engine  102.8   | per faction MC g/c/i 99/84/88  engine 104/102/103  (MC abs 5.31, eng 8.38)
+   F riv fr+cd+sd MC   83.4   engine   98.7   | per faction MC g/c/i 94/76/81  engine 100/98/98  (MC abs 4.91, eng 8.04)
+   F riv ms+cd+dmg MC   89.3   engine  105.1   | per faction MC g/c/i 99/81/89  engine 105/105/105  (MC abs 5.26, eng 8.56)
+   F riv 2+1 ms+fr MC  101.0   engine   91.0   | per faction MC g/c/i 95/103/105  engine 92/91/91  (MC abs 5.95, eng 7.41)
+   F riv mid      MC   97.1   engine   95.5   | per faction MC g/c/i 96/94/101  engine 96/95/96  (MC abs 5.72, eng 7.78)
+   F riv min      MC   91.8   engine   91.2   | per faction MC g/c/i 90/89/97  engine 91/91/91  (MC abs 5.41, eng 7.43)
+   Frail>ClG      MC  100.0   engine  109.9   | per faction MC g/c/i 145/82/84  engine 168/89/89  (MC abs 5.89, eng 8.96)
+   Elem>ClG       MC   98.9   engine   94.5   | per faction MC g/c/i 139/84/83  engine 142/77/77  (MC abs 5.83, eng 7.69)
+   PCS>ClG        MC  103.9   engine   97.6   | per faction MC g/c/i 146/87/89  engine 149/79/79  (MC abs 6.12, eng 7.95)
+   Rav>ClG        MC  108.7   engine  101.9   | per faction MC g/c/i 156/91/91  engine 156/82/82  (MC abs 6.41, eng 8.30)
+   Frail>ClC      MC   87.9   engine  109.3   | per faction MC g/c/i 87/94/83  engine 89/164/89  (MC abs 5.18, eng 8.91)
+   Elem>ClC       MC   89.4   engine   94.4   | per faction MC g/c/i 76/113/83  engine 76/144/77  (MC abs 5.27, eng 7.69)
+   PCS>ClC        MC   93.0   engine   97.6   | per faction MC g/c/i 80/113/89  engine 80/147/79  (MC abs 5.48, eng 7.95)
+   Rav>ClC        MC   95.9   engine  101.8   | per faction MC g/c/i 84/114/92  engine 83/154/82  (MC abs 5.65, eng 8.29)
+   Frail>ClI      MC   90.0   engine  109.8   | per faction MC g/c/i 87/82/103  engine 89/89/167  (MC abs 5.30, eng 8.94)
+   Elem>ClI       MC   91.9   engine   94.7   | per faction MC g/c/i 76/85/119  engine 76/77/145  (MC abs 5.42, eng 7.71)
+   PCS>ClI        MC   95.7   engine   97.9   | per faction MC g/c/i 79/88/125  engine 80/79/149  (MC abs 5.64, eng 7.97)
+   Rav>ClI        MC   98.8   engine  102.0   | per faction MC g/c/i 83/90/128  engine 83/82/155  (MC abs 5.82, eng 8.31)
+== c.001d3 (levels 100/200/350)
+  F cd           MC clear g/c/i x lo/hi/top: 4.62 5.78 7.04 3.96 4.15 3.94 3.93 3.62 4.15
+  E (PPB)        MC clear g/c/i x lo/hi/top: 4.66 5.64 6.96 4.76 4.87 5.24 4.79 3.98 4.58
+  F sd           MC clear g/c/i x lo/hi/top: 4.25 5.57 6.70 3.85 3.38 3.96 3.00 3.54 4.09
+  F Rav>PPB      MC clear g/c/i x lo/hi/top: 4.52 5.78 7.07 3.94 4.10 4.04 4.00 3.61 4.16
+  F Rav>AccB     MC clear g/c/i x lo/hi/top: 4.90 6.19 7.62 3.58 3.43 4.16 2.94 3.66 4.77
+  F Rav>Vig      MC clear g/c/i x lo/hi/top: 4.86 6.16 7.58 3.51 3.37 4.19 3.07 3.58 4.47
+  F Elem>AccB    MC clear g/c/i x lo/hi/top: 5.53 6.94 8.75 3.70 4.17 4.63 3.69 4.28 4.99
+  F PCS>AccB     MC clear g/c/i x lo/hi/top: 5.22 6.57 8.12 3.64 3.68 4.37 3.00 3.82 4.87
+  F Elem>PPB     MC clear g/c/i x lo/hi/top: 5.00 6.39 7.99 4.06 4.30 4.93 4.20 3.95 4.68
+  F PCS>PPB      MC clear g/c/i x lo/hi/top: 4.61 6.00 7.63 3.92 4.31 4.16 4.13 3.65 4.36
+  F Frail>Vic    MC clear g/c/i x lo/hi/top: 5.06 6.34 7.51 5.02 4.98 4.48 4.92 4.05 4.53
+  F Frail>AccB   MC clear g/c/i x lo/hi/top: 4.71 5.89 7.09 4.09 4.46 4.16 4.18 3.69 4.46
+  F Frail>Vig    MC clear g/c/i x lo/hi/top: 4.73 6.01 7.21 4.47 4.60 4.20 4.59 3.90 4.60
+  F CDec>Blund   MC clear g/c/i x lo/hi/top: 5.61 7.40 8.76 4.10 4.88 5.15 4.60 4.62 5.30
+  F Hell>HellCh  MC clear g/c/i x lo/hi/top: 5.18 6.74 8.33 4.57 5.13 4.74 4.89 4.28 4.83
+  F Bar>AccB     MC clear g/c/i x lo/hi/top: 4.74 6.07 7.41 4.18 4.40 4.24 4.26 3.66 4.41
+  F noRiv AccB   MC clear g/c/i x lo/hi/top: 8.30 10.01 13.20 6.75 5.85 7.00 5.32 6.04 7.83
+  F noRiv PPB    MC clear g/c/i x lo/hi/top: 7.86 9.87 12.25 7.62 7.87 7.18 5.67 6.67 7.59
+  F arc overcharge MC clear g/c/i x lo/hi/top: 4.51 5.67 7.10 2.85 2.94 3.87 2.51 3.14 4.04
+  F arc plated_round MC clear g/c/i x lo/hi/top: 4.32 5.70 6.90 3.86 4.08 3.98 4.00 3.47 4.27
+  F arc None     MC clear g/c/i x lo/hi/top: 5.77 7.47 9.34 4.16 4.11 5.10 3.60 4.41 5.42
+  F riv ms+fr+dmg MC clear g/c/i x lo/hi/top: 4.31 5.55 6.74 3.88 4.23 3.98 3.90 3.62 4.12
+  F riv ms+fr+cc MC clear g/c/i x lo/hi/top: 4.86 5.88 7.30 4.04 3.75 4.19 3.38 3.70 4.66
+  F riv ms+fr+elec MC clear g/c/i x lo/hi/top: 4.56 5.99 7.34 3.90 3.50 4.13 3.19 3.65 4.52
+  F riv ms+cd+sd MC clear g/c/i x lo/hi/top: 4.60 5.94 7.33 5.09 5.27 4.36 5.31 4.18 4.67
+  F riv fr+cd+sd MC clear g/c/i x lo/hi/top: 5.06 6.42 7.77 5.73 5.92 4.64 5.88 4.49 4.99
+  F riv ms+cd+dmg MC clear g/c/i x lo/hi/top: 4.69 6.06 7.20 5.11 5.24 5.58 5.13 4.00 4.54
+  F riv 2+1 ms+fr MC clear g/c/i x lo/hi/top: 4.88 6.00 7.37 3.46 3.29 4.04 2.79 3.59 4.62
+  F riv mid      MC clear g/c/i x lo/hi/top: 4.63 6.01 7.31 4.01 4.50 4.17 3.28 3.80 4.47
+  F riv min      MC clear g/c/i x lo/hi/top: 5.01 6.49 7.72 4.34 4.59 4.46 3.25 3.95 4.66
+  Frail>ClG      MC clear g/c/i x lo/hi/top: 3.56 4.04 5.01 4.88 5.29 4.89 4.99 4.29 4.85
+  Elem>ClG       MC clear g/c/i x lo/hi/top: 3.43 4.64 5.23 4.06 4.64 5.28 4.24 4.65 5.47
+  PCS>ClG        MC clear g/c/i x lo/hi/top: 3.46 4.41 4.98 4.18 3.98 4.82 3.50 4.23 5.50
+  Rav>ClG        MC clear g/c/i x lo/hi/top: 3.24 3.96 4.63 4.02 3.85 4.59 3.36 4.13 5.26
+  Frail>ClC      MC clear g/c/i x lo/hi/top: 5.25 6.84 8.27 5.05 4.71 4.83 4.95 4.33 5.23
+  Elem>ClC       MC clear g/c/i x lo/hi/top: 6.02 7.81 9.88 3.83 3.87 4.00 4.07 4.62 5.64
+  PCS>ClC        MC clear g/c/i x lo/hi/top: 5.71 7.37 9.32 3.71 3.78 4.01 3.37 4.21 5.32
+  Rav>ClC        MC clear g/c/i x lo/hi/top: 5.47 6.92 8.42 3.68 3.83 4.05 3.31 3.96 5.13
+  Frail>ClI      MC clear g/c/i x lo/hi/top: 5.31 6.51 8.14 4.85 5.10 4.60 4.82 4.83 3.56
+  Elem>ClI       MC clear g/c/i x lo/hi/top: 5.91 7.70 9.65 4.15 4.76 5.14 3.81 3.92 3.37
+  PCS>ClI        MC clear g/c/i x lo/hi/top: 5.61 7.27 9.18 4.18 4.01 4.82 3.68 2.94 3.20
+  Rav>ClI        MC clear g/c/i x lo/hi/top: 5.62 6.86 8.59 4.04 3.90 4.60 3.76 2.92 3.26
+   F cd           MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 2.65, eng 6.08)
+   E (PPB)        MC   89.4   engine  106.6   | per faction MC g/c/i 101/81/88  engine 107/107/107  (MC abs 2.37, eng 6.49)
+   F sd           MC  108.0   engine  103.3   | per faction MC g/c/i 106/108/111  engine 104/103/103  (MC abs 2.87, eng 6.29)
+   F Rav>PPB      MC   99.9   engine   99.5   | per faction MC g/c/i 101/100/99  engine 99/99/99  (MC abs 2.65, eng 6.05)
+   F Rav>AccB     MC  102.0   engine   89.9   | per faction MC g/c/i 94/108/105  engine 90/90/90  (MC abs 2.71, eng 5.47)
+   F Rav>Vig      MC  102.9   engine   90.8   | per faction MC g/c/i 94/109/106  engine 91/91/91  (MC abs 2.73, eng 5.52)
+   F Elem>AccB    MC   90.0   engine   80.4   | per faction MC g/c/i 83/97/91  engine 80/81/81  (MC abs 2.39, eng 4.89)
+   F PCS>AccB     MC   97.5   engine   85.0   | per faction MC g/c/i 88/104/102  engine 85/85/85  (MC abs 2.59, eng 5.17)
+   F Elem>PPB     MC   90.9   engine   89.3   | per faction MC g/c/i 90/91/91  engine 88/90/90  (MC abs 2.41, eng 5.43)
+   F PCS>PPB      MC   96.7   engine   94.1   | per faction MC g/c/i 96/97/96  engine 94/94/94  (MC abs 2.56, eng 5.72)
+   F Frail>Vic    MC   87.2   engine   99.3   | per faction MC g/c/i 92/83/87  engine 99/99/99  (MC abs 2.31, eng 6.04)
+   F Frail>AccB   MC   96.1   engine   98.6   | per faction MC g/c/i 98/95/95  engine 99/99/99  (MC abs 2.55, eng 6.00)
+   F Frail>Vig    MC   92.3   engine   97.9   | per faction MC g/c/i 97/91/89  engine 98/98/98  (MC abs 2.45, eng 5.95)
+   F CDec>Blund   MC   82.3   engine   83.6   | per faction MC g/c/i 80/86/81  engine 84/84/83  (MC abs 2.18, eng 5.09)
+   F Hell>HellCh  MC   84.7   engine   89.8   | per faction MC g/c/i 87/84/84  engine 90/90/90  (MC abs 2.25, eng 5.47)
+   F Bar>AccB     MC   95.0   engine   96.7   | per faction MC g/c/i 96/94/95  engine 97/97/97  (MC abs 2.52, eng 5.88)
+   F noRiv AccB   MC   59.8   engine   63.8   | per faction MC g/c/i 56/62/62  engine 64/64/64  (MC abs 1.58, eng 3.88)
+   F noRiv PPB    MC   56.9   engine   69.0   | per faction MC g/c/i 58/53/59  engine 69/69/69  (MC abs 1.51, eng 4.20)
+   F arc overcharge MC  115.8   engine   94.2   | per faction MC g/c/i 101/126/122  engine 95/94/94  (MC abs 3.07, eng 5.73)
+   F arc plated_round MC  101.4   engine  103.1   | per faction MC g/c/i 103/101/100  engine 103/103/103  (MC abs 2.69, eng 6.27)
+   F arc None     MC   85.4   engine   76.3   | per faction MC g/c/i 78/91/88  engine 77/76/76  (MC abs 2.26, eng 4.64)
+   F riv ms+fr+dmg MC  101.8   engine  102.7   | per faction MC g/c/i 105/100/101  engine 103/103/103  (MC abs 2.70, eng 6.24)
+   F riv ms+fr+cc MC   99.2   engine   95.7   | per faction MC g/c/i 97/101/100  engine 96/96/96  (MC abs 2.63, eng 5.82)
+   F riv ms+fr+elec MC  102.0   engine   95.1   | per faction MC g/c/i 98/105/104  engine 95/95/95  (MC abs 2.71, eng 5.78)
+   F riv ms+cd+sd MC   87.2   engine  105.7   | per faction MC g/c/i 98/82/83  engine 106/105/105  (MC abs 2.31, eng 6.43)
+   F riv fr+cd+sd MC   80.4   engine  101.4   | per faction MC g/c/i 91/75/77  engine 102/101/101  (MC abs 2.13, eng 6.17)
+   F riv ms+cd+dmg MC   85.6   engine  105.1   | per faction MC g/c/i 97/76/86  engine 105/105/105  (MC abs 2.27, eng 6.39)
+   F riv 2+1 ms+fr MC  105.1   engine   91.3   | per faction MC g/c/i 96/112/108  engine 92/91/91  (MC abs 2.79, eng 5.56)
+   F riv mid      MC   98.1   engine   95.9   | per faction MC g/c/i 97/95/102  engine 96/96/96  (MC abs 2.60, eng 5.83)
+   F riv min      MC   93.4   engine   91.7   | per faction MC g/c/i 91/90/99  engine 92/92/92  (MC abs 2.48, eng 5.58)
+   Frail>ClG      MC   96.8   engine  111.3   | per faction MC g/c/i 137/80/83  engine 171/90/90  (MC abs 2.57, eng 6.77)
+   Elem>ClG       MC   97.7   engine   92.2   | per faction MC g/c/i 131/87/82  engine 140/75/75  (MC abs 2.59, eng 5.61)
+   PCS>ClG        MC  104.2   engine   97.4   | per faction MC g/c/i 135/93/90  engine 149/79/79  (MC abs 2.76, eng 5.93)
+   Rav>ClG        MC  109.8   engine  103.2   | per faction MC g/c/i 146/97/93  engine 159/83/83  (MC abs 2.91, eng 6.28)
+   Frail>ClC      MC   83.0   engine  110.8   | per faction MC g/c/i 86/83/81  engine 90/168/90  (MC abs 2.20, eng 6.74)
+   Elem>ClC       MC   85.7   engine   92.0   | per faction MC g/c/i 74/103/82  engine 74/141/75  (MC abs 2.27, eng 5.60)
+   PCS>ClC        MC   91.2   engine   97.4   | per faction MC g/c/i 78/105/92  engine 79/149/79  (MC abs 2.42, eng 5.92)
+   Rav>ClC        MC   94.3   engine  103.0   | per faction MC g/c/i 84/104/96  engine 84/157/83  (MC abs 2.50, eng 6.27)
+   Frail>ClI      MC   86.4   engine  111.0   | per faction MC g/c/i 87/83/89  engine 90/90/169  (MC abs 2.29, eng 6.75)
+   Elem>ClI       MC   88.2   engine   92.2   | per faction MC g/c/i 76/86/105  engine 74/75/142  (MC abs 2.34, eng 5.61)
+   PCS>ClI        MC   95.9   engine   97.5   | per faction MC g/c/i 80/93/119  engine 79/79/149  (MC abs 2.54, eng 5.93)
+   Rav>ClI        MC   98.0   engine  103.2   | per faction MC g/c/i 83/96/118  engine 84/83/158  (MC abs 2.60, eng 6.28)
+== c.01 (levels 100/200/350)
+  F cd           MC clear g/c/i x lo/hi/top: 0.79 1.17 1.62 0.43 0.48 0.63 0.45 0.57 0.72
+  E (PPB)        MC clear g/c/i x lo/hi/top: 0.78 1.10 1.48 0.54 0.52 0.68 0.54 0.56 0.69
+  F sd           MC clear g/c/i x lo/hi/top: 0.77 1.13 1.54 0.42 0.44 0.64 0.40 0.56 0.72
+  F Rav>PPB      MC clear g/c/i x lo/hi/top: 0.82 1.19 1.57 0.41 0.50 0.66 0.45 0.56 0.72
+  F Rav>AccB     MC clear g/c/i x lo/hi/top: 0.94 1.37 1.79 0.42 0.50 0.75 0.40 0.59 0.84
+  F Rav>Vig      MC clear g/c/i x lo/hi/top: 0.92 1.33 1.74 0.41 0.55 0.75 0.40 0.57 0.87
+  F Elem>AccB    MC clear g/c/i x lo/hi/top: 1.03 1.45 1.94 0.42 0.60 0.86 0.44 0.64 0.89
+  F PCS>AccB     MC clear g/c/i x lo/hi/top: 0.97 1.47 1.90 0.44 0.56 0.80 0.41 0.61 0.87
+  F Elem>PPB     MC clear g/c/i x lo/hi/top: 0.88 1.28 1.71 0.41 0.57 0.78 0.45 0.57 0.76
+  F PCS>PPB      MC clear g/c/i x lo/hi/top: 0.87 1.24 1.69 0.41 0.56 0.73 0.46 0.58 0.77
+  F Frail>Vic    MC clear g/c/i x lo/hi/top: 0.80 1.24 1.63 0.53 0.62 0.66 0.54 0.56 0.75
+  F Frail>AccB   MC clear g/c/i x lo/hi/top: 0.79 1.21 1.61 0.46 0.52 0.68 0.49 0.52 0.70
+  F Frail>Vig    MC clear g/c/i x lo/hi/top: 0.82 1.22 1.61 0.46 0.53 0.69 0.48 0.56 0.77
+  F CDec>Blund   MC clear g/c/i x lo/hi/top: 1.07 1.55 2.01 0.54 0.69 0.91 0.60 0.72 0.96
+  F Hell>HellCh  MC clear g/c/i x lo/hi/top: 0.98 1.39 1.84 0.51 0.61 0.78 0.55 0.68 0.90
+  F Bar>AccB     MC clear g/c/i x lo/hi/top: 0.85 1.23 1.65 0.45 0.53 0.71 0.48 0.54 0.78
+  F noRiv AccB   MC clear g/c/i x lo/hi/top: 1.55 2.20 2.82 0.83 1.03 1.32 0.79 1.06 1.45
+  F noRiv PPB    MC clear g/c/i x lo/hi/top: 1.46 2.00 2.58 0.85 0.95 1.17 0.79 1.09 1.37
+  F arc overcharge MC clear g/c/i x lo/hi/top: 0.89 1.26 1.69 0.31 0.43 0.68 0.32 0.51 0.74
+  F arc plated_round MC clear g/c/i x lo/hi/top: 0.94 1.34 1.75 0.43 0.53 0.75 0.41 0.56 0.80
+  F arc None     MC clear g/c/i x lo/hi/top: 1.22 1.67 2.24 0.48 0.66 0.98 0.52 0.76 1.09
+  F riv ms+fr+dmg MC clear g/c/i x lo/hi/top: 0.74 1.13 1.50 0.42 0.47 0.62 0.44 0.49 0.67
+  F riv ms+fr+cc MC clear g/c/i x lo/hi/top: 0.84 1.24 1.68 0.45 0.54 0.69 0.43 0.57 0.78
+  F riv ms+fr+elec MC clear g/c/i x lo/hi/top: 0.86 1.29 1.67 0.43 0.52 0.72 0.42 0.56 0.79
+  F riv ms+cd+sd MC clear g/c/i x lo/hi/top: 0.83 1.16 1.51 0.56 0.57 0.69 0.58 0.61 0.72
+  F riv fr+cd+sd MC clear g/c/i x lo/hi/top: 0.93 1.28 1.65 0.64 0.65 0.74 0.63 0.67 0.82
+  F riv ms+cd+dmg MC clear g/c/i x lo/hi/top: 0.75 1.16 1.50 0.56 0.56 0.74 0.55 0.59 0.76
+  F riv 2+1 ms+fr MC clear g/c/i x lo/hi/top: 0.91 1.35 1.73 0.40 0.53 0.73 0.38 0.56 0.82
+  F riv mid      MC clear g/c/i x lo/hi/top: 0.88 1.26 1.65 0.44 0.52 0.70 0.41 0.59 0.78
+  F riv min      MC clear g/c/i x lo/hi/top: 0.91 1.31 1.75 0.46 0.63 0.74 0.45 0.62 0.84
+  Frail>ClG      MC clear g/c/i x lo/hi/top: 0.45 0.69 0.84 0.52 0.62 0.79 0.55 0.65 0.89
+  Elem>ClG       MC clear g/c/i x lo/hi/top: 0.54 0.76 1.01 0.48 0.68 0.91 0.52 0.71 0.99
+  PCS>ClG        MC clear g/c/i x lo/hi/top: 0.46 0.68 0.96 0.47 0.63 0.93 0.47 0.69 0.99
+  Rav>ClG        MC clear g/c/i x lo/hi/top: 0.45 0.65 0.93 0.48 0.63 0.85 0.46 0.67 0.99
+  Frail>ClC      MC clear g/c/i x lo/hi/top: 0.94 1.36 1.82 0.50 0.49 0.53 0.55 0.64 0.89
+  Elem>ClC       MC clear g/c/i x lo/hi/top: 1.13 1.60 2.16 0.39 0.42 0.48 0.50 0.72 1.00
+  PCS>ClC        MC clear g/c/i x lo/hi/top: 1.13 1.58 2.07 0.38 0.42 0.49 0.46 0.70 0.99
+  Rav>ClC        MC clear g/c/i x lo/hi/top: 1.05 1.52 1.97 0.38 0.43 0.45 0.45 0.65 0.96
+  Frail>ClI      MC clear g/c/i x lo/hi/top: 0.96 1.36 1.84 0.55 0.62 0.77 0.48 0.48 0.46
+  Elem>ClI       MC clear g/c/i x lo/hi/top: 1.13 1.64 2.17 0.47 0.67 0.95 0.38 0.44 0.46
+  PCS>ClI        MC clear g/c/i x lo/hi/top: 1.12 1.60 2.09 0.48 0.63 0.94 0.39 0.39 0.45
+  Rav>ClI        MC clear g/c/i x lo/hi/top: 1.08 1.50 1.96 0.49 0.63 0.85 0.39 0.36 0.47
+   F cd           MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 16.10, eng 16.14)
+   E (PPB)        MC   95.3   engine  106.9   | per faction MC g/c/i 104/87/95  engine 106/108/107  (MC abs 15.33, eng 17.24)
+   F sd           MC  104.0   engine   97.8   | per faction MC g/c/i 104/104/105  engine 100/97/97  (MC abs 16.74, eng 15.79)
+   F Rav>PPB      MC   99.7   engine   99.3   | per faction MC g/c/i 99/99/101  engine 99/99/99  (MC abs 16.05, eng 16.02)
+   F Rav>AccB     MC   94.0   engine   89.3   | per faction MC g/c/i 88/96/99  engine 90/89/89  (MC abs 15.12, eng 14.41)
+   F Rav>Vig      MC   93.2   engine   89.9   | per faction MC g/c/i 89/92/98  engine 91/89/89  (MC abs 15.00, eng 14.50)
+   F Elem>AccB    MC   86.5   engine   87.8   | per faction MC g/c/i 81/86/92  engine 85/89/89  (MC abs 13.92, eng 14.17)
+   F PCS>AccB     MC   89.1   engine   87.9   | per faction MC g/c/i 83/89/96  engine 88/88/87  (MC abs 14.35, eng 14.18)
+   F Elem>PPB     MC   93.5   engine   98.5   | per faction MC g/c/i 92/90/98  engine 95/100/101  (MC abs 15.05, eng 15.90)
+   F PCS>PPB      MC   94.6   engine   97.8   | per faction MC g/c/i 94/93/97  engine 97/98/98  (MC abs 15.23, eng 15.78)
+   F Frail>Vic    MC   90.8   engine   98.7   | per faction MC g/c/i 96/84/92  engine 98/99/99  (MC abs 14.62, eng 15.93)
+   F Frail>AccB   MC   97.4   engine   98.2   | per faction MC g/c/i 98/93/101  engine 98/99/98  (MC abs 15.68, eng 15.85)
+   F Frail>Vig    MC   93.8   engine   97.3   | per faction MC g/c/i 96/91/94  engine 97/98/97  (MC abs 15.09, eng 15.71)
+   F CDec>Blund   MC   77.0   engine   82.2   | per faction MC g/c/i 78/75/79  engine 83/82/81  (MC abs 12.40, eng 13.27)
+   F Hell>HellCh  MC   83.5   engine   88.5   | per faction MC g/c/i 85/83/83  engine 89/88/88  (MC abs 13.45, eng 14.28)
+   F Bar>AccB     MC   94.6   engine   96.4   | per faction MC g/c/i 95/92/97  engine 96/97/96  (MC abs 15.22, eng 15.56)
+   F noRiv AccB   MC   53.6   engine   60.7   | per faction MC g/c/i 55/51/55  engine 62/60/60  (MC abs 8.62, eng 9.79)
+   F noRiv PPB    MC   55.8   engine   65.8   | per faction MC g/c/i 59/53/55  engine 66/66/65  (MC abs 8.98, eng 10.62)
+   F arc overcharge MC  105.1   engine   94.4   | per faction MC g/c/i 93/111/113  engine 96/94/93  (MC abs 16.91, eng 15.23)
+   F arc plated_round MC   93.7   engine   91.2   | per faction MC g/c/i 88/92/101  engine 92/91/91  (MC abs 15.08, eng 14.72)
+   F arc None     MC   74.3   engine   74.2   | per faction MC g/c/i 70/76/77  engine 76/73/73  (MC abs 11.95, eng 11.97)
+   F riv ms+fr+dmg MC  105.4   engine  103.3   | per faction MC g/c/i 106/102/109  engine 103/104/103  (MC abs 16.96, eng 16.67)
+   F riv ms+fr+cc MC   95.7   engine   95.4   | per faction MC g/c/i 95/93/99  engine 96/96/95  (MC abs 15.40, eng 15.40)
+   F riv ms+fr+elec MC   95.6   engine   92.5   | per faction MC g/c/i 93/94/100  engine 93/92/92  (MC abs 15.39, eng 14.92)
+   F riv ms+cd+sd MC   90.2   engine   99.2   | per faction MC g/c/i 100/83/89  engine 101/98/98  (MC abs 14.52, eng 16.00)
+   F riv fr+cd+sd MC   83.6   engine   95.7   | per faction MC g/c/i 92/77/83  engine 97/96/95  (MC abs 13.46, eng 15.44)
+   F riv ms+cd+dmg MC   91.0   engine  104.7   | per faction MC g/c/i 103/82/89  engine 104/105/105  (MC abs 14.65, eng 16.90)
+   F riv 2+1 ms+fr MC   95.8   engine   90.8   | per faction MC g/c/i 90/96/103  engine 92/90/90  (MC abs 15.42, eng 14.66)
+   F riv mid      MC   95.5   engine   95.1   | per faction MC g/c/i 94/94/99  engine 95/95/95  (MC abs 15.37, eng 15.35)
+   F riv min      MC   89.4   engine   90.9   | per faction MC g/c/i 90/85/93  engine 91/91/90  (MC abs 14.39, eng 14.67)
+   Frail>ClG      MC  104.2   engine  108.1   | per faction MC g/c/i 170/80/83  engine 164/88/88  (MC abs 16.78, eng 17.44)
+   Elem>ClG       MC   98.3   engine   98.2   | per faction MC g/c/i 150/78/81  engine 144/82/81  (MC abs 15.83, eng 15.84)
+   PCS>ClG        MC  103.4   engine   97.9   | per faction MC g/c/i 165/79/84  engine 148/80/80  (MC abs 16.65, eng 15.81)
+   Rav>ClG        MC  105.9   engine  100.4   | per faction MC g/c/i 171/81/86  engine 153/82/81  (MC abs 17.05, eng 16.20)
+   Frail>ClC      MC   89.0   engine  107.2   | per faction MC g/c/i 86/98/84  engine 89/158/88  (MC abs 14.33, eng 17.30)
+   Elem>ClC       MC   89.0   engine   98.3   | per faction MC g/c/i 74/117/82  engine 78/151/81  (MC abs 14.32, eng 15.87)
+   PCS>ClC        MC   90.5   engine   98.5   | per faction MC g/c/i 75/117/85  engine 81/148/80  (MC abs 14.56, eng 15.89)
+   Rav>ClC        MC   93.9   engine  100.5   | per faction MC g/c/i 79/119/88  engine 83/151/81  (MC abs 15.11, eng 16.22)
+   Frail>ClI      MC   92.3   engine  107.8   | per faction MC g/c/i 85/79/116  engine 89/88/161  (MC abs 14.85, eng 17.39)
+   Elem>ClI       MC   90.3   engine   98.4   | per faction MC g/c/i 73/77/131  engine 78/82/149  (MC abs 14.54, eng 15.87)
+   PCS>ClI        MC   92.7   engine   98.3   | per faction MC g/c/i 75/79/136  engine 81/80/148  (MC abs 14.92, eng 15.86)
+   Rav>ClI        MC   95.6   engine  100.6   | per faction MC g/c/i 79/81/137  engine 83/82/151  (MC abs 15.38, eng 16.23)
+== c.003 SP150 (levels 150/250/400)
+  F cd           MC clear g/c/i x lo/hi/top: 4.17 5.11 6.28 1.45 1.79 2.13 1.87 2.32 2.79
+  E (PPB)        MC clear g/c/i x lo/hi/top: 3.91 4.95 5.75 1.61 1.75 2.11 1.99 2.28 2.78
+  F sd           MC clear g/c/i x lo/hi/top: 4.04 4.97 5.93 1.40 1.81 2.14 1.88 2.24 2.71
+  F Rav>PPB      MC clear g/c/i x lo/hi/top: 4.16 5.05 6.17 1.46 1.75 2.16 1.90 2.34 2.71
+  F Rav>AccB     MC clear g/c/i x lo/hi/top: 4.69 5.72 6.94 1.50 1.87 2.32 2.04 2.50 3.04
+  F Rav>Vig      MC clear g/c/i x lo/hi/top: 4.58 5.56 6.87 1.49 1.85 2.34 2.01 2.46 2.97
+  F Elem>AccB    MC clear g/c/i x lo/hi/top: 5.22 6.46 8.09 1.66 2.09 2.52 2.27 2.74 3.35
+  F PCS>AccB     MC clear g/c/i x lo/hi/top: 4.96 6.09 7.54 1.64 1.99 2.47 2.11 2.65 3.12
+  F Elem>PPB     MC clear g/c/i x lo/hi/top: 4.77 5.83 7.06 1.61 1.91 2.29 2.02 2.49 2.97
+  F PCS>PPB      MC clear g/c/i x lo/hi/top: 4.39 5.44 6.66 1.52 1.88 2.22 2.00 2.39 2.90
+  F Frail>Vic    MC clear g/c/i x lo/hi/top: 4.28 5.18 6.35 1.72 1.95 2.26 2.01 2.42 2.84
+  F Frail>AccB   MC clear g/c/i x lo/hi/top: 4.28 5.27 6.32 1.53 1.77 2.19 1.97 2.39 2.85
+  F Frail>Vig    MC clear g/c/i x lo/hi/top: 4.33 5.30 6.41 1.58 1.80 2.25 1.99 2.37 2.87
+  F CDec>Blund   MC clear g/c/i x lo/hi/top: 5.20 6.29 7.83 1.97 2.26 2.67 2.39 2.83 3.34
+  F Hell>HellCh  MC clear g/c/i x lo/hi/top: 4.60 5.81 7.19 1.66 2.09 2.45 2.25 2.67 3.13
+  F Bar>AccB     MC clear g/c/i x lo/hi/top: 4.38 5.39 6.53 1.60 1.82 2.18 1.99 2.42 2.89
+  F noRiv AccB   MC clear g/c/i x lo/hi/top: 7.25 9.10 11.42 2.64 3.19 3.67 3.37 3.84 4.72
+  F noRiv PPB    MC clear g/c/i x lo/hi/top: 6.40 8.18 10.19 2.76 3.05 3.64 3.45 3.88 4.47
+  F arc overcharge MC clear g/c/i x lo/hi/top: 4.34 5.31 6.56 1.36 1.71 2.10 1.78 2.23 2.75
+  F arc plated_round MC clear g/c/i x lo/hi/top: 4.01 4.88 5.99 1.44 1.66 2.07 1.85 2.22 2.64
+  F arc None     MC clear g/c/i x lo/hi/top: 5.53 6.92 8.72 1.87 2.43 2.76 2.37 2.97 3.61
+  F riv ms+fr+dmg MC clear g/c/i x lo/hi/top: 4.06 4.96 6.04 1.41 1.69 2.05 1.84 2.27 2.62
+  F riv ms+fr+cc MC clear g/c/i x lo/hi/top: 4.40 5.33 6.71 1.52 1.82 2.31 1.98 2.37 2.81
+  F riv ms+fr+elec MC clear g/c/i x lo/hi/top: 4.33 5.38 6.51 1.55 1.81 2.24 1.99 2.42 2.90
+  F riv ms+cd+sd MC clear g/c/i x lo/hi/top: 3.97 4.90 5.94 1.73 1.84 2.25 2.08 2.41 2.76
+  F riv fr+cd+sd MC clear g/c/i x lo/hi/top: 4.22 5.20 6.30 1.94 2.14 2.41 2.23 2.60 2.97
+  F riv ms+cd+dmg MC clear g/c/i x lo/hi/top: 4.01 5.01 5.91 1.67 1.90 2.23 2.05 2.41 2.77
+  F riv 2+1 ms+fr MC clear g/c/i x lo/hi/top: 4.56 5.62 6.87 1.50 1.84 2.25 2.02 2.47 2.93
+  F riv mid      MC clear g/c/i x lo/hi/top: 4.35 5.36 6.57 1.53 1.80 2.28 2.00 2.43 2.84
+  F riv min      MC clear g/c/i x lo/hi/top: 4.58 5.73 6.81 1.52 1.91 2.37 2.07 2.51 3.07
+  Frail>ClG      MC clear g/c/i x lo/hi/top: 2.45 3.08 3.60 1.79 2.07 2.54 2.23 2.67 3.18
+  Elem>ClG       MC clear g/c/i x lo/hi/top: 2.94 3.54 4.34 1.84 2.28 2.80 2.48 3.03 3.61
+  PCS>ClG        MC clear g/c/i x lo/hi/top: 2.72 3.29 4.07 1.86 2.17 2.66 2.42 2.86 3.47
+  Rav>ClG        MC clear g/c/i x lo/hi/top: 2.51 3.19 3.86 1.70 2.05 2.62 2.27 2.72 3.32
+  Frail>ClC      MC clear g/c/i x lo/hi/top: 4.72 5.82 6.99 1.64 1.58 1.60 2.25 2.65 3.12
+  Elem>ClC       MC clear g/c/i x lo/hi/top: 5.75 7.08 9.00 1.43 1.39 1.56 2.48 2.94 3.65
+  PCS>ClC        MC clear g/c/i x lo/hi/top: 5.35 6.80 8.38 1.23 1.37 1.50 2.30 2.85 3.60
+  Rav>ClC        MC clear g/c/i x lo/hi/top: 5.15 6.26 7.71 1.22 1.20 1.38 2.28 2.67 3.32
+  Frail>ClI      MC clear g/c/i x lo/hi/top: 4.72 5.87 7.01 1.78 2.08 2.56 1.54 1.65 1.83
+  Elem>ClI       MC clear g/c/i x lo/hi/top: 5.83 7.20 9.03 1.83 2.31 2.85 1.39 1.64 1.92
+  PCS>ClI        MC clear g/c/i x lo/hi/top: 5.56 6.59 8.34 1.82 2.23 2.64 1.42 1.60 1.87
+  Rav>ClI        MC clear g/c/i x lo/hi/top: 5.06 6.22 7.65 1.73 2.10 2.59 1.33 1.46 1.77
+   F cd           MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 4.28, eng 5.63)
+   E (PPB)        MC  100.4   engine  106.5   | per faction MC g/c/i 106/97/98  engine 106/107/107  (MC abs 4.29, eng 5.99)
+   F sd           MC  102.3   engine  102.0   | per faction MC g/c/i 104/101/102  engine 103/101/102  (MC abs 4.37, eng 5.74)
+   F Rav>PPB      MC  100.5   engine   99.5   | per faction MC g/c/i 101/100/100  engine 99/99/99  (MC abs 4.30, eng 5.60)
+   F Rav>AccB     MC   92.5   engine   89.9   | per faction MC g/c/i 90/95/92  engine 91/89/90  (MC abs 3.96, eng 5.06)
+   F Rav>Vig      MC   93.6   engine   90.8   | per faction MC g/c/i 92/95/94  engine 92/90/91  (MC abs 4.00, eng 5.12)
+   F Elem>AccB    MC   83.2   engine   82.3   | per faction MC g/c/i 79/87/84  engine 81/83/83  (MC abs 3.56, eng 4.64)
+   F PCS>AccB     MC   87.3   engine   86.3   | per faction MC g/c/i 84/89/89  engine 87/86/86  (MC abs 3.73, eng 4.86)
+   F Elem>PPB     MC   91.3   engine   91.5   | per faction MC g/c/i 88/92/93  engine 89/93/92  (MC abs 3.91, eng 5.15)
+   F PCS>PPB      MC   95.3   engine   95.4   | per faction MC g/c/i 94/96/96  engine 95/95/96  (MC abs 4.08, eng 5.37)
+   F Frail>Vic    MC   94.4   engine   99.0   | per faction MC g/c/i 98/90/95  engine 99/99/99  (MC abs 4.04, eng 5.57)
+   F Frail>AccB   MC   97.3   engine   98.4   | per faction MC g/c/i 98/98/97  engine 98/99/98  (MC abs 4.16, eng 5.54)
+   F Frail>Vig    MC   95.9   engine   97.7   | per faction MC g/c/i 97/95/96  engine 98/98/98  (MC abs 4.10, eng 5.50)
+   F CDec>Blund   MC   80.2   engine   83.4   | per faction MC g/c/i 81/78/82  engine 84/83/83  (MC abs 3.43, eng 4.70)
+   F Hell>HellCh  MC   87.5   engine   89.3   | per faction MC g/c/i 89/87/87  engine 89/89/89  (MC abs 3.74, eng 5.03)
+   F Bar>AccB     MC   95.5   engine   96.6   | per faction MC g/c/i 95/96/95  engine 97/97/97  (MC abs 4.08, eng 5.44)
+   F noRiv AccB   MC   57.4   engine   62.7   | per faction MC g/c/i 56/57/59  engine 63/62/63  (MC abs 2.45, eng 3.53)
+   F noRiv PPB    MC   59.7   engine   67.8   | per faction MC g/c/i 63/57/59  engine 68/68/68  (MC abs 2.55, eng 3.82)
+   F arc overcharge MC  101.2   engine   95.0   | per faction MC g/c/i 96/104/103  engine 97/94/95  (MC abs 4.33, eng 5.35)
+   F arc plated_round MC  104.0   engine  103.2   | per faction MC g/c/i 104/104/104  engine 103/103/103  (MC abs 4.45, eng 5.81)
+   F arc None     MC   76.4   engine   76.0   | per faction MC g/c/i 74/77/79  engine 77/75/76  (MC abs 3.27, eng 4.28)
+   F riv ms+fr+dmg MC  103.7   engine  102.7   | per faction MC g/c/i 103/104/103  engine 103/103/103  (MC abs 4.43, eng 5.78)
+   F riv ms+fr+cc MC   95.9   engine   95.6   | per faction MC g/c/i 95/95/97  engine 96/95/96  (MC abs 4.10, eng 5.38)
+   F riv ms+fr+elec MC   95.9   engine   94.3   | per faction MC g/c/i 96/96/96  engine 95/94/94  (MC abs 4.10, eng 5.31)
+   F riv ms+cd+sd MC   96.9   engine  104.0   | per faction MC g/c/i 105/91/95  engine 105/103/104  (MC abs 4.14, eng 5.85)
+   F riv fr+cd+sd MC   90.0   engine   99.4   | per faction MC g/c/i 99/83/89  engine 100/99/99  (MC abs 3.85, eng 5.59)
+   F riv ms+cd+dmg MC   96.8   engine  104.8   | per faction MC g/c/i 104/92/95  engine 104/105/105  (MC abs 4.14, eng 5.90)
+   F riv 2+1 ms+fr MC   94.1   engine   91.5   | per faction MC g/c/i 91/97/94  engine 92/91/91  (MC abs 4.02, eng 5.15)
+   F riv mid      MC   95.8   engine   95.6   | per faction MC g/c/i 96/96/96  engine 96/96/96  (MC abs 4.10, eng 5.39)
+   F riv min      MC   91.8   engine   91.4   | per faction MC g/c/i 91/93/91  engine 92/91/91  (MC abs 3.92, eng 5.15)
+   Frail>ClG      MC  106.6   engine  110.1   | per faction MC g/c/i 168/84/86  engine 168/89/89  (MC abs 4.56, eng 6.20)
+   Elem>ClG       MC   95.1   engine   93.3   | per faction MC g/c/i 143/78/77  engine 140/76/76  (MC abs 4.07, eng 5.25)
+   PCS>ClG        MC   99.7   engine   97.7   | per faction MC g/c/i 154/81/80  engine 149/79/80  (MC abs 4.26, eng 5.50)
+   Rav>ClG        MC  105.2   engine  102.3   | per faction MC g/c/i 162/85/84  engine 156/82/83  (MC abs 4.50, eng 5.76)
+   Frail>ClC      MC   94.3   engine  110.2   | per faction MC g/c/i 89/109/87  engine 90/167/89  (MC abs 4.03, eng 6.21)
+   Elem>ClC       MC   87.5   engine   93.8   | per faction MC g/c/i 72/121/77  engine 75/144/76  (MC abs 3.74, eng 5.28)
+   PCS>ClC        MC   92.5   engine   98.4   | per faction MC g/c/i 76/129/80  engine 80/149/80  (MC abs 3.96, eng 5.54)
+   Rav>ClC        MC   98.6   engine  102.7   | per faction MC g/c/i 82/139/85  engine 84/156/83  (MC abs 4.22, eng 5.78)
+   Frail>ClI      MC  100.0   engine  110.3   | per faction MC g/c/i 88/84/136  engine 90/89/168  (MC abs 4.28, eng 6.21)
+   Elem>ClI       MC   91.5   engine   93.7   | per faction MC g/c/i 71/78/139  engine 75/76/143  (MC abs 3.91, eng 5.27)
+   PCS>ClI        MC   95.2   engine   98.2   | per faction MC g/c/i 76/81/141  engine 80/79/149  (MC abs 4.07, eng 5.53)
+   Rav>ClI        MC  101.5   engine  102.6   | per faction MC g/c/i 82/84/150  engine 84/82/156  (MC abs 4.34, eng 5.78)
