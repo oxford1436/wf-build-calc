@@ -1,0 +1,84 @@
+== c.005 (levels 100/200/350)
+  F cd           MC clear g/c/i x lo/hi/top: 1.60 2.20 2.94 1.04 1.15 1.38 1.05 1.27 1.56
+  F sd           MC clear g/c/i x lo/hi/top: 1.58 2.20 2.83 1.01 1.10 1.33 0.92 1.26 1.53
+  F ae           MC clear g/c/i x lo/hi/top: 1.88 2.62 3.36 1.01 1.21 1.64 0.97 1.29 1.77
+  F ae Elem>PPB  MC clear g/c/i x lo/hi/top: 2.14 2.96 3.78 1.12 1.41 1.82 1.06 1.48 1.95
+  F ae Elem>AccB MC clear g/c/i x lo/hi/top: 2.48 3.41 4.31 1.14 1.48 2.09 1.11 1.66 2.22
+  F ms+sd+ae     MC clear g/c/i x lo/hi/top: 1.89 2.53 3.23 1.23 1.32 1.63 1.14 1.46 1.77
+  F ms+cd+sd     MC clear g/c/i x lo/hi/top: 1.61 2.15 2.77 1.34 1.33 1.42 1.24 1.31 1.51
+  F fr+cd+sd     MC clear g/c/i x lo/hi/top: 1.79 2.36 3.06 1.47 1.51 1.64 1.51 1.50 1.72
+  F sd mid       MC clear g/c/i x lo/hi/top: 1.67 2.27 2.98 1.08 1.15 1.40 1.00 1.31 1.62
+  F cd mid       MC clear g/c/i x lo/hi/top: 1.71 2.38 3.09 1.06 1.21 1.50 1.00 1.27 1.61
+   F cd           MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 7.74, eng 9.78)
+   F sd           MC  103.7   engine  100.1   | per faction MC g/c/i 102/104/105  engine 102/99/99  (MC abs 8.03, eng 9.79)
+   F ae           MC   92.8   engine   86.2   | per faction MC g/c/i 86/94/98  engine 87/86/86  (MC abs 7.18, eng 8.43)
+   F ae Elem>PPB  MC   82.8   engine   78.9   | per faction MC g/c/i 76/84/89  engine 78/79/80  (MC abs 6.41, eng 7.72)
+   F ae Elem>AccB MC   75.2   engine   70.0   | per faction MC g/c/i 67/79/81  engine 70/70/70  (MC abs 5.82, eng 6.85)
+   F ms+sd+ae     MC   87.3   engine   88.7   | per faction MC g/c/i 88/85/89  engine 91/88/88  (MC abs 6.76, eng 8.68)
+   F ms+cd+sd     MC   93.7   engine  104.3   | per faction MC g/c/i 102/86/94  engine 106/103/104  (MC abs 7.26, eng 10.20)
+   F fr+cd+sd     MC   84.0   engine   97.7   | per faction MC g/c/i 93/78/82  engine 99/97/97  (MC abs 6.50, eng 9.56)
+   F sd mid       MC   98.4   engine   95.8   | per faction MC g/c/i 97/98/100  engine 98/95/95  (MC abs 7.62, eng 9.37)
+   F cd mid       MC   96.4   engine   95.5   | per faction MC g/c/i 94/95/101  engine 96/95/96  (MC abs 7.47, eng 9.34)
+== c.003 (levels 100/200/350)
+  F cd           MC clear g/c/i x lo/hi/top: 2.37 3.16 4.11 1.71 1.90 2.12 1.72 1.93 2.22
+  F sd           MC clear g/c/i x lo/hi/top: 2.33 3.08 3.96 1.68 1.73 2.02 1.57 1.91 2.24
+  F ae           MC clear g/c/i x lo/hi/top: 2.75 3.72 4.63 1.61 1.84 2.34 1.55 1.99 2.59
+  F ae Elem>PPB  MC clear g/c/i x lo/hi/top: 3.12 4.15 5.38 1.76 2.16 2.65 1.67 2.28 2.85
+  F ae Elem>AccB MC clear g/c/i x lo/hi/top: 3.51 4.67 5.85 1.71 2.22 3.04 1.75 2.38 3.23
+  F ms+sd+ae     MC clear g/c/i x lo/hi/top: 2.71 3.66 4.59 2.05 2.07 2.44 1.82 2.18 2.60
+  F ms+cd+sd     MC clear g/c/i x lo/hi/top: 2.45 3.14 3.90 2.12 2.22 2.24 2.21 2.12 2.33
+  F fr+cd+sd     MC clear g/c/i x lo/hi/top: 2.71 3.48 4.45 2.47 2.58 2.54 2.53 2.42 2.65
+  F sd mid       MC clear g/c/i x lo/hi/top: 2.46 3.32 4.22 1.70 1.80 2.18 1.66 1.96 2.33
+  F cd mid       MC clear g/c/i x lo/hi/top: 2.51 3.32 4.32 1.74 1.90 2.26 1.65 2.00 2.37
+   F cd           MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 5.16, eng 7.37)
+   F sd           MC  103.7   engine  101.3   | per faction MC g/c/i 103/105/103  engine 103/101/101  (MC abs 5.35, eng 7.47)
+   F ae           MC   94.8   engine   86.5   | per faction MC g/c/i 87/100/98  engine 87/86/86  (MC abs 4.89, eng 6.38)
+   F ae Elem>PPB  MC   84.2   engine   77.9   | per faction MC g/c/i 77/88/88  engine 77/78/78  (MC abs 4.35, eng 5.74)
+   F ae Elem>AccB MC   78.5   engine   69.2   | per faction MC g/c/i 69/85/83  engine 69/69/69  (MC abs 4.05, eng 5.10)
+   F ms+sd+ae     MC   88.0   engine   90.1   | per faction MC g/c/i 88/87/89  engine 91/90/89  (MC abs 4.54, eng 6.65)
+   F ms+cd+sd     MC   91.2   engine  105.7   | per faction MC g/c/i 100/86/87  engine 107/105/105  (MC abs 4.71, eng 7.79)
+   F fr+cd+sd     MC   81.0   engine   99.0   | per faction MC g/c/i 90/76/78  engine 100/99/99  (MC abs 4.18, eng 7.30)
+   F sd mid       MC   98.8   engine   97.0   | per faction MC g/c/i 96/101/99  engine 98/96/96  (MC abs 5.10, eng 7.15)
+   F cd mid       MC   96.8   engine   95.8   | per faction MC g/c/i 95/97/98  engine 96/96/96  (MC abs 4.99, eng 7.07)
+== c.001d3 (levels 100/200/350)
+  F cd           MC clear g/c/i x lo/hi/top: 5.01 6.57 7.97 4.44 4.83 4.65 4.79 4.07 4.86
+  F sd           MC clear g/c/i x lo/hi/top: 5.02 6.54 7.56 4.59 3.89 4.35 3.33 3.96 4.90
+  F ae           MC clear g/c/i x lo/hi/top: 5.80 7.23 9.16 4.33 4.08 4.99 3.56 4.33 5.51
+  F ae Elem>PPB  MC clear g/c/i x lo/hi/top: 6.63 8.79 10.77 4.71 5.24 5.88 3.99 5.26 6.35
+  F ae Elem>AccB MC clear g/c/i x lo/hi/top: 7.28 9.56 12.44 4.35 4.84 6.37 3.98 5.53 6.70
+  F ms+sd+ae     MC clear g/c/i x lo/hi/top: 5.97 7.26 8.98 5.41 4.44 5.37 4.12 4.91 5.53
+  F ms+cd+sd     MC clear g/c/i x lo/hi/top: 5.25 6.65 7.88 5.84 5.93 4.66 5.87 4.66 5.07
+  F fr+cd+sd     MC clear g/c/i x lo/hi/top: 5.85 7.20 8.67 6.83 6.78 5.43 6.89 5.25 5.68
+  F sd mid       MC clear g/c/i x lo/hi/top: 5.37 6.86 8.11 4.82 4.11 4.59 3.83 4.45 4.70
+  F cd mid       MC clear g/c/i x lo/hi/top: 5.27 6.95 8.27 4.74 5.35 4.94 3.61 4.26 4.94
+   F cd           MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 2.31, eng 5.55)
+   F sd           MC  107.8   engine  103.4   | per faction MC g/c/i 102/109/113  engine 104/103/103  (MC abs 2.49, eng 5.74)
+   F ae           MC   98.5   engine   87.0   | per faction MC g/c/i 88/104/104  engine 87/87/87  (MC abs 2.28, eng 4.82)
+   F ae Elem>PPB  MC   84.0   engine   75.6   | per faction MC g/c/i 75/88/89  engine 75/76/76  (MC abs 1.94, eng 4.19)
+   F ae Elem>AccB MC   80.9   engine   67.6   | per faction MC g/c/i 67/91/87  engine 67/68/68  (MC abs 1.87, eng 3.75)
+   F ms+sd+ae     MC   91.2   engine   92.5   | per faction MC g/c/i 88/92/94  engine 93/92/92  (MC abs 2.11, eng 5.13)
+   F ms+cd+sd     MC   90.2   engine  108.1   | per faction MC g/c/i 98/85/88  engine 109/108/108  (MC abs 2.08, eng 6.00)
+   F fr+cd+sd     MC   80.0   engine  101.5   | per faction MC g/c/i 90/74/77  engine 102/101/101  (MC abs 1.85, eng 5.63)
+   F sd mid       MC  101.4   engine   99.2   | per faction MC g/c/i 96/103/106  engine 100/99/99  (MC abs 2.34, eng 5.50)
+   F cd mid       MC   98.3   engine   96.0   | per faction MC g/c/i 95/93/107  engine 96/96/96  (MC abs 2.27, eng 5.32)
+== c.01 (levels 100/200/350)
+  F cd           MC clear g/c/i x lo/hi/top: 0.92 1.33 1.75 0.50 0.57 0.78 0.54 0.68 0.86
+  F sd           MC clear g/c/i x lo/hi/top: 0.93 1.31 1.77 0.49 0.53 0.75 0.46 0.68 0.87
+  F ae           MC clear g/c/i x lo/hi/top: 1.16 1.63 2.09 0.52 0.69 0.92 0.50 0.76 1.06
+  F ae Elem>PPB  MC clear g/c/i x lo/hi/top: 1.26 1.84 2.39 0.53 0.75 1.05 0.52 0.83 1.12
+  F ae Elem>AccB MC clear g/c/i x lo/hi/top: 1.48 2.13 2.70 0.58 0.86 1.22 0.59 0.91 1.31
+  F ms+sd+ae     MC clear g/c/i x lo/hi/top: 1.13 1.51 2.01 0.60 0.65 0.88 0.55 0.80 1.04
+  F ms+cd+sd     MC clear g/c/i x lo/hi/top: 0.91 1.29 1.67 0.64 0.64 0.79 0.66 0.69 0.85
+  F fr+cd+sd     MC clear g/c/i x lo/hi/top: 1.07 1.45 1.87 0.75 0.75 0.89 0.78 0.80 0.96
+  F sd mid       MC clear g/c/i x lo/hi/top: 1.04 1.42 1.85 0.52 0.57 0.80 0.50 0.70 0.95
+  F cd mid       MC clear g/c/i x lo/hi/top: 1.01 1.42 1.90 0.55 0.66 0.84 0.48 0.70 0.95
+   F cd           MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 13.74, eng 14.50)
+   F sd           MC  102.9   engine   97.9   | per faction MC g/c/i 100/104/105  engine 100/96/97  (MC abs 14.13, eng 14.20)
+   F ae           MC   88.2   engine   85.9   | per faction MC g/c/i 82/90/93  engine 87/85/86  (MC abs 12.12, eng 12.46)
+   F ae Elem>PPB  MC   81.3   engine   81.1   | per faction MC g/c/i 74/83/88  engine 79/82/82  (MC abs 11.16, eng 11.76)
+   F ae Elem>AccB MC   72.1   engine   71.5   | per faction MC g/c/i 65/74/78  engine 71/72/72  (MC abs 9.91, eng 10.37)
+   F ms+sd+ae     MC   86.5   engine   86.9   | per faction MC g/c/i 85/86/88  engine 89/86/86  (MC abs 11.88, eng 12.60)
+   F ms+cd+sd     MC   93.5   engine  101.4   | per faction MC g/c/i 102/87/92  engine 104/99/101  (MC abs 12.84, eng 14.70)
+   F fr+cd+sd     MC   83.5   engine   95.8   | per faction MC g/c/i 91/78/82  engine 97/95/95  (MC abs 11.47, eng 13.89)
+   F sd mid       MC   96.1   engine   94.1   | per faction MC g/c/i 93/98/98  engine 96/93/93  (MC abs 13.20, eng 13.65)
+   F cd mid       MC   94.1   engine   95.5   | per faction MC g/c/i 93/91/99  engine 96/95/95  (MC abs 12.93, eng 13.85)
