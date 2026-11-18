@@ -1,0 +1,28 @@
+== c.005 (levels 100/200/350)
+  F max          MC clear g/c/i x lo/hi/top: 1.42 1.99 2.57 0.86 0.96 1.20 0.88 1.08 1.37
+  F real         MC clear g/c/i x lo/hi/top: 1.41 2.01 2.56 0.87 0.98 1.23 0.92 1.08 1.34
+  F real noNeg   MC clear g/c/i x lo/hi/top: 1.39 2.02 2.61 0.88 0.97 1.20 0.93 1.09 1.34
+   F max          MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 8.99, eng 10.84)
+   F real         MC   99.2   engine   99.4   | per faction MC g/c/i 100/98/100  engine 99/99/99  (MC abs 8.92, eng 10.78)
+   F real noNeg   MC   99.1   engine   99.4   | per faction MC g/c/i 100/99/99  engine 99/99/99  (MC abs 8.91, eng 10.78)
+== c.003 (levels 100/200/350)
+  F max          MC clear g/c/i x lo/hi/top: 2.11 2.85 3.64 1.39 1.66 1.87 1.51 1.61 1.97
+  F real         MC clear g/c/i x lo/hi/top: 2.11 2.89 3.70 1.45 1.57 1.83 1.45 1.69 1.97
+  F real noNeg   MC clear g/c/i x lo/hi/top: 2.11 2.82 3.67 1.39 1.63 1.86 1.48 1.67 1.99
+   F max          MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 5.93, eng 8.15)
+   F real         MC  100.0   engine   99.4   | per faction MC g/c/i 99/101/100  engine 99/99/99  (MC abs 5.93, eng 8.10)
+   F real noNeg   MC  100.1   engine   99.4   | per faction MC g/c/i 100/101/99  engine 99/99/99  (MC abs 5.93, eng 8.10)
+== c.001d3 (levels 100/200/350)
+  F max          MC clear g/c/i x lo/hi/top: 4.56 5.73 7.15 3.91 4.32 3.77 3.94 3.49 4.19
+  F real         MC clear g/c/i x lo/hi/top: 4.41 5.75 7.20 3.88 4.17 3.96 3.84 3.46 4.22
+  F real noNeg   MC clear g/c/i x lo/hi/top: 4.60 5.83 7.09 3.96 4.26 4.07 4.00 3.73 4.13
+   F max          MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 2.66, eng 6.08)
+   F real         MC  100.5   engine   99.5   | per faction MC g/c/i 101/100/101  engine 99/99/99  (MC abs 2.68, eng 6.05)
+   F real noNeg   MC   98.3   engine   99.5   | per faction MC g/c/i 99/98/98  engine 99/99/99  (MC abs 2.62, eng 6.05)
+== c.01 (levels 100/200/350)
+  F max          MC clear g/c/i x lo/hi/top: 0.78 1.18 1.54 0.43 0.48 0.63 0.45 0.54 0.71
+  F real         MC clear g/c/i x lo/hi/top: 0.78 1.19 1.57 0.42 0.50 0.65 0.45 0.56 0.74
+  F real noNeg   MC clear g/c/i x lo/hi/top: 0.78 1.18 1.56 0.42 0.49 0.64 0.44 0.58 0.72
+   F max          MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 16.31, eng 16.14)
+   F real         MC   98.6   engine   99.4   | per faction MC g/c/i 99/99/98  engine 99/99/99  (MC abs 16.09, eng 16.04)
+   F real noNeg   MC   99.0   engine   99.4   | per faction MC g/c/i 100/99/98  engine 99/99/99  (MC abs 16.15, eng 16.04)
