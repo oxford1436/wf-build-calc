@@ -1,0 +1,37 @@
+GAP 0.19s, trials 3000; clear time (s) of a 12-pack: per faction, condition A/B/C × level 65/165/315
+-- CD+CL+Ba+Ra+El+CS  rate 15.85 mag 32
+   grineer    0.90  0.90  1.16 |  0.26  0.23  0.36 |  0.59  0.50  0.77   rel 100.0  by level 100/100/100
+   corpus     0.89  0.90  0.90 |  0.27  0.27  0.26 |  0.61  0.60  0.58   rel 100.0  by level 100/100/100
+   infested   0.90  0.94  0.94 |  0.27  0.27  0.27 |  0.62  0.62  0.61   rel 100.0  by level 100/100/100
+   corrupted  0.87  0.90  1.06 |  0.26  0.22  0.31 |  0.57  0.49  0.65   rel 100.0  by level 100/100/100
+   overall 100.0   by level 100.0/100.0/100.0
+-- CD+CL+Ba+Fr+El+CS  rate 20.05 mag 32
+   grineer    0.70  0.87  1.24 |  0.21  0.26  0.38 |  0.47  0.54  0.78   rel 106.9  by level 126/99/98
+   corpus     0.71  0.71  0.82 |  0.21  0.21  0.25 |  0.48  0.46  0.55   rel 121.0  by level 127/128/109
+   infested   0.72  0.75  0.74 |  0.21  0.22  0.19 |  0.49  0.49  0.42   rel 128.7  by level 126/125/135
+   corrupted  0.70  0.87  1.02 |  0.21  0.25  0.32 |  0.46  0.53  0.67   rel 107.5  by level 125/98/102
+   overall 115.7   by level 125.8/111.6/110.2
+-- CD+CL+Ba+AB+El+CS  rate 18.65 mag 32
+   grineer    0.75  0.91  1.30 |  0.22  0.26  0.40 |  0.50  0.56  0.83   rel 101.3  by level 118/96/92
+   corpus     0.77  0.76  0.87 |  0.23  0.22  0.26 |  0.52  0.49  0.58   rel 113.2  by level 117/121/103
+   infested   0.77  0.80  0.79 |  0.23  0.23  0.20 |  0.53  0.52  0.44   rel 120.8  by level 117/117/129
+   corrupted  0.76  0.91  1.06 |  0.23  0.26  0.33 |  0.50  0.56  0.70   rel 101.4  by level 115/93/97
+   overall 108.9   by level 116.6/105.9/104.5
+-- CD+CL+Ba+Fr+El+AS  rate 20.05 mag 54
+   grineer    0.69  1.08  1.51 |  0.20  0.35  0.50 |  0.45  0.74  1.02   rel  91.4  by level 129/76/78
+   corpus     0.71  0.78  0.80 |  0.21  0.23  0.24 |  0.48  0.52  0.54   rel 118.2  by level 127/117/111
+   infested   0.69  0.79  0.84 |  0.20  0.23  0.23 |  0.46  0.52  0.52   rel 121.9  by level 132/119/115
+   corrupted  0.69  0.96  1.31 |  0.20  0.30  0.43 |  0.46  0.64  0.90   rel  94.5  by level 126/86/78
+   overall 105.7   by level 128.4/97.8/93.9
+-- CD+CL+Ba+Ra+El+AS  rate 15.85 mag 54
+   grineer    0.88  1.02  1.43 |  0.25  0.30  0.45 |  0.58  0.65  0.94   rel  88.5  by level 102/83/82
+   corpus     0.89  0.88  0.99 |  0.27  0.25  0.29 |  0.60  0.58  0.66   rel  98.2  by level 101/104/91
+   infested   0.89  0.92  0.99 |  0.27  0.26  0.29 |  0.60  0.58  0.66   rel  99.6  by level 102/103/94
+   corrupted  0.88  1.03  1.20 |  0.25  0.29  0.38 |  0.57  0.63  0.81   rel  88.8  by level 100/83/85
+   overall 93.6   by level 101.1/92.5/87.8
+-- CD+Ba+Fr+Ra+El+CS  rate 20.05 mag 32
+   grineer    0.77  1.40  1.93 |  0.23  0.49  0.71 |  0.52  1.02  1.35   rel  73.1  by level 116/57/59
+   corpus     0.70  0.78  0.93 |  0.21  0.23  0.30 |  0.48  0.53  0.65   rel 111.4  by level 127/116/94
+   infested   0.70  0.86  1.00 |  0.20  0.26  0.31 |  0.46  0.58  0.67   rel 109.9  by level 131/108/94
+   corrupted  0.76  1.30  1.66 |  0.23  0.42  0.62 |  0.50  0.89  1.21   rel  75.8  by level 116/64/59
+   overall 90.8   by level 122.0/82.3/74.5

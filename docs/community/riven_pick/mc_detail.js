@@ -14,13 +14,25 @@ const jobs = JSON.parse(require("fs").readFileSync(process.argv[2], "utf8"));
     if (j.evo) S.evo = j.evo;
     const h = Buffer.from(JSON.stringify(S), "utf8").toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
     await pg.goto("file://" + (j.html || repo + "/index.html") + "#s=" + h); await pg.waitForFunction((w) => window.WF_APP && window.WF_APP.st.weapon && (window.WF_APP.st.base || window.WF_APP.st.weapon).id === w, c.w);
-    const r = await pg.evaluate(({ builds, vars }) => {
+    const r = await pg.evaluate(({ builds, vars, nb }) => {
       const A = window.WF_APP, E = window.WFEngine, st = A.st;
       const rows = [];
       for (const v of vars) {
         const o = Object.assign(A.readOpts(), v.o || {}); if (v.level || v.steel != null || v.factions) { if (v.level) o.level = v.level; if (v.steel != null) o.steel = v.steel; if (v.factions) o.factions = v.factions; } o.targets = E.targetsFor(o);
         let w = st.weapon;
         if (v.pel || v.fo !== undefined) { w = JSON.parse(JSON.stringify(st.weapon)); const a = w.attacks[st.atk]; if (v.pel) a.pellets *= v.pel; if (v.fo !== undefined) { if (v.fo) a.fo = v.fo; else delete a.fo; } }
+        // 2026-11-19: j.nb = { base: [mod names], keep: [slot indices that stay], tag } -> the base build + every single-slot swap with a mod the app would consider
+        // (candidateMods, boss: true so plain mods are allowed — P6), conflicts removed with the engine's own clash(); meta carries magazine and the swapped slot
+        if (nb && !nb.done) {
+          nb.done = true; const MODS = window.WF_MODS, byEn = (n) => MODS.find((m) => m.en === n), atk = st.weapon.attacks[st.atk];
+          const cands = A.candidateMods(st.weapon, atk, { boss: true }).filter((m) => !m.manual), baseM = nb.base.map((n) => /^riven/i.test(n) ? null : byEn(n));
+          const magOf = (ms) => Math.round(nb.mag0 * (1 + ms.reduce((q, m) => q + (m && m.eff && m.eff.mag || 0), 0)));
+          const mk = (ms, label) => ({ n: nb.tag + " " + label, mods: ms.map((m, i) => m ? m.en : nb.base[i]), arcane: nb.arcane, rivStats: nb.rivStats, meta: { mag: magOf(ms), fac: ms.some((m) => m && /^Primed Cleanse/.test(m.en)) ? 1.55 : 1 } });
+          builds = [mk(baseM, "base")];
+          baseM.forEach((bm, i) => { if (!bm || (nb.keep || []).includes(i)) return;
+            for (const c of cands) { if (baseM.some((m, k) => m && k !== i && (m.id === c.id || E.clash(c, m))) || c.id === bm.id) continue;
+              const ms = baseM.slice(); ms[i] = c; builds.push(mk(ms, bm.en + " > " + c.en)); } });
+        }
         rows.push({ v: v.v, ext: o.ext, lev: o.targets.levels, steel: o.steel, density: o.density, res: builds.map((bd) => {
           if (bd.mods && !bd.ids) bd.ids = bd.mods.map((n) => /^riven/i.test(n) ? "__riven" : (window.WF_MODS.find((m) => m.en === n) || { id: "?" + n }).id);
           if (bd.rivStats && !bd.rivEff) bd.rivEff = A.effFromStats(bd.rivStats);
@@ -29,10 +41,10 @@ const jobs = JSON.parse(require("fs").readFileSync(process.argv[2], "utf8"));
           const pf = {};
           for (const f in x.perF || {}) { const q = x.perF[f]; const one = (y) => ({ ttk: +y.ttk.toFixed(3), ttkH: +y.ttkHeavy.toFixed(3), ttkEx: y.ttkEx != null ? +y.ttkEx.toFixed(3) : null, clear: +y.clear.toFixed(3), Keff: y.Keff, tg: y.target, tgH: y.targetHeavy });
             pf[f] = { lo: one(q), hi: one(q.hi), top: one(q.top), direct: q.direct / 4.25, dotBy: Object.fromEntries(Object.entries(q.dotBy).map(([k, vv]) => [k, vv / 4.25])), blast: q.blast / 4.25 }; }
-          return { n: bd.n, s: x.score, pf, cc: x.cc, cd: x.cd, critf: x.critf, ms: x.ms, rate: x.rate, sc: x.sc, procs: x.procs, K: x.K, N: x.N, ntypes: x.ntypes, gco: x.gco, dmgb: x.dmgb, sd: x.sd, total: x.total, Btot: x.Btot, mbd: x.mbd, Tdur: x.Tdur, dotN: x.dotN, lay: x.layout ? x.layout.coef : null, mp: x.layout ? x.layout.mp : null }; }) });
+          return { n: bd.n, meta: bd.meta, s: x.score, pf, cc: x.cc, cd: x.cd, critf: x.critf, ms: x.ms, rate: x.rate, sc: x.sc, procs: x.procs, K: x.K, N: x.N, ntypes: x.ntypes, gco: x.gco, dmgb: x.dmgb, sd: x.sd, total: x.total, Btot: x.Btot, mbd: x.mbd, Tdur: x.Tdur, dotN: x.dotN, lay: x.layout ? x.layout.coef : null, mp: x.layout ? x.layout.mp : null }; }) });
       }
       return { evo: st.evoSel, atk: st.weapon.attacks[st.atk].name, pellets: st.weapon.attacks[st.atk].pellets, rows, og: [100, 200, 350, 150, 250, 400].map((l) => [l, E.overguardAt ? E.overguardAt(l) : null]) };
-    }, { builds: j.builds, vars: j.vars || [{ v: "as is" }] });
+    }, { builds: j.builds || [], vars: j.vars || [{ v: "as is" }], nb: j.nb || null });
     out.push(Object.assign({ name: j.name }, r, { errs: errs.slice(0, 2) }));
     await pg.close();
   }
