@@ -1,0 +1,78 @@
+== L65 c.0075 (levels 65/165/315)
+  ClO cd         MC clear g/c/i x lo/hi/top: 0.52 0.69 1.00
+  ClO sd         MC clear g/c/i x lo/hi/top: 0.55 0.71 1.08
+  ClO dmg        MC clear g/c/i x lo/hi/top: 0.52 0.72 1.05
+  ClO elec       MC clear g/c/i x lo/hi/top: 0.50 0.84 1.17
+  ClO cc         MC clear g/c/i x lo/hi/top: 0.55 0.89 1.16
+  ClO none       MC clear g/c/i x lo/hi/top: 0.57 1.02 1.36
+   ClO cd         MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 15.82, eng 19.42)
+   ClO sd         MC   94.8   engine   89.9   | per faction MC g/c/i 95  engine 90  (MC abs 14.99, eng 17.46)
+   ClO dmg        MC   96.7   engine   92.3   | per faction MC g/c/i 97  engine 92  (MC abs 15.29, eng 17.93)
+   ClO elec       MC   89.8   engine   83.9   | per faction MC g/c/i 90  engine 84  (MC abs 14.20, eng 16.30)
+   ClO cc         MC   85.9   engine   84.3   | per faction MC g/c/i 86  engine 84  (MC abs 13.59, eng 16.37)
+   ClO none       MC   77.5   engine   74.1   | per faction MC g/c/i 78  engine 74  (MC abs 12.26, eng 14.38)
+== L65 c.003 (levels 65/165/315)
+  ClO cd         MC clear g/c/i x lo/hi/top: 1.37 1.58 2.09
+  ClO sd         MC clear g/c/i x lo/hi/top: 1.34 1.63 2.12
+  ClO dmg        MC clear g/c/i x lo/hi/top: 1.40 1.66 2.23
+  ClO elec       MC clear g/c/i x lo/hi/top: 1.36 1.85 2.31
+  ClO cc         MC clear g/c/i x lo/hi/top: 1.41 1.92 2.32
+  ClO none       MC clear g/c/i x lo/hi/top: 1.46 2.08 2.63
+   ClO cd         MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 7.04, eng 11.68)
+   ClO sd         MC   99.3   engine   91.8   | per faction MC g/c/i 99  engine 92  (MC abs 6.99, eng 10.72)
+   ClO dmg        MC   95.7   engine   92.5   | per faction MC g/c/i 96  engine 93  (MC abs 6.73, eng 10.81)
+   ClO elec       MC   92.2   engine   85.0   | per faction MC g/c/i 92  engine 85  (MC abs 6.49, eng 9.93)
+   ClO cc         MC   90.0   engine   84.7   | per faction MC g/c/i 90  engine 85  (MC abs 6.33, eng 9.89)
+   ClO none       MC   83.2   engine   74.6   | per faction MC g/c/i 83  engine 75  (MC abs 5.86, eng 8.72)
+== L65 c.001d3 (levels 65/165/315)
+  ClO cd         MC clear g/c/i x lo/hi/top: 3.75 3.40 4.19
+  ClO sd         MC clear g/c/i x lo/hi/top: 3.74 3.72 4.34
+  ClO dmg        MC clear g/c/i x lo/hi/top: 3.89 3.80 4.42
+  ClO elec       MC clear g/c/i x lo/hi/top: 3.90 4.22 4.71
+  ClO cc         MC clear g/c/i x lo/hi/top: 3.84 4.16 4.94
+  ClO none       MC clear g/c/i x lo/hi/top: 3.94 4.35 5.35
+   ClO cd         MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 3.14, eng 8.81)
+   ClO sd         MC   96.0   engine   93.8   | per faction MC g/c/i 96  engine 94  (MC abs 3.02, eng 8.27)
+   ClO dmg        MC   93.6   engine   92.8   | per faction MC g/c/i 94  engine 93  (MC abs 2.94, eng 8.18)
+   ClO elec       MC   88.4   engine   86.1   | per faction MC g/c/i 88  engine 86  (MC abs 2.78, eng 7.59)
+   ClO cc         MC   88.0   engine   85.2   | per faction MC g/c/i 88  engine 85  (MC abs 2.77, eng 7.51)
+   ClO none       MC   83.7   engine   75.4   | per faction MC g/c/i 84  engine 75  (MC abs 2.63, eng 6.64)
+== L150 c.0075 (levels 150/250/400)
+  ClO cd         MC clear g/c/i x lo/hi/top: 0.72 0.86 1.11
+  ClO sd         MC clear g/c/i x lo/hi/top: 0.70 1.01 1.18
+  ClO dmg        MC clear g/c/i x lo/hi/top: 0.72 0.96 1.16
+  ClO elec       MC clear g/c/i x lo/hi/top: 0.86 1.04 1.26
+  ClO cc         MC clear g/c/i x lo/hi/top: 0.84 1.07 1.29
+  ClO none       MC clear g/c/i x lo/hi/top: 1.00 1.21 1.50
+   ClO cd         MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 12.88, eng 13.64)
+   ClO sd         MC   93.8   engine   91.7   | per faction MC g/c/i 94  engine 92  (MC abs 12.08, eng 12.51)
+   ClO dmg        MC   95.3   engine   92.6   | per faction MC g/c/i 95  engine 93  (MC abs 12.27, eng 12.63)
+   ClO elec       MC   85.4   engine   84.9   | per faction MC g/c/i 85  engine 85  (MC abs 11.00, eng 11.59)
+   ClO cc         MC   84.5   engine   84.9   | per faction MC g/c/i 85  engine 85  (MC abs 10.89, eng 11.58)
+   ClO none       MC   73.3   engine   75.0   | per faction MC g/c/i 73  engine 75  (MC abs 9.44, eng 10.23)
+== L150 c.003 (levels 150/250/400)
+  ClO cd         MC clear g/c/i x lo/hi/top: 1.57 1.81 2.18
+  ClO sd         MC clear g/c/i x lo/hi/top: 1.59 2.06 2.34
+  ClO dmg        MC clear g/c/i x lo/hi/top: 1.61 2.05 2.31
+  ClO elec       MC clear g/c/i x lo/hi/top: 1.76 2.16 2.44
+  ClO cc         MC clear g/c/i x lo/hi/top: 1.89 2.15 2.55
+  ClO none       MC clear g/c/i x lo/hi/top: 2.07 2.45 2.90
+   ClO cd         MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 6.35, eng 8.31)
+   ClO sd         MC   93.4   engine   92.9   | per faction MC g/c/i 93  engine 93  (MC abs 5.93, eng 7.72)
+   ClO dmg        MC   93.7   engine   92.7   | per faction MC g/c/i 94  engine 93  (MC abs 5.95, eng 7.70)
+   ClO elec       MC   87.7   engine   85.6   | per faction MC g/c/i 88  engine 86  (MC abs 5.57, eng 7.11)
+   ClO cc         MC   84.7   engine   85.0   | per faction MC g/c/i 85  engine 85  (MC abs 5.38, eng 7.06)
+   ClO none       MC   75.6   engine   75.2   | per faction MC g/c/i 76  engine 75  (MC abs 4.80, eng 6.25)
+== L150 c.001d3 (levels 150/250/400)
+  ClO cd         MC clear g/c/i x lo/hi/top: 3.45 4.13 4.25
+  ClO sd         MC clear g/c/i x lo/hi/top: 3.30 4.37 4.83
+  ClO dmg        MC clear g/c/i x lo/hi/top: 3.59 4.25 4.62
+  ClO elec       MC clear g/c/i x lo/hi/top: 3.79 4.40 5.01
+  ClO cc         MC clear g/c/i x lo/hi/top: 3.93 4.57 5.06
+  ClO none       MC clear g/c/i x lo/hi/top: 4.27 4.93 5.64
+   ClO cd         MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 3.02, eng 6.36)
+   ClO sd         MC   95.5   engine   94.3   | per faction MC g/c/i 95  engine 94  (MC abs 2.88, eng 5.99)
+   ClO dmg        MC   95.2   engine   92.9   | per faction MC g/c/i 95  engine 93  (MC abs 2.87, eng 5.90)
+   ClO elec       MC   90.0   engine   86.4   | per faction MC g/c/i 90  engine 86  (MC abs 2.71, eng 5.49)
+   ClO cc         MC   87.5   engine   85.3   | per faction MC g/c/i 87  engine 85  (MC abs 2.64, eng 5.42)
+   ClO none       MC   80.1   engine   75.6   | per faction MC g/c/i 80  engine 76  (MC abs 2.42, eng 4.80)
