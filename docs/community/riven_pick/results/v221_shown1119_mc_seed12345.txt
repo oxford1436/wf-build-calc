@@ -1,0 +1,180 @@
+== c.0075 (levels 100/200/350)
+  REC            MC clear g/c/i x lo/hi/top: 1.06 1.48 1.93 0.59 0.66 0.83 0.62 0.74 0.94
+  SHOT           MC clear g/c/i x lo/hi/top: 1.52 2.18 2.90 1.07 1.17 1.48 1.16 1.16 1.48
+  SHOT myRiv     MC clear g/c/i x lo/hi/top: 1.20 1.67 2.20 0.74 0.80 1.04 0.76 0.80 1.06
+  REC Sav        MC clear g/c/i x lo/hi/top: 1.08 1.53 2.00 0.57 0.67 0.89 0.62 0.75 1.00
+  REC Vic        MC clear g/c/i x lo/hi/top: 1.08 1.52 1.99 0.73 0.82 0.87 0.76 0.75 0.99
+  SHOT PCS       MC clear g/c/i x lo/hi/top: 1.43 1.96 2.61 1.08 1.20 1.35 1.11 1.08 1.36
+  SHOT Frail     MC clear g/c/i x lo/hi/top: 1.34 1.86 2.46 0.80 0.89 1.11 0.84 0.95 1.24
+   REC            MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 12.48, eng 13.58)
+   SHOT           MC   60.7   engine   73.6   | per faction MC g/c/i 67/56/59  engine 75/72/73  (MC abs 7.58, eng 10.00)
+   SHOT myRiv     MC   85.0   engine   92.9   | per faction MC g/c/i 88/81/87  engine 95/91/93  (MC abs 10.61, eng 12.62)
+   REC Sav        MC   97.6   engine  100.0   | per faction MC g/c/i 97/98/98  engine 102/99/99  (MC abs 12.18, eng 13.58)
+   REC Vic        MC   90.5   engine   98.4   | per faction MC g/c/i 97/85/91  engine 98/98/99  (MC abs 11.30, eng 13.37)
+   SHOT PCS       MC   64.2   engine   79.4   | per faction MC g/c/i 73/57/63  engine 80/79/79  (MC abs 8.01, eng 10.79)
+   SHOT Frail     MC   76.2   engine   84.3   | per faction MC g/c/i 79/74/76  engine 86/84/83  (MC abs 9.51, eng 11.45)
+== c.0075 noDirect (levels 100/200/350)
+  REC            MC clear g/c/i x lo/hi/top: 1.00 1.49 1.97 0.58 0.62 0.87 0.59 0.77 0.94
+  SHOT           MC clear g/c/i x lo/hi/top: 1.76 2.39 3.19 1.08 1.24 1.58 1.16 1.34 1.67
+  SHOT myRiv     MC clear g/c/i x lo/hi/top: 1.35 1.94 2.48 0.72 0.92 1.19 0.77 0.97 1.25
+  REC Sav        MC clear g/c/i x lo/hi/top: 1.33 1.85 2.43 0.66 0.78 1.06 0.67 0.89 1.11
+  REC Vic        MC clear g/c/i x lo/hi/top: 1.11 1.50 2.02 0.73 0.80 0.89 0.78 0.73 0.99
+  SHOT PCS       MC clear g/c/i x lo/hi/top: 1.42 2.05 2.61 1.07 1.19 1.36 1.06 1.15 1.36
+  SHOT Frail     MC clear g/c/i x lo/hi/top: 1.55 2.20 2.84 0.80 1.00 1.34 0.87 1.05 1.41
+   REC            MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 12.60, eng 13.58)
+   SHOT           MC   55.7   engine   67.6   | per faction MC g/c/i 60/53/55  engine 69/67/67  (MC abs 7.02, eng 9.18)
+   SHOT myRiv     MC   75.7   engine   84.6   | per faction MC g/c/i 77/74/77  engine 86/84/84  (MC abs 9.54, eng 11.49)
+   REC Sav        MC   83.3   engine   88.0   | per faction MC g/c/i 79/84/87  engine 89/87/88  (MC abs 10.49, eng 11.96)
+   REC Vic        MC   89.3   engine   98.4   | per faction MC g/c/i 95/84/90  engine 98/98/99  (MC abs 11.25, eng 13.37)
+   SHOT PCS       MC   63.3   engine   79.4   | per faction MC g/c/i 72/56/63  engine 80/79/79  (MC abs 7.98, eng 10.79)
+   SHOT Frail     MC   67.7   engine   74.6   | per faction MC g/c/i 67/67/69  engine 75/74/74  (MC abs 8.53, eng 10.13)
+== c.003 (levels 100/200/350)
+  REC            MC clear g/c/i x lo/hi/top: 2.10 2.88 3.68 1.42 1.61 1.86 1.47 1.64 1.96
+  SHOT           MC clear g/c/i x lo/hi/top: 3.47 4.32 5.52 2.64 2.83 3.20 2.78 2.81 3.34
+  SHOT myRiv     MC clear g/c/i x lo/hi/top: 2.55 3.39 4.36 1.81 2.09 2.25 1.81 2.01 2.37
+  REC Sav        MC clear g/c/i x lo/hi/top: 2.27 3.12 4.05 1.49 1.73 2.06 1.53 1.81 2.16
+  REC Vic        MC clear g/c/i x lo/hi/top: 2.27 3.11 3.88 1.79 1.93 1.92 1.79 1.70 2.12
+  SHOT PCS       MC clear g/c/i x lo/hi/top: 3.08 3.84 5.08 2.73 2.80 3.02 2.73 2.63 3.04
+  SHOT Frail     MC clear g/c/i x lo/hi/top: 2.80 3.81 4.81 1.93 2.26 2.54 2.15 2.21 2.71
+   REC            MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 5.93, eng 8.10)
+   SHOT           MC   58.9   engine   72.1   | per faction MC g/c/i 64/56/57  engine 73/72/72  (MC abs 3.50, eng 5.84)
+   SHOT myRiv     MC   81.6   engine   88.7   | per faction MC g/c/i 84/79/82  engine 90/88/88  (MC abs 4.84, eng 7.18)
+   REC Sav        MC   92.5   engine   93.1   | per faction MC g/c/i 92/93/93  engine 95/92/92  (MC abs 5.49, eng 7.54)
+   REC Vic        MC   89.6   engine   98.9   | per faction MC g/c/i 93/86/90  engine 99/99/99  (MC abs 5.31, eng 8.01)
+   SHOT PCS       MC   62.4   engine   80.8   | per faction MC g/c/i 71/57/60  engine 81/80/81  (MC abs 3.70, eng 6.54)
+   SHOT Frail     MC   73.3   engine   79.9   | per faction MC g/c/i 76/73/72  engine 81/79/79  (MC abs 4.35, eng 6.47)
+== c.003 noDirect (levels 100/200/350)
+  REC            MC clear g/c/i x lo/hi/top: 2.06 2.90 3.65 1.41 1.59 1.89 1.51 1.65 1.94
+  SHOT           MC clear g/c/i x lo/hi/top: 3.56 4.72 6.03 2.65 2.86 3.51 2.85 2.82 3.42
+  SHOT myRiv     MC clear g/c/i x lo/hi/top: 2.73 3.75 4.77 1.86 2.07 2.36 1.93 2.14 2.63
+  REC Sav        MC clear g/c/i x lo/hi/top: 2.65 3.54 4.49 1.56 1.91 2.22 1.64 1.92 2.47
+  REC Vic        MC clear g/c/i x lo/hi/top: 2.34 3.03 3.85 1.76 1.95 1.96 1.83 1.75 2.12
+  SHOT PCS       MC clear g/c/i x lo/hi/top: 2.94 3.88 4.99 2.77 2.88 3.01 2.61 2.52 2.97
+  SHOT Frail     MC clear g/c/i x lo/hi/top: 3.09 4.25 5.37 2.03 2.37 2.68 2.12 2.38 2.95
+   REC            MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 5.93, eng 8.10)
+   SHOT           MC   56.6   engine   66.8   | per faction MC g/c/i 60/54/56  engine 68/66/67  (MC abs 3.36, eng 5.41)
+   SHOT myRiv     MC   76.8   engine   81.7   | per faction MC g/c/i 76/78/76  engine 83/81/81  (MC abs 4.56, eng 6.62)
+   REC Sav        MC   84.3   engine   83.6   | per faction MC g/c/i 81/87/86  engine 85/83/83  (MC abs 5.00, eng 6.77)
+   REC Vic        MC   89.0   engine   98.9   | per faction MC g/c/i 92/86/89  engine 99/99/99  (MC abs 5.28, eng 8.01)
+   SHOT PCS       MC   63.2   engine   80.8   | per faction MC g/c/i 72/56/63  engine 81/80/81  (MC abs 3.75, eng 6.54)
+   SHOT Frail     MC   68.6   engine   72.2   | per faction MC g/c/i 68/69/69  engine 73/72/72  (MC abs 4.07, eng 5.85)
+== c.001d3 (levels 100/200/350)
+  REC            MC clear g/c/i x lo/hi/top: 4.47 5.75 7.08 3.89 4.20 4.10 3.83 3.59 4.17
+  SHOT           MC clear g/c/i x lo/hi/top: 7.71 9.44 12.15 7.62 7.57 7.05 7.38 6.68 7.12
+  SHOT myRiv     MC clear g/c/i x lo/hi/top: 5.66 7.25 8.93 4.83 5.29 5.04 5.14 4.50 5.31
+  REC Sav        MC clear g/c/i x lo/hi/top: 5.23 6.47 8.07 4.18 4.30 4.59 3.25 3.90 4.92
+  REC Vic        MC clear g/c/i x lo/hi/top: 4.82 6.39 7.80 5.11 5.00 4.49 5.11 4.04 4.65
+  SHOT PCS       MC clear g/c/i x lo/hi/top: 6.72 8.49 10.76 7.75 7.64 7.87 7.90 5.98 6.58
+  SHOT Frail     MC clear g/c/i x lo/hi/top: 6.05 8.16 9.86 5.61 5.93 5.35 5.30 5.08 6.35
+   REC            MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 2.66, eng 6.05)
+   SHOT           MC   56.1   engine   70.8   | per faction MC g/c/i 59/55/55  engine 71/70/71  (MC abs 1.49, eng 4.28)
+   SHOT myRiv     MC   79.1   engine   85.4   | per faction MC g/c/i 79/80/78  engine 86/85/85  (MC abs 2.10, eng 5.17)
+   REC Sav        MC   92.6   engine   88.2   | per faction MC g/c/i 87/93/97  engine 89/88/88  (MC abs 2.46, eng 5.34)
+   REC Vic        MC   86.2   engine   99.3   | per faction MC g/c/i 91/83/84  engine 99/99/99  (MC abs 2.29, eng 6.01)
+   SHOT PCS       MC   58.3   engine   82.1   | per faction MC g/c/i 67/52/57  engine 82/82/82  (MC abs 1.55, eng 4.97)
+   SHOT Frail     MC   71.3   engine   77.1   | per faction MC g/c/i 72/72/70  engine 78/77/77  (MC abs 1.90, eng 4.67)
+== c.001d3 noDirect (levels 100/200/350)
+  REC            MC clear g/c/i x lo/hi/top: 4.50 5.82 7.27 3.83 4.27 4.03 3.93 3.65 4.19
+  SHOT           MC clear g/c/i x lo/hi/top: 7.81 9.93 12.86 7.50 7.89 6.78 7.71 6.69 7.78
+  SHOT myRiv     MC clear g/c/i x lo/hi/top: 5.89 7.68 9.78 5.00 5.32 5.43 5.01 4.71 6.01
+  REC Sav        MC clear g/c/i x lo/hi/top: 5.61 6.97 8.75 4.17 4.56 4.95 3.44 4.23 5.34
+  REC Vic        MC clear g/c/i x lo/hi/top: 5.03 6.39 7.66 4.73 5.13 4.56 4.96 4.00 4.78
+  SHOT PCS       MC clear g/c/i x lo/hi/top: 6.83 8.32 10.09 7.43 7.80 7.78 7.54 5.92 6.83
+  SHOT Frail     MC clear g/c/i x lo/hi/top: 7.03 8.76 10.74 5.42 6.03 6.11 5.54 5.28 6.72
+   REC            MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 2.64, eng 6.05)
+   SHOT           MC   55.1   engine   66.5   | per faction MC g/c/i 58/55/53  engine 67/66/66  (MC abs 1.45, eng 4.02)
+   SHOT myRiv     MC   75.9   engine   79.6   | per faction MC g/c/i 76/77/75  engine 80/79/79  (MC abs 2.00, eng 4.82)
+   REC Sav        MC   87.7   engine   80.5   | per faction MC g/c/i 82/89/92  engine 81/80/80  (MC abs 2.31, eng 4.87)
+   REC Vic        MC   87.2   engine   99.3   | per faction MC g/c/i 92/84/86  engine 99/99/99  (MC abs 2.30, eng 6.01)
+   SHOT PCS       MC   59.6   engine   82.1   | per faction MC g/c/i 69/53/58  engine 82/82/82  (MC abs 1.57, eng 4.97)
+   SHOT Frail     MC   67.6   engine   70.8   | per faction MC g/c/i 66/69/67  engine 71/71/71  (MC abs 1.78, eng 4.29)
+== c.0075 x0.27 (levels 100/200/350)
+  REC            MC clear g/c/i x lo/hi/top: 2.86 3.76 4.84 2.18 2.35 2.53 2.19 2.24 2.59
+  SHOT           MC clear g/c/i x lo/hi/top: 4.61 6.03 7.55 4.04 4.12 4.59 4.02 4.07 4.32
+  SHOT myRiv     MC clear g/c/i x lo/hi/top: 3.36 4.54 5.67 2.65 2.96 3.08 2.65 2.74 3.22
+  REC Sav        MC clear g/c/i x lo/hi/top: 3.13 4.16 5.34 2.12 2.45 2.68 2.15 2.39 3.03
+  REC Vic        MC clear g/c/i x lo/hi/top: 3.09 3.98 5.07 2.58 2.84 2.75 2.66 2.53 2.91
+  SHOT PCS       MC clear g/c/i x lo/hi/top: 4.30 5.34 6.78 3.96 4.04 4.25 4.14 3.60 3.96
+  SHOT Frail     MC clear g/c/i x lo/hi/top: 3.87 5.02 6.34 2.92 3.25 3.64 3.01 3.03 3.84
+   REC            MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 4.31, eng 6.53)
+   SHOT           MC   58.0   engine   71.6   | per faction MC g/c/i 63/55/56  engine 73/71/71  (MC abs 2.50, eng 4.68)
+   SHOT myRiv     MC   82.3   engine   87.4   | per faction MC g/c/i 84/81/81  engine 89/87/87  (MC abs 3.54, eng 5.71)
+   REC Sav        MC   94.0   engine   91.1   | per faction MC g/c/i 91/98/94  engine 93/90/90  (MC abs 4.05, eng 5.95)
+   REC Vic        MC   88.7   engine   99.2   | per faction MC g/c/i 94/86/86  engine 99/99/99  (MC abs 3.82, eng 6.48)
+   SHOT PCS       MC   61.9   engine   81.2   | per faction MC g/c/i 69/57/60  engine 82/81/81  (MC abs 2.67, eng 5.31)
+   SHOT Frail     MC   72.8   engine   78.7   | per faction MC g/c/i 75/72/71  engine 80/78/78  (MC abs 3.14, eng 5.14)
+== c.0075 x0.27 noDirect (levels 100/200/350)
+  REC            MC clear g/c/i x lo/hi/top: 2.98 3.72 4.79 2.07 2.27 2.56 2.25 2.30 2.70
+  SHOT           MC clear g/c/i x lo/hi/top: 4.79 6.55 8.02 3.97 4.27 4.84 4.13 4.06 4.69
+  SHOT myRiv     MC clear g/c/i x lo/hi/top: 3.73 4.96 6.22 2.73 2.96 3.25 2.83 2.96 3.51
+  REC Sav        MC clear g/c/i x lo/hi/top: 3.43 4.60 5.91 2.23 2.54 3.01 2.34 2.56 3.26
+  REC Vic        MC clear g/c/i x lo/hi/top: 3.17 4.02 5.04 2.70 2.69 2.79 2.71 2.60 2.95
+  SHOT PCS       MC clear g/c/i x lo/hi/top: 4.38 5.33 6.67 3.85 4.05 4.17 4.07 3.88 4.09
+  SHOT Frail     MC clear g/c/i x lo/hi/top: 4.32 5.59 7.03 2.98 3.22 3.63 2.99 3.33 4.19
+   REC            MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 4.29, eng 6.53)
+   SHOT           MC   56.0   engine   66.7   | per faction MC g/c/i 59/53/56  engine 67/66/66  (MC abs 2.40, eng 4.36)
+   SHOT myRiv     MC   77.4   engine   81.0   | per faction MC g/c/i 77/77/78  engine 82/80/81  (MC abs 3.32, eng 5.29)
+   REC Sav        MC   87.2   engine   82.4   | per faction MC g/c/i 83/89/90  engine 84/82/82  (MC abs 3.74, eng 5.39)
+   REC Vic        MC   88.2   engine   99.2   | per faction MC g/c/i 94/84/87  engine 99/99/99  (MC abs 3.78, eng 6.48)
+   SHOT PCS       MC   61.9   engine   81.2   | per faction MC g/c/i 70/57/60  engine 82/81/81  (MC abs 2.65, eng 5.31)
+   SHOT Frail     MC   69.2   engine   71.7   | per faction MC g/c/i 68/70/70  engine 72/71/71  (MC abs 2.97, eng 4.68)
+== c.003 x0.27 (levels 100/200/350)
+  REC            MC clear g/c/i x lo/hi/top: 5.89 7.23 9.24 5.01 5.37 5.43 5.26 4.93 5.63
+  SHOT           MC clear g/c/i x lo/hi/top: 10.29 12.69 17.08 10.30 10.18 9.23 9.94 9.37 9.69
+  SHOT myRiv     MC clear g/c/i x lo/hi/top: 7.34 8.95 11.83 6.43 6.82 6.83 6.52 6.36 7.11
+  REC Sav        MC clear g/c/i x lo/hi/top: 6.45 8.40 10.85 5.32 5.39 5.76 4.81 5.24 6.50
+  REC Vic        MC clear g/c/i x lo/hi/top: 6.58 8.12 10.25 6.50 6.63 6.27 6.63 5.77 6.44
+  SHOT PCS       MC clear g/c/i x lo/hi/top: 9.16 11.28 14.23 10.05 9.95 10.12 9.82 8.99 9.09
+  SHOT Frail     MC clear g/c/i x lo/hi/top: 7.94 10.52 13.53 7.28 7.28 7.64 7.52 6.91 8.17
+   REC            MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 2.02, eng 4.00)
+   SHOT           MC   54.6   engine   70.2   | per faction MC g/c/i 56/53/54  engine 70/70/70  (MC abs 1.10, eng 2.81)
+   SHOT myRiv     MC   79.2   engine   85.3   | per faction MC g/c/i 80/79/79  engine 86/85/85  (MC abs 1.60, eng 3.41)
+   REC Sav        MC   93.2   engine   88.0   | per faction MC g/c/i 88/96/96  engine 89/87/88  (MC abs 1.89, eng 3.52)
+   REC Vic        MC   84.9   engine   99.4   | per faction MC g/c/i 89/81/84  engine 99/99/99  (MC abs 1.72, eng 3.98)
+   SHOT PCS       MC   57.6   engine   82.1   | per faction MC g/c/i 64/52/57  engine 82/82/82  (MC abs 1.17, eng 3.29)
+   SHOT Frail     MC   70.6   engine   76.7   | per faction MC g/c/i 70/71/70  engine 77/76/77  (MC abs 1.43, eng 3.07)
+== c.003 x0.27 noDirect (levels 100/200/350)
+  REC            MC clear g/c/i x lo/hi/top: 5.84 7.43 9.49 5.04 5.38 5.23 5.16 4.97 5.63
+  SHOT           MC clear g/c/i x lo/hi/top: 10.38 13.18 17.84 10.19 9.93 10.14 10.17 8.95 10.24
+  SHOT myRiv     MC clear g/c/i x lo/hi/top: 7.70 9.67 12.66 6.81 6.79 6.92 6.49 6.40 7.50
+  REC Sav        MC clear g/c/i x lo/hi/top: 7.08 9.12 11.81 5.24 5.68 6.08 4.82 5.68 6.41
+  REC Vic        MC clear g/c/i x lo/hi/top: 6.92 8.07 10.13 6.56 6.37 6.39 6.67 5.62 6.30
+  SHOT PCS       MC clear g/c/i x lo/hi/top: 9.51 11.51 13.63 10.00 10.42 10.22 9.94 8.87 9.12
+  SHOT Frail     MC clear g/c/i x lo/hi/top: 8.79 11.45 14.91 7.12 7.78 7.80 7.24 7.10 8.84
+   REC            MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 2.02, eng 4.00)
+   SHOT           MC   53.5   engine   66.0   | per faction MC g/c/i 55/52/54  engine 65/66/66  (MC abs 1.08, eng 2.64)
+   SHOT myRiv     MC   76.5   engine   79.7   | per faction MC g/c/i 76/76/77  engine 80/79/80  (MC abs 1.55, eng 3.19)
+   REC Sav        MC   89.0   engine   80.7   | per faction MC g/c/i 82/92/94  engine 81/80/80  (MC abs 1.80, eng 3.23)
+   REC Vic        MC   85.1   engine   99.4   | per faction MC g/c/i 90/81/85  engine 99/99/99  (MC abs 1.72, eng 3.98)
+   SHOT PCS       MC   57.2   engine   82.1   | per faction MC g/c/i 65/51/56  engine 82/82/82  (MC abs 1.16, eng 3.29)
+   SHOT Frail     MC   67.4   engine   70.6   | per faction MC g/c/i 65/69/68  engine 70/71/71  (MC abs 1.36, eng 2.83)
+== c.001d3 x0.27 (levels 100/200/350)
+  REC            MC clear g/c/i x lo/hi/top: 13.09 16.22 21.84 13.91 14.42 12.55 14.43 11.41 13.11
+  SHOT           MC clear g/c/i x lo/hi/top: 25.25 31.01 40.03 27.00 26.59 23.67 27.59 22.16 24.47
+  SHOT myRiv     MC clear g/c/i x lo/hi/top: 17.17 22.73 28.40 17.79 18.25 15.79 18.44 15.26 16.44
+  REC Sav        MC clear g/c/i x lo/hi/top: 16.81 20.47 25.52 14.43 14.83 14.17 11.30 12.04 16.33
+  REC Vic        MC clear g/c/i x lo/hi/top: 15.32 19.96 22.64 17.51 18.60 13.59 18.71 14.47 14.95
+  SHOT PCS       MC clear g/c/i x lo/hi/top: 20.88 25.11 32.41 27.47 26.69 27.35 28.21 21.21 20.67
+  SHOT Frail     MC clear g/c/i x lo/hi/top: 22.95 26.68 33.69 20.10 20.92 18.93 20.44 15.71 22.36
+   REC            MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 0.84, eng 3.09)
+   SHOT           MC   52.8   engine   67.1   | per faction MC g/c/i 53/53/52  engine 64/68/69  (MC abs 0.44, eng 2.07)
+   SHOT myRiv     MC   77.1   engine   81.8   | per faction MC g/c/i 75/79/78  engine 81/82/82  (MC abs 0.64, eng 2.52)
+   REC Sav        MC   91.0   engine   84.0   | per faction MC g/c/i 81/94/99  engine 83/84/84  (MC abs 0.76, eng 2.59)
+   REC Vic        MC   83.8   engine   99.5   | per faction MC g/c/i 87/83/81  engine 100/99/100  (MC abs 0.70, eng 3.07)
+   SHOT PCS       MC   56.6   engine   82.3   | per faction MC g/c/i 65/50/56  engine 81/83/83  (MC abs 0.47, eng 2.54)
+   SHOT Frail     MC   65.3   engine   72.9   | per faction MC g/c/i 61/68/67  engine 71/74/74  (MC abs 0.55, eng 2.25)
+== c.001d3 x0.27 noDirect (levels 100/200/350)
+  REC            MC clear g/c/i x lo/hi/top: 13.21 16.63 21.55 13.88 13.94 11.28 14.19 11.45 12.21
+  SHOT           MC clear g/c/i x lo/hi/top: 25.81 32.97 41.58 27.04 28.49 22.75 28.76 21.10 25.29
+  SHOT myRiv     MC clear g/c/i x lo/hi/top: 19.73 23.77 31.06 17.11 18.55 16.99 18.11 14.70 19.81
+  REC Sav        MC clear g/c/i x lo/hi/top: 17.46 21.94 27.89 13.62 15.12 14.25 11.56 12.63 16.55
+  REC Vic        MC clear g/c/i x lo/hi/top: 16.06 20.26 21.65 18.10 17.45 13.97 17.60 13.63 14.47
+  SHOT PCS       MC clear g/c/i x lo/hi/top: 21.55 25.15 32.82 27.38 26.49 27.19 28.64 20.22 22.07
+  SHOT Frail     MC clear g/c/i x lo/hi/top: 23.23 27.00 35.94 19.19 20.48 19.41 19.75 16.93 21.30
+   REC            MC  100.0   engine  100.0   | per faction MC g/c/i 100/100/100  engine 100/100/100  (MC abs 0.85, eng 3.09)
+   SHOT           MC   50.6   engine   64.7   | per faction MC g/c/i 51/50/51  engine 62/66/66  (MC abs 0.43, eng 2.00)
+   SHOT myRiv     MC   71.6   engine   78.0   | per faction MC g/c/i 69/74/72  engine 77/79/79  (MC abs 0.61, eng 2.41)
+   REC Sav        MC   86.5   engine   78.6   | per faction MC g/c/i 76/91/94  engine 77/79/79  (MC abs 0.74, eng 2.42)
+   REC Vic        MC   83.1   engine   99.5   | per faction MC g/c/i 88/79/83  engine 100/99/100  (MC abs 0.71, eng 3.07)
+   SHOT PCS       MC   55.0   engine   82.3   | per faction MC g/c/i 64/48/54  engine 81/83/83  (MC abs 0.47, eng 2.54)
+   SHOT Frail     MC   63.5   engine   68.9   | per faction MC g/c/i 59/66/65  engine 66/70/70  (MC abs 0.54, eng 2.13)
