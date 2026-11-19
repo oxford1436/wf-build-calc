@@ -1,0 +1,99 @@
+== L65 c.0075 (levels 65/165/315)
+  ClO Frail      MC clear g/c/i x lo/hi/top: 0.52 0.69 1.00
+  ClO PPB        MC clear g/c/i x lo/hi/top: 0.70 0.77 0.89
+  ClO Vicious    MC clear g/c/i x lo/hi/top: 0.67 0.75 1.03
+  ClO Ravage     MC clear g/c/i x lo/hi/top: 0.65 0.74 0.88
+  ClO AccelBl    MC clear g/c/i x lo/hi/top: 0.57 0.78 1.00
+   ClO Frail      MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 15.82, eng 19.42)
+   ClO PPB        MC   89.8   engine  106.2   | per faction MC g/c/i 90  engine 106  (MC abs 14.21, eng 20.61)
+   ClO Vicious    MC   87.8   engine   98.5   | per faction MC g/c/i 88  engine 98  (MC abs 13.89, eng 19.12)
+   ClO Ravage     MC   92.9   engine  107.5   | per faction MC g/c/i 93  engine 108  (MC abs 14.70, eng 20.88)
+   ClO AccelBl    MC   92.8   engine   98.3   | per faction MC g/c/i 93  engine 98  (MC abs 14.68, eng 19.08)
+== L65 c.003 (levels 65/165/315)
+  ClO Frail      MC clear g/c/i x lo/hi/top: 1.33 1.61 2.09
+  ClO PPB        MC clear g/c/i x lo/hi/top: 1.73 1.73 2.00
+  ClO Vicious    MC clear g/c/i x lo/hi/top: 1.73 1.79 2.16
+  ClO Ravage     MC clear g/c/i x lo/hi/top: 1.71 1.79 1.92
+  ClO AccelBl    MC clear g/c/i x lo/hi/top: 1.46 1.67 2.09
+   ClO Frail      MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 7.06, eng 11.68)
+   ClO PPB        MC   90.4   engine  106.5   | per faction MC g/c/i 90  engine 106  (MC abs 6.39, eng 12.44)
+   ClO Vicious    MC   87.2   engine   98.9   | per faction MC g/c/i 87  engine 99  (MC abs 6.16, eng 11.56)
+   ClO Ravage     MC   91.0   engine  107.7   | per faction MC g/c/i 91  engine 108  (MC abs 6.42, eng 12.59)
+   ClO AccelBl    MC   95.8   engine   98.5   | per faction MC g/c/i 96  engine 98  (MC abs 6.76, eng 11.50)
+== L65 c.001d3 (levels 65/165/315)
+  ClO Frail      MC clear g/c/i x lo/hi/top: 3.90 3.40 4.32
+  ClO PPB        MC clear g/c/i x lo/hi/top: 4.75 3.81 4.49
+  ClO Vicious    MC clear g/c/i x lo/hi/top: 4.80 3.93 4.58
+  ClO Ravage     MC clear g/c/i x lo/hi/top: 4.70 4.01 4.33
+  ClO AccelBl    MC clear g/c/i x lo/hi/top: 4.23 3.71 4.69
+   ClO Frail      MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 3.07, eng 8.81)
+   ClO PPB        MC   88.9   engine  106.4   | per faction MC g/c/i 89  engine 106  (MC abs 2.73, eng 9.38)
+   ClO Vicious    MC   87.2   engine   99.2   | per faction MC g/c/i 87  engine 99  (MC abs 2.68, eng 8.74)
+   ClO Ravage     MC   88.8   engine  107.6   | per faction MC g/c/i 89  engine 108  (MC abs 2.73, eng 9.49)
+   ClO AccelBl    MC   92.1   engine   98.6   | per faction MC g/c/i 92  engine 99  (MC abs 2.83, eng 8.69)
+== L80 c.0075 (levels 80/180/330)
+  ClO Frail      MC clear g/c/i x lo/hi/top: 0.48 0.71 0.99
+  ClO PPB        MC clear g/c/i x lo/hi/top: 0.54 0.77 0.90
+  ClO Vicious    MC clear g/c/i x lo/hi/top: 0.58 0.77 1.06
+  ClO Ravage     MC clear g/c/i x lo/hi/top: 0.55 0.75 0.88
+  ClO AccelBl    MC clear g/c/i x lo/hi/top: 0.53 0.76 1.06
+   ClO Frail      MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 15.95, eng 17.18)
+   ClO PPB        MC   96.0   engine  106.1   | per faction MC g/c/i 96  engine 106  (MC abs 15.31, eng 18.23)
+   ClO Vicious    MC   89.4   engine   98.5   | per faction MC g/c/i 89  engine 99  (MC abs 14.26, eng 16.93)
+   ClO Ravage     MC   96.9   engine  107.5   | per faction MC g/c/i 97  engine 107  (MC abs 15.45, eng 18.46)
+   ClO AccelBl    MC   93.2   engine   98.3   | per faction MC g/c/i 93  engine 98  (MC abs 14.87, eng 16.88)
+== L80 c.003 (levels 80/180/330)
+  ClO Frail      MC clear g/c/i x lo/hi/top: 1.22 1.57 2.13
+  ClO PPB        MC clear g/c/i x lo/hi/top: 1.46 1.81 1.96
+  ClO Vicious    MC clear g/c/i x lo/hi/top: 1.49 1.80 2.24
+  ClO Ravage     MC clear g/c/i x lo/hi/top: 1.41 1.71 1.96
+  ClO AccelBl    MC clear g/c/i x lo/hi/top: 1.31 1.66 2.14
+   ClO Frail      MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 7.29, eng 10.39)
+   ClO PPB        MC   91.8   engine  106.4   | per faction MC g/c/i 92  engine 106  (MC abs 6.69, eng 11.05)
+   ClO Vicious    MC   87.5   engine   99.0   | per faction MC g/c/i 88  engine 99  (MC abs 6.38, eng 10.28)
+   ClO Ravage     MC   94.6   engine  107.7   | per faction MC g/c/i 95  engine 108  (MC abs 6.89, eng 11.19)
+   ClO AccelBl    MC   95.6   engine   98.5   | per faction MC g/c/i 96  engine 98  (MC abs 6.96, eng 10.23)
+== L80 c.001d3 (levels 80/180/330)
+  ClO Frail      MC clear g/c/i x lo/hi/top: 2.68 3.54 4.35
+  ClO PPB        MC clear g/c/i x lo/hi/top: 3.19 3.88 4.34
+  ClO Vicious    MC clear g/c/i x lo/hi/top: 3.33 4.23 5.19
+  ClO Ravage     MC clear g/c/i x lo/hi/top: 3.02 3.92 4.50
+  ClO AccelBl    MC clear g/c/i x lo/hi/top: 2.98 3.73 4.65
+   ClO Frail      MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 3.43, eng 7.89)
+   ClO PPB        MC   91.3   engine  106.5   | per faction MC g/c/i 91  engine 106  (MC abs 3.13, eng 8.40)
+   ClO Vicious    MC   82.5   engine   99.3   | per faction MC g/c/i 83  engine 99  (MC abs 2.83, eng 7.83)
+   ClO Ravage     MC   91.5   engine  107.7   | per faction MC g/c/i 91  engine 108  (MC abs 3.13, eng 8.50)
+   ClO AccelBl    MC   92.6   engine   98.6   | per faction MC g/c/i 93  engine 99  (MC abs 3.17, eng 7.78)
+== L150 c.0075 (levels 150/250/400)
+  ClO Frail      MC clear g/c/i x lo/hi/top: 0.72 0.87 1.05
+  ClO PPB        MC clear g/c/i x lo/hi/top: 0.75 0.80 1.03
+  ClO Vicious    MC clear g/c/i x lo/hi/top: 0.75 0.88 1.10
+  ClO Ravage     MC clear g/c/i x lo/hi/top: 0.75 0.78 1.06
+  ClO AccelBl    MC clear g/c/i x lo/hi/top: 0.67 0.92 1.13
+   ClO Frail      MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 13.02, eng 13.64)
+   ClO PPB        MC  100.9   engine  106.1   | per faction MC g/c/i 101  engine 106  (MC abs 13.14, eng 14.47)
+   ClO Vicious    MC   95.6   engine   98.6   | per faction MC g/c/i 96  engine 99  (MC abs 12.45, eng 13.45)
+   ClO Ravage     MC  100.7   engine  107.3   | per faction MC g/c/i 101  engine 107  (MC abs 13.12, eng 14.64)
+   ClO AccelBl    MC   98.2   engine   98.3   | per faction MC g/c/i 98  engine 98  (MC abs 12.79, eng 13.41)
+== L150 c.003 (levels 150/250/400)
+  ClO Frail      MC clear g/c/i x lo/hi/top: 1.61 1.82 2.18
+  ClO PPB        MC clear g/c/i x lo/hi/top: 1.73 1.88 2.11
+  ClO Vicious    MC clear g/c/i x lo/hi/top: 1.73 1.91 2.35
+  ClO Ravage     MC clear g/c/i x lo/hi/top: 1.73 1.86 2.14
+  ClO AccelBl    MC clear g/c/i x lo/hi/top: 1.63 1.87 2.24
+   ClO Frail      MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 6.29, eng 8.31)
+   ClO PPB        MC   97.1   engine  106.3   | per faction MC g/c/i 97  engine 106  (MC abs 6.11, eng 8.83)
+   ClO Vicious    MC   93.3   engine   99.0   | per faction MC g/c/i 93  engine 99  (MC abs 5.87, eng 8.22)
+   ClO Ravage     MC   97.0   engine  107.6   | per faction MC g/c/i 97  engine 108  (MC abs 6.11, eng 8.94)
+   ClO AccelBl    MC   97.9   engine   98.4   | per faction MC g/c/i 98  engine 98  (MC abs 6.16, eng 8.18)
+== L150 c.001d3 (levels 150/250/400)
+  ClO Frail      MC clear g/c/i x lo/hi/top: 3.50 4.32 4.37
+  ClO PPB        MC clear g/c/i x lo/hi/top: 3.95 4.18 4.60
+  ClO Vicious    MC clear g/c/i x lo/hi/top: 3.93 4.35 5.34
+  ClO Ravage     MC clear g/c/i x lo/hi/top: 3.76 4.19 4.60
+  ClO AccelBl    MC clear g/c/i x lo/hi/top: 3.75 3.83 4.72
+   ClO Frail      MC  100.0   engine  100.0   | per faction MC g/c/i 100  engine 100  (MC abs 2.93, eng 6.36)
+   ClO PPB        MC   95.3   engine  106.5   | per faction MC g/c/i 95  engine 107  (MC abs 2.79, eng 6.77)
+   ClO Vicious    MC   89.7   engine   99.4   | per faction MC g/c/i 90  engine 99  (MC abs 2.63, eng 6.32)
+   ClO Ravage     MC   96.7   engine  107.7   | per faction MC g/c/i 97  engine 108  (MC abs 2.83, eng 6.85)
+   ClO AccelBl    MC   99.0   engine   98.6   | per faction MC g/c/i 99  engine 99  (MC abs 2.90, eng 6.27)

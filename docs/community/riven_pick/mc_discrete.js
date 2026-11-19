@@ -13,7 +13,7 @@ const XH = 0.8075;
 function sim(b, f, lvKey, row) {
   const q = b.pf[f], y = q[lvKey], lv = y.tg.level, rho = row.density, n3 = 1 + rho * Math.PI * 9;
   const steel = row.steel ? 2.5 : 1;   // engine: overguard is not scaled by Steel Path in targetsAt
-  const fac = /Cl(G|C|I)/.test(b.n) && ((/ClG/.test(b.n) && f === "grineer") || (/ClC/.test(b.n) && f === "corpus") || (/ClI/.test(b.n) && f === "infested")) ? 1.55 : 1;
+  const fac = /Cl(G|C|I|O)/.test(b.n) && ((/ClG/.test(b.n) && f === "grineer") || (/ClC/.test(b.n) && f === "corpus") || (/ClI/.test(b.n) && f === "infested") || (/ClO/.test(b.n) && f === "corrupted")) ? 1.55 : 1;
   const dp = q.direct / b.ms;                       // main + extra hit, pre-crit
   const vEst = dp / (b.Btot * (1 + b.dmgb + b.gco) * b.total * fac) - XH * fac;   // vuln (≈1.0–1.2)
   const mainShare = vEst / (vEst + XH * fac);
@@ -52,15 +52,17 @@ function sim(b, f, lvKey, row) {
   return sumT / TR;
 }
 const res = {};
+// 2026-11-19: the factions come from the engine output (a job with factions: ["corrupted"] works); "ClO" in a build name = Primed Cleanse Orokin
+const FACS = Object.keys(out.rows[0].res[0].pf);
 for (const row of out.rows) {
   console.log("== " + row.v + " (levels " + row.lev.join("/") + ")" + (persist ? " [ticks persist after death]" : ""));
   const sc = {};
   for (const b of row.res) {
     const ts = []; let lg = 0, lgE = 0, n = 0; const pfm = {}, pfe = {};
-    for (const f of ["grineer", "corpus", "infested"]) { let a = 0, e = 0; for (const lk of ["lo", "hi", "top"]) { const T = sim(b, f, lk, row); ts.push(T.toFixed(2)); const x = Math.log(12 / (T + 1 / b.rate)), y = Math.log(12 / Math.max(1 / b.rate, b.pf[f][lk].clear)); lg += x; lgE += y; a += x; e += y; n++; } pfm[f] = Math.exp(a / 3); pfe[f] = Math.exp(e / 3); }
+    for (const f of FACS) { let a = 0, e = 0; for (const lk of ["lo", "hi", "top"]) { const T = sim(b, f, lk, row); ts.push(T.toFixed(2)); const x = Math.log(12 / (T + 1 / b.rate)), y = Math.log(12 / Math.max(1 / b.rate, b.pf[f][lk].clear)); lg += x; lgE += y; a += x; e += y; n++; } pfm[f] = Math.exp(a / 3); pfe[f] = Math.exp(e / 3); }
     sc[b.n] = [Math.exp(lg / n), Math.exp(lgE / n), pfm, pfe];
     console.log("  " + b.n.padEnd(14) + " MC clear g/c/i x lo/hi/top: " + ts.join(" "));
   }
   const ref = sc[row.res[0].n];
-  for (const k in sc) console.log("   " + k.padEnd(14) + " MC " + (sc[k][0] / ref[0] * 100).toFixed(1).padStart(6) + "   engine " + (sc[k][1] / ref[1] * 100).toFixed(1).padStart(6) + "   | per faction MC g/c/i " + ["grineer", "corpus", "infested"].map((f) => (sc[k][2][f] / ref[2][f] * 100).toFixed(0)).join("/") + "  engine " + ["grineer", "corpus", "infested"].map((f) => (sc[k][3][f] / ref[3][f] * 100).toFixed(0)).join("/") + "  (MC abs " + sc[k][0].toFixed(2) + ", eng " + sc[k][1].toFixed(2) + ")");
+  for (const k in sc) console.log("   " + k.padEnd(14) + " MC " + (sc[k][0] / ref[0] * 100).toFixed(1).padStart(6) + "   engine " + (sc[k][1] / ref[1] * 100).toFixed(1).padStart(6) + "   | per faction MC g/c/i " + FACS.map((f) => (sc[k][2][f] / ref[2][f] * 100).toFixed(0)).join("/") + "  engine " + FACS.map((f) => (sc[k][3][f] / ref[3][f] * 100).toFixed(0)).join("/") + "  (MC abs " + sc[k][0].toFixed(2) + ", eng " + sc[k][1].toFixed(2) + ")");
 }
