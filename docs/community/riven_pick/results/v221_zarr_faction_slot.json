@@ -1,0 +1,1293 @@
+{
+ "note": "2026-11-23 Kuva Zarr (Cyte-09, user's build + riven cd 143 / ms 102.1 / cc 181.9 / dur -84.5, toxin 36.9%, Primary Merciless, bonds, Resupply magnetic cast 0): each slot replaced by the faction's Primed Bane. score = calculator crowd score, shot/dps = direct damage per shot x crit average (x fire rate) against that faction. v2.21 engine.",
+ "res": {
+  "grineer": {
+   "sp150": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 31.579,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.282,
+      0.441,
+      0.441
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 61.9,
+      "shot_pct": 198.5,
+      "dps_pct": 198.5,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 95.8,
+      "dps_pct": 95.8,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 101.6,
+      "shot_pct": 115.8,
+      "dps_pct": 123.7,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 116.1,
+      "shot_pct": 131.5,
+      "dps_pct": 131.5,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 134.5,
+      "shot_pct": 187.0,
+      "dps_pct": 148.3,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 116.9,
+      "shot_pct": 192.0,
+      "dps_pct": 132.4,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 116.1,
+      "shot_pct": 134.8,
+      "dps_pct": 134.8,
+      "rate": 6.29
+     }
+    }
+   },
+   "sp150 stacks kept": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 36.65,
+     "rate": 6.29,
+     "ms": 4.32,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.282,
+      0.282,
+      0.441
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 53.3,
+      "shot_pct": 198.5,
+      "dps_pct": 198.5,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 87.5,
+      "dps_pct": 87.5,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 100.8,
+      "shot_pct": 115.8,
+      "dps_pct": 123.7,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 116.1,
+      "shot_pct": 131.5,
+      "dps_pct": 131.5,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 115.8,
+      "shot_pct": 187.0,
+      "dps_pct": 148.3,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 100.7,
+      "shot_pct": 190.7,
+      "dps_pct": 131.5,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 116.1,
+      "shot_pct": 148.3,
+      "dps_pct": 148.3,
+      "rate": 6.29
+     }
+    }
+   },
+   "sp150 tAcq0.15": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 37.453,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.224,
+      0.383,
+      0.383
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 65.7,
+      "shot_pct": 198.5,
+      "dps_pct": 198.5,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 95.8,
+      "dps_pct": 95.8,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 106.2,
+      "shot_pct": 115.8,
+      "dps_pct": 123.7,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 119.6,
+      "shot_pct": 131.5,
+      "dps_pct": 131.5,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 113.4,
+      "shot_pct": 187.0,
+      "dps_pct": 148.3,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 98.6,
+      "shot_pct": 192.0,
+      "dps_pct": 132.4,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 119.6,
+      "shot_pct": 134.8,
+      "dps_pct": 134.8,
+      "rate": 6.29
+     }
+    }
+   },
+   "sp150 tAcq0.3": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 22.927,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.423,
+      0.582,
+      0.582
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 56.8,
+      "shot_pct": 198.5,
+      "dps_pct": 198.5,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 95.8,
+      "dps_pct": 95.8,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 101.2,
+      "shot_pct": 115.8,
+      "dps_pct": 123.7,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 111.2,
+      "shot_pct": 131.5,
+      "dps_pct": 131.5,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 123.7,
+      "shot_pct": 187.0,
+      "dps_pct": 148.3,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 123.7,
+      "shot_pct": 192.0,
+      "dps_pct": 132.4,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 111.2,
+      "shot_pct": 134.8,
+      "dps_pct": 134.8,
+      "rate": 6.29
+     }
+    }
+   },
+   "arb100": {
+    "levels": [
+     100,
+     200,
+     350
+    ],
+    "steel": false,
+    "cur": {
+     "score": 42.536,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.282,
+      0.282,
+      0.282
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 46.0,
+      "shot_pct": 198.5,
+      "dps_pct": 198.5,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 95.8,
+      "dps_pct": 95.8,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 100.0,
+      "shot_pct": 115.8,
+      "dps_pct": 123.7,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 100.0,
+      "shot_pct": 131.5,
+      "dps_pct": 131.5,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 99.8,
+      "shot_pct": 187.0,
+      "dps_pct": 148.3,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 86.8,
+      "shot_pct": 192.0,
+      "dps_pct": 132.4,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 100.0,
+      "shot_pct": 134.8,
+      "dps_pct": 134.8,
+      "rate": 6.29
+     }
+    }
+   }
+  },
+  "corpus": {
+   "sp150": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 42.536,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.282,
+      0.282,
+      0.282
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 46.0,
+      "shot_pct": 214.1,
+      "dps_pct": 214.1,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 103.3,
+      "dps_pct": 103.3,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 100.0,
+      "shot_pct": 124.9,
+      "dps_pct": 133.5,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 100.0,
+      "shot_pct": 141.8,
+      "dps_pct": 141.8,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 99.8,
+      "shot_pct": 201.7,
+      "dps_pct": 160.0,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 86.8,
+      "shot_pct": 207.1,
+      "dps_pct": 142.9,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 100.0,
+      "shot_pct": 145.4,
+      "dps_pct": 145.4,
+      "rate": 6.29
+     }
+    }
+   },
+   "sp150 stacks kept": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 42.536,
+     "rate": 6.29,
+     "ms": 4.32,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.282,
+      0.282,
+      0.282
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 46.0,
+      "shot_pct": 214.1,
+      "dps_pct": 214.1,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 94.3,
+      "dps_pct": 94.3,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 100.0,
+      "shot_pct": 124.9,
+      "dps_pct": 133.5,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 100.0,
+      "shot_pct": 141.8,
+      "dps_pct": 141.8,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 99.8,
+      "shot_pct": 201.7,
+      "dps_pct": 160.0,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 86.8,
+      "shot_pct": 205.7,
+      "dps_pct": 141.9,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 100.0,
+      "shot_pct": 160.0,
+      "dps_pct": 160.0,
+      "rate": 6.29
+     }
+    }
+   },
+   "sp150 tAcq0.15": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 53.535,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.224,
+      0.224,
+      0.224
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 46.0,
+      "shot_pct": 214.1,
+      "dps_pct": 214.1,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 103.3,
+      "dps_pct": 103.3,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 105.9,
+      "shot_pct": 124.9,
+      "dps_pct": 133.5,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 100.0,
+      "shot_pct": 141.8,
+      "dps_pct": 141.8,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 79.3,
+      "shot_pct": 201.7,
+      "dps_pct": 160.0,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 69.0,
+      "shot_pct": 207.1,
+      "dps_pct": 142.9,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 100.0,
+      "shot_pct": 145.4,
+      "dps_pct": 145.4,
+      "rate": 6.29
+     }
+    }
+   },
+   "sp150 tAcq0.3": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 28.357,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.423,
+      0.423,
+      0.423
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 46.0,
+      "shot_pct": 214.1,
+      "dps_pct": 214.1,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 103.3,
+      "dps_pct": 103.3,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 100.0,
+      "shot_pct": 124.9,
+      "dps_pct": 133.5,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 100.0,
+      "shot_pct": 141.8,
+      "dps_pct": 141.8,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 100.0,
+      "shot_pct": 201.7,
+      "dps_pct": 160.0,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 100.0,
+      "shot_pct": 207.1,
+      "dps_pct": 142.9,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 100.0,
+      "shot_pct": 145.4,
+      "dps_pct": 145.4,
+      "rate": 6.29
+     }
+    }
+   },
+   "arb100": {
+    "levels": [
+     100,
+     200,
+     350
+    ],
+    "steel": false,
+    "cur": {
+     "score": 42.536,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.282,
+      0.282,
+      0.282
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 46.0,
+      "shot_pct": 214.1,
+      "dps_pct": 214.1,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 103.3,
+      "dps_pct": 103.3,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 100.0,
+      "shot_pct": 124.9,
+      "dps_pct": 133.5,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 100.0,
+      "shot_pct": 141.8,
+      "dps_pct": 141.8,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 99.8,
+      "shot_pct": 201.7,
+      "dps_pct": 160.0,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 86.8,
+      "shot_pct": 207.1,
+      "dps_pct": 142.9,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 100.0,
+      "shot_pct": 145.4,
+      "dps_pct": 145.4,
+      "rate": 6.29
+     }
+    }
+   }
+  },
+  "infested": {
+   "sp150": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 42.536,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.282,
+      0.282,
+      0.282
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 46.0,
+      "shot_pct": 205.0,
+      "dps_pct": 205.0,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 98.9,
+      "dps_pct": 98.9,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 100.0,
+      "shot_pct": 119.5,
+      "dps_pct": 127.8,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 100.0,
+      "shot_pct": 135.8,
+      "dps_pct": 135.8,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 99.8,
+      "shot_pct": 193.1,
+      "dps_pct": 153.1,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 86.8,
+      "shot_pct": 198.3,
+      "dps_pct": 136.8,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 100.0,
+      "shot_pct": 139.2,
+      "dps_pct": 139.2,
+      "rate": 6.29
+     }
+    }
+   },
+   "sp150 stacks kept": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 42.536,
+     "rate": 6.29,
+     "ms": 4.32,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.282,
+      0.282,
+      0.282
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 46.0,
+      "shot_pct": 205.0,
+      "dps_pct": 205.0,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 90.3,
+      "dps_pct": 90.3,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 100.0,
+      "shot_pct": 119.5,
+      "dps_pct": 127.8,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 100.0,
+      "shot_pct": 135.8,
+      "dps_pct": 135.8,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 99.8,
+      "shot_pct": 193.1,
+      "dps_pct": 153.1,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 86.8,
+      "shot_pct": 196.9,
+      "dps_pct": 135.8,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 100.0,
+      "shot_pct": 153.2,
+      "dps_pct": 153.2,
+      "rate": 6.29
+     }
+    }
+   },
+   "sp150 tAcq0.15": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 53.535,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.224,
+      0.224,
+      0.224
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 46.0,
+      "shot_pct": 205.0,
+      "dps_pct": 205.0,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 98.9,
+      "dps_pct": 98.9,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 105.9,
+      "shot_pct": 119.5,
+      "dps_pct": 127.8,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 100.0,
+      "shot_pct": 135.8,
+      "dps_pct": 135.8,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 79.3,
+      "shot_pct": 193.1,
+      "dps_pct": 153.1,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 69.0,
+      "shot_pct": 198.3,
+      "dps_pct": 136.8,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 100.0,
+      "shot_pct": 139.2,
+      "dps_pct": 139.2,
+      "rate": 6.29
+     }
+    }
+   },
+   "sp150 tAcq0.3": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 28.357,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.423,
+      0.423,
+      0.423
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 46.0,
+      "shot_pct": 205.0,
+      "dps_pct": 205.0,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 98.9,
+      "dps_pct": 98.9,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 100.0,
+      "shot_pct": 119.5,
+      "dps_pct": 127.8,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 100.0,
+      "shot_pct": 135.8,
+      "dps_pct": 135.8,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 100.0,
+      "shot_pct": 193.1,
+      "dps_pct": 153.1,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 100.0,
+      "shot_pct": 198.3,
+      "dps_pct": 136.8,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 100.0,
+      "shot_pct": 139.2,
+      "dps_pct": 139.2,
+      "rate": 6.29
+     }
+    }
+   },
+   "arb100": {
+    "levels": [
+     100,
+     200,
+     350
+    ],
+    "steel": false,
+    "cur": {
+     "score": 42.536,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.282,
+      0.282,
+      0.282
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 46.0,
+      "shot_pct": 205.0,
+      "dps_pct": 205.0,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 98.9,
+      "dps_pct": 98.9,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 100.0,
+      "shot_pct": 119.5,
+      "dps_pct": 127.8,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 100.0,
+      "shot_pct": 135.8,
+      "dps_pct": 135.8,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 99.8,
+      "shot_pct": 193.1,
+      "dps_pct": 153.1,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 86.8,
+      "shot_pct": 198.3,
+      "dps_pct": 136.8,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 100.0,
+      "shot_pct": 139.2,
+      "dps_pct": 139.2,
+      "rate": 6.29
+     }
+    }
+   }
+  },
+  "corrupted": {
+   "sp150": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 31.579,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.282,
+      0.441,
+      0.441
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 61.9,
+      "shot_pct": 202.7,
+      "dps_pct": 202.7,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 97.8,
+      "dps_pct": 97.8,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 117.0,
+      "shot_pct": 118.2,
+      "dps_pct": 126.3,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 116.1,
+      "shot_pct": 134.2,
+      "dps_pct": 134.2,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 134.5,
+      "shot_pct": 190.9,
+      "dps_pct": 151.4,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 116.9,
+      "shot_pct": 196.1,
+      "dps_pct": 135.2,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 116.1,
+      "shot_pct": 137.6,
+      "dps_pct": 137.6,
+      "rate": 6.29
+     }
+    }
+   },
+   "sp150 stacks kept": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 36.65,
+     "rate": 6.29,
+     "ms": 4.32,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.282,
+      0.282,
+      0.441
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 53.3,
+      "shot_pct": 202.7,
+      "dps_pct": 202.7,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 89.3,
+      "dps_pct": 89.3,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 116.1,
+      "shot_pct": 118.2,
+      "dps_pct": 126.3,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 116.1,
+      "shot_pct": 134.2,
+      "dps_pct": 134.2,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 115.8,
+      "shot_pct": 190.9,
+      "dps_pct": 151.4,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 100.7,
+      "shot_pct": 194.7,
+      "dps_pct": 134.3,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 116.1,
+      "shot_pct": 151.5,
+      "dps_pct": 151.5,
+      "rate": 6.29
+     }
+    }
+   },
+   "sp150 tAcq0.15": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 37.453,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.224,
+      0.383,
+      0.383
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 65.7,
+      "shot_pct": 202.7,
+      "dps_pct": 202.7,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 97.8,
+      "dps_pct": 97.8,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 126.8,
+      "shot_pct": 118.2,
+      "dps_pct": 126.3,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 119.6,
+      "shot_pct": 134.2,
+      "dps_pct": 134.2,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 113.4,
+      "shot_pct": 190.9,
+      "dps_pct": 151.4,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 98.6,
+      "shot_pct": 196.1,
+      "dps_pct": 135.2,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 119.6,
+      "shot_pct": 137.6,
+      "dps_pct": 137.6,
+      "rate": 6.29
+     }
+    }
+   },
+   "sp150 tAcq0.3": {
+    "levels": [
+     150,
+     250,
+     400
+    ],
+    "steel": true,
+    "cur": {
+     "score": 22.927,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.423,
+      0.582,
+      0.582
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 56.8,
+      "shot_pct": 202.7,
+      "dps_pct": 202.7,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 97.8,
+      "dps_pct": 97.8,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 111.9,
+      "shot_pct": 118.2,
+      "dps_pct": 126.3,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 111.2,
+      "shot_pct": 134.2,
+      "dps_pct": 134.2,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 123.7,
+      "shot_pct": 190.9,
+      "dps_pct": 151.4,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 123.7,
+      "shot_pct": 196.1,
+      "dps_pct": 135.2,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 111.2,
+      "shot_pct": 137.6,
+      "dps_pct": 137.6,
+      "rate": 6.29
+     }
+    }
+   },
+   "arb100": {
+    "levels": [
+     100,
+     200,
+     350
+    ],
+    "steel": false,
+    "cur": {
+     "score": 42.536,
+     "rate": 6.29,
+     "ms": 3.95,
+     "cc": 1.205,
+     "cd": 10.27,
+     "clear": [
+      0.282,
+      0.282,
+      0.282
+     ]
+    },
+    "swap": {
+     "Primed Firestorm": {
+      "score_pct": 46.0,
+      "shot_pct": 202.7,
+      "dps_pct": 202.7,
+      "rate": 6.29
+     },
+     "Galvanized Chamber": {
+      "score_pct": 100.0,
+      "shot_pct": 97.8,
+      "dps_pct": 97.8,
+      "rate": 6.29
+     },
+     "Critical Delay": {
+      "score_pct": 100.0,
+      "shot_pct": 118.2,
+      "dps_pct": 126.3,
+      "rate": 6.73
+     },
+     "Vital Sense": {
+      "score_pct": 100.0,
+      "shot_pct": 134.2,
+      "dps_pct": 134.2,
+      "rate": 6.29
+     },
+     "Speed Trigger": {
+      "score_pct": 99.8,
+      "shot_pct": 190.9,
+      "dps_pct": 151.4,
+      "rate": 4.99
+     },
+     "Vile Acceleration": {
+      "score_pct": 86.8,
+      "shot_pct": 196.1,
+      "dps_pct": 135.2,
+      "rate": 4.34
+     },
+     "Amalgam Serration": {
+      "score_pct": 100.0,
+      "shot_pct": 137.6,
+      "dps_pct": 137.6,
+      "rate": 6.29
+     }
+    }
+   }
+  }
+ }
+}
