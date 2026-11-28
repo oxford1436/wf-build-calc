@@ -124,7 +124,12 @@ const { chromium } = require("playwright");
         check("v1.84 피해가 2배면 3팩션 점수가 줄지 않음 (적을 죽이기 전 타격 수는 정수, 이전 ×0.955)", x2 >= 1, x2.toFixed(3));
         const t0 = BRI.slice(1), tA = E.evaluate(st.weapon, st.weapon.attacks[0], t0.concat([{ id: "t_a", ko: "a", en: "a", slots: ["melee"], exilus: true, eff: { tenno: { on: 1, freq: 1.5 } } }]), oI).score;
         const tB = E.evaluate(st.weapon, st.weapon.attacks[0], t0.concat([{ id: "t_b", ko: "b", en: "b", slots: ["melee"], exilus: true, eff: { tenno: { on: 1, freq: 1.5, cd: 0.32 } } }]), oI).score;
-        check("v1.84 휘두르기와 섞은 텐노카이도 자기 치명타로 계산 (텐노카이 치명타 피해 +32%가 점수를 올림, 이전 ×1.000)", tB / tA > 1.03, (tB / tA).toFixed(3));
+        // v2.23: Tenacious Bond now adds +1.2 to melee too, which moves the whole-hit thresholds (+32% → ×1.009, +100% → ×1.10 with the
+        // bond; ×1.112 without it) — the original threshold is checked without the bond, and with it the score must still rise with the bonus
+        const oIn = Object.assign({}, oI, { ext: Object.assign({}, oI.ext, { cdFinalAdd: 0 }) });
+        const tKn = (cd, oo) => E.evaluate(st.weapon, st.weapon.attacks[0], t0.concat([{ id: "t_k", ko: "k", en: "k", slots: ["melee"], exilus: true, eff: { tenno: cd ? { on: 1, freq: 1.5, cd } : { on: 1, freq: 1.5 } } }]), oo).score;
+        const rNo = tKn(0.32, oIn) / tKn(0, oIn), rOn = tB / tA, rOn1 = tKn(1, oI) / tA;
+        check("v1.84 휘두르기와 섞은 텐노카이도 자기 치명타로 계산 (텐노카이 치명타 피해 +32%가 점수를 올림, 이전 ×1.000 — 본드 없이 ×1.03 이상, 본드 켜면 +32%도 1 초과·+100%는 ×1.05 이상)", rNo > 1.03 && rOn > 1.001 && rOn1 > 1.05, [rNo, rOn, rOn1].map((x) => x.toFixed(3)).join(" / "));
         [st.base, st.weapon, st.atk, st.results] = sv;
       }
       // v1.80 (independent review): Berserker Fury stacks ramp; melee swing+Tennokai model choices are checked at both ends;
@@ -578,8 +583,8 @@ const { chromium } = require("playwright");
       const r0 = E.evaluate(w, a, ids, baseO()), r1 = E.evaluate(w, a, ids, Object.assign(baseO(), { ext }));
       const wm = weapon("dual_ichor"), rm0 = E.evaluate(wm, wm.attacks[0], [], baseO()), rm1 = E.evaluate(wm, wm.attacks[0], [], Object.assign(baseO(), { ext: window.WF_BUFFS.merge(G.map((x) => x.fx(wm))) }));
       const ok = G.length === 2 && mb("tenacious_bond") && mb("tenacious_bond").checked && mb("reinforced_bond") && mb("reinforced_bond").checked
-        && Math.abs(r0.cd - 6.6) < 0.05 && Math.abs(r1.cd - 7.8) < 0.05 && r1.rate > r0.rate * 1.05 && rm1.cd === rm0.cd && rm1.rate === rm0.rate;
-      check("v1.93 동반자 본드 모드(기본 켬): 터네이셔스 본드 치명타 배율 +1.2 (버스튼 빌드 A 6.6 → 7.8 = 아스날), 리인포스드 본드 연사 +60%, 근접은 그대로", ok,
+        && Math.abs(r0.cd - 6.6) < 0.05 && Math.abs(r1.cd - 7.8) < 0.05 && r1.rate > r0.rate * 1.05 && Math.abs(rm1.cd - rm0.cd - 1.2) < 1e-9 && rm1.rate === rm0.rate;
+      check("v1.93 동반자 본드 모드(기본 켬): 터네이셔스 본드 치명타 배율 +1.2 (버스튼 빌드 A 6.6 → 7.8 = 아스날), 리인포스드 본드 연사 +60%, 근접은 치명타 배율만 +1.2(v2.23)·공격 속도 그대로", ok,
         [G.length, r0.cd.toFixed(2), r1.cd.toFixed(2), (r1.rate / r0.rate).toFixed(3), rm0.cd + "=" + rm1.cd].join(" / "));
     }
     // v2.08 (묶음 18 인카논): Braton Munitions Grit "Multishot consumes ammo … and does +54% Damage" — wiki Braton Prime Incarnon
@@ -917,6 +922,32 @@ const { chromium } = require("playwright");
     results.push({ name: "v2.22 강한 내려찍기에는 준비 시간이 없음 — 강공 준비 속도 +100%를 더해도 초당 슬램 수가 같음 (위키 Melee 'Wind Up')", ok: !r.err && r.rate0 > 0 && Math.abs(r.rate0 - r.rateWind) < 1e-9, detail: r.err || JSON.stringify({ rate0: r.rate0, rateWind: r.rateWind }) });
     results.push({ name: "v2.22 서서 쓰는 강공은 맞혀도 연속기가 오르지 않음 — 초기 연속기 39.5면 무리에서도 2배 (위키 Melee 'Wind Up'), 강한 내려찍기는 맞은 적 수만큼 올라 3배 이상", ok: !r.err && r.mHeavy === 2 && r.mSlam >= 3 && r.mSlam0 === 2, detail: r.err || JSON.stringify({ mHeavy: r.mHeavy, mSlam: r.mSlam, mSlam0: r.mSlam0 }) });
     await p4.close();
+  }
+
+  // v2.23: Tenacious Bond (+1.2x final crit multiplier) also applies to melee — wiki Tenacious Bond: "you gain +1.2x Final Critical Damage
+  // Multiplier", only exclusion noted is Amp damage. The user's Sancti Magistar Arsenal (2026-11-28, evolution IV Critical Parallel = 2.2x):
+  // 3.4x without and 8.4x with three Tauforged Violet shards (melee crit damage +37.5% each, doubled over 500 max energy = +225%).
+  // Reinforced Bond stays gun-only (the same Arsenal shows attack speed 1.4 = 1.0 + 40% from Edge of Justice).
+  {
+    const p5 = await ctx.newPage();
+    p5.on("pageerror", (e) => errs.push(e.message));
+    await p5.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p5.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p5.evaluate(() => {
+      const A = window.WF_APP, E = window.WFEngine, W = window.WF_WEAPONS, B = window.WF_BUFFS;
+      const w0 = W.find((x) => x.id === "sancti_magistar"), w = A.applyEvos(w0, { 2: 1, 3: 0, 4: 2 }), ai = w.attacks.findIndex((a) => a.en === "Normal Attack");
+      A.st.base = w0; A.st.weapon = w; A.st.atk = ai;
+      const o = Object.assign(A.readOpts(), { targets: null, val: null }); o.targets = E.targetsFor(o); A.st.results = { o };
+      const en = (n) => (window.WF_MODS.find((x) => x.en === n) || {}).id;
+      const tb = B.misc.find((x) => x.id === "tenacious_bond").fx(w), rb = B.misc.find((x) => x.id === "reinforced_bond").fx(w);
+      const cd = (ext) => A.evalBuild([en("Primed Pressure Point")], null, null, Object.assign({}, o, { arcane: null, ext: B.merge([ext]) }), null, null, w).cd;
+      const gr = window.WF_MODS.find((x) => x.id === "galvanized_reflex");
+      return { bond: cd(tb), bondShards: cd(Object.assign({ cdAdd: 2.25 }, tb)), rbFr: rb.frAdd || 0, reflexIc: gr && gr.cond && gr.cond[0].eff.ic };
+    }).catch((e) => ({ err: e.message }));
+    results.push({ name: "v2.23 터네이셔스 본드는 근접에도 적용 — 생티 마기스타 치명타 배율 2.2 + 1.2 = 3.4x, 타우포지드 보라 샤드 3개면 8.35x (사용자 아스날 8.4x ▸ 3.4x). 리인포스드 본드는 근접 미적용", ok: !r.err && Math.abs(r.bond - 3.4) < 0.005 && Math.abs(r.bondShards - 8.35) < 0.005 && !r.rbFr, detail: r.err || JSON.stringify(r) });
+    // wiki Galvanized Reflex rank table: rank 10 "+20.46" Initial Combo per stack, "Max Bonus +81.84" (the card rounds to +20) — was 81.4
+    results.push({ name: "v2.23 갈바나이즈드 리플렉스 초기 연속기 중첩당 20.46 · 4중첩 81.84 (위키 랭크 표, 카드는 20으로 반올림 — 이전 81.4)", ok: !r.err && Math.abs(r.reflexIc - 81.84) < 1e-9, detail: r.err || r.reflexIc });
+    await p5.close();
   }
 
   // v2.05: Galariak Prime (wiki): "Gains a flat +10% Critical Chance bonus per unique Status Effect type on the target hit"

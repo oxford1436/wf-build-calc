@@ -83,7 +83,7 @@
     // not on the Mausolon) → on by default (def). Tenacious: "Critical damage multiplier is a flat final and follows the formula
     // 1 + (tier * (crit multi - 1 + final))" — added after every crit multiplier. Reinforced: "+60% Fire Rate" when the companion has
     // over 1200 shields, "does not count double for Bows" (added outside the bow doubling).
-    { id: "tenacious_bond", def: true, gear: true, ko: "동반자 터네이셔스 본드 (치명타 배율 +1.2)", note: "동반자 치명타 확률 50% 이상일 때 내 총기 치명타 배율 +1.2 (모든 치명타 배율 뒤에 더함, 위키). 근접 제외", fx: (w) => (w.cls === "melee" ? {} : { cdFinalAdd: 1.2 }) },
+    { id: "tenacious_bond", def: true, gear: true, ko: "동반자 터네이셔스 본드 (치명타 배율 +1.2)", note: "동반자 치명타 확률 50% 이상일 때 내 무기 치명타 배율 +1.2 (모든 치명타 배율 뒤에 더함, 위키). 총기·근접 모두 (v2.23 — 근접 아스날에서 확인)", fx: () => ({ cdFinalAdd: 1.2 }) },
     { id: "reinforced_bond", def: true, gear: true, ko: "동반자 리인포스드 본드 (연사 +60%)", note: "동반자 실드 1200 초과일 때 연사 +60% (연사 모드와 합연산, 활에서 두 배 아님, 위키). 근접 제외", fx: (w) => (w.cls === "melee" ? {} : { frAdd: 0.6 }) },
     // v2.22 Nira set (warframe mods Nira's Hatred / Nira's Anguish; the third, Nira's Contempt, is a whip-only melee mod): wiki Melee
     // "Slam Damage" — "Nira's Set bonus: +150% Slam Damage per mod equipped", wiki Seismic Wave — "Nira's Set bonus is additive to Seismic Wave"

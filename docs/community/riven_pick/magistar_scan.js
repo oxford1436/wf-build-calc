@@ -3,11 +3,14 @@
 // measure: average damage of one heavy slam = pre-crit per-hit damage × average crit multiplier (geometric mean over the three factions) × slams per second
 const p = require("playwright"); const fs = require("fs"); const repo = process.env.WFREPO || "/home/claude/wf-build-calc";
 const BUILD = ["Galvanized Reflex", "Primed Pressure Point", "Focus Radon", "Corrupt Charge", "Blood Rush", "Galvanized Steel", "Seismic Wave", "Primed Fever Strike"];
-const F = { rivmode: "none", frame: "wukong_prime", aura: "ready_steel", fa0: "아케인 퓨리", fa1: "아케인 스트라이크" };
+// Wukong Prime as in the user's Arsenal (2026-11-28): Ready Steel, Arcane Fury + Strike, three Tauforged Violet shards (melee crit damage,
+// doubled over 500 max energy — 556) and two casting-speed shards; companion Tenacious Bond (Arsenal crit multiplier 8.4x = 2.2 × 3.25 + 1.2)
+const F = { rivmode: "none", frame: "wukong_prime", aura: "ready_steel", fa0: "아케인 퓨리", fa1: "아케인 스트라이크", energy: "556", strength: "190", duration: "209", range: "34", efficiency: "160",
+  sh0: "v_mcd", tau0: true, sh1: "v_mcd", tau1: true, sh2: "v_mcd", tau2: true, sh3: "a_cast", sh4: "a_cast" };
 const VARS = JSON.parse(process.env.VARS || '[{"v":"default"}]');
 (async () => {
   const b = await p.chromium.launch(); const pg = await b.newPage(); const errs = []; pg.on("pageerror", (e) => errs.push(e.message));
-  const S = { w: "sancti_magistar", a: 2, evo: { 2: 1, 3: 0, 4: 2 }, f: F, mb: ["nira_hatred", "nira_anguish"], s: [] };
+  const S = { w: "sancti_magistar", a: 2, evo: { 2: 1, 3: 0, 4: 2 }, f: F, mb: ["nira_hatred", "nira_anguish", "tenacious_bond"], s: [] };
   const h = Buffer.from(JSON.stringify(S), "utf8").toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
   await pg.goto("file://" + repo + "/index.html#s=" + h); await pg.waitForFunction(() => window.WF_APP && window.WF_APP.st.weapon && (window.WF_APP.st.base || window.WF_APP.st.weapon).id === "sancti_magistar", null, { timeout: 60000 });
   await pg.waitForTimeout(1500);
