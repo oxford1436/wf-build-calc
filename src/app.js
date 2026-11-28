@@ -76,7 +76,7 @@
     { k: "heavyd", ko: "강공 피해", cls: "melee", grp: "splice", base: 1.197, eff: "heavy", need: ["강공 효율", "추가 연속기 카운트 확률"] },
     { k: "windup", ko: "강공 준비 속도", cls: "melee", grp: "splice", base: 1.197, eff: "wind", need: ["강공 효율", "연속기 지속시간"] },
     { k: "block", ko: "막기 각도", cls: "melee", grp: "splice", base: 0.81, eff: null, need: ["공격 속도", "근접 사거리"] },
-    { k: "slam", ko: "슬램 피해", cls: "melee", grp: "splice", base: 1.197, eff: null, need: ["피해", "공격 속도"] },
+    { k: "slam", ko: "슬램 피해", cls: "melee", grp: "splice", base: 1.197, eff: "slamDmg", need: ["피해", "공격 속도"], note: "슬램·강한 내려찍기에만 (사이즈믹 웨이브와 합연산)" },   // v2.22: wiki Melee "Slam Damage" lists the spliced riven trait as a source of the same multiplier as Seismic Wave
   ];
   const RIV_D = Object.fromEntries(RIV_DEF.map((d) => [d.k, d]));
   const RIV_KO = Object.fromEntries(RIV_DEF.map((d) => [d.k, d.ko + (d.grp === "splice" ? " (접합)" : "")]));

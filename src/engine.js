@@ -1172,7 +1172,10 @@
     if (isHeavy) {
       // wind-up (and glaive charged throws) only speed up with Heavy Attack Wind Up Speed, not attack speed (wiki "Attack Speed");
       // attack speed only shortens the heavy swing animation after the wind-up
-      const tw = (atk.windup || 1) / Math.max(0.2, 1 + a.wind + (ext.windAdd || 0));
+      // v2.22 heavy slams: wiki Melee "Wind Up" — "Heavy Slams do not have any wind up"; "Heavy Slams" — "All melee weapons use the same
+      // multiplier and animation for their Heavy Slams". So a slam's cycle does not depend on the weapon class wind-up or on Wind Up
+      // Speed mods. The 1 s (jump + fall + landing) is this model's own figure — the wiki gives no time for a slam.
+      const tw = atk.slam ? 1 : (atk.windup || 1) / Math.max(0.2, 1 + a.wind + (ext.windAdd || 0));
       let over = 0.3 / Math.max(0.2, 1 + a.fr + (ext.asAdd || 0));
       if (kind === "glaive") {
         // the glaive has to fly out and come back before the next throw: travel time at its projectile speed
@@ -1184,7 +1187,11 @@
       if (kind === "tennokai" && o._tennoOnly) rate = (atk.swingFr || 1) * Math.max(0.2, 1 + a.fr + (ext.asAdd || 0)) * 1.5;
       // glaive: the thrown glaive's own hits build combo (explosion-only hits don't — wiki), a heavy-attack
       // detonation spends it; Volatile bounce explosions get no combo multiplier and spend nothing
-      const gain = kind === "glaive" ? (o.scenario === "crowd" ? Math.min(3, K) : 1) : K;
+      // v2.22: a standing heavy attack's own hits add no combo — wiki Melee "Wind Up": "connecting with a Heavy Attack does not add to the
+      // combo counter". A slam does — wiki Melee "Slam Attack": "Melee combo is gained for each enemy struck by the slam's area of effect.
+      // A variation, the Heavy Slam attack, additionally benefits from the Heavy Attack combo multiplier and applies the Lifted status,
+      // but consumes melee combo." (o.slamNoCombo: the other reading of that sentence — the heavy slam gains none either)
+      const gain = kind === "glaive" ? (o.scenario === "crowd" ? Math.min(3, K) : 1) : atk.slam ? (o.slamNoCombo ? 0 : K) : 0;
       M = kind === "tennokai" ? swingTier(atk.swingFr) : atk.bounceOnly ? 1 : comboMult(a.ic + (ext.icAdd || 0), a.hae, gain, o.comboHits, 1 / rate, a.ccc);
     } else if (kind === "melee") {
       rate = (atk.fr || 1) * Math.max(0.2, 1 + a.fr + (ext.asAdd || 0)) * 1.5;
@@ -1328,7 +1335,7 @@
     const evoAll = weapon.en && /^Torid/.test(weapon.en) && (atk.inc || (parentAtk && parentAtk.inc));
     const nProj = atk.noMs ? 1 : ((atk.pellets || 1) + finalMs) * (msLock ? 1 : Math.max(0, 1 + a.ms + (ext.msAdd || 0)));
     const evoM = a.evoMult ? 1 + a.evoMult * (evoAll ? 1 : Math.max(0, nProj - 1) / Math.max(1e-9, nProj)) : 1;
-    const fin = (ext.final || 1) * (tenno && !o.tennoAdd ? 1 + (tenno.dmg || 0) : 1) * exChain * sniperM * evoM * (atk.slam ? 1 + (a.slamDmg || 0) : 1);   // evoMult: Incarnon "unique multiplier" perks; slamDmg (v2.04): Seismic Wave — its own multiplier on slams (wiki Arca Titron: Slam Capacitor "is multiplicative to Seismic Wave and the Nira's Set bonus, and additive to base damage (e.g. Pressure Point …)"; wiki Jat Kusar: Slam Radial Damage "can only be increased with Seismic Wave")
+    const fin = (ext.final || 1) * (tenno && !o.tennoAdd ? 1 + (tenno.dmg || 0) : 1) * exChain * sniperM * evoM * (atk.slam ? 1 + (a.slamDmg || 0) + (ext.slamAdd || 0) : 1);   // slamAdd (v2.22): Nira's set — wiki Seismic Wave "Nira's Set bonus is additive to Seismic Wave. Slam damage bonus is multiplicative to base damage (e.g., Pressure Point, Arcane Fury)"; wiki Melee "Slam Damage": sources are Seismic Wave, the Nira set (+150% per mod) and the spliced riven trait (a.slamDmg). evoMult: Incarnon "unique multiplier" perks; slamDmg (v2.04): Seismic Wave — its own multiplier on slams (wiki Arca Titron: Slam Capacitor "is multiplicative to Seismic Wave and the Nira's Set bonus, and additive to base damage (e.g. Pressure Point …)"; wiki Jat Kusar: Slam Radial Damage "can only be increased with Seismic Wave")
     // falloff: distance (bullets/pellets) and blast edge (enemies around the centre of an explosion)
     let fallM = distFall(atk.fo, o) * armFrac(atk.arm, o);
     if (atk.rfo && o.scenario === "crowd" && K > 1) fallM *= (1 + (K - 1) * (1 - atk.rfo * 2 / 3)) / K;

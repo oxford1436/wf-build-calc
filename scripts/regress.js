@@ -883,6 +883,42 @@ const { chromium } = require("playwright");
     await p3.close();
   }
 
+  // v2.22: the Slam Damage multiplier has three sources that add to each other (wiki Melee "Slam Damage": "Sources of Slam Damage
+  // include: Seismic Wave: +200% Melee Slam Damage / Nira's Set bonus: +150% Slam Damage per mod equipped: Nira's Anguish, Nira's
+  // Hatred, and Nira's Contempt / Melee Riven Mods, when splicing the Melee Damage stat with Attack Speed"; wiki Seismic Wave:
+  // "Nira's Set bonus is additive to Seismic Wave. Slam damage bonus is multiplicative to base damage (e.g., Pressure Point, Arcane
+  // Fury)"). The spliced riven trait had no effect (eff: null) and the Nira set (warframe mods) was not in the calculator.
+  {
+    const p4 = await ctx.newPage();
+    p4.on("pageerror", (e) => errs.push(e.message));
+    await p4.goto("file://" + path.resolve(__dirname, "..", "index.html"));
+    await p4.waitForFunction(() => window.WFEngine && window.WF_APP);
+    const r = await p4.evaluate(() => {
+      const A = window.WF_APP, E = window.WFEngine, W = window.WF_WEAPONS, B = window.WF_BUFFS;
+      const w = W.find((x) => x.id === "sancti_magistar"), ai = w.attacks.findIndex((a) => a.en === "Heavy Slam Attack");
+      A.st.base = w; A.st.weapon = w; A.st.atk = ai;
+      const o = Object.assign(A.readOpts(), { targets: null, val: null }); o.targets = E.targetsFor(o); A.st.results = { o };
+      const en = (n) => (window.WF_MODS.find((x) => x.en === n) || {}).id;
+      const ids = ["Primed Pressure Point", "Primed Fever Strike", "Galvanized Steel", "Blood Rush", "Corrupt Charge", "Galvanized Reflex", "Seismic Wave"].map(en).concat(["__riven"]);
+      const hit = (riv, ext) => { const x = A.evalBuild(ids, null, null, Object.assign({}, o, { arcane: null, ext: Object.assign({}, o.ext, ext || {}) }), A.effFromStats(riv)); const f = Object.keys(x.perF)[0]; return x.perF[f].direct; };
+      const h0 = hit([["ic", 1]]), fx = (id) => { const m = (B.misc || []).find((x) => x.id === id); return m ? m.fx(w) : null; };
+      const n1 = fx("nira_hatred"), n2 = fx("nira_anguish");
+      // heavy slams have no wind-up (wiki Melee "Wind Up": "Heavy Slams do not have any wind up") — Wind Up Speed must not change the slam rate
+      const rate = (ext) => A.evalBuild(ids, null, null, Object.assign({}, o, { arcane: null, ext: Object.assign({}, o.ext, ext || {}) }), A.effFromStats([["ic", 1]])).rate;
+      // a standing heavy attack's own hits add no combo (wiki Melee "Wind Up": "connecting with a Heavy Attack does not add to the combo
+      // counter"): Initial Combo 39.5 stays at 2x however many enemies the swing hits; a heavy slam still gains per enemy struck
+      const hi = w.attacks.findIndex((a) => a.en === "Heavy Attack"), cch = en("Corrupt Charge");
+      const mOf = (ai2, extra) => { A.st.atk = ai2; const x = A.evalBuild([cch, "__riven"], null, null, Object.assign({}, o, { arcane: null }, extra || {}), A.effFromStats([["ic", 9.5]])); A.st.atk = ai; return x.M; };
+      const mHeavy = mOf(hi), mSlam = mOf(ai), mSlam0 = mOf(ai, { slamNoCombo: true });
+      return { mHeavy, mSlam, mSlam0, riv: hit([["ic", 1], ["slam", 1.481]]) / h0, n1: n1 && n1.slamAdd, n2: n2 && n2.slamAdd, nira: n1 && n2 ? hit([["ic", 1]], B.merge([n1, n2])) / h0 : 0, gun: (fx("nira_hatred") && B.misc.find((x) => x.id === "nira_hatred").fx({ cls: "rifle" }).slamAdd) || 0, rate0: rate(), rateWind: rate({ windAdd: 1.0 }) };
+    }).catch((e) => ({ err: e.message }));
+    results.push({ name: "v2.22 리벤 접합 '슬램 피해'는 사이즈믹 웨이브와 합연산 — +148.1%면 강한 내려찍기 피해 (1 + 2 + 1.481) ÷ 3 = 1.494배 (위키 Melee 'Slam Damage')", ok: !r.err && Math.abs(r.riv - 4.481 / 3) < 0.005, detail: r.err || JSON.stringify({ riv: r.riv }) });
+    results.push({ name: "v2.22 나이라 세트(워프레임 모드 2개, 개당 슬램 피해 +150%)는 사이즈믹 웨이브와 합연산 — 강한 내려찍기 피해 (1 + 2 + 3) ÷ 3 = 2배, 근접에만", ok: !r.err && r.n1 === 1.5 && r.n2 === 1.5 && Math.abs(r.nira - 2) < 0.005 && !r.gun, detail: r.err || JSON.stringify({ n1: r.n1, n2: r.n2, nira: r.nira, gun: r.gun }) });
+    results.push({ name: "v2.22 강한 내려찍기에는 준비 시간이 없음 — 강공 준비 속도 +100%를 더해도 초당 슬램 수가 같음 (위키 Melee 'Wind Up')", ok: !r.err && r.rate0 > 0 && Math.abs(r.rate0 - r.rateWind) < 1e-9, detail: r.err || JSON.stringify({ rate0: r.rate0, rateWind: r.rateWind }) });
+    results.push({ name: "v2.22 서서 쓰는 강공은 맞혀도 연속기가 오르지 않음 — 초기 연속기 39.5면 무리에서도 2배 (위키 Melee 'Wind Up'), 강한 내려찍기는 맞은 적 수만큼 올라 3배 이상", ok: !r.err && r.mHeavy === 2 && r.mSlam >= 3 && r.mSlam0 === 2, detail: r.err || JSON.stringify({ mHeavy: r.mHeavy, mSlam: r.mSlam, mSlam0: r.mSlam0 }) });
+    await p4.close();
+  }
+
   // v2.05: Galariak Prime (wiki): "Gains a flat +10% Critical Chance bonus per unique Status Effect type on the target hit"
   // (Blast is not in the wiki's list of valid types) — every attack carries ccType 0.1 and it must raise a crit build's score
   {

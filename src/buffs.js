@@ -85,6 +85,10 @@
     // over 1200 shields, "does not count double for Bows" (added outside the bow doubling).
     { id: "tenacious_bond", def: true, gear: true, ko: "동반자 터네이셔스 본드 (치명타 배율 +1.2)", note: "동반자 치명타 확률 50% 이상일 때 내 총기 치명타 배율 +1.2 (모든 치명타 배율 뒤에 더함, 위키). 근접 제외", fx: (w) => (w.cls === "melee" ? {} : { cdFinalAdd: 1.2 }) },
     { id: "reinforced_bond", def: true, gear: true, ko: "동반자 리인포스드 본드 (연사 +60%)", note: "동반자 실드 1200 초과일 때 연사 +60% (연사 모드와 합연산, 활에서 두 배 아님, 위키). 근접 제외", fx: (w) => (w.cls === "melee" ? {} : { frAdd: 0.6 }) },
+    // v2.22 Nira set (warframe mods Nira's Hatred / Nira's Anguish; the third, Nira's Contempt, is a whip-only melee mod): wiki Melee
+    // "Slam Damage" — "Nira's Set bonus: +150% Slam Damage per mod equipped", wiki Seismic Wave — "Nira's Set bonus is additive to Seismic Wave"
+    { id: "nira_hatred", ko: "나이라 헤이트리드 (워프레임 모드, 나이라 세트)", note: "나이라 세트 모드 1개당 슬램 피해 +150% — 사이즈믹 웨이브와 합연산, 슬램·강한 내려찍기에만 (위키)", fx: (w) => (w.cls === "melee" ? { slamAdd: 1.5 } : {}) },
+    { id: "nira_anguish", ko: "나이라 앵귀시 (워프레임 모드, 나이라 세트)", note: "나이라 세트 모드 1개당 슬램 피해 +150% — 사이즈믹 웨이브와 합연산, 슬램·강한 내려찍기에만 (위키)", fx: (w) => (w.cls === "melee" ? { slamAdd: 1.5 } : {}) },
     { id: "stealth", ko: "은신 기습 (근접)", note: "적이 알아채기 전 근접 공격 피해 +700%(무기 랭크 30). 모든 타격에 적용되므로 은신 운용일 때만 켜세요", fx: (w) => (w.cls === "melee" ? { stealth: 7 } : {}) },
   ];
   add("Electric Shield", { ko: "일렉트릭 실드 (통과 사격)", gunOnly: true, note: "전기 +50%, 치명타 피해 2배. 근접·글레이브 제외",
